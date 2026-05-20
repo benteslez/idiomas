@@ -783,6 +783,7 @@ function saveVerb() {
         pr:tenseData.pr, im:tenseData.im, pc:tenseData.pc,
         fs:tenseData.fs, co:tenseData.co, sb:tenseData.sb, ip:tenseData.ip,
         custom: true });
+      indexVerb(V[idx]);
       var ci = customVerbs.findIndex(function(c){ return c.n === n; });
       if (ci !== -1) customVerbs[ci] = V[idx];
     }
@@ -800,6 +801,7 @@ function saveVerb() {
       pr: tenseData.pr, im: tenseData.im, pc: tenseData.pc,
       fs: tenseData.fs, co: tenseData.co, sb: tenseData.sb, ip: tenseData.ip,
     };
+    indexVerb(newVerb);
     V.push(newVerb);
     customVerbs.push(newVerb);
   }
@@ -823,6 +825,16 @@ function deleteCustomVerb(n) {
 
 // ── Export HTML ──
 function exportHTML() {
+  // Vaciar contenedores que se regeneran en cada carga vía render(); así
+  // outerHTML no inyecta cientos de KB de tarjetas ya renderizadas en el
+  // archivo exportado (que se descartarían inmediatamente al recargar).
+  var gridEl    = document.getElementById('grid');
+  var rbarEl    = document.getElementById('rbar');
+  var impPrevEl = document.getElementById('importVerbsPreviewList');
+  if (gridEl)    gridEl.innerHTML    = '';
+  if (rbarEl)    rbarEl.innerHTML    = '';
+  if (impPrevEl) impPrevEl.innerHTML = '';
+
   // Captura el HTML actual del documento (tal como lo serializa el navegador).
   // Importante: outerHTML devuelve el código fuente original del <script>,
   // por lo que cualquier mutación in-memory en V/customVerbs NO se refleja
@@ -921,6 +933,9 @@ function exportHTML() {
   }
 
   downloadHTML(src);
+
+  // Repintar la UI: los contenedores se vaciaron arriba para reducir peso del export.
+  render();
 }
 
 function downloadHTML(src) {
@@ -3259,6 +3274,7 @@ const V = [
 if (typeof customVerbs !== 'undefined' && Array.isArray(customVerbs)) {
   customVerbs.forEach(function(cv) { V.push(cv); });
 }
+buildSearchIndex();
 
 const BL = {
   "Auxiliares":    {c:"#5c7ef0",bg:"rgba(92,126,240,.09)", b:"rgba(92,126,240,.25)"},
@@ -3299,7 +3315,7 @@ var _savedUI = (function(){
   catch(e){ return {}; }
 })();
 
-let searchTerm  = (typeof _savedUI.searchTerm === 'string') ? _savedUI.searchTerm : '';
+let searchTerm  = '';
 let sortMode    = (typeof _savedUI.sortMode === 'string') ? _savedUI.sortMode : 'rel';
 let activeBloc  = (typeof _savedUI.activeBloc === 'string') ? _savedUI.activeBloc : 'Todos';
 let activeFlags = new Set(Array.isArray(_savedUI.activeFlags) ? _savedUI.activeFlags : []);
@@ -3310,7 +3326,6 @@ let mastered    = new Set(JSON.parse(localStorage.getItem('delf_mastered') || '[
 function saveUIState(){
   try {
     localStorage.setItem(UI_STATE_KEY, JSON.stringify({
-      searchTerm: searchTerm,
       sortMode:   sortMode,
       activeBloc: activeBloc,
       activeFlags: Array.from(activeFlags),
@@ -3323,6 +3338,24 @@ function saveUIState(){
 // ── Helpers ────────────────────────────────────────────────────────────────
 function stripAccents(s){
   return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+}
+
+// Pre-built haystack por verbo: se calcula una vez (no en cada tecla)
+function indexVerb(v){
+  var keys = ['pr','im','pc','fs','co','sb','ip'];
+  var parts = [v.v || '', v.t || ''];
+  for(var i = 0; i < keys.length; i++){
+    var arr = v[keys[i]];
+    if(Array.isArray(arr)){
+      for(var j = 0; j < arr.length; j++){
+        if(arr[j] && arr[j][1]) parts.push(arr[j][1]);
+      }
+    }
+  }
+  v._hay = stripAccents(parts.join(' '));
+}
+function buildSearchIndex(){
+  for(var i = 0; i < V.length; i++) indexVerb(V[i]);
 }
 
 function esc(s){
@@ -3544,22 +3577,69 @@ function render(){
   updateHdrPills();
   var q = searchTerm;
 
+  // ── Modo sin filtros: mostrar 3 verbos aleatorios ──────────────────────────
+  var noFilters = !q && activeBloc === 'Todos' && activeFlags.size === 0 && !knowFilter;
+  if(noFilters){
+    // Elegir 3 índices aleatorios sin repetición
+    var pool = V.slice();
+    var sample = [];
+    for(var _i = 0; _i < 3 && pool.length; _i++){
+      var _ri = Math.floor(Math.random() * pool.length);
+      sample.push(pool.splice(_ri, 1)[0]);
+    }
+    document.getElementById('rbar').innerHTML =
+      '<span style="color:var(--text2)">Mostrando 3 verbos aleatorios · '
+      + '<strong>' + V.length + ' verbos</strong> disponibles — usa el buscador o un filtro para encontrar los que quieras</span>';
+    var data = sample;
+    // Renderizar directamente y salir
+    var grid = document.getElementById('grid');
+    grid.innerHTML = data.map(function(v, i){
+      var bl      = BL[v.b] || BL[Object.keys(BL)[0]];
+      var bs      = 'background:' + bl.bg + ';color:' + bl.c + ';border:1px solid ' + bl.b;
+      var topBadge    = (v.flags && v.flags.top) ? '<span class="top-badge">Top 20</span>' : '';
+      var customBadge = v.custom ? '<span class="custom-badge">Personalizado</span>' : '';
+      var isMast  = mastered.has(v.n);
+      var knowBtn = '<button class="know-btn" data-n="' + v.n + '">'
+        + '<span class="chk-icon">' + (isMast ? '✓' : '') + '</span>'
+        + '<span class="tt">' + (isMast ? 'Quitar marca' : 'Ya lo sé') + '</span>'
+        + '</button>';
+      var btnsRow = v.custom
+        ? '<div style="display:flex;flex-direction:row;gap:5px;align-items:center;justify-content:flex-end;">'
+          + '<button class="know-btn" onclick="event.stopPropagation();openAddVerb(' + v.n + ')" style="font-size:13px" title="Editar">✏️</button>'
+          + '<button class="know-btn" onclick="event.stopPropagation();deleteCustomVerb(' + v.n + ')" style="font-size:13px;border-color:rgba(181,58,58,.3);color:#b53a3a" title="Eliminar">🗑</button>'
+          + knowBtn + '</div>'
+        : knowBtn;
+      var tensesHtml = TENSES.map(function(t){
+        var cls = 'tb' + (t.hl ? ' hl' : '') + (t.imp ? ' imp' : '');
+        return '<div class="' + cls + '"><div class="tl">' + t.label + '</div>'
+             + '<div class="tf">' + renderForms(v[t.key], q) + '</div></div>';
+      }).join('');
+      var warnHtml = v.warn ? '<div class="cw">' + esc(v.warn) + '</div>' : '';
+      return '<div class="card' + (isMast ? ' mastered' : '') + (v.custom ? ' custom-verb' : '') + '" data-n="' + v.n + '" style="animation-delay:' + Math.min(i*20,220) + 'ms">'
+        + '<div class="ch"><div class="ch-left">'
+          + '<div class="cv">' + esc(v.v) + topBadge + customBadge + '</div>'
+          + '<div class="ct">' + esc(v.t) + '</div>'
+          + '<div class="cn">#' + v.n + '</div>'
+        + '</div><div class="ch-right">'
+          + '<span class="cbadge" style="' + bs + '">' + esc(v.b) + '</span>'
+          + btnsRow
+        + '</div></div>'
+        + '<div class="tw">' + tensesHtml + '</div>'
+        + warnHtml + '</div>';
+    }).join('');
+    if(studyMode) updateProgress();
+    return;
+  }
+  // ── Modo normal: búsqueda / filtros activos ─────────────────────────────────
+  var qNorm = q ? stripAccents(q) : '';
   var data = V.filter(function(v){
     if(activeBloc !== 'Todos' && v.b !== activeBloc) return false;
     for(var flag of activeFlags){ if(!v.flags || !v.flags[flag]) return false; }
     if(knowFilter === 'know'   && !mastered.has(v.n)) return false;
     if(knowFilter === 'noknow' &&  mastered.has(v.n)) return false;
-    if(!q) return true;
-    var hay = [v.v, v.t]
-      .concat(v.pr.map(function(r){return r[1];}))
-      .concat(v.im.map(function(r){return r[1];}))
-      .concat(v.pc.map(function(r){return r[1];}))
-      .concat(v.fs.map(function(r){return r[1];}))
-      .concat(v.co.map(function(r){return r[1];}))
-      .concat(v.sb.map(function(r){return r[1];}))
-      .concat(v.ip.map(function(r){return r[1];}))
-      .join(' ').toLowerCase();
-    return hay.indexOf(q.toLowerCase()) !== -1;
+    if(!qNorm) return true;
+    if(!v._hay) indexVerb(v);
+    return v._hay.indexOf(qNorm) !== -1;
   });
 
   if(sortMode === 'az'){
@@ -3633,11 +3713,15 @@ function render(){
 }
 
 // ── Event wiring ───────────────────────────────────────────────────────────
+var _searchDebounce = null;
 document.getElementById('search').addEventListener('input', function(){
   searchTerm = this.value.trim();
   document.getElementById('clr-btn').className = 'clr-btn' + (searchTerm ? ' vis' : '');
-  saveUIState();
-  render();
+  if(_searchDebounce) clearTimeout(_searchDebounce);
+  _searchDebounce = setTimeout(function(){
+    saveUIState();
+    render();
+  }, 90);
 });
 
 document.getElementById('clr-btn').addEventListener('click', function(){
@@ -3942,6 +4026,7 @@ document.getElementById('restoreVerbsConfirm').addEventListener('click', functio
   // Replace V in place (preserve reference)
   V.length = 0;
   newV.forEach(function(verb){ V.push(verb); });
+  buildSearchIndex();
 
   // Update customVerbs and persist
   customVerbs = newCustom;
@@ -4130,6 +4215,7 @@ document.getElementById('importVerbsConfirm').addEventListener('click', function
     maxN++;
     var verb = buildCustomVerb(item, maxN);
     verb.custom = true; // anything added via Importar verbos is personalized by definition
+    indexVerb(verb);
     customVerbs.push(verb);
     V.push(verb);
     added++;
