@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammaire · Le Subjonctif</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ede9df;
+  --card: #faf7f1;
+  --border: #c4bead;
+  --text: #1a1814;
+  --text2: #44413a;
+  --text3: #706c64;
+  --accent: #7a5a0a;
+  --accent-light: #f0e0c0;
+  --accent-mid: #b89050;
+  --warn-bg: #fdf0cc;
+  --shadow: 0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm: 0 1px 6px rgba(0,0,0,0.08);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --green: #1a6028;
+  --green-bg: #e4f2e8;
+  --red: #a81e2e;
+  --red-bg: #fce6e8;
+  --blue: #163494;
+  --blue-bg: #e6ebf8;
+  --purple: #6a1a8a;
+  --purple-bg: #f2e6f8;
+  --fs: 15px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: var(--fs); }
+
+/* ── HEADER ── */
+.site-header { background: var(--card); border-bottom: 2px solid var(--border); padding: 20px 20px 14px; }
+.header-top { display: flex; align-items: baseline; gap: 10px; margin-bottom: 3px; flex-wrap: wrap; }
+.site-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 5vw, 2.1rem); font-weight: 700; color: var(--text); }
+.header-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent-mid); border-radius: 20px; padding: 3px 10px; }
+.subtitle { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
+.stats-row { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+.stat-pill { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 4px 11px; font-size: 0.76rem; font-weight: 500; color: var(--text2); }
+.stat-pill span { font-weight: 700; color: var(--text); }
+.fs-wrap { display: flex; align-items: center; gap: 7px; margin-left: auto; }
+.fs-label { font-size: 0.68rem; font-weight: 700; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+.fs-slider { width: 76px; accent-color: var(--accent); cursor: pointer; }
+.fs-sz { color: var(--text3); font-weight: 700; }
+
+/* ── SECTION NAV (sticky pill bar) ── */
+.section-nav {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--card);
+  border-bottom: 2px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 0;
+}
+.section-nav-inner {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 0;
+}
+.section-nav-inner::-webkit-scrollbar { display: none; }
+.snav-btn {
+  flex-shrink: 0;
+  padding: 11px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem; font-weight: 600;
+  color: var(--text3); background: transparent;
+  border: none; border-bottom: 3px solid transparent;
+  cursor: pointer; transition: all 0.15s;
+  white-space: nowrap;
+}
+.snav-btn:hover { color: var(--text2); }
+.snav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+/* tab mode for Referencia / Ejercicios toggle */
+.mode-toggle {
+  display: flex;
+  border-bottom: 2px solid var(--border);
+  background: var(--card);
+}
+.mode-btn {
+  flex: 1; padding: 12px 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.84rem; font-weight: 600;
+  color: var(--text3); background: transparent;
+  border: none; border-bottom: 3px solid transparent;
+  cursor: pointer; transition: all 0.15s; margin-bottom: -2px;
+}
+.mode-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── LAYOUT ── */
+.main-layout { max-width: 860px; margin: 0 auto; padding: 16px 16px 40px; }
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── SECTION BLOCK ── */
+.sec-block { display: none; }
+.sec-block.active { display: block; }
+
+/* ── CARDS ── */
+.gram-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden; }
+.gram-card-body { padding: 18px; }
+
+/* ── BOXES ── */
+.def-box { background: var(--warn-bg); border-left: 4px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 15px; margin-bottom: 14px; line-height: 1.65; color: var(--text); }
+.def-box strong { color: var(--accent); font-weight: 700; }
+.warn-box { background: #fff4e0; border: 1px solid #c8900a; border-radius: var(--radius-sm); padding: 10px 13px; margin: 10px 0; font-size: 0.9em; display: flex; gap: 8px; align-items: flex-start; }
+.warn-icon { flex-shrink: 0; margin-top: 1px; }
+.warn-text { color: var(--text2); line-height: 1.55; }
+.warn-text strong { color: #7a4400; font-weight: 700; }
+.example-block { background: var(--blue-bg); border-left: 4px solid var(--blue); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 8px 0; }
+.ex-fr { font-weight: 600; margin-bottom: 3px; color: var(--text); }
+.ex-fr em { color: var(--blue); font-style: normal; font-weight: 700; }
+.ex-es { color: var(--text2); font-size: 0.88em; font-style: italic; }
+.note-box { background: var(--purple-bg); border-left: 4px solid var(--purple); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 10px 0; font-size: 0.9em; color: var(--text2); line-height: 1.55; }
+.note-box strong { color: var(--purple); font-weight: 700; }
+
+/* ── TABLES ── */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.gram-table { width: 100%; border-collapse: collapse; min-width: 320px; }
+.gram-table th { background: var(--bg); border-bottom: 2px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; text-align: left; font-size: 0.72em; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+.gram-table td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; vertical-align: top; color: var(--text); }
+.gram-table tr:last-child td { border-bottom: none; }
+.gram-table tr:nth-child(even) td { background: #f4f0e6; }
+.gram-table td:last-child, .gram-table th:last-child { border-right: none; }
+.hl { color: var(--accent); font-weight: 700; }
+.dim { color: var(--text3); }
+.ok-cell { color: var(--green); font-weight: 700; }
+.err-cell { color: var(--red); font-weight: 600; font-style: italic; }
+.warn-cell { color: var(--accent); font-weight: 600; }
+
+/* ── CHIP BAR ── */
+.chip-bar { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.chip {
+  border: 1.5px solid var(--border); border-radius: 20px;
+  padding: 6px 14px; font-family: 'DM Sans', sans-serif;
+  font-size: 0.82em; font-weight: 600;
+  cursor: pointer; background: var(--bg); color: var(--text2);
+  transition: all 0.15s; white-space: nowrap;
+}
+.chip:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+.chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.chip-panel { display: none; }
+.chip-panel.active { display: block; }
+
+/* ── IRREG TABLE ── */
+.irreg-table { width: 100%; border-collapse: collapse; }
+.irreg-table td { padding: 7px 12px; border-bottom: 1px solid var(--border); font-size: 0.9em; }
+.irreg-table tr:last-child td { border-bottom: none; }
+.irreg-table .ipron { color: var(--text3); font-weight: 500; width: 42%; }
+.irreg-table .iform { color: var(--accent); font-weight: 700; }
+.irreg-note-tag { display: inline-block; margin-top: 10px; font-size: 0.74em; background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-mid); border-radius: 12px; padding: 2px 10px; font-weight: 700; }
+.irreg-type-tag { display: inline-block; font-size: 0.7em; background: var(--blue-bg); color: var(--blue); border: 1px solid #90a8e0; border-radius: 12px; padding: 2px 9px; font-weight: 700; margin-top: 6px; margin-left: 6px; }
+
+/* ── TRIGGER ITEMS (no cursiva) ── */
+.trigger-search-wrap { position: relative; margin-bottom: 10px; }
+.trigger-search { width: 100%; border: 1.5px solid var(--border); border-radius: 20px; padding: 8px 14px 8px 34px; font-family: 'DM Sans', sans-serif; font-size: 0.88em; background: var(--card); color: var(--text); outline: none; }
+.trigger-search:focus { border-color: var(--accent); }
+.search-ico { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text3); pointer-events: none; }
+.trigger-count { font-size: 0.74em; color: var(--text3); margin-bottom: 10px; font-weight: 500; }
+.trigger-panel-wrap { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+.trigger-panel-title { font-size: 0.72em; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.trigger-item { display: flex; align-items: baseline; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--border); }
+.trigger-item:last-child { border-bottom: none; }
+.t-expr { font-weight: 700; color: var(--text); font-size: 0.95em; }
+.t-trad { font-size: 0.82em; color: var(--text2); }
+.t-cat-tag { margin-left: auto; font-size: 0.72em; color: var(--text3); font-weight: 500; white-space: nowrap; }
+
+/* ── TRAP CARDS ── */
+.trap-cards { display: flex; flex-direction: column; gap: 10px; }
+.trap-card { border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.trap-card-header { padding: 11px 14px; background: var(--bg); }
+.trap-name { font-weight: 700; font-size: 0.9em; color: var(--text); margin-bottom: 7px; }
+.trap-vs { display: flex; gap: 8px; flex-wrap: wrap; }
+.trap-wrong { background: var(--red-bg); border: 1.5px solid #d09098; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--red); font-weight: 500; }
+.trap-right { background: var(--green-bg); border: 1.5px solid #80b890; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--green); font-weight: 500; }
+.trap-expl { padding: 10px 14px 12px; font-size: 0.86em; color: var(--text2); line-height: 1.6; border-top: 1px solid var(--border); background: var(--card); }
+.trap-expl strong { color: var(--text); font-weight: 700; }
+
+/* ── SUBJ VS IND: MODE CHIPS ── */
+.mode-section { margin-bottom: 12px; }
+.mode-section-title { font-size: 0.74em; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
+
+/* ── EXERCISE CONTROLS ── */
+.exercise-controls { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.exercise-controls h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+.ctrl-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 7px; display: block; }
+.ex-options { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.ex-opt-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.ex-opt-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+.row-btns { display: flex; gap: 7px; margin-bottom: 14px; flex-wrap: wrap; }
+.pill-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.pill-btn:hover:not(.active) { background: var(--border); }
+.pill-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+.pill-btn.diff.active.A2 { background: var(--green); border-color: var(--green); color: #fff; }
+.pill-btn.diff.active.B1 { background: var(--blue); border-color: var(--blue); color: #fff; }
+.pill-btn.diff.active.B2 { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-generate { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; border: none; border-radius: 10px; padding: 13px; font-family: 'DM Sans', sans-serif; font-size: 0.92em; font-weight: 700; cursor: pointer; background: var(--accent); color: white; transition: all 0.18s; margin-top: 4px; }
+.btn-generate:hover:not(:disabled) { filter: brightness(1.1); box-shadow: 0 4px 14px rgba(122,90,10,0.32); }
+.btn-generate:disabled { opacity: 0.5; cursor: not-allowed; }
+.spinner { display: none; animation: spin 0.8s linear infinite; }
+.btn-generate.loading .spinner { display: inline; }
+.btn-generate.loading .btn-icon { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── PROGRESS ── */
+.progress-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 14px; display: none; }
+.progress-wrap.visible { display: block; }
+.progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.progress-label { font-size: 0.78em; color: var(--text3); font-weight: 600; }
+.progress-frac { font-size: 0.92em; font-weight: 700; color: var(--accent); }
+.progress-track { height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.35s ease; }
+.progress-score { display: flex; gap: 14px; margin-top: 9px; font-size: 0.8em; flex-wrap: wrap; align-items: center; }
+.score-item { display: flex; align-items: center; gap: 5px; font-weight: 500; color: var(--text2); }
+.score-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.score-dot.g { background: var(--green); }
+.score-dot.r { background: var(--red); }
+.btn-retry { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 13px; font-family: 'DM Sans', sans-serif; font-size: 0.78em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; margin-left: auto; }
+.btn-retry:hover { background: var(--border); }
+
+/* ── FINAL SCORE ── */
+.final-score-bar { display: none; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
+.final-score-bar.visible { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.final-num { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+.final-label { font-size: 0.74em; color: var(--text3); }
+.final-track { flex: 1; min-width: 80px; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.final-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+.final-msg { font-size: 0.84em; color: var(--text2); width: 100%; font-weight: 500; }
+
+/* ── EXERCISE CARDS ── */
+.exercise-area { display: none; }
+.exercise-area.visible { display: block; }
+.exercise-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 12px; overflow: hidden; }
+.exercise-card-header { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--border); }
+.ex-num { font-weight: 700; color: var(--accent); font-size: 0.88em; }
+.ex-type-badge { font-size: 0.68em; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-mid); border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge { font-size: 0.68em; font-weight: 700; border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge.A2 { background: var(--green-bg); color: var(--green); border: 1px solid #80b890; }
+.ex-diff-badge.B1 { background: var(--blue-bg); color: var(--blue); border: 1px solid #90a8e0; }
+.ex-diff-badge.B2 { background: var(--warn-bg); color: var(--accent); border: 1px solid var(--accent-mid); }
+.ex-status { margin-left: auto; }
+.exercise-body { padding: 16px 18px; }
+.exercise-prompt { line-height: 1.7; margin-bottom: 12px; color: var(--text); }
+.exercise-prompt em { color: var(--accent); font-style: italic; font-weight: 600; }
+.fill-input { border: none; border-bottom: 2px solid var(--accent-mid); background: var(--accent-light); padding: 2px 8px; border-radius: 4px 4px 0 0; font-family: 'DM Sans', sans-serif; font-size: 1em; color: var(--text); min-width: 110px; outline: none; transition: border-color 0.15s; }
+.fill-input:focus { border-bottom-color: var(--accent); }
+.fill-input.ok { background: var(--green-bg); border-bottom-color: var(--green); }
+.fill-input.err { background: var(--red-bg); border-bottom-color: var(--red); }
+.choices-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 10px; }
+.choice-btn { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.88em; font-weight: 500; cursor: pointer; text-align: left; background: var(--bg); color: var(--text); transition: all 0.15s; }
+.choice-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-light); }
+.choice-btn.ok { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 700; }
+.choice-btn.err { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+.choice-btn:disabled { cursor: default; }
+.transform-input { width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.9em; background: var(--bg); color: var(--text); outline: none; margin-bottom: 8px; transition: border-color 0.15s; }
+.transform-input:focus { border-color: var(--accent); }
+.transform-input.ok { background: var(--green-bg); border-color: var(--green); }
+.transform-input.err { background: var(--red-bg); border-color: var(--red); }
+.btn-check { border: 1.5px solid var(--accent); border-radius: 20px; padding: 7px 18px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 700; cursor: pointer; background: transparent; color: var(--accent); transition: all 0.15s; }
+.btn-check:hover:not(:disabled) { background: var(--accent); color: white; }
+.btn-check:disabled { opacity: 0.35; cursor: default; }
+.ex-feedback { display: none; border-radius: var(--radius-sm); padding: 11px 14px; line-height: 1.55; margin-top: 10px; font-size: 0.9em; }
+.ex-feedback.visible { display: block; }
+.ex-feedback.ok { background: var(--green-bg); border: 1.5px solid #80b890; color: #0e4818; }
+.ex-feedback.err { background: var(--red-bg); border: 1.5px solid #c08090; color: #700018; }
+.fb-rule-link { display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 0.84em; font-weight: 700; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── SKELETON ── */
+.skeleton-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 12px; }
+.skel { background: linear-gradient(90deg,var(--border) 25%,#e6e0d4 50%,var(--border) 75%); background-size: 200% 100%; animation: skel 1.4s infinite; border-radius: 4px; height: 13px; margin-bottom: 9px; }
+@keyframes skel { to { background-position: -200% 0; } }
+.state-msg { text-align: center; padding: 40px 20px; color: var(--text3); }
+.state-icon { font-size: 2rem; margin-bottom: 10px; }
+.state-msg p { max-width: 260px; margin: 0 auto; line-height: 1.6; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-top">
+    <h1>Le Subjonctif</h1>
+    <span class="header-tag">Grammaire</span>
+  </div>
+  <div class="subtitle">Gramática francesa · DELF B1–B2</div>
+  <div class="stats-row">
+    <div class="stat-pill"><span>7</span> bloques</div>
+    <div class="stat-pill"><span>28</span> expresiones</div>
+    <div class="stat-pill"><span>14</span> irregulares</div>
+    <div class="stat-pill" id="score-pill" style="display:none">Resultado: <span id="score-pill-val">—</span></div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+    </div>
+  </div>
+</header>
+
+<!-- MODE TOGGLE (Referencia / Ejercicios) -->
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referencia</button>
+</div>
+
+<!-- SECTION NAV (only shown in ref mode) -->
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-def',this)">1. Concepto</button>
+    <button class="snav-btn" onclick="showSection('s-forma',this)">2. Formación</button>
+    <button class="snav-btn" onclick="showSection('s-irreg',this)">3. Irregulares</button>
+    <button class="snav-btn" onclick="showSection('s-passe',this)">4. Passé</button>
+    <button class="snav-btn" onclick="showSection('s-usos',this)">5. Desencadenantes</button>
+    <button class="snav-btn" onclick="showSection('s-vsind',this)">6. Subj. vs. Ind.</button>
+    <button class="snav-btn" onclick="showSection('s-trampas',this)">7. Trampas</button>
+  </div>
+</div>
+
+<div class="main-layout">
+
+  <!-- ══════════ REFERENCIA ══════════ -->
+  <div class="panel active" id="panel-ref">
+
+    <!-- 1. CONCEPTO -->
+    <div class="sec-block active" id="s-def">
+      <div class="gram-card">
+        <div class="gram-card-body">
+          <div class="def-box">
+            El subjonctif es un <strong>modo verbal</strong> (no un tiempo) que expresa que la acción está <strong>filtrada por la subjetividad</strong> del hablante: deseo, duda, emoción u obligación. Aparece casi siempre en la subordinada introducida por <strong>que</strong>.
+          </div>
+          <div class="example-block">
+            <div class="ex-fr">Je veux que tu <em>viennes</em>. → subjonctif (deseo subjetivo)</div>
+            <div class="ex-es">Quiero que vengas.</div>
+          </div>
+          <div class="example-block">
+            <div class="ex-fr">Je sais que tu <em>viens</em>. → indicatif (hecho objetivo)</div>
+            <div class="ex-es">Sé que vienes.</div>
+          </div>
+          <div class="warn-box">
+            <span class="warn-icon">💡</span>
+            <div class="warn-text"><strong>Regla de oro:</strong> dos sujetos distintos → <em>que + subjonctif</em>. Mismo sujeto → infinitivo: <em>Je veux partir</em> (nunca: <em>que je parte</em>).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. FORMACIÓN -->
+    <div class="sec-block" id="s-forma">
+      <div class="gram-card">
+        <div class="gram-card-body">
+          <div class="def-box">
+            <strong>Base:</strong> raíz de <em>ils/elles</em> (présent indicatif) + terminaciones: <strong>-e · -es · -e · -ions · -iez · -ent</strong>
+          </div>
+          <div class="table-wrap">
+            <table class="gram-table">
+              <thead>
+                <tr>
+                  <th>Pronombre</th>
+                  <th>PARLER → <span class="hl">parl-</span></th>
+                  <th>FINIR → <span class="hl">finiss-</span></th>
+                  <th>PARTIR → <span class="hl">part-</span></th>
+                  <th>Terminación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>que je</strong></td><td><span class="dim">parl</span><span class="hl">e</span></td><td><span class="dim">finiss</span><span class="hl">e</span></td><td><span class="dim">part</span><span class="hl">e</span></td><td class="hl">-e</td></tr>
+                <tr><td><strong>que tu</strong></td><td><span class="dim">parl</span><span class="hl">es</span></td><td><span class="dim">finiss</span><span class="hl">es</span></td><td><span class="dim">part</span><span class="hl">es</span></td><td class="hl">-es</td></tr>
+                <tr><td><strong>qu'il/elle</strong></td><td><span class="dim">parl</span><span class="hl">e</span></td><td><span class="dim">finiss</span><span class="hl">e</span></td><td><span class="dim">part</span><span class="hl">e</span></td><td class="hl">-e</td></tr>
+                <tr><td><strong>que nous</strong></td><td><span class="dim">parl</span><span class="hl">ions</span></td><td><span class="dim">finiss</span><span class="hl">ions</span></td><td><span class="dim">part</span><span class="hl">ions</span></td><td class="hl">-ions</td></tr>
+                <tr><td><strong>que vous</strong></td><td><span class="dim">parl</span><span class="hl">iez</span></td><td><span class="dim">finiss</span><span class="hl">iez</span></td><td><span class="dim">part</span><span class="hl">iez</span></td><td class="hl">-iez</td></tr>
+                <tr><td><strong>qu'ils/elles</strong></td><td><span class="dim">parl</span><span class="hl">ent</span></td><td><span class="dim">finiss</span><span class="hl">ent</span></td><td><span class="dim">part</span><span class="hl">ent</span></td><td class="hl">-ent</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="warn-box">
+            <span class="warn-icon">⚠️</span>
+            <div class="warn-text"><strong>nous/vous:</strong> idénticas al imparfait. Solo el contexto (presencia del <em>que</em>) las distingue: <em>que nous parlions</em> (subj.) vs. <em>nous parlions</em> (imparfait).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. IRREGULARES -->
+    <div class="sec-block" id="s-irreg">
+      <div class="gram-card">
+        <div class="gram-card-body">
+          <div class="def-box">
+            Estos verbos tienen <strong>raíz propia</strong> que no sigue la regla general. Pulsa cada uno para ver su conjugación completa. Los marcados en azul tienen <strong>doble raíz</strong> (nous/vous diferente).
+          </div>
+          <div class="chip-bar" id="irreg-chips"></div>
+          <div id="irreg-panels"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. SUBJONCTIF PASSÉ -->
+    <div class="sec-block" id="s-passe">
+      <div class="gram-card">
+        <div class="gram-card-body">
+          <div class="def-box">
+            El subjonctif passé expresa una acción <strong>anterior</strong> a la del verbo principal. Se forma con <strong>avoir o être en subjonctif présent + participio pasado</strong>.
+          </div>
+
+          <div style="margin-bottom:14px">
+            <div class="mode-section-title" style="font-size:0.74em;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">Formación</div>
+            <div class="table-wrap">
+              <table class="gram-table">
+                <thead><tr><th>Auxiliar</th><th>Uso</th><th>Ejemplo</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="hl">avoir</span> (subj.) + p.p.</td><td>Mayoría de verbos</td><td>que j'<span class="hl">aie parlé</span>, qu'il <span class="hl">ait fini</span></td></tr>
+                  <tr><td><span class="hl">être</span> (subj.) + p.p.</td><td>Verbos de movimiento + pronominales</td><td>qu'il <span class="hl">soit parti</span>, qu'elle <span class="hl">se soit levée</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="chip-bar" id="passe-chips">
+            <button class="chip active" onclick="selectChip('passe',0)">avoir + p.p.</button>
+            <button class="chip" onclick="selectChip('passe',1)">être + p.p.</button>
+          </div>
+          <div id="passe-panels">
+            <div class="chip-panel active" id="passe-p-0">
+              <div class="table-wrap">
+                <table class="gram-table">
+                  <thead><tr><th>Pronombre</th><th>PARLER (subj. passé)</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>que j'</strong></td><td>aie <span class="hl">parlé</span></td></tr>
+                    <tr><td><strong>que tu</strong></td><td>aies <span class="hl">parlé</span></td></tr>
+                    <tr><td><strong>qu'il/elle</strong></td><td>ait <span class="hl">parlé</span></td></tr>
+                    <tr><td><strong>que nous</strong></td><td>ayons <span class="hl">parlé</span></td></tr>
+                    <tr><td><strong>que vous</strong></td><td>ayez <span class="hl">parlé</span></td></tr>
+                    <tr><td><strong>qu'ils/elles</strong></td><td>aient <span class="hl">parlé</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="chip-panel" id="passe-p-1">
+              <div class="table-wrap">
+                <table class="gram-table">
+                  <thead><tr><th>Pronombre</th><th>PARTIR (subj. passé)</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>que je</strong></td><td>sois <span class="hl">parti(e)</span></td></tr>
+                    <tr><td><strong>que tu</strong></td><td>sois <span class="hl">parti(e)</span></td></tr>
+                    <tr><td><strong>qu'il/elle</strong></td><td>soit <span class="hl">parti(e)</span></td></tr>
+                    <tr><td><strong>que nous</strong></td><td>soyons <span class="hl">parti(e)s</span></td></tr>
+                    <tr><td><strong>que vous</strong></td><td>soyez <span class="hl">parti(e)(s)</span></td></tr>
+                    <tr><td><strong>qu'ils/elles</strong></td><td>soient <span class="hl">parti(e)s</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:14px">
+            <div class="mode-section-title" style="font-size:0.74em;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">Cuándo usarlo</div>
+            <div class="chip-bar" id="passe-uso-chips">
+              <button class="chip active" onclick="selectChip('passeuso',0)">Anterioridad</button>
+              <button class="chip" onclick="selectChip('passeuso',1)">Présent vs. Passé</button>
+            </div>
+            <div id="passeuso-panels">
+              <div class="chip-panel active" id="passeuso-p-0">
+                <div class="example-block">
+                  <div class="ex-fr">Je suis content qu'il <em>soit venu</em>.</div>
+                  <div class="ex-es">Estoy contento de que haya venido. (acción anterior)</div>
+                </div>
+                <div class="example-block">
+                  <div class="ex-fr">Je suis content qu'il <em>vienne</em>.</div>
+                  <div class="ex-es">Estoy contento de que venga. (acción simultánea o futura)</div>
+                </div>
+                <div class="note-box"><strong>Clave:</strong> si la acción subordinada ocurre <strong>antes</strong> que la principal → subjonctif passé. Si es simultánea o posterior → subjonctif présent.</div>
+              </div>
+              <div class="chip-panel" id="passeuso-p-1">
+                <div class="table-wrap">
+                  <table class="gram-table">
+                    <thead><tr><th>Situación</th><th>Tiempo</th><th>Ejemplo</th></tr></thead>
+                    <tbody>
+                      <tr><td>Acción simultánea / futura</td><td class="hl">Subj. présent</td><td>Je veux qu'il <span class="hl">parte</span>.</td></tr>
+                      <tr><td>Acción ya ocurrida</td><td class="hl">Subj. passé</td><td>Je regrette qu'il <span class="hl">soit parti</span>.</td></tr>
+                      <tr><td>Duda sobre el pasado</td><td class="hl">Subj. passé</td><td>Je ne crois pas qu'il <span class="hl">ait menti</span>.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. USOS Y DESENCADENANTES -->
+    <div class="sec-block" id="s-usos">
+      <div class="gram-card">
+        <div class="gram-card-body">
+          <div class="def-box">
+            El subjonctif es <strong>obligatorio</strong> tras estos verbos, expresiones y conjunciones. Pulsa una categoría o usa el buscador.
+          </div>
+          <div class="trigger-search-wrap">
+            <span class="search-ico">🔍</span>
+            <input class="trigger-search" type="text" id="trigger-search" placeholder="Buscar expresión…" oninput="filterTriggers(this.value)" autocomplete="off">
+          </div>
+          <div class="trigger-count" id="trigger-count"></div>
+          <div id="trigger-chips-wrap">
+            <div class="chip-bar" id="trigger-chips"></div>
+            <div id="trigger-panels"></div>
+          </div>
+          <div id="trigger-search-results" style="display:none"></div>
+          <div class="warn-box" style="margin-top:12px">
+            <span class="warn-icon">💡</span>
+            <div class="warn-text"><strong>après que → indicatif</strong>, NO subjonctif. Error frecuente por analogía con <em>avant que</em>.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. SUBJONCTIF VS. INDICATIF -->
+    <div class="sec-block" id="s-vsind">
+      <div class="gram-card">
+        <div class="gram-card-body">
+          <div class="def-box">
+            Algunos verbos cambian de modo según si la frase es <strong>afirmativa, negativa o interrogativa</strong>. Esta tabla recoge los más importantes y preguntables en DELF.
+          </div>
+
+          <div class="chip-bar" id="vsind-chips">
+            <button class="chip active" onclick="selectChip('vsind',0)">Opinión / creencia</button>
+            <button class="chip" onclick="selectChip('vsind',1)">Certeza / probabilidad</button>
+            <button class="chip" onclick="selectChip('vsind',2)">Percepción / declaración</button>
+            <button class="chip" onclick="selectChip('vsind',3)">Esp. / voluntad especial</button>
+          </div>
+          <div id="vsind-panels">
+
+            <!-- Opinión -->
+            <div class="chip-panel active" id="vsind-p-0">
+              <div class="table-wrap">
+                <table class="gram-table">
+                  <thead><tr><th>Verbo</th><th>Afirmativo →</th><th>Negativo / Interrogativo →</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>croire que</strong></td><td class="ok-cell">indicatif</td><td class="warn-cell">subjonctif</td></tr>
+                    <tr><td><strong>penser que</strong></td><td class="ok-cell">indicatif</td><td class="warn-cell">subjonctif</td></tr>
+                    <tr><td><strong>trouver que</strong></td><td class="ok-cell">indicatif</td><td class="warn-cell">subjonctif</td></tr>
+                    <tr><td><strong>estimer que</strong></td><td class="ok-cell">indicatif</td><td class="warn-cell">subjonctif</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div style="font-size:0.7em;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin:12px 0 6px">Ejemplos</div>
+              <div class="example-block">
+                <div class="ex-fr">Je pense qu'il <em>vient</em> ce soir. <span style="color:var(--green);font-size:0.85em">✓ afirmativo → indicatif</span></div>
+                <div class="ex-es">Pienso que viene esta noche.</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">Je ne pense pas qu'il <em>vienne</em> ce soir. <span style="color:var(--accent);font-size:0.85em">✓ negativo → subjonctif</span></div>
+                <div class="ex-es">No pienso que venga esta noche.</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">Penses-tu qu'il <em>vienne</em> ? <span style="color:var(--accent);font-size:0.85em">✓ interrogativo → subjonctif</span></div>
+                <div class="ex-es">¿Piensas que venga?</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">Je crois qu'elle <em>a</em> raison. <span style="color:var(--green);font-size:0.85em">✓ afirmativo → indicatif</span></div>
+                <div class="ex-es">Creo que tiene razón.</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">Je ne crois pas qu'elle <em>ait</em> raison. <span style="color:var(--accent);font-size:0.85em">✓ negativo → subjonctif</span></div>
+                <div class="ex-es">No creo que tenga razón.</div>
+              </div>
+            </div>
+
+            <!-- Certeza -->
+            <div class="chip-panel" id="vsind-p-1">
+              <div class="table-wrap">
+                <table class="gram-table">
+                  <thead><tr><th>Expresión</th><th>Afirmativo →</th><th>Negativo / Interrogativo →</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>il est certain que</strong></td><td class="ok-cell">indicatif</td><td class="warn-cell">subjonctif</td></tr>
+                    <tr><td><strong>il est sûr que</strong></td><td class="ok-cell">indicatif</td><td class="warn-cell">subjonctif</td></tr>
+                    <tr><td><strong>il est évident que</strong></td><td class="ok-cell">indicatif</td><td class="warn-cell">subjonctif</td></tr>
+                    <tr><td><strong>il est probable que</strong></td><td class="ok-cell">indicatif</td><td class="warn-cell">subjonctif</td></tr>
+                    <tr><td><strong>il est possible que</strong></td><td class="warn-cell">subjonctif</td><td class="warn-cell">subjonctif</td></tr>
+                    <tr><td><strong>il semble que</strong></td><td class="warn-cell">subjonctif</td><td class="warn-cell">subjonctif</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="note-box"><strong>Atención:</strong> <em>il est possible que</em> e <em>il semble que</em> siempre rigen subjonctif, sin importar la polaridad.</div>
+              <div style="font-size:0.7em;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin:12px 0 6px">Ejemplos</div>
+              <div class="example-block">
+                <div class="ex-fr">Il est certain qu'il <em>viendra</em>. <span style="color:var(--green);font-size:0.85em">✓ afirmativo → indicatif</span></div>
+                <div class="ex-es">Es seguro que vendrá.</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">Il n'est pas certain qu'il <em>vienne</em>. <span style="color:var(--accent);font-size:0.85em">✓ negativo → subjonctif</span></div>
+                <div class="ex-es">No es seguro que venga.</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">Il est probable qu'elle <em>a</em> oublié. <span style="color:var(--green);font-size:0.85em">✓ afirmativo → indicatif</span></div>
+                <div class="ex-es">Es probable que haya olvidado.</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">Il est possible qu'il <em>fasse</em> grève demain. <span style="color:var(--accent);font-size:0.85em">✓ siempre subjonctif</span></div>
+                <div class="ex-es">Es posible que haya huelga mañana.</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">Il semble qu'elle <em>soit</em> malade. <span style="color:var(--accent);font-size:0.85em">✓ siempre subjonctif</span></div>
+                <div class="ex-es">Parece que está enferma.</div>
+              </div>
+            </div>
+
+            <!-- Percepción -->
+            <div class="chip-panel" id="vsind-p-2">
+              <div class="table-wrap">
+                <table class="gram-table">
+                  <thead><tr><th>Verbo</th><th>Afirmativo →</th><th>Negativo →</th><th>Nota</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>savoir que</strong></td><td class="ok-cell">indicatif</td><td class="warn-cell">subjonctif</td><td class="dim">–</td></tr>
+                    <tr><td><strong>voir que</strong></td><td class="ok-cell">indicatif</td><td class="warn-cell">subjonctif</td><td class="dim">–</td></tr>
+                    <tr><td><strong>entendre que</strong></td><td class="ok-cell">indicatif</td><td class="warn-cell">subjonctif</td><td class="dim">–</td></tr>
+                    <tr><td><strong>dire que</strong></td><td class="ok-cell">indicatif</td><td class="warn-cell">subjonctif</td><td class="dim">Solo negativo de voluntad</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div style="font-size:0.7em;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin:12px 0 6px">Ejemplos</div>
+              <div class="example-block">
+                <div class="ex-fr">Je sais qu'il <em>est</em> là. <span style="color:var(--green);font-size:0.85em">✓ afirmativo → indicatif</span></div>
+                <div class="ex-es">Sé que está aquí.</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">Je ne sais pas s'il <em>soit</em> là. → Je ne sais pas qu'il <em>soit</em> là. <span style="color:var(--accent);font-size:0.85em">✓ negativo → subjonctif</span></div>
+                <div class="ex-es">No sé si está aquí.</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">Je vois qu'il <em>comprend</em>. <span style="color:var(--green);font-size:0.85em">✓ afirmativo → indicatif</span></div>
+                <div class="ex-es">Veo que entiende.</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">Je ne vois pas qu'il <em>comprenne</em>. <span style="color:var(--accent);font-size:0.85em">✓ negativo → subjonctif</span></div>
+                <div class="ex-es">No veo que entienda.</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">Il dit qu'elle <em>arrive</em> demain. <span style="color:var(--green);font-size:0.85em">✓ declarativo → indicatif</span></div>
+                <div class="ex-es">Dice que llega mañana.</div>
+              </div>
+            </div>
+
+            <!-- Esp. especial -->
+            <div class="chip-panel" id="vsind-p-3">
+              <div class="table-wrap">
+                <table class="gram-table">
+                  <thead><tr><th>Verbo</th><th>Modo</th><th>Razón</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>espérer que</strong></td><td class="ok-cell">indicatif (futuro)</td><td>Siempre indicatif — excepción total</td></tr>
+                    <tr><td><strong>souhaiter que</strong></td><td class="warn-cell">subjonctif</td><td>Deseo → subjonctif siempre</td></tr>
+                    <tr><td><strong>vouloir que</strong></td><td class="warn-cell">subjonctif</td><td>Voluntad → subjonctif siempre</td></tr>
+                    <tr><td><strong>aimer que</strong></td><td class="warn-cell">subjonctif</td><td>Sentimiento → subjonctif siempre</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="warn-box">
+                <span class="warn-icon">⚠️</span>
+                <div class="warn-text"><strong>espérer</strong> es la trampa más frecuente: por analogía con <em>souhaiter</em>, los hispanohablantes ponen subjonctif, pero rige <strong>indicatif futuro</strong>: <em>J'espère qu'il viendra</em> ✓</div>
+              </div>
+              <div style="font-size:0.7em;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin:12px 0 6px">Ejemplos</div>
+              <div class="example-block">
+                <div class="ex-fr">J'espère qu'il <em>viendra</em> demain. <span style="color:var(--green);font-size:0.85em">✓ espérer → indicatif futuro</span></div>
+                <div class="ex-es">Espero que venga mañana.</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">Je souhaite qu'il <em>vienne</em> demain. <span style="color:var(--accent);font-size:0.85em">✓ souhaiter → subjonctif</span></div>
+                <div class="ex-es">Deseo que venga mañana.</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">J'espère qu'elle <em>a</em> réussi. <span style="color:var(--green);font-size:0.85em">✓ espérer → indicatif (passé composé)</span></div>
+                <div class="ex-es">Espero que haya aprobado.</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">Je veux qu'il <em>parte</em> maintenant. <span style="color:var(--accent);font-size:0.85em">✓ vouloir → subjonctif</span></div>
+                <div class="ex-es">Quiero que se vaya ahora.</div>
+              </div>
+              <div class="example-block">
+                <div class="ex-fr">J'aime qu'elle <em>soit</em> ponctuelle. <span style="color:var(--accent);font-size:0.85em">✓ aimer → subjonctif</span></div>
+                <div class="ex-es">Me gusta que sea puntual.</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. TRAMPAS -->
+    <div class="sec-block" id="s-trampas">
+      <div class="gram-card">
+        <div class="gram-card-body">
+          <div class="def-box">Los 6 errores más habituales en el DELF para hispanohablantes.</div>
+          <div class="trap-cards" id="trap-cards"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /panel-ref -->
+</div><!-- /main-layout -->
+
+<script>
+/* ══════════ DATA ══════════ */
+const IRREG = [
+  {v:'être',    note:'raíz: so- / soy-',       dual:false, rows:[['que je','sois'],['que tu','sois'],["qu'il/elle",'soit'],['que nous','soyons'],['que vous','soyez'],["qu'ils/elles",'soient']]},
+  {v:'avoir',   note:'raíz: ai- / ay-',         dual:false, rows:[['que je','aie'],['que tu','aies'],["qu'il/elle",'ait'],['que nous','ayons'],['que vous','ayez'],["qu'ils/elles",'aient']]},
+  {v:'aller',   note:'raíz: aill- / all-',      dual:true,  rows:[['que je','aille'],['que tu','ailles'],["qu'il/elle",'aille'],['que nous','allions'],['que vous','alliez'],["qu'ils/elles",'aillent']]},
+  {v:'faire',   note:'raíz: fass-',             dual:false, rows:[['que je','fasse'],['que tu','fasses'],["qu'il/elle",'fasse'],['que nous','fassions'],['que vous','fassiez'],["qu'ils/elles",'fassent']]},
+  {v:'pouvoir', note:'raíz: puiss-',            dual:false, rows:[['que je','puisse'],['que tu','puisses'],["qu'il/elle",'puisse'],['que nous','puissions'],['que vous','puissiez'],["qu'ils/elles",'puissent']]},
+  {v:'savoir',  note:'raíz: sach-',             dual:false, rows:[['que je','sache'],['que tu','saches'],["qu'il/elle",'sache'],['que nous','sachions'],['que vous','sachiez'],["qu'ils/elles",'sachent']]},
+  {v:'vouloir', note:'raíz: veuill- / voul-',   dual:true,  rows:[['que je','veuille'],['que tu','veuilles'],["qu'il/elle",'veuille'],['que nous','voulions'],['que vous','vouliez'],["qu'ils/elles",'veuillent']]},
+  {v:'venir',   note:'raíz: vienn- / ven-',     dual:true,  rows:[['que je','vienne'],['que tu','viennes'],["qu'il/elle",'vienne'],['que nous','venions'],['que vous','veniez'],["qu'ils/elles",'viennent']]},
+  {v:'prendre', note:'raíz: prenn- / pren-',    dual:true,  rows:[['que je','prenne'],['que tu','prennes'],["qu'il/elle",'prenne'],['que nous','prenions'],['que vous','preniez'],["qu'ils/elles",'prennent']]},
+  {v:'croire',  note:'raíz: croi- / croy-',     dual:true,  rows:[['que je','croie'],['que tu','croies'],["qu'il/elle",'croie'],['que nous','croyions'],['que vous','croyiez'],["qu'ils/elles",'croient']]},
+  {v:'boire',   note:'raíz: boiv- / buv-',      dual:true,  rows:[['que je','boive'],['que tu','boives'],["qu'il/elle",'boive'],['que nous','buvions'],['que vous','buviez'],["qu'ils/elles",'boivent']]},
+  {v:'recevoir',note:'raíz: reçoiv- / recev-',  dual:true,  rows:[['que je','reçoive'],['que tu','reçoives'],["qu'il/elle",'reçoive'],['que nous','recevions'],['que vous','receviez'],["qu'ils/elles",'reçoivent']]},
+  {v:'falloir', note:'solo 3ª persona singular', dual:false, rows:[["qu'il",'faille']]},
+  {v:'pleuvoir',note:'solo 3ª persona singular', dual:false, rows:[["qu'il",'pleuve']]},
+];
+
+const TRIGGERS = [
+  {cat:'😍 Deseo / voluntad', id:'deseo', items:[{e:'vouloir que',t:'querer que'},{e:'souhaiter que',t:'desear que'},{e:'désirer que',t:'desear que'},{e:'préférer que',t:'preferir que'},{e:'aimer que',t:'gustar que'}],
+   exs:[
+    {fr:"Je veux que tu <em>viennes</em> avec moi.", es:"Quiero que vengas conmigo."},
+    {fr:"Elle souhaite qu'il <em>réussisse</em> son examen.", es:"Desea que apruebe su examen."},
+    {fr:"Nous préférons qu'il <em>parte</em> plus tôt.", es:"Preferimos que se vaya antes."},
+    {fr:"Il désire que vous <em>soyez</em> présents.", es:"Desea que estéis presentes."},
+    {fr:"J'aime que la maison <em>soit</em> propre.", es:"Me gusta que la casa esté limpia."},
+  ]},
+  {cat:'😢 Emoción',          id:'emocion',items:[{e:'être content(e) que',t:'estar contento de que'},{e:'être triste que',t:'estar triste de que'},{e:'avoir peur que',t:'tener miedo de que'},{e:'regretter que',t:'lamentar que'},{e:'être surpris(e) que',t:'sorprender que'}],
+   exs:[
+    {fr:"Je suis content qu'elle <em>ait</em> réussi.", es:"Estoy contento de que haya aprobado."},
+    {fr:"Il est triste que tu ne <em>puisses</em> pas venir.", es:"Está triste de que no puedas venir."},
+    {fr:"J'ai peur qu'il <em>fasse</em> une erreur.", es:"Tengo miedo de que cometa un error."},
+    {fr:"Elle regrette que nous <em>partions</em> si tôt.", es:"Lamenta que nos vayamos tan pronto."},
+    {fr:"Nous sommes surpris qu'il <em>soit</em> déjà là.", es:"Nos sorprende que ya esté aquí."},
+  ]},
+  {cat:'🚫 Duda / negación',  id:'duda',  items:[{e:'douter que',t:'dudar que'},{e:'ne pas croire que',t:'no creer que'},{e:'ne pas penser que',t:'no pensar que'},{e:"ne pas être sûr(e) que",t:'no estar seguro de que'}],
+   exs:[
+    {fr:"Je doute qu'il <em>vienne</em> à temps.", es:"Dudo que llegue a tiempo."},
+    {fr:"Elle ne croit pas qu'il <em>dise</em> la vérité.", es:"No cree que diga la verdad."},
+    {fr:"Nous ne pensons pas que ce <em>soit</em> possible.", es:"No pensamos que eso sea posible."},
+    {fr:"Je ne suis pas sûr qu'il <em>ait</em> compris.", es:"No estoy seguro de que haya entendido."},
+    {fr:"Crois-tu qu'elle <em>puisse</em> le faire ?", es:"¿Crees que pueda hacerlo?"},
+  ]},
+  {cat:'📋 Obligación',       id:'oblig', items:[{e:'il faut que',t:'es necesario que'},{e:'il est nécessaire que',t:'es necesario que'},{e:'il est important que',t:'es importante que'},{e:'il vaut mieux que',t:'es mejor que'}],
+   exs:[
+    {fr:"Il faut que vous <em>soyez</em> à l'heure.", es:"Es necesario que lleguen a tiempo."},
+    {fr:"Il est nécessaire qu'il <em>prenne</em> ses médicaments.", es:"Es necesario que tome sus medicamentos."},
+    {fr:"Il est important que tu <em>fasses</em> tes devoirs.", es:"Es importante que hagas los deberes."},
+    {fr:"Il vaut mieux qu'elle <em>reste</em> au repos.", es:"Es mejor que ella descanse."},
+    {fr:"Il faut qu'on <em>parte</em> avant la nuit.", es:"Hay que salir antes de que anochezca."},
+  ]},
+  {cat:'⏱ Tiempo',            id:'tiempo',items:[{e:'avant que',t:'antes de que'},{e:"jusqu'à ce que",t:'hasta que'},{e:'en attendant que',t:'mientras espera que'}],
+   exs:[
+    {fr:"Appelle-moi avant qu'il ne <em>parte</em>.", es:"Llámame antes de que se vaya."},
+    {fr:"Attends jusqu'à ce qu'il <em>arrive</em>.", es:"Espera hasta que llegue."},
+    {fr:"Je lis en attendant qu'elle <em>finisse</em>.", es:"Leo mientras espero a que termine."},
+    {fr:"Finissons avant qu'il ne <em>fasse</em> nuit.", es:"Terminemos antes de que anochezca."},
+    {fr:"Elle restera jusqu'à ce que tu <em>sois</em> guéri.", es:"Se quedará hasta que estés curado."},
+  ]},
+  {cat:'🎯 Fin / concesión',  id:'fin',   items:[{e:'pour que',t:'para que'},{e:'afin que',t:'a fin de que'},{e:'bien que',t:'aunque'},{e:'quoique',t:'aunque'},{e:'à moins que',t:'a menos que'},{e:'pourvu que',t:'con tal de que'},{e:'de peur que',t:'por miedo a que'}],
+   exs:[
+    {fr:"Je t'explique pour que tu <em>comprennes</em>.", es:"Te explico para que entiendas."},
+    {fr:"Bien qu'il <em>fasse</em> froid, elle sort sans manteau.", es:"Aunque haga frío, sale sin abrigo."},
+    {fr:"Je viendrai à moins qu'il ne <em>pleuve</em>.", es:"Vendré a menos que llueva."},
+    {fr:"Pourvu qu'il <em>fasse</em> beau demain !", es:"¡Con tal de que haga buen tiempo mañana!"},
+    {fr:"Elle parle doucement de peur qu'il ne <em>se réveille</em>.", es:"Habla bajito por miedo a que él se despierte."},
+  ]},
+];
+
+const TRAPS = [
+  {name:'Mismo sujeto',                wrong:'Je veux que je parte',      right:'Je veux partir',         expl:'Con el mismo sujeto en ambos verbos → <strong>infinitivo</strong>, nunca <em>que + subjonctif</em>.'},
+  {name:'croire / penser (afirmativo)',wrong:"Je crois qu'il vienne",     right:"Je crois qu'il vient",   expl:'En afirmativo → <strong>indicatif</strong>. Solo en negativo/interrogativo rige subjonctif.'},
+  {name:'espérer',                     wrong:"J'espère qu'il vienne",     right:"J'espère qu'il viendra", expl:'<strong>Espérer</strong> rige siempre <strong>indicatif futuro</strong>, nunca subjonctif. Excepción total.'},
+  {name:'après que',                   wrong:"après qu'il soit parti",    right:"après qu'il est parti",  expl:'<strong>Après que</strong> → indicatif. La acción ya ocurrió. Confusión por analogía con <em>avant que</em>.'},
+  {name:'ne explétif',                 wrong:"avant qu'il parte",         right:"avant qu'il ne parte",   expl:'El <em>ne</em> explétif es <strong>opcional pero correcto</strong> en registro formal con <em>avant que, à moins que, de peur que</em>.'},
+  {name:'Forma nous/vous',             wrong:'(confundir con imparfait)', right:'Identificar por que previo',expl:'<strong>Que nous parlions</strong> = subjonctif / <strong>Nous parlions</strong> = imparfait. Formas idénticas; solo el contexto las distingue.'},
+];
+
+/* ══════════ RENDER IRREGULARS ══════════ */
+function renderIrregs() {
+  const chipsEl  = document.getElementById('irreg-chips');
+  const panelsEl = document.getElementById('irreg-panels');
+  chipsEl.innerHTML = IRREG.map((v,i) =>
+    `<button class="chip${i===0?' active':''}" onclick="selectIrreg(${i})">${v.v}${v.dual?'<span style="font-size:0.65em;vertical-align:super;margin-left:2px;color:var(--blue)">2R</span>':''}</button>`
+  ).join('');
+  panelsEl.innerHTML = IRREG.map((v,i) => `
+    <div class="chip-panel${i===0?' active':''}" id="irreg-p-${i}">
+      <div class="table-wrap" style="margin-bottom:8px">
+        <table class="irreg-table">
+          ${v.rows.map(([p,f])=>`<tr><td class="ipron">${p}</td><td class="iform">${f}</td></tr>`).join('')}
+        </table>
+      </div>
+      <span class="irreg-note-tag">${v.note}</span>
+      ${v.dual?'<span class="irreg-type-tag">Doble raíz: nous/vous distinta</span>':''}
+    </div>`).join('');
+}
+
+function selectIrreg(idx) {
+  document.querySelectorAll('#irreg-chips .chip').forEach((c,i)=>c.classList.toggle('active',i===idx));
+  document.querySelectorAll('#irreg-panels .chip-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+}
+
+/* ══════════ RENDER TRIGGERS ══════════ */
+function renderTriggers() {
+  const chipsEl  = document.getElementById('trigger-chips');
+  const panelsEl = document.getElementById('trigger-panels');
+  chipsEl.innerHTML = TRIGGERS.map((g,i)=>
+    `<button class="chip${i===0?' active':''}" onclick="selectTrigger(${i})">${g.cat}</button>`
+  ).join('');
+  panelsEl.innerHTML = TRIGGERS.map((g,i)=>`
+    <div class="chip-panel${i===0?' active':''}" id="trigger-p-${i}">
+      <div class="trigger-panel-wrap">
+        <div class="trigger-panel-title">${g.cat} — ${g.items.length} expresiones</div>
+        ${g.items.map(it=>`<div class="trigger-item"><span class="t-expr">${it.e}</span><span class="t-trad">${it.t}</span></div>`).join('')}
+      </div>
+      <div style="margin-top:10px">
+        <div style="font-size:0.7em;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Ejemplos</div>
+        ${g.exs.map(ex=>`<div class="example-block"><div class="ex-fr">${ex.fr}</div><div class="ex-es">${ex.es}</div></div>`).join('')}
+      </div>
+    </div>`).join('');
+  document.getElementById('trigger-count').textContent = '6 categorías · 28 expresiones';
+}
+
+function selectTrigger(idx) {
+  document.querySelectorAll('#trigger-chips .chip').forEach((c,i)=>c.classList.toggle('active',i===idx));
+  document.querySelectorAll('#trigger-panels .chip-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+}
+
+function filterTriggers(q) {
+  q = q.trim().toLowerCase();
+  const chipsWrap = document.getElementById('trigger-chips-wrap');
+  const resultsEl = document.getElementById('trigger-search-results');
+  const countEl   = document.getElementById('trigger-count');
+  if (!q) {
+    chipsWrap.style.display=''; resultsEl.style.display='none';
+    countEl.textContent='6 categorías · 28 expresiones'; return;
+  }
+  chipsWrap.style.display='none'; resultsEl.style.display='';
+  const matches=[];
+  TRIGGERS.forEach(g=>g.items.forEach(it=>{
+    if(it.e.toLowerCase().includes(q)||it.t.toLowerCase().includes(q))
+      matches.push({cat:g.cat,e:it.e,t:it.t});
+  }));
+  countEl.textContent=matches.length?`${matches.length} resultado${matches.length!==1?'s':''}`:'Sin resultados';
+  resultsEl.innerHTML=matches.length
+    ?`<div class="trigger-panel-wrap">${matches.map(m=>`<div class="trigger-item"><span class="t-expr">${m.e}</span><span class="t-trad">${m.t}</span><span class="t-cat-tag">${m.cat}</span></div>`).join('')}</div>`
+    :`<div class="state-msg" style="padding:20px 0"><div class="state-icon" style="font-size:1.4rem">🔍</div><p>Sin resultados para "${q}"</p></div>`;
+}
+
+/* ══════════ RENDER TRAPS ══════════ */
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t=>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+/* ══════════ GENERIC CHIP SELECT ══════════ */
+function selectChip(ns, idx) {
+  document.querySelectorAll(`#${ns}-chips .chip`).forEach((c,i)=>c.classList.toggle('active',i===idx));
+  document.querySelectorAll(`#${ns}-panels .chip-panel`).forEach((p,i)=>p.classList.toggle('active',i===idx));
+  // handle 'passeuso' namespace mapped to 'passeuso-panels'
+}
+
+/* ══════════ SECTION NAV ══════════ */
+function showSection(id, btn) {
+  document.querySelectorAll('.sec-block').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.snav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function switchMode(mode, btn) {
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+mode).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('section-nav').style.display = mode==='ref' ? '' : 'none';
+}
+
+/* ══════════ FONT SIZE ══════════ */
+function setFontSize(v) { document.documentElement.style.setProperty('--fs', v+'px'); }
+
+/* ══════════ EXERCISE STATE ══════════ */
+let exType='fill', exDiff='B1', exQty=5;
+let exTotal=0, exAnswered=0, exCorrect=0, exWrong=0;
+
+document.querySelectorAll('.ex-opt-btn').forEach(b=>b.addEventListener('click',function(){
+  document.querySelectorAll('.ex-opt-btn').forEach(x=>x.classList.remove('active'));
+  this.classList.add('active'); exType=this.dataset.type;
+}));
+
+function setDiff(d) {
+  exDiff=d;
+  document.querySelectorAll('#diff-btns .pill-btn').forEach(b=>{
+    b.classList.remove('active','A2','B1','B2');
+    if(b.textContent.trim()===d)b.classList.add('active',d);
+  });
+}
+function setQty(q) {
+  exQty=q;
+  document.querySelectorAll('#qty-btns .pill-btn').forEach(b=>b.classList.toggle('active',parseInt(b.textContent.trim())===q));
+}
+
+/* ══════════ GENERATE ══════════ */
+function renderExercises(exs) {
+  const area=document.getElementById('exercise-area');
+  const labels={fill:'Completar',choice:'Elección múltiple',transform:'Transformación'};
+  area.innerHTML=exs.map((ex,i)=>
+    `<div class="exercise-card" id="ex-card-${i}" data-expl="${esc(ex.explanation)}" data-rule="${ex.rule_ref||''}">
+      <div class="exercise-card-header">
+        <span class="ex-num">${i+1}</span>
+        <span class="ex-type-badge">${labels[ex.type]||ex.type}</span>
+        <span class="ex-diff-badge ${ex.diff}">${ex.diff}</span>
+        <span class="ex-status" id="ex-st-${i}"></span>
+      </div>
+      <div class="exercise-body">
+        ${buildBody(ex,i)}
+        <div class="ex-feedback" id="ex-fb-${i}"></div>
+      </div>
+    </div>`).join('');
+  exs.forEach((ex,i)=>{
+    const chk=document.getElementById('chk-'+i);
+    if(chk)chk.addEventListener('click',()=>checkAnswer(ex,i));
+    const inp=document.getElementById('inp-'+i);
+    if(inp)inp.addEventListener('keydown',e=>{if(e.key==='Enter')checkAnswer(ex,i);});
+  });
+}
+
+function buildBody(ex,i) {
+  if(ex.type==='fill')
+    return `<div class="exercise-prompt">${ex.prompt_parts[0]}<input class="fill-input" id="inp-${i}" type="text" placeholder="${ex.blank_hint||'…'}" autocomplete="off" spellcheck="false">${ex.prompt_parts[1]||''}</div><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  if(ex.type==='choice')
+    return `<div class="exercise-prompt">${ex.prompt}</div><div class="choices-grid">${ex.options.map((o,j)=>`<button class="choice-btn" id="ch-${i}-${j}" onclick="selectChoice(${i},${j},${ex.correct_index})">${o}</button>`).join('')}</div>`;
+  if(ex.type==='transform')
+    return `<div class="exercise-prompt">${ex.instruction}<br><em>${ex.original}</em></div><input class="transform-input" id="inp-${i}" type="text" placeholder="Tu respuesta…" autocomplete="off" spellcheck="false"><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  return '';
+}
+
+function checkAnswer(ex,i) {
+  const inp=document.getElementById('inp-'+i);
+  if(!inp||inp.disabled)return;
+  const ok=inp.value.trim().toLowerCase()===ex.answer.trim().toLowerCase();
+  inp.classList.add(ok?'ok':'err'); inp.disabled=true;
+  const chk=document.getElementById('chk-'+i); if(chk)chk.disabled=true;
+  showFeedback(i,ok,ex.answer,ex.explanation,ex.rule_ref);
+  recordAnswer(ok);
+}
+
+function selectChoice(idx,chosen,correct) {
+  const c0=document.getElementById(`ch-${idx}-0`);
+  if(!c0||c0.disabled)return;
+  for(let j=0;j<4;j++){const b=document.getElementById(`ch-${idx}-${j}`);if(!b)continue;b.disabled=true;if(j===correct)b.classList.add('ok');else if(j===chosen)b.classList.add('err');}
+  const card=document.getElementById('ex-card-'+idx);
+  showFeedback(idx,chosen===correct,null,card.dataset.expl,card.dataset.rule);
+  recordAnswer(chosen===correct);
+}
+
+const RULE_LABELS={'s-def':'Concepto','s-forma':'Formación','s-irreg':'Irregulares','s-passe':'Subj. passé','s-usos':'Desencadenantes','s-vsind':'Subj. vs. Ind.','s-trampas':'Trampas'};
+
+function showFeedback(i,ok,ans,expl,ruleRef) {
+  document.getElementById('ex-st-'+i).textContent=ok?'✅':'❌';
+  const fb=document.getElementById('ex-fb-'+i);
+  fb.className='ex-feedback visible '+(ok?'ok':'err');
+  const link=RULE_LABELS[ruleRef]?`<span class="fb-rule-link" onclick="goToRule('${ruleRef}')">📖 Ver: ${RULE_LABELS[ruleRef]}</span>`:'';
+  let html=ok?`<strong>✓ Correcto</strong>`:`<strong>✗ Incorrecto</strong>${ans?` — Respuesta: <strong>${ans}</strong>`:''}`;
+  if(expl)html+=`<br><span style="font-size:0.88em;opacity:0.92;margin-top:3px;display:block">${expl}</span>`;
+  html+=link; fb.innerHTML=html;
+}
+
+function goToRule(ref) {
+  switchMode('ref', document.querySelector('.mode-btn'));
+  setTimeout(()=>{
+    showSection(ref, document.querySelector(`.snav-btn[onclick*="${ref}"]`));
+    document.getElementById(ref).scrollIntoView({behavior:'smooth',block:'start'});
+  },80);
+}
+
+function recordAnswer(ok){exAnswered++;if(ok)exCorrect++;else exWrong++;updateProgress();}
+
+function updateProgress(){
+  const pct=exTotal>0?(exAnswered/exTotal)*100:0;
+  document.getElementById('progress-frac').textContent=`${exAnswered} / ${exTotal}`;
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('score-correct').textContent=`${exCorrect} correcta${exCorrect!==1?'s':''}`;
+  document.getElementById('score-wrong').textContent=`${exWrong} error${exWrong!==1?'es':''}`;
+  if(exAnswered>=exTotal&&exTotal>0)showFinalScore();
+}
+
+function showFinalScore(){
+  const pct=Math.round((exCorrect/exTotal)*100);
+  document.getElementById('final-score-bar').classList.add('visible');
+  document.getElementById('final-num').textContent=`${exCorrect} / ${exTotal}`;
+  const fill=document.getElementById('final-fill');
+  fill.style.width=pct+'%';
+  fill.style.background=pct>=80?'var(--green)':pct>=50?'var(--accent)':'var(--red)';
+  const msgs={100:'¡Parfait! Dominas el subjonctif. 🎉',80:'Très bien! Repasa los errores marcados.',50:'Bien, pero refuerza los bloques señalados.',0:'Vuelve a Referencia antes de repetir.'};
+  document.getElementById('final-msg').textContent=msgs[pct===100?100:pct>=80?80:pct>=50?50:0];
+  document.getElementById('score-pill').style.display='';
+  document.getElementById('score-pill-val').textContent=`${exCorrect}/${exTotal}`;
+}
+
+function resetExercises(){
+  document.getElementById('exercise-area').innerHTML=`<div class="state-msg"><div class="state-icon">✏️</div><p>Elige tipo, nivel y cantidad, y pulsa <strong>Generar ejercicios</strong>.</p></div>`;
+  document.getElementById('progress-wrap').classList.remove('visible');
+  document.getElementById('final-score-bar').classList.remove('visible');
+  document.getElementById('score-pill').style.display='none';
+  exAnswered=0;exCorrect=0;exWrong=0;
+}
+
+function esc(s){return(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+
+/* ══════════ INIT ══════════ */
+renderIrregs();
+renderTriggers();
+renderTraps();
+</script>
+</body>
+</html>

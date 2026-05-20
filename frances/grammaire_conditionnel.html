@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammaire · Le Conditionnel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ede9df;
+  --card: #faf7f1;
+  --border: #c4bead;
+  --text: #1a1814;
+  --text2: #44413a;
+  --text3: #706c64;
+  --accent: #7a5a0a;
+  --accent-light: #f0e0c0;
+  --accent-mid: #b89050;
+  --warn-bg: #fdf0cc;
+  --shadow: 0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm: 0 1px 6px rgba(0,0,0,0.08);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --green: #1a6028;
+  --green-bg: #e4f2e8;
+  --red: #a81e2e;
+  --red-bg: #fce6e8;
+  --blue: #163494;
+  --blue-bg: #e6ebf8;
+  --purple: #6a1a8a;
+  --purple-bg: #f2e6f8;
+  /* tense colours */
+  --cp-color: #163494;   /* conditionnel présent — blue  */
+  --cp-bg:    #e6ebf8;
+  --cpa-color: #6a1a8a;  /* conditionnel passé  — purple */
+  --cpa-bg:    #f2e6f8;
+  --fs: 15px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: var(--fs); }
+
+/* HEADER */
+.site-header { background: var(--card); border-bottom: 2px solid var(--border); padding: 20px 20px 14px; }
+.header-top { display: flex; align-items: baseline; gap: 10px; margin-bottom: 3px; flex-wrap: wrap; }
+.site-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.3rem,5vw,2rem); font-weight: 700; color: var(--text); }
+.header-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent-mid); border-radius: 20px; padding: 3px 10px; }
+.subtitle { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
+.stats-row { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+.stat-pill { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 4px 11px; font-size: 0.76rem; font-weight: 500; color: var(--text2); }
+.stat-pill.cp  { border-color: var(--cp-color);  color: var(--cp-color);  background: var(--cp-bg); }
+.stat-pill.cpa { border-color: var(--cpa-color); color: var(--cpa-color); background: var(--cpa-bg); }
+.fs-wrap { display: flex; align-items: center; gap: 7px; margin-left: auto; }
+.fs-slider { width: 76px; accent-color: var(--accent); cursor: pointer; }
+.fs-sz { color: var(--text3); font-weight: 700; }
+
+/* NAV */
+.mode-toggle { display: flex; border-bottom: 2px solid var(--border); background: var(--card); }
+.mode-btn { flex: 1; padding: 12px 8px; font-family: 'DM Sans', sans-serif; font-size: 0.84rem; font-weight: 600; color: var(--text3); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.15s; margin-bottom: -2px; }
+.mode-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.section-nav { position: sticky; top: 0; z-index: 200; background: var(--card); border-bottom: 2px solid var(--border); box-shadow: var(--shadow-sm); }
+.section-nav-inner { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.section-nav-inner::-webkit-scrollbar { display: none; }
+.snav-btn { flex-shrink: 0; padding: 11px 16px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; color: var(--text3); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.snav-btn:hover { color: var(--text2); }
+.snav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* LAYOUT */
+.main-layout { max-width: 860px; margin: 0 auto; padding: 16px 16px 40px; }
+.panel { display: none; } .panel.active { display: block; }
+.sec-block { display: none; } .sec-block.active { display: block; }
+.gram-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden; }
+.gram-card-body { padding: 18px; }
+
+/* BOXES */
+.def-box { background: var(--warn-bg); border-left: 4px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 15px; margin-bottom: 14px; line-height: 1.65; color: var(--text); }
+.def-box strong { color: var(--accent); font-weight: 700; }
+.warn-box { background: #fff4e0; border: 1px solid #c8900a; border-radius: var(--radius-sm); padding: 10px 13px; margin: 10px 0; font-size: 0.9em; display: flex; gap: 8px; align-items: flex-start; }
+.warn-icon { flex-shrink: 0; margin-top: 1px; }
+.warn-text { color: var(--text2); line-height: 1.55; }
+.warn-text strong { color: #7a4400; font-weight: 700; }
+.note-box { background: var(--purple-bg); border-left: 4px solid var(--purple); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 10px 0; font-size: 0.9em; color: var(--text2); line-height: 1.55; }
+.note-box strong { color: var(--purple); font-weight: 700; }
+
+/* EXAMPLE BLOCKS */
+.example-block { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 8px 0; }
+.example-block.cp  { background: var(--cp-bg);  border-left: 4px solid var(--cp-color); }
+.example-block.cpa { background: var(--cpa-bg); border-left: 4px solid var(--cpa-color); }
+.example-block.mix { background: #f0f0f8; border-left: 4px solid #606080; }
+.example-block.neu { background: var(--blue-bg); border-left: 4px solid var(--blue); }
+.ex-fr { font-weight: 600; margin-bottom: 3px; color: var(--text); }
+.ecp  { color: var(--cp-color);  font-weight: 700; font-style: normal; }
+.ecpa { color: var(--cpa-color); font-weight: 700; font-style: normal; }
+.ex-fr em { color: var(--blue); font-style: normal; font-weight: 700; }
+.ex-es { color: var(--text2); font-size: 0.88em; font-style: italic; }
+.ex-note { font-size: 0.78em; color: var(--text3); margin-top: 3px; font-weight: 500; }
+
+/* LEGEND */
+.legend-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.legend-pill { font-size: 0.74em; font-weight: 700; border-radius: 20px; padding: 3px 10px; border: 1.5px solid; white-space: nowrap; }
+.legend-pill.cp  { background: var(--cp-bg);  color: var(--cp-color);  border-color: var(--cp-color); }
+.legend-pill.cpa { background: var(--cpa-bg); color: var(--cpa-color); border-color: var(--cpa-color); }
+
+/* TABLES */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.gram-table { width: 100%; border-collapse: collapse; min-width: 300px; }
+.gram-table th { background: var(--bg); border-bottom: 2px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; text-align: left; font-size: 0.72em; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+.gram-table td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; vertical-align: top; color: var(--text); }
+.gram-table tr:last-child td { border-bottom: none; }
+.gram-table tr:nth-child(even) td { background: #f4f0e6; }
+.gram-table td:last-child, .gram-table th:last-child { border-right: none; }
+.hl-cp  { color: var(--cp-color);  font-weight: 700; }
+.hl-cpa { color: var(--cpa-color); font-weight: 700; }
+.hl     { color: var(--accent);    font-weight: 700; }
+.dim    { color: var(--text3); }
+.ok-cell  { color: var(--green); font-weight: 700; }
+.err-cell { color: var(--red);   font-weight: 600; }
+
+/* CHIPS */
+.chip-bar { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.chip { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; white-space: nowrap; }
+.chip:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+.chip.active  { background: var(--accent);    color: #fff; border-color: var(--accent); }
+.chip.cp.active  { background: var(--cp-color);  border-color: var(--cp-color); }
+.chip.cpa.active { background: var(--cpa-color); border-color: var(--cpa-color); }
+.chip-panel { display: none; } .chip-panel.active { display: block; }
+
+/* SEC LABEL */
+.sec-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin: 14px 0 7px; }
+
+/* TRAP CARDS */
+.trap-cards { display: flex; flex-direction: column; gap: 10px; }
+.trap-card { border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.trap-card-header { padding: 11px 14px; background: var(--bg); }
+.trap-name { font-weight: 700; font-size: 0.9em; color: var(--text); margin-bottom: 7px; }
+.trap-vs { display: flex; gap: 8px; flex-wrap: wrap; }
+.trap-wrong { background: var(--red-bg);  border: 1.5px solid #d09098; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--red);   font-weight: 500; }
+.trap-right { background: var(--green-bg); border: 1.5px solid #80b890; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--green); font-weight: 500; }
+.trap-expl { padding: 10px 14px 12px; font-size: 0.86em; color: var(--text2); line-height: 1.6; border-top: 1px solid var(--border); background: var(--card); }
+.trap-expl strong { color: var(--text); font-weight: 700; }
+
+/* EXERCISES */
+.exercise-controls { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.exercise-controls h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+.ctrl-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 7px; display: block; }
+.ex-options { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.ex-opt-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.ex-opt-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+.row-btns { display: flex; gap: 7px; margin-bottom: 14px; flex-wrap: wrap; }
+.pill-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.pill-btn:hover:not(.active) { background: var(--border); }
+.pill-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+.pill-btn.diff.active.A2 { background: var(--green); border-color: var(--green); color: #fff; }
+.pill-btn.diff.active.B1 { background: var(--blue);  border-color: var(--blue);  color: #fff; }
+.pill-btn.diff.active.B2 { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-generate { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; border: none; border-radius: 10px; padding: 13px; font-family: 'DM Sans', sans-serif; font-size: 0.92em; font-weight: 700; cursor: pointer; background: var(--accent); color: white; transition: all 0.18s; margin-top: 4px; }
+.btn-generate:hover:not(:disabled) { filter: brightness(1.1); box-shadow: 0 4px 14px rgba(122,90,10,0.32); }
+.btn-generate:disabled { opacity: 0.5; cursor: not-allowed; }
+.spinner { display: none; animation: spin 0.8s linear infinite; }
+.btn-generate.loading .spinner { display: inline; }
+.btn-generate.loading .btn-icon { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.progress-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 14px; display: none; }
+.progress-wrap.visible { display: block; }
+.progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.progress-label { font-size: 0.78em; color: var(--text3); font-weight: 600; }
+.progress-frac  { font-size: 0.92em; font-weight: 700; color: var(--accent); }
+.progress-track { height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-fill  { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.35s ease; }
+.progress-score { display: flex; gap: 14px; margin-top: 9px; font-size: 0.8em; flex-wrap: wrap; align-items: center; }
+.score-item { display: flex; align-items: center; gap: 5px; font-weight: 500; color: var(--text2); }
+.score-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.score-dot.g { background: var(--green); } .score-dot.r { background: var(--red); }
+.btn-retry { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 13px; font-family: 'DM Sans', sans-serif; font-size: 0.78em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; margin-left: auto; }
+.btn-retry:hover { background: var(--border); }
+
+.final-score-bar { display: none; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
+.final-score-bar.visible { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.final-num   { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+.final-label { font-size: 0.74em; color: var(--text3); }
+.final-track { flex: 1; min-width: 80px; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.final-fill  { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+.final-msg   { font-size: 0.84em; color: var(--text2); width: 100%; font-weight: 500; }
+
+.exercise-area { display: none; } .exercise-area.visible { display: block; }
+.exercise-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 12px; overflow: hidden; }
+.exercise-card-header { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--border); }
+.ex-num { font-weight: 700; color: var(--accent); font-size: 0.88em; }
+.ex-type-badge { font-size: 0.68em; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-mid); border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge { font-size: 0.68em; font-weight: 700; border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge.A2 { background: var(--green-bg); color: var(--green); border: 1px solid #80b890; }
+.ex-diff-badge.B1 { background: var(--blue-bg);  color: var(--blue);  border: 1px solid #90a8e0; }
+.ex-diff-badge.B2 { background: var(--warn-bg);  color: var(--accent); border: 1px solid var(--accent-mid); }
+.ex-status { margin-left: auto; }
+.exercise-body { padding: 16px 18px; }
+.exercise-prompt { line-height: 1.7; margin-bottom: 12px; color: var(--text); }
+.exercise-prompt em { color: var(--accent); font-style: italic; font-weight: 600; }
+.fill-input { border: none; border-bottom: 2px solid var(--accent-mid); background: var(--accent-light); padding: 2px 8px; border-radius: 4px 4px 0 0; font-family: 'DM Sans', sans-serif; font-size: 1em; color: var(--text); min-width: 120px; outline: none; transition: border-color 0.15s; }
+.fill-input:focus { border-bottom-color: var(--accent); }
+.fill-input.ok  { background: var(--green-bg); border-bottom-color: var(--green); }
+.fill-input.err { background: var(--red-bg);   border-bottom-color: var(--red); }
+.choices-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 10px; }
+.choice-btn { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.88em; font-weight: 500; cursor: pointer; text-align: left; background: var(--bg); color: var(--text); transition: all 0.15s; }
+.choice-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-light); }
+.choice-btn.ok  { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 700; }
+.choice-btn.err { background: var(--red-bg);   border-color: var(--red);   color: var(--red); }
+.choice-btn:disabled { cursor: default; }
+.transform-input { width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.9em; background: var(--bg); color: var(--text); outline: none; margin-bottom: 8px; transition: border-color 0.15s; }
+.transform-input:focus { border-color: var(--accent); }
+.transform-input.ok  { background: var(--green-bg); border-color: var(--green); }
+.transform-input.err { background: var(--red-bg);   border-color: var(--red); }
+.btn-check { border: 1.5px solid var(--accent); border-radius: 20px; padding: 7px 18px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 700; cursor: pointer; background: transparent; color: var(--accent); transition: all 0.15s; }
+.btn-check:hover:not(:disabled) { background: var(--accent); color: white; }
+.btn-check:disabled { opacity: 0.35; cursor: default; }
+.ex-feedback { display: none; border-radius: var(--radius-sm); padding: 11px 14px; line-height: 1.55; margin-top: 10px; font-size: 0.9em; }
+.ex-feedback.visible { display: block; }
+.ex-feedback.ok  { background: var(--green-bg); border: 1.5px solid #80b890; color: #0e4818; }
+.ex-feedback.err { background: var(--red-bg);   border: 1.5px solid #c08090; color: #700018; }
+.fb-rule-link { display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 0.84em; font-weight: 700; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+
+.skeleton-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 12px; }
+.skel { background: linear-gradient(90deg,var(--border) 25%,#e6e0d4 50%,var(--border) 75%); background-size: 200% 100%; animation: skel 1.4s infinite; border-radius: 4px; height: 13px; margin-bottom: 9px; }
+@keyframes skel { to { background-position: -200% 0; } }
+.state-msg { text-align: center; padding: 40px 20px; color: var(--text3); }
+.state-icon { font-size: 2rem; margin-bottom: 10px; }
+.state-msg p { max-width: 260px; margin: 0 auto; line-height: 1.6; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <h1>Le Conditionnel</h1>
+    <span class="header-tag">Grammaire</span>
+  </div>
+  <div class="subtitle">Gramática francesa · DELF B1–B2</div>
+  <div class="stats-row">
+    <div class="stat-pill cp">Conditionnel présent</div>
+    <div class="stat-pill cpa">Conditionnel passé</div>
+    <div class="stat-pill" id="score-pill" style="display:none">Resultado: <span id="score-pill-val">—</span></div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referencia</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Visión general</button>
+    <button class="snav-btn"        onclick="showSection('s-cp',this)">2. Cond. présent</button>
+    <button class="snav-btn"        onclick="showSection('s-usos-cp',this)">3. Usos del présent</button>
+    <button class="snav-btn"        onclick="showSection('s-cpa',this)">4. Cond. passé</button>
+    <button class="snav-btn"        onclick="showSection('s-usos-cpa',this)">5. Usos del passé</button>
+    <button class="snav-btn"        onclick="showSection('s-si',this)">6. Frases con si</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Trampas</button>
+  </div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. VISIÓN GENERAL -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El conditionnel no es exactamente un tiempo sino un <strong>modo</strong> que expresa que una acción depende de una condición. Tiene dos formas: el <strong>présent</strong> (para hipótesis actuales o futuras) y el <strong>passé</strong> (para hipótesis irrealizadas en el pasado).
+      </div>
+      <div class="legend-row">
+        <span class="legend-pill cp">Conditionnel présent — hipótesis presente/futura, cortesía, consejo</span>
+        <span class="legend-pill cpa">Conditionnel passé — hipótesis irreal en el pasado, reproche, alivio</span>
+      </div>
+
+      <div class="sec-label">Comparativa rápida</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Forma</th><th>Formación</th><th>Equivalente español</th><th>Uso central</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong class="hl-cp">Cond. présent</strong></td>
+            <td>raíz FS + terminaciones imparfait</td>
+            <td>-ría / -rías / -ría…</td>
+            <td>Si j'avais de l'argent, je <span class="hl-cp">voyagerais</span>.</td>
+          </tr>
+          <tr>
+            <td><strong class="hl-cpa">Cond. passé</strong></td>
+            <td>avoir/être en cond. présent + p.p.</td>
+            <td>habría / habrías…</td>
+            <td>Si j'avais eu de l'argent, j'<span class="hl-cpa">aurais voyagé</span>.</td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Sistema de hipótesis completo</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tipo de hipótesis</th><th>Proposición si</th><th>Principal</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Probable / posible</strong> (presente/futuro)</td><td>si + <span class="hl">présent</span></td><td><span class="hl">futur simple</span></td></tr>
+          <tr><td><strong>Improbable / irreal</strong> (presente/futuro)</td><td>si + <span class="hl">imparfait</span></td><td><span class="hl-cp">conditionnel présent</span></td></tr>
+          <tr><td><strong>Irreal en el pasado</strong></td><td>si + <span class="hl">plus-que-parfait</span></td><td><span class="hl-cpa">conditionnel passé</span></td></tr>
+        </tbody>
+      </table></div>
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Regla de oro:</strong> nunca se usa conditionnel después de <em>si</em> condicional. El conditionnel va siempre en la proposición <strong>principal</strong>.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. CONDITIONNEL PRÉSENT — FORMACIÓN -->
+  <div class="sec-block" id="s-cp">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>conditionnel présent</strong> se forma con la <strong>raíz del futur simple + terminaciones del imparfait</strong>: <strong>-ais · -ais · -ait · -ions · -iez · -aient</strong>. Los verbos irregulares en futur simple mantienen la misma raíz irregular.
+      </div>
+
+      <div class="sec-label">Formación regular</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Pronombre</th><th>PARLER</th><th>FINIR</th><th>ATTENDRE</th><th>Term.</th></tr></thead>
+        <tbody>
+          <tr><td><strong>je</strong></td><td class="hl-cp">parlerais</td><td class="hl-cp">finirais</td><td class="hl-cp">attendrais</td><td class="hl-cp">-ais</td></tr>
+          <tr><td><strong>tu</strong></td><td class="hl-cp">parlerais</td><td class="hl-cp">finirais</td><td class="hl-cp">attendrais</td><td class="hl-cp">-ais</td></tr>
+          <tr><td><strong>il/elle</strong></td><td class="hl-cp">parlerait</td><td class="hl-cp">finirait</td><td class="hl-cp">attendrait</td><td class="hl-cp">-ait</td></tr>
+          <tr><td><strong>nous</strong></td><td class="hl-cp">parlerions</td><td class="hl-cp">finirions</td><td class="hl-cp">attendrions</td><td class="hl-cp">-ions</td></tr>
+          <tr><td><strong>vous</strong></td><td class="hl-cp">parleriez</td><td class="hl-cp">finiriez</td><td class="hl-cp">attendriez</td><td class="hl-cp">-iez</td></tr>
+          <tr><td><strong>ils/elles</strong></td><td class="hl-cp">parleraient</td><td class="hl-cp">finiraient</td><td class="hl-cp">attendraient</td><td class="hl-cp">-aient</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Raíces irregulares (idénticas al futur simple)</div>
+      <div class="chip-bar">
+        <button class="chip cp active" onclick="selectChip('cpirr',0)">Grupo 1</button>
+        <button class="chip cp"        onclick="selectChip('cpirr',1)">Grupo 2</button>
+        <button class="chip cp"        onclick="selectChip('cpirr',2)">Grupo 3</button>
+      </div>
+      <div id="cpirr-panels">
+        <div class="chip-panel active" id="cpirr-p-0">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Infinitivo</th><th>Raíz (= FS)</th><th>Cond. présent (je)</th></tr></thead>
+            <tbody>
+              <tr><td>être</td><td class="dim">ser-</td><td class="hl-cp">je serais</td></tr>
+              <tr><td>avoir</td><td class="dim">aur-</td><td class="hl-cp">j'aurais</td></tr>
+              <tr><td>aller</td><td class="dim">ir-</td><td class="hl-cp">j'irais</td></tr>
+              <tr><td>faire</td><td class="dim">fer-</td><td class="hl-cp">je ferais</td></tr>
+              <tr><td>venir</td><td class="dim">viendr-</td><td class="hl-cp">je viendrais</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="chip-panel" id="cpirr-p-1">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Infinitivo</th><th>Raíz (= FS)</th><th>Cond. présent (je)</th></tr></thead>
+            <tbody>
+              <tr><td>pouvoir</td><td class="dim">pourr-</td><td class="hl-cp">je pourrais</td></tr>
+              <tr><td>vouloir</td><td class="dim">voudr-</td><td class="hl-cp">je voudrais</td></tr>
+              <tr><td>savoir</td><td class="dim">saur-</td><td class="hl-cp">je saurais</td></tr>
+              <tr><td>voir</td><td class="dim">verr-</td><td class="hl-cp">je verrais</td></tr>
+              <tr><td>devoir</td><td class="dim">devr-</td><td class="hl-cp">je devrais</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="chip-panel" id="cpirr-p-2">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Infinitivo</th><th>Raíz (= FS)</th><th>Cond. présent (je)</th></tr></thead>
+            <tbody>
+              <tr><td>recevoir</td><td class="dim">recevr-</td><td class="hl-cp">je recevrais</td></tr>
+              <tr><td>tenir</td><td class="dim">tiendr-</td><td class="hl-cp">je tiendrais</td></tr>
+              <tr><td>envoyer</td><td class="dim">enverr-</td><td class="hl-cp">j'enverrais</td></tr>
+              <tr><td>courir</td><td class="dim">courr-</td><td class="hl-cp">je courrais</td></tr>
+              <tr><td>falloir</td><td class="dim">faudr-</td><td class="hl-cp">il faudrait</td></tr>
+              <tr><td>pleuvoir</td><td class="dim">pleuvr-</td><td class="hl-cp">il pleuvrait</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div class="note-box"><strong>Truco de memorización:</strong> si sabes el futur simple de un verbo, el conditionnel présent es automático — misma raíz, solo cambian las terminaciones por las del imparfait.</div>
+    </div></div>
+  </div>
+
+  <!-- 3. USOS DEL CONDITIONNEL PRÉSENT -->
+  <div class="sec-block" id="s-usos-cp">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El conditionnel présent tiene <strong>cinco usos distintos</strong> en el DELF B1–B2. Pulsa cada chip para ver la regla y los ejemplos.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip cp active" onclick="selectChip('cpuso',0)">Hipótesis (si + imparfait)</button>
+        <button class="chip cp"        onclick="selectChip('cpuso',1)">Cortesía / petición</button>
+        <button class="chip cp"        onclick="selectChip('cpuso',2)">Consejo / sugerencia</button>
+        <button class="chip cp"        onclick="selectChip('cpuso',3)">Información no confirmada</button>
+        <button class="chip cp"        onclick="selectChip('cpuso',4)">Deseo / sueño</button>
+      </div>
+      <div id="cpuso-panels">
+
+        <div class="chip-panel active" id="cpuso-p-0">
+          <div class="def-box">Condición irreal o improbable en el presente/futuro: <strong>si + imparfait → conditionnel présent</strong>.</div>
+          <div class="example-block cp"><div class="ex-fr">Si j'<em>avais</em> plus de temps, je <span class="ecp">voyagerais</span> davantage.</div><div class="ex-es">Si tuviera más tiempo, viajaría más.</div></div>
+          <div class="example-block cp"><div class="ex-fr">Si elle <em>pouvait</em>, elle <span class="ecp">viendrait</span> avec nous.</div><div class="ex-es">Si pudiera, vendría con nosotros.</div></div>
+          <div class="example-block cp"><div class="ex-fr">Si nous <em>habitions</em> à Paris, nous <span class="ecp">irions</span> souvent au musée.</div><div class="ex-es">Si viviéramos en París, iríamos al museo a menudo.</div></div>
+          <div class="example-block cp"><div class="ex-fr">Si tu <em>faisais</em> du sport, tu te <span class="ecp">sentirais</span> mieux.</div><div class="ex-es">Si hicieras deporte, te sentirías mejor.</div></div>
+          <div class="example-block cp"><div class="ex-fr">Si on <em>avait</em> de l'argent, on <span class="ecp">achèterait</span> une maison.</div><div class="ex-es">Si tuviéramos dinero, compraríamos una casa.</div></div>
+        </div>
+
+        <div class="chip-panel" id="cpuso-p-1">
+          <div class="def-box">El conditionnel présent suaviza peticiones y preguntas, haciéndolas más educadas. <strong>Aurait, pourrait, voudrait</strong> son las formas más frecuentes.</div>
+          <div class="example-block cp"><div class="ex-fr"><span class="ecp">Pourriez</span>-vous m'aider, s'il vous plaît ?</div><div class="ex-es">¿Podría ayudarme, por favor?</div></div>
+          <div class="example-block cp"><div class="ex-fr">Je <span class="ecp">voudrais</span> un café, s'il vous plaît.</div><div class="ex-es">Querría un café, por favor.</div></div>
+          <div class="example-block cp"><div class="ex-fr"><span class="ecp">Auriez</span>-vous l'heure ?</div><div class="ex-es">¿Tendría la hora?</div></div>
+          <div class="example-block cp"><div class="ex-fr">Tu <span class="ecp">pourrais</span> fermer la fenêtre ?</div><div class="ex-es">¿Podrías cerrar la ventana?</div></div>
+          <div class="example-block cp"><div class="ex-fr">On <span class="ecp">aimerait</span> réserver une table pour ce soir.</div><div class="ex-es">Nos gustaría reservar una mesa para esta noche.</div></div>
+        </div>
+
+        <div class="chip-panel" id="cpuso-p-2">
+          <div class="def-box">Para dar consejos o sugerencias de forma atenuada. Muy frecuente con <strong>devoir, falloir, pouvoir</strong> en conditionnel.</div>
+          <div class="example-block cp"><div class="ex-fr">Tu <span class="ecp">devrais</span> aller chez le médecin.</div><div class="ex-es">Deberías ir al médico.</div></div>
+          <div class="example-block cp"><div class="ex-fr">Il <span class="ecp">faudrait</span> réserver à l'avance.</div><div class="ex-es">Habría que reservar con antelación.</div></div>
+          <div class="example-block cp"><div class="ex-fr">Vous <span class="ecp">pourriez</span> essayer cette approche.</div><div class="ex-es">Podría probar este enfoque.</div></div>
+          <div class="example-block cp"><div class="ex-fr">À ta place, je <span class="ecp">parlerais</span> à ton chef.</div><div class="ex-es">En tu lugar, hablaría con tu jefe.</div></div>
+          <div class="example-block cp"><div class="ex-fr">On <span class="ecp">devrait</span> partir plus tôt pour éviter les bouchons.</div><div class="ex-es">Deberíamos salir antes para evitar atascos.</div></div>
+        </div>
+
+        <div class="chip-panel" id="cpuso-p-3">
+          <div class="def-box">En periodismo y noticias, el conditionnel présent indica que la información <strong>no está confirmada</strong> o es de segunda mano. Equivale a "presuntamente" o "al parecer".</div>
+          <div class="example-block cp"><div class="ex-fr">Le président <span class="ecp">démissionnerait</span> demain selon certaines sources.</div><div class="ex-es">El presidente dimitiría mañana según algunas fuentes. (no confirmado)</div></div>
+          <div class="example-block cp"><div class="ex-fr">Les négociations <span class="ecp">seraient</span> en cours depuis plusieurs semaines.</div><div class="ex-es">Las negociaciones estarían en curso desde hace varias semanas.</div></div>
+          <div class="example-block cp"><div class="ex-fr">Il y <span class="ecp">aurait</span> eu une explosion dans le centre-ville.</div><div class="ex-es">Habría habido una explosión en el centro. (rumor)</div></div>
+          <div class="example-block cp"><div class="ex-fr">L'accusé <span class="ecp">aurait</span> agi seul, d'après les enquêteurs.</div><div class="ex-es">El acusado habría actuado solo, según los investigadores.</div></div>
+          <div class="example-block cp"><div class="ex-fr">Le nouveau modèle <span class="ecp">coûterait</span> autour de 30 000 euros.</div><div class="ex-es">El nuevo modelo costaría alrededor de 30 000 euros.</div></div>
+        </div>
+
+        <div class="chip-panel" id="cpuso-p-4">
+          <div class="def-box">Para expresar deseos, sueños o aspiraciones, a menudo sin condición explícita.</div>
+          <div class="example-block cp"><div class="ex-fr">Je <span class="ecp">voudrais</span> faire le tour du monde un jour.</div><div class="ex-es">Querría dar la vuelta al mundo algún día.</div></div>
+          <div class="example-block cp"><div class="ex-fr">J'<span class="ecp">aimerais</span> vivre au bord de la mer.</div><div class="ex-es">Me gustaría vivir junto al mar.</div></div>
+          <div class="example-block cp"><div class="ex-fr">Il <span class="ecp">rêverait</span> de devenir acteur.</div><div class="ex-es">Sueña con convertirse en actor.</div></div>
+          <div class="example-block cp"><div class="ex-fr">On <span class="ecp">aimerait</span> tellement qu'il revienne.</div><div class="ex-es">Nos gustaría tanto que volviera.</div></div>
+          <div class="example-block cp"><div class="ex-fr">Tu ne <span class="ecp">voudrais</span> pas venir avec nous ?</div><div class="ex-es">¿No querrías venir con nosotros?</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. CONDITIONNEL PASSÉ — FORMACIÓN -->
+  <div class="sec-block" id="s-cpa">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>conditionnel passé</strong> expresa lo que <strong>habría ocurrido</strong> si se hubiera cumplido una condición que no se cumplió. Se forma con <strong>avoir o être en conditionnel présent + participio pasado</strong>.
+      </div>
+
+      <div class="sec-label">Formación — elige el auxiliar</div>
+      <div class="chip-bar">
+        <button class="chip cpa active" onclick="selectChip('cpaaux',0)">avoir (cond. prés.) + p.p.</button>
+        <button class="chip cpa"        onclick="selectChip('cpaaux',1)">être (cond. prés.) + p.p.</button>
+        <button class="chip cpa"        onclick="selectChip('cpaaux',2)">Pronominales</button>
+      </div>
+      <div id="cpaaux-panels">
+        <div class="chip-panel active" id="cpaaux-p-0">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Pronombre</th><th>PARLER</th><th>FAIRE</th><th>PRENDRE</th></tr></thead>
+            <tbody>
+              <tr><td><strong>j'</strong></td><td class="hl-cpa">aurais parlé</td><td class="hl-cpa">aurais fait</td><td class="hl-cpa">aurais pris</td></tr>
+              <tr><td><strong>tu</strong></td><td class="hl-cpa">aurais parlé</td><td class="hl-cpa">aurais fait</td><td class="hl-cpa">aurais pris</td></tr>
+              <tr><td><strong>il/elle</strong></td><td class="hl-cpa">aurait parlé</td><td class="hl-cpa">aurait fait</td><td class="hl-cpa">aurait pris</td></tr>
+              <tr><td><strong>nous</strong></td><td class="hl-cpa">aurions parlé</td><td class="hl-cpa">aurions fait</td><td class="hl-cpa">aurions pris</td></tr>
+              <tr><td><strong>vous</strong></td><td class="hl-cpa">auriez parlé</td><td class="hl-cpa">auriez fait</td><td class="hl-cpa">auriez pris</td></tr>
+              <tr><td><strong>ils/elles</strong></td><td class="hl-cpa">auraient parlé</td><td class="hl-cpa">auraient fait</td><td class="hl-cpa">auraient pris</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="chip-panel" id="cpaaux-p-1">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Pronombre</th><th>ALLER</th><th>VENIR</th><th>PARTIR</th></tr></thead>
+            <tbody>
+              <tr><td><strong>je (m.)</strong></td><td class="hl-cpa">serais allé</td><td class="hl-cpa">serais venu</td><td class="hl-cpa">serais parti</td></tr>
+              <tr><td><strong>je (f.)</strong></td><td class="hl-cpa">serais allée</td><td class="hl-cpa">serais venue</td><td class="hl-cpa">serais partie</td></tr>
+              <tr><td><strong>il/elle</strong></td><td class="hl-cpa">serait allé/allée</td><td class="hl-cpa">serait venu/venue</td><td class="hl-cpa">serait parti/partie</td></tr>
+              <tr><td><strong>nous</strong></td><td class="hl-cpa">serions allé(e)s</td><td class="hl-cpa">serions venu(e)s</td><td class="hl-cpa">serions parti(e)s</td></tr>
+              <tr><td><strong>vous</strong></td><td class="hl-cpa">seriez allé(e)(s)</td><td class="hl-cpa">seriez venu(e)(s)</td><td class="hl-cpa">seriez parti(e)(s)</td></tr>
+              <tr><td><strong>ils/elles</strong></td><td class="hl-cpa">seraient allés/allées</td><td class="hl-cpa">seraient venus/venues</td><td class="hl-cpa">seraient partis/parties</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="chip-panel" id="cpaaux-p-2">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Pronombre</th><th>SE LEVER</th><th>S'HABILLER</th></tr></thead>
+            <tbody>
+              <tr><td><strong>je (m.)</strong></td><td class="hl-cpa">me serais levé</td><td class="hl-cpa">me serais habillé</td></tr>
+              <tr><td><strong>je (f.)</strong></td><td class="hl-cpa">me serais levée</td><td class="hl-cpa">me serais habillée</td></tr>
+              <tr><td><strong>il</strong></td><td class="hl-cpa">se serait levé</td><td class="hl-cpa">se serait habillé</td></tr>
+              <tr><td><strong>elle</strong></td><td class="hl-cpa">se serait levée</td><td class="hl-cpa">se serait habillée</td></tr>
+              <tr><td><strong>nous</strong></td><td class="hl-cpa">nous serions levé(e)s</td><td class="hl-cpa">nous serions habillé(e)s</td></tr>
+              <tr><td><strong>ils/elles</strong></td><td class="hl-cpa">se seraient levé(e)s</td><td class="hl-cpa">se seraient habillé(e)s</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 5. USOS DEL CONDITIONNEL PASSÉ -->
+  <div class="sec-block" id="s-usos-cpa">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El conditionnel passé tiene cuatro usos principales. Todos giran en torno a algo que <strong>no ocurrió en el pasado</strong>.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip cpa active" onclick="selectChip('cpauso',0)">Hipótesis irreal (si + PQP)</button>
+        <button class="chip cpa"        onclick="selectChip('cpauso',1)">Reproche / crítica</button>
+        <button class="chip cpa"        onclick="selectChip('cpauso',2)">Alivio / satisfacción irreal</button>
+        <button class="chip cpa"        onclick="selectChip('cpauso',3)">Información no confirmada</button>
+      </div>
+      <div id="cpauso-panels">
+
+        <div class="chip-panel active" id="cpauso-p-0">
+          <div class="def-box">Condición irreal en el pasado: <strong>si + plus-que-parfait → conditionnel passé</strong>. Lo que habría sucedido si las cosas hubieran sido distintas.</div>
+          <div class="example-block cpa"><div class="ex-fr">Si j'<em>avais su</em>, je t'<span class="ecpa">aurais appelé</span>.</div><div class="ex-es">Si lo hubiera sabido, te habría llamado.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">Si elle <em>avait étudié</em> plus, elle <span class="ecpa">aurait réussi</span> l'examen.</div><div class="ex-es">Si hubiera estudiado más, habría aprobado el examen.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">Si nous <em>étions partis</em> plus tôt, nous n'<span class="ecpa">aurions pas raté</span> le train.</div><div class="ex-es">Si hubiéramos salido antes, no habríamos perdido el tren.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">S'il <em>avait plu</em>, on <span class="ecpa">serait restés</span> à la maison.</div><div class="ex-es">Si hubiera llovido, nos habríamos quedado en casa.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">Si tu m'<em>avais écouté</em>, tu n'<span class="ecpa">aurais pas eu</span> ce problème.</div><div class="ex-es">Si me hubieras escuchado, no habrías tenido este problema.</div></div>
+        </div>
+
+        <div class="chip-panel" id="cpauso-p-1">
+          <div class="def-box">Expresar que alguien <strong>debería haber hecho</strong> algo (y no lo hizo). Tono de crítica o reproche. Muy frecuente con <strong>devoir, pouvoir, falloir</strong>.</div>
+          <div class="example-block cpa"><div class="ex-fr">Tu <span class="ecpa">aurais dû</span> me le dire plus tôt !</div><div class="ex-es">¡Deberías habérmelo dicho antes!</div></div>
+          <div class="example-block cpa"><div class="ex-fr">Vous <span class="ecpa">auriez pu</span> prévenir que vous seriez en retard.</div><div class="ex-es">Podrían haber avisado de que llegarían tarde.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">Il n'<span class="ecpa">aurait pas fallu</span> oublier les clés.</div><div class="ex-es">No había que olvidar las llaves.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">Elle <span class="ecpa">aurait pu</span> être plus gentille avec lui.</div><div class="ex-es">Podría haber sido más amable con él.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">On <span class="ecpa">aurait dû</span> réserver à l'avance.</div><div class="ex-es">Deberíamos haber reservado con antelación.</div></div>
+        </div>
+
+        <div class="chip-panel" id="cpauso-p-2">
+          <div class="def-box">Expresar <strong>alivio o satisfacción</strong> por algo que podría haber ocurrido pero no ocurrió, o por algo que sí ocurrió y resultó bien.</div>
+          <div class="example-block cpa"><div class="ex-fr">On <span class="ecpa">aurait pu</span> avoir un accident !</div><div class="ex-es">¡Podríamos haber tenido un accidente! (alivio de que no pasó)</div></div>
+          <div class="example-block cpa"><div class="ex-fr">Sans toi, je n'<span class="ecpa">aurais jamais réussi</span>.</div><div class="ex-es">Sin ti, nunca lo habría conseguido.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">Heureusement qu'il était là : ça <span class="ecpa">aurait pu</span> être bien pire.</div><div class="ex-es">Menos mal que estaba allí: podría haber sido mucho peor.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">J'<span class="ecpa">aurais été</span> tellement triste si tu n'étais pas venu.</div><div class="ex-es">Habría estado muy triste si no hubieras venido.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">Ça <span class="ecpa">aurait été</span> dommage de rater cette occasion.</div><div class="ex-es">Habría sido una pena perder esta oportunidad.</div></div>
+        </div>
+
+        <div class="chip-panel" id="cpauso-p-3">
+          <div class="def-box">En periodismo, el conditionnel passé indica que un hecho pasado <strong>no está verificado</strong> por quien habla o escribe.</div>
+          <div class="example-block cpa"><div class="ex-fr">Le suspect <span class="ecpa">aurait avoué</span> lors de son interrogatoire.</div><div class="ex-es">El sospechoso habría confesado durante su interrogatorio. (no confirmado)</div></div>
+          <div class="example-block cpa"><div class="ex-fr">L'entreprise <span class="ecpa">aurait licencié</span> plus de 200 employés.</div><div class="ex-es">La empresa habría despedido a más de 200 empleados.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">Des témoins <span class="ecpa">auraient vu</span> l'accusé sur les lieux.</div><div class="ex-es">Testigos habrían visto al acusado en el lugar.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">Les deux pays <span class="ecpa">auraient conclu</span> un accord secret.</div><div class="ex-es">Los dos países habrían concluido un acuerdo secreto.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">L'incendie <span class="ecpa">aurait été</span> provoqué intentionnellement.</div><div class="ex-es">El incendio habría sido provocado intencionadamente.</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. FRASES CON SI — SISTEMA COMPLETO -->
+  <div class="sec-block" id="s-si">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las frases condicionales con <strong>si</strong> siguen un sistema rígido de correspondencias. Mezclarlo es el error más frecuente en el DELF.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="selectChip('si',0)">Sistema completo</button>
+        <button class="chip"        onclick="selectChip('si',1)">Tipo 2: si + imparfait</button>
+        <button class="chip"        onclick="selectChip('si',2)">Tipo 3: si + PQP</button>
+        <button class="chip"        onclick="selectChip('si',3)">Tipo mixto (B2)</button>
+      </div>
+      <div id="si-panels">
+
+        <div class="chip-panel active" id="si-p-0">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Tipo</th><th>Proposición si</th><th>Principal</th><th>Sentido</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Tipo 1</strong><br><span class="dim">Probable</span></td>
+                <td>si + <span class="hl">présent</span><br><em>Si tu viens</em></td>
+                <td><span class="hl">futur simple</span><br><em>on sortira</em></td>
+                <td>Condición posible, resultado probable</td>
+              </tr>
+              <tr>
+                <td><strong>Tipo 2</strong><br><span class="dim">Improbable</span></td>
+                <td>si + <span class="hl">imparfait</span><br><em>Si tu venais</em></td>
+                <td><span class="hl-cp">cond. présent</span><br><em>on sortirait</em></td>
+                <td>Condición poco probable o irreal en presente</td>
+              </tr>
+              <tr>
+                <td><strong>Tipo 3</strong><br><span class="dim">Irreal pasado</span></td>
+                <td>si + <span class="hl">plus-que-parfait</span><br><em>Si tu étais venu</em></td>
+                <td><span class="hl-cpa">cond. passé</span><br><em>on serait sorti</em></td>
+                <td>Condición no cumplida en el pasado</td>
+              </tr>
+            </tbody>
+          </table></div>
+          <div class="warn-box"><span class="warn-icon">🚫</span>
+            <div class="warn-text">Combinaciones <strong>prohibidas:</strong> <em>si + conditionnel</em> ✗ · <em>si + futur</em> ✗. El condicionnel o el futur van <strong>siempre en la principal</strong>, nunca después de <em>si</em>.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="si-p-1">
+          <div class="def-box"><strong>Si + imparfait → conditionnel présent.</strong> Hipótesis que el hablante considera poco probable o irreal respecto al momento actual.</div>
+          <div class="example-block cp"><div class="ex-fr">Si j'<em>étais</em> riche, j'<span class="ecp">achèterais</span> un château.</div><div class="ex-es">Si fuera rico, compraría un castillo. (no lo soy)</div></div>
+          <div class="example-block cp"><div class="ex-fr">Si tu <em>travaillais</em> plus, tu <span class="ecp">réussirais</span> mieux.</div><div class="ex-es">Si trabajaras más, te iría mejor.</div></div>
+          <div class="example-block cp"><div class="ex-fr">Si elle <em>habitait</em> près, on se <span class="ecp">verrait</span> plus souvent.</div><div class="ex-es">Si viviera cerca, nos veríamos más a menudo.</div></div>
+          <div class="example-block cp"><div class="ex-fr">Si vous <em>partiez</em> maintenant, vous <span class="ecp">arriveriez</span> à temps.</div><div class="ex-es">Si salieran ahora, llegarían a tiempo.</div></div>
+          <div class="example-block cp"><div class="ex-fr">Si on <em>avait</em> une voiture, ce <span class="ecp">serait</span> plus pratique.</div><div class="ex-es">Si tuviéramos coche, sería más práctico.</div></div>
+        </div>
+
+        <div class="chip-panel" id="si-p-2">
+          <div class="def-box"><strong>Si + plus-que-parfait → conditionnel passé.</strong> La condición no se cumplió en el pasado; se expresa el resultado hipotético que habría tenido.</div>
+          <div class="example-block cpa"><div class="ex-fr">Si j'<em>avais su</em>, je ne <span class="ecpa">serais pas venu</span>.</div><div class="ex-es">Si lo hubiera sabido, no habría venido.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">Si tu <em>avais étudié</em>, tu <span class="ecpa">aurais réussi</span>.</div><div class="ex-es">Si hubieras estudiado, habrías aprobado.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">Si elle <em>était arrivée</em> à l'heure, elle n'<span class="ecpa">aurait pas raté</span> la réunion.</div><div class="ex-es">Si hubiera llegado a tiempo, no habría perdido la reunión.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">Si nous <em>avions pris</em> le train, on <span class="ecpa">serait déjà arrivés</span>.</div><div class="ex-es">Si hubiéramos tomado el tren, ya habríamos llegado.</div></div>
+          <div class="example-block cpa"><div class="ex-fr">Si tu m'<em>avais prévenu</em>, j'<span class="ecpa">aurais attendu</span>.</div><div class="ex-es">Si me hubieras avisado, habría esperado.</div></div>
+        </div>
+
+        <div class="chip-panel" id="si-p-3">
+          <div class="def-box">En nivel B2, es posible mezclar los tipos: condición en el pasado (PQP) con resultado en el presente (conditionnel présent), o viceversa.</div>
+          <div class="example-block mix">
+            <div class="ex-fr">Si tu <em>avais étudié</em> la médecine (PQP), tu <span class="ecp">serais</span> médecin maintenant (cond. prés.).</div>
+            <div class="ex-es">Si hubieras estudiado medicina, serías médico ahora.</div>
+            <div class="ex-note">Condición pasada · resultado presente</div>
+          </div>
+          <div class="example-block mix">
+            <div class="ex-fr">Si tu <em>travaillais</em> plus sérieusement (imparfait), tu <span class="ecpa">aurais déjà fini</span> (cond. passé).</div>
+            <div class="ex-es">Si trabajaras más en serio, ya habrías terminado.</div>
+            <div class="ex-note">Condición presente · resultado que ya debería haber ocurrido</div>
+          </div>
+          <div class="example-block mix">
+            <div class="ex-fr">Si j'<em>avais pris</em> ce poste à l'époque, je <span class="ecp">serais</span> directeur aujourd'hui.</div>
+            <div class="ex-es">Si hubiera aceptado ese puesto entonces, hoy sería director.</div>
+          </div>
+          <div class="example-block mix">
+            <div class="ex-fr">Si tu n'<em>avais pas menti</em>, elle te <span class="ecp">ferait</span> encore confiance.</div>
+            <div class="ex-es">Si no hubieras mentido, todavía te tendría confianza.</div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 7 errores más frecuentes de hispanohablantes con el conditionnel en el DELF B1–B2.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+</div><!-- /main-layout -->
+
+<script>
+/* DATA */
+const TRAPS = [
+  {name:'Conditionnel después de si',
+   wrong:"Si tu viendrais, on sortirait.",
+   right:"Si tu venais, on sortirait.",
+   expl:'Después de <strong>si condicional</strong> nunca se usa conditionnel (ni futur). La proposición <em>si</em> lleva présent (tipo 1), imparfait (tipo 2) o plus-que-parfait (tipo 3). El conditionnel va en la <strong>principal</strong>.'},
+  {name:'Confundir tipo 2 y tipo 3',
+   wrong:"Si j'avais su, je t'appellerais. (cond. présent en lugar de passé)",
+   right:"Si j'avais su, je t'aurais appelé.",
+   expl:'Si la proposición <em>si</em> lleva <strong>plus-que-parfait</strong> (acción pasada), la principal debe llevar <strong>conditionnel passé</strong>, no présent. Tipo 3 completo: PQP → cond. passé.'},
+  {name:'Concordancia del participio con être',
+   wrong:"Elle serait parti sans rien dire.",
+   right:"Elle serait partie sans rien dire.",
+   expl:'En el conditionnel passé con <strong>être</strong>, el participio concuerda en género y número con el sujeto, igual que en passé composé y futur antérieur.'},
+  {name:'Devoir / pouvoir en cond. passé',
+   wrong:"Tu aurais devoir partir plus tôt.",
+   right:"Tu aurais dû partir plus tôt.",
+   expl:'<em>Devoir</em> en conditionnel passé → <strong>aurait dû</strong> (participio = dû). <em>Pouvoir</em> → <strong>aurait pu</strong>. Son formas fijas de reproche muy frecuentes en el DELF.'},
+  {name:'Cortesía: présent vs. conditionnel',
+   wrong:"Je veux un café. (en contexto formal)",
+   right:"Je voudrais un café.",
+   expl:'En peticiones formales, <strong>je voudrais, je pourrais, pourriez-vous</strong> son mucho más corteses que las formas del présent. El conditionnel atenúa la petición.'},
+  {name:'Información no confirmada en periodismo',
+   wrong:"Le ministre a démissionné selon nos sources.",
+   right:"Le ministre démissionnerait selon nos sources.",
+   expl:'Cuando la información no está verificada, el periodismo francés usa el <strong>conditionnel présent</strong> (o passé si es sobre el pasado) para indicar que la fuente no es oficial.'},
+  {name:'Hipótesis mixta (B2)',
+   wrong:"Si j'avais étudié médecine, je serai médecin maintenant.",
+   right:"Si j'avais étudié la médecine, je serais médecin maintenant.",
+   expl:'En hipótesis mixtas (condición pasada + resultado presente), la principal lleva <strong>conditionnel présent</strong> (no passé ni futur). La condición (PQP) hace referencia al pasado; el resultado es actual.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+/* CHIP SELECT */
+function selectChip(ns, idx) {
+  document.querySelectorAll('.chip-bar').forEach(bar => {
+    const first = bar.querySelector('.chip');
+    if (first && first.getAttribute('onclick') && first.getAttribute('onclick').includes("'" + ns + "'")) {
+      bar.querySelectorAll('.chip').forEach((c,i) => c.classList.toggle('active', i===idx));
+    }
+  });
+  const panelsEl = document.getElementById(ns + '-panels');
+  if (panelsEl) panelsEl.querySelectorAll(':scope > .chip-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+}
+
+/* NAV */
+function showSection(id, btn) {
+  document.querySelectorAll('.sec-block').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.snav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function switchMode(mode, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + mode).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('section-nav').style.display = mode==='ref' ? '' : 'none';
+}
+function setFontSize(v) { document.documentElement.style.setProperty('--fs', v+'px'); }
+
+/* EXERCISE STATE */
+let exType='fill', exDiff='B1', exQty=5, exFoco='mix';
+let exTotal=0, exAnswered=0, exCorrect=0, exWrong=0;
+
+document.querySelectorAll('.ex-opt-btn:not(.foco)').forEach(b => b.addEventListener('click', function(){
+  document.querySelectorAll('.ex-opt-btn:not(.foco)').forEach(x => x.classList.remove('active'));
+  this.classList.add('active'); exType = this.dataset.type;
+}));
+document.querySelectorAll('.ex-opt-btn.foco').forEach(b => b.addEventListener('click', function(){
+  document.querySelectorAll('.ex-opt-btn.foco').forEach(x => x.classList.remove('active'));
+  this.classList.add('active'); exFoco = this.dataset.foco;
+}));
+
+function setDiff(d) {
+  exDiff = d;
+  document.querySelectorAll('#diff-btns .pill-btn').forEach(b => {
+    b.classList.remove('active','A2','B1','B2');
+    if (b.textContent.trim()===d) b.classList.add('active',d);
+  });
+}
+function setQty(q) {
+  exQty = q;
+  document.querySelectorAll('#qty-btns .pill-btn').forEach(b =>
+    b.classList.toggle('active', parseInt(b.textContent.trim())===q));
+}
+
+/* GENERATE */
+const FOCO_DESC = {
+  mix:      'ambas formas (conditionnel présent y passé), mezclando usos variados: hipótesis, cortesía, consejo, reproche, información no confirmada',
+  cp:       'exclusivamente el conditionnel présent: formación correcta con raíces regulares e irregulares, y sus distintos usos',
+  cpa:      'exclusivamente el conditionnel passé: formación con avoir/être en cond. présent + participio, concordancias, y sus usos',
+  si2:      'frases condicionales tipo 2: si + imparfait → conditionnel présent. El alumno debe conjugar correctamente la principal o la proposición si',
+  si3:      'frases condicionales tipo 3: si + plus-que-parfait → conditionnel passé. El alumno debe conjugar correctamente la principal o la proposición si',
+  cortesia: 'usos de cortesía, consejo y reproche: voudrais, pourriez, devrait, aurait dû, aurait pu, faudrait, à ta place je…',
+};
+const TYPE_DESC = {
+  fill:      'completar huecos: el alumno escribe la forma correcta del verbo',
+  choice:    'elección múltiple: 4 opciones, solo una correcta',
+  transform: 'transformación: reformular la frase según la instrucción',
+  mix:       'mixto: combina fill, choice y transform',
+};
+
+const RULE_LABELS = {
+  's-intro':'Visión general','s-cp':'Cond. présent (formación)',
+  's-usos-cp':'Usos del présent','s-cpa':'Cond. passé (formación)',
+  's-usos-cpa':'Usos del passé','s-si':'Frases con si','s-trampas':'Trampas'
+};
+
+function renderExercises(exs) {
+  const area = document.getElementById('exercise-area');
+  const labels = {fill:'Completar', choice:'Elección múltiple', transform:'Transformación'};
+  area.innerHTML = exs.map((ex,i) =>
+    `<div class="exercise-card" id="ex-card-${i}" data-expl="${esc(ex.explanation)}" data-rule="${ex.rule_ref||''}">
+      <div class="exercise-card-header">
+        <span class="ex-num">${i+1}</span>
+        <span class="ex-type-badge">${labels[ex.type]||ex.type}</span>
+        <span class="ex-diff-badge ${ex.diff}">${ex.diff}</span>
+        <span class="ex-status" id="ex-st-${i}"></span>
+      </div>
+      <div class="exercise-body">
+        ${buildBody(ex,i)}
+        <div class="ex-feedback" id="ex-fb-${i}"></div>
+      </div>
+    </div>`).join('');
+  exs.forEach((ex,i) => {
+    const chk = document.getElementById('chk-'+i);
+    if (chk) chk.addEventListener('click', ()=>checkAnswer(ex,i));
+    const inp = document.getElementById('inp-'+i);
+    if (inp) inp.addEventListener('keydown', e => { if(e.key==='Enter') checkAnswer(ex,i); });
+  });
+}
+
+function buildBody(ex,i) {
+  if (ex.type==='fill')
+    return `<div class="exercise-prompt">${ex.prompt_parts[0]}<input class="fill-input" id="inp-${i}" type="text" placeholder="${ex.blank_hint||'…'}" autocomplete="off" spellcheck="false">${ex.prompt_parts[1]||''}</div><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  if (ex.type==='choice')
+    return `<div class="exercise-prompt">${ex.prompt}</div><div class="choices-grid">${ex.options.map((o,j)=>`<button class="choice-btn" id="ch-${i}-${j}" onclick="selectChoice(${i},${j},${ex.correct_index})">${o}</button>`).join('')}</div>`;
+  if (ex.type==='transform')
+    return `<div class="exercise-prompt">${ex.instruction}<br><em>${ex.original}</em></div><input class="transform-input" id="inp-${i}" type="text" placeholder="Tu respuesta…" autocomplete="off" spellcheck="false"><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  return '';
+}
+
+function checkAnswer(ex,i) {
+  const inp = document.getElementById('inp-'+i);
+  if (!inp||inp.disabled) return;
+  const ok = inp.value.trim().toLowerCase() === ex.answer.trim().toLowerCase();
+  inp.classList.add(ok?'ok':'err'); inp.disabled=true;
+  const chk = document.getElementById('chk-'+i); if(chk) chk.disabled=true;
+  showFeedback(i, ok, ex.answer, ex.explanation, ex.rule_ref);
+  recordAnswer(ok);
+}
+
+function selectChoice(idx, chosen, correct) {
+  const c0 = document.getElementById(`ch-${idx}-0`);
+  if (!c0||c0.disabled) return;
+  for(let j=0;j<4;j++){
+    const b=document.getElementById(`ch-${idx}-${j}`);
+    if(!b) continue; b.disabled=true;
+    if(j===correct)b.classList.add('ok'); else if(j===chosen)b.classList.add('err');
+  }
+  const card=document.getElementById('ex-card-'+idx);
+  showFeedback(idx, chosen===correct, null, card.dataset.expl, card.dataset.rule);
+  recordAnswer(chosen===correct);
+}
+
+function showFeedback(i, ok, ans, expl, ruleRef) {
+  document.getElementById('ex-st-'+i).textContent = ok?'✅':'❌';
+  const fb=document.getElementById('ex-fb-'+i);
+  fb.className='ex-feedback visible '+(ok?'ok':'err');
+  const link = RULE_LABELS[ruleRef]
+    ? `<span class="fb-rule-link" onclick="goToRule('${ruleRef}')">📖 Ver: ${RULE_LABELS[ruleRef]}</span>` : '';
+  let html = ok ? `<strong>✓ Correcto</strong>` : `<strong>✗ Incorrecto</strong>${ans?` — Respuesta: <strong>${ans}</strong>`:''}`;
+  if(expl) html += `<br><span style="font-size:0.88em;opacity:0.92;margin-top:3px;display:block">${expl}</span>`;
+  html += link; fb.innerHTML=html;
+}
+
+function goToRule(ref) {
+  switchMode('ref', document.querySelector('.mode-btn'));
+  setTimeout(()=>{
+    showSection(ref, document.querySelector(`.snav-btn[onclick*="${ref}"]`));
+    document.getElementById(ref).scrollIntoView({behavior:'smooth',block:'start'});
+  }, 80);
+}
+
+function recordAnswer(ok) { exAnswered++; if(ok)exCorrect++; else exWrong++; updateProgress(); }
+
+function updateProgress() {
+  const pct = exTotal>0?(exAnswered/exTotal)*100:0;
+  document.getElementById('progress-frac').textContent=`${exAnswered} / ${exTotal}`;
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('score-correct').textContent=`${exCorrect} correcta${exCorrect!==1?'s':''}`;
+  document.getElementById('score-wrong').textContent=`${exWrong} error${exWrong!==1?'es':''}`;
+  if(exAnswered>=exTotal&&exTotal>0) showFinalScore();
+}
+
+function showFinalScore() {
+  const pct = Math.round((exCorrect/exTotal)*100);
+  document.getElementById('final-score-bar').classList.add('visible');
+  document.getElementById('final-num').textContent=`${exCorrect} / ${exTotal}`;
+  const fill=document.getElementById('final-fill');
+  fill.style.width=pct+'%';
+  fill.style.background=pct>=80?'var(--green)':pct>=50?'var(--accent)':'var(--red)';
+  const msgs={100:'¡Parfait! Dominas el conditionnel. 🎉',80:'Très bien! Repasa los errores marcados.',50:'Bien, pero refuerza los bloques señalados.',0:'Vuelve a Referencia antes de repetir.'};
+  document.getElementById('final-msg').textContent=msgs[pct===100?100:pct>=80?80:pct>=50?50:0];
+  document.getElementById('score-pill').style.display='';
+  document.getElementById('score-pill-val').textContent=`${exCorrect}/${exTotal}`;
+}
+
+function resetExercises() {
+  document.getElementById('exercise-area').innerHTML=`<div class="state-msg"><div class="state-icon">✏️</div><p>Elige tipo, foco, nivel y cantidad, y pulsa <strong>Generar ejercicios</strong>.</p></div>`;
+  document.getElementById('progress-wrap').classList.remove('visible');
+  document.getElementById('final-score-bar').classList.remove('visible');
+  document.getElementById('score-pill').style.display='none';
+  exAnswered=0; exCorrect=0; exWrong=0;
+}
+
+function esc(s) { return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+/* INIT */
+renderTraps();
+</script>
+</body>
+</html>

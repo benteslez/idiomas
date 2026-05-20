@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammaire · Les Expressions de Temps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ede9df;
+  --card: #faf7f1;
+  --border: #c4bead;
+  --text: #1a1814;
+  --text2: #44413a;
+  --text3: #706c64;
+  --accent: #7a5a0a;
+  --accent-light: #f0e0c0;
+  --accent-mid: #b89050;
+  --warn-bg: #fdf0cc;
+  --shadow: 0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm: 0 1px 6px rgba(0,0,0,0.08);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --green: #1a6028;  --green-bg: #e4f2e8;
+  --red: #a81e2e;    --red-bg: #fce6e8;
+  --blue: #163494;   --blue-bg: #e6ebf8;
+  --purple: #6a1a8a; --purple-bg: #f2e6f8;
+  --teal: #0e6e6e;   --teal-bg: #e0f4f4;
+  /* expression colours */
+  --dep-color: #163494; --dep-bg: #e6ebf8;   /* depuis   — blue   */
+  --pen-color: #1a6028; --pen-bg: #e4f2e8;   /* pendant  — green  */
+  --por-color: #8b1a4a; --por-bg: #f8e6ee;   /* pour     — wine   */
+  --ily-color: #6a1a8a; --ily-bg: #f2e6f8;   /* il y a   — purple */
+  --dan-color: #7a5a0a; --dan-bg: #f0e0c0;   /* dans     — gold   */
+  --en-color:  #0e6e6e; --en-bg:  #e0f4f4;   /* en       — teal   */
+  --fs: 15px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: var(--fs); }
+
+/* HEADER */
+.site-header { background: var(--card); border-bottom: 2px solid var(--border); padding: 20px 20px 14px; }
+.header-top { display: flex; align-items: baseline; gap: 10px; margin-bottom: 3px; flex-wrap: wrap; }
+.site-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem,5vw,1.9rem); font-weight: 700; color: var(--text); }
+.header-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent-mid); border-radius: 20px; padding: 3px 10px; }
+.subtitle { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
+.stats-row { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+.stat-pill { border-radius: 20px; padding: 4px 11px; font-size: 0.76rem; font-weight: 700; border: 1px solid; }
+.stat-pill.dep { background: var(--dep-bg); color: var(--dep-color); border-color: var(--dep-color); }
+.stat-pill.pen { background: var(--pen-bg); color: var(--pen-color); border-color: var(--pen-color); }
+.stat-pill.por { background: var(--por-bg); color: var(--por-color); border-color: var(--por-color); }
+.stat-pill.ily { background: var(--ily-bg); color: var(--ily-color); border-color: var(--ily-color); }
+.stat-pill.dan { background: var(--dan-bg); color: var(--dan-color); border-color: var(--dan-color); }
+.stat-pill.enc { background: var(--en-bg);  color: var(--en-color);  border-color: var(--en-color); }
+.stat-pill.neu { background: var(--bg); color: var(--text2); border-color: var(--border); font-weight: 500; }
+.fs-wrap { display: flex; align-items: center; gap: 7px; margin-left: auto; }
+.fs-slider { width: 76px; accent-color: var(--accent); cursor: pointer; }
+.fs-sz { color: var(--text3); font-weight: 700; }
+
+/* NAV */
+.mode-toggle { display: flex; border-bottom: 2px solid var(--border); background: var(--card); }
+.mode-btn { flex: 1; padding: 12px 8px; font-family: 'DM Sans', sans-serif; font-size: 0.84rem; font-weight: 600; color: var(--text3); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.15s; margin-bottom: -2px; }
+.mode-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.section-nav { position: sticky; top: 0; z-index: 200; background: var(--card); border-bottom: 2px solid var(--border); box-shadow: var(--shadow-sm); }
+.section-nav-inner { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.section-nav-inner::-webkit-scrollbar { display: none; }
+.snav-btn { flex-shrink: 0; padding: 11px 16px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; color: var(--text3); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.snav-btn:hover { color: var(--text2); }
+.snav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* LAYOUT */
+.main-layout { max-width: 860px; margin: 0 auto; padding: 16px 16px 40px; }
+.panel { display: none; } .panel.active { display: block; }
+.sec-block { display: none; } .sec-block.active { display: block; }
+.gram-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden; }
+.gram-card-body { padding: 18px; }
+
+/* BOXES */
+.def-box { background: var(--warn-bg); border-left: 4px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 15px; margin-bottom: 14px; line-height: 1.65; }
+.def-box strong { color: var(--accent); font-weight: 700; }
+.warn-box { background: #fff4e0; border: 1px solid #c8900a; border-radius: var(--radius-sm); padding: 10px 13px; margin: 10px 0; font-size: 0.9em; display: flex; gap: 8px; align-items: flex-start; }
+.warn-icon { flex-shrink: 0; margin-top: 1px; }
+.warn-text { color: var(--text2); line-height: 1.55; }
+.warn-text strong { color: #7a4400; font-weight: 700; }
+.note-box { background: var(--purple-bg); border-left: 4px solid var(--purple); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 10px 0; font-size: 0.9em; color: var(--text2); line-height: 1.55; }
+.note-box strong { color: var(--purple); font-weight: 700; }
+.green-box { background: var(--green-bg); border-left: 4px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 10px 0; font-size: 0.9em; color: var(--text2); line-height: 1.55; }
+.green-box strong { color: var(--green); font-weight: 700; }
+
+/* EXAMPLE BLOCKS */
+.example-block { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 8px 0; }
+.example-block.dep { background: var(--dep-bg); border-left: 4px solid var(--dep-color); }
+.example-block.pen { background: var(--pen-bg); border-left: 4px solid var(--pen-color); }
+.example-block.por { background: var(--por-bg); border-left: 4px solid var(--por-color); }
+.example-block.ily { background: var(--ily-bg); border-left: 4px solid var(--ily-color); }
+.example-block.dan { background: var(--dan-bg); border-left: 4px solid var(--dan-color); }
+.example-block.enc { background: var(--en-bg);  border-left: 4px solid var(--en-color); }
+.example-block.neu { background: var(--blue-bg); border-left: 4px solid var(--blue); }
+.example-block.mix { background: #f0f0f8; border-left: 4px solid #606080; }
+.ex-fr { font-weight: 600; margin-bottom: 3px; color: var(--text); }
+.edep { color: var(--dep-color); font-weight: 700; }
+.epen { color: var(--pen-color); font-weight: 700; }
+.epor { color: var(--por-color); font-weight: 700; }
+.eily { color: var(--ily-color); font-weight: 700; }
+.edan { color: var(--dan-color); font-weight: 700; }
+.een  { color: var(--en-color);  font-weight: 700; }
+.ex-es { color: var(--text2); font-size: 0.88em; font-style: italic; }
+.ex-note { font-size: 0.78em; color: var(--text3); margin-top: 3px; font-weight: 500; }
+
+/* TABLES */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.gram-table { width: 100%; border-collapse: collapse; min-width: 280px; }
+.gram-table th { background: var(--bg); border-bottom: 2px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; text-align: left; font-size: 0.72em; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+.gram-table td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; vertical-align: top; }
+.gram-table tr:last-child td { border-bottom: none; }
+.gram-table tr:nth-child(even) td { background: #f4f0e6; }
+.gram-table td:last-child, .gram-table th:last-child { border-right: none; }
+.hl-dep { color: var(--dep-color); font-weight: 700; }
+.hl-pen { color: var(--pen-color); font-weight: 700; }
+.hl-por { color: var(--por-color); font-weight: 700; }
+.hl-ily { color: var(--ily-color); font-weight: 700; }
+.hl-dan { color: var(--dan-color); font-weight: 700; }
+.hl-en  { color: var(--en-color);  font-weight: 700; }
+.hl     { color: var(--accent);    font-weight: 700; }
+.dim    { color: var(--text3); font-size: 0.88em; }
+.ok-cell  { color: var(--green); font-weight: 700; }
+.err-cell { color: var(--red);   font-weight: 600; font-style: italic; }
+
+/* CHIPS */
+.chip-bar { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.chip { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; white-space: nowrap; }
+.chip:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+.chip.active      { background: var(--accent);    color: #fff; border-color: var(--accent); }
+.chip.dep.active  { background: var(--dep-color); border-color: var(--dep-color); }
+.chip.pen.active  { background: var(--pen-color); border-color: var(--pen-color); }
+.chip.por.active  { background: var(--por-color); border-color: var(--por-color); }
+.chip.ily.active  { background: var(--ily-color); border-color: var(--ily-color); }
+.chip.dan.active  { background: var(--dan-color); border-color: var(--dan-color); }
+.chip.enc.active  { background: var(--en-color);  border-color: var(--en-color); }
+.chip-panel { display: none; } .chip-panel.active { display: block; }
+
+.sec-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin: 14px 0 7px; }
+
+/* TRAP CARDS */
+.trap-cards { display: flex; flex-direction: column; gap: 10px; }
+.trap-card { border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.trap-card-header { padding: 11px 14px; background: var(--bg); }
+.trap-name { font-weight: 700; font-size: 0.9em; color: var(--text); margin-bottom: 7px; }
+.trap-vs { display: flex; gap: 8px; flex-wrap: wrap; }
+.trap-wrong { background: var(--red-bg);  border: 1.5px solid #d09098; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--red);   font-weight: 500; }
+.trap-right { background: var(--green-bg); border: 1.5px solid #80b890; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--green); font-weight: 500; }
+.trap-expl { padding: 10px 14px 12px; font-size: 0.86em; color: var(--text2); line-height: 1.6; border-top: 1px solid var(--border); background: var(--card); }
+.trap-expl strong { color: var(--text); font-weight: 700; }
+
+/* EXERCISES */
+.exercise-controls { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.exercise-controls h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+.ctrl-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 7px; display: block; }
+.ex-options { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.ex-opt-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.ex-opt-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+.row-btns { display: flex; gap: 7px; margin-bottom: 14px; flex-wrap: wrap; }
+.pill-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.pill-btn:hover:not(.active) { background: var(--border); }
+.pill-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+.pill-btn.diff.active.A2 { background: var(--green); border-color: var(--green); color: #fff; }
+.pill-btn.diff.active.B1 { background: var(--blue);  border-color: var(--blue);  color: #fff; }
+.pill-btn.diff.active.B2 { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-generate { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; border: none; border-radius: 10px; padding: 13px; font-family: 'DM Sans', sans-serif; font-size: 0.92em; font-weight: 700; cursor: pointer; background: var(--accent); color: white; transition: all 0.18s; margin-top: 4px; }
+.btn-generate:hover:not(:disabled) { filter: brightness(1.1); box-shadow: 0 4px 14px rgba(122,90,10,0.32); }
+.btn-generate:disabled { opacity: 0.5; cursor: not-allowed; }
+.spinner { display: none; animation: spin 0.8s linear infinite; }
+.btn-generate.loading .spinner { display: inline; }
+.btn-generate.loading .btn-icon { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.progress-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 14px; display: none; }
+.progress-wrap.visible { display: block; }
+.progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.progress-label { font-size: 0.78em; color: var(--text3); font-weight: 600; }
+.progress-frac  { font-size: 0.92em; font-weight: 700; color: var(--accent); }
+.progress-track { height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-fill  { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.35s ease; }
+.progress-score { display: flex; gap: 14px; margin-top: 9px; font-size: 0.8em; flex-wrap: wrap; align-items: center; }
+.score-item { display: flex; align-items: center; gap: 5px; font-weight: 500; color: var(--text2); }
+.score-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.score-dot.g { background: var(--green); } .score-dot.r { background: var(--red); }
+.btn-retry { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 13px; font-family: 'DM Sans', sans-serif; font-size: 0.78em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; margin-left: auto; }
+.btn-retry:hover { background: var(--border); }
+.final-score-bar { display: none; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
+.final-score-bar.visible { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.final-num { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+.final-label { font-size: 0.74em; color: var(--text3); }
+.final-track { flex: 1; min-width: 80px; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.final-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+.final-msg { font-size: 0.84em; color: var(--text2); width: 100%; font-weight: 500; }
+.exercise-area { display: none; } .exercise-area.visible { display: block; }
+.exercise-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 12px; overflow: hidden; }
+.exercise-card-header { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--border); }
+.ex-num { font-weight: 700; color: var(--accent); font-size: 0.88em; }
+.ex-type-badge { font-size: 0.68em; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-mid); border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge { font-size: 0.68em; font-weight: 700; border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge.A2 { background: var(--green-bg); color: var(--green); border: 1px solid #80b890; }
+.ex-diff-badge.B1 { background: var(--blue-bg);  color: var(--blue);  border: 1px solid #90a8e0; }
+.ex-diff-badge.B2 { background: var(--warn-bg);  color: var(--accent); border: 1px solid var(--accent-mid); }
+.ex-status { margin-left: auto; }
+.exercise-body { padding: 16px 18px; }
+.exercise-prompt { line-height: 1.7; margin-bottom: 12px; color: var(--text); }
+.exercise-prompt em { color: var(--accent); font-style: italic; font-weight: 600; }
+.fill-input { border: none; border-bottom: 2px solid var(--accent-mid); background: var(--accent-light); padding: 2px 8px; border-radius: 4px 4px 0 0; font-family: 'DM Sans', sans-serif; font-size: 1em; color: var(--text); min-width: 110px; outline: none; transition: border-color 0.15s; }
+.fill-input:focus { border-bottom-color: var(--accent); }
+.fill-input.ok  { background: var(--green-bg); border-bottom-color: var(--green); }
+.fill-input.err { background: var(--red-bg);   border-bottom-color: var(--red); }
+.choices-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 10px; }
+.choice-btn { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.88em; font-weight: 500; cursor: pointer; text-align: left; background: var(--bg); color: var(--text); transition: all 0.15s; }
+.choice-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-light); }
+.choice-btn.ok  { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 700; }
+.choice-btn.err { background: var(--red-bg);   border-color: var(--red);   color: var(--red); }
+.choice-btn:disabled { cursor: default; }
+.transform-input { width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.9em; background: var(--bg); color: var(--text); outline: none; margin-bottom: 8px; transition: border-color 0.15s; }
+.transform-input:focus { border-color: var(--accent); }
+.transform-input.ok  { background: var(--green-bg); border-color: var(--green); }
+.transform-input.err { background: var(--red-bg);   border-color: var(--red); }
+.btn-check { border: 1.5px solid var(--accent); border-radius: 20px; padding: 7px 18px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 700; cursor: pointer; background: transparent; color: var(--accent); transition: all 0.15s; }
+.btn-check:hover:not(:disabled) { background: var(--accent); color: white; }
+.btn-check:disabled { opacity: 0.35; cursor: default; }
+.ex-feedback { display: none; border-radius: var(--radius-sm); padding: 11px 14px; line-height: 1.55; margin-top: 10px; font-size: 0.9em; }
+.ex-feedback.visible { display: block; }
+.ex-feedback.ok  { background: var(--green-bg); border: 1.5px solid #80b890; color: #0e4818; }
+.ex-feedback.err { background: var(--red-bg);   border: 1.5px solid #c08090; color: #700018; }
+.fb-rule-link { display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 0.84em; font-weight: 700; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.skeleton-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 12px; }
+.skel { background: linear-gradient(90deg,var(--border) 25%,#e6e0d4 50%,var(--border) 75%); background-size: 200% 100%; animation: skel 1.4s infinite; border-radius: 4px; height: 13px; margin-bottom: 9px; }
+@keyframes skel { to { background-position: -200% 0; } }
+.state-msg { text-align: center; padding: 40px 20px; color: var(--text3); }
+.state-icon { font-size: 2rem; margin-bottom: 10px; }
+.state-msg p { max-width: 260px; margin: 0 auto; line-height: 1.6; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <h1>Les Expressions de Temps</h1>
+    <span class="header-tag">Grammaire</span>
+  </div>
+  <div class="subtitle">Gramática francesa · DELF B1–B2</div>
+  <div class="stats-row">
+    <div class="stat-pill dep">depuis</div>
+    <div class="stat-pill pen">pendant</div>
+    <div class="stat-pill por">pour</div>
+    <div class="stat-pill ily">il y a</div>
+    <div class="stat-pill dan">dans</div>
+    <div class="stat-pill enc">en</div>
+    <div class="stat-pill neu" id="score-pill" style="display:none">Resultado: <span id="score-pill-val">—</span></div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referencia</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Panorama</button>
+    <button class="snav-btn"        onclick="showSection('s-depuis',this)">2. DEPUIS</button>
+    <button class="snav-btn"        onclick="showSection('s-pendant',this)">3. PENDANT</button>
+    <button class="snav-btn"        onclick="showSection('s-pour',this)">4. POUR</button>
+    <button class="snav-btn"        onclick="showSection('s-ilya',this)">5. IL Y A</button>
+    <button class="snav-btn"        onclick="showSection('s-dans',this)">6. DANS</button>
+    <button class="snav-btn"        onclick="showSection('s-en',this)">7. EN</button>
+    <button class="snav-btn"        onclick="showSection('s-autres',this)">8. Otros</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">9. Trampas</button>
+  </div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. PANORAMA -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las expresiones de tiempo sitúan una acción en el tiempo: cuándo ocurrió, cuánto duró, cuándo ocurrirá. La elección correcta depende de <strong>tres factores</strong>: el tiempo verbal, si la acción continúa o no, y si nos referimos a una duración o a un punto temporal.
+      </div>
+
+      <div class="sec-label">Tabla comparativa de referencia rápida</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Expresión</th><th>Tiempo verbal</th><th>Qué expresa</th><th>Equivalente español</th></tr></thead>
+        <tbody>
+          <tr><td><strong class="hl-dep">depuis</strong></td><td>présent / imparfait</td><td>Inicio de acción que <em>continúa</em></td><td>desde hace / llevaba</td></tr>
+          <tr><td><strong class="hl-pen">pendant</strong></td><td>todos (pasado, pres., fut.)</td><td>Duración completa (terminada o prevista)</td><td>durante</td></tr>
+          <tr><td><strong class="hl-por">pour</strong></td><td>présent / futur</td><td>Duración prevista (intención futura)</td><td>por (tiempo)</td></tr>
+          <tr><td><strong class="hl-ily">il y a</strong></td><td>passé composé</td><td>Punto en el pasado desde el presente</td><td>hace (+ tiempo)</td></tr>
+          <tr><td><strong class="hl-dan">dans</strong></td><td>futur / présent</td><td>Punto en el futuro desde el presente</td><td>dentro de / en</td></tr>
+          <tr><td><strong class="hl-en">en</strong></td><td>todos</td><td>Duración necesaria para completar algo</td><td>en (tiempo que tarda)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Línea de tiempo</div>
+      <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:14px;overflow-x:auto">
+        <div style="display:flex;align-items:center;gap:0;min-width:480px">
+          <div style="flex:1;text-align:center">
+            <div style="font-size:0.76em;color:var(--ily-color);font-weight:700">IL Y A 3 ans</div>
+            <div style="font-size:0.76em;color:var(--dep-color);font-weight:700;margin-top:2px">← DEPUIS 3 ans →</div>
+          </div>
+          <div style="width:2px;height:48px;background:var(--border);flex-shrink:0"></div>
+          <div style="padding:0 8px;text-align:center;flex-shrink:0">
+            <div style="font-size:0.8em;font-weight:700;color:var(--accent)">MAINTENANT</div>
+          </div>
+          <div style="width:2px;height:48px;background:var(--border);flex-shrink:0"></div>
+          <div style="flex:1;text-align:center">
+            <div style="font-size:0.76em;color:var(--dan-color);font-weight:700">DANS 3 ans</div>
+            <div style="font-size:0.76em;color:var(--por-color);font-weight:700;margin-top:2px">POUR 3 ans →</div>
+          </div>
+        </div>
+        <div style="height:2px;background:linear-gradient(to right,var(--ily-color),var(--border) 40%,var(--border) 60%,var(--dan-color));border-radius:2px;margin:6px 0"></div>
+        <div style="display:flex;justify-content:center;margin-top:4px">
+          <div style="font-size:0.74em;color:var(--pen-color);font-weight:700;background:var(--pen-bg);border:1px solid var(--pen-color);border-radius:12px;padding:2px 10px">PENDANT 3 heures (cualquier posición) · EN 3 heures (duración de la acción)</div>
+        </div>
+      </div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Clave de diagnóstico:</strong> ¿la acción <em>continúa</em> ahora? → <strong>depuis + présent</strong>. ¿Ya terminó? → <strong>pendant + PC</strong>. ¿Cuándo empezó? → <strong>il y a + PC</strong>. ¿Cuándo será? → <strong>dans + futur</strong>.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. DEPUIS -->
+  <div class="sec-block" id="s-depuis">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong class="hl-dep">Depuis</strong> indica el <strong>punto de inicio de una acción que continúa en el momento de hablar</strong>. Se usa con présent (si la acción sigue ahora) o imparfait (si seguía en el pasado). Puede ir con una duración o con una fecha/evento.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip dep active" onclick="selectChip('dep',0)">Depuis + durée (présent)</button>
+        <button class="chip dep"        onclick="selectChip('dep',1)">Depuis + date / événement</button>
+        <button class="chip dep"        onclick="selectChip('dep',2)">Depuis + imparfait</button>
+        <button class="chip dep"        onclick="selectChip('dep',3)">Depuis + passé composé (acción terminada)</button>
+      </div>
+      <div id="dep-panels">
+
+        <div class="chip-panel active" id="dep-p-0">
+          <div class="def-box">Acción que empezó en el pasado y <strong>todavía continúa</strong>. Présent + depuis + duración.</div>
+          <div class="example-block dep"><div class="ex-fr">J'habite à Paris <span class="edep">depuis</span> trois ans.</div><div class="ex-es">Llevo tres años viviendo en París. / Vivo en París desde hace tres años.</div></div>
+          <div class="example-block dep"><div class="ex-fr">Elle travaille dans cette entreprise <span class="edep">depuis</span> dix ans.</div><div class="ex-es">Lleva diez años trabajando en esa empresa.</div></div>
+          <div class="example-block dep"><div class="ex-fr">On se connaît <span class="edep">depuis</span> longtemps.</div><div class="ex-es">Nos conocemos desde hace mucho tiempo.</div></div>
+          <div class="example-block dep"><div class="ex-fr">Tu apprends le français <span class="edep">depuis</span> combien de temps ?</div><div class="ex-es">¿Cuánto tiempo llevas aprendiendo francés?</div></div>
+          <div class="example-block dep"><div class="ex-fr">Il ne mange plus de viande <span class="edep">depuis</span> six mois.</div><div class="ex-es">Lleva seis meses sin comer carne.</div></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Error español:</strong> "Llevo tres años" = <em>J'habite depuis trois ans</em> (présent). <strong>Nunca</strong> passé composé: <em>J'ai habité depuis trois ans</em> ✗</div></div>
+        </div>
+
+        <div class="chip-panel" id="dep-p-1">
+          <div class="def-box">Depuis puede ir seguido de una <strong>fecha precisa o de un evento</strong> en lugar de una duración.</div>
+          <div class="example-block dep"><div class="ex-fr">Je vis ici <span class="edep">depuis</span> 2019.</div><div class="ex-es">Vivo aquí desde 2019.</div></div>
+          <div class="example-block dep"><div class="ex-fr">Elle est végétarienne <span class="edep">depuis</span> son voyage en Inde.</div><div class="ex-es">Es vegetariana desde su viaje a la India.</div></div>
+          <div class="example-block dep"><div class="ex-fr">On n'a plus de nouvelles <span class="edep">depuis</span> lundi.</div><div class="ex-es">No tenemos noticias desde el lunes.</div></div>
+          <div class="example-block dep"><div class="ex-fr">Il travaille pour cette ONG <span class="edep">depuis</span> la fin de ses études.</div><div class="ex-es">Trabaja para esa ONG desde que terminó sus estudios.</div></div>
+          <div class="example-block dep"><div class="ex-fr"><span class="edep">Depuis</span> son accident, il fait plus attention.</div><div class="ex-es">Desde su accidente, tiene más cuidado.</div></div>
+        </div>
+
+        <div class="chip-panel" id="dep-p-2">
+          <div class="def-box">Cuando el relato está en pasado, depuis se usa con <strong>imparfait</strong> para indicar que la acción seguía ocurriendo en aquel momento pasado.</div>
+          <div class="example-block dep"><div class="ex-fr">Il dormait <span class="edep">depuis</span> deux heures quand le téléphone a sonné.</div><div class="ex-es">Llevaba dos horas durmiendo cuando sonó el teléfono.</div></div>
+          <div class="example-block dep"><div class="ex-fr">Elle attendait <span class="edep">depuis</span> une heure lorsqu'il est enfin arrivé.</div><div class="ex-es">Llevaba una hora esperando cuando por fin llegó.</div></div>
+          <div class="example-block dep"><div class="ex-fr">Nous vivions là <span class="edep">depuis</span> cinq ans quand on a décidé de partir.</div><div class="ex-es">Llevábamos cinco años viviendo allí cuando decidimos irnos.</div></div>
+          <div class="example-block dep"><div class="ex-fr">Il cherchait du travail <span class="edep">depuis</span> des mois avant de trouver ce poste.</div><div class="ex-es">Llevaba meses buscando trabajo antes de encontrar ese puesto.</div></div>
+        </div>
+
+        <div class="chip-panel" id="dep-p-3">
+          <div class="def-box">En negación o con verbos de <em>cambio de estado</em>, depuis puede ir con passé composé cuando la acción o situación <strong>ha terminado</strong>.</div>
+          <div class="example-block dep"><div class="ex-fr">Je n'ai pas dormi <span class="edep">depuis</span> deux jours.</div><div class="ex-es">No he dormido en dos días. (= la privación de sueño persiste)</div></div>
+          <div class="example-block dep"><div class="ex-fr">Il n'a pas mangé <span class="edep">depuis</span> hier soir.</div><div class="ex-es">No ha comido desde anoche.</div></div>
+          <div class="example-block dep"><div class="ex-fr">Je ne l'ai pas vu <span class="edep">depuis</span> des années.</div><div class="ex-es">No lo he visto en años.</div></div>
+          <div class="note-box"><strong>Regla:</strong> en negación, el passé composé con depuis es correcto porque la negación implica que la acción <em>no</em> ha ocurrido durante ese período. La privación continúa.</div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3. PENDANT -->
+  <div class="sec-block" id="s-pendant">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong class="hl-pen">Pendant</strong> indica la <strong>duración completa</strong> de una acción, ya sea pasada, presente o futura. A diferencia de depuis, la acción no tiene que continuar ahora — expresa un período con principio y fin conocidos.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pen active" onclick="selectChip('pen',0)">Pendant + durée (passé)</button>
+        <button class="chip pen"        onclick="selectChip('pen',1)">Pendant + durée (présent / futur)</button>
+        <button class="chip pen"        onclick="selectChip('pen',2)">Pendant que (simultanéité)</button>
+      </div>
+      <div id="pen-panels">
+
+        <div class="chip-panel active" id="pen-p-0">
+          <div class="def-box">Acción completamente terminada, de la que se especifica la duración total. Típicamente con passé composé o imparfait.</div>
+          <div class="example-block pen"><div class="ex-fr">J'ai vécu à Rome <span class="epen">pendant</span> deux ans.</div><div class="ex-es">Viví en Roma durante dos años. (ya no vivo allí)</div></div>
+          <div class="example-block pen"><div class="ex-fr">Elle a travaillé <span class="epen">pendant</span> toute la nuit.</div><div class="ex-es">Trabajó durante toda la noche.</div></div>
+          <div class="example-block pen"><div class="ex-fr">Il a plu <span class="epen">pendant</span> trois heures.</div><div class="ex-es">Llovió durante tres horas.</div></div>
+          <div class="example-block pen"><div class="ex-fr">On a attendu <span class="epen">pendant</span> une heure sans nouvelles.</div><div class="ex-es">Esperamos una hora sin noticias.</div></div>
+          <div class="example-block pen"><div class="ex-fr"><span class="epen">Pendant</span> son enfance, il vivait à la campagne.</div><div class="ex-es">Durante su infancia, vivía en el campo.</div></div>
+        </div>
+
+        <div class="chip-panel" id="pen-p-1">
+          <div class="def-box">Pendant puede usarse también con présent (hábito, duración actual) o futur (duración prevista).</div>
+          <div class="example-block pen"><div class="ex-fr"><span class="epen">Pendant</span> les vacances, je me lève tard.</div><div class="ex-es">Durante las vacaciones, me levanto tarde.</div></div>
+          <div class="example-block pen"><div class="ex-fr">Je serai absent <span class="epen">pendant</span> une semaine.</div><div class="ex-es">Estaré ausente durante una semana.</div></div>
+          <div class="example-block pen"><div class="ex-fr">Tu peux garder ce livre <span class="epen">pendant</span> un mois.</div><div class="ex-es">Puedes quedarte con ese libro durante un mes.</div></div>
+          <div class="example-block pen"><div class="ex-fr"><span class="epen">Pendant</span> les travaux, l'accès est interdit.</div><div class="ex-es">Durante las obras, el acceso está prohibido.</div></div>
+        </div>
+
+        <div class="chip-panel" id="pen-p-2">
+          <div class="def-box"><strong>Pendant que</strong> introduce una proposición de simultaneidad: dos acciones ocurren al mismo tiempo.</div>
+          <div class="example-block pen"><div class="ex-fr"><span class="epen">Pendant que</span> tu cuisines, je mets la table.</div><div class="ex-es">Mientras cocinas, yo pongo la mesa.</div></div>
+          <div class="example-block pen"><div class="ex-fr"><span class="epen">Pendant qu'</span>il dormait, elle lisait.</div><div class="ex-es">Mientras él dormía, ella leía.</div></div>
+          <div class="example-block pen"><div class="ex-fr"><span class="epen">Pendant que</span> vous regardez la télé, les enfants font leurs devoirs.</div><div class="ex-es">Mientras veis la tele, los niños hacen los deberes.</div></div>
+          <div class="note-box"><strong>Pendant que vs. alors que:</strong> <em>pendant que</em> indica simple simultaneidad. <em>Alors que</em> añade un matiz de contraste u oposición.</div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. POUR -->
+  <div class="sec-block" id="s-pour">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong class="hl-por">Pour</strong> expresa una <strong>duración prevista o planificada</strong> — el tiempo que se tiene intención de estar o que se ha asignado a algo. Se usa principalmente con verbos de movimiento o de estancia y con tiempo futuro o présent.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip por active" onclick="selectChip('por',0)">Duración prevista (aller, partir, rester)</button>
+        <button class="chip por"        onclick="selectChip('por',1)">Pour vs. pendant — distinción clave</button>
+      </div>
+      <div id="por-panels">
+
+        <div class="chip-panel active" id="por-p-0">
+          <div class="example-block por"><div class="ex-fr">Je pars à Lyon <span class="epor">pour</span> trois jours.</div><div class="ex-es">Me voy a Lyon por tres días (tengo previsto quedarme tres días).</div></div>
+          <div class="example-block por"><div class="ex-fr">Elle est partie en vacances <span class="epor">pour</span> deux semaines.</div><div class="ex-es">Se ha ido de vacaciones por dos semanas.</div></div>
+          <div class="example-block por"><div class="ex-fr">Je reste ici <span class="epor">pour</span> quelques jours.</div><div class="ex-es">Me quedo aquí unos días.</div></div>
+          <div class="example-block por"><div class="ex-fr">Il a loué un appartement <span class="epor">pour</span> un an.</div><div class="ex-es">Ha alquilado un piso por un año.</div></div>
+          <div class="example-block por"><div class="ex-fr">Je serai à Paris <span class="epor">pour</span> une semaine à partir de lundi.</div><div class="ex-es">Estaré en París una semana a partir del lunes.</div></div>
+        </div>
+
+        <div class="chip-panel" id="por-p-1">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th></th><th class="hl-por">Pour</th><th class="hl-pen">Pendant</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Perspectiva</strong></td><td>Duración planeada (todavía en curso o futura)</td><td>Duración real transcurrida (terminada o neutra)</td></tr>
+              <tr><td><strong>Tiempo verbal</strong></td><td>Présent, futur, partir/rester/aller</td><td>Cualquiera, especialmente pasado</td></tr>
+              <tr><td><strong>Certeza</strong></td><td>Intención, previsión</td><td>Dato objetivo, duración efectiva</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block por"><div class="ex-fr">Je pars à Madrid <span class="epor">pour</span> une semaine.</div><div class="ex-es">Me voy a Madrid por una semana. (intención/plan)</div></div>
+          <div class="example-block pen"><div class="ex-fr">J'ai vécu à Madrid <span class="epen">pendant</span> une semaine.</div><div class="ex-es">Viví en Madrid durante una semana. (hecho consumado)</div></div>
+          <div class="example-block por"><div class="ex-fr">Il est en réunion <span class="epor">pour</span> encore une heure.</div><div class="ex-es">Está en reunión durante otra hora más. (previsto)</div></div>
+          <div class="example-block pen"><div class="ex-fr">Il était en réunion <span class="epen">pendant</span> trois heures.</div><div class="ex-es">Estuvo en reunión durante tres horas. (consumado)</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 5. IL Y A -->
+  <div class="sec-block" id="s-ilya">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong class="hl-ily">Il y a</strong> indica un <strong>momento en el pasado</strong> medido desde el presente. Equivale a "hace" en español. Se usa siempre con passé composé. No confundir con depuis (duración continua) ni con dans (futuro).
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip ily active" onclick="selectChip('ily',0)">Il y a + durée (point dans le passé)</button>
+        <button class="chip ily"        onclick="selectChip('ily',1)">Il y a que / Ça fait… que</button>
+        <button class="chip ily"        onclick="selectChip('ily',2)">Il y a vs. depuis — distinción clave</button>
+      </div>
+      <div id="ily-panels">
+
+        <div class="chip-panel active" id="ily-p-0">
+          <div class="def-box">Señala cuándo ocurrió algo en el pasado — responde a "¿cuándo?" no a "¿cuánto tiempo lleva?".</div>
+          <div class="example-block ily"><div class="ex-fr">Je suis arrivé <span class="eily">il y a</span> trois jours.</div><div class="ex-es">Llegué hace tres días.</div></div>
+          <div class="example-block ily"><div class="ex-fr">Elle a appelé <span class="eily">il y a</span> cinq minutes.</div><div class="ex-es">Llamó hace cinco minutos.</div></div>
+          <div class="example-block ily"><div class="ex-fr">Ils se sont rencontrés <span class="eily">il y a</span> dix ans.</div><div class="ex-es">Se conocieron hace diez años.</div></div>
+          <div class="example-block ily"><div class="ex-fr">J'ai terminé mes études <span class="eily">il y a</span> deux ans.</div><div class="ex-es">Terminé mis estudios hace dos años.</div></div>
+          <div class="example-block ily"><div class="ex-fr">Cette loi a été votée <span class="eily">il y a</span> environ un siècle.</div><div class="ex-es">Esta ley fue aprobada hace aproximadamente un siglo.</div></div>
+        </div>
+
+        <div class="chip-panel" id="ily-p-1">
+          <div class="def-box"><strong>Il y a… que</strong> y <strong>ça fait… que</strong> son alternativas a depuis para expresar duración de acción que continúa. Más coloquiales. Se usan con présent.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Estructura</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><span class="hl-dep">Depuis</span> + durée</td><td>J'habite ici <span class="hl-dep">depuis</span> trois ans.</td></tr>
+              <tr><td><span class="hl-ily">Il y a</span> + durée + que</td><td><span class="hl-ily">Il y a</span> trois ans que j'habite ici.</td></tr>
+              <tr><td><span class="hl-ily">Ça fait</span> + durée + que</td><td><span class="hl-ily">Ça fait</span> trois ans que j'habite ici.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block ily"><div class="ex-fr"><span class="eily">Il y a</span> deux heures qu'on attend.</div><div class="ex-es">Llevamos dos horas esperando.</div></div>
+          <div class="example-block ily"><div class="ex-fr"><span class="eily">Ça fait</span> longtemps qu'on ne s'est pas vus.</div><div class="ex-es">Hace mucho que no nos vemos.</div></div>
+          <div class="note-box"><strong>Registro:</strong> <em>depuis</em> es neutro y válido en todos los contextos. <em>Ça fait… que</em> es más oral/coloquial. <em>Il y a… que</em> es intermedio.</div>
+        </div>
+
+        <div class="chip-panel" id="ily-p-2">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th></th><th class="hl-ily">Il y a</th><th class="hl-dep">Depuis</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Pregunta</strong></td><td>¿Cuándo ocurrió?</td><td>¿Desde cuándo / cuánto tiempo?</td></tr>
+              <tr><td><strong>Acción</strong></td><td>Terminada (puntual)</td><td>Continúa ahora</td></tr>
+              <tr><td><strong>Tiempo verbal</strong></td><td>Passé composé</td><td>Présent (o imparfait)</td></tr>
+              <tr><td><strong>Español</strong></td><td>"hace X tiempo"</td><td>"desde hace X tiempo / llevo X"</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block ily"><div class="ex-fr">Je suis arrivé à Paris <span class="eily">il y a</span> un an. (llegué = hecho puntual pasado)</div><div class="ex-es">Llegué a París hace un año.</div></div>
+          <div class="example-block dep"><div class="ex-fr">J'habite à Paris <span class="edep">depuis</span> un an. (sigo viviendo aquí)</div><div class="ex-es">Llevo un año viviendo en París.</div></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text">No se dice: <em>J'habite ici il y a un an</em> ✗ ni <em>Je suis arrivé depuis un an</em> ✗. El par correcto es: <strong>je suis arrivé il y a / j'habite depuis</strong>.</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. DANS -->
+  <div class="sec-block" id="s-dans">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong class="hl-dan">Dans</strong> indica un <strong>momento en el futuro</strong> medido desde el presente. Equivale a "dentro de" o "en" en español cuando se refiere al futuro. Se usa con futur simple o futur proche.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip dan active" onclick="selectChip('dan',0)">Dans + durée (futur)</button>
+        <button class="chip dan"        onclick="selectChip('dan',1)">Dans vs. en — distinción clave</button>
+        <button class="chip dan"        onclick="selectChip('dan',2)">Dans vs. il y a — simetría temporal</button>
+      </div>
+      <div id="dan-panels">
+
+        <div class="chip-panel active" id="dan-p-0">
+          <div class="example-block dan"><div class="ex-fr">Je serai là <span class="edan">dans</span> dix minutes.</div><div class="ex-es">Estaré allí en diez minutos / dentro de diez minutos.</div></div>
+          <div class="example-block dan"><div class="ex-fr">On part en vacances <span class="edan">dans</span> deux semaines.</div><div class="ex-es">Nos vamos de vacaciones dentro de dos semanas.</div></div>
+          <div class="example-block dan"><div class="ex-fr">Le résultat sera connu <span class="edan">dans</span> trois jours.</div><div class="ex-es">El resultado se sabrá dentro de tres días.</div></div>
+          <div class="example-block dan"><div class="ex-fr">Je te rappelle <span class="edan">dans</span> une heure.</div><div class="ex-es">Te llamo dentro de una hora.</div></div>
+          <div class="example-block dan"><div class="ex-fr"><span class="edan">Dans</span> dix ans, la situation sera très différente.</div><div class="ex-es">Dentro de diez años, la situación será muy diferente.</div></div>
+        </div>
+
+        <div class="chip-panel" id="dan-p-1">
+          <div class="def-box">Tanto <em>dans</em> como <em>en</em> pueden traducirse con "en" en español, pero tienen significados distintos.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th></th><th class="hl-dan">Dans</th><th class="hl-en">En</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Qué indica</strong></td><td>Punto futuro desde ahora</td><td>Duración necesaria para completar</td></tr>
+              <tr><td><strong>Pregunta</strong></td><td>¿Cuándo ocurrirá?</td><td>¿Cuánto tarda / tardó?</td></tr>
+              <tr><td><strong>Ejemplo</strong></td><td>Je finis <em>dans</em> une heure. (terminaré a las X)</td><td>Je finis <em>en</em> une heure. (tardo una hora)</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block dan"><div class="ex-fr">Le train part <span class="edan">dans</span> une heure. (salida: dentro de una hora)</div><div class="ex-es">El tren sale dentro de una hora.</div></div>
+          <div class="example-block enc"><div class="ex-fr">Le trajet dure <span class="een">en</span> une heure. (duración del trayecto: una hora)</div><div class="ex-es">El trayecto dura una hora.</div></div>
+          <div class="example-block dan"><div class="ex-fr">Je reviens <span class="edan">dans</span> deux jours. (punto de regreso: en dos días)</div><div class="ex-es">Vuelvo dentro de dos días.</div></div>
+          <div class="example-block enc"><div class="ex-fr">Il a lu ce livre <span class="een">en</span> deux jours. (tardó dos días en leerlo)</div><div class="ex-es">Leyó ese libro en dos días.</div></div>
+        </div>
+
+        <div class="chip-panel" id="dan-p-2">
+          <div class="def-box"><em>Il y a</em> y <em>dans</em> son simétricos respecto al presente: il y a mira al pasado, dans al futuro.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th class="hl-ily">Il y a (pasado)</th><th style="text-align:center">MAINTENANT</th><th class="hl-dan">Dans (futuro)</th></tr></thead>
+            <tbody>
+              <tr><td>Il est parti <span class="hl-ily">il y a</span> deux jours.</td><td style="text-align:center">→</td><td>Il reviendra <span class="hl-dan">dans</span> deux jours.</td></tr>
+              <tr><td>Je l'ai vu <span class="hl-ily">il y a</span> une heure.</td><td style="text-align:center">→</td><td>Je le verrai <span class="hl-dan">dans</span> une heure.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block ily"><div class="ex-fr">Elle a appelé <span class="eily">il y a</span> cinq minutes.</div><div class="ex-es">Llamó hace cinco minutos.</div></div>
+          <div class="example-block dan"><div class="ex-fr">Elle va appeler <span class="edan">dans</span> cinq minutes.</div><div class="ex-es">Llamará dentro de cinco minutos.</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 7. EN -->
+  <div class="sec-block" id="s-en">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong class="hl-en">En</strong> expresa el <strong>tiempo necesario para completar una acción</strong> — cuánto tarda en hacerse algo. Se usa con cualquier tiempo verbal. Responde a la pregunta: <em>combien de temps ça prend ?</em>
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip enc active" onclick="selectChip('enc',0)">En + durée (temps de réalisation)</button>
+        <button class="chip enc"        onclick="selectChip('enc',1)">En vs. dans (confusión con "en" español)</button>
+        <button class="chip enc"        onclick="selectChip('enc',2)">En vs. pendant</button>
+      </div>
+      <div id="enc-panels">
+
+        <div class="chip-panel active" id="enc-p-0">
+          <div class="example-block enc"><div class="ex-fr">Elle a couru le marathon <span class="een">en</span> trois heures et demie.</div><div class="ex-es">Corrió el maratón en tres horas y media.</div></div>
+          <div class="example-block enc"><div class="ex-fr">Je peux préparer ce plat <span class="een">en</span> vingt minutes.</div><div class="ex-es">Puedo preparar ese plato en veinte minutos.</div></div>
+          <div class="example-block enc"><div class="ex-fr">Il a lu tout le livre <span class="een">en</span> une journée.</div><div class="ex-es">Leyó todo el libro en un día.</div></div>
+          <div class="example-block enc"><div class="ex-fr">On peut traverser Paris <span class="een">en</span> une heure en métro.</div><div class="ex-es">Se puede cruzar París en una hora en metro.</div></div>
+          <div class="example-block enc"><div class="ex-fr">Elle apprend vite — elle a fini le niveau B1 <span class="een">en</span> six mois.</div><div class="ex-es">Aprende rápido — terminó el nivel B1 en seis meses.</div></div>
+        </div>
+
+        <div class="chip-panel" id="enc-p-1">
+          <div class="def-box">El español usa "en" para dos cosas distintas que el francés separa con <em>en</em> y <em>dans</em>.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Español "en"</th><th>Sentido</th><th>Francés</th></tr></thead>
+            <tbody>
+              <tr><td>"Lo haré <strong>en</strong> dos horas" (tardará 2h)</td><td>Duración para completar</td><td class="hl-en">en deux heures</td></tr>
+              <tr><td>"Lo haré <strong>en</strong> dos horas" (dentro de 2h)</td><td>Punto futuro</td><td class="hl-dan">dans deux heures</td></tr>
+            </tbody>
+          </table></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text">En español "en dos horas" es ambiguo. En francés la distinción es obligatoria: <strong>en deux heures</strong> (tarda dos horas) ≠ <strong>dans deux heures</strong> (dentro de dos horas). Contexto: "Voy a prepararlo en dos horas" → <em>Je vais le préparer <strong>en</strong> deux heures</em> (duración). "Comeré en dos horas" → <em>Je mangerai <strong>dans</strong> deux heures</em> (momento futuro).</div></div>
+        </div>
+
+        <div class="chip-panel" id="enc-p-2">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th></th><th class="hl-en">En</th><th class="hl-pen">Pendant</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Qué mide</strong></td><td>Tiempo para completar (eficiencia)</td><td>Duración total transcurrida</td></tr>
+              <tr><td><strong>Implica</strong></td><td>La acción se completó / completará</td><td>Neutro sobre si se completó</td></tr>
+              <tr><td><strong>Ejemplo</strong></td><td>J'ai écrit le rapport <em>en</em> une heure.</td><td>J'ai travaillé <em>pendant</em> une heure.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block enc"><div class="ex-fr">Il a réparé la voiture <span class="een">en</span> deux heures. (tardó dos horas en terminar)</div><div class="ex-es">Reparó el coche en dos horas.</div></div>
+          <div class="example-block pen"><div class="ex-fr">Il a travaillé sur la voiture <span class="epen">pendant</span> deux heures. (estuvo dos horas trabajando, sin indicar si terminó)</div><div class="ex-es">Trabajó en el coche durante dos horas.</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 8. OTROS -->
+  <div class="sec-block" id="s-autres">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Otras expresiones temporales frecuentes en el DELF B1–B2 que no son preposiciones de duración sino <strong>marcadores de secuencia, frecuencia y relación temporal</strong>.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="selectChip('aut',0)">Antériorité / postériorité</button>
+        <button class="chip"        onclick="selectChip('aut',1)">Fréquence</button>
+        <button class="chip"        onclick="selectChip('aut',2)">Dès que / aussitôt que / quand / lorsque</button>
+        <button class="chip"        onclick="selectChip('aut',3)">Dès (préposition) — en détail</button>
+        <button class="chip"        onclick="selectChip('aut',4)">Tôt / tard · D'ici · Désormais</button>
+      </div>
+      <div id="aut-panels">
+
+        <div class="chip-panel active" id="aut-p-0">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Expresión</th><th>Sentido</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><strong>avant (de / que)</strong></td><td>anterioridad</td><td>Appelle-moi <span class="hl">avant</span> de partir.</td></tr>
+              <tr><td><strong>après (avoir / être + pp)</strong></td><td>posterioridad</td><td><span class="hl">Après avoir mangé</span>, il s'est reposé.</td></tr>
+              <tr><td><strong>puis / ensuite / alors</strong></td><td>secuencia narrativa</td><td>Il est entré, <span class="hl">puis</span> il a salué tout le monde.</td></tr>
+              <tr><td><strong>enfin / finalement</strong></td><td>conclusión de secuencia</td><td><span class="hl">Finalement</span>, ils ont décidé de partir.</td></tr>
+              <tr><td><strong>tout de suite / immédiatement</strong></td><td>inmediatamente después</td><td>J'arrive <span class="hl">tout de suite</span>.</td></tr>
+              <tr><td><strong>au bout de</strong></td><td>al cabo de (duración transcurrida)</td><td><span class="hl">Au bout de</span> deux heures, il était épuisé.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--accent);font-weight:700">Après avoir</span> fini son travail, elle est sortie.</div><div class="ex-es">Después de terminar su trabajo, salió.</div><div class="ex-note">après + avoir/être + participio pasado (infinitif passé)</div></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--accent);font-weight:700">Au bout de</span> trois heures d'attente, il est parti sans nouvelles.</div><div class="ex-es">Al cabo de tres horas de espera, se fue sin noticias.</div></div>
+        </div>
+
+        <div class="chip-panel" id="aut-p-1">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Expresión</th><th>Frecuencia</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><strong>toujours</strong></td><td>siempre</td><td>Il est <span class="hl">toujours</span> en retard.</td></tr>
+              <tr><td><strong>souvent</strong></td><td>a menudo</td><td>On se voit <span class="hl">souvent</span>.</td></tr>
+              <tr><td><strong>parfois / quelquefois</strong></td><td>a veces</td><td><span class="hl">Parfois</span>, je préfère rester chez moi.</td></tr>
+              <tr><td><strong>de temps en temps</strong></td><td>de vez en cuando</td><td>Je fais du sport <span class="hl">de temps en temps</span>.</td></tr>
+              <tr><td><strong>rarement</strong></td><td>raramente</td><td>Elle sort <span class="hl">rarement</span> le soir.</td></tr>
+              <tr><td><strong>jamais</strong></td><td>nunca (con ne)</td><td>Je ne mange <span class="hl">jamais</span> de viande.</td></tr>
+              <tr><td><strong>tous les + jours / ans…</strong></td><td>periodicidad</td><td>Il court <span class="hl">tous les matins</span>.</td></tr>
+              <tr><td><strong>une fois par semaine</strong></td><td>periodicidad exacta</td><td>On se réunit <span class="hl">une fois par mois</span>.</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="chip-panel" id="aut-p-2">
+          <div class="def-box">Conjunciones temporales que introducen una subordinada. <strong>Regla clave:</strong> en contexto futuro, rigen futur simple o futur antérieur en la subordinada — <strong>nunca présent</strong> (al contrario que en español). En contexto pasado, rigen passé composé o plus-que-parfait.</div>
+
+          <div class="sec-label">Tabla completa con tiempos verbales</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Conjunción</th><th>Sentido</th><th>Futuro (subordinada)</th><th>Pasado (subordinada)</th></tr></thead>
+            <tbody>
+              <tr><td><strong>dès que</strong></td><td>en cuanto, nada más</td><td>futur simple / FA</td><td>passé composé / PQP</td></tr>
+              <tr><td><strong>aussitôt que</strong></td><td>en cuanto (aún más inmediato)</td><td>futur simple / FA</td><td>passé composé / PQP</td></tr>
+              <tr><td><strong>quand</strong></td><td>cuando</td><td>futur simple / FA</td><td>passé composé / imparfait</td></tr>
+              <tr><td><strong>lorsque</strong></td><td>cuando (más formal)</td><td>futur simple / FA</td><td>passé composé / imparfait</td></tr>
+              <tr><td><strong>tant que</strong></td><td>mientras / mientras que (condición)</td><td>futur simple</td><td>imparfait</td></tr>
+              <tr><td><strong>jusqu'à ce que</strong></td><td>hasta que</td><td colspan="2">subjonctif présent (siempre)</td></tr>
+              <tr><td><strong>avant que</strong></td><td>antes de que</td><td colspan="2">subjonctif présent (siempre)</td></tr>
+              <tr><td><strong>après que</strong></td><td>después de que</td><td colspan="2">indicatif (no subjonctif — error frecuente)</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="sec-label">Dès que — 5 ejemplos en contextos distintos</div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Dès que</span> tu <em>auras fini</em>, appelle-moi. (futur antérieur)</div><div class="ex-es">En cuanto hayas terminado, llámame.</div></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Dès qu'</span>il <em>arrivera</em>, on commencera. (futur simple)</div><div class="ex-es">En cuanto llegue, empezaremos.</div></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Dès que</span> j'ai su la nouvelle, je t'ai appelé. (passé composé)</div><div class="ex-es">En cuanto supe la noticia, te llamé.</div></div>
+          <div class="example-block neu"><div class="ex-fr">Elle souriait <span style="color:var(--dep-color);font-weight:700">dès qu'</span>elle le voyait. (imparfait — habitual)</div><div class="ex-es">Sonreía en cuanto le veía (cada vez que).</div></div>
+          <div class="example-block neu"><div class="ex-fr">Je t'enverrai les résultats <span style="color:var(--dep-color);font-weight:700">dès que</span> je <em>les aurai reçus</em>. (FA + accord)</div><div class="ex-es">Te enviaré los resultados en cuanto los haya recibido.</div></div>
+
+          <div class="sec-label">Aussitôt que vs. dès que</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th></th><th>Dès que</th><th>Aussitôt que</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Matiz</strong></td><td>Inmediatamente después de (estándar)</td><td>Inmediatamente después de (insistencia en la rapidez)</td></tr>
+              <tr><td><strong>Registro</strong></td><td>Neutro, todos los registros</td><td>Más enfático, ligeramente más formal</td></tr>
+              <tr><td><strong>Tiempo verbal</strong></td><td>Idéntico a dès que</td><td>Idéntico a dès que</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Aussitôt qu'</span>il eut terminé, il quitta la salle. (passé simple, muy formal)</div><div class="ex-es">En cuanto hubo terminado, abandonó la sala.</div></div>
+
+          <div class="sec-label">Quand vs. lorsque</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th></th><th>Quand</th><th>Lorsque</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Registro</strong></td><td>Neutro / oral / escrito</td><td>Más formal / escrito</td></tr>
+              <tr><td><strong>Interrogativo</strong></td><td>Sí: Quand viendras-tu ?</td><td>No (solo subordinante)</td></tr>
+              <tr><td><strong>Tiempo verbal</strong></td><td>FS / FA en contexto futuro</td><td>FS / FA en contexto futuro</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Quand</span> tu <em>arriveras</em>, nous serons déjà là.</div><div class="ex-es">Cuando llegues, ya estaremos allí. (quand + futur simple, nunca présent)</div></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Lorsqu'</span>il <em>aura obtenu</em> son diplôme, il cherchera du travail.</div><div class="ex-es">Cuando haya obtenido su diploma, buscará trabajo.</div></div>
+
+          <div class="sec-label">Tant que — mientras (condición)</div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Tant que</span> tu <em>seras</em> là, je n'aurai pas peur. (futur simple)</div><div class="ex-es">Mientras estés aquí, no tendré miedo.</div></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Tant qu'</span>il y a de la vie, il y a de l'espoir. (présent — verdad general)</div><div class="ex-es">Mientras haya vida, habrá esperanza.</div></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Tant que</span> tu ne t'excuseras pas, je ne te parlerai plus.</div><div class="ex-es">Mientras no te disculpes, no te hablaré más.</div></div>
+
+          <div class="sec-label">Jusqu'à ce que y avant que — siempre subjonctif</div>
+          <div class="example-block neu"><div class="ex-fr">Attends <span style="color:var(--dep-color);font-weight:700">jusqu'à ce que</span> je <em>revienne</em>. (subjonctif)</div><div class="ex-es">Espera hasta que vuelva.</div></div>
+          <div class="example-block neu"><div class="ex-fr">Dis-le-lui <span style="color:var(--dep-color);font-weight:700">avant qu'</span>il ne <em>parte</em>. (subjonctif + ne explétif optional)</div><div class="ex-es">Díselo antes de que se vaya.</div></div>
+
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text"><strong>Après que ≠ subjonctif.</strong> "Después de que" rige indicatif en francés normativo: <em>après qu'il <strong>est</strong> parti</em> ✓ (no: <em>après qu'il soit parti</em>). En oral se usa frecuentemente con subjonctif, pero en el escrito formal del DELF, indicatif es la forma prescrita.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="aut-p-3">
+          <div class="def-box"><strong>Dès</strong> como preposición (sin <em>que</em>) se usa ante un sustantivo, un infinitif passé o un adverbio de tiempo. Expresa <strong>inmediatez</strong>: en cuanto, nada más, desde el primer momento.</div>
+
+          <div class="sec-label">Dès + nom (sustantivo)</div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Dès</span> son arrivée, il a pris les choses en main.</div><div class="ex-es">Nada más llegar, tomó las riendas.</div><div class="ex-note">dès + nom = en cuanto + acción sustantivada</div></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Dès</span> le début, j'ai su que ça ne marcherait pas.</div><div class="ex-es">Desde el principio, supe que no funcionaría.</div></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Dès</span> sa sortie de prison, il a recommencé à travailler.</div><div class="ex-es">Nada más salir de la cárcel, volvió a trabajar.</div></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Dès</span> l'aube, les oiseaux commencent à chanter.</div><div class="ex-es">Desde el amanecer, los pájaros empiezan a cantar.</div></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Dès</span> la fermeture des portes, le train part.</div><div class="ex-es">Nada más cerrarse las puertas, el tren parte.</div></div>
+
+          <div class="sec-label">Dès + maintenant / demain / lors</div>
+          <div class="example-block neu"><div class="ex-fr">Tu peux commencer <span style="color:var(--dep-color);font-weight:700">dès maintenant</span>.</div><div class="ex-es">Puedes empezar ahora mismo / desde ya.</div></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Dès demain</span>, les nouvelles règles s'appliquent.</div><div class="ex-es">A partir de mañana, se aplican las nuevas normas.</div></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Dès lors</span>, tout a changé entre eux. (formal)</div><div class="ex-es">Desde entonces / A partir de ese momento, todo cambió entre ellos.</div></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--dep-color);font-weight:700">Dès lors que</span> tu acceptes, tu es responsable. (formal)</div><div class="ex-es">Desde el momento en que aceptas, eres responsable.</div></div>
+
+          <div class="sec-label">Dès que vs. dès (preposición) — resumen</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Forma</th><th>Sigue de</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><strong>dès que</strong></td><td>+ sujeto + verbo conjugado</td><td><em>Dès qu'il arrive</em>, on commence.</td></tr>
+              <tr><td><strong>dès</strong></td><td>+ sustantivo</td><td><em>Dès son arrivée</em>, on commence.</td></tr>
+              <tr><td><strong>dès</strong></td><td>+ adverbio temporal</td><td><em>Dès maintenant / demain / lors</em></td></tr>
+            </tbody>
+          </table></div>
+          <div class="note-box"><strong>Equivalencia:</strong> <em>dès que + verbo conjugado</em> y <em>dès + nom d'action</em> expresan la misma idea. En el escrito formal, la construcción con sustantivo (<em>dès son arrivée</em>) es más elegante que la conjunción.</div>
+        </div>
+
+        <div class="chip-panel" id="aut-p-4">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Expresión</th><th>Sentido</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><strong>tôt ou tard</strong></td><td>tarde o temprano</td><td><span class="hl">Tôt ou tard</span>, tu comprendras.</td></tr>
+              <tr><td><strong>d'ici + durée</strong></td><td>para / de aquí a</td><td>Ça sera prêt <span class="hl">d'ici</span> demain.</td></tr>
+              <tr><td><strong>d'ici là</strong></td><td>de aquí a entonces</td><td><span class="hl">D'ici là</span>, on aura le temps.</td></tr>
+              <tr><td><strong>désormais</strong></td><td>de ahora en adelante (formal)</td><td><span class="hl">Désormais</span>, les règles ont changé.</td></tr>
+              <tr><td><strong>dorénavant</strong></td><td>a partir de ahora (formal)</td><td><span class="hl">Dorénavant</span>, merci de prévenir.</td></tr>
+              <tr><td><strong>à partir de</strong></td><td>a partir de</td><td><span class="hl">À partir de</span> lundi, le bureau ferme à 17h.</td></tr>
+              <tr><td><strong>jusqu'à</strong></td><td>hasta (punto temporal)</td><td>On travaille <span class="hl">jusqu'à</span> 18h.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--accent);font-weight:700">D'ici</span> la fin du mois, tout sera réglé.</div><div class="ex-es">Para finales de mes, todo estará resuelto.</div></div>
+          <div class="example-block neu"><div class="ex-fr"><span style="color:var(--accent);font-weight:700">Désormais</span>, les candidats devront fournir deux références.</div><div class="ex-es">A partir de ahora, los candidatos deberán aportar dos referencias.</div></div>
+          <div class="example-block neu"><div class="ex-fr">Il est resté là <span style="color:var(--accent);font-weight:700">jusqu'à</span> la fermeture.</div><div class="ex-es">Se quedó allí hasta el cierre.</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 9. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes de hispanohablantes con las expresiones de tiempo en el DELF B1–B2.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+</div><!-- /main-layout -->
+
+<script>
+/* DATA */
+const TRAPS = [
+  {name:"Depuis + présent (no passé composé)",
+   wrong:"J'ai habité ici depuis trois ans. / J'ai étudié le français depuis deux ans.",
+   right:"J'habite ici depuis trois ans. / J'étudie le français depuis deux ans.",
+   expl:"Cuando la acción <strong>continúa en el presente</strong>, depuis rige <strong>présent</strong>, no passé composé. El error viene del español 'he vivido aquí desde hace tres años', que usa el pretérito perfecto compuesto. En francés, la continuidad se expresa con présent."},
+  {name:"Depuis vs. il y a: confundir duración continua con punto pasado",
+   wrong:"Je suis arrivé depuis trois jours. / J'habite ici il y a trois ans.",
+   right:"Je suis arrivé il y a trois jours. / J'habite ici depuis trois ans.",
+   expl:"<strong>Il y a</strong> = hace (cuándo ocurrió, acción puntual, passé composé). <strong>Depuis</strong> = desde hace (duración continua, présent). No son intercambiables: 'llegué hace tres días' = <em>je suis arrivé <strong>il y a</strong> trois jours</em>; 'llevo tres días aquí' = <em>j'habite ici <strong>depuis</strong> trois jours</em>."},
+  {name:"Dans vs. en: ambos se traducen 'en' en español",
+   wrong:"Je finirai en deux heures. (queriendo decir 'dentro de dos horas') / Je vais le faire dans deux heures. (queriendo decir 'tardo dos horas')",
+   right:"Je finirai dans deux heures. (dentro de 2h) / Je vais le faire en deux heures. (me lleva 2h)",
+   expl:"El español 'en' es ambiguo: puede ser punto futuro o duración. El francés distingue: <strong>dans</strong> = punto en el futuro (dentro de X tiempo) · <strong>en</strong> = duración para completar algo (tarda X tiempo). Pregúntate: ¿cuándo? → dans · ¿cuánto tarda? → en."},
+  {name:"Pendant vs. pour: duración real vs. prevista",
+   wrong:"J'ai vécu à Rome pour deux ans. (duración ya vivida) / Je pars pendant trois jours. (duración planeada de una estancia)",
+   right:"J'ai vécu à Rome pendant deux ans. / Je pars pour trois jours.",
+   expl:"<strong>Pendant</strong> = duración objetiva, ya transcurrida o neutra. <strong>Pour</strong> = duración prevista o intención futura, especialmente con verbos de movimiento o estancia (partir, rester, aller). 'Viví dos años' (hecho) → pendant. 'Me voy tres días' (plan) → pour."},
+  {name:"Oublier le temps verbal avec depuis",
+   wrong:"Depuis que je suis arrivé, il a plu tous les jours. (hablando de la lluvia continua hasta ahora)",
+   right:"Depuis que je suis arrivé, il pleut tous les jours.",
+   expl:"Con <em>depuis que</em> + passé composé en la subordinada, el verbo de la principal va en <strong>présent</strong> (si la situación sigue) o imparfait (si seguía en ese momento pasado). 'Desde que llegué, llueve todos los días' = <em>depuis que je suis arrivé, il <strong>pleut</strong> tous les jours</em>."},
+  {name:"Il y a + durée vs. il y a + que",
+   wrong:"Il y a trois ans j'ai commencé ce travail. (queriendo decir 'llevo tres años en este trabajo')",
+   right:"Il y a trois ans, j'ai commencé ce travail. (hace 3 años empecé) / Il y a trois ans que je fais ce travail. (llevo 3 años)",
+   expl:"<em>Il y a trois ans + PC</em> = hace tres años (ocurrió). <em>Il y a trois ans que + présent</em> = llevo tres años (continúa). La diferencia es la presencia o ausencia de <strong>que</strong> y el tiempo verbal."},
+  {name:"Pendant que vs. alors que",
+   wrong:"Pendant qu'il travaille dur, elle ne fait rien. (si se quiere expresar contraste/injusticia)",
+   right:"Alors qu'il travaille dur, elle ne fait rien.",
+   expl:"<strong>Pendant que</strong> = simple simultaneidad sin juicio. <strong>Alors que</strong> = simultaneidad con matiz de contraste u oposición. 'Mientras trabaja duro, ella no hace nada' (contraste) → <em>alors que</em>, no <em>pendant que</em>."},
+  {name:"En vs. pendant: completar vs. estar",
+   wrong:"Il a travaillé en une heure. (queriendo decir 'trabajó durante una hora') / Il a réparé la voiture pendant deux heures. (queriendo decir 'tardó dos horas en repararla')",
+   right:"Il a travaillé pendant une heure. / Il a réparé la voiture en deux heures.",
+   expl:"<strong>En</strong> indica tiempo necesario para <em>completar</em> una tarea: hay resultado. <strong>Pendant</strong> indica duración de una actividad: no implica que se completó. 'Trabajó una hora' (actividad) → pendant. 'Reparó el coche en dos horas' (completó) → en."},
+];
+
+function renderTraps() {
+  document.getElementById("trap-cards").innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join("");
+}
+
+/* CHIP SELECT */
+function selectChip(ns, idx) {
+  document.querySelectorAll(".chip-bar").forEach(bar => {
+    const first = bar.querySelector(".chip");
+    if (first && first.getAttribute("onclick") && first.getAttribute("onclick").includes("'" + ns + "'")) {
+      bar.querySelectorAll(".chip").forEach((c, i) => c.classList.toggle("active", i === idx));
+    }
+  });
+  const el = document.getElementById(ns + "-panels");
+  if (el) el.querySelectorAll(":scope > .chip-panel").forEach((p, i) => p.classList.toggle("active", i === idx));
+}
+
+/* NAV */
+function showSection(id, btn) {
+  document.querySelectorAll(".sec-block").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".snav-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  btn.classList.add("active");
+}
+function switchMode(mode, btn) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById("panel-" + mode).classList.add("active");
+  btn.classList.add("active");
+  document.getElementById("section-nav").style.display = mode === "ref" ? "" : "none";
+}
+function setFontSize(v) { document.documentElement.style.setProperty("--fs", v + "px"); }
+
+/* EXERCISE STATE */
+let exType = "fill", exDiff = "B1", exQty = 5, exFoco = "mix";
+let exTotal = 0, exAnswered = 0, exCorrect = 0, exWrong = 0;
+
+document.querySelectorAll(".ex-opt-btn:not(.foco)").forEach(b => b.addEventListener("click", function () {
+  document.querySelectorAll(".ex-opt-btn:not(.foco)").forEach(x => x.classList.remove("active"));
+  this.classList.add("active"); exType = this.dataset.type;
+}));
+document.querySelectorAll(".ex-opt-btn.foco").forEach(b => b.addEventListener("click", function () {
+  document.querySelectorAll(".ex-opt-btn.foco").forEach(x => x.classList.remove("active"));
+  this.classList.add("active"); exFoco = this.dataset.foco;
+}));
+
+function setDiff(d) {
+  exDiff = d;
+  document.querySelectorAll("#diff-btns .pill-btn").forEach(b => {
+    b.classList.remove("active", "A2", "B1", "B2");
+    if (b.textContent.trim() === d) b.classList.add("active", d);
+  });
+}
+function setQty(q) {
+  exQty = q;
+  document.querySelectorAll("#qty-btns .pill-btn").forEach(b =>
+    b.classList.toggle("active", parseInt(b.textContent.trim()) === q));
+}
+
+/* GENERATE */
+const FOCO_DESC = {
+  mix:        "todas las expresiones de tiempo: depuis, pendant, pour, il y a, dans, en; incluyendo la elección del tiempo verbal correcto (présent/imparfait/PC/futur) según cada expresión",
+  dep_ilya:   "distinción depuis vs. il y a: depuis + présent (duración continua) vs. il y a + passé composé (punto en el pasado); incluir frases donde la acción continúa y frases donde ya terminó",
+  dep_pen:    "distinción depuis vs. pendant: desde hace (acción continua) vs. durante (duración completa terminada); forzar elección del tiempo verbal correcto en cada caso",
+  dan_en:     "distinción dans vs. en: dans (dentro de X tiempo = punto futuro) vs. en (tiempo necesario para completar = duración de ejecución); ambos pueden traducirse 'en' en español",
+  pen_por:    "distinción pendant vs. pour: pendant (duración objetiva, cualquier tiempo) vs. pour (duración prevista con verbos de movimiento/estancia: partir, rester, aller); incluir casos pasados y futuros",
+  temps_verb: "expresión de tiempo + tiempo verbal correcto: el alumno debe conjugar el verbo correctamente según la expresión temporal (depuis → présent, il y a → PC, dans → futur, pendant → PC/imparfait)",
+};
+const TYPE_DESC = {
+  fill:      "completar huecos: el alumno escribe la expresión de tiempo correcta o la forma verbal correcta",
+  choice:    "elección múltiple: 4 opciones de expresiones de tiempo (depuis/pendant/pour/il y a/dans/en), solo una correcta según el contexto",
+  transform: "transformación: reformular la frase usando la expresión de tiempo indicada, con el tiempo verbal correcto",
+  mix:       "mixto: combina fill, choice y transform",
+};
+
+const RULE_LABELS = {
+  "s-intro":   "Panorama general",
+  "s-depuis":  "DEPUIS",
+  "s-pendant": "PENDANT",
+  "s-pour":    "POUR",
+  "s-ilya":    "IL Y A",
+  "s-dans":    "DANS",
+  "s-en":      "EN",
+  "s-autres":  "Otros marcadores",
+  "s-trampas": "Trampas"
+};
+
+function renderExercises(exs) {
+  const area = document.getElementById("exercise-area");
+  const labels = { fill: "Completar", choice: "Elección múltiple", transform: "Transformación" };
+  area.innerHTML = exs.map((ex, i) =>
+    `<div class="exercise-card" id="ex-card-${i}" data-expl="${esc(ex.explanation)}" data-rule="${ex.rule_ref || ""}">
+      <div class="exercise-card-header">
+        <span class="ex-num">${i + 1}</span>
+        <span class="ex-type-badge">${labels[ex.type] || ex.type}</span>
+        <span class="ex-diff-badge ${ex.diff}">${ex.diff}</span>
+        <span class="ex-status" id="ex-st-${i}"></span>
+      </div>
+      <div class="exercise-body">
+        ${buildBody(ex, i)}
+        <div class="ex-feedback" id="ex-fb-${i}"></div>
+      </div>
+    </div>`).join("");
+  exs.forEach((ex, i) => {
+    const chk = document.getElementById("chk-" + i);
+    if (chk) chk.addEventListener("click", () => checkAnswer(ex, i));
+    const inp = document.getElementById("inp-" + i);
+    if (inp) inp.addEventListener("keydown", e => { if (e.key === "Enter") checkAnswer(ex, i); });
+  });
+}
+
+function buildBody(ex, i) {
+  if (ex.type === "fill")
+    return `<div class="exercise-prompt">${ex.prompt_parts[0]}<input class="fill-input" id="inp-${i}" type="text" placeholder="${ex.blank_hint || "…"}" autocomplete="off" spellcheck="false">${ex.prompt_parts[1] || ""}</div><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  if (ex.type === "choice")
+    return `<div class="exercise-prompt">${ex.prompt}</div><div class="choices-grid">${ex.options.map((o, j) => `<button class="choice-btn" id="ch-${i}-${j}" onclick="selectChoice(${i},${j},${ex.correct_index})">${o}</button>`).join("")}</div>`;
+  if (ex.type === "transform")
+    return `<div class="exercise-prompt">${ex.instruction}<br><em>${ex.original}</em></div><input class="transform-input" id="inp-${i}" type="text" placeholder="Tu respuesta completa…" autocomplete="off" spellcheck="false"><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  return "";
+}
+
+function checkAnswer(ex, i) {
+  const inp = document.getElementById("inp-" + i);
+  if (!inp || inp.disabled) return;
+  const ok = inp.value.trim().toLowerCase() === ex.answer.trim().toLowerCase();
+  inp.classList.add(ok ? "ok" : "err"); inp.disabled = true;
+  const chk = document.getElementById("chk-" + i); if (chk) chk.disabled = true;
+  showFeedback(i, ok, ex.answer, ex.explanation, ex.rule_ref);
+  recordAnswer(ok);
+}
+
+function selectChoice(idx, chosen, correct) {
+  const c0 = document.getElementById(`ch-${idx}-0`);
+  if (!c0 || c0.disabled) return;
+  for (let j = 0; j < 4; j++) {
+    const b = document.getElementById(`ch-${idx}-${j}`);
+    if (!b) continue; b.disabled = true;
+    if (j === correct) b.classList.add("ok"); else if (j === chosen) b.classList.add("err");
+  }
+  const card = document.getElementById("ex-card-" + idx);
+  showFeedback(idx, chosen === correct, null, card.dataset.expl, card.dataset.rule);
+  recordAnswer(chosen === correct);
+}
+
+function showFeedback(i, ok, ans, expl, ruleRef) {
+  document.getElementById("ex-st-" + i).textContent = ok ? "✅" : "❌";
+  const fb = document.getElementById("ex-fb-" + i);
+  fb.className = "ex-feedback visible " + (ok ? "ok" : "err");
+  const link = RULE_LABELS[ruleRef]
+    ? `<span class="fb-rule-link" onclick="goToRule('${ruleRef}')">📖 Ver: ${RULE_LABELS[ruleRef]}</span>` : "";
+  let html = ok ? `<strong>✓ Correcto</strong>` : `<strong>✗ Incorrecto</strong>${ans ? ` — Respuesta: <strong>${ans}</strong>` : ""}`;
+  if (expl) html += `<br><span style="font-size:0.88em;opacity:0.92;margin-top:3px;display:block">${expl}</span>`;
+  html += link; fb.innerHTML = html;
+}
+
+function goToRule(ref) {
+  switchMode("ref", document.querySelector(".mode-btn"));
+  setTimeout(() => {
+    showSection(ref, document.querySelector(`.snav-btn[onclick*="${ref}"]`));
+    document.getElementById(ref).scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 80);
+}
+
+function recordAnswer(ok) { exAnswered++; if (ok) exCorrect++; else exWrong++; updateProgress(); }
+
+function updateProgress() {
+  const pct = exTotal > 0 ? (exAnswered / exTotal) * 100 : 0;
+  document.getElementById("progress-frac").textContent = `${exAnswered} / ${exTotal}`;
+  document.getElementById("progress-fill").style.width = pct + "%";
+  document.getElementById("score-correct").textContent = `${exCorrect} correcta${exCorrect !== 1 ? "s" : ""}`;
+  document.getElementById("score-wrong").textContent = `${exWrong} error${exWrong !== 1 ? "es" : ""}`;
+  if (exAnswered >= exTotal && exTotal > 0) showFinalScore();
+}
+
+function showFinalScore() {
+  const pct = Math.round((exCorrect / exTotal) * 100);
+  document.getElementById("final-score-bar").classList.add("visible");
+  document.getElementById("final-num").textContent = `${exCorrect} / ${exTotal}`;
+  const fill = document.getElementById("final-fill");
+  fill.style.width = pct + "%";
+  fill.style.background = pct >= 80 ? "var(--green)" : pct >= 50 ? "var(--accent)" : "var(--red)";
+  const msgs = {
+    100: "Parfait ! Dominas las expresiones de tiempo. 🎉",
+    80:  "Très bien ! Repasa los errores marcados.",
+    50:  "Bien, pero refuerza los bloques señalados.",
+    0:   "Vuelve a Referencia antes de repetir."
+  };
+  document.getElementById("final-msg").textContent = msgs[pct === 100 ? 100 : pct >= 80 ? 80 : pct >= 50 ? 50 : 0];
+  document.getElementById("score-pill").style.display = "";
+  document.getElementById("score-pill-val").textContent = `${exCorrect}/${exTotal}`;
+}
+
+function resetExercises() {
+  document.getElementById("exercise-area").innerHTML = `<div class="state-msg"><div class="state-icon">✏️</div><p>Elige tipo, foco, nivel y cantidad, y pulsa <strong>Generar ejercicios</strong>.</p></div>`;
+  document.getElementById("progress-wrap").classList.remove("visible");
+  document.getElementById("final-score-bar").classList.remove("visible");
+  document.getElementById("score-pill").style.display = "none";
+  exAnswered = 0; exCorrect = 0; exWrong = 0;
+}
+
+function esc(s) { return (s || "").replace(/"/g, "&quot;").replace(/</g, "&lt;"); }
+
+renderTraps();
+</script>
+</body>
+</html>

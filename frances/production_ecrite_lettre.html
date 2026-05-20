@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Production Écrite · La Lettre et l'Email</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ede9df;
+  --card: #faf7f1;
+  --border: #c4bead;
+  --text: #1a1814;
+  --text2: #44413a;
+  --text3: #706c64;
+  --accent: #7a5a0a;
+  --accent-light: #f0e0c0;
+  --accent-mid: #b89050;
+  --warn-bg: #fdf0cc;
+  --shadow: 0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm: 0 1px 6px rgba(0,0,0,0.08);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --green: #1a6028;  --green-bg: #e4f2e8;
+  --red: #a81e2e;    --red-bg: #fce6e8;
+  --blue: #163494;   --blue-bg: #e6ebf8;
+  --purple: #6a1a8a; --purple-bg: #f2e6f8;
+  /* register colours */
+  --fo-color: #163494;  --fo-bg: #e6ebf8;   /* formel    — blue   */
+  --se-color: #1a6028;  --se-bg: #e4f2e8;   /* semi-form — green  */
+  --in-color: #8b1a4a;  --in-bg: #f8e6ee;   /* informel  — wine   */
+  --fs: 15px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: var(--fs); }
+
+.site-header { background: var(--card); border-bottom: 2px solid var(--border); padding: 20px 20px 14px; }
+.header-top { display: flex; align-items: baseline; gap: 10px; margin-bottom: 3px; flex-wrap: wrap; }
+.site-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem,5vw,1.85rem); font-weight: 700; color: var(--text); }
+.header-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent-mid); border-radius: 20px; padding: 3px 10px; }
+.subtitle { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
+.stats-row { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+.stat-pill { border-radius: 20px; padding: 4px 11px; font-size: 0.76rem; font-weight: 600; border: 1px solid; }
+.stat-pill.fo { background: var(--fo-bg); color: var(--fo-color); border-color: var(--fo-color); }
+.stat-pill.se { background: var(--se-bg); color: var(--se-color); border-color: var(--se-color); }
+.stat-pill.in { background: var(--in-bg); color: var(--in-color); border-color: var(--in-color); }
+.stat-pill.neu { background: var(--bg); color: var(--text2); border-color: var(--border); font-weight: 500; }
+.fs-wrap { display: flex; align-items: center; gap: 7px; margin-left: auto; }
+.fs-slider { width: 76px; accent-color: var(--accent); cursor: pointer; }
+.fs-sz { color: var(--text3); font-weight: 700; }
+
+.mode-toggle { display: flex; border-bottom: 2px solid var(--border); background: var(--card); }
+.mode-btn { flex: 1; padding: 12px 8px; font-family: 'DM Sans', sans-serif; font-size: 0.84rem; font-weight: 600; color: var(--text3); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.15s; margin-bottom: -2px; }
+.mode-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.section-nav { position: sticky; top: 0; z-index: 200; background: var(--card); border-bottom: 2px solid var(--border); box-shadow: var(--shadow-sm); }
+.section-nav-inner { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.section-nav-inner::-webkit-scrollbar { display: none; }
+.snav-btn { flex-shrink: 0; padding: 11px 16px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; color: var(--text3); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.snav-btn:hover { color: var(--text2); }
+.snav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.main-layout { max-width: 860px; margin: 0 auto; padding: 16px 16px 40px; }
+.panel { display: none; } .panel.active { display: block; }
+.sec-block { display: none; } .sec-block.active { display: block; }
+.gram-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden; }
+.gram-card-body { padding: 18px; }
+
+.def-box { background: var(--warn-bg); border-left: 4px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 15px; margin-bottom: 14px; line-height: 1.65; }
+.def-box strong { color: var(--accent); font-weight: 700; }
+.warn-box { background: #fff4e0; border: 1px solid #c8900a; border-radius: var(--radius-sm); padding: 10px 13px; margin: 10px 0; font-size: 0.9em; display: flex; gap: 8px; align-items: flex-start; }
+.warn-icon { flex-shrink: 0; margin-top: 1px; }
+.warn-text { color: var(--text2); line-height: 1.55; }
+.warn-text strong { color: #7a4400; font-weight: 700; }
+.note-box { background: var(--purple-bg); border-left: 4px solid var(--purple); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 10px 0; font-size: 0.9em; color: var(--text2); line-height: 1.55; }
+.note-box strong { color: var(--purple); font-weight: 700; }
+.green-box { background: var(--green-bg); border-left: 4px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 10px 0; font-size: 0.9em; color: var(--text2); line-height: 1.55; }
+.green-box strong { color: var(--green); font-weight: 700; }
+
+/* Letter blocks */
+.letter-box { border-radius: var(--radius-sm); padding: 16px 18px; margin: 12px 0; font-size: 0.9em; line-height: 1.9; }
+.letter-box.fo { background: var(--fo-bg); border: 1.5px solid var(--fo-color); }
+.letter-box.in { background: var(--in-bg); border: 1.5px solid var(--in-color); }
+.letter-box.se { background: var(--se-bg); border: 1.5px solid var(--se-color); }
+.letter-label { font-size: 0.68em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 10px; }
+.letter-label.fo { background: var(--fo-color); color: #fff; }
+.letter-label.in { background: var(--in-color); color: #fff; }
+.letter-label.se { background: var(--se-color); color: #fff; }
+.letter-part { font-weight: 700; color: var(--text3); font-size: 0.75em; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 10px; margin-bottom: 2px; }
+.efo { color: var(--fo-color); font-weight: 700; }
+.ein { color: var(--in-color); font-weight: 700; }
+.ese { color: var(--se-color); font-weight: 700; }
+
+.example-block { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 8px 0; }
+.example-block.fo  { background: var(--fo-bg);  border-left: 4px solid var(--fo-color); }
+.example-block.in  { background: var(--in-bg);  border-left: 4px solid var(--in-color); }
+.example-block.se  { background: var(--se-bg);  border-left: 4px solid var(--se-color); }
+.example-block.neu { background: var(--blue-bg); border-left: 4px solid var(--blue); }
+.ex-fr { font-weight: 600; margin-bottom: 3px; color: var(--text); }
+.ex-es { color: var(--text2); font-size: 0.88em; font-style: italic; }
+.ex-note { font-size: 0.78em; color: var(--text3); margin-top: 3px; font-weight: 500; }
+
+/* comparison table */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.gram-table { width: 100%; border-collapse: collapse; min-width: 280px; }
+.gram-table th { background: var(--bg); border-bottom: 2px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; text-align: left; font-size: 0.72em; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+.gram-table td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; vertical-align: top; }
+.gram-table tr:last-child td { border-bottom: none; }
+.gram-table tr:nth-child(even) td { background: #f4f0e6; }
+.gram-table td:last-child, .gram-table th:last-child { border-right: none; }
+.hl-fo { color: var(--fo-color); font-weight: 700; }
+.hl-in { color: var(--in-color); font-weight: 700; }
+.hl-se { color: var(--se-color); font-weight: 700; }
+.hl    { color: var(--accent);   font-weight: 700; }
+.dim   { color: var(--text3); font-size: 0.88em; }
+.ok-cell  { color: var(--green); font-weight: 700; }
+.err-cell { color: var(--red);   font-weight: 600; font-style: italic; }
+
+/* phrase cards grid */
+.phrase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+@media (max-width: 520px) { .phrase-grid { grid-template-columns: 1fr; } }
+.phrase-card { border-radius: var(--radius-sm); padding: 10px 13px; border: 1.5px solid; }
+.phrase-card.fo { background: var(--fo-bg); border-color: var(--fo-color); }
+.phrase-card.in { background: var(--in-bg); border-color: var(--in-color); }
+.phrase-card.se { background: var(--se-bg); border-color: var(--se-color); }
+.phrase-fr { font-weight: 700; font-size: 0.88em; color: var(--text); margin-bottom: 3px; }
+.phrase-es { font-size: 0.78em; color: var(--text2); font-style: italic; }
+
+.chip-bar { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.chip { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; white-space: nowrap; }
+.chip:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+.chip.active    { background: var(--accent);    color: #fff; border-color: var(--accent); }
+.chip.fo.active { background: var(--fo-color);  border-color: var(--fo-color); }
+.chip.in.active { background: var(--in-color);  border-color: var(--in-color); }
+.chip.se.active { background: var(--se-color);  border-color: var(--se-color); }
+.chip-panel { display: none; } .chip-panel.active { display: block; }
+
+.sec-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin: 14px 0 7px; }
+
+.trap-cards { display: flex; flex-direction: column; gap: 10px; }
+.trap-card { border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.trap-card-header { padding: 11px 14px; background: var(--bg); }
+.trap-name { font-weight: 700; font-size: 0.9em; color: var(--text); margin-bottom: 7px; }
+.trap-vs { display: flex; gap: 8px; flex-wrap: wrap; }
+.trap-wrong { background: var(--red-bg);  border: 1.5px solid #d09098; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--red);   font-weight: 500; }
+.trap-right { background: var(--green-bg); border: 1.5px solid #80b890; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--green); font-weight: 500; }
+.trap-expl { padding: 10px 14px 12px; font-size: 0.86em; color: var(--text2); line-height: 1.6; border-top: 1px solid var(--border); background: var(--card); }
+.trap-expl strong { color: var(--text); font-weight: 700; }
+
+/* EXERCISES */
+.exercise-controls { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.exercise-controls h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+.ctrl-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 7px; display: block; }
+.ex-options { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.ex-opt-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.ex-opt-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+.row-btns { display: flex; gap: 7px; margin-bottom: 14px; flex-wrap: wrap; }
+.pill-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.pill-btn:hover:not(.active) { background: var(--border); }
+.pill-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+.pill-btn.diff.active.A2 { background: var(--green); border-color: var(--green); color: #fff; }
+.pill-btn.diff.active.B1 { background: var(--blue);  border-color: var(--blue);  color: #fff; }
+.pill-btn.diff.active.B2 { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-generate { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; border: none; border-radius: 10px; padding: 13px; font-family: 'DM Sans', sans-serif; font-size: 0.92em; font-weight: 700; cursor: pointer; background: var(--accent); color: white; transition: all 0.18s; margin-top: 4px; }
+.btn-generate:hover:not(:disabled) { filter: brightness(1.1); box-shadow: 0 4px 14px rgba(122,90,10,0.32); }
+.btn-generate:disabled { opacity: 0.5; cursor: not-allowed; }
+.spinner { display: none; animation: spin 0.8s linear infinite; }
+.btn-generate.loading .spinner { display: inline; }
+.btn-generate.loading .btn-icon { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.progress-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 14px; display: none; }
+.progress-wrap.visible { display: block; }
+.progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.progress-label { font-size: 0.78em; color: var(--text3); font-weight: 600; }
+.progress-frac  { font-size: 0.92em; font-weight: 700; color: var(--accent); }
+.progress-track { height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-fill  { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.35s ease; }
+.progress-score { display: flex; gap: 14px; margin-top: 9px; font-size: 0.8em; flex-wrap: wrap; align-items: center; }
+.score-item { display: flex; align-items: center; gap: 5px; font-weight: 500; color: var(--text2); }
+.score-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.score-dot.g { background: var(--green); } .score-dot.r { background: var(--red); }
+.btn-retry { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 13px; font-family: 'DM Sans', sans-serif; font-size: 0.78em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; margin-left: auto; }
+.btn-retry:hover { background: var(--border); }
+.final-score-bar { display: none; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
+.final-score-bar.visible { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.final-num { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+.final-label { font-size: 0.74em; color: var(--text3); }
+.final-track { flex: 1; min-width: 80px; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.final-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+.final-msg { font-size: 0.84em; color: var(--text2); width: 100%; font-weight: 500; }
+.exercise-area { display: none; } .exercise-area.visible { display: block; }
+.exercise-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 12px; overflow: hidden; }
+.exercise-card-header { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--border); }
+.ex-num { font-weight: 700; color: var(--accent); font-size: 0.88em; }
+.ex-type-badge { font-size: 0.68em; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-mid); border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge { font-size: 0.68em; font-weight: 700; border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge.A2 { background: var(--green-bg); color: var(--green); border: 1px solid #80b890; }
+.ex-diff-badge.B1 { background: var(--blue-bg);  color: var(--blue);  border: 1px solid #90a8e0; }
+.ex-diff-badge.B2 { background: var(--warn-bg);  color: var(--accent); border: 1px solid var(--accent-mid); }
+.ex-status { margin-left: auto; }
+.exercise-body { padding: 16px 18px; }
+.exercise-prompt { line-height: 1.7; margin-bottom: 12px; color: var(--text); }
+.exercise-prompt em { color: var(--accent); font-style: italic; font-weight: 600; }
+.fill-input { border: none; border-bottom: 2px solid var(--accent-mid); background: var(--accent-light); padding: 2px 8px; border-radius: 4px 4px 0 0; font-family: 'DM Sans', sans-serif; font-size: 1em; color: var(--text); min-width: 180px; outline: none; transition: border-color 0.15s; }
+.fill-input:focus { border-bottom-color: var(--accent); }
+.fill-input.ok  { background: var(--green-bg); border-bottom-color: var(--green); }
+.fill-input.err { background: var(--red-bg);   border-bottom-color: var(--red); }
+.choices-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 10px; }
+.choice-btn { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 500; cursor: pointer; text-align: left; background: var(--bg); color: var(--text); transition: all 0.15s; }
+.choice-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-light); }
+.choice-btn.ok  { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 700; }
+.choice-btn.err { background: var(--red-bg);   border-color: var(--red);   color: var(--red); }
+.choice-btn:disabled { cursor: default; }
+.transform-input { width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.9em; background: var(--bg); color: var(--text); outline: none; margin-bottom: 8px; transition: border-color 0.15s; }
+.transform-input:focus { border-color: var(--accent); }
+.transform-input.ok  { background: var(--green-bg); border-color: var(--green); }
+.transform-input.err { background: var(--red-bg);   border-color: var(--red); }
+.btn-check { border: 1.5px solid var(--accent); border-radius: 20px; padding: 7px 18px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 700; cursor: pointer; background: transparent; color: var(--accent); transition: all 0.15s; }
+.btn-check:hover:not(:disabled) { background: var(--accent); color: white; }
+.btn-check:disabled { opacity: 0.35; cursor: default; }
+.ex-feedback { display: none; border-radius: var(--radius-sm); padding: 11px 14px; line-height: 1.55; margin-top: 10px; font-size: 0.9em; }
+.ex-feedback.visible { display: block; }
+.ex-feedback.ok  { background: var(--green-bg); border: 1.5px solid #80b890; color: #0e4818; }
+.ex-feedback.err { background: var(--red-bg);   border: 1.5px solid #c08090; color: #700018; }
+.fb-rule-link { display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 0.84em; font-weight: 700; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.skeleton-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 12px; }
+.skel { background: linear-gradient(90deg,var(--border) 25%,#e6e0d4 50%,var(--border) 75%); background-size: 200% 100%; animation: skel 1.4s infinite; border-radius: 4px; height: 13px; margin-bottom: 9px; }
+@keyframes skel { to { background-position: -200% 0; } }
+.state-msg { text-align: center; padding: 40px 20px; color: var(--text3); }
+.state-icon { font-size: 2rem; margin-bottom: 10px; }
+.state-msg p { max-width: 260px; margin: 0 auto; line-height: 1.6; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <h1>La Lettre et l'Email</h1>
+    <span class="header-tag">Production Écrite</span>
+  </div>
+  <div class="subtitle">Escrito formal e informal · DELF B1–B2</div>
+  <div class="stats-row">
+    <div class="stat-pill fo">Formel</div>
+    <div class="stat-pill se">Semi-formel</div>
+    <div class="stat-pill in">Informel</div>
+    <div class="stat-pill neu" id="score-pill" style="display:none">Resultado: <span id="score-pill-val">—</span></div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referencia</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Tipos y contextos</button>
+    <button class="snav-btn"        onclick="showSection('s-structure',this)">2. Estructura</button>
+    <button class="snav-btn"        onclick="showSection('s-salutations',this)">3. Salutaciones</button>
+    <button class="snav-btn"        onclick="showSection('s-intro-corps',this)">4. Introducción</button>
+    <button class="snav-btn"        onclick="showSection('s-corps',this)">5. Desarrollo</button>
+    <button class="snav-btn"        onclick="showSection('s-cloture',this)">6. Cierre</button>
+    <button class="snav-btn"        onclick="showSection('s-modeles',this)">7. Modelos</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">8. Trampas</button>
+  </div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. TIPOS Y CONTEXTOS -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El DELF B1 y B2 exige escribir textos que responden a una situación comunicativa concreta: una carta formal a una empresa o administración, un email semi-formal a un desconocido, o un mensaje informal a un amigo. Elegir el <strong>registro correcto</strong> es la primera condición para obtener buena nota.
+      </div>
+
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tipo</th><th>Destinatario</th><th>Contextos típicos DELF</th><th>Tutoiement</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong class="hl-fo">Formel</strong></td>
+            <td>Desconocido, institución, empresa, jefe</td>
+            <td>Reclamación, candidatura, solicitud, carta al director, queja</td>
+            <td class="err-cell">Non (vous)</td>
+          </tr>
+          <tr>
+            <td><strong class="hl-se">Semi-formel</strong></td>
+            <td>Conocido, vecino, asociación, profesor</td>
+            <td>Invitación, información, agradecimiento, respuesta a anuncio</td>
+            <td class="err-cell">Non (vous)</td>
+          </tr>
+          <tr>
+            <td><strong class="hl-in">Informel</strong></td>
+            <td>Amigo, familiar, compañero cercano</td>
+            <td>Noticias personales, invitación amistosa, consejos entre amigos</td>
+            <td class="ok-cell">Oui (tu)</td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Error de registro = penalización grave.</strong> Tutear a una empresa o usar <em>Salut</em> en una carta formal son errores que el examinador penaliza directamente en la rúbrica de adéquation à la situation de communication. Leer bien el enunciado para identificar el destinatario.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. ESTRUCTURA -->
+  <div class="sec-block" id="s-structure">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Toda carta o email tiene una estructura fija. En el DELF, respetar esta estructura garantiza puntos. La carta formal tiene más elementos obligatorios que la informal.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip fo active" onclick="selectChip('struct',0)">Carte / lettre formelle</button>
+        <button class="chip in"        onclick="selectChip('struct',1)">Email / lettre informelle</button>
+        <button class="chip se"        onclick="selectChip('struct',2)">Email professionnel / semi-formel</button>
+      </div>
+      <div id="struct-panels">
+
+        <div class="chip-panel active" id="struct-p-0">
+          <div class="letter-box fo">
+            <div class="letter-label fo">Lettre formelle — structure</div>
+            <div class="letter-part">Coordonnées de l'expéditeur (coin supérieur gauche)</div>
+            <div>Prénom Nom<br>Adresse<br>Code postal Ville<br>Email / Téléphone</div>
+            <div class="letter-part">Coordonnées du destinataire (coin supérieur droit)</div>
+            <div>Nom / Fonction<br>Entreprise / Institution<br>Adresse</div>
+            <div class="letter-part">Lieu et date</div>
+            <div><span class="efo">Paris, le 15 mars 2025</span></div>
+            <div class="letter-part">Objet (obligatoire en lettre formelle)</div>
+            <div><span class="efo">Objet : Demande de remboursement / Candidature au poste de…</span></div>
+            <div class="letter-part">Salutation d'ouverture</div>
+            <div><span class="efo">Madame, Monsieur,</span></div>
+            <div class="letter-part">Corps de la lettre</div>
+            <div>§1 Introduction — objet de la lettre<br>§2 Développement — arguments / faits<br>§3 Demande / conclusion</div>
+            <div class="letter-part">Formule de politesse (obligatoire)</div>
+            <div><span class="efo">Veuillez agréer, Madame, Monsieur, l'expression de mes salutations distinguées.</span></div>
+            <div class="letter-part">Signature</div>
+            <div>Prénom Nom</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="struct-p-1">
+          <div class="letter-box in">
+            <div class="letter-label in">Email / lettre informelle — structure</div>
+            <div class="letter-part">Objet de l'email (facultatif)</div>
+            <div><span class="ein">Objet : Nouvelles / On se voit quand ?</span></div>
+            <div class="letter-part">Salutation d'ouverture</div>
+            <div><span class="ein">Salut Marie, / Coucou ! / Chère Sophie,</span></div>
+            <div class="letter-part">Accroche</div>
+            <div><span class="ein">Comment tu vas ? J'espère que tout se passe bien pour toi.</span></div>
+            <div class="letter-part">Corps</div>
+            <div>§1 Raison du message<br>§2 Détails / informations<br>§3 Question ou demande</div>
+            <div class="letter-part">Formule de clôture</div>
+            <div><span class="ein">Bisous ! / À bientôt / Grosses bises,</span></div>
+            <div class="letter-part">Signature</div>
+            <div>Prénom (solo)</div>
+          </div>
+          <div class="note-box"><strong>En informal:</strong> sin coordonnées del remitente, sin lieu/date detallado, sin objet obligatoire, la formule de politesse se reemplaza por una fórmula de cierre cálida.</div>
+        </div>
+
+        <div class="chip-panel" id="struct-p-2">
+          <div class="letter-box se">
+            <div class="letter-label se">Email semi-formel — structure</div>
+            <div class="letter-part">Objet (recommandé)</div>
+            <div><span class="ese">Objet : Réponse à votre annonce / Demande d'information</span></div>
+            <div class="letter-part">Salutation</div>
+            <div><span class="ese">Bonjour Madame Dupont, / Bonjour à tous,</span></div>
+            <div class="letter-part">Corps</div>
+            <div>§1 Contexte / raison du message<br>§2 Informations ou demande<br>§3 Suite attendue</div>
+            <div class="letter-part">Clôture</div>
+            <div><span class="ese">Cordialement, / Bien cordialement,</span></div>
+            <div class="letter-part">Signature</div>
+            <div>Prénom Nom (+ titre éventuel)</div>
+          </div>
+          <div class="green-box"><strong>Semi-formel:</strong> se usa <em>Bonjour</em> (no Madame seul ni Salut). La formule de politesse se acorta. Se puede usar <em>vous</em> sin las formules de politesse largas de la carta formal.</div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3. SALUTACIONES -->
+  <div class="sec-block" id="s-salutations">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        La salutation d'ouverture es el primer elemento que el examinador lee y ya indica el registro. Hay que conocer las formas exactas — una coma incorrecta o un punto al final son errores tipográficos que se penalizan.
+      </div>
+
+      <div class="sec-label">Formes d'ouverture par registre</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Registro</th><th>Fórmula</th><th>Contexto</th><th>Puntuación</th></tr></thead>
+        <tbody>
+          <tr><td><strong class="hl-fo">Formel</strong></td><td class="hl-fo">Madame, Monsieur,</td><td>Destinatario desconocido (hombre o mujer)</td><td>coma al final</td></tr>
+          <tr><td><strong class="hl-fo">Formel</strong></td><td class="hl-fo">Madame,</td><td>Destinataria conocida (mujer)</td><td>coma al final</td></tr>
+          <tr><td><strong class="hl-fo">Formel</strong></td><td class="hl-fo">Monsieur,</td><td>Destinatario conocido (hombre)</td><td>coma al final</td></tr>
+          <tr><td><strong class="hl-fo">Formel</strong></td><td class="hl-fo">Madame la Directrice,</td><td>Con título o función</td><td>coma al final</td></tr>
+          <tr><td><strong class="hl-fo">Formel</strong></td><td class="hl-fo">Monsieur le Directeur,</td><td>Con título masculino</td><td>coma al final</td></tr>
+          <tr><td><strong class="hl-se">Semi-formel</strong></td><td class="hl-se">Bonjour Madame Dupont,</td><td>Con apellido conocido</td><td>coma al final</td></tr>
+          <tr><td><strong class="hl-se">Semi-formel</strong></td><td class="hl-se">Bonjour,</td><td>Destinatario genérico conocido</td><td>coma al final</td></tr>
+          <tr><td><strong class="hl-in">Informel</strong></td><td class="hl-in">Salut Marie,</td><td>Amigo/a con nombre</td><td>coma al final</td></tr>
+          <tr><td><strong class="hl-in">Informel</strong></td><td class="hl-in">Chère Sophie, / Cher Paul,</td><td>Amigo/a, tono cálido</td><td>coma al final</td></tr>
+          <tr><td><strong class="hl-in">Informel</strong></td><td class="hl-in">Coucou !</td><td>Muy familiar</td><td>signo exclamación</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Errores típicos:</strong> (1) <em>Cher Monsieur,</em> ✗ en carta formal — se reserva para contacto conocido y amistoso. (2) <em>Madame, Monsieur.</em> con punto ✗ — siempre coma. (3) <em>À qui de droit,</em> suena arcaico — preferir <em>Madame, Monsieur,</em>.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. INTRODUCCIÓN DEL CUERPO -->
+  <div class="sec-block" id="s-intro-corps">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        La primera frase del cuerpo establece el objeto de la carta o email. En el DELF, el examinador verifica que el propósito de la comunicación queda claro desde el primer párrafo.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip fo active" onclick="selectChip('intro',0)">Formelles — présenter l'objet</button>
+        <button class="chip fo"        onclick="selectChip('intro',1)">Formelles — répondre à / faire suite à</button>
+        <button class="chip in"        onclick="selectChip('intro',2)">Informelles — accroche</button>
+      </div>
+      <div id="intro-panels">
+
+        <div class="chip-panel active" id="intro-p-0">
+          <div class="sec-label">Presentar el motivo de la carta</div>
+          <div class="phrase-grid">
+            <div class="phrase-card fo"><div class="phrase-fr">Je me permets de vous écrire afin de…</div><div class="phrase-es">Me permito escribirle para…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">J'ai l'honneur de vous soumettre ma candidature pour…</div><div class="phrase-es">Tengo el honor de presentar mi candidatura para…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Je vous contacte concernant…</div><div class="phrase-es">Me pongo en contacto con usted en relación con…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Par la présente, je souhaite vous informer de…</div><div class="phrase-es">Por medio de la presente, deseo informarle de…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Je me permets de vous contacter au sujet de…</div><div class="phrase-es">Me permito contactarle en relación con…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">L'objet de cette lettre est de vous informer que…</div><div class="phrase-es">El objeto de esta carta es informarle que…</div></div>
+            <div class="phrase-card se"><div class="phrase-fr">Je vous écris pour vous demander des informations sur…</div><div class="phrase-es">Le escribo para pedirle información sobre…</div></div>
+            <div class="phrase-card se"><div class="phrase-fr">Je vous contacte pour vous faire part de…</div><div class="phrase-es">Le contacto para comunicarle…</div></div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="intro-p-1">
+          <div class="sec-label">Responder a un mensaje anterior</div>
+          <div class="phrase-grid">
+            <div class="phrase-card fo"><div class="phrase-fr">En réponse à votre lettre du… je…</div><div class="phrase-es">En respuesta a su carta del… yo…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Faisant suite à notre entretien téléphonique,…</div><div class="phrase-es">A continuación de nuestra conversación telefónica,…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Suite à votre annonce parue dans…, je…</div><div class="phrase-es">A raíz de su anuncio publicado en…, yo…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Comme convenu lors de notre réunion,…</div><div class="phrase-es">Tal como acordamos en nuestra reunión,…</div></div>
+            <div class="phrase-card se"><div class="phrase-fr">Merci pour votre message du… J'ai bien noté que…</div><div class="phrase-es">Gracias por su mensaje del… He tomado nota de que…</div></div>
+            <div class="phrase-card se"><div class="phrase-fr">Suite à votre email, je vous fais parvenir…</div><div class="phrase-es">A raíz de su email, le envío…</div></div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="intro-p-2">
+          <div class="sec-label">Acroche informelle — comment tu vas ?</div>
+          <div class="phrase-grid">
+            <div class="phrase-card in"><div class="phrase-fr">Comment tu vas ? J'espère que tout va bien pour toi !</div><div class="phrase-es">¿Cómo estás? ¡Espero que todo vaya bien para ti!</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Ça fait longtemps qu'on ne s'est pas donné de nouvelles !</div><div class="phrase-es">¡Hace tiempo que no tenemos noticias el uno del otro!</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Je t'écris parce que j'ai une super nouvelle à t'annoncer !</div><div class="phrase-es">Te escribo porque tengo una noticia genial que contarte.</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Je pense à toi et j'avais envie de prendre des nouvelles.</div><div class="phrase-es">Estoy pensando en ti y tenía ganas de saber cómo estás.</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">J'espère que tu vas bien et que la rentrée s'est bien passée.</div><div class="phrase-es">Espero que estés bien y que el regreso haya ido bien.</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Merci pour ton message, ça m'a fait vraiment plaisir !</div><div class="phrase-es">Gracias por tu mensaje, me ha alegrado mucho.</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 5. DESARROLLO -->
+  <div class="sec-block" id="s-corps">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El desarrollo contiene los argumentos, peticiones, informaciones o narrativas según el tipo de carta. Estas frases y expresiones articulan el contenido con coherencia.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip fo active" onclick="selectChip('corps',0)">Réclamation / plainte</button>
+        <button class="chip fo"        onclick="selectChip('corps',1)">Demande / sollicitation</button>
+        <button class="chip fo"        onclick="selectChip('corps',2)">Candidature / motivation</button>
+        <button class="chip in"        onclick="selectChip('corps',3)">Informer / raconter (informel)</button>
+        <button class="chip in"        onclick="selectChip('corps',4)">Inviter / proposer (informel)</button>
+        <button class="chip se"        onclick="selectChip('corps',5)">Remercier / féliciter</button>
+      </div>
+      <div id="corps-panels">
+
+        <div class="chip-panel active" id="corps-p-0">
+          <div class="phrase-grid">
+            <div class="phrase-card fo"><div class="phrase-fr">Je me permets de vous signaler que…</div><div class="phrase-es">Me permito señalarle que…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Je suis au regret de vous informer que…</div><div class="phrase-es">Lamento informarle que…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">J'ai constaté avec regret que…</div><div class="phrase-es">He constatado con pesar que…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Cela fait maintenant… que… sans résultat.</div><div class="phrase-es">Ya hace… que… sin resultado.</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Je me vois dans l'obligation de…</div><div class="phrase-es">Me veo en la obligación de…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Je souhaiterais obtenir un remboursement de…</div><div class="phrase-es">Desearía obtener un reembolso de…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Cette situation est inacceptable et je vous demande de…</div><div class="phrase-es">Esta situación es inaceptable y le pido que…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Je vous serais reconnaissant(e) de bien vouloir…</div><div class="phrase-es">Le estaría agradecido/a si tuviera a bien…</div></div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="corps-p-1">
+          <div class="phrase-grid">
+            <div class="phrase-card fo"><div class="phrase-fr">Je vous serais reconnaissant(e) de bien vouloir m'envoyer…</div><div class="phrase-es">Le agradecería que tuviera a bien enviarme…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Pourriez-vous m'indiquer si…?</div><div class="phrase-es">¿Podría usted indicarme si…?</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Je vous prie de bien vouloir me faire parvenir…</div><div class="phrase-es">Le ruego que tenga a bien hacerme llegar…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Il m'est indispensable de savoir si…</div><div class="phrase-es">Me es indispensable saber si…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Je souhaitais vous demander de…</div><div class="phrase-es">Me gustaría pedirle que…</div></div>
+            <div class="phrase-card se"><div class="phrase-fr">Je voudrais savoir si vous pourriez…</div><div class="phrase-es">Me gustaría saber si podría usted…</div></div>
+            <div class="phrase-card se"><div class="phrase-fr">Serait-il possible de… ?</div><div class="phrase-es">¿Sería posible…?</div></div>
+            <div class="phrase-card se"><div class="phrase-fr">Je me demandais si vous accepteriez de…</div><div class="phrase-es">Me preguntaba si aceptaría usted…</div></div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="corps-p-2">
+          <div class="phrase-grid">
+            <div class="phrase-card fo"><div class="phrase-fr">Actuellement, je suis… et je souhaite…</div><div class="phrase-es">Actualmente soy… y deseo…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Titulaire d'un diplôme de…, j'ai acquis des compétences en…</div><div class="phrase-es">Siendo titular de un diploma de…, he adquirido competencias en…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Ce poste m'intéresse particulièrement car…</div><div class="phrase-es">Este puesto me interesa especialmente porque…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Je pense pouvoir apporter à votre équipe…</div><div class="phrase-es">Creo poder aportar a su equipo…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Fort(e) de mon expérience en…, je suis en mesure de…</div><div class="phrase-es">Con mi experiencia en…, soy capaz de…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Vous trouverez ci-joint mon CV ainsi que…</div><div class="phrase-es">Encontrará adjunto mi CV así como…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Je suis convaincu(e) que ma candidature retiendra votre attention.</div><div class="phrase-es">Estoy convencido/a de que mi candidatura retendrá su atención.</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Je reste à votre disposition pour un entretien à votre convenance.</div><div class="phrase-es">Quedo a su disposición para una entrevista cuando le resulte conveniente.</div></div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="corps-p-3">
+          <div class="phrase-grid">
+            <div class="phrase-card in"><div class="phrase-fr">Tu ne vas pas le croire mais…</div><div class="phrase-es">No te lo vas a creer, pero…</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Figure-toi que… / Devine quoi ?</div><div class="phrase-es">Resulta que… / ¿Adivina qué?</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Je voulais te dire que tout se passe super bien ici.</div><div class="phrase-es">Quería decirte que todo va genial aquí.</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">J'ai une super nouvelle à t'annoncer !</div><div class="phrase-es">¡Tengo una noticia genial que darte!</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">De mon côté, je…/ En ce qui me concerne, je…</div><div class="phrase-es">Por mi parte, yo… / En lo que a mí respecta, yo…</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">C'était vraiment incroyable / super / nul.</div><div class="phrase-es">Fue realmente increíble / genial / una birria.</div></div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="corps-p-4">
+          <div class="phrase-grid">
+            <div class="phrase-card in"><div class="phrase-fr">Je t'invite à… / J'aimerais qu'on se voie pour…</div><div class="phrase-es">Te invito a… / Me gustaría que nos viéramos para…</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Qu'est-ce que tu dirais de… ?</div><div class="phrase-es">¿Qué te parecería…?</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Ça te dirait de venir… ?</div><div class="phrase-es">¿Te apetecería venir…?</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">On pourrait se retrouver le… si ça te convient.</div><div class="phrase-es">Podríamos quedar el… si te viene bien.</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">J'espère que tu pourras venir / que tu seras disponible.</div><div class="phrase-es">Espero que puedas venir / que estés disponible.</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Dis-moi si ça t'intéresse / si tu es partant(e) !</div><div class="phrase-es">Dime si te interesa / si te apuntas.</div></div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="corps-p-5">
+          <div class="phrase-grid">
+            <div class="phrase-card fo"><div class="phrase-fr">Je vous adresse mes sincères remerciements pour…</div><div class="phrase-es">Le dirijo mis más sinceras gracias por…</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Je tiens à vous remercier chaleureusement de…</div><div class="phrase-es">Deseo agradecerle calurosamente que…</div></div>
+            <div class="phrase-card se"><div class="phrase-fr">Je vous remercie vivement pour votre aide / réponse rapide.</div><div class="phrase-es">Le agradezco vivamente su ayuda / rápida respuesta.</div></div>
+            <div class="phrase-card se"><div class="phrase-fr">Je souhaitais vous féliciter pour…</div><div class="phrase-es">Quería felicitarle por…</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Merci mille fois pour… Tu es vraiment…</div><div class="phrase-es">Mil gracias por… De verdad eres…</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Je voulais juste te remercier encore une fois pour…</div><div class="phrase-es">Solo quería volverte a agradecer por…</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Félicitations pour… ! Je suis tellement content(e) pour toi !</div><div class="phrase-es">¡Felicidades por…! ¡Estoy muy contento/a por ti!</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Tu mérites vraiment cette réussite !</div><div class="phrase-es">¡Te mereces de verdad este éxito!</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. CIERRE -->
+  <div class="sec-block" id="s-cloture">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El cierre es obligatorio y muy evaluado en el DELF. En formal, la <strong>formule de politesse</strong> es una frase larga y muy codificada. En informal, una frase cálida corta. Confundir los dos registros aquí es un error grave.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip fo active" onclick="selectChip('clo',0)">Formules de politesse formelles</button>
+        <button class="chip se"        onclick="selectChip('clo',1)">Clôture semi-formelle</button>
+        <button class="chip in"        onclick="selectChip('clo',2)">Clôture informelle</button>
+        <button class="chip fo"        onclick="selectChip('clo',3)">Phrases de transition avant la formule</button>
+      </div>
+      <div id="clo-panels">
+
+        <div class="chip-panel active" id="clo-p-0">
+          <div class="def-box">La formule de politesse formelle tiene una estructura fija: incluye una referencia a la salutation d'ouverture (Madame, Monsieur) y acaba con una expresión de "sentiments distingués" o similares.</div>
+
+          <div class="sec-label">Fórmulas completas más frecuentes en el DELF</div>
+          <div class="example-block fo">
+            <div class="ex-fr"><span class="efo">Veuillez agréer, Madame, Monsieur, l'expression de mes salutations distinguées.</span></div>
+            <div class="ex-es">La fórmula estándar más frecuente y segura.</div>
+          </div>
+          <div class="example-block fo">
+            <div class="ex-fr"><span class="efo">Je vous prie d'agréer, Madame, Monsieur, l'expression de mes sentiments respectueux.</span></div>
+            <div class="ex-es">Tono muy formal y respetuoso.</div>
+          </div>
+          <div class="example-block fo">
+            <div class="ex-fr"><span class="efo">Veuillez recevoir, Monsieur le Directeur, l'assurance de ma haute considération.</span></div>
+            <div class="ex-es">Para cargos con título (directeur, président…).</div>
+          </div>
+          <div class="example-block fo">
+            <div class="ex-fr"><span class="efo">Dans l'attente de votre réponse, je vous adresse mes cordiales salutations.</span></div>
+            <div class="ex-es">Cuando se espera respuesta — más cálida pero aún formal.</div>
+          </div>
+          <div class="example-block fo">
+            <div class="ex-fr"><span class="efo">En espérant que ma candidature retiendra votre attention, je vous adresse mes salutations distinguées.</span></div>
+            <div class="ex-es">Específica para candidaturas — cierre que recuerda el objeto.</div>
+          </div>
+
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text"><strong>Regla de espejo:</strong> la fórmula de politesse debe retomar exactamente la misma forma de tratamiento que la salutation. Si abriste con <em>Madame,</em> (sola), cierra con <em>Madame</em>. Si abriste con <em>Madame, Monsieur,</em> cierra con <em>Madame, Monsieur</em>.</div>
+          </div>
+
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text"><strong>Estructura de la formule:</strong> no se puede mezclar libremente. El patrón es: <em>[Verbe: Veuillez agréer / Je vous prie d'agréer], [titre], [expression: l'expression de mes + adjectivo + sentiments/salutations].</em> Inventarse combinaciones no convencionales suena mal.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="clo-p-1">
+          <div class="phrase-grid">
+            <div class="phrase-card se"><div class="phrase-fr">Cordialement,</div><div class="phrase-es">Atentamente / Con un cordial saludo</div></div>
+            <div class="phrase-card se"><div class="phrase-fr">Bien cordialement,</div><div class="phrase-es">Con un cordial saludo (ligeramente más cálido)</div></div>
+            <div class="phrase-card se"><div class="phrase-fr">Avec mes cordiales salutations,</div><div class="phrase-es">Con saludos cordiales</div></div>
+            <div class="phrase-card se"><div class="phrase-fr">Bien à vous,</div><div class="phrase-es">Atentamente (tono personal amable)</div></div>
+            <div class="phrase-card se"><div class="phrase-fr">Sincèrement,</div><div class="phrase-es">Sinceramente</div></div>
+            <div class="phrase-card se"><div class="phrase-fr">Merci encore et bonne continuation,</div><div class="phrase-es">Gracias de nuevo y buena continuación</div></div>
+          </div>
+          <div class="note-box"><strong>Semi-formel:</strong> se evita la formule longue, pero tampoco se usan bisous ni coucou. <em>Cordialement</em> es la opción más segura para cualquier situación profesional o semi-formal.</div>
+        </div>
+
+        <div class="chip-panel" id="clo-p-2">
+          <div class="phrase-grid">
+            <div class="phrase-card in"><div class="phrase-fr">Bisous ! / Grosses bises !</div><div class="phrase-es">¡Besos! / ¡Un abrazo fuerte!</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">À très bientôt j'espère !</div><div class="phrase-es">¡Hasta muy pronto espero!</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">À bientôt ! Prends soin de toi !</div><div class="phrase-es">¡Hasta pronto! ¡Cuídate!</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">J'attends ta réponse avec impatience !</div><div class="phrase-es">¡Espero tu respuesta con impaciencia!</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Plein de bonnes choses pour toi,</div><div class="phrase-es">Todo lo mejor para ti,</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Avec toute mon amitié,</div><div class="phrase-es">Con toda mi amistad,</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Je t'embrasse fort !</div><div class="phrase-es">¡Un gran abrazo!</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Amitiés, / Amicalement,</div><div class="phrase-es">Con cariño, (más neutro)</div></div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="clo-p-3">
+          <div class="def-box">Estas frases de transición van antes de la formule de politesse y sirven para cerrar el desarrollo y anunciar el cierre.</div>
+          <div class="phrase-grid">
+            <div class="phrase-card fo"><div class="phrase-fr">Dans l'attente de votre réponse,</div><div class="phrase-es">En espera de su respuesta,</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">En espérant recevoir une réponse favorable,</div><div class="phrase-es">Con la esperanza de recibir una respuesta favorable,</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">Restant à votre disposition pour tout renseignement complémentaire,</div><div class="phrase-es">Permaneciendo a su disposición para cualquier información adicional,</div></div>
+            <div class="phrase-card fo"><div class="phrase-fr">En vous remerciant par avance de l'attention que vous porterez à ma demande,</div><div class="phrase-es">Agradeciéndole de antemano la atención que preste a mi solicitud,</div></div>
+            <div class="phrase-card se"><div class="phrase-fr">N'hésitez pas à me contacter si vous avez des questions.</div><div class="phrase-es">No dude en ponerse en contacto conmigo si tiene preguntas.</div></div>
+            <div class="phrase-card in"><div class="phrase-fr">Donne-moi de tes nouvelles vite !</div><div class="phrase-es">¡Dame noticias pronto!</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 7. MODELOS COMPLETOS -->
+  <div class="sec-block" id="s-modeles">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Dos modelos completos anotados: uno formal (reclamación) y uno informal (respuesta a un amigo). Úsalos como referencia de estructura, no como texto a copiar — en el DELF el contenido debe adaptarse al enunciado.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip fo active" onclick="selectChip('modelo',0)">Lettre formelle — réclamation</button>
+        <button class="chip in"        onclick="selectChip('modelo',1)">Email informel — invitación</button>
+        <button class="chip se"        onclick="selectChip('modelo',2)">Email semi-formel — candidature</button>
+      </div>
+      <div id="modelo-panels">
+
+        <div class="chip-panel active" id="modelo-p-0">
+          <div class="letter-box fo">
+            <div class="letter-label fo">Lettre formelle — Réclamation</div>
+            <div style="font-size:0.86em;line-height:2">
+              <div class="letter-part">Expéditeur</div>
+              Marie Dupont · 12, rue des Lilas · 75011 Paris<br>
+              <div class="letter-part">Destinataire</div>
+              Service clientèle · Boutique Électro Plus · 8, avenue de la République · 75011 Paris<br>
+              <div class="letter-part">Lieu et date</div>
+              <span class="efo">Paris, le 10 mars 2025</span><br>
+              <div class="letter-part">Objet</div>
+              <span class="efo">Objet : Demande de remboursement — commande n°45678</span><br>
+              <div class="letter-part">Ouverture</div>
+              <span class="efo">Madame, Monsieur,</span><br>
+              <div class="letter-part">§1 Présentation du problème</div>
+              Je me permets de vous contacter concernant une commande passée le 15 février dernier sur votre site. En effet, j'ai commandé un téléphone portable (référence XM500) pour un montant de 349 euros. Or, l'appareil livré présente un défaut : l'écran se fissure spontanément sans avoir subi aucun choc.<br>
+              <div class="letter-part">§2 Démarches effectuées</div>
+              J'ai contacté votre service clientèle par téléphone à plusieurs reprises sans obtenir de réponse satisfaisante. Il m'a été simplement demandé d'attendre, sans qu'aucune solution concrète ne soit proposée.<br>
+              <div class="letter-part">§3 Demande explicite</div>
+              Je me vois donc dans l'obligation de vous demander de procéder au remboursement intégral de cette commande dans un délai de quinze jours. À défaut, je serai contraint(e) de saisir les organismes compétents de protection des consommateurs.<br>
+              <div class="letter-part">Transition + formule</div>
+              <span class="efo">Dans l'attente de votre réponse, veuillez agréer, Madame, Monsieur, l'expression de mes salutations distinguées.</span><br>
+              <div class="letter-part">Signature</div>
+              Marie Dupont
+            </div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="modelo-p-1">
+          <div class="letter-box in">
+            <div class="letter-label in">Email informel — Invitation</div>
+            <div style="font-size:0.86em;line-height:2">
+              <div class="letter-part">Objet (facultatif)</div>
+              <span class="ein">Objet : Une idée pour le week-end !</span><br>
+              <div class="letter-part">Ouverture</div>
+              <span class="ein">Salut Thomas !</span><br>
+              <div class="letter-part">Accroche</div>
+              <span class="ein">Comment tu vas ? Ça fait un moment qu'on ne s'est pas vus !</span><br>
+              <div class="letter-part">§1 Raison du message</div>
+              Je t'écris parce que j'ai eu une super idée pour le week-end prochain. Tu sais que je suis passionné(e) de randonnée — eh bien, j'ai trouvé un super sentier en forêt à environ une heure de Paris. Qu'est-ce que tu en penses ?<br>
+              <div class="letter-part">§2 Détails pratiques</div>
+              On pourrait partir samedi matin vers 9h et revenir en début de soirée. Il faut juste prévoir de bonnes chaussures et un pique-nique. Le trajet en train ne coûte presque rien !<br>
+              <div class="letter-part">§3 Demande de réponse</div>
+              Dis-moi vite si ça te tente ! J'espère vraiment que tu seras disponible, ça serait trop bien de passer la journée ensemble.<br>
+              <div class="letter-part">Clôture</div>
+              <span class="ein">À bientôt j'espère ! Grosses bises,</span><br>
+              <div class="letter-part">Signature</div>
+              <span class="ein">Camille</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="modelo-p-2">
+          <div class="letter-box se">
+            <div class="letter-label se">Email semi-formel — Réponse à une annonce</div>
+            <div style="font-size:0.86em;line-height:2">
+              <div class="letter-part">Objet</div>
+              <span class="ese">Objet : Candidature — poste d'animateur(trice) culturel(le)</span><br>
+              <div class="letter-part">Ouverture</div>
+              <span class="ese">Bonjour Madame Martin,</span><br>
+              <div class="letter-part">§1 Motif</div>
+              Suite à votre annonce publiée sur le site de l'association, je vous contacte pour soumettre ma candidature au poste d'animateur(trice) culturel(le).<br>
+              <div class="letter-part">§2 Profil</div>
+              Titulaire d'une licence en lettres modernes, j'ai travaillé pendant deux ans comme bénévole dans une bibliothèque municipale où j'organisais des ateliers de lecture pour les 8-12 ans. Cette expérience m'a permis de développer un sens de l'écoute et une vraie passion pour la médiation culturelle.<br>
+              <div class="letter-part">§3 Disponibilité</div>
+              Je suis disponible pour un entretien à votre convenance et reste à votre disposition pour tout renseignement complémentaire.<br>
+              <div class="letter-part">Clôture</div>
+              <span class="ese">En vous remerciant de l'attention portée à ma candidature, je vous adresse mes cordiales salutations.</span><br>
+              <div class="letter-part">Signature</div>
+              <span class="ese">Léa Fontaine</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 8. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes en la producción escrita de cartas y emails en el DELF B1–B2.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+</div><!-- /main-layout -->
+
+<script>
+/* DATA */
+const TRAPS = [
+  {name:"Salutation avec le nom propre en formel",
+   wrong:"Madame Dupont, / Cher Monsieur Martin,",
+   right:"Madame, / Monsieur, / Madame, Monsieur,",
+   expl:"En la carta formal, la salutation no lleva nunca el apellido del destinatario. Solo <strong>Madame,</strong> o <strong>Monsieur,</strong> solos. El apellido se usa solo en semi-formel (<em>Bonjour Madame Dupont,</em>) o si se tiene una relación más personal."},
+  {name:"Formule de politesse incompleta o inventada",
+   wrong:"Cordialement. / Salutations distinguées. / Mes salutations.",
+   right:"Veuillez agréer, Madame, Monsieur, l'expression de mes salutations distinguées.",
+   expl:"La formule de politesse formal tiene una estructura fija: <em>Veuillez agréer</em> (o <em>Je vous prie d'agréer</em>) + titre de la salutation + <em>l'expression de mes salutations/sentiments distingués/respectueux</em>. Reducirla a <em>Cordialement</em> en una carta formal es un error de registro grave."},
+  {name:"Tutoyer en registre formel",
+   wrong:"Je te contacte pour te demander de… / Tu pourras m'envoyer…",
+   right:"Je vous contacte pour vous demander de… / Pourriez-vous m'envoyer…",
+   expl:"En cualquier contexto formal o semi-formal con un desconocido o superior, se usa <strong>vous</strong> obligatoriamente. Tutear en una carta de reclamación, solicitud o candidatura es un error muy grave de registro."},
+  {name:"Oublier l'objet dans une lettre formelle",
+   wrong:"(carta formal sin línea Objet:)",
+   right:"Objet : Demande de remboursement — commande n°…",
+   expl:"La ligne <strong>Objet :</strong> es obligatoria en la carta formal. Permite al destinatario identificar inmediatamente el propósito. En el DELF, su ausencia penaliza en la rúbrica de structure et présentation."},
+  {name:"Formule de politesse qui ne reprend pas la salutation",
+   wrong:"Madame, … [fin] Veuillez agréer, Madame, Monsieur, mes salutations.",
+   right:"Madame, … [fin] Veuillez agréer, Madame, l'expression de mes salutations distinguées.",
+   expl:"La formule de politesse debe retomar exactamente el mismo tratamiento que la salutation de apertura. Si abriste con <em>Madame,</em> sola, cierra con <em>Madame</em> sola. La falta de coherencia entre apertura y cierre es un error formal detectado por el examinador."},
+  {name:"Utiliser 'Cher / Chère' en formel",
+   wrong:"Chère Madame, / Cher Directeur,",
+   right:"Madame, / Monsieur le Directeur,",
+   expl:"<em>Cher / Chère</em> implica una relación personal. En la carta formal con desconocidos, no se usa. Se reserva para cartas informales (<em>Chère Marie</em>) o para relaciones profesionales ya establecidas y cálidas."},
+  {name:"Bisous / Salut en semi-formel ou formel",
+   wrong:"Salut ! (en una carta a un vecino desconocido) / Bisous ! (en un email de candidatura)",
+   right:"Bonjour, / Bonjour Madame, (semi-formel) — Cordialement, (cierre semi-formel)",
+   expl:"<em>Salut</em> y <em>Bisous</em> son exclusivos del registro muy familiar (amigos íntimos). Un email semi-formal empieza con <em>Bonjour</em> y cierra con <em>Cordialement</em>. Mezclar registros baja la nota de adéquation sociolinguistique."},
+  {name:"Ne pas se relire : fautes de concordance et verbe manquant",
+   wrong:"Je vous écris car j'ai commandé un téléphone qui présentait un défaut. (présent/imparfait mélangés sans lógica)",
+   right:"Je vous écris car j'ai commandé un téléphone qui présente un défaut. (présent: el defecto sigue existiendo)",
+   expl:"En producción escrita del DELF se penalizan las incoherencias temporales. Si el defecto sigue presente en el momento de escribir, se usa présent (<em>présente</em>). Imparfait (<em>présentait</em>) sugeriría que ya no tiene el defecto. Releer el texto antes de entregarlo es imprescindible."},
+];
+
+function renderTraps() {
+  document.getElementById("trap-cards").innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join("");
+}
+
+/* CHIP SELECT */
+function selectChip(ns, idx) {
+  document.querySelectorAll(".chip-bar").forEach(bar => {
+    const first = bar.querySelector(".chip");
+    if (first && first.getAttribute("onclick") && first.getAttribute("onclick").includes("'" + ns + "'")) {
+      bar.querySelectorAll(".chip").forEach((c, i) => c.classList.toggle("active", i === idx));
+    }
+  });
+  const el = document.getElementById(ns + "-panels");
+  if (el) el.querySelectorAll(":scope > .chip-panel").forEach((p, i) => p.classList.toggle("active", i === idx));
+}
+
+/* NAV */
+function showSection(id, btn) {
+  document.querySelectorAll(".sec-block").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".snav-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  btn.classList.add("active");
+}
+function switchMode(mode, btn) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById("panel-" + mode).classList.add("active");
+  btn.classList.add("active");
+  document.getElementById("section-nav").style.display = mode === "ref" ? "" : "none";
+}
+function setFontSize(v) { document.documentElement.style.setProperty("--fs", v + "px"); }
+
+/* EXERCISE STATE */
+let exType = "fill", exDiff = "B1", exQty = 5, exFoco = "mix";
+let exTotal = 0, exAnswered = 0, exCorrect = 0, exWrong = 0;
+
+document.querySelectorAll(".ex-opt-btn:not(.foco)").forEach(b => b.addEventListener("click", function () {
+  document.querySelectorAll(".ex-opt-btn:not(.foco)").forEach(x => x.classList.remove("active"));
+  this.classList.add("active"); exType = this.dataset.type;
+}));
+document.querySelectorAll(".ex-opt-btn.foco").forEach(b => b.addEventListener("click", function () {
+  document.querySelectorAll(".ex-opt-btn.foco").forEach(x => x.classList.remove("active"));
+  this.classList.add("active"); exFoco = this.dataset.foco;
+}));
+
+function setDiff(d) {
+  exDiff = d;
+  document.querySelectorAll("#diff-btns .pill-btn").forEach(b => {
+    b.classList.remove("active", "A2", "B1", "B2");
+    if (b.textContent.trim() === d) b.classList.add("active", d);
+  });
+}
+function setQty(q) {
+  exQty = q;
+  document.querySelectorAll("#qty-btns .pill-btn").forEach(b =>
+    b.classList.toggle("active", parseInt(b.textContent.trim()) === q));
+}
+
+/* GENERATE */
+const FOCO_DESC = {
+  mix:        "todos los aspectos de la carta y el email: salutations (formal/semi-formel/informel), formules de politesse formelles completas, frases de introducción, desarrollo (réclamation, demande, candidature, informer, inviter, remercier), frases de cierre, distinción de registro",
+  salutation: "salutations d'ouverture: Madame/Monsieur (formel), Bonjour Madame (semi-formel), Salut/Chère/Cher (informel); el alumno identifica el registro correcto o completa la salutation adecuada según el contexto dado",
+  politesse:  "formules de politesse formelles: estructura completa Veuillez agréer / Je vous prie d'agréer + titre + l'expression de mes salutations/sentiments distingués/respectueux; regla espejo (retomar la salutation); el alumno completa o identifica la fórmula correcta",
+  intro:      "frases de introducción del cuerpo de la carta: Je me permets de vous écrire afin de / En réponse à / Suite à / Je vous contacte concernant / Par la présente (formel) vs. Je t'écris pour / Figure-toi que (informel); el alumno elige o completa según el registro y el contexto",
+  registre:   "transformación de registro: convertir frases de formel a informel o viceversa manteniendo el sentido (vous→tu, Je vous serais reconnaissant→tu pourrais?, Veuillez agréer→Bisous, Bonjour→Salut, etc.)",
+  reclamation:"frases específicas de réclamation y solicitud formal: Je me permets de vous signaler / J'ai constaté avec regret / Je me vois dans l'obligation de / Je vous serais reconnaissant de / Pourriez-vous / Dans l'attente de votre réponse; el alumno completa o elige la frase adecuada",
+};
+const TYPE_DESC = {
+  fill:      "completar huecos: el alumno escribe la palabra, expresión o fórmula correcta según el registro y el contexto indicado",
+  choice:    "elección múltiple: 4 opciones de fórmulas, frases o palabras, solo una correcta para el registro y contexto dado",
+  transform: "transformación de registro: se da una frase en un registro y se pide reformularla en el registro contrario (formel→informel o viceversa)",
+  mix:       "mixto: combina fill, choice y transform",
+};
+
+const RULE_LABELS = {
+  "s-intro":       "Tipos y contextos",
+  "s-structure":   "Estructura de la carta",
+  "s-salutations": "Salutaciones de apertura",
+  "s-intro-corps": "Introducción del cuerpo",
+  "s-corps":       "Desarrollo",
+  "s-cloture":     "Cierre y formules de politesse",
+  "s-modeles":     "Modelos completos",
+  "s-trampas":     "Trampas"
+};
+
+function renderExercises(exs) {
+  const area = document.getElementById("exercise-area");
+  const labels = { fill: "Completar", choice: "Elección múltiple", transform: "Transformación" };
+  area.innerHTML = exs.map((ex, i) =>
+    `<div class="exercise-card" id="ex-card-${i}" data-expl="${esc(ex.explanation)}" data-rule="${ex.rule_ref || ""}">
+      <div class="exercise-card-header">
+        <span class="ex-num">${i + 1}</span>
+        <span class="ex-type-badge">${labels[ex.type] || ex.type}</span>
+        <span class="ex-diff-badge ${ex.diff}">${ex.diff}</span>
+        <span class="ex-status" id="ex-st-${i}"></span>
+      </div>
+      <div class="exercise-body">
+        ${buildBody(ex, i)}
+        <div class="ex-feedback" id="ex-fb-${i}"></div>
+      </div>
+    </div>`).join("");
+  exs.forEach((ex, i) => {
+    const chk = document.getElementById("chk-" + i);
+    if (chk) chk.addEventListener("click", () => checkAnswer(ex, i));
+    const inp = document.getElementById("inp-" + i);
+    if (inp) inp.addEventListener("keydown", e => { if (e.key === "Enter") checkAnswer(ex, i); });
+  });
+}
+
+function buildBody(ex, i) {
+  if (ex.type === "fill")
+    return `<div class="exercise-prompt">${ex.prompt_parts[0]}<input class="fill-input" id="inp-${i}" type="text" placeholder="${ex.blank_hint || "…"}" autocomplete="off" spellcheck="false">${ex.prompt_parts[1] || ""}</div><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  if (ex.type === "choice")
+    return `<div class="exercise-prompt">${ex.prompt}</div><div class="choices-grid">${ex.options.map((o, j) => `<button class="choice-btn" id="ch-${i}-${j}" onclick="selectChoice(${i},${j},${ex.correct_index})">${o}</button>`).join("")}</div>`;
+  if (ex.type === "transform")
+    return `<div class="exercise-prompt">${ex.instruction}<br><em>${ex.original}</em></div><input class="transform-input" id="inp-${i}" type="text" placeholder="Frase transformada completa…" autocomplete="off" spellcheck="false"><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  return "";
+}
+
+function checkAnswer(ex, i) {
+  const inp = document.getElementById("inp-" + i);
+  if (!inp || inp.disabled) return;
+  const ok = inp.value.trim().toLowerCase() === ex.answer.trim().toLowerCase();
+  inp.classList.add(ok ? "ok" : "err"); inp.disabled = true;
+  const chk = document.getElementById("chk-" + i); if (chk) chk.disabled = true;
+  showFeedback(i, ok, ex.answer, ex.explanation, ex.rule_ref);
+  recordAnswer(ok);
+}
+
+function selectChoice(idx, chosen, correct) {
+  const c0 = document.getElementById(`ch-${idx}-0`);
+  if (!c0 || c0.disabled) return;
+  for (let j = 0; j < 4; j++) {
+    const b = document.getElementById(`ch-${idx}-${j}`);
+    if (!b) continue; b.disabled = true;
+    if (j === correct) b.classList.add("ok"); else if (j === chosen) b.classList.add("err");
+  }
+  const card = document.getElementById("ex-card-" + idx);
+  showFeedback(idx, chosen === correct, null, card.dataset.expl, card.dataset.rule);
+  recordAnswer(chosen === correct);
+}
+
+function showFeedback(i, ok, ans, expl, ruleRef) {
+  document.getElementById("ex-st-" + i).textContent = ok ? "✅" : "❌";
+  const fb = document.getElementById("ex-fb-" + i);
+  fb.className = "ex-feedback visible " + (ok ? "ok" : "err");
+  const link = RULE_LABELS[ruleRef]
+    ? `<span class="fb-rule-link" onclick="goToRule('${ruleRef}')">📖 Ver: ${RULE_LABELS[ruleRef]}</span>` : "";
+  let html = ok ? `<strong>✓ Correcto</strong>` : `<strong>✗ Incorrecto</strong>${ans ? ` — Respuesta: <strong>${ans}</strong>` : ""}`;
+  if (expl) html += `<br><span style="font-size:0.88em;opacity:0.92;margin-top:3px;display:block">${expl}</span>`;
+  html += link; fb.innerHTML = html;
+}
+
+function goToRule(ref) {
+  switchMode("ref", document.querySelector(".mode-btn"));
+  setTimeout(() => {
+    showSection(ref, document.querySelector(`.snav-btn[onclick*="${ref}"]`));
+    document.getElementById(ref).scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 80);
+}
+
+function recordAnswer(ok) { exAnswered++; if (ok) exCorrect++; else exWrong++; updateProgress(); }
+
+function updateProgress() {
+  const pct = exTotal > 0 ? (exAnswered / exTotal) * 100 : 0;
+  document.getElementById("progress-frac").textContent = `${exAnswered} / ${exTotal}`;
+  document.getElementById("progress-fill").style.width = pct + "%";
+  document.getElementById("score-correct").textContent = `${exCorrect} correcta${exCorrect !== 1 ? "s" : ""}`;
+  document.getElementById("score-wrong").textContent = `${exWrong} error${exWrong !== 1 ? "es" : ""}`;
+  if (exAnswered >= exTotal && exTotal > 0) showFinalScore();
+}
+
+function showFinalScore() {
+  const pct = Math.round((exCorrect / exTotal) * 100);
+  document.getElementById("final-score-bar").classList.add("visible");
+  document.getElementById("final-num").textContent = `${exCorrect} / ${exTotal}`;
+  const fill = document.getElementById("final-fill");
+  fill.style.width = pct + "%";
+  fill.style.background = pct >= 80 ? "var(--green)" : pct >= 50 ? "var(--accent)" : "var(--red)";
+  const msgs = {
+    100: "Parfait ! Dominas la carta y el email en francés. 🎉",
+    80:  "Très bien ! Repasa los errores marcados.",
+    50:  "Bien, pero refuerza los bloques señalados.",
+    0:   "Vuelve a Referencia antes de repetir."
+  };
+  document.getElementById("final-msg").textContent = msgs[pct === 100 ? 100 : pct >= 80 ? 80 : pct >= 50 ? 50 : 0];
+  document.getElementById("score-pill").style.display = "";
+  document.getElementById("score-pill-val").textContent = `${exCorrect}/${exTotal}`;
+}
+
+function resetExercises() {
+  document.getElementById("exercise-area").innerHTML = `<div class="state-msg"><div class="state-icon">✏️</div><p>Elige tipo, foco, nivel y cantidad, y pulsa <strong>Generar ejercicios</strong>.</p></div>`;
+  document.getElementById("progress-wrap").classList.remove("visible");
+  document.getElementById("final-score-bar").classList.remove("visible");
+  document.getElementById("score-pill").style.display = "none";
+  exAnswered = 0; exCorrect = 0; exWrong = 0;
+}
+
+function esc(s) { return (s || "").replace(/"/g, "&quot;").replace(/</g, "&lt;"); }
+
+renderTraps();
+</script>
+</body>
+</html>

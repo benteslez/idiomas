@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammaire · La Négation Complexe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#ede9df; --card:#faf7f1; --border:#c4bead;
+  --text:#1a1814; --text2:#44413a; --text3:#706c64;
+  --accent:#7a5a0a; --accent-light:#f0e0c0; --accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,.11),0 1px 4px rgba(0,0,0,.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,.08);
+  --radius:14px; --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --red:#a81e2e;   --red-bg:#fce6e8;
+  --blue:#163494;  --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --ne-color:#163494; --ne-bg:#e6ebf8;
+  --el-color:#1a6028; --el-bg:#e4f2e8;
+  --db-color:#6a1a8a; --db-bg:#f2e6f8;
+  --re-color:#8b1a4a; --re-bg:#f8e6ee;
+  --fs:15px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:var(--fs);}
+
+/* HEADER */
+.site-header{background:var(--card);border-bottom:2px solid var(--border);padding:20px 20px 14px;}
+.header-top{display:flex;align-items:baseline;gap:10px;margin-bottom:3px;flex-wrap:wrap;}
+.site-header h1{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,5vw,1.9rem);font-weight:700;}
+.header-tag{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border:1px solid var(--accent-mid);border-radius:20px;padding:3px 10px;}
+.subtitle{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.stats-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
+.stat-pill{border-radius:20px;padding:4px 11px;font-size:.76rem;font-weight:600;border:1px solid;}
+.stat-pill.ne{background:var(--ne-bg);color:var(--ne-color);border-color:var(--ne-color);}
+.stat-pill.el{background:var(--el-bg);color:var(--el-color);border-color:var(--el-color);}
+.stat-pill.db{background:var(--db-bg);color:var(--db-color);border-color:var(--db-color);}
+.stat-pill.re{background:var(--re-bg);color:var(--re-color);border-color:var(--re-color);}
+.stat-pill.neu{background:var(--bg);color:var(--text2);border-color:var(--border);font-weight:500;}
+.fs-wrap{display:flex;align-items:center;gap:7px;margin-left:auto;}
+.fs-slider{width:76px;accent-color:var(--accent);cursor:pointer;}
+.fs-sz{color:var(--text3);font-weight:700;}
+
+/* MODE TOGGLE */
+.mode-toggle{display:flex;border-bottom:2px solid var(--border);background:var(--card);}
+.mode-btn{flex:1;padding:12px 8px;font-family:'DM Sans',sans-serif;font-size:.84rem;font-weight:600;color:var(--text3);background:transparent;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .15s;margin-bottom:-2px;}
+.mode-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* SECTION NAV */
+.section-nav{position:sticky;top:0;z-index:200;background:var(--card);border-bottom:2px solid var(--border);box-shadow:var(--shadow-sm);}
+.section-nav-inner{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.section-nav-inner::-webkit-scrollbar{display:none;}
+.snav-btn{flex-shrink:0;padding:11px 16px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;color:var(--text3);background:transparent;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.snav-btn:hover{color:var(--text2);}
+.snav-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* LAYOUT */
+.main-layout{max-width:860px;margin:0 auto;padding:16px 16px 40px;}
+.panel{display:none;} .panel.active{display:block;}
+.sec-block{display:none;} .sec-block.active{display:block;}
+.gram-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;}
+.gram-card-body{padding:18px;}
+
+/* BOXES */
+.def-box{background:var(--warn-bg);border-left:4px solid var(--accent);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:12px 15px;margin-bottom:14px;line-height:1.65;}
+.def-box strong{color:var(--accent);font-weight:700;}
+.warn-box{background:#fff4e0;border:1px solid #c8900a;border-radius:var(--radius-sm);padding:10px 13px;margin:10px 0;font-size:.9em;display:flex;gap:8px;align-items:flex-start;}
+.warn-icon{flex-shrink:0;margin-top:1px;}
+.warn-text{color:var(--text2);line-height:1.55;}
+.warn-text strong{color:#7a4400;font-weight:700;}
+.note-box{background:var(--purple-bg);border-left:4px solid var(--purple);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 14px;margin:10px 0;font-size:.9em;color:var(--text2);line-height:1.55;}
+.note-box strong{color:var(--purple);font-weight:700;}
+.green-box{background:var(--green-bg);border-left:4px solid var(--green);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 14px;margin:10px 0;font-size:.9em;color:var(--text2);line-height:1.55;}
+.green-box strong{color:var(--green);font-weight:700;}
+
+/* EXAMPLES */
+.example-block{border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 14px;margin:8px 0;}
+.example-block.ne{background:var(--ne-bg);border-left:4px solid var(--ne-color);}
+.example-block.el{background:var(--el-bg);border-left:4px solid var(--el-color);}
+.example-block.db{background:var(--db-bg);border-left:4px solid var(--db-color);}
+.example-block.re{background:var(--re-bg);border-left:4px solid var(--re-color);}
+.example-block.neu{background:var(--blue-bg);border-left:4px solid var(--blue);}
+.ex-fr{font-weight:600;margin-bottom:3px;color:var(--text);}
+.ex-es{color:var(--text2);font-size:.88em;font-style:italic;}
+.ex-note{font-size:.78em;color:var(--text3);margin-top:3px;font-weight:500;}
+.ene{color:var(--ne-color);font-weight:700;}
+.eel{color:var(--el-color);font-weight:700;}
+.edb{color:var(--db-color);font-weight:700;}
+.ere{color:var(--re-color);font-weight:700;}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:14px;border-radius:var(--radius-sm);border:1px solid var(--border);}
+.gram-table{width:100%;border-collapse:collapse;min-width:280px;}
+.gram-table th{background:var(--bg);border-bottom:2px solid var(--border);border-right:1px solid var(--border);padding:8px 11px;text-align:left;font-size:.72em;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);}
+.gram-table td{border-bottom:1px solid var(--border);border-right:1px solid var(--border);padding:8px 11px;vertical-align:top;}
+.gram-table tr:last-child td{border-bottom:none;}
+.gram-table tr:nth-child(even) td{background:#f4f0e6;}
+.gram-table td:last-child,.gram-table th:last-child{border-right:none;}
+.hl-ne{color:var(--ne-color);font-weight:700;}
+.hl-el{color:var(--el-color);font-weight:700;}
+.hl-db{color:var(--db-color);font-weight:700;}
+.hl-re{color:var(--re-color);font-weight:700;}
+.hl{color:var(--accent);font-weight:700;}
+.dim{color:var(--text3);font-size:.88em;}
+.ok-cell{color:var(--green);font-weight:700;}
+.err-cell{color:var(--red);font-weight:600;font-style:italic;}
+
+/* POSITION DIAGRAM */
+.pos-diagram{display:flex;align-items:center;gap:5px;flex-wrap:wrap;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;margin:10px 0;}
+.pos-slot{border-radius:6px;padding:5px 10px;font-weight:700;font-size:.82em;text-align:center;border:1.5px solid;white-space:nowrap;}
+.pos-slot.ne{background:var(--ne-bg);border-color:var(--ne-color);color:var(--ne-color);}
+.pos-slot.el{background:var(--el-bg);border-color:var(--el-color);color:var(--el-color);}
+.pos-slot.vb{background:var(--warn-bg);border-color:var(--accent);color:var(--accent);}
+.pos-slot.au{background:#f5f0e8;border-color:var(--border);color:var(--text2);}
+.pos-slot.pp{background:#f0f0f8;border-color:#808090;color:#404060;}
+.pos-arrow{color:var(--text3);font-size:.9em;font-weight:700;flex-shrink:0;}
+.pos-label{font-size:.7em;color:var(--text3);width:100%;margin-top:4px;}
+
+/* CHIPS */
+.chip-bar{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+.chip{border:1.5px solid var(--border);border-radius:20px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:.82em;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;white-space:nowrap;}
+.chip:hover{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.chip.ne.active{background:var(--ne-color);border-color:var(--ne-color);}
+.chip.el.active{background:var(--el-color);border-color:var(--el-color);}
+.chip.db.active{background:var(--db-color);border-color:var(--db-color);}
+.chip.re.active{background:var(--re-color);border-color:var(--re-color);}
+.chip-panel{display:none;} .chip-panel.active{display:block;}
+.sec-label{font-size:.7em;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:14px 0 7px;}
+
+/* TRAP CARDS */
+.trap-cards{display:flex;flex-direction:column;gap:10px;}
+.trap-card{border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;}
+.trap-card-header{padding:11px 14px;background:var(--bg);}
+.trap-name{font-weight:700;font-size:.9em;color:var(--text);margin-bottom:7px;}
+.trap-vs{display:flex;gap:8px;flex-wrap:wrap;}
+.trap-wrong{background:var(--red-bg);border:1.5px solid #d09098;border-radius:6px;padding:4px 10px;font-size:.82em;color:var(--red);font-weight:500;}
+.trap-right{background:var(--green-bg);border:1.5px solid #80b890;border-radius:6px;padding:4px 10px;font-size:.82em;color:var(--green);font-weight:500;}
+.trap-expl{padding:10px 14px 12px;font-size:.86em;color:var(--text2);line-height:1.6;border-top:1px solid var(--border);background:var(--card);}
+.trap-expl strong{color:var(--text);font-weight:700;}
+
+/* EXERCISES */
+.exercise-controls{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:var(--shadow-sm);}
+.exercise-controls h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;margin-bottom:14px;}
+.ctrl-label{font-size:.7em;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:7px;display:block;}
+.ex-options{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+.ex-opt-btn{border:1.5px solid var(--border);border-radius:20px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:.84em;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;}
+.ex-opt-btn.active{background:var(--accent);color:white;border-color:var(--accent);}
+.row-btns{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;}
+.pill-btn{border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'DM Sans',sans-serif;font-size:.82em;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;}
+.pill-btn:hover:not(.active){background:var(--border);}
+.pill-btn.active{background:var(--text);color:var(--bg);border-color:var(--text);}
+.pill-btn.diff.active.A2{background:var(--green);border-color:var(--green);color:#fff;}
+.pill-btn.diff.active.B1{background:var(--blue);border-color:var(--blue);color:#fff;}
+.pill-btn.diff.active.B2{background:var(--accent);border-color:var(--accent);color:#fff;}
+.btn-generate{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:none;border-radius:10px;padding:13px;font-family:'DM Sans',sans-serif;font-size:.92em;font-weight:700;cursor:pointer;background:var(--accent);color:white;transition:all .18s;margin-top:4px;}
+.btn-generate:hover:not(:disabled){filter:brightness(1.1);box-shadow:0 4px 14px rgba(122,90,10,.32);}
+.btn-generate:disabled{opacity:.5;cursor:not-allowed;}
+.spinner{display:none;animation:spin .8s linear infinite;}
+.btn-generate.loading .spinner{display:inline;}
+.btn-generate.loading .btn-icon{display:none;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.progress-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:14px;display:none;}
+.progress-wrap.visible{display:block;}
+.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.progress-label{font-size:.78em;color:var(--text3);font-weight:600;}
+.progress-frac{font-size:.92em;font-weight:700;color:var(--accent);}
+.progress-track{height:7px;background:var(--border);border-radius:4px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--accent);border-radius:4px;transition:width .35s ease;}
+.progress-score{display:flex;gap:14px;margin-top:9px;font-size:.8em;flex-wrap:wrap;align-items:center;}
+.score-item{display:flex;align-items:center;gap:5px;font-weight:500;color:var(--text2);}
+.score-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.score-dot.g{background:var(--green);} .score-dot.r{background:var(--red);}
+.btn-retry{border:1.5px solid var(--border);border-radius:20px;padding:5px 13px;font-family:'DM Sans',sans-serif;font-size:.78em;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;margin-left:auto;}
+.btn-retry:hover{background:var(--border);}
+.final-score-bar{display:none;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.final-score-bar.visible{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.final-num{font-size:1.5rem;font-weight:700;color:var(--accent);}
+.final-label{font-size:.74em;color:var(--text3);}
+.final-track{flex:1;min-width:80px;height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
+.final-fill{height:100%;border-radius:4px;transition:width .5s ease;}
+.final-msg{font-size:.84em;color:var(--text2);width:100%;font-weight:500;}
+.exercise-area{display:none;} .exercise-area.visible{display:block;}
+.exercise-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden;}
+.exercise-card-header{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--border);}
+.ex-num{font-weight:700;color:var(--accent);font-size:.88em;}
+.ex-type-badge{font-size:.68em;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-mid);border-radius:12px;padding:2px 8px;}
+.ex-diff-badge{font-size:.68em;font-weight:700;border-radius:12px;padding:2px 8px;}
+.ex-diff-badge.A2{background:var(--green-bg);color:var(--green);border:1px solid #80b890;}
+.ex-diff-badge.B1{background:var(--blue-bg);color:var(--blue);border:1px solid #90a8e0;}
+.ex-diff-badge.B2{background:var(--warn-bg);color:var(--accent);border:1px solid var(--accent-mid);}
+.ex-status{margin-left:auto;}
+.exercise-body{padding:16px 18px;}
+.exercise-prompt{line-height:1.7;margin-bottom:12px;color:var(--text);}
+.exercise-prompt em{color:var(--accent);font-style:italic;font-weight:600;}
+.fill-input{border:none;border-bottom:2px solid var(--accent-mid);background:var(--accent-light);padding:2px 8px;border-radius:4px 4px 0 0;font-family:'DM Sans',sans-serif;font-size:1em;color:var(--text);min-width:150px;outline:none;transition:border-color .15s;}
+.fill-input:focus{border-bottom-color:var(--accent);}
+.fill-input.ok{background:var(--green-bg);border-bottom-color:var(--green);}
+.fill-input.err{background:var(--red-bg);border-bottom-color:var(--red);}
+.choices-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px;}
+.choice-btn{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:.88em;font-weight:500;cursor:pointer;text-align:left;background:var(--bg);color:var(--text);transition:all .15s;}
+.choice-btn:hover:not(:disabled){border-color:var(--accent);background:var(--accent-light);}
+.choice-btn.ok{background:var(--green-bg);border-color:var(--green);color:var(--green);font-weight:700;}
+.choice-btn.err{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.choice-btn:disabled{cursor:default;}
+.transform-input{width:100%;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:.9em;background:var(--bg);color:var(--text);outline:none;margin-bottom:8px;transition:border-color .15s;}
+.transform-input:focus{border-color:var(--accent);}
+.transform-input.ok{background:var(--green-bg);border-color:var(--green);}
+.transform-input.err{background:var(--red-bg);border-color:var(--red);}
+.btn-check{border:1.5px solid var(--accent);border-radius:20px;padding:7px 18px;font-family:'DM Sans',sans-serif;font-size:.84em;font-weight:700;cursor:pointer;background:transparent;color:var(--accent);transition:all .15s;}
+.btn-check:hover:not(:disabled){background:var(--accent);color:white;}
+.btn-check:disabled{opacity:.35;cursor:default;}
+.ex-feedback{display:none;border-radius:var(--radius-sm);padding:11px 14px;line-height:1.55;margin-top:10px;font-size:.9em;}
+.ex-feedback.visible{display:block;}
+.ex-feedback.ok{background:var(--green-bg);border:1.5px solid #80b890;color:#0e4818;}
+.ex-feedback.err{background:var(--red-bg);border:1.5px solid #c08090;color:#700018;}
+.fb-rule-link{display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:.84em;font-weight:700;color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:2px;}
+.skeleton-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:12px;}
+.skel{background:linear-gradient(90deg,var(--border) 25%,#e6e0d4 50%,var(--border) 75%);background-size:200% 100%;animation:skel 1.4s infinite;border-radius:4px;height:13px;margin-bottom:9px;}
+@keyframes skel{to{background-position:-200% 0;}}
+.state-msg{text-align:center;padding:40px 20px;color:var(--text3);}
+.state-icon{font-size:2rem;margin-bottom:10px;}
+.state-msg p{max-width:260px;margin:0 auto;line-height:1.6;font-weight:500;}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <h1>La Négation Complexe</h1>
+    <span class="header-tag">Grammaire</span>
+  </div>
+  <div class="subtitle">Gramática francesa · DELF B1–B2</div>
+  <div class="stats-row">
+    <div class="stat-pill ne">ne… pas / jamais / plus</div>
+    <div class="stat-pill el">rien / personne / aucun</div>
+    <div class="stat-pill db">Doubles négations</div>
+    <div class="stat-pill re">ne… que</div>
+    <div class="stat-pill neu" id="score-pill" style="display:none">Resultado: <span id="score-pill-val">—</span></div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referencia</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Panorama</button>
+    <button class="snav-btn"        onclick="showSection('s-basiques',this)">2. Négations de base</button>
+    <button class="snav-btn"        onclick="showSection('s-rien',this)">3. Rien / Personne / Aucun</button>
+    <button class="snav-btn"        onclick="showSection('s-position',this)">4. Position</button>
+    <button class="snav-btn"        onclick="showSection('s-doubles',this)">5. Doubles négations</button>
+    <button class="snav-btn"        onclick="showSection('s-que',this)">6. Ne… que</button>
+    <button class="snav-btn"        onclick="showSection('s-sansne',this)">7. Négation sans ne</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">8. Trampas</button>
+  </div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        La negación francesa funciona en <strong>dos partes</strong>: <strong>ne</strong> antes del verbo y un <strong>segundo elemento</strong> después. Dominar sus variantes, su posición en los distintos tiempos y las combinaciones dobles es esencial para el DELF B1–B2.
+      </div>
+
+      <div class="sec-label">Sistema completo de negaciones</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Negación</th><th>Significado</th><th>Categoría</th></tr></thead>
+        <tbody>
+          <tr><td><strong class="hl-ne">ne… pas</strong></td><td>no</td><td>básica</td></tr>
+          <tr><td><strong class="hl-ne">ne… jamais</strong></td><td>nunca / jamás</td><td>frecuencia</td></tr>
+          <tr><td><strong class="hl-ne">ne… plus</strong></td><td>ya no</td><td>cesación</td></tr>
+          <tr><td><strong class="hl-ne">ne… pas encore</strong></td><td>todavía no / aún no</td><td>anterioridad</td></tr>
+          <tr><td><strong class="hl-ne">ne… pas du tout</strong></td><td>en absoluto / para nada</td><td>énfasis total</td></tr>
+          <tr><td><strong class="hl-el">ne… rien</strong></td><td>nada</td><td>objeto (COD)</td></tr>
+          <tr><td><strong class="hl-el">ne… personne</strong></td><td>nadie / a nadie</td><td>persona</td></tr>
+          <tr><td><strong class="hl-el">ne… aucun(e)</strong></td><td>ningún / ninguna</td><td>determinante</td></tr>
+          <tr><td><strong class="hl-el">ne… nulle part</strong></td><td>en ningún sitio</td><td>lugar</td></tr>
+          <tr><td><strong class="hl-el">ne… guère</strong></td><td>apenas / casi no</td><td>cantidad (formal)</td></tr>
+          <tr><td><strong class="hl-re">ne… que</strong></td><td>solo / solamente</td><td>restricción (≠ negación total)</td></tr>
+          <tr><td><strong class="hl-db">ne… ni… ni</strong></td><td>ni… ni</td><td>doble exclusión</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Posición estándar — tiempos simples</div>
+      <div class="pos-diagram">
+        <div class="pos-slot ne">ne / n'</div>
+        <div class="pos-arrow">+</div>
+        <div class="pos-slot vb">VERBE</div>
+        <div class="pos-arrow">+</div>
+        <div class="pos-slot el">pas / jamais / plus / rien…</div>
+        <div class="pos-label">El segundo elemento siempre va DESPUÉS del verbo conjugado en tiempos simples.</div>
+      </div>
+
+      <div class="sec-label">Posición — temps composés (regla general)</div>
+      <div class="pos-diagram">
+        <div class="pos-slot ne">ne / n'</div>
+        <div class="pos-arrow">+</div>
+        <div class="pos-slot au">AVOIR / ÊTRE</div>
+        <div class="pos-arrow">+</div>
+        <div class="pos-slot el">pas / jamais / plus / rien</div>
+        <div class="pos-arrow">+</div>
+        <div class="pos-slot pp">participe passé</div>
+        <div class="pos-label">⚠️ Excepción: personne, nulle part y aucun van DESPUÉS del participio pasado.</div>
+      </div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Clave de diagnóstico rápido:</strong> ¿La acción no ocurre nunca? → <em>jamais</em>. ¿Ocurría antes pero ya no? → <em>plus</em>. ¿Todavía no ha ocurrido? → <em>pas encore</em>. ¿El objeto es nada? → <em>rien</em>. ¿La persona es nadie? → <em>personne</em>. ¿Solo X? → <em>ne… que</em>.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="sec-block" id="s-basiques">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las negaciones básicas comparten la misma estructura pero tienen <strong>matices semánticos distintos</strong>. Elegir la equivocada no es un error gramatical sino de sentido — y el examinador lo detecta.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip ne active" onclick="selectChip('bas',0)">ne… pas</button>
+        <button class="chip ne"        onclick="selectChip('bas',1)">ne… jamais</button>
+        <button class="chip ne"        onclick="selectChip('bas',2)">ne… plus</button>
+        <button class="chip ne"        onclick="selectChip('bas',3)">ne… pas encore</button>
+        <button class="chip ne"        onclick="selectChip('bas',4)">ne… pas du tout · guère · nullement</button>
+      </div>
+      <div id="bas-panels">
+
+        <div class="chip-panel active" id="bas-p-0">
+          <div class="def-box">Negación simple y directa. La más frecuente. Puede reforzarse con <em>du tout</em>.</div>
+          <div class="example-block ne"><div class="ex-fr">Je <span class="ene">ne</span> comprends <span class="ene">pas</span> cette règle.</div><div class="ex-es">No entiendo esta regla.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Elle <span class="ene">n'</span>est <span class="ene">pas</span> venue hier.</div><div class="ex-es">No vino ayer.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Nous <span class="ene">ne</span> pouvons <span class="ene">pas</span> accepter cette offre.</div><div class="ex-es">No podemos aceptar esta oferta.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Tu <span class="ene">n'</span>as <span class="ene">pas</span> lu ce livre ? C'est dommage.</div><div class="ex-es">¿No has leído este libro? Qué lástima.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Il <span class="ene">ne</span> fait <span class="ene">pas</span> beau aujourd'hui.</div><div class="ex-es">No hace buen tiempo hoy.</div></div>
+        </div>
+
+        <div class="chip-panel" id="bas-p-1">
+          <div class="def-box">Equivale a "nunca / jamás". Puede usarse solo como respuesta corta: <em>Jamais !</em></div>
+          <div class="example-block ne"><div class="ex-fr">Je <span class="ene">ne</span> mange <span class="ene">jamais</span> de viande.</div><div class="ex-es">Nunca como carne.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Elle <span class="ene">n'</span>a <span class="ene">jamais</span> visité Paris.</div><div class="ex-es">Nunca ha visitado París.</div></div>
+          <div class="example-block ne"><div class="ex-fr">On <span class="ene">ne</span> sait <span class="ene">jamais</span> ce qui peut arriver.</div><div class="ex-es">Nunca se sabe lo que puede pasar.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Il <span class="ene">ne</span> s'est <span class="ene">jamais</span> plaint de son sort.</div><div class="ex-es">Nunca se ha quejado de su suerte.</div></div>
+          <div class="example-block ne"><div class="ex-fr">— Tu mens ? — <span class="ene">Jamais</span> !</div><div class="ex-es">— ¿Mientes? — ¡Jamás!</div></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text">En español el doble negativo es obligatorio (<em>no… nunca</em>). En francés <strong>ne… jamais</strong> ya es negación completa — nunca se añade <em>pas</em>: <em>je ne mange jamais</em> ✓ — <em>je ne mange pas jamais</em> ✗</div></div>
+        </div>
+
+        <div class="chip-panel" id="bas-p-2">
+          <div class="def-box">Indica que algo que antes ocurría <strong>ha cesado</strong>. Equivale a "ya no". El antónimo positivo es <em>encore / toujours</em> (todavía).</div>
+          <div class="example-block ne"><div class="ex-fr">Elle <span class="ene">ne</span> fume <span class="ene">plus</span>.</div><div class="ex-es">Ya no fuma.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Il <span class="ene">n'</span>habite <span class="ene">plus</span> à Paris.</div><div class="ex-es">Ya no vive en París.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Je <span class="ene">ne</span> te fais <span class="ene">plus</span> confiance.</div><div class="ex-es">Ya no me fío de ti.</div></div>
+          <div class="example-block ne"><div class="ex-fr">On <span class="ene">n'</span>a <span class="ene">plus</span> de lait — il faut en acheter.</div><div class="ex-es">Ya no queda leche — hay que comprar.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Ils <span class="ene">ne</span> se voient <span class="ene">plus</span> depuis leur dispute.</div><div class="ex-es">Ya no se ven desde su pelea.</div></div>
+          <div class="note-box"><strong>Pronunciación:</strong> en negación, <em>plus</em> se pronuncia /ply/ sin la s. Con valor positivo (<em>il en veut plus</em> = quiere más) se pronuncia /plys/ con s.</div>
+        </div>
+
+        <div class="chip-panel" id="bas-p-3">
+          <div class="def-box">Algo que se esperaba que hubiera ocurrido <strong>todavía no ha ocurrido</strong>. El antónimo es <em>déjà</em> (ya).</div>
+          <div class="example-block ne"><div class="ex-fr">Il <span class="ene">n'</span>est <span class="ene">pas encore</span> arrivé.</div><div class="ex-es">Todavía no ha llegado.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Je <span class="ene">n'</span>ai <span class="ene">pas encore</span> fini mon travail.</div><div class="ex-es">Aún no he terminado mi trabajo.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Elle <span class="ene">ne</span> comprend <span class="ene">pas encore</span> pourquoi c'est arrivé.</div><div class="ex-es">Todavía no entiende por qué pasó.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Tu <span class="ene">n'</span>as <span class="ene">pas encore</span> lu ce livre ? Tu devrais !</div><div class="ex-es">¿Aún no has leído ese libro? ¡Deberías!</div></div>
+          <div class="example-block ne"><div class="ex-fr">Ils <span class="ene">ne</span> sont <span class="ene">pas encore</span> prêts à prendre cette décision.</div><div class="ex-es">Aún no están listos para tomar esa decisión.</div></div>
+        </div>
+
+        <div class="chip-panel" id="bas-p-4">
+          <div class="def-box">Refuerzos de la negación con distintos grados de énfasis y registro.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Negación</th><th>Significado</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td><strong class="hl-ne">ne… pas du tout</strong></td><td>en absoluto, para nada</td><td>neutro / oral</td></tr>
+              <tr><td><strong class="hl-ne">ne… nullement</strong></td><td>en modo alguno</td><td>formal / escrito</td></tr>
+              <tr><td><strong class="hl-ne">ne… guère</strong></td><td>apenas, casi no</td><td>literario / formal</td></tr>
+              <tr><td><strong class="hl-ne">ne… point</strong></td><td>no (enfático)</td><td>arcaico / literario</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block ne"><div class="ex-fr">Ça <span class="ene">ne</span> me plaît <span class="ene">pas du tout</span>.</div><div class="ex-es">No me gusta en absoluto.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Je <span class="ene">ne</span> suis <span class="ene">nullement</span> responsable de cela.</div><div class="ex-es">No soy en modo alguno responsable de eso.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Il <span class="ene">ne</span> travaille <span class="ene">guère</span> — c'est inquiétant.</div><div class="ex-es">Apenas trabaja — es preocupante.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Je <span class="ene">ne</span> suis <span class="ene">pas du tout</span> d'accord avec cette analyse.</div><div class="ex-es">No estoy de acuerdo en absoluto con ese análisis.</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <div class="sec-block" id="s-rien">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <em>Rien</em>, <em>personne</em> y <em>aucun(e)</em> son pronombres/determinantes negativos que sustituyen a un complemento. Su comportamiento difiere de <em>pas</em>: pueden ser <strong>sujetos</strong>, su posición en temps composés es diferente, y pueden usarse solos como respuesta.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip el active" onclick="selectChip('rpa',0)">ne… rien (nada)</button>
+        <button class="chip el"        onclick="selectChip('rpa',1)">ne… personne (nadie)</button>
+        <button class="chip el"        onclick="selectChip('rpa',2)">ne… aucun(e) (ningún/a)</button>
+        <button class="chip el"        onclick="selectChip('rpa',3)">ne… nulle part (en ningún sitio)</button>
+        <button class="chip el"        onclick="selectChip('rpa',4)">Como sujeto — Rien ne / Personne ne</button>
+      </div>
+      <div id="rpa-panels">
+
+        <div class="chip-panel active" id="rpa-p-0">
+          <div class="def-box"><em>Rien</em> niega un complemento de cosa (COD). En temps composés va <strong>antes del participio</strong>.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Tiempo simple</th><th>Temps composé</th></tr></thead>
+            <tbody>
+              <tr><td>Il ne dit <span class="hl-el">rien</span>.</td><td>Il n'a <span class="hl-el">rien</span> dit.</td></tr>
+              <tr><td>Je ne vois <span class="hl-el">rien</span>.</td><td>Je n'ai <span class="hl-el">rien</span> vu.</td></tr>
+              <tr><td>Elle ne fait <span class="hl-el">rien</span>.</td><td>Elle n'a <span class="hl-el">rien</span> fait.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block el"><div class="ex-fr">Je <span class="eel">ne</span> comprends <span class="eel">rien</span> à ce problème.</div><div class="ex-es">No entiendo nada de este problema.</div></div>
+          <div class="example-block el"><div class="ex-fr">Il <span class="eel">n'</span>a <span class="eel">rien</span> dit à personne.</div><div class="ex-es">No le dijo nada a nadie.</div></div>
+          <div class="example-block el"><div class="ex-fr">On <span class="eel">n'</span>a <span class="eel">rien</span> trouvé de suspect.</div><div class="ex-es">No encontramos nada sospechoso.</div></div>
+          <div class="example-block el"><div class="ex-fr">Elle <span class="eel">ne</span> mange <span class="eel">rien</span> depuis deux jours.</div><div class="ex-es">No come nada desde hace dos días.</div></div>
+          <div class="example-block el"><div class="ex-fr">Je <span class="eel">n'</span>ai <span class="eel">rien</span> entendu de ce qu'il a dit.</div><div class="ex-es">No oí nada de lo que dijo.</div></div>
+        </div>
+
+        <div class="chip-panel" id="rpa-p-1">
+          <div class="def-box"><em>Personne</em> niega un complemento de persona. En temps composés va <strong>después del participio</strong> — al contrario que <em>rien</em>.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Tiempo simple</th><th>Temps composé</th></tr></thead>
+            <tbody>
+              <tr><td>Il ne voit <span class="hl-el">personne</span>.</td><td>Il n'a vu <span class="hl-el">personne</span>.</td></tr>
+              <tr><td>Je ne connais <span class="hl-el">personne</span>.</td><td>Je n'ai connu <span class="hl-el">personne</span>.</td></tr>
+              <tr><td>Elle n'appelle <span class="hl-el">personne</span>.</td><td>Elle n'a appelé <span class="hl-el">personne</span>.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block el"><div class="ex-fr">Je <span class="eel">ne</span> connais <span class="eel">personne</span> ici.</div><div class="ex-es">No conozco a nadie aquí.</div></div>
+          <div class="example-block el"><div class="ex-fr">Il <span class="eel">n'</span>a parlé à <span class="eel">personne</span> de ce projet.</div><div class="ex-es">No habló con nadie de ese proyecto.</div></div>
+          <div class="example-block el"><div class="ex-fr">Elle <span class="eel">n'</span>a invité <span class="eel">personne</span> à sa fête.</div><div class="ex-es">No invitó a nadie a su fiesta.</div></div>
+          <div class="example-block el"><div class="ex-fr">On <span class="eel">ne</span> peut faire confiance à <span class="eel">personne</span>.</div><div class="ex-es">No se puede confiar en nadie.</div></div>
+          <div class="example-block el"><div class="ex-fr">Je <span class="eel">n'</span>ai rencontré <span class="eel">personne</span> d'intéressant hier soir.</div><div class="ex-es">No conocí a nadie interesante anoche.</div></div>
+        </div>
+
+        <div class="chip-panel" id="rpa-p-2">
+          <div class="def-box"><em>Aucun(e)</em> es un determinante negativo que acompaña a un sustantivo. Concuerda en género. El sustantivo va siempre en <strong>singular</strong>. En temps composés va después del participio.</div>
+          <div class="example-block el"><div class="ex-fr">Il <span class="eel">n'</span>a fait <span class="eel">aucun</span> effort.</div><div class="ex-es">No hizo ningún esfuerzo.</div></div>
+          <div class="example-block el"><div class="ex-fr">Elle <span class="eel">n'</span>a <span class="eel">aucune</span> idée de ce qui se passe.</div><div class="ex-es">No tiene ninguna idea de lo que pasa.</div></div>
+          <div class="example-block el"><div class="ex-fr">Je <span class="eel">ne</span> vois <span class="eel">aucun</span> problème avec ta proposition.</div><div class="ex-es">No veo ningún problema con tu propuesta.</div></div>
+          <div class="example-block el"><div class="ex-fr">Ils <span class="eel">n'</span>ont pris <span class="eel">aucune</span> décision concrète.</div><div class="ex-es">No tomaron ninguna decisión concreta.</div></div>
+          <div class="example-block el"><div class="ex-fr">Il <span class="eel">n'</span>y a <span class="eel">aucun</span> doute : c'est lui le coupable.</div><div class="ex-es">No hay ninguna duda: él es el culpable.</div></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text">Sustantivo tras <em>aucun</em> siempre en <strong>singular</strong>: <em>aucun problème</em> ✓ — <em>aucuns problèmes</em> ✗.</div></div>
+        </div>
+
+        <div class="chip-panel" id="rpa-p-3">
+          <div class="def-box"><em>Nulle part</em> niega un complemento de lugar. En temps composés va <strong>después del participio</strong>.</div>
+          <div class="example-block el"><div class="ex-fr">Je <span class="eel">ne</span> vais <span class="eel">nulle part</span> ce week-end.</div><div class="ex-es">No voy a ningún sitio este fin de semana.</div></div>
+          <div class="example-block el"><div class="ex-fr">On <span class="eel">ne</span> la trouve <span class="eel">nulle part</span>.</div><div class="ex-es">No la encontramos en ningún sitio.</div></div>
+          <div class="example-block el"><div class="ex-fr">Il <span class="eel">n'</span>est allé <span class="eel">nulle part</span> pendant les vacances.</div><div class="ex-es">No fue a ningún sitio durante las vacaciones.</div></div>
+          <div class="example-block el"><div class="ex-fr">Ces chaussures <span class="eel">ne</span> sont vendues <span class="eel">nulle part</span> en France.</div><div class="ex-es">Estos zapatos no se venden en ningún sitio de Francia.</div></div>
+          <div class="example-block el"><div class="ex-fr">Je <span class="eel">ne</span> me sens bien <span class="eel">nulle part</span> sauf chez moi.</div><div class="ex-es">No me siento bien en ningún sitio excepto en casa.</div></div>
+        </div>
+
+        <div class="chip-panel" id="rpa-p-4">
+          <div class="def-box"><em>Rien</em>, <em>personne</em> y <em>aucun</em> pueden ser <strong>sujetos</strong>. En ese caso van al inicio de la frase y <strong>ne</strong> va justo antes del verbo.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Como COD (posición normal)</th><th>Como sujeto</th></tr></thead>
+            <tbody>
+              <tr><td>Il ne voit <span class="hl-el">rien</span>.</td><td><span class="hl-el">Rien</span> ne se passe.</td></tr>
+              <tr><td>Il ne voit <span class="hl-el">personne</span>.</td><td><span class="hl-el">Personne</span> ne sait pourquoi.</td></tr>
+              <tr><td>Il n'a fait <span class="hl-el">aucun</span> effort.</td><td><span class="hl-el">Aucun</span> élève n'a compris.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block el"><div class="ex-fr"><span class="eel">Rien</span> ne va plus.</div><div class="ex-es">Ya nada va bien.</div></div>
+          <div class="example-block el"><div class="ex-fr"><span class="eel">Personne</span> ne l'a vu partir.</div><div class="ex-es">Nadie lo vio marcharse.</div></div>
+          <div class="example-block el"><div class="ex-fr"><span class="eel">Rien</span> n'est impossible si on le veut vraiment.</div><div class="ex-es">Nada es imposible si de verdad se quiere.</div></div>
+          <div class="example-block el"><div class="ex-fr"><span class="eel">Personne</span> n'était au courant de cette décision.</div><div class="ex-es">Nadie estaba al corriente de esa decisión.</div></div>
+          <div class="example-block el"><div class="ex-fr"><span class="eel">Aucun</span> de ses amis n'est venu à la réunion.</div><div class="ex-es">Ninguno de sus amigos vino a la reunión.</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <div class="sec-block" id="s-position">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        La posición del segundo elemento varía según el tiempo verbal y si hay infinitivo. Este es el punto más confuso — y más examinado — del sistema de negación.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip ne active" onclick="selectChip('posit',0)">Temps simples</button>
+        <button class="chip ne"        onclick="selectChip('posit',1)">Temps composés — règle générale</button>
+        <button class="chip ne"        onclick="selectChip('posit',2)">Rien vs. Personne / Nulle part / Aucun</button>
+        <button class="chip ne"        onclick="selectChip('posit',3)">Avec infinitif</button>
+        <button class="chip ne"        onclick="selectChip('posit',4)">Avec pronoms COD / COI</button>
+      </div>
+      <div id="posit-panels">
+
+        <div class="chip-panel active" id="posit-p-0">
+          <div class="def-box">Présent, imparfait, futur simple, conditionnel, subjonctif: <strong>ne + verbe conjugué + second élément</strong>. Sin excepción.</div>
+          <div class="example-block ne"><div class="ex-fr">Il <span class="ene">ne</span> mange <span class="ene">pas</span>. / Il <span class="ene">ne</span> mange <span class="ene">jamais</span>. / Il <span class="ene">ne</span> mange <span class="ene">rien</span>.</div><div class="ex-note">présent — todos los elementos van después del verbo</div></div>
+          <div class="example-block ne"><div class="ex-fr">Elle <span class="ene">ne</span> mangeait <span class="ene">plus</span> de sucre.</div><div class="ex-note">imparfait</div></div>
+          <div class="example-block ne"><div class="ex-fr">Il <span class="ene">ne</span> viendra <span class="ene">pas</span> demain.</div><div class="ex-note">futur simple</div></div>
+          <div class="example-block ne"><div class="ex-fr">Je veux qu'il <span class="ene">ne</span> parte <span class="ene">pas</span> si tôt.</div><div class="ex-note">subjonctif</div></div>
+          <div class="example-block ne"><div class="ex-fr">Il <span class="ene">ne</span> ferait <span class="ene">jamais</span> une chose pareille.</div><div class="ex-note">conditionnel</div></div>
+        </div>
+
+        <div class="chip-panel" id="posit-p-1">
+          <div class="def-box">Passé composé, plus-que-parfait, futur antérieur: el segundo elemento va <strong>entre el auxiliar y el participio</strong>. Regla válida para pas, jamais, plus, pas encore, rien.</div>
+          <div class="pos-diagram">
+            <div class="pos-slot ne">ne</div><div class="pos-arrow">+</div>
+            <div class="pos-slot au">avoir / être</div><div class="pos-arrow">+</div>
+            <div class="pos-slot el">pas / jamais / plus / rien</div><div class="pos-arrow">+</div>
+            <div class="pos-slot pp">participe passé</div>
+            <div class="pos-label">pas, jamais, plus, pas encore, rien → entre auxiliar y participio</div>
+          </div>
+          <div class="example-block ne"><div class="ex-fr">Il <span class="ene">n'</span>a <span class="ene">pas</span> mangé.</div><div class="ex-es">No ha comido.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Elle <span class="ene">n'</span>avait <span class="ene">jamais</span> vu ça.</div><div class="ex-es">Nunca había visto eso.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Nous <span class="ene">n'</span>avons <span class="ene">plus</span> travaillé ensemble.</div><div class="ex-es">Ya no hemos trabajado juntos.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Il <span class="ene">n'</span>avait <span class="ene">pas encore</span> décidé quoi faire.</div><div class="ex-es">Todavía no había decidido qué hacer.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Tu <span class="ene">n'</span>auras <span class="ene">pas</span> fini à temps.</div><div class="ex-note">futur antérieur</div></div>
+        </div>
+
+        <div class="chip-panel" id="posit-p-2">
+          <div class="def-box"><strong>La distinción clave:</strong> <em>rien</em> va antes del participio (como <em>pas</em>). Pero <em>personne, nulle part</em> y <em>aucun + nom</em> van <strong>después del participio</strong>.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Negación</th><th>Posición en temps composés</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><strong class="hl-ne">pas / jamais / plus</strong></td><td>antes del p.p.</td><td>Il n'a <span class="hl-ne">pas</span> répondu.</td></tr>
+              <tr><td><strong class="hl-el">rien</strong></td><td>antes del p.p.</td><td>Il n'a <span class="hl-el">rien</span> dit.</td></tr>
+              <tr><td><strong class="hl-el">personne</strong></td><td>después del p.p.</td><td>Il n'a vu <span class="hl-el">personne</span>.</td></tr>
+              <tr><td><strong class="hl-el">aucun(e) + nom</strong></td><td>después del p.p.</td><td>Il n'a pris <span class="hl-el">aucune</span> décision.</td></tr>
+              <tr><td><strong class="hl-el">nulle part</strong></td><td>después del p.p.</td><td>Il n'est allé <span class="hl-el">nulle part</span>.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block el"><div class="ex-fr">Je <span class="eel">n'</span>ai <span class="eel">rien</span> entendu. <span class="ex-note">(rien → antes del p.p.)</span></div></div>
+          <div class="example-block el"><div class="ex-fr">Elle <span class="eel">n'</span>a vu <span class="eel">personne</span>. <span class="ex-note">(personne → después del p.p.)</span></div></div>
+          <div class="example-block el"><div class="ex-fr">Ils <span class="eel">n'</span>ont pris <span class="eel">aucune</span> mesure concrète. <span class="ex-note">(aucun → después del p.p.)</span></div></div>
+          <div class="example-block el"><div class="ex-fr">On <span class="eel">n'</span>est allé <span class="eel">nulle part</span> cet été. <span class="ex-note">(nulle part → después del p.p.)</span></div></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Truco:</strong> <em>rien</em> se comporta como <em>pas</em> (antes del p.p.). <em>Personne, nulle part, aucun</em> se comportan como complementos largos que van al final.</div></div>
+        </div>
+
+        <div class="chip-panel" id="posit-p-3">
+          <div class="def-box">Con <em>verbe conjugué + infinitif</em>, la negación envuelve el <strong>infinitivo</strong>: ambos elementos juntos, antes del infinitivo.</div>
+          <div class="pos-diagram">
+            <div class="pos-slot au">Verbe conj.</div><div class="pos-arrow">+</div>
+            <div class="pos-slot ne">ne pas / ne jamais / ne plus / ne rien</div><div class="pos-arrow">+</div>
+            <div class="pos-slot pp">infinitif</div>
+            <div class="pos-label">ne y pas/jamais/rien van juntos antes del infinitivo. Personne/nulle part van después.</div>
+          </div>
+          <div class="example-block ne"><div class="ex-fr">Il essaie de <span class="ene">ne pas</span> faire de bruit.</div><div class="ex-es">Intenta no hacer ruido.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Elle préfère <span class="ene">ne jamais</span> parler de ça.</div><div class="ex-es">Prefiere no hablar nunca de eso.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Il a décidé de <span class="ene">ne plus</span> fumer.</div><div class="ex-es">Decidió no fumar más.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Je lui ai conseillé de <span class="ene">ne rien</span> dire.</div><div class="ex-es">Le aconsejé no decir nada.</div></div>
+          <div class="example-block el"><div class="ex-fr">Elle a promis de ne voir <span class="eel">personne</span>. <span class="ex-note">(personne → después del infinitivo)</span></div><div class="ex-es">Prometió no ver a nadie.</div></div>
+        </div>
+
+        <div class="chip-panel" id="posit-p-4">
+          <div class="def-box">Los pronombres COD/COI van siempre entre <em>ne</em> y el verbo. La negación rodea el conjunto <strong>pronom + verbe</strong>.</div>
+          <div class="example-block ne"><div class="ex-fr">Je <span class="ene">ne</span> le vois <span class="ene">plus</span>.</div><div class="ex-es">Ya no lo veo.</div><div class="ex-note">le va entre ne y vois</div></div>
+          <div class="example-block ne"><div class="ex-fr">Il <span class="ene">ne</span> lui a <span class="ene">pas</span> répondu.</div><div class="ex-es">No le ha respondido.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Je <span class="ene">ne</span> t'ai <span class="ene">jamais</span> menti.</div><div class="ex-es">Nunca te he mentido.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Elle <span class="ene">ne</span> s'en souvient <span class="ene">plus</span>.</div><div class="ex-es">Ya no se acuerda de ello.</div></div>
+          <div class="example-block ne"><div class="ex-fr">On <span class="ene">ne</span> vous l'a <span class="ene">pas encore</span> dit.</div><div class="ex-es">Todavía no os lo han dicho.</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <div class="sec-block" id="s-doubles">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Es posible combinar dos elementos negativos en una misma frase. El resultado es siempre una <strong>negación reforzada</strong> — nunca un "doble negativo" que se cancele. La combinación más examinada es <strong>ne… ni… ni</strong>.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip db active" onclick="selectChip('doub',0)">ne… ni… ni</button>
+        <button class="chip db"        onclick="selectChip('doub',1)">ne… plus jamais</button>
+        <button class="chip db"        onclick="selectChip('doub',2)">ne… plus rien / ne… jamais rien</button>
+        <button class="chip db"        onclick="selectChip('doub',3)">ne… plus personne / ne… jamais personne</button>
+      </div>
+      <div id="doub-panels">
+
+        <div class="chip-panel active" id="doub-p-0">
+          <div class="def-box"><em>Ne… ni… ni</em> niega dos complementos simultáneamente. Los artículos <strong>partitivos e indefinidos desaparecen</strong>. Los artículos definidos se conservan.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Afirmativo</th><th>Negativo ni… ni</th></tr></thead>
+            <tbody>
+              <tr><td>Il mange <strong>du</strong> pain et <strong>du</strong> beurre.</td><td>Il ne mange <span class="hl-db">ni</span> pain <span class="hl-db">ni</span> beurre. <span class="dim">(sin du)</span></td></tr>
+              <tr><td>Il aime <strong>le</strong> café et <strong>le</strong> thé.</td><td>Il n'aime <span class="hl-db">ni</span> le café <span class="hl-db">ni</span> le thé. <span class="dim">(le se conserva)</span></td></tr>
+              <tr><td>Il est grand et fort.</td><td>Il n'est <span class="hl-db">ni</span> grand <span class="hl-db">ni</span> fort.</td></tr>
+              <tr><td>Il fume et boit.</td><td>Il ne fume <span class="hl-db">ni</span> ne boit. <span class="dim">(ni antes de cada verbo)</span></td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block db"><div class="ex-fr">Je <span class="edb">ne</span> parle <span class="edb">ni</span> anglais <span class="edb">ni</span> allemand.</div><div class="ex-es">No hablo ni inglés ni alemán.</div></div>
+          <div class="example-block db"><div class="ex-fr">Elle <span class="edb">n'</span>a <span class="edb">ni</span> frère <span class="edb">ni</span> sœur.</div><div class="ex-es">No tiene ni hermano ni hermana.</div></div>
+          <div class="example-block db"><div class="ex-fr">Cette décision <span class="edb">n'</span>est <span class="edb">ni</span> juste <span class="edb">ni</span> raisonnable.</div><div class="ex-es">Esta decisión no es ni justa ni razonable.</div></div>
+          <div class="example-block db"><div class="ex-fr">Je <span class="edb">n'</span>ai vu <span class="edb">ni</span> Paul <span class="edb">ni</span> Marie à la réunion.</div><div class="ex-es">No vi ni a Paul ni a Marie en la reunión.</div></div>
+          <div class="example-block db"><div class="ex-fr">Il <span class="edb">ne</span> fume <span class="edb">ni</span> ne boit.</div><div class="ex-es">No fuma ni bebe.</div><div class="ex-note">ni antes de cada verbo</div></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Artículos con ni… ni:</strong> du/de la/des/un/une desaparecen ✓. Le/la/les se conservan ✓. <em>Il ne mange ni du pain ni du beurre</em> ✗ — <em>Il ne mange ni pain ni beurre</em> ✓.</div></div>
+        </div>
+
+        <div class="chip-panel" id="doub-p-1">
+          <div class="def-box"><em>Ne… plus jamais</em> combina cesación (<em>plus</em>) + frecuencia nula (<em>jamais</em>): "nunca más / jamás volverá a".</div>
+          <div class="example-block db"><div class="ex-fr">Je <span class="edb">ne</span> ferai <span class="edb">plus jamais</span> ça.</div><div class="ex-es">Nunca más haré eso.</div></div>
+          <div class="example-block db"><div class="ex-fr">Elle <span class="edb">ne</span> voudra <span class="edb">plus jamais</span> te parler.</div><div class="ex-es">No querrá volver a hablarte nunca más.</div></div>
+          <div class="example-block db"><div class="ex-fr">On <span class="edb">n'</span>a <span class="edb">plus jamais</span> entendu parler de lui.</div><div class="ex-es">Nunca más volvimos a saber de él.</div></div>
+          <div class="example-block db"><div class="ex-fr">Il <span class="edb">ne</span> reviendra <span class="edb">plus jamais</span> dans cette ville.</div><div class="ex-es">Nunca más volverá a esta ciudad.</div></div>
+          <div class="example-block db"><div class="ex-fr">Après ce qui s'est passé, je <span class="edb">ne</span> lui ferai <span class="edb">plus jamais</span> confiance.</div><div class="ex-es">Después de lo que pasó, nunca más confiaré en él.</div></div>
+        </div>
+
+        <div class="chip-panel" id="doub-p-2">
+          <div class="def-box">Combinaciones con <em>rien</em>: el orden sigue la jerarquía <em>plus / jamais</em> antes de <em>rien</em>. En temps composés, <em>rien</em> sigue yendo antes del participio.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Combinación</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><strong class="hl-db">ne… plus rien</strong></td><td>ya nada</td><td>Il ne reste <span class="hl-db">plus rien</span>.</td></tr>
+              <tr><td><strong class="hl-db">ne… jamais rien</strong></td><td>nunca nada</td><td>Il ne dit <span class="hl-db">jamais rien</span> d'utile.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block db"><div class="ex-fr">Il <span class="edb">ne</span> reste <span class="edb">plus rien</span> dans le frigo.</div><div class="ex-es">Ya no queda nada en la nevera.</div></div>
+          <div class="example-block db"><div class="ex-fr">Après l'inondation, il <span class="edb">ne</span> restait <span class="edb">plus rien</span> de la maison.</div><div class="ex-es">Después de la inundación, ya no quedaba nada de la casa.</div></div>
+          <div class="example-block db"><div class="ex-fr">Il <span class="edb">ne</span> dit <span class="edb">jamais rien</span> d'intéressant en réunion.</div><div class="ex-es">Nunca dice nada interesante en las reuniones.</div></div>
+          <div class="example-block db"><div class="ex-fr">On <span class="edb">n'</span>a <span class="edb">plus rien</span> à perdre.</div><div class="ex-es">Ya no tenemos nada que perder.</div></div>
+          <div class="example-block db"><div class="ex-fr">Elle <span class="edb">n'</span>a <span class="edb">plus rien</span> voulu entendre après l'annonce.</div><div class="ex-es">Ya no quiso escuchar nada más después del anuncio.</div></div>
+        </div>
+
+        <div class="chip-panel" id="doub-p-3">
+          <div class="def-box">Combinaciones con <em>personne</em>: en temps composés, <em>personne</em> sigue yendo después del participio, incluso en combinación.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Combinación</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><strong class="hl-db">ne… plus personne</strong></td><td>ya nadie</td><td>Il ne parle à <span class="hl-db">plus personne</span>.</td></tr>
+              <tr><td><strong class="hl-db">ne… jamais personne</strong></td><td>nunca nadie</td><td>Il ne voit <span class="hl-db">jamais personne</span>.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block db"><div class="ex-fr">Elle <span class="edb">ne</span> voit <span class="edb">plus personne</span> depuis son déménagement.</div><div class="ex-es">Ya no ve a nadie desde su mudanza.</div></div>
+          <div class="example-block db"><div class="ex-fr">Il <span class="edb">ne</span> parle à <span class="edb">plus personne</span> au bureau.</div><div class="ex-es">Ya no le habla a nadie en la oficina.</div></div>
+          <div class="example-block db"><div class="ex-fr">Il <span class="edb">ne</span> voit <span class="edb">jamais personne</span> — il est très solitaire.</div><div class="ex-es">Nunca ve a nadie — es muy solitario.</div></div>
+          <div class="example-block db"><div class="ex-fr">Depuis la pandémie, elle <span class="edb">n'</span>a invité <span class="edb">plus personne</span> chez elle.</div><div class="ex-es">Desde la pandemia, ya no ha invitado a nadie a su casa.</div></div>
+          <div class="example-block db"><div class="ex-fr">On <span class="edb">ne</span> peut faire confiance à <span class="edb">plus personne</span> dans cette affaire.</div><div class="ex-es">Ya no se puede confiar en nadie en este asunto.</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <div class="sec-block" id="s-que">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong>Ne… que</strong> no es una negación total sino una <strong>restricción</strong>: equivale a "solo / solamente / únicamente". El elemento <em>que</em> se coloca directamente antes del elemento que se quiere restringir — no siempre inmediatamente después del verbo.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip re active" onclick="selectChip('que',0)">Ne… que + COD</button>
+        <button class="chip re"        onclick="selectChip('que',1)">Ne… que + otros complementos</button>
+        <button class="chip re"        onclick="selectChip('que',2)">Ne… que en temps composés</button>
+        <button class="chip re"        onclick="selectChip('que',3)">Ne… que vs. negación total — partitif</button>
+      </div>
+      <div id="que-panels">
+
+        <div class="chip-panel active" id="que-p-0">
+          <div class="def-box"><em>Que</em> se coloca directamente antes del COD restringido. El artículo partitivo se <strong>conserva</strong> — diferencia clave con la negación total.</div>
+          <div class="example-block re"><div class="ex-fr">Je <span class="ere">ne</span> mange <span class="ere">que</span> des légumes.</div><div class="ex-es">Solo como verduras.</div></div>
+          <div class="example-block re"><div class="ex-fr">Il <span class="ere">ne</span> boit <span class="ere">que</span> de l'eau.</div><div class="ex-es">Solo bebe agua.</div></div>
+          <div class="example-block re"><div class="ex-fr">Elle <span class="ere">ne</span> lit <span class="ere">que</span> des romans policiers.</div><div class="ex-es">Solo lee novelas policiacas.</div></div>
+          <div class="example-block re"><div class="ex-fr">Nous <span class="ere">n'</span>avons <span class="ere">qu'</span>une seule chance — il faut la saisir.</div><div class="ex-es">Solo tenemos una oportunidad — hay que aprovecharla.</div></div>
+          <div class="example-block re"><div class="ex-fr">Il <span class="ere">ne</span> connaît <span class="ere">que</span> cette ville.</div><div class="ex-es">Solo conoce esta ciudad.</div></div>
+        </div>
+
+        <div class="chip-panel" id="que-p-1">
+          <div class="def-box"><em>Que</em> puede restringir el tiempo, el lugar, la manera o el sujeto — siempre va justo antes del elemento restringido, no del verbo.</div>
+          <div class="example-block re"><div class="ex-fr">Il <span class="ere">ne</span> travaille <span class="ere">que</span> le matin.</div><div class="ex-es">Solo trabaja por la mañana.</div><div class="ex-note">que antes del complemento de tiempo</div></div>
+          <div class="example-block re"><div class="ex-fr">Elle <span class="ere">ne</span> sort <span class="ere">que</span> le week-end.</div><div class="ex-es">Solo sale los fines de semana.</div></div>
+          <div class="example-block re"><div class="ex-fr">Elle <span class="ere">ne</span> parle <span class="ere">qu'</span>à voix basse.</div><div class="ex-es">Solo habla en voz baja.</div><div class="ex-note">que antes del complemento de manera</div></div>
+          <div class="example-block re"><div class="ex-fr">Ce <span class="ere">n'</span>est <span class="ere">que</span> lui qui peut résoudre ce problème.</div><div class="ex-es">Solo él puede resolver este problema.</div><div class="ex-note">restricción del sujeto</div></div>
+          <div class="example-block re"><div class="ex-fr">Je <span class="ere">ne</span> me sens vraiment bien <span class="ere">que</span> chez moi.</div><div class="ex-es">Solo me siento bien de verdad en casa.</div></div>
+        </div>
+
+        <div class="chip-panel" id="que-p-2">
+          <div class="def-box">En temps composés, <em>que</em> va antes del elemento restringido — que puede ser el participio o un complemento posterior.</div>
+          <div class="example-block re"><div class="ex-fr">Je <span class="ere">n'</span>ai <span class="ere">qu'</span>entendu des rumeurs, pas des faits.</div><div class="ex-es">Solo he oído rumores, no hechos.</div><div class="ex-note">que antes del participio</div></div>
+          <div class="example-block re"><div class="ex-fr">Elle <span class="ere">n'</span>a parlé <span class="ere">qu'</span>à Marie.</div><div class="ex-es">Solo habló con Marie.</div><div class="ex-note">que antes del complemento</div></div>
+          <div class="example-block re"><div class="ex-fr">Il <span class="ere">n'</span>a travaillé <span class="ere">que</span> deux heures ce matin.</div><div class="ex-es">Solo trabajó dos horas esta mañana.</div></div>
+          <div class="example-block re"><div class="ex-fr">On <span class="ere">n'</span>a invité <span class="ere">que</span> les proches à la cérémonie.</div><div class="ex-es">Solo invitamos a los allegados a la ceremonia.</div></div>
+          <div class="example-block re"><div class="ex-fr">Je <span class="ere">n'</span>ai rencontré <span class="ere">que</span> des difficultés depuis le début.</div><div class="ex-es">Solo he encontrado dificultades desde el principio.</div></div>
+        </div>
+
+        <div class="chip-panel" id="que-p-3">
+          <div class="def-box">Esta es la distinción más importante: <em>ne… que</em> (restricción) conserva el partitif. <em>Ne… pas</em> (negación total) lo elimina y lo convierte en <em>de</em>.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th></th><th>Frase</th><th>Sentido</th><th>Artículo</th></tr></thead>
+            <tbody>
+              <tr><td><strong class="hl-re">Ne… que</strong></td><td>Je ne mange <span class="hl-re">que du</span> pain.</td><td>Solo como pan (como otras cosas pero el pan es lo único)</td><td class="ok-cell">du conservado</td></tr>
+              <tr><td><strong class="hl-ne">Ne… pas</strong></td><td>Je ne mange <span class="hl-ne">pas de</span> pain.</td><td>No como pan (negación total)</td><td class="ok-cell">de (sin artículo)</td></tr>
+              <tr><td><strong class="hl-re">Ne… que</strong></td><td>Il ne boit <span class="hl-re">que de l'</span>eau.</td><td>Solo bebe agua</td><td class="ok-cell">de l' conservado</td></tr>
+              <tr><td><strong class="hl-ne">Ne… pas</strong></td><td>Il ne boit <span class="hl-ne">pas d'</span>eau.</td><td>No bebe agua</td><td class="ok-cell">d' (sin artículo)</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block re"><div class="ex-fr">Elle ne mange <span class="ere">que du</span> riz le soir. <span class="ex-note">(restricción: solo arroz, nada más)</span></div><div class="ex-es">Por la noche solo come arroz.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Elle ne mange <span class="ene">pas de</span> riz. <span class="ex-note">(negación total: no come arroz en absoluto)</span></div><div class="ex-es">No come arroz.</div></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Error frecuente:</strong> <em>Je ne mange que pain</em> ✗ — hay que mantener el partitif: <em>Je ne mange que <strong>du</strong> pain</em> ✓. Eliminar el artículo es confundir restricción con negación total.</div></div>
+          <div class="note-box"><strong>Ne… que vs. seulement:</strong> son equivalentes y pueden sustituirse. <em>Seulement</em> es más flexible en posición y no requiere <em>ne</em>: <em>Je mange seulement du pain</em> ✓. En el DELF escrito, ambas formas son válidas.</div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <div class="sec-block" id="s-sansne">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        En francés oral y en ciertos contextos específicos, la negación aparece <strong>sin ne</strong>. Es importante reconocerlo en comprensión y saber cuándo es aceptable — y cuándo no — en producción.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip ne active" onclick="selectChip('sansne',0)">Chute du ne en oral</button>
+        <button class="chip ne"        onclick="selectChip('sansne',1)">Réponses courtes sans verbe</button>
+        <button class="chip ne"        onclick="selectChip('sansne',2)">Négation de l'infinitif (panneaux)</button>
+        <button class="chip ne"        onclick="selectChip('sansne',3)">Sans + infinitif / nom</button>
+      </div>
+      <div id="sansne-panels">
+
+        <div class="chip-panel active" id="sansne-p-0">
+          <div class="def-box">En français oral courant, <em>ne</em> tiende a desaparecer. En el DELF <strong>escrito</strong>, el <em>ne</em> es siempre obligatorio.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Oral familier</th><th>Écrit / standard</th></tr></thead>
+            <tbody>
+              <tr><td>Je sais <strong>pas</strong>.</td><td>Je <span class="hl-ne">ne</span> sais <span class="hl-ne">pas</span>.</td></tr>
+              <tr><td>C'est <strong>pas</strong> vrai !</td><td>Ce <span class="hl-ne">n'</span>est <span class="hl-ne">pas</span> vrai !</td></tr>
+              <tr><td>J'ai <strong>rien</strong> dit.</td><td>Je <span class="hl-ne">n'</span>ai <span class="hl-el">rien</span> dit.</td></tr>
+              <tr><td>Y'a <strong>personne</strong>.</td><td>Il <span class="hl-ne">n'</span>y a <span class="hl-el">personne</span>.</td></tr>
+              <tr><td>Je viens <strong>plus</strong>.</td><td>Je <span class="hl-ne">ne</span> viens <span class="hl-ne">plus</span>.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text">En el <strong>DELF escrito</strong>, omitir el <em>ne</em> es un error grave. En comprensión oral, hay que reconocer las frases sin <em>ne</em>. En producción oral, el examinador valora positivamente el uso sistemático de <em>ne</em>.</div></div>
+        </div>
+
+        <div class="chip-panel" id="sansne-p-1">
+          <div class="def-box">En respuestas cortas sin verbo conjugado, el segundo elemento puede usarse solo. Es gramaticalmente correcto porque no hay verbo que envolver.</div>
+          <div class="example-block ne"><div class="ex-fr">— Tu viens ? — <span class="ene">Pas</span> maintenant.</div><div class="ex-es">— ¿Vienes? — Ahora no.</div></div>
+          <div class="example-block ne"><div class="ex-fr">— Qui est là ? — <span class="eel">Personne</span>.</div><div class="ex-es">— ¿Quién está ahí? — Nadie.</div></div>
+          <div class="example-block ne"><div class="ex-fr">— Qu'est-ce que tu veux ? — <span class="eel">Rien</span>.</div><div class="ex-es">— ¿Qué quieres? — Nada.</div></div>
+          <div class="example-block ne"><div class="ex-fr">— Tu y vas souvent ? — <span class="ene">Plus</span> vraiment.</div><div class="ex-es">— ¿Vas allí a menudo? — Ya no mucho.</div></div>
+          <div class="example-block ne"><div class="ex-fr">— Tu as faim ? — <span class="ene">Pas du tout</span>.</div><div class="ex-es">— ¿Tienes hambre? — En absoluto.</div></div>
+        </div>
+
+        <div class="chip-panel" id="sansne-p-2">
+          <div class="def-box">En instrucciones, letreros y pancartas con infinitivo, la negación aparece sin sujeto. <em>Ne pas</em> va junto antes del infinitivo.</div>
+          <div class="example-block ne"><div class="ex-fr"><span class="ene">Ne pas</span> fumer.</div><div class="ex-es">No fumar.</div></div>
+          <div class="example-block ne"><div class="ex-fr"><span class="ene">Ne pas</span> se pencher par la fenêtre.</div><div class="ex-es">No asomarse por la ventana.</div></div>
+          <div class="example-block ne"><div class="ex-fr"><span class="ene">Ne pas</span> déranger.</div><div class="ex-es">No molestar.</div></div>
+          <div class="example-block ne"><div class="ex-fr"><span class="ene">Ne pas</span> marcher sur la pelouse.</div><div class="ex-es">No pisar el césped.</div></div>
+          <div class="example-block ne"><div class="ex-fr"><span class="ene">Ne pas</span> oublier de signer le formulaire.</div><div class="ex-es">No olvidar firmar el formulario.</div></div>
+          <div class="note-box"><strong>Mismo patrón que con infinitivo dependiente:</strong> <em>essayer de <strong>ne pas</strong> faire…</em> — los dos elementos juntos antes del infinitivo.</div>
+        </div>
+
+        <div class="chip-panel" id="sansne-p-3">
+          <div class="def-box"><strong>Sans</strong> + infinitif o sustantivo expresa ausencia o privación — funciona como negación implícita sin necesitar <em>ne</em>.</div>
+          <div class="example-block ne"><div class="ex-fr">Il est parti <span class="ene">sans</span> dire au revoir.</div><div class="ex-es">Se fue sin decir adiós.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Elle travaille <span class="ene">sans</span> se plaindre.</div><div class="ex-es">Trabaja sin quejarse.</div></div>
+          <div class="example-block ne"><div class="ex-fr">On ne peut pas vivre <span class="ene">sans</span> eau.</div><div class="ex-es">No se puede vivir sin agua.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Il est sorti <span class="ene">sans</span> manteau par ce froid.</div><div class="ex-es">Salió sin abrigo con este frío.</div></div>
+          <div class="example-block ne"><div class="ex-fr">Elle a réussi <span class="ene">sans</span> l'aide de personne.</div><div class="ex-es">Triunfó sin la ayuda de nadie.</div></div>
+          <div class="green-box"><strong>Sans que + subjonctif:</strong> <em>Il est parti <strong>sans que</strong> personne le <strong>sache</strong>.</em> — Se fue sin que nadie lo supiera. Cuando hay dos sujetos distintos se usa <em>sans que</em> + subjonctif.</div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+</div><!-- /main-layout -->
+
+<script>
+/* ── TRAMPAS DATA ─────────────────────────────── */
+const TRAPS = [
+  {name:"Doble negativo al estilo español: pas jamais / pas rien",
+   wrong:"Je ne mange pas jamais. / Je ne vois pas rien.",
+   right:"Je ne mange jamais. / Je ne vois rien.",
+   expl:"<strong>Ne…jamais</strong> y <strong>ne…rien</strong> son negaciones completas. No se añade <em>pas</em>. El español usa doble negativo (<em>no…nunca</em>) pero el francés solo usa un elemento: <em>ne…pas</em> o <em>ne…jamais</em>, nunca los dos juntos."},
+  {name:"Personne en temps composés: posición antes del participio",
+   wrong:"Il n'a personne vu. / Elle n'a personne invité.",
+   right:"Il n'a vu personne. / Elle n'a invité personne.",
+   expl:"<strong>Personne</strong> en temps composés va siempre <strong>después del participio pasado</strong>. Al contrario que <em>rien</em>, que va antes. Esta distinción es fundamental y muy preguntada en el DELF."},
+  {name:"Rien en temps composés: posición después del participio",
+   wrong:"Il n'a dit rien. / Elle n'a entendu rien.",
+   right:"Il n'a rien dit. / Elle n'a rien entendu.",
+   expl:"<strong>Rien</strong> en temps composés va <strong>antes del participio pasado</strong> (entre auxiliar y participio): <em>il n'a <strong>rien</strong> dit</em>. Es el caso opuesto a <em>personne</em>."},
+  {name:"Artículos con ne… ni… ni",
+   wrong:"Il ne mange ni du pain ni du beurre.",
+   right:"Il ne mange ni pain ni beurre.",
+   expl:"Con <strong>ne…ni…ni</strong>, los artículos partitivos (du, de la, des) y los indefinidos (un, une, des) <strong>desaparecen</strong>. Los artículos definidos (le, la, les) se conservan: <em>il n'aime ni le café ni le thé</em> ✓."},
+  {name:"Ne… que confundido con negación total (partitivo)",
+   wrong:"Je ne mange que pain. (suprimiendo el partitif)",
+   right:"Je ne mange que du pain.",
+   expl:"<strong>Ne…que</strong> es restricción, no negación total. Los artículos partitivos se conservan: <em>je ne bois que de l'eau</em> ✓. Solo con <em>ne…pas</em> el artículo se convierte en <em>de</em>: <em>je ne bois pas d'eau</em> ✓."},
+  {name:"Ne olvidado en la negación escrita",
+   wrong:"Je sais pas. / C'est pas vrai. / Il a rien dit.",
+   right:"Je ne sais pas. / Ce n'est pas vrai. / Il n'a rien dit.",
+   expl:"La omisión del <em>ne</em> es frecuente en oral coloquial pero es un <strong>error grave en el DELF escrito</strong>. El <em>ne</em> es siempre obligatorio en producción escrita formal."},
+  {name:"Aucun con sustantivo en plural",
+   wrong:"Il n'a fait aucuns efforts. / Je n'ai aucunes nouvelles.",
+   right:"Il n'a fait aucun effort. / Je n'ai aucune nouvelle.",
+   expl:"El sustantivo que sigue a <strong>aucun(e)</strong> va siempre en <strong>singular</strong>: <em>aucun problème, aucune décision</em>. El plural es obligatorio solo en casos muy raros (pluralia tantum)."},
+  {name:"Jamais vs. plus: confusión de matiz",
+   wrong:"Il ne fume plus. (queriendo decir 'nunca ha fumado')",
+   right:"Il n'a jamais fumé. (nunca) / Il ne fume plus. (ya no, antes sí)",
+   expl:"<strong>Jamais</strong> niega que algo haya ocurrido nunca. <strong>Plus</strong> indica que algo que ocurría antes ha cesado. <em>Il ne fume plus</em> implica que antes fumaba. <em>Il n'a jamais fumé</em> implica que nunca lo ha hecho."},
+];
+
+function renderTraps() {
+  document.getElementById("trap-cards").innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join("");
+}
+
+/* ── CHIP SELECT ──────────────────────────────── */
+function selectChip(ns, idx) {
+  document.querySelectorAll(".chip-bar").forEach(bar => {
+    const first = bar.querySelector(".chip");
+    if (first && first.getAttribute("onclick") && first.getAttribute("onclick").includes("'" + ns + "'")) {
+      bar.querySelectorAll(".chip").forEach((c, i) => c.classList.toggle("active", i === idx));
+    }
+  });
+  const el = document.getElementById(ns + "-panels");
+  if (el) el.querySelectorAll(":scope > .chip-panel").forEach((p, i) => p.classList.toggle("active", i === idx));
+}
+
+/* ── NAV ──────────────────────────────────────── */
+function showSection(id, btn) {
+  document.querySelectorAll(".sec-block").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".snav-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  btn.classList.add("active");
+}
+function switchMode(mode, btn) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById("panel-" + mode).classList.add("active");
+  btn.classList.add("active");
+  document.getElementById("section-nav").style.display = mode === "ref" ? "" : "none";
+}
+function setFontSize(v) { document.documentElement.style.setProperty("--fs", v + "px"); }
+
+/* ── EXERCISE STATE ───────────────────────────── */
+let exType = "fill", exDiff = "B1", exQty = 5, exFoco = "mix";
+let exTotal = 0, exAnswered = 0, exCorrect = 0, exWrong = 0;
+
+document.querySelectorAll(".ex-opt-btn:not(.foco)").forEach(b => b.addEventListener("click", function() {
+  document.querySelectorAll(".ex-opt-btn:not(.foco)").forEach(x => x.classList.remove("active"));
+  this.classList.add("active"); exType = this.dataset.type;
+}));
+document.querySelectorAll(".ex-opt-btn.foco").forEach(b => b.addEventListener("click", function() {
+  document.querySelectorAll(".ex-opt-btn.foco").forEach(x => x.classList.remove("active"));
+  this.classList.add("active"); exFoco = this.dataset.foco;
+}));
+
+function setDiff(d) {
+  exDiff = d;
+  document.querySelectorAll("#diff-btns .pill-btn").forEach(b => {
+    b.classList.remove("active","A2","B1","B2");
+    if (b.textContent.trim() === d) b.classList.add("active", d);
+  });
+}
+function setQty(q) {
+  exQty = q;
+  document.querySelectorAll("#qty-btns .pill-btn").forEach(b =>
+    b.classList.toggle("active", parseInt(b.textContent.trim()) === q));
+}
+
+/* ── GENERATE ─────────────────────────────────── */
+const FOCO_DESC = {
+  mix:      "todo el sistema: ne…pas/jamais/plus/pas encore, rien/personne/aucun/nulle part, posición en temps composés (rien avant p.p., personne après p.p.), doubles négations (ni…ni sin artículos partitivos, plus jamais, jamais rien, plus personne), ne…que con partitif conservado",
+  basiques: "ne…pas (negación simple), ne…jamais (nunca), ne…plus (ya no), ne…pas encore (todavía no), ne…pas du tout / ne…nullement (énfasis); el alumno elige o completa la negación correcta según el matiz",
+  rien_pn:  "rien/personne/aucun/nulle part: como COD (posición normal), como sujeto (Rien ne / Personne ne / Aucun ne), posición en temps composés (rien avant p.p. vs personne/nulle part/aucun après p.p.), aucun con sustantivo singular",
+  position: "posición en temps composés: pas/jamais/plus/rien entre auxiliaire y p.p. vs personne/nulle part/aucun+nom después del p.p.; posición con infinitif (ne pas/jamais/rien juntos antes del inf., personne después); con pronoms COD/COI",
+  doubles:  "ne…ni…ni (sin artículos partitivos, artículos definidos conservados), ne…plus jamais, ne…jamais rien, ne…plus rien, ne…jamais personne, ne…plus personne; Rien ne / Personne ne / Aucun de… ne como sujeto",
+  que:      "ne…que (restricción = seulement): que directamente antes del elemento restringido; partitif conservado (ne mange que du pain, no ne mange que pain); distinción con negación total (ne…pas → de); en temps composés",
+};
+const TYPE_DESC = {
+  fill:      "completar huecos: el alumno escribe la negación correcta o la parte que falta; el hueco puede ser ne+second élément, solo el second élément, o el verbo negado completo",
+  choice:    "elección múltiple: 4 formas de negación, solo una correcta según el matiz y la posición (pas/jamais/plus/rien/personne/aucun/que; avant o après p.p.)",
+  transform: "transformación: poner la frase afirmativa en negativo con la negación indicada, o corregir una frase con posición incorrecta",
+  mix:       "mixto: combina fill, choice y transform en proporciones iguales",
+};
+
+const RULE_LABELS = {
+  "s-intro":"Panorama","s-basiques":"Négations de base","s-rien":"Rien / Personne / Aucun",
+  "s-position":"Position","s-doubles":"Doubles négations","s-que":"Ne… que",
+  "s-sansne":"Négation sans ne","s-trampas":"Trampas"
+};
+
+function renderExercises(exs) {
+  const area = document.getElementById("exercise-area");
+  const labels = {fill:"Completar", choice:"Elección múltiple", transform:"Transformación"};
+  area.innerHTML = exs.map((ex, i) =>
+    `<div class="exercise-card" id="ex-card-${i}" data-expl="${esc(ex.explanation)}" data-rule="${ex.rule_ref||""}">
+      <div class="exercise-card-header">
+        <span class="ex-num">${i+1}</span>
+        <span class="ex-type-badge">${labels[ex.type]||ex.type}</span>
+        <span class="ex-diff-badge ${ex.diff}">${ex.diff}</span>
+        <span class="ex-status" id="ex-st-${i}"></span>
+      </div>
+      <div class="exercise-body">
+        ${buildBody(ex, i)}
+        <div class="ex-feedback" id="ex-fb-${i}"></div>
+      </div>
+    </div>`).join("");
+  exs.forEach((ex, i) => {
+    const chk = document.getElementById("chk-"+i);
+    if (chk) chk.addEventListener("click", () => checkAnswer(ex, i));
+    const inp = document.getElementById("inp-"+i);
+    if (inp) inp.addEventListener("keydown", e => { if (e.key==="Enter") checkAnswer(ex, i); });
+  });
+}
+
+function buildBody(ex, i) {
+  if (ex.type === "fill") {
+    const parts = ex.prompt_parts || ["", ""];
+    return `<div class="exercise-prompt">${parts[0]}<input class="fill-input" id="inp-${i}" type="text" placeholder="${ex.blank_hint||"…"}" autocomplete="off" spellcheck="false">${parts.slice(1).join("")}</div><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  }
+  if (ex.type === "choice")
+    return `<div class="exercise-prompt">${ex.prompt}</div><div class="choices-grid">${ex.options.map((o,j) => `<button class="choice-btn" id="ch-${i}-${j}" onclick="selectChoice(${i},${j},${ex.correct_index})">${o}</button>`).join("")}</div>`;
+  if (ex.type === "transform")
+    return `<div class="exercise-prompt">${ex.instruction}<br><em>${ex.original}</em></div><input class="transform-input" id="inp-${i}" type="text" placeholder="Frase negativa completa…" autocomplete="off" spellcheck="false"><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  return "";
+}
+
+function checkAnswer(ex, i) {
+  const inp = document.getElementById("inp-"+i);
+  if (!inp || inp.disabled) return;
+  const ok = inp.value.trim().toLowerCase() === ex.answer.trim().toLowerCase();
+  inp.classList.add(ok?"ok":"err"); inp.disabled = true;
+  const chk = document.getElementById("chk-"+i); if (chk) chk.disabled = true;
+  showFeedback(i, ok, ex.answer, ex.explanation, ex.rule_ref);
+  recordAnswer(ok);
+}
+
+function selectChoice(idx, chosen, correct) {
+  const c0 = document.getElementById(`ch-${idx}-0`);
+  if (!c0 || c0.disabled) return;
+  for (let j=0;j<4;j++) {
+    const b = document.getElementById(`ch-${idx}-${j}`);
+    if (!b) continue; b.disabled = true;
+    if (j===correct) b.classList.add("ok"); else if (j===chosen) b.classList.add("err");
+  }
+  const card = document.getElementById("ex-card-"+idx);
+  showFeedback(idx, chosen===correct, null, card.dataset.expl, card.dataset.rule);
+  recordAnswer(chosen===correct);
+}
+
+function showFeedback(i, ok, ans, expl, ruleRef) {
+  document.getElementById("ex-st-"+i).textContent = ok?"✅":"❌";
+  const fb = document.getElementById("ex-fb-"+i);
+  fb.className = "ex-feedback visible "+(ok?"ok":"err");
+  const link = RULE_LABELS[ruleRef]
+    ? `<span class="fb-rule-link" onclick="goToRule('${ruleRef}')">📖 Ver: ${RULE_LABELS[ruleRef]}</span>` : "";
+  let html = ok ? `<strong>✓ Correcto</strong>` : `<strong>✗ Incorrecto</strong>${ans ? ` — Respuesta: <strong>${ans}</strong>` : ""}`;
+  if (expl) html += `<br><span style="font-size:.88em;opacity:.92;margin-top:3px;display:block">${expl}</span>`;
+  html += link; fb.innerHTML = html;
+}
+
+function goToRule(ref) {
+  switchMode("ref", document.querySelector(".mode-btn"));
+  setTimeout(() => {
+    showSection(ref, document.querySelector(`.snav-btn[onclick*="${ref}"]`));
+    document.getElementById(ref).scrollIntoView({behavior:"smooth", block:"start"});
+  }, 80);
+}
+
+function recordAnswer(ok) { exAnswered++; if(ok) exCorrect++; else exWrong++; updateProgress(); }
+
+function updateProgress() {
+  const pct = exTotal>0 ? (exAnswered/exTotal)*100 : 0;
+  document.getElementById("progress-frac").textContent = `${exAnswered} / ${exTotal}`;
+  document.getElementById("progress-fill").style.width = pct+"%";
+  document.getElementById("score-correct").textContent = `${exCorrect} correcta${exCorrect!==1?"s":""}`;
+  document.getElementById("score-wrong").textContent = `${exWrong} error${exWrong!==1?"es":""}`;
+  if (exAnswered>=exTotal && exTotal>0) showFinalScore();
+}
+
+function showFinalScore() {
+  const pct = Math.round((exCorrect/exTotal)*100);
+  document.getElementById("final-score-bar").classList.add("visible");
+  document.getElementById("final-num").textContent = `${exCorrect} / ${exTotal}`;
+  const fill = document.getElementById("final-fill");
+  fill.style.width = pct+"%";
+  fill.style.background = pct>=80?"var(--green)":pct>=50?"var(--accent)":"var(--red)";
+  const msgs = {100:"Parfait ! Dominas la negación compleja. 🎉",80:"Très bien ! Repasa los errores.",50:"Bien, refuerza los bloques señalados.",0:"Vuelve a Referencia antes de repetir."};
+  document.getElementById("final-msg").textContent = msgs[pct===100?100:pct>=80?80:pct>=50?50:0];
+  document.getElementById("score-pill").style.display = "";
+  document.getElementById("score-pill-val").textContent = `${exCorrect}/${exTotal}`;
+}
+
+function resetExercises() {
+  document.getElementById("exercise-area").innerHTML = `<div class="state-msg"><div class="state-icon">✏️</div><p>Elige tipo, foco, nivel y cantidad, y pulsa <strong>Generar ejercicios</strong>.</p></div>`;
+  document.getElementById("progress-wrap").classList.remove("visible");
+  document.getElementById("final-score-bar").classList.remove("visible");
+  document.getElementById("score-pill").style.display = "none";
+  exAnswered = 0; exCorrect = 0; exWrong = 0;
+}
+
+function esc(s) { return (s||"").replace(/"/g,"&quot;").replace(/</g,"&lt;"); }
+
+renderTraps();
+</script>
+</body>
+</html>
