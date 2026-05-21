@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammatica italiana · PLIDA B1–C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#ede9df; --card:#faf7f1; --border:#c4bead;
+  --text:#1a1814; --text2:#44413a; --text3:#706c64;
+  --accent:#7a5a0a; --accent-light:#f0e0c0; --accent-mid:#b89050;
+  --shadow:0 2px 14px rgba(0,0,0,.10),0 1px 4px rgba(0,0,0,.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,.07);
+  --radius:14px; --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --wine:#8b1a4a; --wine-bg:#f8e6ee;
+  --teal:#0e6060; --teal-bg:#e0f2f2;
+  --orange:#8b4a0a; --orange-bg:#f8ede0;
+  /* dark card colors */
+  --dk-blue:#1a2f6e; --dk-green:#06402b; --dk-purple:#4a1460;
+  --dk-wine:#6e1438; --dk-teal:#0a4242; --dk-orange:#8b5e00;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* HEADER */
+.site-header{background:var(--card);border-bottom:2px solid var(--border);padding:28px 20px 22px;}
+.header-inner{max-width:900px;margin:0 auto;}
+.header-top{display:flex;align-items:baseline;gap:12px;margin-bottom:4px;flex-wrap:wrap;}
+.site-header h1{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,5vw,2.2rem);font-weight:700;color:var(--text);}
+.header-tag{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border:1px solid var(--accent-mid);border-radius:20px;padding:3px 11px;}
+.header-sub{font-size:.78rem;color:var(--text3);font-weight:500;margin-bottom:18px;}
+.header-sub strong{color:var(--accent);}
+
+/* STATS ROW */
+.stats-row{display:flex;flex-wrap:wrap;gap:8px;}
+.stat-badge{background:var(--bg);border:1.5px solid var(--border);border-radius:20px;padding:5px 13px;font-size:.76rem;font-weight:600;color:var(--text2);display:flex;align-items:center;gap:5px;}
+.stat-badge .dot{width:7px;height:7px;border-radius:50%;}
+
+/* SEARCH */
+.search-wrap{max-width:900px;margin:0 auto;padding:18px 20px 0;}
+.search-box{display:flex;align-items:center;gap:10px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:10px 16px;box-shadow:var(--shadow-sm);}
+.search-icon{color:var(--text3);font-size:1rem;flex-shrink:0;}
+.search-input{flex:1;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:.92rem;color:var(--text);outline:none;}
+.search-input::placeholder{color:var(--text3);}
+
+/* FILTER TABS */
+.filter-wrap{max-width:900px;margin:0 auto;padding:14px 20px 0;}
+.filter-tabs{display:flex;gap:7px;flex-wrap:wrap;}
+.ftab{border:1.5px solid var(--border);border-radius:20px;padding:6px 15px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;white-space:nowrap;}
+.ftab:hover{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+.ftab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+/* GRID */
+.main{max-width:960px;margin:0 auto;padding:18px 20px 48px;}
+.section-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin:22px 0 12px;padding-left:2px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;align-items:stretch;}
+
+/* CARD */
+.topic-card{position:relative;border:1.5px solid transparent;border-radius:var(--radius);box-shadow:0 3px 16px rgba(0,0,0,.25),0 1px 4px rgba(0,0,0,.14);cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;text-decoration:none;display:flex;overflow:hidden;isolation:isolate;}
+.topic-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.28);box-shadow:0 10px 30px rgba(0,0,0,.36),0 2px 8px rgba(0,0,0,.18);}
+.topic-card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.09) 0%,rgba(255,255,255,.02) 45%,rgba(0,0,0,.14) 100%);pointer-events:none;border-radius:inherit;z-index:0;}
+.card-accent{display:none;}
+.card-body{position:relative;z-index:1;padding:22px 22px 60px;flex:1;display:flex;flex-direction:column;min-height:0;}
+.card-top{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.card-num{font-size:.7rem;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.55);}
+.card-level{font-size:.65rem;font-weight:700;letter-spacing:.04em;border-radius:10px;padding:3px 9px;border:1px solid;}
+.card-level.tier1{background:rgba(40,170,130,.22);border-color:rgba(90,210,170,.5);color:#a8efd1;}
+.card-level.tier2{background:rgba(70,130,240,.22);border-color:rgba(120,170,250,.5);color:#bcd5ff;}
+.card-level.tier3{background:rgba(150,100,235,.22);border-color:rgba(185,145,250,.5);color:#d6c0ff;}
+.card-title{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;letter-spacing:1px;color:#fff;margin-bottom:10px;line-height:1.3;}
+.card-desc{font-size:.84rem;color:rgba(255,255,255,.8);line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.topic-card:hover .card-desc{-webkit-line-clamp:unset;overflow:visible;}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:14px;}
+.card-tag{font-size:.66rem;font-weight:600;border-radius:10px;padding:3px 9px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.92);}
+.card-action{position:absolute;bottom:14px;right:14px;z-index:2;display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:600;letter-spacing:.03em;color:rgba(255,255,255,.96);background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.24);border-radius:20px;padding:5px 11px 5px 12px;transition:all .15s ease;backdrop-filter:blur(2px);}
+.topic-card:hover .card-action{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.42);}
+.card-action .arrow{font-size:.95rem;line-height:1;transition:transform .15s ease;}
+.topic-card:hover .card-action .arrow{transform:translateX(2px);}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:48px 20px;color:var(--text3);}
+.empty-icon{font-size:2rem;margin-bottom:10px;}
+.empty-state p{font-weight:500;font-size:.9rem;}
+
+/* HIDDEN */
+.hidden{display:none!important;}
+
+/* BACK BUTTON */
+.back-btn{position:fixed;top:18px;left:18px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:7px 14px 7px 11px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all .15s;}
+.back-btn:hover{background:var(--accent-light);border-color:var(--accent);color:var(--accent);transform:translateX(-2px);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+@media (max-width:600px){.back-btn{top:12px;left:12px;padding:6px 12px 6px 9px;font-size:.74rem;}}
+</style>
+</head>
+<body>
+
+<a class="back-btn" href="index.html" title="Volver al índice de italiano">
+  <span class="arrow">←</span><span>Índice</span>
+</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>🇮🇹 Grammatica italiana</h1>
+      <span class="header-tag">PLIDA A1–C1</span>
+    </div>
+    <p class="header-sub">Índice de bloques · <strong>51 temas</strong> · Referencia + ejercicios con IA</p>
+    <div class="stats-row">
+      <div class="stat-badge"><span class="dot" style="background:var(--teal)"></span>Verbos y tiempos</div>
+      <div class="stat-badge"><span class="dot" style="background:var(--green)"></span>Sintaxis</div>
+      <div class="stat-badge"><span class="dot" style="background:var(--wine)"></span>Discurso</div>
+      <div class="stat-badge"><span class="dot" style="background:var(--orange)"></span>Léxico gramatical</div>
+      <div class="stat-badge"><span class="dot" style="background:var(--purple)"></span>Producción</div>
+    </div>
+  </div>
+</header>
+
+<div class="search-wrap">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" type="text" placeholder="Buscar tema… (ej: congiuntivo, passato, avverbi…)" oninput="filterCards(this.value)" id="search-input">
+  </div>
+</div>
+
+<div class="filter-wrap">
+  <div class="filter-tabs">
+    <button class="ftab active" onclick="setFilter('all',this)">Todos</button>
+    <button class="ftab" onclick="setFilter('verbos',this)">Verbos y tiempos</button>
+    <button class="ftab" onclick="setFilter('sintaxis',this)">Sintaxis</button>
+    <button class="ftab" onclick="setFilter('discurso',this)">Discurso</button>
+    <button class="ftab" onclick="setFilter('lexico',this)">Léxico gramatical</button>
+    <button class="ftab" onclick="setFilter('produccion',this)">Producción</button>
+  </div>
+</div>
+
+<main class="main" id="main">
+  <div class="grid" id="grid"></div>
+  <div class="empty-state hidden" id="empty">
+    <div class="empty-icon">🔎</div>
+    <p>Ningún tema coincide con tu búsqueda.</p>
+  </div>
+</main>
+
+<script>
+const TOPICS = [
+  // ===== SEZIONE 1–4 · VERBI =====
+  {
+    num:"01", file:"grammatica_presente.html",
+    title:"Il Presente Indicativo",
+    desc:"Conjugaciones -are/-ere/-ire e irregulares clave (essere, avere, fare, dire, venire, porre, trarre). Reflexivos. Usos: habitual, histórico, futuro próximo.",
+    tags:["presente","coniugazione","irregolari","riflessivi","essere","avere"],
+    cat:"verbos", level:"A1–B1",
+    color:"var(--dk-teal)", colorbg:"var(--dk-teal)"
+  },
+  {
+    num:"02", file:"grammatica_passato_prossimo_imperfetto.html",
+    title:"Passato Prossimo e Imperfetto",
+    desc:"Participios irregulares, ausiliare essere vs avere, accordo. Contraste PP/IMP. Verbos con doble significado: conoscere, sapere, volere, potere, dovere.",
+    tags:["passato prossimo","imperfetto","ausiliare","accordo","conoscere"],
+    cat:"verbos", level:"A2–B1",
+    color:"var(--dk-teal)", colorbg:"var(--dk-teal)"
+  },
+  {
+    num:"03", file:"grammatica_passato_remoto.html",
+    title:"Il Passato Remoto",
+    desc:"Regulares (-ai/-etti/-ii) e irregulares de alta frecuencia (fece, disse, vide, nacque). Uso narrativo y literario. Variación geográfica Norte/Sur.",
+    tags:["passato remoto","narrazione","letterario","irregolari","nord-sud"],
+    cat:"verbos", level:"B1",
+    color:"var(--dk-teal)", colorbg:"var(--dk-teal)"
+  },
+  {
+    num:"04", file:"grammatica_futuro.html",
+    title:"Futuro Semplice e Futuro Anteriore",
+    desc:"Formación regular e irregulares (sarò, andrò, vedrò, terrò, berrò). Valor temporal y epistémico/conjetural (avrà trent'anni). Anterioridad futura.",
+    tags:["futuro semplice","futuro anteriore","probabilità","congettura"],
+    cat:"verbos", level:"B1–B2",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"05", file:"grammatica_condizionale.html",
+    title:"Condizionale Presente e Passato",
+    desc:"Cortesía, deseo, consejo (dovresti), futuro nel passato, noticia no confirmada (avrebbe dichiarato). Error crítico: *se avrei → agrammaticale.",
+    tags:["condizionale","cortesia","consiglio","futuro nel passato","giornalistico"],
+    cat:"verbos", level:"B1–B2",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"06", file:"grammatica_trapassato.html",
+    title:"Trapassato Prossimo e Trapassato Remoto",
+    desc:"Anterioridad en el pasado. Trapassato remoto solo tras dopo che/appena/quando + passato remoto (registro literario). Trampas para hispanohablantes.",
+    tags:["trapassato prossimo","trapassato remoto","anteriorità","letterario"],
+    cat:"verbos", level:"B2",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"07", file:"grammatica_imperativo.html",
+    title:"L'Imperativo — Sistema Completo",
+    desc:"Afirmativo, negativo (non + inf.), formal con congiuntivo (venga, si accomodi). Enclisi/proclisi de pronombres. Raddoppiamento (dimmi, dallo, vacci).",
+    tags:["imperativo","Lei","negativo","pronomi","enclisi","raddoppiamento"],
+    cat:"verbos", level:"A2–B1",
+    color:"var(--dk-teal)", colorbg:"var(--dk-teal)"
+  },
+  {
+    num:"08", file:"grammatica_congiuntivo_presente.html",
+    title:"Congiuntivo Presente e Passato",
+    desc:"Formación e irregulares (sia, abbia, vada, faccia, dica, venga, sappia). Opinión, duda, emoción, voluntad, impersonales, indefiniti (chiunque).",
+    tags:["congiuntivo","penso che","voglio che","bisogna che","chiunque"],
+    cat:"verbos", level:"B2–C1",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"09", file:"grammatica_congiuntivo_imperfetto.html",
+    title:"Congiuntivo Imperfetto e Trapassato",
+    desc:"Formación e irregulares (fossi, avessi, facessi, dessi). Periodo ipotetico II y III. Magari, come se, sebbene. Consecutio temporum completa.",
+    tags:["congiuntivo imperfetto","trapassato","fossi","come se","magari"],
+    cat:"verbos", level:"B2–C1",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"10", file:"grammatica_modi_indefiniti.html",
+    title:"Modi Indefiniti: Infinito, Gerundio, Participio",
+    desc:"Infinito con/sin preposición. Gerundio temporal/causal/modal (pur + ger.). Participio presente y absoluto (Arrivati a Roma, visitammo…).",
+    tags:["infinito","gerundio","participio","pur","costruzione assoluta"],
+    cat:"verbos", level:"B2–C1",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"11", file:"grammatica_perifrasi_verbali.html",
+    title:"Perifrasi Verbali",
+    desc:"Stare/andare + gerundio, stare per, cominciare a, smettere di, tornare a. Andare + participio (va detto). Volerci vs metterci.",
+    tags:["perifrasi","stare facendo","stare per","volerci","metterci"],
+    cat:"verbos", level:"B2–C1",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"12", file:"grammatica_verbi_modali.html",
+    title:"Verbi Modali — Uso Avanzato",
+    desc:"Potere, dovere, volere, sapere: valor epistémico vs deontico. Condizionale (dovresti, potrebbe). Avresti dovuto (rimpianto). Sapere vs potere.",
+    tags:["modali","potere","dovere","volere","sapere","epistemico"],
+    cat:"verbos", level:"B2–C1",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"13", file:"grammatica_verbi_percezione.html",
+    title:"Verbi di Percezione — Costruzioni",
+    desc:"Vedere/sentire + oggetto + infinito vs + che + indicativo. Acuerdo con pronombres (l'ho vista arrivare). Causativi fare/lasciare + infinito.",
+    tags:["percezione","vedere","sentire","fare + infinito","causativo"],
+    cat:"verbos", level:"B2–C1",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"14", file:"grammatica_si_impersonale.html",
+    title:"Si Impersonale e Si Passivante",
+    desc:"Si impersonale (si mangia bene) vs si passivante (si vendono case). Ausiliare essere. Acuerdo masculino plural (si è stanchi, si è arrivati).",
+    tags:["si impersonale","si passivante","accordo","si vendono"],
+    cat:"verbos", level:"B1–B2",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"15", file:"grammatica_verbi_pronominali.html",
+    title:"Verbi Pronominali Idiomatici",
+    desc:"Andarsene, farcela, cavarsela, prendersela, intendersene, fregarsene. Volerci vs metterci. Acuerdo del participio (me la sono cavata).",
+    tags:["pronominali","andarsene","farcela","cavarsela","fregarsene"],
+    cat:"verbos", level:"B2–C1",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"16", file:"grammatica_forma_passiva.html",
+    title:"La Forma Passiva — Sistema Completo",
+    desc:"Passivo con essere, venire (proceso) y andare (obbligo: va detto). Si passivante. Causativo fare/lasciare + inf. Agente con da.",
+    tags:["passivo","essere","venire","andare","fare causativo","da"],
+    cat:"verbos", level:"B2–C1",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  // ===== SEZIONE 5 + 7 · SINTASSI =====
+  {
+    num:"17", file:"grammatica_articoli.html",
+    title:"Articoli — Uso Avanzato",
+    desc:"Ausencia con profesión, nacionalidad atributiva, parentela singular. Geográficos: in Italia/negli USA. Partitivo (del, della, dei).",
+    tags:["articolo","determinativo","partitivo","geografici","possessivo"],
+    cat:"sintaxis", level:"A2–B1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"18", file:"grammatica_pronomi_tonici.html",
+    title:"Pronomi Tonici / Disgiunti",
+    desc:"Me, te, lui, lei, sé. Tras preposición, énfasis, comparación. Sé reflexivo correferente al sujeto. Con anche, solo, pure.",
+    tags:["pronomi tonici","sé","disgiunti","enfasi"],
+    cat:"sintaxis", level:"B1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"19", file:"grammatica_pronomi_atoni.html",
+    title:"Pronomi Personali Atoni",
+    desc:"Directos, indirectos y combinados (glielo, me lo, ce lo). Proclisi/enclisi. Acuerdo del participio. Posición con modales y perifrasis.",
+    tags:["pronomi","diretti","indiretti","glielo","proclisi","enclisi"],
+    cat:"sintaxis", level:"B1–B2",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"20", file:"grammatica_accordo_participio.html",
+    title:"Accordo del Participio Passato",
+    desc:"Con essere: con sujeto. Con avere: obligatorio con lo/la/li/le/ne. Si impersonale + essere: masculino plural. Construcción absoluta.",
+    tags:["accordo","participio","essere","avere","lo la li le"],
+    cat:"sintaxis", level:"B1–B2",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"21", file:"grammatica_ci_ne.html",
+    title:"Le Particelle CI e NE",
+    desc:"Ne partitivo, ne = di + SN. Ci locativo y pronominale (crederci, pensarci). Esserci, averci. Combinaciones (ce ne sono, ce l'ho).",
+    tags:["ci","ne","partitivo","esserci","averci","ce ne"],
+    cat:"sintaxis", level:"B1–B2",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"22", file:"grammatica_dimostrativi.html",
+    title:"Aggettivi e Pronomi Dimostrativi",
+    desc:"Questo vs quello (concordancia). Ciò (formal). Quello/ciò che. Colui/colei/coloro. Tale, stesso, medesimo.",
+    tags:["dimostrativi","questo","quello","ciò","colui","stesso"],
+    cat:"sintaxis", level:"B1–B2",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"23", file:"grammatica_indefiniti.html",
+    title:"Aggettivi e Pronomi Indefiniti",
+    desc:"Qualcuno, qualcosa, qualche, alcuni, nessuno, ognuno, ciascuno, chiunque, qualunque, qualsiasi (+ cong.). Distribución y cuantificación.",
+    tags:["indefiniti","qualche","ogni","nessuno","chiunque","qualsiasi"],
+    cat:"sintaxis", level:"B1–B2",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"24", file:"grammatica_pronomi_relativi.html",
+    title:"Pronomi e Proposizioni Relative",
+    desc:"Che, cui (con prep.), il quale, il cui + nome, il che, chi, quanto. Con congiuntivo tras negativo/superlativo. Restrittive vs appositive. Relative ridotte con participio.",
+    tags:["relativi","che","cui","il quale","il cui","il che","restrittiva","appositiva"],
+    cat:"sintaxis", level:"B2–C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"25", file:"grammatica_avverbi.html",
+    title:"Gli Avverbi",
+    desc:"Formación -mente. Irregulares (bene, male, presto). Comparación (meglio, peggio). Grado (affatto, mica). Avverbi modali (forse, magari).",
+    tags:["avverbi","-mente","meglio","peggio","mica","affatto"],
+    cat:"sintaxis", level:"B1–B2",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"26", file:"grammatica_costruzioni_impersonali.html",
+    title:"Costruzioni Impersonali",
+    desc:"Bisogna, occorre, basta, conviene, sembra + inf./che + cong. È necessario/utile/importante + che + cong. Error: *bisogna che + ind.",
+    tags:["bisogna","occorre","basta","sembra","è necessario"],
+    cat:"sintaxis", level:"B1–B2",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"27", file:"grammatica_comparativi_superlativi.html",
+    title:"Comparativi e Superlativi",
+    desc:"Più/meno + di vs che (trampa crítica). Comparativo uguaglianza così…come. Superlativo: -issimo, irregulares (migliore, ottimo, massimo).",
+    tags:["comparativo","superlativo","di vs che","-issimo","migliore"],
+    cat:"sintaxis", level:"B2–C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"28", file:"grammatica_proposizioni_subordinate.html",
+    title:"Proposizioni Subordinate",
+    desc:"Temporali (mentre, appena, prima che + cong.), causali (perché, siccome, poiché), finali (affinché + cong.), consecutive (così…che), modali (come se), concessive (benché, sebbene, anche se, pur + ger.).",
+    tags:["subordinate","temporali","causali","finali","concessive","modali"],
+    cat:"sintaxis", level:"B1–C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"29", file:"grammatica_periodo_ipotetico.html",
+    title:"Il Periodo Ipotetico",
+    desc:"Tipo I (reale), II (cong. imp. + cond. pres.), III (cong. trap. + cond. pass.), mixto. Qualora, purché, a patto che. Error: *se avrei.",
+    tags:["periodo ipotetico","se","tipo II","tipo III","misto","qualora"],
+    cat:"sintaxis", level:"B2–C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"30", file:"grammatica_frase_scissa.html",
+    title:"La Frase Scissa e Pseudo-scissa",
+    desc:"È + foco + che/chi (focalización contrastiva). Pseudo-scissa: quello che…è. Concordancia con sujeto real. Función pragmática.",
+    tags:["frase scissa","pseudo-scissa","focalizzazione","è…che"],
+    cat:"sintaxis", level:"C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"31", file:"grammatica_dislocazione.html",
+    title:"Dislocazione e Topicalizzazione",
+    desc:"Sinistra (Il libro, l'ho letto) con pronome di ripresa. Destra (L'ho letto, il libro). Tema-rema. Registro parlato vs scritto formal.",
+    tags:["dislocazione","topicalizzazione","tema-rema","ripresa"],
+    cat:"sintaxis", level:"C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"32", file:"grammatica_costruzione_assoluta.html",
+    title:"Costruzione Assoluta con Participio",
+    desc:"Arrivati a Roma, visitammo… Valor temporal, causal o concesivo. Acuerdo con su propio sujeto. Registro escrito formal.",
+    tags:["costruzione assoluta","participio","arrivati","terminata"],
+    cat:"sintaxis", level:"C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"33", file:"grammatica_nominalizzazione.html",
+    title:"Nominalizzazione e Sintassi Nominale",
+    desc:"Infinito sustantivado (il mangiare). Sustantivos deverbales (decisione, sviluppo). Estilo académico, periodístico, administrativo.",
+    tags:["nominalizzazione","infinito sostantivato","stile accademico"],
+    cat:"sintaxis", level:"C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"34", file:"grammatica_concordanza_ad_sensum.html",
+    title:"Concordanza ad Sensum",
+    desc:"Nombres colectivos (la gente dice/dicono). Soggetto posposto. Fracciones y porcentajes (il 30%…considera/considerano).",
+    tags:["concordanza","ad sensum","la gente","percentuali"],
+    cat:"sintaxis", level:"C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  // ===== SEZIONE 8 + parte di 7 · DISCORSO =====
+  {
+    num:"35", file:"grammatica_discorso_indiretto.html",
+    title:"Il Discorso Indiretto",
+    desc:"Transformación de tiempos, pronombres y expresiones temporales (oggi→quel giorno). Interrogativas indirectas. Imperativo indirecto.",
+    tags:["discorso indiretto","concordanza","chiedere se","di + infinito"],
+    cat:"discurso", level:"B2–C1",
+    color:"var(--dk-wine)", colorbg:"var(--dk-wine)"
+  },
+  {
+    num:"36", file:"grammatica_connettivi.html",
+    title:"Connettivi e Argomentazione",
+    desc:"Avversativi (ma, però, tuttavia, anzi), aggiuntivi (inoltre, per di più), causali (quindi, dunque, perciò). Argomentativi formali: anzitutto, nondimeno, in definitiva, per contro, ne consegue.",
+    tags:["connettivi","argomentativi","ma","però","tuttavia","quindi","nondimeno"],
+    cat:"discurso", level:"B1–C1",
+    color:"var(--dk-wine)", colorbg:"var(--dk-wine)"
+  },
+  {
+    num:"37", file:"grammatica_congiuntivo_registro.html",
+    title:"Congiuntivo nel Parlato vs Scritto",
+    desc:"Congiuntivo como marcador de registro. Penso che sia (escrito) vs penso che è (parlato). Obligatorio: benché, magari, ipotetico.",
+    tags:["congiuntivo","registro","diafasica","parlato","scritto"],
+    cat:"discurso", level:"C1",
+    color:"var(--dk-wine)", colorbg:"var(--dk-wine)"
+  },
+  {
+    num:"38", file:"grammatica_marcatori_discorso.html",
+    title:"Marcatori del Discorso",
+    desc:"Orale (ecco, allora, cioè, insomma, diciamo, guarda). Formal (in merito a, fermo restando, atteso che). Valor pragmático.",
+    tags:["marcatori","ecco","insomma","fermo restando","fàtici"],
+    cat:"discurso", level:"C1",
+    color:"var(--dk-wine)", colorbg:"var(--dk-wine)"
+  },
+  {
+    num:"39", file:"grammatica_modi_di_dire.html",
+    title:"Modi di Dire e Fraseologia",
+    desc:"Avere/fare/dare/stare en expresiones (farcela, fare a meno di, dare per scontato). Locuciones argumentativas (a conti fatti, tutto sommato).",
+    tags:["modi di dire","fraseologia","farcela","a conti fatti"],
+    cat:"discurso", level:"B2–C1",
+    color:"var(--dk-wine)", colorbg:"var(--dk-wine)"
+  },
+  {
+    num:"40", file:"grammatica_registro_formale_informale.html",
+    title:"Registro Formale vs Informale",
+    desc:"Léxico (utilizzare/usare, necessitare/aver bisogno). Construcciones formales (nominalización, passive). Coloquiales (dislocazioni, che polivalente).",
+    tags:["registro","formale","informale","diafasica","colloquiale"],
+    cat:"discurso", level:"B2–C1",
+    color:"var(--dk-wine)", colorbg:"var(--dk-wine)"
+  },
+  // ===== SEZIONE 6 + 9 · LESSICO GRAMMATICALE =====
+  {
+    num:"41", file:"grammatica_preposizioni.html",
+    title:"Preposizioni Semplici e Articolate",
+    desc:"Di, a, da, in, con, su, per, tra/fra: valores. Articolate (del, alle, sui). Ausencia con in (in Italia, in centro). Tra vs fra.",
+    tags:["preposizioni","articolate","di","a","da","in"],
+    cat:"lexico", level:"A2–B1",
+    color:"var(--dk-orange)", colorbg:"var(--dk-orange)"
+  },
+  {
+    num:"42", file:"grammatica_reggenze_verbali.html",
+    title:"Reggenze Verbali con Preposizione",
+    desc:"Verbi + a (cominciare, imparare), + di (cercare, smettere), + da, + su, + con. Sin preposición (dovere, potere). Doppia reggenza.",
+    tags:["reggenze","cominciare a","cercare di","contare su","doppia"],
+    cat:"lexico", level:"B1–B2",
+    color:"var(--dk-orange)", colorbg:"var(--dk-orange)"
+  },
+  {
+    num:"43", file:"grammatica_reggenze_nominali.html",
+    title:"Reggenze Nominali e Aggettivali",
+    desc:"Capace di, simile a, pieno di, abituato a, convinto di. Voglia di, bisogno di. Locuciones: a causa di, grazie a, in merito a.",
+    tags:["reggenze","aggettivi","capace di","a causa di","grazie a"],
+    cat:"lexico", level:"B2–C1",
+    color:"var(--dk-orange)", colorbg:"var(--dk-orange)"
+  },
+  {
+    num:"44", file:"grammatica_formazione_parole.html",
+    title:"Formazione delle Parole",
+    desc:"Suffissi nominali (-zione, -mento, -ità, -ezza, -tore). Prefissi (in-, dis-, ri-, super-, iper-). Alterati (-ino, -one, -accio, -uccio). Suffissi aggettivali (-bile, -oso, -ale, -ivo, -evole).",
+    tags:["formazione","suffissi","prefissi","alterati","-bile","-zione"],
+    cat:"lexico", level:"B2–C1",
+    color:"var(--dk-orange)", colorbg:"var(--dk-orange)"
+  },
+  {
+    num:"45", file:"grammatica_collocazioni.html",
+    title:"Collocazioni Lessicali",
+    desc:"Verbo + nome (prendere una decisione, trarre conclusioni, affrontare un problema). Aggettivo + nome. Falsi amici colocacionales con español.",
+    tags:["collocazioni","prendere decisione","trarre","affrontare"],
+    cat:"lexico", level:"C1",
+    color:"var(--dk-orange)", colorbg:"var(--dk-orange)"
+  },
+  {
+    num:"46", file:"grammatica_falsi_amici.html",
+    title:"Falsi Amici con lo Spagnolo",
+    desc:"Sensibile, eventuale (≠ eventual), pretendere (≠ pretender), incontrare (solo personas), burro (mantequilla), camera (stanza), largo (ancho).",
+    tags:["falsi amici","sensibile","pretendere","burro","camera","largo"],
+    cat:"lexico", level:"B1–C1",
+    color:"var(--dk-orange)", colorbg:"var(--dk-orange)"
+  },
+  // ===== SEZIONE 10 · PRODUZIONE =====
+  {
+    num:"47", file:"grammatica_testo_argomentativo.html",
+    title:"Testo Argomentativo",
+    desc:"Tesi → argomentazione → refutazione → conclusione. Registro formal, congiuntivo, nominalizaciones. Saggio breve, articolo d'opinione.",
+    tags:["argomentativo","saggio","tesi","refutazione","produzione"],
+    cat:"produccion", level:"C1",
+    color:"var(--dk-purple)", colorbg:"var(--dk-purple)"
+  },
+  {
+    num:"48", file:"grammatica_testo_espositivo.html",
+    title:"Testo Espositivo-Descrittivo",
+    desc:"Pasivas para objetividad, progresión tema-rema, anáforas léxicas. Relazione, sintesi, riassunto critico. Densidad léxica alta.",
+    tags:["espositivo","relazione","sintesi","tema-rema","anafora"],
+    cat:"produccion", level:"C1",
+    color:"var(--dk-purple)", colorbg:"var(--dk-purple)"
+  },
+  {
+    num:"49", file:"grammatica_coesione_coerenza.html",
+    title:"Coesione e Coerenza Testuale",
+    desc:"Anáforas (pronomi, dimostrativi, sinonimi, iperonimi), catafora, progresión tematica. Connettivi como cohesivos. Coherencia de registro.",
+    tags:["coesione","coerenza","anafora","catafora","progressione"],
+    cat:"produccion", level:"C1",
+    color:"var(--dk-purple)", colorbg:"var(--dk-purple)"
+  },
+  {
+    num:"50", file:"grammatica_punteggiatura.html",
+    title:"Punteggiatura — Uso Avanzato",
+    desc:"Virgola (no sujeto-verbo), punto e virgola, due punti, virgolette, trattino, parentesi. Diferencias con español (¡¿).",
+    tags:["punteggiatura","virgola","punto e virgola","due punti","incisi"],
+    cat:"produccion", level:"C1",
+    color:"var(--dk-purple)", colorbg:"var(--dk-purple)"
+  },
+  {
+    num:"51", file:"grammatica_sintassi_complessa.html",
+    title:"Sintassi Complessa — Controllo Produttivo",
+    desc:"Subordinazione múltiple, alternancia esplicite/implicite, concordanza dei tempi del congiuntivo. Evitar gerundi pendenti e periodos incoherentes.",
+    tags:["sintassi","subordinazione","concordanza","gerundio pendente"],
+    cat:"produccion", level:"C1",
+    color:"var(--dk-purple)", colorbg:"var(--dk-purple)"
+  },
+];
+
+const CAT_LABELS = {
+  verbos:"Verbos y tiempos",
+  sintaxis:"Sintaxis",
+  discurso:"Discurso",
+  lexico:"Léxico gramatical",
+  produccion:"Producción"
+};
+
+let activeFilter = "all";
+let searchVal = "";
+
+function getLevelTier(level){
+  if(level.includes("C1")) return "tier3";
+  if(level.includes("B2")) return "tier2";
+  return "tier1";
+}
+
+function buildCards(items){
+  const grid = document.getElementById("grid");
+  const empty = document.getElementById("empty");
+  if(!items.length){
+    grid.innerHTML="";
+    empty.classList.remove("hidden");
+    return;
+  }
+  empty.classList.add("hidden");
+
+  // Group by category
+  const cats = ["verbos","sintaxis","discurso","lexico","produccion"];
+  let html = "";
+  cats.forEach(cat => {
+    const filtered = items.filter(t => t.cat === cat);
+    if(!filtered.length) return;
+    if(activeFilter === "all"){
+      html += `<div class="section-label" style="grid-column:1/-1">${CAT_LABELS[cat]}</div>`;
+    }
+    filtered.forEach(t => {
+      const tier = getLevelTier(t.level);
+      html += `
+        <a class="topic-card" href="${t.file}" target="_blank" data-cat="${t.cat}" data-search="${t.title.toLowerCase()} ${t.desc.toLowerCase()} ${t.tags.join(" ").toLowerCase()}" style="background:${t.colorbg};">
+          <div class="card-body">
+            <div class="card-top">
+              <span class="card-num">${t.num}</span>
+              <span class="card-level ${tier}">${t.level}</span>
+            </div>
+            <div class="card-title">${t.title}</div>
+            <div class="card-desc">${t.desc}</div>
+            <div class="card-tags">
+              ${t.tags.map(tag => `<span class="card-tag">${tag}</span>`).join("")}
+            </div>
+            <span class="card-action">Ver más <span class="arrow">→</span></span>
+          </div>
+        </a>`;
+    });
+  });
+  grid.innerHTML = html;
+}
+
+function applyFilters(){
+  let items = TOPICS;
+  if(activeFilter !== "all") items = items.filter(t => t.cat === activeFilter);
+  if(searchVal.trim()){
+    const q = searchVal.trim().toLowerCase();
+    items = items.filter(t =>
+      t.title.toLowerCase().includes(q) ||
+      t.desc.toLowerCase().includes(q) ||
+      t.tags.some(tag => tag.toLowerCase().includes(q))
+    );
+  }
+  buildCards(items);
+}
+
+function setFilter(cat, btn){
+  activeFilter = cat;
+  document.querySelectorAll(".ftab").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  applyFilters();
+}
+
+function filterCards(val){
+  searchVal = val;
+  applyFilters();
+}
+
+// Init
+applyFilters();
+</script>
+</body>
+</html>

@@ -58,23 +58,140 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 /* GRID */
 .main{max-width:900px;margin:0 auto;padding:18px 20px 48px;}
-.section-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin:20px 0 10px;padding-left:2px;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;}
+.section-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin:24px 0 12px;padding-left:2px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;align-items:stretch;}
 
 /* CARD */
-.topic-card{border:none;border-radius:var(--radius);box-shadow:0 3px 16px rgba(0,0,0,.2),0 1px 4px rgba(0,0,0,.12);cursor:pointer;transition:all .18s;text-decoration:none;display:flex;align-items:stretch;overflow:hidden;}
-.topic-card:hover{box-shadow:0 6px 26px rgba(0,0,0,.3),0 2px 8px rgba(0,0,0,.14);transform:translateY(-3px);}
+.topic-card{
+  position:relative;
+  border:1.5px solid rgba(255,255,255,.06);
+  border-radius:var(--radius);
+  box-shadow:0 3px 16px rgba(0,0,0,.22),0 1px 4px rgba(0,0,0,.12);
+  cursor:pointer;
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+  text-decoration:none;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  min-height:230px;
+}
+.topic-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, rgba(255,255,255,.07) 0%, rgba(255,255,255,0) 42%, rgba(0,0,0,.18) 100%);
+  pointer-events:none;
+  border-radius:inherit;
+  z-index:0;
+}
+.topic-card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(255,255,255,.24);
+  box-shadow:0 8px 30px rgba(0,0,0,.34),0 2px 8px rgba(0,0,0,.16);
+}
 .card-accent{display:none;}
-.card-body{padding:15px 15px 13px;flex:1;}
-.card-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
-.card-num{font-size:.68rem;font-weight:700;letter-spacing:.06em;color:rgba(255,255,255,.5);}
-.card-level{font-size:.65rem;font-weight:700;border-radius:10px;padding:2px 7px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:rgba(255,255,255,.95);}
-.card-title{font-family:'Playfair Display',serif;font-size:.96rem;font-weight:700;color:#fff;margin-bottom:5px;line-height:1.3;}
-.card-desc{font-size:.76rem;color:rgba(255,255,255,.75);line-height:1.5;}
-.card-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}
-.card-tag{font-size:.66rem;font-weight:600;border-radius:10px;padding:2px 7px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);}
-.card-arrow{padding:0 12px 0 4px;display:flex;align-items:center;font-size:.9rem;color:rgba(255,255,255,.4);transition:color .15s;}
-.topic-card:hover .card-arrow{color:rgba(255,255,255,.9);}
+.card-body{
+  position:relative;
+  z-index:1;
+  padding:22px 22px 60px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+.card-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.card-num{font-size:.7rem;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.55);}
+
+/* Level badges by MCER tier */
+.card-level{
+  font-size:.65rem;
+  font-weight:700;
+  border-radius:10px;
+  padding:3px 9px;
+  letter-spacing:.04em;
+}
+.card-level.lvl-low{
+  background:rgba(80,200,140,.18);
+  border:1px solid rgba(80,200,140,.5);
+  color:#a8eecb;
+}
+.card-level.lvl-mid{
+  background:rgba(110,150,255,.18);
+  border:1px solid rgba(110,150,255,.5);
+  color:#bdccff;
+}
+.card-level.lvl-high{
+  background:rgba(170,130,255,.2);
+  border:1px solid rgba(170,130,255,.55);
+  color:#dcc6ff;
+}
+
+.card-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.02rem;
+  font-weight:700;
+  letter-spacing:.012em;
+  color:#fff;
+  margin-bottom:8px;
+  line-height:1.3;
+}
+.card-desc{
+  font-size:.85rem;
+  color:rgba(255,255,255,.8);
+  line-height:1.5;
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  margin-bottom:14px;
+  transition:all .2s ease;
+}
+.topic-card:hover .card-desc{
+  -webkit-line-clamp:unset;
+  overflow:visible;
+}
+.card-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px 8px;
+  margin-top:auto;
+  padding-top:4px;
+}
+.card-tag{
+  font-size:.68rem;
+  font-weight:600;
+  border-radius:10px;
+  padding:3px 8px;
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.22);
+  color:rgba(255,255,255,.94);
+}
+
+/* CTA pill */
+.card-cta{
+  position:absolute;
+  right:16px;
+  bottom:16px;
+  z-index:2;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.72rem;
+  font-weight:700;
+  letter-spacing:.03em;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.28);
+  color:#fff;
+  border-radius:18px;
+  padding:5px 11px 5px 12px;
+  transition:background .15s,border-color .15s,transform .15s;
+}
+.card-cta .arrow{font-size:.95rem;line-height:1;}
+.topic-card:hover .card-cta{
+  background:rgba(255,255,255,.24);
+  border-color:rgba(255,255,255,.45);
+  transform:translateX(2px);
+}
 
 /* EMPTY */
 .empty-state{text-align:center;padding:48px 20px;color:var(--text3);}
@@ -315,6 +432,12 @@ const CAT_LABELS = {
 let activeFilter = "all";
 let searchVal = "";
 
+function levelClass(level){
+  if(/C1|C2|B2\s*[-–]\s*C/.test(level)) return 'lvl-high';
+  if(/B1\s*[-–]\s*B2|^B2/.test(level)) return 'lvl-mid';
+  return 'lvl-low';
+}
+
 function buildCards(items){
   const grid = document.getElementById("grid");
   const empty = document.getElementById("empty");
@@ -340,7 +463,7 @@ function buildCards(items){
           <div class="card-body">
             <div class="card-top">
               <span class="card-num">${t.num}</span>
-              <span class="card-level">${t.level}</span>
+              <span class="card-level ${levelClass(t.level)}">${t.level}</span>
             </div>
             <div class="card-title">${t.title}</div>
             <div class="card-desc">${t.desc}</div>
@@ -348,7 +471,7 @@ function buildCards(items){
               ${t.tags.map(tag => `<span class="card-tag">${tag}</span>`).join("")}
             </div>
           </div>
-          <div class="card-arrow">›</div>
+          <span class="card-cta">Ver más <span class="arrow">→</span></span>
         </a>`;
     });
   });

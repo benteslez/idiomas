@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática portuguesa (PB) · CEFR A1–C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#ede9df; --card:#faf7f1; --border:#c4bead;
+  --text:#1a1814; --text2:#44413a; --text3:#706c64;
+  --accent:#7a5a0a; --accent-light:#f0e0c0; --accent-mid:#b89050;
+  --shadow:0 2px 14px rgba(0,0,0,.10),0 1px 4px rgba(0,0,0,.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,.07);
+  --radius:14px; --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --wine:#8b1a4a; --wine-bg:#f8e6ee;
+  --teal:#0e6060; --teal-bg:#e0f2f2;
+  --orange:#8b4a0a; --orange-bg:#f8ede0;
+  /* dark card colors */
+  --dk-blue:#1a2f6e; --dk-green:#06402b; --dk-purple:#4a1460;
+  --dk-wine:#6e1438; --dk-teal:#0a4242; --dk-orange:#8b5e00;
+  /* level tier accents */
+  --tier-low-bg:rgba(45,180,110,.18);
+  --tier-low-bd:rgba(110,231,160,.45);
+  --tier-low-fg:#9ef0bd;
+  --tier-mid-bg:rgba(80,140,255,.20);
+  --tier-mid-bd:rgba(140,180,255,.50);
+  --tier-mid-fg:#a8c8ff;
+  --tier-high-bg:rgba(155,110,255,.22);
+  --tier-high-bd:rgba(190,160,255,.50);
+  --tier-high-fg:#d3c0ff;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* HEADER */
+.site-header{background:var(--card);border-bottom:2px solid var(--border);padding:28px 20px 22px;}
+.header-inner{max-width:1080px;margin:0 auto;}
+.header-top{display:flex;align-items:baseline;gap:12px;margin-bottom:4px;flex-wrap:wrap;}
+.site-header h1{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,5vw,2.2rem);font-weight:700;color:var(--text);}
+.header-tag{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border:1px solid var(--accent-mid);border-radius:20px;padding:3px 11px;}
+.header-sub{font-size:.78rem;color:var(--text3);font-weight:500;margin-bottom:18px;}
+.header-sub strong{color:var(--accent);}
+
+/* STATS ROW */
+.stats-row{display:flex;flex-wrap:wrap;gap:8px;}
+.stat-badge{background:var(--bg);border:1.5px solid var(--border);border-radius:20px;padding:5px 13px;font-size:.76rem;font-weight:600;color:var(--text2);display:flex;align-items:center;gap:5px;}
+.stat-badge .dot{width:7px;height:7px;border-radius:50%;}
+
+/* SEARCH */
+.search-wrap{max-width:1080px;margin:0 auto;padding:18px 20px 0;}
+.search-box{display:flex;align-items:center;gap:10px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:10px 16px;box-shadow:var(--shadow-sm);}
+.search-icon{color:var(--text3);font-size:1rem;flex-shrink:0;}
+.search-input{flex:1;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:.92rem;color:var(--text);outline:none;}
+.search-input::placeholder{color:var(--text3);}
+
+/* FILTER TABS */
+.filter-wrap{max-width:1080px;margin:0 auto;padding:14px 20px 0;}
+.filter-tabs{display:flex;gap:7px;flex-wrap:wrap;}
+.ftab{border:1.5px solid var(--border);border-radius:20px;padding:6px 15px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;white-space:nowrap;}
+.ftab:hover{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+.ftab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+/* GRID */
+.main{max-width:1080px;margin:0 auto;padding:18px 20px 56px;}
+.section-label{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin:22px 0 12px;padding-left:2px;}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:14px;
+  align-items:stretch;
+}
+@media (max-width:880px){.grid{grid-template-columns:repeat(2, minmax(0, 1fr));}}
+@media (max-width:560px){.grid{grid-template-columns:1fr;}}
+
+/* CARD */
+.topic-card{
+  position:relative;
+  isolation:isolate;
+  border:1.5px solid rgba(255,255,255,.06);
+  border-radius:var(--radius);
+  box-shadow:0 3px 16px rgba(0,0,0,.22),0 1px 4px rgba(0,0,0,.14);
+  cursor:pointer;
+  transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  text-decoration:none;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  min-height:100%;
+}
+.topic-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, rgba(255,255,255,.09) 0%, rgba(255,255,255,.02) 38%, rgba(0,0,0,.18) 100%);
+  pointer-events:none;
+  z-index:0;
+}
+.topic-card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(255,255,255,.30);
+  box-shadow:0 10px 30px rgba(0,0,0,.36),0 3px 10px rgba(0,0,0,.20);
+}
+
+.card-body{
+  position:relative;
+  z-index:1;
+  padding:22px 22px 14px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+.card-top{display:flex;align-items:center;gap:10px;margin-bottom:11px;}
+.card-num{font-size:.7rem;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.5);}
+
+/* Level badge by tier */
+.card-level{
+  font-size:.66rem;
+  font-weight:700;
+  letter-spacing:.04em;
+  border-radius:10px;
+  padding:3px 9px;
+  border:1px solid;
+}
+.card-level.tier-low{background:var(--tier-low-bg);border-color:var(--tier-low-bd);color:var(--tier-low-fg);}
+.card-level.tier-mid{background:var(--tier-mid-bg);border-color:var(--tier-mid-bd);color:var(--tier-mid-fg);}
+.card-level.tier-high{background:var(--tier-high-bg);border-color:var(--tier-high-bd);color:var(--tier-high-fg);}
+
+.card-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.04rem;
+  font-weight:700;
+  letter-spacing:.5px;
+  color:#fff;
+  margin-bottom:10px;
+  line-height:1.3;
+}
+
+.card-desc{
+  font-size:.84rem;
+  color:rgba(255,255,255,.78);
+  line-height:1.5;
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  transition:-webkit-line-clamp .2s;
+}
+.topic-card:hover .card-desc{-webkit-line-clamp:8;}
+
+.card-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px 8px;
+  margin-top:auto;
+  padding-top:14px;
+}
+.card-tag{
+  font-size:.68rem;
+  font-weight:600;
+  border-radius:10px;
+  padding:3px 9px;
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.22);
+  color:rgba(255,255,255,.95);
+}
+
+/* Footer + CTA pill */
+.card-footer{
+  position:relative;
+  z-index:1;
+  display:flex;
+  justify-content:flex-end;
+  padding:0 22px 18px;
+}
+.card-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:20px;
+  padding:6px 12px 6px 14px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.72rem;
+  font-weight:600;
+  letter-spacing:.02em;
+  color:#fff;
+  transition:background .15s, border-color .15s, transform .15s;
+}
+.card-cta .arrow{font-size:.95rem;line-height:1;transform:translateY(-1px);}
+.topic-card:hover .card-cta{
+  background:rgba(255,255,255,.26);
+  border-color:rgba(255,255,255,.55);
+  transform:translateX(2px);
+}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:48px 20px;color:var(--text3);}
+.empty-icon{font-size:2rem;margin-bottom:10px;}
+.empty-state p{font-weight:500;font-size:.9rem;}
+
+/* HIDDEN */
+.hidden{display:none!important;}
+
+/* BACK BUTTON */
+.back-btn{position:fixed;top:18px;left:18px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:7px 14px 7px 11px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all .15s;}
+.back-btn:hover{background:var(--accent-light);border-color:var(--accent);color:var(--accent);transform:translateX(-2px);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+@media (max-width:600px){.back-btn{top:12px;left:12px;padding:6px 12px 6px 9px;font-size:.74rem;}}
+</style>
+</head>
+<body>
+
+<a class="back-btn" href="index.html" title="Volver al índice de portugués">
+  <span class="arrow">←</span><span>Índice</span>
+</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>🇧🇷 Gramática portuguesa (PB)</h1>
+      <span class="header-tag">CEFR A1–C1</span>
+    </div>
+    <p class="header-sub">Índice de bloques · <strong>55 temas</strong> · Referencia + ejercicios con IA · 🔴 = exclusivo del portugués</p>
+    <div class="stats-row">
+      <div class="stat-badge"><span class="dot" style="background:var(--teal)"></span>Verbos y tiempos</div>
+      <div class="stat-badge"><span class="dot" style="background:var(--green)"></span>Sintaxis</div>
+      <div class="stat-badge"><span class="dot" style="background:var(--wine)"></span>Discurso</div>
+      <div class="stat-badge"><span class="dot" style="background:var(--orange)"></span>Léxico gramatical</div>
+      <div class="stat-badge"><span class="dot" style="background:var(--purple)"></span>Producción</div>
+    </div>
+  </div>
+</header>
+
+<div class="search-wrap">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" type="text" placeholder="Buscar tema… (ej: subjuntivo, pretérito, infinitivo pessoal…)" oninput="filterCards(this.value)" id="search-input">
+  </div>
+</div>
+
+<div class="filter-wrap">
+  <div class="filter-tabs">
+    <button class="ftab active" onclick="setFilter('all',this)">Todos</button>
+    <button class="ftab" onclick="setFilter('verbos',this)">Verbos y tiempos</button>
+    <button class="ftab" onclick="setFilter('sintaxis',this)">Sintaxis</button>
+    <button class="ftab" onclick="setFilter('discurso',this)">Discurso</button>
+    <button class="ftab" onclick="setFilter('lexico',this)">Léxico gramatical</button>
+    <button class="ftab" onclick="setFilter('produccion',this)">Producción</button>
+  </div>
+</div>
+
+<main class="main" id="main">
+  <div class="grid" id="grid"></div>
+  <div class="empty-state hidden" id="empty">
+    <div class="empty-icon">🔎</div>
+    <p>Ningún tema coincide con tu búsqueda.</p>
+  </div>
+</main>
+
+<script>
+const TOPICS = [
+  // ===== VERBOS · INDICATIVO =====
+  {
+    num:"01", file:"gramatica_presente.html",
+    title:"Presente do Indicativo",
+    desc:"Conjugaciones regulares -ar/-er/-ir e irregulares clave (ser, estar, ter, ir, vir, pôr, fazer, dizer, dar, ver, saber, poder, querer). Alternancias vocálicas en -ir (durmo, sinto, sirvo). Usos: habitual, atemporal, futuro próximo, histórico.",
+    tags:["presente","conjugação","irregulares","ser","estar","ter","alternâncias"],
+    cat:"verbos", level:"A1–B1",
+    color:"var(--dk-teal)", colorbg:"var(--dk-teal)"
+  },
+  {
+    num:"02", file:"gramatica_preterito_perfeito_imperfeito.html",
+    title:"Pretérito Perfeito Simples e Imperfeito",
+    desc:"Formación regular e irregulares (fui, fiz, disse, vi, pus, trouxe, soube, quis, pude). Contraste PPS/Imperfeito. Imperfecto cortés (queria pedir). Imperfecto narrativo y descriptivo. Verbos con cambio de significado (sabia/soube, conhecia/conheci).",
+    tags:["pretérito perfeito","imperfeito","fui","fiz","irregulares","contraste"],
+    cat:"verbos", level:"A2–B1",
+    color:"var(--dk-teal)", colorbg:"var(--dk-teal)"
+  },
+  {
+    num:"03", file:"gramatica_mais_que_perfeito.html",
+    title:"Pretérito Mais-que-Perfeito",
+    desc:"Forma simple literaria (falara, fizera, dissera) y forma compuesta corriente (tinha falado, havia feito). Anterioridad en el pasado. Valor de condicional irreal en formal (quem me dera, tomara). El simple solo en registro escrito culto.",
+    tags:["mais-que-perfeito","tinha falado","falara","anterioridade","literário"],
+    cat:"verbos", level:"B1–B2",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"04", file:"gramatica_preterito_perfeito_composto.html",
+    title:"🔴 Pretérito Perfeito Composto",
+    desc:"EXCLUSIVO DEL PORTUGUÉS: tenho feito = acción repetida/continua hasta el presente. NO equivale al 'he hecho' español. Solo valor iterativo o durativo (tenho trabalhado muito = he estado trabajando últimamente). Una de las mayores trampas para hispanohablantes.",
+    tags:["pretérito composto","tenho feito","iterativo","durativo","armadilha","exclusivo"],
+    cat:"verbos", level:"B1–B2",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"05", file:"gramatica_futuro_presente_preterito.html",
+    title:"Futuro do Presente e Futuro do Pretérito",
+    desc:"Futuro do presente: regular e irregulares (farei, direi, trarei). Valor temporal y epistémico (será que…?). Futuro do pretérito (= condicional): cortesía, deseo, hipótesis, futuro en el pasado. Sustitución coloquial PB por ir + infinitivo (vou fazer / ia fazer).",
+    tags:["futuro","condicional","faria","poderia","cortesia","ir + infinitivo"],
+    cat:"verbos", level:"B1–B2",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  // ===== VERBOS · IMPERATIVO =====
+  {
+    num:"06", file:"gramatica_imperativo.html",
+    title:"Imperativo — Formal e Coloquial",
+    desc:"Imperativo formal (subjuntivo: faça, venha, não faça). Imperativo coloquial PB (indicativo: faz, vai, não faz, não vai — muy frecuente en habla). Pronombres con imperativo: ênclise normativa (faça-o, dê-me) vs próclise real PB (me dá, te liga, se senta).",
+    tags:["imperativo","faça","faz","negativo","formal","coloquial","ênclise"],
+    cat:"verbos", level:"A2–B1",
+    color:"var(--dk-teal)", colorbg:"var(--dk-teal)"
+  },
+  // ===== VERBOS · SUBJUNTIVO E CONDICIONAL =====
+  {
+    num:"07", file:"gramatica_subjuntivo_presente_passado.html",
+    title:"Subjuntivo Presente e Passado",
+    desc:"Formación e irregulares (seja, esteja, tenha, vá, venha, faça, diga, saiba, possa, queira). Imperfeito do subjuntivo (fosse, tivesse, fizesse, pudesse). Contextos: opinión, duda, emoción, volición, impersonales, indefinidos, concesivas (embora, talvez).",
+    tags:["subjuntivo","seja","tenha","fosse","embora","talvez","opinião"],
+    cat:"verbos", level:"B1–B2",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"08", file:"gramatica_subjuntivo_futuro.html",
+    title:"🔴 Subjuntivo Futuro",
+    desc:"EXCLUSIVO DEL PORTUGUÉS — no existe en español ni italiano. Formación a partir del PPS 3ª pl (fizeram → fizer, tiveram → tiver, foram → for). Uso obligatorio en temporales (quando chegar), condicionales (se vier) y relativas (quem fizer) referidas al futuro.",
+    tags:["subjuntivo futuro","quando chegar","se vier","quem fizer","exclusivo"],
+    cat:"verbos", level:"B1–B2",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"09", file:"gramatica_periodo_hipotetico.html",
+    title:"Período Hipotético Completo",
+    desc:"Tipo I real (se + presente/futuro subj. → indicativo/futuro). Tipo II hipotético (se eu pudesse, faria). Tipo III irreal pasado (se tivesse podido, teria feito). Mixto. Caso, contanto que, desde que, a menos que, a não ser que (+ subj.).",
+    tags:["se","período hipotético","caso","contanto que","irreal","tipo II","tipo III"],
+    cat:"verbos", level:"B2–C1",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  // ===== VERBOS · FORMAS NOMINAIS E PERÍFRASES =====
+  {
+    num:"10", file:"gramatica_infinitivo_pessoal.html",
+    title:"🔴 Infinitivo Pessoal (Flexionado)",
+    desc:"EXCLUSIVO DEL PORTUGUÉS: infinitivo con desinencias personales (falarmos, fazerem, sermos). Obligatorio con sujeto distinto del principal (é importante vocês estudarem). Optativo para clarificar. Distinción crítica con infinitivo impessoal. Marcador C1.",
+    tags:["infinitivo pessoal","flexionado","estudarmos","fazerem","exclusivo"],
+    cat:"verbos", level:"B2–C1",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"11", file:"gramatica_gerundio.html",
+    title:"🔴 Gerúndio — PB vs PE",
+    desc:"PB: estar/ir/andar/ficar/vir + gerúndio como progresivo (estou falando). PE: estar a + infinitivo (estou a falar). Gerúndio temporal, modal, causal. Construção absoluta. Gerundismo (vou estar fazendo) como vicio coloquial criticado.",
+    tags:["gerúndio","estou falando","gerundismo","PB vs PE","progressivo"],
+    cat:"verbos", level:"A2–B1",
+    color:"var(--dk-teal)", colorbg:"var(--dk-teal)"
+  },
+  {
+    num:"12", file:"gramatica_participio.html",
+    title:"Particípio e Duplos Particípios",
+    desc:"Regulares (-ado/-ido) e irregulares (feito, dito, visto, posto, aberto, escrito, vindo). Duplos particípios: aceitado/aceito, pegado/pego, matado/morto, ganhado/ganho, gastado/gasto — forma regular con ter/haver, forma corta con ser/estar. Concordancia.",
+    tags:["particípio","duplos","aceito","pego","morto","concordância","irregulares"],
+    cat:"verbos", level:"B1–B2",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"13", file:"gramatica_voz_passiva.html",
+    title:"Voz Passiva — Sistema Completo",
+    desc:"Pasiva con ser + particípio (acción). Pasiva con estar + particípio (resultado/estado). Se apassivador (vendem-se casas). Se impessoal (precisa-se de). Diferencia PB vs PE en uso del se. Pasiva coloquial con ter (já tenho feito isso).",
+    tags:["passiva","ser","estar","se apassivador","se impessoal","agente","por"],
+    cat:"verbos", level:"B2–C1",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"14", file:"gramatica_verbos_modais.html",
+    title:"Verbos Modais — Uso Avançado",
+    desc:"Poder, dever, precisar (de), ter que/ter de, conseguir, saber. Valor epistémico vs deóntico. Dever + infinitivo (obligación) vs dever + ter + particípio (probabilidad pasada: deve ter chegado). Conseguir vs poder (capacidad vs posibilidad).",
+    tags:["modais","poder","dever","ter que","conseguir","precisar","epistêmico"],
+    cat:"verbos", level:"B1–B2",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"15", file:"gramatica_perifrases_verbais.html",
+    title:"Perífrases Verbais",
+    desc:"Estar + gerúndio (progresivo), ir + infinitivo (futuro/intención), acabar de + inf. (recién), continuar + ger./a + inf., começar a, parar de, deixar de, voltar a, ficar + ger. (repetición/continuidad — muy PB), andar + ger., vir + ger.",
+    tags:["perífrases","estar fazendo","ir + inf","acabar de","ficar fazendo","andar"],
+    cat:"verbos", level:"B1–C1",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"16", file:"gramatica_verbos_pronominais.html",
+    title:"Verbos Pronominais e Reflexivos",
+    desc:"Colocación PB: pronombre antes del verbo en habla (me chamo, te amo, se foi). Verbos con cambio de significado: ir/ir-se, lembrar/lembrar-se (recordar/acordarse), esquecer/esquecer-se, encontrar/encontrar-se. Recíprocos (um ao outro).",
+    tags:["pronominais","reflexivos","me chamo","ir-se","lembrar-se","recíprocos"],
+    cat:"verbos", level:"B1–B2",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"17", file:"gramatica_construcoes_fazer_dar_ter_ficar.html",
+    title:"Construções com Fazer, Dar, Ter, Ficar",
+    desc:"Expresiones gramaticalizadas frecuentes: dar para + inf. (ser posible), dar certo (salir bien), ficar com (quedarse con), ter a ver com, fazer sentido, não tem jeito, ficar bom/ruim, dar uma de + sust. Productividad idiomática del PB.",
+    tags:["dar para","dar certo","ficar com","ter a ver","fazer sentido","não tem jeito"],
+    cat:"verbos", level:"B2–C1",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  {
+    num:"18", file:"gramatica_concordancia_verbal.html",
+    title:"Concordância Verbal",
+    desc:"Con sujeto compuesto, posposto, colectivos (a maioria, a maior parte + sing./pl.), expresiones de cantidad, porcentajes. Concordancia con a gente (a gente vai, NO *a gente vamos). Concordancia ad sensum en PB coloquial (o povo dizem).",
+    tags:["concordância","a maioria","a gente","sujeito posposto","ad sensum"],
+    cat:"verbos", level:"B2–C1",
+    color:"var(--dk-blue)", colorbg:"var(--dk-blue)"
+  },
+  // ===== SINTAXIS · PRONOMES E DETERMINANTES =====
+  {
+    num:"19", file:"gramatica_sistema_pronominal_pb.html",
+    title:"🔴 Sistema Pronominal do PB",
+    desc:"EXCLUSIVO DEL PB: você (estándar) vs tu (regional, concordancia variable tu vai/tu vais). A gente (= nós, frecuencia altísima, concordancia 3ª sing.: a gente vai). Vocês como único plural. Distancia radical entre norma escrita y PB hablado.",
+    tags:["pronomes","você","tu","a gente","sujeito","PB","exclusivo"],
+    cat:"sintaxis", level:"A2–C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"20", file:"gramatica_pronomes_obliquos.html",
+    title:"Pronomes Oblíquos e Colocação",
+    desc:"Diretos (me, te, o, a, nos, vos, os, as), indiretos (me, te, lhe, nos, vos, lhes), combinados (mo, lho — solo norma escrita). PB real: ele/ela como oblíquo direto (vi ele, NO *vi-o). Próclise universal en PB. Mesóclise: solo reconocimiento pasivo.",
+    tags:["oblíquos","me","lhe","colocação","próclise","ênclise","mesóclise"],
+    cat:"sintaxis", level:"B1–C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"21", file:"gramatica_pronomes_tratamento.html",
+    title:"Pronomes de Tratamento",
+    desc:"Você (estándar), o senhor / a senhora (formal), Vossa Excelência, Vossa Senhoria, Vossa Magnificência (institucional). Concordancia siempre 3ª persona pero te/seu mezclados en PB (você te lembra — variación coloquial). Registro y contexto.",
+    tags:["tratamento","você","o senhor","Vossa Excelência","registro","formal"],
+    cat:"sintaxis", level:"A2–B1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"22", file:"gramatica_pronomes_relativos.html",
+    title:"Pronomes Relativos",
+    desc:"Que, quem (con prep.), o qual / a qual, cujo / cuja + N (posesivo), onde (lugar), quando, como, quanto. Cujo: norma vs ausencia coloquial PB (sustituido por que o seu/que a). Restrictivas vs explicativas. Relativas con preposición.",
+    tags:["relativos","que","cujo","o qual","onde","restritiva","explicativa"],
+    cat:"sintaxis", level:"B1–C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"23", file:"gramatica_pronomes_indefinidos.html",
+    title:"Pronomes Indefinidos",
+    desc:"Alguém, ninguém, algo, nada, algum/nenhum, todo/tudo (distinción crítica: todo o dia vs todo dia), cada, qualquer, outro, certo, vários, tanto, pouco, muito, demais. Posición y concordancia. Doble negativo (não fiz nada — norma PB).",
+    tags:["indefinidos","alguém","ninguém","todo","tudo","qualquer","cada"],
+    cat:"sintaxis", level:"B1–B2",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"24", file:"gramatica_demonstrativos.html",
+    title:"Pronomes Demonstrativos",
+    desc:"Este/esse/aquele (norma: 3 grados de distancia) vs uso real PB (este y esse confundidos; esse domina como anafórico). Neutros: isto, isso, aquilo. Combinaciones con preposiciones (deste, naquele, daquilo). Trampa crítica para hispanohablantes.",
+    tags:["demonstrativos","este","esse","aquele","isso","aquilo","anafórico"],
+    cat:"sintaxis", level:"A2–B1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"25", file:"gramatica_artigos.html",
+    title:"Artigos e Determinantes",
+    desc:"Definido (o, a, os, as) e indefinido (um, uma, uns, umas). Uso PB: artículo antes de nombres propios (a Maria, o João) mucho más frecuente que en PE y español. Con posesivos (meu livro vs o meu livro: PB ambas, PE solo con). Países, profesiones, abstractos.",
+    tags:["artigo","determinante","o","a","posesivos","nomes próprios"],
+    cat:"sintaxis", level:"A2–B1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"26", file:"gramatica_adjetivos.html",
+    title:"Adjetivos — Concordância e Posição",
+    desc:"Concordancia en género y número (casos especiales: sujeto compuesto, posposto). Posición: antes vs después del sustantivo (um grande homem = importante / um homem grande = corporal). Adjetivos invariables (azul-marinho, cor-de-rosa, laranja).",
+    tags:["adjetivo","concordância","posição","grande","cor-de-rosa","invariáveis"],
+    cat:"sintaxis", level:"B1–B2",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"27", file:"gramatica_comparativos_superlativos.html",
+    title:"Comparativos e Superlativos",
+    desc:"Mais/menos…(do) que (ambas formas válidas). Tão…quanto/como. Irregulares: bom/melhor/ótimo, mau/pior/péssimo, grande/maior/máximo, pequeno/menor/mínimo. Superlativo absoluto: -íssimo, muito, super-/mega-/hiper- (coloquial PB).",
+    tags:["comparativo","superlativo","do que","melhor","-íssimo","super-"],
+    cat:"sintaxis", level:"B1–B2",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"28", file:"gramatica_adverbios.html",
+    title:"Advérbios",
+    desc:"Formación -mente. Irregulares (bem, mal, depressa). Comparación (melhor, pior). Negación: não, nunca, jamais, nem, tampouco. Doble negativo (não fiz nada — norma PB, diferente del español). Modales: talvez + subj., quiçá, inclusive, até, mesmo, ainda, já.",
+    tags:["advérbios","-mente","bem","mal","talvez","até","mesmo","dupla negação"],
+    cat:"sintaxis", level:"B1–C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  // ===== SINTAXIS · PREPOSIÇÕES =====
+  {
+    num:"29", file:"gramatica_preposicoes.html",
+    title:"Preposições Simples e Contraídas",
+    desc:"Em, de, a, para, por, com, sem, sobre, sob, entre, até, desde, após, perante, mediante, conforme, segundo. Contracciones obligatorias (do, da, no, na, ao, à, pelo, num, dum). Crase (à, às): regla, casos críticos, casos prohibidos.",
+    tags:["preposições","contrações","crase","à","do","no","pelo"],
+    cat:"sintaxis", level:"A2–B1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"30", file:"gramatica_para_vs_a.html",
+    title:"Para vs A — Distinção Crítica",
+    desc:"Trampa crítica para hispanohablantes: en PB, para domina como preposición de destino y finalidad (vou para casa, é para você). A: complemento indirecto, dirección temporal (das 2 às 4). Distribución muy diferente del español, donde a tiene mayor cobertura.",
+    tags:["para","a","destino","finalidade","armadilha","hispanofalantes"],
+    cat:"sintaxis", level:"B1–B2",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"31", file:"gramatica_regencias_verbais.html",
+    title:"Regências Verbais com Preposição",
+    desc:"Gostar de, precisar de, depender de, concordar com, discordar de, assistir a (norma) vs assistir (PB coloquial), obedecer a vs obedecer (PB), namorar (sin prep. en PB: namorar alguém, NO *namorar com), visitar (sin prep.). 50+ verbos PB vs norma culta.",
+    tags:["regências","gostar de","assistir a","namorar","preposição","norma"],
+    cat:"sintaxis", level:"B1–C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"32", file:"gramatica_locucoes_prepositivas.html",
+    title:"Locuções Prepositivas",
+    desc:"A fim de, em vez de, em função de, a respeito de, com relação a, em relação a, por meio de, a partir de, em torno de, ao longo de, por causa de, graças a, apesar de, além de, diante de, em frente a/de, de acordo com, em virtude de.",
+    tags:["locuções","a fim de","apesar de","graças a","por causa de","além de"],
+    cat:"sintaxis", level:"B2–C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  // ===== SINTAXIS · ORAÇÃO COMPOSTA =====
+  {
+    num:"33", file:"gramatica_subordinadas_substantivas.html",
+    title:"Subordinadas Substantivas",
+    desc:"Que + indicativo (afirmación) vs que + subjuntivo (volición, duda, emoción, impersonales). Infinitivo pessoal vs que + subjuntivo (é melhor fazermos / é melhor que façamos). Interrogativas indirectas (se, quem, o que). Verbos introductores.",
+    tags:["substantivas","que","subjuntivo","infinitivo pessoal","interrogativa indireta"],
+    cat:"sintaxis", level:"B1–B2",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"34", file:"gramatica_oracoes_temporais.html",
+    title:"Orações Temporais",
+    desc:"Quando + subjuntivo futuro (CRÍTICO: quando eu chegar, NO *quando chego). Enquanto, assim que, logo que, depois que, antes que + subj., desde que, sempre que, mal (= en cuanto), à medida que, na medida em que. Selección de modo por referencia temporal.",
+    tags:["temporais","quando","enquanto","antes que","assim que","subjuntivo futuro"],
+    cat:"sintaxis", level:"B1–C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"35", file:"gramatica_oracoes_causais_concessivas.html",
+    title:"Orações Causais e Concessivas",
+    desc:"Causales: porque, pois (postverbal), uma vez que, já que, visto que, dado que, como (preverbal). Distinción pois causal vs pois explicativo. Concesivas: embora + subj., ainda que, mesmo que, por mais que, apesar de (que), conquanto (formal).",
+    tags:["causais","concessivas","porque","embora","apesar de","ainda que","pois"],
+    cat:"sintaxis", level:"B1–C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"36", file:"gramatica_oracoes_finais_consecutivas_comparativas.html",
+    title:"Finais, Consecutivas e Comparativas",
+    desc:"Finales: para (que) + subj., a fim de (que), com o objetivo de, com vistas a. Consecutivas: tão/tanto…que, de modo/forma/maneira que, tal…que. Comparativas: mais/menos…do que, tão…quanto, tanto…quanto, como se + imperfeito do subjuntivo.",
+    tags:["finais","consecutivas","comparativas","para que","tão...que","como se"],
+    cat:"sintaxis", level:"B1–C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"37", file:"gramatica_frase_clivada.html",
+    title:"Frase Clivada e Pseudo-clivada",
+    desc:"É + foco + que/quem (foi ele que fez, é amanhã que chego). Muy frecuente en PB. Variantes: foi que, é que (expletivo). Pseudo-clivada: o que eu quero é… Función pragmática focalizadora. Concordancia con sujeto real.",
+    tags:["clivada","é que","foco","pseudo-clivada","foi que","focalização"],
+    cat:"sintaxis", level:"C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  {
+    num:"38", file:"gramatica_topicalizacao.html",
+    title:"Topicalização e Deslocamento",
+    desc:"Frecuentísimo en PB hablado: deslocamento a la izquierda (esse livro, eu já li; a Maria, eu vi ela ontem) con o sin pronombre de recuperación. Tema-rema. Registro coloquial vs norma escrita. Función discursiva (énfasis, contraste).",
+    tags:["topicalização","deslocamento","tema-rema","esquerda","PB coloquial"],
+    cat:"sintaxis", level:"C1",
+    color:"var(--dk-green)", colorbg:"var(--dk-green)"
+  },
+  // ===== DISCURSO =====
+  {
+    num:"39", file:"gramatica_discurso_indireto.html",
+    title:"Discurso Indireto",
+    desc:"Transformación de tiempos, pronombres y expresiones temporales (hoje → naquele dia, amanhã → no dia seguinte). Verbos introductores (disse que, perguntou se, pediu para). Interrogativa indirecta. Imperativo indirecto (pediu para fazer / que fizesse).",
+    tags:["discurso indireto","concordância","disse que","perguntou se","reportado"],
+    cat:"discurso", level:"B2–C1",
+    color:"var(--dk-wine)", colorbg:"var(--dk-wine)"
+  },
+  {
+    num:"40", file:"gramatica_conectivos.html",
+    title:"Conectivos e Argumentação",
+    desc:"Adversativos (mas, porém, contudo, todavia, no entanto, entretanto), aditivos (além disso, ademais, ainda por cima), conclusivos (portanto, logo, por conseguinte, assim, dessa forma). Argumentativos formales: outrossim, não obstante, por outro lado, em contrapartida.",
+    tags:["conectivos","mas","porém","portanto","além disso","outrossim","argumentação"],
+    cat:"discurso", level:"B1–C1",
+    color:"var(--dk-wine)", colorbg:"var(--dk-wine)"
+  },
+  {
+    num:"41", file:"gramatica_marcadores_pb_oral.html",
+    title:"🔴 Marcadores do PB Oral",
+    desc:"ESPECÍFICOS DEL PB: aí (narrativo: aí ele disse), daí (consecutivo coloquial), então, tipo (juvenil), né (= não é, marcador fático universal), sabe?, entendeu?, olha, veja, quer dizer, ou seja, aliás, por sinal. Función pragmática y conversacional.",
+    tags:["marcadores","aí","né","tipo","sabe","oral","PB","fáticos"],
+    cat:"discurso", level:"B1–C1",
+    color:"var(--dk-wine)", colorbg:"var(--dk-wine)"
+  },
+  {
+    num:"42", file:"gramatica_diglossia_pb.html",
+    title:"🔴 Diglossia: Norma vs PB Coloquial",
+    desc:"FUNDAMENTAL C1: el PB tiene una distancia entre norma escrita y habla mayor que cualquier otra lengua románica. Diferencias sistemáticas: pronombres, concordancia (a gente vai vs nós vamos), colocación, regencias, léxico. Eje central del C1.",
+    tags:["diglossia","norma culta","PB coloquial","registro","C1","variação"],
+    cat:"discurso", level:"C1",
+    color:"var(--dk-wine)", colorbg:"var(--dk-wine)"
+  },
+  {
+    num:"43", file:"gramatica_que_polivalente.html",
+    title:"Que Polivalente no PB",
+    desc:"Que como conector multifuncional en PB coloquial: causal (vai com cuidado que tá chovendo), consecutivo (tô com tanta fome que…), comparativo (mais alto que ele), expletivo (que bom que veio). Reconocimiento y producción adecuada por registro.",
+    tags:["que polivalente","causal","consecutivo","expletivo","coloquial"],
+    cat:"discurso", level:"C1",
+    color:"var(--dk-wine)", colorbg:"var(--dk-wine)"
+  },
+  {
+    num:"44", file:"gramatica_fraseologia.html",
+    title:"Modos de Dizer e Fraseologia",
+    desc:"Locuciones idiomáticas con dar/fazer/ter/ficar (dar bola, fazer vista grossa, ter pé atrás, ficar de bobeira). Locuciones argumentativas (a rigor, em última análise, bem entendido, no fim das contas, em suma). Marcadores fraseológicos del PB.",
+    tags:["fraseologia","modos de dizer","dar bola","a rigor","no fim das contas"],
+    cat:"discurso", level:"B2–C1",
+    color:"var(--dk-wine)", colorbg:"var(--dk-wine)"
+  },
+  // ===== LÉXICO =====
+  {
+    num:"45", file:"gramatica_formacao_palavras.html",
+    title:"Formação de Palavras",
+    desc:"Sufijos nominales (-ção, -mento, -dade, -agem, -ura, -ismo, -ista). Sufijos adjetivales (-vel, -oso, -al, -ivo, -ento, -ável). Verbales (-izar, -ificar, -ejar, -ecer). Prefijos (in-, des-, re-, super-, anti-, contra-, sub-, hiper-). Derivación productiva.",
+    tags:["formação","sufijos","prefijos","-ção","-vel","derivação","produtiva"],
+    cat:"lexico", level:"B2–C1",
+    color:"var(--dk-orange)", colorbg:"var(--dk-orange)"
+  },
+  {
+    num:"46", file:"gramatica_aumentativos_diminutivos.html",
+    title:"🔴 Aumentativos e Diminutivos",
+    desc:"ESPECÍFICO DEL PB: el diminutivo -inho/-zinho es MUCHO más frecuente que en PE y español, con valor pragmático-afetivo (um minutinho, pertinho, obrigadinho, espera um pouquinho). Atenuador, cortés, irónico. Aumentativos -ão/-ona (carrão, mulherona).",
+    tags:["diminutivo","-inho","-zinho","aumentativo","-ão","pragmático","afetivo"],
+    cat:"lexico", level:"B1–C1",
+    color:"var(--dk-orange)", colorbg:"var(--dk-orange)"
+  },
+  {
+    num:"47", file:"gramatica_falsos_amigos.html",
+    title:"Falsos Amigos com o Espanhol",
+    desc:"Trampa sistemática: borracha (goma), cena (escena), exquisito (raro/extraño), embaraçada (avergonzada), polvo (pulpo), salada (ensalada), oficina (taller), brincar (jugar), latir (palpitar), prender (atar), apelido (apodo), pelado (desnudo).",
+    tags:["falsos amigos","borracha","cena","exquisito","polvo","brincar","apelido"],
+    cat:"lexico", level:"B1–C1",
+    color:"var(--dk-orange)", colorbg:"var(--dk-orange)"
+  },
+  {
+    num:"48", file:"gramatica_colocacoes.html",
+    title:"Colocações Lexicais",
+    desc:"Verbo + sustantivo (tomar uma decisão, tirar uma conclusão, enfrentar um problema, correr o risco, fazer uma pergunta, dar uma resposta). Adjetivo + sustantivo. Sustantivo + preposición. Falsos cognatos colocacionales con español. Producción natural C1.",
+    tags:["colocações","tomar decisão","tirar conclusão","enfrentar","C1"],
+    cat:"lexico", level:"C1",
+    color:"var(--dk-orange)", colorbg:"var(--dk-orange)"
+  },
+  {
+    num:"49", file:"gramatica_composicao.html",
+    title:"Composição Lexical",
+    desc:"Sustantivo + sustantivo (peixe-espada, palavra-chave), verbo + sustantivo (guarda-chuva, beija-flor, quebra-cabeça), adjetivo + sustantivo (boa-vontade), aglutinación (embora < em boa hora), siglas y acrónimos productivos. Plural de compuestos.",
+    tags:["composição","palavra-chave","guarda-chuva","aglutinação","compostos","plural"],
+    cat:"lexico", level:"B2–C1",
+    color:"var(--dk-orange)", colorbg:"var(--dk-orange)"
+  },
+  // ===== PRODUÇÃO =====
+  {
+    num:"50", file:"gramatica_texto_argumentativo.html",
+    title:"Texto Argumentativo",
+    desc:"Tesis → argumentos → contraargumentos → conclusión. Registro formal, subjuntivo, nominalizaciones, voz pasiva. Conectivos argumentativos cultos. Estructuras tipo redação ENEM, artículo de opinión, ensaio breve. Densidad léxica y abstracción.",
+    tags:["argumentativo","redação","tese","ENEM","produção","ensaio"],
+    cat:"produccion", level:"C1",
+    color:"var(--dk-purple)", colorbg:"var(--dk-purple)"
+  },
+  {
+    num:"51", file:"gramatica_texto_expositivo.html",
+    title:"Texto Expositivo-Descritivo",
+    desc:"Pasivas para objetividad, progresión tema-rema, anáforas léxicas. Relatório, resumo, síntese crítica. Densidad léxica alta. Vocabulario técnico y abstracto. Estilo impersonal y nominalizado. Coherencia referencial.",
+    tags:["expositivo","relatório","resumo","síntese","tema-rema","anáfora"],
+    cat:"produccion", level:"C1",
+    color:"var(--dk-purple)", colorbg:"var(--dk-purple)"
+  },
+  {
+    num:"52", file:"gramatica_coesao_coerencia.html",
+    title:"Coesão e Coerência Textual",
+    desc:"Anáforas (pronombres, demostrativos, sinónimos, hiperónimos), catáfora, progresión temática. Conectivos como cohesivos. Coherencia de registro y tiempo verbal. Elipsis controlada. Encadenamientos lógicos y referenciales.",
+    tags:["coesão","coerência","anáfora","catáfora","progressão","elipsis"],
+    cat:"produccion", level:"C1",
+    color:"var(--dk-purple)", colorbg:"var(--dk-purple)"
+  },
+  {
+    num:"53", file:"gramatica_pontuacao.html",
+    title:"Pontuação — Uso Avançado",
+    desc:"Vírgula (no entre sujeto-verbo; sí en adjuntos antepuestos, apostos, vocativos), ponto e vírgula, dois pontos, travessão, parênteses, aspas. Diferencias clave con español (no ¿¡; uso del travessão en diálogos). Acordo Ortográfico de 1990.",
+    tags:["pontuação","vírgula","ponto e vírgula","travessão","acordo ortográfico"],
+    cat:"produccion", level:"C1",
+    color:"var(--dk-purple)", colorbg:"var(--dk-purple)"
+  },
+  {
+    num:"54", file:"gramatica_sintaxe_complexa.html",
+    title:"Sintaxe Complexa — Controle Produtivo",
+    desc:"Subordinación múltiple, alternancia explícita/implícita (que + subj. vs infinitivo pessoal), concordancia de tiempos del subjuntivo. Evitar gerúndio pendente, anacolutos, periodos incoherentes. Estilo escrito formal C1.",
+    tags:["sintaxe","subordinação","concordância","gerúndio pendente","anacoluto"],
+    cat:"produccion", level:"C1",
+    color:"var(--dk-purple)", colorbg:"var(--dk-purple)"
+  },
+  {
+    num:"55", file:"gramatica_competencia_diglossica.html",
+    title:"🔴 Competência Diglóssica",
+    desc:"COMPETENCIA C1 EXCLUSIVA DEL PB: saber CUÁNDO usar norma culta y CUÁNDO usar PB coloquial. Adecuación al destinatario, soporte y género. Movilizar conscientemente registro escrito formal vs habla informal. Conciencia metalingüística como meta del C1.",
+    tags:["diglossia","competência","registro","norma","coloquial","C1","metalinguística"],
+    cat:"produccion", level:"C1",
+    color:"var(--dk-purple)", colorbg:"var(--dk-purple)"
+  }
+];
+
+const CAT_LABELS = {
+  verbos:"Verbos y tiempos",
+  sintaxis:"Sintaxis",
+  discurso:"Discurso",
+  lexico:"Léxico gramatical",
+  produccion:"Producción"
+};
+
+// Map level range to tier accent (by upper bound)
+function getLevelTier(level){
+  if(level.includes("C1")) return "tier-high";
+  if(level.includes("B2")) return "tier-mid";
+  return "tier-low";
+}
+
+let activeFilter = "all";
+let searchVal = "";
+
+function buildCards(items){
+  const grid = document.getElementById("grid");
+  const empty = document.getElementById("empty");
+  if(!items.length){
+    grid.innerHTML="";
+    empty.classList.remove("hidden");
+    return;
+  }
+  empty.classList.add("hidden");
+
+  const cats = ["verbos","sintaxis","discurso","lexico","produccion"];
+  let html = "";
+  cats.forEach(cat => {
+    const filtered = items.filter(t => t.cat === cat);
+    if(!filtered.length) return;
+    if(activeFilter === "all"){
+      html += `<div class="section-label" style="grid-column:1/-1">${CAT_LABELS[cat]}</div>`;
+    }
+    filtered.forEach(t => {
+      const tier = getLevelTier(t.level);
+      html += `
+        <a class="topic-card" href="${t.file}" target="_blank" data-cat="${t.cat}" data-search="${t.title.toLowerCase()} ${t.desc.toLowerCase()} ${t.tags.join(" ").toLowerCase()}" style="background:${t.colorbg};">
+          <div class="card-body">
+            <div class="card-top">
+              <span class="card-num">${t.num}</span>
+              <span class="card-level ${tier}">${t.level}</span>
+            </div>
+            <div class="card-title">${t.title}</div>
+            <div class="card-desc">${t.desc}</div>
+            <div class="card-tags">
+              ${t.tags.map(tag => `<span class="card-tag">${tag}</span>`).join("")}
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-cta">Ver más <span class="arrow">→</span></span>
+          </div>
+        </a>`;
+    });
+  });
+  grid.innerHTML = html;
+}
+
+function applyFilters(){
+  let items = TOPICS;
+  if(activeFilter !== "all") items = items.filter(t => t.cat === activeFilter);
+  if(searchVal.trim()){
+    const q = searchVal.trim().toLowerCase();
+    items = items.filter(t =>
+      t.title.toLowerCase().includes(q) ||
+      t.desc.toLowerCase().includes(q) ||
+      t.tags.some(tag => tag.toLowerCase().includes(q))
+    );
+  }
+  buildCards(items);
+}
+
+function setFilter(cat, btn){
+  activeFilter = cat;
+  document.querySelectorAll(".ftab").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  applyFilters();
+}
+
+function filterCards(val){
+  searchVal = val;
+  applyFilters();
+}
+
+applyFilters();
+</script>
+</body>
+</html>
