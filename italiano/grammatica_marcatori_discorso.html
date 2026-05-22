@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Marcatori del Discorso · Grammatica C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ede9df;
+  --card:#faf7f1;
+  --border:#c4bead;
+  --text:#1a1814;
+  --text2:#44413a;
+  --text3:#706c64;
+  --accent:#7a5a0a;
+  --accent-light:#f0e0c0;
+  --accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,0.08);
+  --radius:14px;
+  --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --red:#a81e2e; --red-bg:#fce6e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --teal:#0e6e6e; --teal-bg:#e0f4f4;
+  --fs:15px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-size:var(--fs);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:60px;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text);margin:0 0 .4em;font-weight:600;line-height:1.2}
+h1{font-size:1.85em;font-weight:700}
+h2{font-size:1.45em}
+h3{font-size:1.15em;margin-top:1.1em}
+h4{font-size:1em;font-weight:600}
+p{margin:.5em 0}
+em{font-style:italic}
+b,strong{font-weight:600}
+
+/* HEADER */
+.site-header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 18px 16px;
+  position:relative;
+}
+.site-header .inner{max-width:860px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title-wrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.site-header h1{margin:0;font-size:1.9em;color:var(--text)}
+.header-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.85em;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid var(--accent-mid);
+}
+.subtitle{color:var(--text3);font-size:.92em;margin:4px 0 12px;font-style:italic}
+.stat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stat-pill{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:4px 10px;
+  font-size:.78em;
+  border-radius:999px;
+  font-weight:500;
+}
+.font-ctrl{display:flex;align-items:center;gap:8px;font-size:.78em;color:var(--text3)}
+.font-ctrl input[type=range]{width:90px}
+
+/* SECTION NAV */
+.section-nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:10px 18px;
+  margin-top:14px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.section-nav::-webkit-scrollbar{display:none}
+.section-nav .inner{max-width:860px;margin:0 auto;display:flex;gap:6px;flex-wrap:nowrap}
+.snav-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:6px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82em;
+  border-radius:999px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .15s;
+  font-weight:500;
+}
+.snav-btn:hover{background:var(--accent-light)}
+.snav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* MAIN LAYOUT */
+.main-layout{
+  max-width:860px;
+  margin:0 auto;
+  padding:20px 18px;
+}
+.sec-block{display:none}
+.sec-block.active{display:block;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* GRAM-CARD */
+.gram-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.gram-card-body{padding:18px}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:1.45em;
+  margin:0 0 .4em;
+  color:var(--text);
+}
+.sec-subtitle{color:var(--text3);font-style:italic;font-size:.95em;margin:0 0 14px}
+
+/* DEF-BOX */
+.def-box{
+  background:var(--warn-bg);
+  border-left:4px solid var(--accent);
+  padding:12px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:14px 0;
+  font-size:.96em;
+}
+.def-box b{color:var(--accent)}
+
+/* WARN-BOX */
+.warn-box{
+  background:#fff4e0;
+  border:1px solid #c8900a;
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:12px 0;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:.93em;
+  color:var(--text2);
+}
+.warn-box .ico{font-size:1.1em;flex-shrink:0;line-height:1.3}
+
+/* EXAMPLE BLOCK */
+.example-block{
+  background:var(--blue-bg);
+  border-left:3px solid var(--blue);
+  padding:9px 12px;
+  margin:8px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.ex-it{font-weight:500;color:var(--text)}
+.ex-it em{font-style:normal;color:var(--blue);font-weight:600}
+.ex-es{font-style:italic;color:var(--text2);font-size:.88em;margin-top:2px}
+.ex-note{font-size:.84em;color:var(--text3);margin-top:4px;font-style:italic}
+
+/* NOTE-BOX */
+.note-box{
+  background:var(--purple-bg);
+  border-left:3px solid var(--purple);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.note-box b{color:var(--purple)}
+
+/* GREEN-BOX */
+.green-box{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.green-box b{color:var(--green)}
+
+/* TEAL-BOX */
+.teal-box{
+  background:var(--teal-bg);
+  border-left:3px solid var(--teal);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.teal-box b{color:var(--teal)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.gram-table{width:100%;border-collapse:collapse;font-size:.92em;background:var(--card)}
+.gram-table th{
+  background:var(--accent-light);
+  color:var(--accent);
+  font-family:'DM Sans',sans-serif;
+  font-size:.72em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:8px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--accent-mid);
+}
+.gram-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.gram-table tr:nth-child(even) td{background:rgba(196,190,173,0.12)}
+.gram-table tr:last-child td{border-bottom:none}
+.ok-cell{color:var(--green);font-weight:500}
+.err-cell{color:var(--red);font-weight:500}
+.warn-cell{color:var(--accent);font-weight:500}
+.tbl-pron{font-weight:600;color:var(--text);background:rgba(196,190,173,0.18)}
+.tbl-marker{font-weight:700;color:var(--accent);font-family:'Playfair Display',serif;font-style:italic;font-size:1.05em}
+
+/* CHIPS */
+.chip-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:14px 0 10px;
+  padding-bottom:4px;
+}
+.chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:5px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.83em;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{background:var(--accent-light)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-panel{display:none}
+.chip-panel.active{display:block;animation:fadeIn .25s}
+
+/* TRAPS */
+.trap-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.trap-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trap-name{font-weight:600;color:var(--text);font-size:.96em}
+.trap-vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.trap-wrong{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-wrong::before{content:'✗ ';color:var(--red);font-weight:700}
+.trap-right{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-right::before{content:'✓ ';color:var(--green);font-weight:700}
+.trap-expl{font-size:.88em;color:var(--text2);font-style:italic;margin-top:6px}
+@media (max-width:520px){.trap-vs{grid-template-columns:1fr}}
+
+/* MINI-TABLE */
+.mini-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.88em;
+  background:var(--card);
+  margin:10px 0;
+}
+.mini-table td{
+  padding:5px 9px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.mini-table td:first-child{color:var(--text3);font-weight:500;width:38%}
+.mini-table td:last-child{color:var(--text);font-weight:600}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table .hl-form{color:var(--accent);font-weight:700}
+
+/* TAG/LABEL */
+.tag{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:.72em;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-right:6px;
+  border:1px solid;
+}
+.tag-fat{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.tag-rie{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.tag-str{background:var(--teal-bg);color:var(--teal);border-color:var(--teal)}
+.tag-mod{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.tag-for{background:var(--green-bg);color:var(--green);border-color:var(--green)}
+.tag-col{background:var(--red-bg);color:var(--red);border-color:var(--red)}
+
+/* UTILS */
+.hl{color:var(--accent);font-weight:600}
+.dim{color:var(--text3)}
+
+/* ANALYSIS LIST */
+.analysis-list{
+  font-size:.86em;
+  color:var(--text2);
+  margin-top:6px;
+  padding-left:0;
+  list-style:none;
+}
+.analysis-list li{
+  margin:2px 0;
+  padding-left:12px;
+  position:relative;
+}
+.analysis-list li::before{
+  content:'·';
+  position:absolute;
+  left:2px;
+  color:var(--accent);
+  font-weight:700;
+}
+.analysis-list b{color:var(--accent)}
+
+/* MARKER CARD (catalogo) */
+.marker-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:14px 16px;
+  margin:14px 0;
+  box-shadow:var(--shadow-sm);
+}
+.marker-head{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:8px;
+  padding-bottom:8px;
+  border-bottom:1px dashed var(--border);
+}
+.marker-name{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-style:italic;
+  font-size:1.35em;
+  color:var(--accent);
+}
+.marker-gloss{
+  color:var(--text3);
+  font-size:.88em;
+  font-style:italic;
+}
+.marker-funz{
+  font-weight:600;
+  color:var(--text);
+  margin:8px 0 4px;
+  font-size:.95em;
+}
+.marker-funz::before{content:'▸ ';color:var(--accent);font-weight:700}
+
+/* DIALOG BLOCK */
+.dialog-block{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:10px 0;
+  font-size:.93em;
+}
+.dialog-line{margin:3px 0;color:var(--text)}
+.dialog-line em{font-style:normal;color:var(--accent);font-weight:600}
+.dialog-spk{color:var(--text3);font-weight:600;margin-right:6px}
+.dialog-trans{
+  margin-top:6px;
+  padding-top:6px;
+  border-top:1px dashed var(--border);
+  font-style:italic;
+  color:var(--text2);
+  font-size:.86em;
+}
+
+/* RESPONSIVE */
+@media (max-width:520px){
+  .site-header{padding:14px 14px 12px}
+  h1{font-size:1.5em}
+  .main-layout{padding:14px}
+  .gram-card-body{padding:14px}
+  .stat-pill{font-size:.72em}
+  .header-top{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="inner">
+    <div class="header-top">
+      <div>
+        <div class="header-title-wrap">
+          <h1>I Marcatori del Discorso</h1>
+          <span class="header-tag">Grammatica</span>
+        </div>
+        <div class="subtitle">Pragmatica · C1 · per ispanofoni</div>
+        <div class="stat-bar">
+          <span class="stat-pill">8 sezioni</span>
+          <span class="stat-pill">parlato vs scritto</span>
+          <span class="stat-pill">funzioni pragmatiche</span>
+          <span class="stat-pill">catalogo dettagliato</span>
+          <span class="stat-pill">20+ esempi analizzati</span>
+        </div>
+      </div>
+      <div class="font-ctrl">
+        <span>A-</span>
+        <input type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+        <span>A+</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION NAV -->
+<nav class="section-nav" id="sec-nav">
+  <div class="inner">
+    <button class="snav-btn active" onclick="showSection('s-concetto',this)">1. Concetto</button>
+    <button class="snav-btn" onclick="showSection('s-coloquiale',this)">2. Parlato coloquiale</button>
+    <button class="snav-btn" onclick="showSection('s-formale',this)">3. Registro formale</button>
+    <button class="snav-btn" onclick="showSection('s-catalogo',this)">4. Catalogo dettagliato</button>
+    <button class="snav-btn" onclick="showSection('s-fermo',this)">5. Fermo restando</button>
+    <button class="snav-btn" onclick="showSection('s-tabella',this)">6. Registro × Funzione</button>
+    <button class="snav-btn" onclick="showSection('s-trappole',this)">7. Trappole ES</button>
+    <button class="snav-btn" onclick="showSection('s-esempi',this)">8. Esempi analizzati</button>
+  </div>
+</nav>
+
+<main class="main-layout">
+
+<!-- SECCIÓN 1 · CONCETTO -->
+<section id="s-concetto" class="sec-block active">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">1. Che cosa sono i marcatori del discorso</h2>
+      <p class="sec-subtitle">Elementi pragmatici che articolano il discorso, non la sintassi</p>
+
+      <div class="def-box">
+        I <b>marcatori del discorso</b> (o <em>segnali discorsivi</em>) sono elementi lingüísticos que <span class="hl">articulan y estructuran el discurso a nivel pragmático</span>: señalan la actitud del hablante, estructuran la conversación, gestionan los turnos de palabra y refuerzan la cohesión. No expresan relaciones semánticas entre proposiciones — eso es trabajo de los <em>connettivi</em> lógicos — sino <span class="hl">funciones comunicativas</span>.
+      </div>
+
+      <h3>Distinción crítica · Marcatori vs Connettivi</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Dimensione</th><th>Connettivi lógicos</th><th>Marcatori del discorso</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>Nivel de operación</b></td>
+              <td>Semántico (relación entre contenidos)</td>
+              <td>Pragmático (gestión del discurso)</td>
+            </tr>
+            <tr>
+              <td><b>Función</b></td>
+              <td>Causa, oposición, conclusión lógica…</td>
+              <td>Marcar actitud, organizar turno, mantener contacto</td>
+            </tr>
+            <tr>
+              <td><b>Eliminables?</b></td>
+              <td>No: cambian el sentido</td>
+              <td>Sí, pero el discurso queda «descarnado»</td>
+            </tr>
+            <tr>
+              <td><b>Ejemplos</b></td>
+              <td><em>perché, quindi, tuttavia, sebbene</em></td>
+              <td><em>ecco, allora, insomma, diciamo, beh</em></td>
+            </tr>
+            <tr>
+              <td><b>Registro típico</b></td>
+              <td>Escrito y oral formal</td>
+              <td>Oral preponderante (pero también escrito formal)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Las cuatro grandes familias funcionales</h3>
+      <div class="chip-bar">
+        <span class="chip" onclick="showPanel('p-fat',this)">Fatici</span>
+        <span class="chip" onclick="showPanel('p-rie',this)">Riempitivi / Esitatori</span>
+        <span class="chip" onclick="showPanel('p-str',this)">Strutturatori del turno</span>
+        <span class="chip" onclick="showPanel('p-mod',this)">Modali</span>
+      </div>
+
+      <div id="p-fat" class="chip-panel">
+        <div class="example-block">
+          <div class="ex-it"><span class="tag tag-fat">FATICI</span> Mantienen el contacto entre interlocutores.</div>
+          <div class="ex-es">Su función no es transmitir contenido, sino verificar que el canal de comunicación está abierto y el oyente sigue presente y atento.</div>
+          <div class="ex-note">Ejemplos: <em>ecco, vedi, guarda, senti, capito?, no?, sai?, vero?, dai</em></div>
+        </div>
+      </div>
+
+      <div id="p-rie" class="chip-panel">
+        <div class="example-block">
+          <div class="ex-it"><span class="tag tag-rie">RIEMPITIVI</span> Rellenan pausas de planificación.</div>
+          <div class="ex-es">El hablante necesita tiempo para formular el enunciado y usa estas piezas para no dejar silencio. También suavizan o aproximan el contenido (<em>hedging</em>).</div>
+          <div class="ex-note">Ejemplos: <em>cioè, diciamo, insomma, praticamente, in un certo senso, tipo, nel senso</em></div>
+        </div>
+      </div>
+
+      <div id="p-str" class="chip-panel">
+        <div class="example-block">
+          <div class="ex-it"><span class="tag tag-str">STRUTTURATORI</span> Organizan el turno y la narración.</div>
+          <div class="ex-es">Marcan el inicio, transición o cierre de un fragmento discursivo. Son las «articulaciones» visibles del razonamiento o del relato.</div>
+          <div class="ex-note">Ejemplos: <em>allora, dunque, be'/beh, ecco, appunto</em></div>
+        </div>
+      </div>
+
+      <div id="p-mod" class="chip-panel">
+        <div class="example-block">
+          <div class="ex-it"><span class="tag tag-mod">MODALI</span> Expresan actitud del hablante.</div>
+          <div class="ex-es">Modulan el grado de compromiso del hablante con lo que dice: probabilidad, posibilidad, certeza, franqueza, evidencialidad.</div>
+          <div class="ex-note">Ejemplos: <em>magari, forse, probabilmente, a quanto pare, pare che, sembra che, a dire il vero, francamente</em></div>
+        </div>
+      </div>
+
+      <h3>Por qué importan a nivel C1</h3>
+      <p>El estudiante intermedio domina la sintaxis pero produce un italiano <span class="hl">«limpio»</span>, sin marcadores. Suena artificial, libresco, traducido. El paso a C1 consiste en gran parte en <span class="hl">incorporar estos marcadores</span> hasta el punto de usarlos naturalmente. Un hablante nativo introduce un marcador cada pocos enunciados; un estudiante que los evita revela inmediatamente su nivel.</p>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Para el hispanohablante:</b> el español tiene su propio repertorio (<em>pues, vamos, o sea, bueno, en fin, vale, mira, oye…</em>), pero <span class="hl">no se traducen directamente</span>. Cada marcador italiano tiene su propio perfil de uso. Traducir <em>pues</em> por <em>allora</em> o <em>bueno</em> por <em>bene</em> es uno de los errores más frecuentes.</div>
+      </div>
+
+      <div class="green-box">
+        <b>Idea clave:</b> los marcadores son la <span class="hl">«gramática invisible»</span> de la conversación. Sin ellos, las palabras se entienden pero la interacción suena rota.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 2 · PARLATO COLOQUIALE -->
+<section id="s-coloquiale" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">2. Marcatori del parlato coloquiale</h2>
+      <p class="sec-subtitle">Quattro famiglie funzionali nell'italiano parlato</p>
+
+      <div class="def-box">
+        El italiano hablado coloquial reposa sobre cuatro grandes familias de marcadores que operan simultáneamente: <b>fatici</b> (mantienen el contacto), <b>riempitivi</b> (rellenan pausas), <b>strutturatori</b> (organizan el turno) y <b>modali</b> (expresan actitud). Una sola conversación corriente puede contener decenas de marcadores de las cuatro familias.
+      </div>
+
+      <h3>2.a · Fatici · mantenimento del contatto</h3>
+      <p>Estos marcadores no aportan contenido proposicional: su función es <span class="hl">verificar que el oyente sigue presente</span>, invitarlo a confirmar, o atraer su atención.</p>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Marcatore</th><th>Posizione</th><th>Funzione</th><th>Equivalente ES</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tbl-marker">ecco</span></td><td>Inicio/final</td><td>Presentar, concluir, atraer atención</td><td>he aquí / pues / ya está</td></tr>
+            <tr><td><span class="tbl-marker">vedi / vedete</span></td><td>Intercalado</td><td>Invitar al oyente a constatar</td><td>mira, ves</td></tr>
+            <tr><td><span class="tbl-marker">guarda</span></td><td>Inicio</td><td>Llamar la atención antes de afirmación</td><td>mira</td></tr>
+            <tr><td><span class="tbl-marker">senti</span></td><td>Inicio</td><td>Llamar atención al cambiar de tema</td><td>oye, escucha</td></tr>
+            <tr><td><span class="tbl-marker">capito?</span></td><td>Final</td><td>Verificar comprensión</td><td>¿entiendes?</td></tr>
+            <tr><td><span class="tbl-marker">no?</span></td><td>Final</td><td>Buscar confirmación</td><td>¿no?</td></tr>
+            <tr><td><span class="tbl-marker">sai?</span></td><td>Final/intercalado</td><td>Apelar al conocimiento compartido</td><td>¿sabes?</td></tr>
+            <tr><td><span class="tbl-marker">vero?</span></td><td>Final</td><td>Buscar acuerdo</td><td>¿verdad?</td></tr>
+            <tr><td><span class="tbl-marker">dai</span></td><td>Inicio/final</td><td>Animar, persuadir, mostrar incredulidad</td><td>¡venga!, ¡anda ya!</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Guarda</em>, io non lo farei mai una cosa del genere.</div>
+        <div class="ex-es">Mira, yo no haría nunca una cosa así.</div>
+        <div class="ex-note"><em>guarda</em> = llama la atención del oyente antes de la opinión personal</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Senti</em>, ti volevo chiedere una cosa.</div>
+        <div class="ex-es">Oye, te quería preguntar una cosa.</div>
+        <div class="ex-note"><em>senti</em> = abre un nuevo segmento discursivo</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È una cosa complicata, <em>sai?</em></div>
+        <div class="ex-es">Es una cosa complicada, ¿sabes?</div>
+        <div class="ex-note"><em>sai?</em> = solicita complicidad / apela al conocimiento del oyente</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Dai</em>, non fare così!</div>
+        <div class="ex-es">¡Venga, no hagas eso!</div>
+        <div class="ex-note"><em>dai</em> = exhortativo, animar / consolar</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">«Ho vinto la lotteria!» «<em>Ma dai!</em>»</div>
+        <div class="ex-es">«¡Me ha tocado la lotería!» «¡Anda ya!»</div>
+        <div class="ex-note"><em>ma dai</em> = incredulidad, sorpresa</div>
+      </div>
+
+      <h3>2.b · Riempitivi / Esitatori · riempire le pause</h3>
+      <p>El hablante necesita tiempo para planificar el enunciado, suavizar lo que va a decir, o aproximar el contenido. Los <em>riempitivi</em> hacen esa función: <span class="hl">no dejan silencio, pero tampoco aportan contenido</span>.</p>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Marcatore</th><th>Funzione</th><th>Registro</th><th>Equivalente ES</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tbl-marker">cioè</span></td><td>Reformulación / vacilación</td><td>Universal</td><td>o sea, es decir</td></tr>
+            <tr><td><span class="tbl-marker">diciamo</span></td><td>Hedging / aproximación</td><td>Medio</td><td>digamos / por así decir</td></tr>
+            <tr><td><span class="tbl-marker">insomma</span></td><td>Resumen / atenuación / vacilación</td><td>Medio</td><td>en suma / vaya</td></tr>
+            <tr><td><span class="tbl-marker">praticamente</span></td><td>Aproximación al hecho</td><td>Coloquial</td><td>prácticamente / vamos</td></tr>
+            <tr><td><span class="tbl-marker">in un certo senso</span></td><td>Atenuación</td><td>Medio-alto</td><td>en cierto sentido</td></tr>
+            <tr><td><span class="tbl-marker">tipo</span></td><td>Aproximación / ejemplificación</td><td>Juvenil</td><td>tipo / como</td></tr>
+            <tr><td><span class="tbl-marker">nel senso</span></td><td>Aclaración / planificación</td><td>Medio-coloquial</td><td>en el sentido (de) que</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È stato un viaggio… <em>cioè</em>… indimenticabile.</div>
+        <div class="ex-es">Fue un viaje… o sea… inolvidable.</div>
+        <div class="ex-note"><em>cioè</em> = ganancia de tiempo para encontrar el adjetivo justo</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>diciamo</em> una soluzione provvisoria.</div>
+        <div class="ex-es">Es, digamos, una solución provisional.</div>
+        <div class="ex-note"><em>diciamo</em> = suavización (no quiere comprometerse del todo)</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Praticamente</em> non ho dormito stanotte.</div>
+        <div class="ex-es">Prácticamente / Vamos, no he dormido esta noche.</div>
+        <div class="ex-note"><em>praticamente</em> = aproximación factual + cierta intensificación coloquial</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Ha detto, <em>nel senso</em>, che non era d'accordo.</div>
+        <div class="ex-es">Dijo, en el sentido de que, que no estaba de acuerdo.</div>
+        <div class="ex-note"><em>nel senso</em> = planifica la reformulación que sigue</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Mi ha guardato <em>tipo</em> dieci secondi senza dire niente.</div>
+        <div class="ex-es">Me miró tipo diez segundos sin decir nada.</div>
+        <div class="ex-note"><em>tipo</em> = aproximación cuantitativa, registro juvenil</div>
+      </div>
+
+      <h3>2.c · Strutturatori del turno · organizzare il discorso</h3>
+      <p>Marcan los <span class="hl">límites entre segmentos del discurso</span>: inicio de turno, inicio de narración, transición entre temas, vacilación inicial, conclusión.</p>
+
+      <div class="marker-card">
+        <div class="marker-head">
+          <span class="marker-name">allora</span>
+          <span class="marker-gloss">apertura di turno / di racconto / di pensiero</span>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Allora</em>, stamattina mi sono svegliato presto…</div>
+          <div class="ex-es">Pues, esta mañana me he despertado pronto…</div>
+          <div class="ex-note">Abre la narración sin valor temporal de «entonces»</div>
+        </div>
+      </div>
+
+      <div class="marker-card">
+        <div class="marker-head">
+          <span class="marker-name">dunque</span>
+          <span class="marker-gloss">pensiero ad alta voce / strutturazione</span>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Dunque</em>… vediamo un attimo… cosa avevo da fare?</div>
+          <div class="ex-es">A ver… veamos un momento… ¿qué tenía que hacer?</div>
+          <div class="ex-note">Marca un momento de organización mental en voz alta</div>
+        </div>
+      </div>
+
+      <div class="marker-card">
+        <div class="marker-head">
+          <span class="marker-name">be' / beh</span>
+          <span class="marker-gloss">esitazione / apertura di risposta</span>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">«Cosa ne pensi?» «<em>Beh</em>… non saprei…»</div>
+          <div class="ex-es">«¿Qué piensas?» «Bueno… no sabría…»</div>
+          <div class="ex-note">Vacilación al iniciar respuesta, gana tiempo</div>
+        </div>
+      </div>
+
+      <div class="marker-card">
+        <div class="marker-head">
+          <span class="marker-name">ecco</span>
+          <span class="marker-gloss">presentazione / conclusione</span>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">…e <em>ecco</em>, alla fine ho deciso di restare.</div>
+          <div class="ex-es">…y, en fin, al final he decidido quedarme.</div>
+          <div class="ex-note">Concluye / cierra un argumento</div>
+        </div>
+      </div>
+
+      <div class="marker-card">
+        <div class="marker-head">
+          <span class="marker-name">appunto</span>
+          <span class="marker-gloss">conferma / accordo</span>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">«Il problema è il tempo.» «<em>Appunto</em>.»</div>
+          <div class="ex-es">«El problema es el tiempo.» «Exacto.»</div>
+          <div class="ex-note">Confirma con énfasis la afirmación del interlocutor</div>
+        </div>
+      </div>
+
+      <h3>2.d · Modali · l'atteggiamento del parlante</h3>
+      <p>Modulan <span class="hl">el compromiso del hablante</span> con la verdad de lo que dice: probabilidad, posibilidad, evidencialidad, franqueza.</p>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Marcatore</th><th>Tipo modale</th><th>Equivalente ES</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tbl-marker">magari</span></td><td>Posibilidad/deseo (¡ojalá!)</td><td>quizá / ojalá</td></tr>
+            <tr><td><span class="tbl-marker">forse</span></td><td>Posibilidad neutra</td><td>quizá / tal vez</td></tr>
+            <tr><td><span class="tbl-marker">probabilmente</span></td><td>Probabilidad alta</td><td>probablemente</td></tr>
+            <tr><td><span class="tbl-marker">a quanto pare</span></td><td>Evidencialidad indirecta</td><td>por lo que parece / al parecer</td></tr>
+            <tr><td><span class="tbl-marker">pare che + cong.</span></td><td>Evidencialidad reportativa</td><td>parece que</td></tr>
+            <tr><td><span class="tbl-marker">sembra che + cong.</span></td><td>Evidencialidad inferencial</td><td>parece que</td></tr>
+            <tr><td><span class="tbl-marker">a dire il vero</span></td><td>Franqueza / matización</td><td>a decir verdad</td></tr>
+            <tr><td><span class="tbl-marker">francamente</span></td><td>Franqueza</td><td>francamente</td></tr>
+            <tr><td><span class="tbl-marker">onestamente</span></td><td>Franqueza / honestidad</td><td>honestamente</td></tr>
+            <tr><td><span class="tbl-marker">sinceramente</span></td><td>Franqueza / sinceridad</td><td>sinceramente</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Magari</em> venisse anche lui!</div>
+        <div class="ex-es">¡Ojalá viniera también él!</div>
+        <div class="ex-note"><em>magari</em> + congiuntivo imperfetto = deseo intenso, casi irreal</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>A quanto pare</em>, hanno annullato il volo.</div>
+        <div class="ex-es">Por lo que parece, han cancelado el vuelo.</div>
+        <div class="ex-note">Evidencialidad: el hablante no ha vivido el hecho directamente</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>A dire il vero</em>, non sono molto convinto.</div>
+        <div class="ex-es">A decir verdad, no estoy muy convencido.</div>
+        <div class="ex-note">Introduce una matización honesta, a veces en contraste con lo dicho antes</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Francamente</em>, mi aspettavo di più.</div>
+        <div class="ex-es">Francamente, me esperaba más.</div>
+        <div class="ex-note">Subraya la sinceridad / posiblemente crítica</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 3 · REGISTRO FORMALE -->
+<section id="s-formale" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">3. Marcatori del registro formale e scritto</h2>
+      <p class="sec-subtitle">L'italiano amministrativo, accademico, giuridico, giornalistico</p>
+
+      <div class="def-box">
+        El italiano formal — administrativo, jurídico, académico, periodístico — utiliza un repertorio propio de marcadores muy distinto del coloquial. Estos marcadores son <span class="hl">obligatorios para mantener el registro</span>: usar <em>insomma</em> o <em>cioè</em> en una carta legal destruye el tono. Inversamente, usar <em>fermo restando</em> en una conversación informal suena pedante.
+      </div>
+
+      <h3>3.a · Strutturatori argomentativi formali</h3>
+      <p>Introducen el <span class="hl">tema o ámbito</span> sobre el que va a versar el discurso siguiente. Típicos de cartas administrativas y artículos académicos.</p>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Marcatore</th><th>Funzione</th><th>Equivalente ES</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tbl-marker">in merito a</span></td><td>Introducir el tema («en relación a»)</td><td>en relación con</td></tr>
+            <tr><td><span class="tbl-marker">con riferimento a</span></td><td>Referencia a comunicación previa</td><td>con referencia a</td></tr>
+            <tr><td><span class="tbl-marker">relativamente a</span></td><td>Limitar el alcance del discurso</td><td>en lo relativo a</td></tr>
+            <tr><td><span class="tbl-marker">per quanto concerne</span></td><td>Delimitación temática (muy formal)</td><td>en lo que concierne a</td></tr>
+            <tr><td><span class="tbl-marker">in ordine a</span></td><td>Burocrático: en cuanto a</td><td>en orden a</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>In merito alla</em> Sua richiesta del 12 marzo, La informiamo che…</div>
+        <div class="ex-es">En relación con su solicitud del 12 de marzo, le informamos de que…</div>
+        <div class="ex-note">Apertura típica de carta administrativa</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Per quanto concerne</em> il bilancio, i dati saranno presentati nel prossimo trimestre.</div>
+        <div class="ex-es">En lo que concierne al balance, los datos serán presentados en el próximo trimestre.</div>
+      </div>
+
+      <h3>3.b · Concessivi formali</h3>
+      <p>Permiten admitir un hecho mientras se introduce una restricción o un contraste.</p>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Marcatore</th><th>Costruzione</th><th>Equivalente ES</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tbl-marker">fermo restando che</span></td><td>+ indicativo</td><td>siendo entendido que / dado que</td></tr>
+            <tr><td><span class="tbl-marker">premesso che</span></td><td>+ indicativo</td><td>habida cuenta de que / partiendo de que</td></tr>
+            <tr><td><span class="tbl-marker">ciò nonostante</span></td><td>aislado</td><td>a pesar de eso / no obstante</td></tr>
+            <tr><td><span class="tbl-marker">nondimeno</span></td><td>aislado (literario)</td><td>no obstante</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Fermo restando che</em> la decisione spetta al consiglio, possiamo già anticipare alcune considerazioni.</div>
+        <div class="ex-es">Sin perjuicio de que la decisión corresponde al consejo, podemos ya anticipar algunas consideraciones.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Premesso che</em> la situazione è complessa, occorre agire con prudenza.</div>
+        <div class="ex-es">Partiendo de que la situación es compleja, hay que actuar con prudencia.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Le condizioni sono difficili. <em>Ciò nonostante</em>, l'azienda continuerà a investire.</div>
+        <div class="ex-es">Las condiciones son difíciles. A pesar de ello, la empresa seguirá invirtiendo.</div>
+      </div>
+
+      <h3>3.c · Conclusivi formali</h3>
+      <p>Cierran una argumentación con un peso retórico claramente más elevado que <em>insomma</em> o <em>quindi</em>.</p>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Marcatore</th><th>Sfumatura</th><th>Equivalente ES</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tbl-marker">in definitiva</span></td><td>Conclusión final</td><td>en definitiva</td></tr>
+            <tr><td><span class="tbl-marker">in ultima analisi</span></td><td>Conclusión filosófica/analítica</td><td>en último análisis</td></tr>
+            <tr><td><span class="tbl-marker">alla luce di quanto esposto</span></td><td>Cierre formal post-argumentación</td><td>a la luz de lo expuesto</td></tr>
+            <tr><td><span class="tbl-marker">ne consegue che</span></td><td>Consecuencia lógica</td><td>de ello se deriva que</td></tr>
+            <tr><td><span class="tbl-marker">si evince che</span></td><td>Conclusión inferida (jurídico)</td><td>se deduce que / se infiere que</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Alla luce di quanto esposto</em>, si propone di rinviare la decisione.</div>
+        <div class="ex-es">A la luz de lo expuesto, se propone aplazar la decisión.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Dai dati emerge un calo dei consumi; <em>ne consegue che</em> l'economia rallenta.</div>
+        <div class="ex-es">De los datos se desprende una caída del consumo; de ello se deriva que la economía se ralentiza.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Dall'esame dei documenti <em>si evince che</em> l'imputato era a conoscenza dei fatti.</div>
+        <div class="ex-es">Del examen de los documentos se deduce que el imputado tenía conocimiento de los hechos.</div>
+        <div class="ex-note">Registro forense/jurídico</div>
+      </div>
+
+      <h3>3.d · Esemplificativi</h3>
+      <p>Introducen ejemplos. Cuanto más formal el registro, más elaboradas las fórmulas.</p>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Marcatore</th><th>Registro</th><th>Equivalente ES</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tbl-marker">ad esempio / per esempio</span></td><td>Universal</td><td>por ejemplo</td></tr>
+            <tr><td><span class="tbl-marker">a titolo esemplificativo</span></td><td>Muy formal (jurídico)</td><td>a título de ejemplo</td></tr>
+            <tr><td><span class="tbl-marker">si pensi a</span></td><td>Formal-académico</td><td>piénsese en</td></tr>
+            <tr><td><span class="tbl-marker">si consideri</span></td><td>Formal-académico</td><td>considérese</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>A titolo esemplificativo</em>, si possono citare le sentenze nn. 145 e 178 del 2022.</div>
+        <div class="ex-es">A título de ejemplo, pueden citarse las sentencias núm. 145 y 178 de 2022.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Si pensi a</em> quanto è accaduto durante la crisi del 2008.</div>
+        <div class="ex-es">Piénsese en lo que ocurrió durante la crisis de 2008.</div>
+        <div class="ex-note">Construcción impersonal: <em>si</em> + congiuntivo presente</div>
+      </div>
+
+      <h3>3.e · Riformulativi</h3>
+      <p>Reformulan lo dicho previamente con palabras distintas, generalmente más precisas o más generales.</p>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Marcatore</th><th>Registro</th><th>Equivalente ES</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tbl-marker">in altri termini</span></td><td>Medio-formal</td><td>en otros términos</td></tr>
+            <tr><td><span class="tbl-marker">vale a dire</span></td><td>Medio-formal</td><td>es decir</td></tr>
+            <tr><td><span class="tbl-marker">ossia</span></td><td>Formal escrito</td><td>o sea / es decir</td></tr>
+            <tr><td><span class="tbl-marker">ovverosia</span></td><td>Muy formal (literario/jurídico)</td><td>o sea / esto es</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">La spesa pubblica aumenta più del PIL, <em>vale a dire</em> il debito cresce.</div>
+        <div class="ex-es">El gasto público aumenta más que el PIB, es decir, la deuda crece.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">L'opera è di un autore anonimo, <em>ovverosia</em> di paternità ignota.</div>
+        <div class="ex-es">La obra es de un autor anónimo, o sea, de paternidad desconocida.</div>
+        <div class="ex-note">Registro muy alto, casi literario</div>
+      </div>
+
+      <h3>3.f · Digresivi</h3>
+      <p>Abren un paréntesis temático, anuncian que lo que sigue es un comentario al margen.</p>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Marcatore</th><th>Registro</th><th>Equivalente ES</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tbl-marker">a margine</span></td><td>Formal escrito</td><td>al margen</td></tr>
+            <tr><td><span class="tbl-marker">tra parentesi</span></td><td>Universal</td><td>entre paréntesis</td></tr>
+            <tr><td><span class="tbl-marker">incidentalmente</span></td><td>Formal-medio</td><td>incidentalmente / dicho sea de paso</td></tr>
+            <tr><td><span class="tbl-marker">per inciso</span></td><td>Formal escrito</td><td>dicho sea de paso</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Per inciso</em>, va ricordato che il fenomeno non è recente.</div>
+        <div class="ex-es">Dicho sea de paso, hay que recordar que el fenómeno no es reciente.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>A margine</em> della discussione principale, occorre menzionare un aspetto correlato.</div>
+        <div class="ex-es">Al margen de la discusión principal, hay que mencionar un aspecto relacionado.</div>
+      </div>
+
+      <div class="note-box">
+        <b>Registro y previsibilidad:</b> los marcadores formales son altamente <span class="hl">previsibles y ritualizados</span>. Un cierto número de fórmulas (<em>fermo restando, in merito a, ne consegue che…</em>) construyen el «esqueleto» reconocible del italiano formal. Memorizarlos como bloques rinde mucho.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 4 · CATALOGO -->
+<section id="s-catalogo" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">4. Catalogo dei marcatori più frequenti</h2>
+      <p class="sec-subtitle">Cinque marcatori chiave analizzati in dettaglio</p>
+
+      <div class="def-box">
+        Cinco marcadores que aparecen <span class="hl">decenas de veces al día</span> en cualquier conversación italiana y que el ispanofono debe dominar en todas sus funciones. Cada uno es <span class="hl">altamente polisémico</span>: la misma forma cumple funciones distintas según posición y entonación.
+      </div>
+
+      <!-- ECCO -->
+      <div class="marker-card">
+        <div class="marker-head">
+          <span class="marker-name">ecco</span>
+          <span class="marker-gloss">presentativo · confermativo · conclusivo · fatico</span>
+        </div>
+
+        <p class="marker-funz">Presentativo · «he aquí, aquí está»</p>
+        <div class="example-block">
+          <div class="ex-it"><em>Ecco</em> il problema.</div>
+          <div class="ex-es">Aquí está el problema. / He aquí el problema.</div>
+          <div class="ex-note">Señala/introduce un objeto, idea o situación que se hace visible o se revela</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Ecco</em> Marco che arriva!</div>
+          <div class="ex-es">¡Aquí llega Marco!</div>
+        </div>
+
+        <p class="marker-funz">Confermativo · «exacto, así es»</p>
+        <div class="example-block">
+          <div class="ex-it">«Quindi non vieni?» «<em>Ecco</em>, appunto.»</div>
+          <div class="ex-es">«¿Entonces no vienes?» «Eso, exacto.»</div>
+          <div class="ex-note">Confirma lo dicho por el interlocutor con énfasis</div>
+        </div>
+
+        <p class="marker-funz">Conclusivo · «por eso, así que»</p>
+        <div class="example-block">
+          <div class="ex-it"><em>Ecco</em> perché non sono venuto.</div>
+          <div class="ex-es">He aquí por qué no he venido. / Por eso no he venido.</div>
+          <div class="ex-note">Introduce la explicación final de algo previamente narrado</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Avevo la febbre, <em>ecco</em> tutto.</div>
+          <div class="ex-es">Tenía fiebre, eso es todo.</div>
+        </div>
+
+        <p class="marker-funz">Fatico · vacilación / búsqueda de palabra</p>
+        <div class="example-block">
+          <div class="ex-it"><em>Ecco</em>, come dire… non saprei spiegarlo bene.</div>
+          <div class="ex-es">Pues… cómo decirlo… no sabría explicarlo bien.</div>
+          <div class="ex-note">Marca la pausa donde el hablante busca la palabra apropiada</div>
+        </div>
+      </div>
+
+      <!-- ALLORA -->
+      <div class="marker-card">
+        <div class="marker-head">
+          <span class="marker-name">allora</span>
+          <span class="marker-gloss">strutturatore narrativo · consecutivo · interrogativo enfatico</span>
+        </div>
+
+        <p class="marker-funz">Strutturatore narrativo · apertura de relato</p>
+        <div class="example-block">
+          <div class="ex-it"><em>Allora</em>, stamattina mi sono svegliato alle sei e…</div>
+          <div class="ex-es">Pues, esta mañana me he despertado a las seis y…</div>
+          <div class="ex-note"><span class="hl">NO es «entonces»</span>: aquí no hay valor temporal. Es la apertura discursiva.</div>
+        </div>
+
+        <p class="marker-funz">Consecutivo · «entonces (por consiguiente)»</p>
+        <div class="example-block">
+          <div class="ex-it">Non sei venuto, <em>allora</em> ho capito.</div>
+          <div class="ex-es">No viniste, entonces lo entendí.</div>
+          <div class="ex-note">Aquí sí significa «entonces» en sentido consecutivo</div>
+        </div>
+
+        <p class="marker-funz">Interrogativo / enfático · «¿y bien?»</p>
+        <div class="example-block">
+          <div class="ex-it"><em>Allora</em>, cosa decidiamo?</div>
+          <div class="ex-es">¿Y bien, qué decidimos?</div>
+          <div class="ex-note">Reabre el turno tras una pausa, demanda al interlocutor</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Allora</em>?! Mi rispondi o no?</div>
+          <div class="ex-es">¿Y bien?! ¿Me respondes o no?</div>
+          <div class="ex-note">Con entonación marcada: impaciencia</div>
+        </div>
+      </div>
+
+      <!-- INSOMMA -->
+      <div class="marker-card">
+        <div class="marker-head">
+          <span class="marker-name">insomma</span>
+          <span class="marker-gloss">ricapitolativo · attenuativo · esitativo</span>
+        </div>
+
+        <p class="marker-funz">Ricapitolativo · «en suma, en resumen»</p>
+        <div class="example-block">
+          <div class="ex-it"><em>Insomma</em>, la situazione è difficile.</div>
+          <div class="ex-es">En suma, la situación es difícil.</div>
+          <div class="ex-note">Cierra una serie de consideraciones con un resumen</div>
+        </div>
+
+        <p class="marker-funz">Attenuativo · «más o menos, regular»</p>
+        <div class="example-block">
+          <div class="ex-it">È <em>insomma</em> una soluzione accettabile.</div>
+          <div class="ex-es">Es, digamos, una solución aceptable.</div>
+          <div class="ex-note">Suaviza el adjetivo, no quiere comprometerse</div>
+        </div>
+
+        <p class="marker-funz">Esitativo con sospensione · respuesta «regular»</p>
+        <div class="dialog-block">
+          <div class="dialog-line"><span class="dialog-spk">A:</span> Ti è piaciuto il film?</div>
+          <div class="dialog-line"><span class="dialog-spk">B:</span> <em>Insomma</em>…</div>
+          <div class="dialog-trans">— ¿Te ha gustado la película? — Regular… / Pse… / No mucho…</div>
+        </div>
+        <div class="ex-note" style="margin-top:6px"><em>Insomma</em> usado solo, con entonación suspensa, equivale a «más o menos», «pse», «regular» — implica respuesta negativa atenuada.</div>
+      </div>
+
+      <!-- DICIAMO -->
+      <div class="marker-card">
+        <div class="marker-head">
+          <span class="marker-name">diciamo</span>
+          <span class="marker-gloss">hedging · approssimazione</span>
+        </div>
+
+        <p class="marker-funz">Hedging · suavización del juicio</p>
+        <div class="example-block">
+          <div class="ex-it">È <em>diciamo</em> un'opera minore.</div>
+          <div class="ex-es">Es, digamos, una obra menor.</div>
+          <div class="ex-note">Suaviza el juicio crítico para no comprometerse del todo</div>
+        </div>
+
+        <p class="marker-funz">Approssimazione · «más o menos, sobre»</p>
+        <div class="example-block">
+          <div class="ex-it">Ci ho messo <em>diciamo</em> tre ore.</div>
+          <div class="ex-es">He tardado, digamos, tres horas.</div>
+          <div class="ex-note">Aproximación numérica: no exactamente, pero más o menos</div>
+        </div>
+
+        <p class="marker-funz">Apertura de turno con cautela</p>
+        <div class="example-block">
+          <div class="ex-it"><em>Diciamo</em> che la cosa è più complessa di così.</div>
+          <div class="ex-es">Digamos que la cosa es más compleja que eso.</div>
+          <div class="ex-note">Introduce una matización o corrección del enunciado del interlocutor</div>
+        </div>
+      </div>
+
+      <!-- APPUNTO -->
+      <div class="marker-card">
+        <div class="marker-head">
+          <span class="marker-name">appunto</span>
+          <span class="marker-gloss">conferma · enfasi · risposta affermativa piena</span>
+        </div>
+
+        <p class="marker-funz">Conferma / enfasi · «precisamente, justo»</p>
+        <div class="example-block">
+          <div class="ex-it">È <em>appunto</em> questo il problema.</div>
+          <div class="ex-es">Es precisamente este el problema. / Este es exactamente el problema.</div>
+          <div class="ex-note">Enfatiza la identidad entre lo dicho y la causa real</div>
+        </div>
+
+        <p class="marker-funz">Risposta affermativa enfatica · «exacto»</p>
+        <div class="dialog-block">
+          <div class="dialog-line"><span class="dialog-spk">A:</span> L'hai capito?</div>
+          <div class="dialog-line"><span class="dialog-spk">B:</span> <em>Appunto</em>.</div>
+          <div class="dialog-trans">— ¿Lo has entendido? — Exacto. / Eso es. / Pues sí.</div>
+        </div>
+
+        <p class="marker-funz">Confirmar la propia idea</p>
+        <div class="example-block">
+          <div class="ex-it">«Hai detto che era inutile?» «<em>Appunto</em> quello che pensavo.»</div>
+          <div class="ex-es">«¿Has dicho que era inútil?» «Justo lo que pensaba.»</div>
+        </div>
+
+        <div class="warn-box">
+          <span class="ico">⚠️</span>
+          <div><b>NO confundir con español «apunto»:</b> <em>appunto</em> en italiano <span class="hl">no tiene relación con «apuntar»</span>. Es marcador confirmativo. La forma verbal italiana «apunto» (yo apunto) sería <em>annoto / segno</em>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 5 · FERMO RESTANDO -->
+<section id="s-fermo" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">5. <em>Fermo restando</em> · analisi del costrutto</h2>
+      <p class="sec-subtitle">Una forma chiave del registro amministrativo e giuridico</p>
+
+      <div class="def-box">
+        <b>Fermo restando che</b> + indicativo es uno de los marcadores formales más característicos del italiano administrativo, jurídico y burocrático. Significa <span class="hl">«con la condición de que / siendo que / sin perjuicio de que»</span>. Su valor pragmático es <span class="hl">concesivo-restrictivo</span>: admite un hecho que se da por sentado para introducir luego una afirmación que conviva con ese hecho.
+      </div>
+
+      <h3>Estructura morfológica</h3>
+      <p>El sintagma se construye como una <em>costruzione assoluta</em> con participio presente del verbo <em>restare</em>:</p>
+      <ul class="analysis-list">
+        <li><b>fermo</b> = adjetivo predicativo: «firme, inalterado, estable»</li>
+        <li><b>restando</b> = gerundio/participio presente de <em>restare</em>: «permaneciendo, manteniéndose»</li>
+        <li><b>che + indicativo</b> = subordinada de contenido</li>
+      </ul>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Fermo restando che</em> la decisione spetta al consiglio, possiamo procedere con i preparativi.</div>
+        <div class="ex-es">Sin perjuicio de que la decisión corresponde al consejo, podemos proceder con los preparativos.</div>
+        <ul class="analysis-list">
+          <li><b>Hecho admitido:</b> la decisione spetta al consiglio (la decisión es del consejo)</li>
+          <li><b>Afirmación nueva:</b> possiamo procedere con i preparativi</li>
+          <li><b>Lógica:</b> aunque la decisión final sea del consejo, mientras tanto los preparativos avanzan</li>
+        </ul>
+      </div>
+
+      <h3>Variantes morfológicas</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Forma</th><th>Concordancia</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td><em>fermo restando che</em></td><td>Forma invariable, fijada</td><td>+ que + indicativo (frase completa)</td></tr>
+            <tr><td><em>fermo restando + sostantivo</em></td><td>Concuerda con el sustantivo</td><td>+ sustantivo (sin <em>che</em>)</td></tr>
+            <tr><td><em>fermi restando</em></td><td>Plural masculino</td><td>+ sustantivo plural masculino</td></tr>
+            <tr><td><em>ferma restando</em></td><td>Singular femenino</td><td>+ sustantivo singular femenino</td></tr>
+            <tr><td><em>ferme restando</em></td><td>Plural femenino</td><td>+ sustantivo plural femenino</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Ferma restando</em> la validità del contratto, le parti possono apportare modifiche.</div>
+        <div class="ex-es">Manteniéndose firme la validez del contrato, las partes pueden introducir modificaciones.</div>
+        <div class="ex-note">Concordancia: <em>ferma</em> + <em>la validità</em> (f.sg.)</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Fermi restando</em> i diritti dei terzi, l'azienda procederà con la riorganizzazione.</div>
+        <div class="ex-es">Sin perjuicio de los derechos de terceros, la empresa procederá con la reorganización.</div>
+        <div class="ex-note">Concordancia: <em>fermi</em> + <em>i diritti</em> (m.pl.)</div>
+      </div>
+
+      <h3>Contextos típicos de uso</h3>
+      <div class="green-box">
+        <b>Registro:</b> exclusivamente <span class="hl">administrativo, jurídico, burocrático, contractual</span>.<br>
+        <b>Tipos de texto:</b><br>
+        — cartas formales y oficios<br>
+        — contratos y cláusulas contractuales<br>
+        — comunicaciones oficiales<br>
+        — sentencias judiciales<br>
+        — actas de reuniones formales<br>
+        — comunicados de prensa institucionales
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Nunca en oral coloquial:</b> usar <em>fermo restando</em> en una conversación informal produce un efecto <span class="hl">pedante o irónico</span>. La forma natural en oral es <em>fermo che, posto che, dato che</em>, o simplemente <em>certo che…, ma</em>.</div>
+      </div>
+
+      <h3>Confusiones frecuentes</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-for">FORMAL</span> <em>Fermo restando che</em> il regolamento è chiaro, occorre interpretarlo con buon senso.</div>
+        <div class="ex-it"><span class="tag tag-col">EQUIVALENTE COLOQUIAL</span> Anche se il regolamento è chiaro, va interpretato con buon senso.</div>
+        <div class="ex-es">Mismo contenido, pero el primero solo es admisible en registro formal escrito.</div>
+      </div>
+
+      <div class="note-box">
+        <b>Estrategia de aprendizaje:</b> memoriza <em>fermo restando che</em> como un <span class="hl">bloque léxico cerrado</span>, junto con <em>premesso che</em>, <em>ferma restando la possibilità</em>, etc. No intentes derivarlo cada vez; reconócelo como una unidad fija del italiano formal.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 6 · TABLA REGISTRO × FUNZIONE -->
+<section id="s-tabella" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">6. Tabella riassuntiva · Registro × Funzione</h2>
+      <p class="sec-subtitle">Venti marcatori essenziali con registro, funzione ed equivalente spagnolo</p>
+
+      <div class="def-box">
+        Esta tabla recoge los <span class="hl">20 marcadores más importantes</span> de los puntos 2 y 3, cruzando registro (coloquial / medio / formal) con función pragmática y proporcionando el equivalente español más cercano. Es la <span class="hl">tabla de referencia rápida</span> para reconocer y producir marcadores.
+      </div>
+
+      <h3>Marcatori del parlato</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Marcatore</th><th>Registro</th><th>Funzione</th><th>Equivalente ES</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tbl-marker">ecco</span></td><td>Universal</td><td>Presentativo / conclusivo / fatico</td><td>he aquí / pues / eso es</td></tr>
+            <tr><td><span class="tbl-marker">allora</span></td><td>Universal</td><td>Apertura discursiva / consecutivo</td><td>pues / entonces</td></tr>
+            <tr><td><span class="tbl-marker">dunque</span></td><td>Medio-formal</td><td>Estructurador / pensamiento en voz alta</td><td>así pues / a ver</td></tr>
+            <tr><td><span class="tbl-marker">beh / be'</span></td><td>Coloquial</td><td>Vacilación / apertura de respuesta</td><td>bueno…</td></tr>
+            <tr><td><span class="tbl-marker">cioè</span></td><td>Universal</td><td>Reformulación / vacilación</td><td>o sea / es decir</td></tr>
+            <tr><td><span class="tbl-marker">insomma</span></td><td>Medio</td><td>Resumen / atenuación / regular</td><td>en suma / regular</td></tr>
+            <tr><td><span class="tbl-marker">diciamo</span></td><td>Medio</td><td>Hedging / aproximación</td><td>digamos</td></tr>
+            <tr><td><span class="tbl-marker">appunto</span></td><td>Universal</td><td>Confirmación / énfasis</td><td>exacto / precisamente</td></tr>
+            <tr><td><span class="tbl-marker">guarda</span></td><td>Coloquial</td><td>Atraer atención (fatico)</td><td>mira</td></tr>
+            <tr><td><span class="tbl-marker">senti</span></td><td>Coloquial</td><td>Apertura nuevo tema (fatico)</td><td>oye / escucha</td></tr>
+            <tr><td><span class="tbl-marker">dai</span></td><td>Coloquial</td><td>Exhortativo / incredulidad</td><td>¡venga! / ¡anda ya!</td></tr>
+            <tr><td><span class="tbl-marker">magari</span></td><td>Coloquial</td><td>Posibilidad / deseo (¡ojalá!)</td><td>quizá / ojalá</td></tr>
+            <tr><td><span class="tbl-marker">a quanto pare</span></td><td>Medio</td><td>Evidencialidad indirecta</td><td>al parecer</td></tr>
+            <tr><td><span class="tbl-marker">francamente</span></td><td>Universal</td><td>Modal de franqueza</td><td>francamente</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Marcatori formali e scritti</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Marcatore</th><th>Registro</th><th>Funzione</th><th>Equivalente ES</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tbl-marker">in merito a</span></td><td>Formal</td><td>Introducir tema</td><td>en relación con</td></tr>
+            <tr><td><span class="tbl-marker">per quanto concerne</span></td><td>Muy formal</td><td>Delimitación temática</td><td>en lo que concierne a</td></tr>
+            <tr><td><span class="tbl-marker">fermo restando che</span></td><td>Burocrático</td><td>Concesivo restrictivo</td><td>sin perjuicio de que</td></tr>
+            <tr><td><span class="tbl-marker">ciò nonostante</span></td><td>Formal</td><td>Concesivo adversativo</td><td>no obstante</td></tr>
+            <tr><td><span class="tbl-marker">in definitiva</span></td><td>Formal</td><td>Conclusivo retórico</td><td>en definitiva</td></tr>
+            <tr><td><span class="tbl-marker">ne consegue che</span></td><td>Formal-académico</td><td>Consecutivo lógico</td><td>de ello se deriva que</td></tr>
+            <tr><td><span class="tbl-marker">vale a dire</span></td><td>Medio-formal</td><td>Reformulativo</td><td>es decir</td></tr>
+            <tr><td><span class="tbl-marker">ossia</span></td><td>Formal escrito</td><td>Reformulativo preciso</td><td>o sea</td></tr>
+            <tr><td><span class="tbl-marker">per inciso</span></td><td>Formal</td><td>Digresivo</td><td>dicho sea de paso</td></tr>
+            <tr><td><span class="tbl-marker">a titolo esemplificativo</span></td><td>Muy formal</td><td>Ejemplificativo</td><td>a título de ejemplo</td></tr>
+            <tr><td><span class="tbl-marker">si pensi a</span></td><td>Formal-académico</td><td>Ejemplificativo invitativo</td><td>piénsese en</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Mapa visual de registros</h3>
+      <div class="green-box">
+        <b>Eje del registro:</b><br>
+        <span class="tag tag-col">COLOQUIAL</span> <em>beh, dai, guarda, senti, tipo</em><br>
+        <span class="tag tag-fat">MEDIO-ORAL</span> <em>allora, ecco, insomma, diciamo, cioè, appunto, magari</em><br>
+        <span class="tag tag-str">MEDIO-NEUTRO</span> <em>dunque, a quanto pare, francamente, vale a dire</em><br>
+        <span class="tag tag-mod">FORMAL</span> <em>in merito a, ciò nonostante, in definitiva, per inciso</em><br>
+        <span class="tag tag-for">MUY FORMAL</span> <em>fermo restando che, per quanto concerne, ne consegue che, ossia, ovverosia, a titolo esemplificativo</em>
+      </div>
+
+      <div class="note-box">
+        <b>Lectura práctica:</b> los marcadores no son intercambiables entre registros. Sustituir <em>fermo restando che</em> por <em>insomma</em> en una carta administrativa rompe el tono; sustituir <em>beh</em> por <em>dunque</em> en una conversación íntima suena rígido. La <span class="hl">consistencia de registro</span> es uno de los grandes indicadores del nivel C1.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 7 · TRAPPOLE -->
+<section id="s-trappole" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">7. Trappole per ispanofoni</h2>
+      <p class="sec-subtitle">Cuatro confusiones críticas que cuestan caro</p>
+
+      <div class="def-box">
+        Los marcadores son <span class="hl">la zona de mayor interferencia</span> español/italiano. Las formas se parecen pero los usos divergen radicalmente. Estas cuatro trampas concentran los errores más típicos y persistentes de un ispanofono avanzado.
+      </div>
+
+      <h3>Las cuatro trampas mayores</h3>
+
+      <!-- APPUNTO -->
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">1. APPUNTO no es «apunto» ni «estoy a punto de»</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Appunto al mio quaderno la lezione. <span class="dim">(creyendo «apunto en mi cuaderno»)</span></div>
+          <div class="trap-right">Annoto sul mio quaderno la lezione. / Prendo appunti sul quaderno.</div>
+        </div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Sono appunto di partire. <span class="dim">(*estoy a punto de partir)</span></div>
+          <div class="trap-right">Sto per partire. / Sono sul punto di partire.</div>
+        </div>
+        <div class="trap-expl">El italiano <em>appunto</em> es <b>marcador confirmativo</b> equivalente a «exacto, precisamente, justamente». No tiene ninguna relación con el verbo «apuntar» ni con la perífrasis «estar a punto de». El falso amigo es total. El sustantivo «un appunto» significa «una nota, un apunte» (de cuaderno), pero el adverbio/marcador <em>appunto</em> sirve exclusivamente para confirmar o enfatizar.</div>
+      </div>
+
+      <!-- ALLORA -->
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">2. ALLORA no es siempre «entonces» temporal</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Allora, ti chiamo. <span class="dim">(traduciendo «pues, te llamo» como temporal)</span></div>
+          <div class="trap-right">OK, allora ti chiamo. <span class="dim">(consecutivo correcto)</span></div>
+        </div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Allora ero giovane. <span class="dim">(¿«pues era joven» o «entonces era joven»?)</span></div>
+          <div class="trap-right">A quei tempi ero giovane. <span class="dim">(temporal pasado)</span></div>
+        </div>
+        <div class="trap-expl">El español <em>entonces</em> cubre tres funciones distintas en italiano: <b>(a) temporal pasado</b> = <em>a quei tempi, in quel periodo</em>; <b>(b) consecutivo</b> = <em>allora, quindi</em>; <b>(c) estructurador de turno</b> = <em>allora</em> (sin valor temporal). El ispanofono tiende a usar siempre <em>allora</em>, pero para el sentido temporal de pasado debe usar <em>a quei tempi</em>. <em>Allora</em> al inicio de turno (apertura narrativa) no es temporal: es solo apertura de un episodio discursivo.</div>
+      </div>
+
+      <!-- INSOMMA -->
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">3. INSOMMA no es solo «en suma»</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">«Ti è piaciuto?» «Insomma!» <span class="dim">(traduciendo «¡en suma!»)</span></div>
+          <div class="trap-right">«Ti è piaciuto?» «Insomma…» <span class="dim">(= regular, pse, no mucho)</span></div>
+        </div>
+        <div class="trap-vs">
+          <div class="trap-wrong">È insomma una buona idea. <span class="dim">(intentando decir «es en suma…»)</span></div>
+          <div class="trap-right">È, insomma, una buona idea. <span class="dim">(atenuativo: es, digamos, una buena idea)</span></div>
+        </div>
+        <div class="trap-expl">El italiano <em>insomma</em> tiene <b>tres valores muy distintos</b>: <b>(1) ricapitolativo</b> («en suma» = cierre de razonamiento); <b>(2) atenuativo</b> intercalado (suaviza un juicio); <b>(3) esitativo en respuesta</b> a una pregunta = «regular, pse, no mucho» (¡valor negativo atenuado!). El ispanofono tiende a usarlo solo como «en suma», pero el uso (3) es muy frecuente en oral. «Insomma…» como respuesta es prácticamente una respuesta negativa.</div>
+      </div>
+
+      <!-- ECCO -->
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">4. ECCO es mucho más polisémico que «he aquí»</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">«Perché non sei venuto?» «He aquí, avevo da fare.» <span class="dim">(calco)</span></div>
+          <div class="trap-right">«Perché non sei venuto?» «Ecco, avevo da fare.»</div>
+        </div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Ecco l'autobus che arriva (= «aquí está») y ya no usar más <em>ecco</em>.</div>
+          <div class="trap-right">Ecco… come dire… (fatico) / Ecco perché (conclusivo) / Ecco, appunto (confirmativo)</div>
+        </div>
+        <div class="trap-expl">El español <em>he aquí</em> es muy restringido y libresco. El italiano <em>ecco</em> es <b>extremadamente versátil</b>: presentativo, confirmativo, conclusivo, fatico. Es uno de los marcadores más frecuentes del italiano oral. El ispanofono lo subutiliza porque lo asocia solo al sentido presentativo. Hay que incorporarlo en sus cuatro funciones: <em>ecco</em> al cierre («ecco perché»), <em>ecco</em> de confirmación («ecco, appunto»), <em>ecco</em> de vacilación («ecco, come dire»), <em>ecco</em> de presentación («ecco il libro»).</div>
+      </div>
+
+      <h3>Otras trampas frecuentes</h3>
+      <div id="traps-container"></div>
+
+      <h3>Comparación general español/italiano</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Marcador ES</th><th>Equivalente IT más natural</th><th>Atención</th></tr></thead>
+          <tbody>
+            <tr><td><em>pues</em> (apertura)</td><td><em>allora, beh, dunque</em></td><td>Nunca <em>poi</em> (= después)</td></tr>
+            <tr><td><em>bueno</em> (apertura)</td><td><em>beh, be', vabbè</em></td><td>Nunca <em>bene</em> (= bien, adverbio)</td></tr>
+            <tr><td><em>o sea</em></td><td><em>cioè, ossia, vale a dire</em></td><td>Distinguir registro</td></tr>
+            <tr><td><em>vamos</em> (refuerzo)</td><td><em>insomma, diciamo, praticamente</em></td><td>Nunca <em>andiamo</em> (= ¡vamos! literal)</td></tr>
+            <tr><td><em>en fin</em></td><td><em>insomma, alla fine, in definitiva</em></td><td>Según registro</td></tr>
+            <tr><td><em>mira</em></td><td><em>guarda, senti</em></td><td>Ambos sirven, matiz mínimo</td></tr>
+            <tr><td><em>oye</em></td><td><em>senti</em></td><td>Nunca <em>ascolta</em> (más imperativo)</td></tr>
+            <tr><td><em>¿vale?</em></td><td><em>va bene?, ok?</em></td><td>Nunca <em>vale?</em> solo</td></tr>
+            <tr><td><em>¡venga!</em></td><td><em>dai!, forza!</em></td><td>Nunca <em>vieni!</em> (= ¡ven!)</td></tr>
+            <tr><td><em>en plan</em> (juvenil)</td><td><em>tipo, nel senso</em></td><td>Ambos son juveniles</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Estrategia general:</b> los marcadores no se traducen, se <span class="hl">aprenden por inmersión funcional</span>. Por cada marcador italiano, retén tres cosas: (1) la función pragmática, (2) el registro, (3) un ejemplo prototípico. Esa terna te permite reproducirlo correctamente en contextos nuevos.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 8 · ESEMPI -->
+<section id="s-esempi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">8. Esempi analizzati · 22 frasi e dialoghi</h2>
+      <p class="sec-subtitle">Identificazione del marcatore, registro e funzione pragmatica</p>
+
+      <h3>Bloco A · Marcatori fatici e strutturatori (oral)</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-str">1</span> <em>Allora</em>, ragazzi, oggi parliamo dei verbi pronominali.</div>
+        <div class="ex-es">Pues, chicos, hoy hablamos de los verbos pronominales.</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>allora</em></li>
+          <li><b>Tipo:</b> estructurador de apertura</li>
+          <li><b>Función:</b> abre el turno y anuncia el tema de la clase; sin valor temporal</li>
+          <li><b>Registro:</b> medio-oral (clase, charla)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-str">2</span> <em>Dunque</em>… vediamo… avevamo detto che il problema era l'orario.</div>
+        <div class="ex-es">A ver… veamos… habíamos dicho que el problema era el horario.</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>dunque</em> + <em>vediamo</em></li>
+          <li><b>Tipo:</b> estructurador / pensamiento en voz alta</li>
+          <li><b>Función:</b> el hablante reorganiza sus ideas en directo</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-fat">3</span> Io <em>guarda</em>, di queste cose non ne voglio sentire parlare.</div>
+        <div class="ex-es">Yo, mira, de estas cosas no quiero ni oír hablar.</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>guarda</em></li>
+          <li><b>Tipo:</b> fatico (intercalado)</li>
+          <li><b>Función:</b> atrae la atención del oyente antes de declarar una postura tajante</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-fat">4</span> <em>Senti</em>, ma poi alla fine è venuto Marco?</div>
+        <div class="ex-es">Oye, pero al final, ¿vino Marco?</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>senti</em></li>
+          <li><b>Tipo:</b> fatico de apertura</li>
+          <li><b>Función:</b> introduce un nuevo tema / vuelve a un asunto pendiente</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-fat">5</span> È un po' complicato spiegarlo, <em>sai?</em></div>
+        <div class="ex-es">Es un poco complicado explicarlo, ¿sabes?</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>sai?</em> en posición final</li>
+          <li><b>Tipo:</b> fatico de búsqueda de complicidad</li>
+          <li><b>Función:</b> implica al oyente sin requerir respuesta real</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-fat">6</span> «Davvero ti laurei a giugno?» «<em>Eh sì, dai!</em>»</div>
+        <div class="ex-es">«¿De verdad te gradúas en junio?» «¡Eh, sí, venga!»</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>dai</em></li>
+          <li><b>Tipo:</b> fatico de cierre afirmativo / animador</li>
+          <li><b>Función:</b> refuerza la afirmación con calor afectivo</li>
+        </ul>
+      </div>
+
+      <h3>Bloco B · Riempitivi ed esitatori</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-rie">7</span> La situazione è <em>cioè</em>… come dire… delicata.</div>
+        <div class="ex-es">La situación es, o sea… cómo decirlo… delicada.</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>cioè</em> + <em>come dire</em></li>
+          <li><b>Tipo:</b> riempitivo doble / vacilación</li>
+          <li><b>Función:</b> gana tiempo para encontrar el adjetivo justo, sin dejar silencio</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-rie">8</span> È stata <em>diciamo</em> una scelta strategica.</div>
+        <div class="ex-es">Fue, digamos, una elección estratégica.</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>diciamo</em></li>
+          <li><b>Tipo:</b> hedging</li>
+          <li><b>Función:</b> suaviza la calificación; el hablante no se compromete totalmente con la palabra «estratégica»</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-rie">9</span> Ci ho messo <em>praticamente</em> tre ore per arrivare.</div>
+        <div class="ex-es">Tardé prácticamente / vamos, tres horas en llegar.</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>praticamente</em></li>
+          <li><b>Tipo:</b> riempitivo aproximativo</li>
+          <li><b>Función:</b> indica aproximación factual con tono ligeramente expresivo</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-rie">10</span> Mi ha detto, <em>nel senso</em>, che non poteva venire.</div>
+        <div class="ex-es">Me dijo, en plan, que no podía venir.</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>nel senso</em></li>
+          <li><b>Tipo:</b> riempitivo planificador</li>
+          <li><b>Función:</b> anuncia que se va a reformular o explicitar; muy oral</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-rie">11</span> Era <em>tipo</em> mezzanotte quando è tornato a casa.</div>
+        <div class="ex-es">Era tipo medianoche cuando volvió a casa.</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>tipo</em></li>
+          <li><b>Tipo:</b> riempitivo aproximativo</li>
+          <li><b>Registro:</b> juvenil / coloquial</li>
+        </ul>
+      </div>
+
+      <h3>Bloco C · Marcatori modali</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-mod">12</span> <em>Magari</em> avessi sue notizie!</div>
+        <div class="ex-es">¡Ojalá tuviera noticias suyas!</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>magari</em> + congiuntivo trapassato/imperfetto</li>
+          <li><b>Tipo:</b> modal de deseo intenso (irreal)</li>
+          <li><b>Función:</b> expresa un deseo presentado como improbable</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-mod">13</span> <em>A quanto pare</em>, la riunione è stata rinviata.</div>
+        <div class="ex-es">Al parecer, la reunión ha sido aplazada.</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>a quanto pare</em></li>
+          <li><b>Tipo:</b> modal evidencial indirecto</li>
+          <li><b>Función:</b> el hablante señala que la información le ha llegado de fuentes externas, sin compromiso pleno</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-mod">14</span> <em>A dire il vero</em>, non ero molto contento della decisione.</div>
+        <div class="ex-es">A decir verdad, no estaba muy contento con la decisión.</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>a dire il vero</em></li>
+          <li><b>Tipo:</b> modal de franqueza</li>
+          <li><b>Función:</b> introduce una matización honesta, a veces en disonancia con lo dicho anteriormente</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-mod">15</span> <em>Francamente</em>, mi aspettavo un esito diverso.</div>
+        <div class="ex-es">Francamente, esperaba un resultado distinto.</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>francamente</em></li>
+          <li><b>Tipo:</b> modal de franqueza</li>
+          <li><b>Función:</b> avisa de una declaración personal, generalmente crítica</li>
+        </ul>
+      </div>
+
+      <h3>Bloco D · Marcatori formali e scritti</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-for">16</span> <em>In merito alla</em> Vostra del 5 aprile, comunichiamo quanto segue.</div>
+        <div class="ex-es">En relación con su comunicación del 5 de abril, comunicamos lo siguiente.</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>in merito a</em></li>
+          <li><b>Registro:</b> burocrático / administrativo</li>
+          <li><b>Función:</b> abre la correspondencia oficial estableciendo el tema</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-for">17</span> <em>Fermo restando che</em> il bilancio è in equilibrio, occorrerà ridurre alcune spese.</div>
+        <div class="ex-es">Sin perjuicio de que el balance está equilibrado, habrá que reducir algunos gastos.</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>fermo restando che</em></li>
+          <li><b>Registro:</b> jurídico-administrativo</li>
+          <li><b>Función:</b> admite un hecho como dado para introducir una restricción posterior</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-for">18</span> Dall'analisi dei dati <em>si evince che</em> il fenomeno è in crescita.</div>
+        <div class="ex-es">Del análisis de los datos se deduce que el fenómeno está en crecimiento.</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>si evince che</em></li>
+          <li><b>Registro:</b> académico-jurídico</li>
+          <li><b>Función:</b> conclusión inferida a partir de datos; tono objetivo, impersonal</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-for">19</span> <em>Per inciso</em>, vale la pena ricordare che la legge è entrata in vigore nel 2018.</div>
+        <div class="ex-es">Dicho sea de paso, vale la pena recordar que la ley entró en vigor en 2018.</div>
+        <ul class="analysis-list">
+          <li><b>Marcatore:</b> <em>per inciso</em></li>
+          <li><b>Registro:</b> formal escrito</li>
+          <li><b>Función:</b> abre un paréntesis informativo dentro del flujo principal</li>
+        </ul>
+      </div>
+
+      <h3>Bloco E · Dialoghi con marcatori multipli</h3>
+
+      <div class="dialog-block">
+        <div class="dialog-line"><span class="tag tag-fat">20</span></div>
+        <div class="dialog-line"><span class="dialog-spk">A:</span> <em>Senti</em>, ma poi com'è andata la cena di ieri?</div>
+        <div class="dialog-line"><span class="dialog-spk">B:</span> <em>Beh</em>, <em>insomma</em>… <em>diciamo</em> che poteva andare meglio.</div>
+        <div class="dialog-line"><span class="dialog-spk">A:</span> <em>Ma dai!</em> <em>Cioè</em>, è successo qualcosa?</div>
+        <div class="dialog-line"><span class="dialog-spk">B:</span> <em>Guarda</em>, <em>francamente</em> preferirei non parlarne. <em>Ecco</em>.</div>
+        <div class="dialog-trans">— Oye, ¿y al final cómo fue la cena de ayer? — Bueno, regular… digamos que podía haber ido mejor. — ¡Anda ya! O sea, ¿pasó algo? — Mira, francamente preferiría no hablar de ello. Y ya está.</div>
+        <ul class="analysis-list" style="margin-top:8px">
+          <li><b>Marcatori identificati:</b> senti (fatico apertura), beh (esitativo), insomma (regular = respuesta atenuada), diciamo (hedging), ma dai (incredulidad), cioè (reformulación inquisitiva), guarda (fatico atrayente), francamente (modal franqueza), ecco (conclusivo)</li>
+          <li><b>Densidad:</b> 9 marcadores en 4 intercambios — densidad típica del oral espontáneo</li>
+          <li><b>Pragmática:</b> A insiste, B se cierra; los marcadores construyen la negociación afectiva del intercambio</li>
+        </ul>
+      </div>
+
+      <div class="dialog-block">
+        <div class="dialog-line"><span class="tag tag-str">21</span></div>
+        <div class="dialog-line"><span class="dialog-spk">Professore:</span> <em>Allora</em>, oggi vediamo <em>per esempio</em> il caso del congiuntivo. <em>Dunque</em>, la regola dice che…</div>
+        <div class="dialog-line"><span class="dialog-spk">Studente:</span> Scusi, professore, <em>cioè</em>, non ho capito il primo passaggio.</div>
+        <div class="dialog-line"><span class="dialog-spk">Professore:</span> <em>Vediamo</em>… <em>ecco</em>, ripartiamo dal principio. <em>In altri termini</em>, il verbo della subordinata…</div>
+        <div class="dialog-trans">— Profesor: Pues, hoy vemos por ejemplo el caso del subjuntivo. Así pues, la regla dice que… — Estudiante: Disculpe, profesor, o sea, no he entendido el primer paso. — Profesor: A ver… eso, volvamos al principio. En otros términos, el verbo de la subordinada…</div>
+        <ul class="analysis-list" style="margin-top:8px">
+          <li><b>Marcatori:</b> allora (apertura), per esempio (ejemplificativo), dunque (estructurador), cioè (vacilación cortés del estudiante), vediamo (planificador), ecco (transición), in altri termini (reformulativo)</li>
+          <li><b>Registro:</b> medio-formal (aula universitaria)</li>
+          <li><b>Funcionalidad pragmática:</b> los marcadores articulan la negociación didáctica (explicación → duda → reformulación)</li>
+        </ul>
+      </div>
+
+      <div class="dialog-block">
+        <div class="dialog-line"><span class="tag tag-for">22</span></div>
+        <div class="dialog-line"><b>Texto formal escrito (memorando institucional):</b></div>
+        <div class="dialog-line"><em>In merito alla</em> riorganizzazione dei servizi, <em>premesso che</em> le risorse disponibili sono limitate, e <em>fermo restando che</em> la qualità del servizio non potrà essere compromessa, <em>si evince che</em> sarà necessario ricorrere a una graduale ridistribuzione del personale. <em>A titolo esemplificativo</em>, si pensi alle aree di front-office. <em>Ne consegue che</em>, <em>alla luce di quanto esposto</em>, occorrerà aggiornare l'organigramma entro il mese di giugno.</div>
+        <div class="dialog-trans">En relación con la reorganización de los servicios, partiendo de que los recursos disponibles son limitados, y sin perjuicio de que la calidad del servicio no podrá ser comprometida, se deduce que será necesario recurrir a una gradual redistribución del personal. A título de ejemplo, piénsese en las áreas de front-office. De ello se deriva que, a la luz de lo expuesto, habrá que actualizar el organigrama antes del mes de junio.</div>
+        <ul class="analysis-list" style="margin-top:8px">
+          <li><b>Marcadores identificados:</b> in merito a, premesso che, fermo restando che, si evince che, a titolo esemplificativo, si pensi a, ne consegue che, alla luce di quanto esposto</li>
+          <li><b>Densidad de marcadores formales:</b> 8 en un solo párrafo</li>
+          <li><b>Función global:</b> construir el «esqueleto retórico» típico del italiano administrativo — apertura temática, premisas, conclusión inferida, ejemplo, cierre</li>
+          <li><b>Registro:</b> formal-burocrático puro; ningún marcador coloquial admisible aquí</li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <b>Cierre práctico:</b> los marcadores se entrenan por <span class="hl">imitación funcional</span>. No basta con conocerlos — hay que <em>oírlos</em> en contexto, identificar la función, y luego reproducirla. Mira series, escucha podcasts, lee diálogos, y cada vez que encuentres un marcador pregúntate: ¿qué función pragmática cumple aquí? Esa práctica explícita es lo que separa al estudiante avanzado del hablante con un italiano «vivo».
+      </div>
+
+      <div class="green-box">
+        <b>Decálogo del marcatore C1:</b><br>
+        1. <em>Allora</em> abre el turno, no traduce «entonces».<br>
+        2. <em>Appunto</em> confirma con énfasis: «exacto».<br>
+        3. <em>Ecco</em> es polisémico: úsalo en sus cuatro funciones.<br>
+        4. <em>Insomma</em> como respuesta = «regular», no «en suma».<br>
+        5. <em>Magari</em> + congiuntivo imperfetto = ¡ojalá!<br>
+        6. <em>Dai</em> según contexto = anima, increpa, expresa incredulidad.<br>
+        7. <em>Diciamo</em> = hedging, no compromiso pleno.<br>
+        8. <em>Cioè</em> reformula y rellena pausas a la vez.<br>
+        9. <em>Fermo restando che</em> solo en registro burocrático.<br>
+        10. Los marcadores son <span class="hl">la firma del C1</span>: úsalos con consciencia de su función.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const TRAPS = [
+  {
+    name:'Traducir literalmente «pues» por «poi»',
+    wrong:'Poi, ti volevo dire una cosa.',
+    right:'Allora / Senti, ti volevo dire una cosa.',
+    expl:'El español «pues» como apertura discursiva no se traduce por «poi» (que significa «después, luego» temporal). El equivalente funcional es «allora», «senti», «dunque» o «beh» según el matiz. «Poi» es un adverbio temporal, no un marcador de apertura.'
+  },
+  {
+    name:'Usar «bene» como apertura («bueno…»)',
+    wrong:'Bene, vediamo cosa fare.',
+    right:'Allora / Beh, vediamo cosa fare.',
+    expl:'«Bene» en italiano es un adverbio que significa «bien» (de manera bien). Como apertura discursiva equivalente al español «bueno…», el italiano usa «beh» o «allora». «Bene» como marcador suena artificial o solo es admisible con valor conclusivo («bien, hagámoslo así»).'
+  },
+  {
+    name:'Usar «francamente» en cualquier contexto',
+    wrong:'Francamente sono felice di vederti.',
+    right:'Sono davvero felice di vederti.',
+    expl:'«Francamente» se usa antes de una declaración honesta que generalmente es crítica, negativa o disonante con lo esperado («francamente, no me gusta»). Antes de una afirmación positiva neutra suena inadecuado. Para énfasis positivo usa «davvero, veramente, proprio».'
+  },
+  {
+    name:'Confundir «forse» con «magari»',
+    wrong:'Magari pioverà domani. (= quizá, neutro)',
+    right:'Forse pioverà domani. (neutro) / Magari piovesse! (¡ojalá!)',
+    expl:'«Forse» es posibilidad neutra (= «quizá»). «Magari» con indicativo a veces equivale a «quizá», pero su uso fuerte es con congiuntivo expresando deseo intenso («magari fosse vero!» = ¡ojalá fuera verdad!). El ispanofono tiende a usarlo siempre como «quizá», perdiendo el matiz desiderativo.'
+  },
+  {
+    name:'Olvidar la pausa prosódica del marcador',
+    wrong:'Allora cosa facciamo (sin pausa, todo seguido)',
+    right:'Allora, cosa facciamo?',
+    expl:'La mayoría de marcadores discursivos van seguidos de una breve pausa prosódica (coma en la escritura). Sin esa pausa, el marcador pierde su valor pragmático y se funde con el resto de la oración. La coma es obligatoria tras «allora, beh, senti, ecco, insomma, dunque…» al inicio de turno.'
+  },
+  {
+    name:'Mezclar registros (marcador formal en oral coloquial)',
+    wrong:'In un\'amichevole chiacchierata: «Fermo restando che ho ragione, possiamo parlarne.»',
+    right:'In un\'amichevole chiacchierata: «Comunque ho ragione, ma ne parliamo lo stesso.»',
+    expl:'Los marcadores formales como «fermo restando, in merito a, per quanto concerne» son inadmisibles en conversación informal: producen efecto pedante o irónico. Cada marcador tiene su registro propio. La coherencia de registro es una marca clara del nivel C1.'
+  },
+  {
+    name:'«Cioè» repetido demasiado (tic verbal)',
+    wrong:'Cioè, è bello, cioè, mi piace, cioè, è proprio carino, cioè…',
+    right:'Mi piace molto, è proprio carino. (sin tic)',
+    expl:'«Cioè» es un marcador útil cuando reformula o gana tiempo planificando. Pero repetido cada pocos enunciados se vuelve un tic verbal típico del italiano juvenil mal controlado. En registro adulto medio, conviene variar con «in pratica, in altre parole, voglio dire».'
+  },
+  {
+    name:'Confundir «ecco» presentativo con «ecco» fatico',
+    wrong:'(presentando un objeto) «Ecco, come dire… il libro.»',
+    right:'(presentando) «Ecco il libro.» / (vacilando) «Ecco, come dire…»',
+    expl:'«Ecco» presentativo va inmediatamente seguido del objeto: «ecco + sostantivo». «Ecco» fatico va seguido de pausa y vacilación. Mezclar las dos funciones produce frases mal estructuradas. La entonación y la pausa marcan la diferencia.'
+  },
+  {
+    name:'Usar «appunto» como adverbio temporal («justo ahora»)',
+    wrong:'Appunto adesso stavo arrivando.',
+    right:'Proprio adesso stavo arrivando. / Sono appena arrivato.',
+    expl:'Para el sentido temporal «justo ahora, precisamente en este momento», el italiano usa «proprio adesso» o «appena». «Appunto» como marcador es confirmativo y no marca tiempo. Otra confusión típica: «sono appunto arrivato» suena raro; lo correcto es «sono appena arrivato» (= acabo de llegar).'
+  },
+  {
+    name:'Omitir el marcador en respuestas confirmativas',
+    wrong:'«Quindi è meglio così?» «Sì.»',
+    right:'«Quindi è meglio così?» «Appunto. / Esatto. / Sì, appunto.»',
+    expl:'En italiano oral, las respuestas afirmativas sin marcador resultan secas o frías. Añadir «appunto», «esatto», «proprio così», «infatti» le da naturalidad pragmática. El italiano oral cultiva la confirmación con énfasis donde el español a menudo se contenta con un «sí» seco.'
+  },
+  {
+    name:'Usar «insomma» como conjunción («en suma» + frase)',
+    wrong:'Insomma che la giornata è stata pessima.',
+    right:'Insomma, la giornata è stata pessima.',
+    expl:'«Insomma» nunca lleva «che» detrás como conjunción. Es un marcador autónomo, separado por coma de la oración que sigue. La estructura «*insomma che + frase» es agramatical. El error proviene del español «en suma que…» que en italiano se construye como «insomma, …».'
+  },
+  {
+    name:'Confundir «dunque» con «dunque temporal»',
+    wrong:'Dunque ero in vacanza quando è successo. (creyendo «entonces estaba de vacaciones»)',
+    right:'Allora ero in vacanza quando è successo. / A quel tempo ero in vacanza…',
+    expl:'«Dunque» en italiano es exclusivamente consecutivo («por consiguiente») o estructurador («a ver, veamos»). Nunca tiene valor temporal de pasado. Para «entonces» temporal pasado se usa «allora, in quel periodo, a quel tempo».'
+  }
+];
+
+function renderTraps(){
+  const c = document.getElementById('traps-container');
+  let html = '';
+  TRAPS.forEach(t=>{
+    html += `<div class="trap-card">
+      <div class="trap-card-header"><span class="trap-name">${t.name}</span></div>
+      <div class="trap-vs">
+        <div class="trap-wrong">${t.wrong}</div>
+        <div class="trap-right">${t.right}</div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function showSection(id, btn){
+  document.querySelectorAll('.sec-block').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function showPanel(id, chip){
+  const panels = document.querySelectorAll('.chip-panel');
+  const chips = chip.parentElement.querySelectorAll('.chip');
+  const target = document.getElementById(id);
+  const wasActive = target.classList.contains('active');
+  panels.forEach(p=>p.classList.remove('active'));
+  chips.forEach(c=>c.classList.remove('active'));
+  if(!wasActive){
+    target.classList.add('active');
+    chip.classList.add('active');
+  }
+}
+
+function setFontSize(v){
+  document.documentElement.style.setProperty('--fs', v+'px');
+}
+
+renderTraps();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Congiuntivo e Registro · Grammatica C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ede9df;
+  --card:#faf7f1;
+  --border:#c4bead;
+  --text:#1a1814;
+  --text2:#44413a;
+  --text3:#706c64;
+  --accent:#7a5a0a;
+  --accent-light:#f0e0c0;
+  --accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,0.08);
+  --radius:14px;
+  --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --red:#a81e2e; --red-bg:#fce6e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --teal:#0e6e6e; --teal-bg:#e0f4f4;
+  --fs:15px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-size:var(--fs);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:60px;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text);margin:0 0 .4em;font-weight:600;line-height:1.2}
+h1{font-size:1.85em;font-weight:700}
+h2{font-size:1.45em}
+h3{font-size:1.15em;margin-top:1.1em}
+h4{font-size:1em;font-weight:600}
+p{margin:.5em 0}
+em{font-style:italic}
+b,strong{font-weight:600}
+
+/* HEADER */
+.site-header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 18px 16px;
+  position:relative;
+}
+.site-header .inner{max-width:860px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title-wrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.site-header h1{margin:0;font-size:1.9em;color:var(--text)}
+.header-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.85em;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid var(--accent-mid);
+}
+.subtitle{color:var(--text3);font-size:.92em;margin:4px 0 12px;font-style:italic}
+.stat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stat-pill{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:4px 10px;
+  font-size:.78em;
+  border-radius:999px;
+  font-weight:500;
+}
+.font-ctrl{display:flex;align-items:center;gap:8px;font-size:.78em;color:var(--text3)}
+.font-ctrl input[type=range]{width:90px}
+
+/* SECTION NAV */
+.section-nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:10px 18px;
+  margin-top:14px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.section-nav::-webkit-scrollbar{display:none}
+.section-nav .inner{max-width:860px;margin:0 auto;display:flex;gap:6px;flex-wrap:nowrap}
+.snav-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:6px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82em;
+  border-radius:999px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .15s;
+  font-weight:500;
+}
+.snav-btn:hover{background:var(--accent-light)}
+.snav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* MAIN LAYOUT */
+.main-layout{
+  max-width:860px;
+  margin:0 auto;
+  padding:20px 18px;
+}
+.sec-block{display:none}
+.sec-block.active{display:block;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* GRAM-CARD */
+.gram-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.gram-card-body{padding:18px}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:1.45em;
+  margin:0 0 .4em;
+  color:var(--text);
+}
+.sec-subtitle{color:var(--text3);font-style:italic;font-size:.95em;margin:0 0 14px}
+
+/* DEF-BOX */
+.def-box{
+  background:var(--warn-bg);
+  border-left:4px solid var(--accent);
+  padding:12px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:14px 0;
+  font-size:.96em;
+}
+.def-box b{color:var(--accent)}
+
+/* WARN-BOX */
+.warn-box{
+  background:#fff4e0;
+  border:1px solid #c8900a;
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:12px 0;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:.93em;
+  color:var(--text2);
+}
+.warn-box .ico{font-size:1.1em;flex-shrink:0;line-height:1.3}
+
+/* EXAMPLE BLOCK */
+.example-block{
+  background:var(--blue-bg);
+  border-left:3px solid var(--blue);
+  padding:9px 12px;
+  margin:8px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.ex-it{font-weight:500;color:var(--text)}
+.ex-it em{font-style:normal;color:var(--blue);font-weight:600}
+.ex-es{font-style:italic;color:var(--text2);font-size:.88em;margin-top:2px}
+.ex-anal{font-size:.85em;color:var(--text3);margin-top:4px;padding-top:4px;border-top:1px dashed var(--border)}
+.ex-anal b{color:var(--accent)}
+
+/* NOTE-BOX */
+.note-box{
+  background:var(--purple-bg);
+  border-left:3px solid var(--purple);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.note-box b{color:var(--purple)}
+
+/* GREEN-BOX */
+.green-box{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.green-box b{color:var(--green)}
+
+/* TEAL-BOX */
+.teal-box{
+  background:var(--teal-bg);
+  border-left:3px solid var(--teal);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.teal-box b{color:var(--teal)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.gram-table{width:100%;border-collapse:collapse;font-size:.92em;background:var(--card)}
+.gram-table th{
+  background:var(--accent-light);
+  color:var(--accent);
+  font-family:'DM Sans',sans-serif;
+  font-size:.72em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:8px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--accent-mid);
+}
+.gram-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.gram-table tr:nth-child(even) td{background:rgba(196,190,173,0.12)}
+.gram-table tr:last-child td{border-bottom:none}
+.ok-cell{color:var(--green);font-weight:500}
+.err-cell{color:var(--red);font-weight:500}
+.warn-cell{color:var(--accent);font-weight:500}
+.tbl-pron{font-weight:600;color:var(--text);background:rgba(196,190,173,0.18)}
+
+/* CHIPS */
+.chip-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:14px 0 10px;
+  padding-bottom:4px;
+}
+.chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:5px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.83em;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{background:var(--accent-light)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-panel{display:none}
+.chip-panel.active{display:block;animation:fadeIn .25s}
+
+/* TRAPS */
+.trap-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.trap-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trap-name{font-weight:600;color:var(--text);font-size:.96em}
+.trap-vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.trap-wrong{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-wrong::before{content:'✗ ';color:var(--red);font-weight:700}
+.trap-right{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-right::before{content:'✓ ';color:var(--green);font-weight:700}
+.trap-expl{font-size:.88em;color:var(--text2);font-style:italic;margin-top:6px}
+@media (max-width:520px){.trap-vs{grid-template-columns:1fr}}
+
+/* TRIGGER CARDS */
+.trig-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.trig-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.trig-name{font-weight:700;color:var(--accent);font-size:.95em}
+.trig-tag{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:1px 8px;
+  font-size:.72em;
+  border-radius:999px;
+  font-weight:500;
+}
+.trig-verbs{font-size:.86em;color:var(--text3);font-style:italic;margin-bottom:6px}
+
+/* REGISTRO BADGES */
+.reg-badge{
+  display:inline-block;
+  font-size:.72em;
+  padding:1px 8px;
+  border-radius:999px;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-right:4px;
+}
+.reg-formale{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue)}
+.reg-parlato{background:var(--green-bg);color:var(--green);border:1px solid var(--green)}
+.reg-marcato{background:var(--red-bg);color:var(--red);border:1px solid var(--red)}
+.reg-neutro{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple)}
+
+/* PRACTICE SENTENCE CARD */
+.sent-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.sent-num{
+  display:inline-block;
+  background:var(--accent);
+  color:#fff;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  text-align:center;
+  line-height:22px;
+  font-size:.78em;
+  font-weight:600;
+  margin-right:6px;
+}
+.sent-it{font-weight:500;color:var(--text)}
+.sent-it em{font-style:normal;color:var(--blue);font-weight:600}
+.sent-es{font-style:italic;color:var(--text2);font-size:.9em;margin-top:3px}
+.sent-anal{font-size:.86em;color:var(--text3);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)}
+.sent-anal b{color:var(--accent)}
+
+/* UTILS */
+.hl{color:var(--accent);font-weight:600}
+.dim{color:var(--text3)}
+
+/* RESPONSIVE */
+@media (max-width:520px){
+  .site-header{padding:14px 14px 12px}
+  h1{font-size:1.5em}
+  .main-layout{padding:14px}
+  .gram-card-body{padding:14px}
+  .stat-pill{font-size:.72em}
+  .header-top{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="inner">
+    <div class="header-top">
+      <div>
+        <div class="header-title-wrap">
+          <h1>Congiuntivo e Registro</h1>
+          <span class="header-tag">Grammatica</span>
+        </div>
+        <div class="subtitle">Grammatica italiana · C1 · variazione diafasica per ispanofoni</div>
+        <div class="stat-bar">
+          <span class="stat-pill">8 blocchi</span>
+          <span class="stat-pill">obbligatorio / preferito / sostituito</span>
+          <span class="stat-pill">tabelle d'accettabilità</span>
+          <span class="stat-pill">20+ esempi analizzati</span>
+        </div>
+      </div>
+      <div class="font-ctrl">
+        <span>A-</span>
+        <input type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+        <span>A+</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION NAV -->
+<nav class="section-nav" id="sec-nav">
+  <div class="inner">
+    <button class="snav-btn active" onclick="showSection('s-concetto',this)">1. Concetto</button>
+    <button class="snav-btn" onclick="showSection('s-obbligatorio',this)">2. Obbligatorio</button>
+    <button class="snav-btn" onclick="showSection('s-scritto-parlato',this)">3. Scritto vs Parlato</button>
+    <button class="snav-btn" onclick="showSection('s-impersonali',this)">4. Impersonali</button>
+    <button class="snav-btn" onclick="showSection('s-diafasica',this)">5. Var. diafasica</button>
+    <button class="snav-btn" onclick="showSection('s-infinito',this)">6. Cong. vs Infinito</button>
+    <button class="snav-btn" onclick="showSection('s-consecutio',this)">7. Consecutio</button>
+    <button class="snav-btn" onclick="showSection('s-trappole',this)">8. Trappole + Esempi</button>
+  </div>
+</nav>
+
+<main class="main-layout">
+
+<!-- ============ SECCIÓN 1: CONCETTO ============ -->
+<section id="s-concetto" class="sec-block active">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">1. Il Congiuntivo come Marcatore di Registro</h2>
+      <p class="sec-subtitle">Non solo una scelta grammaticale, ma una scelta sociolinguistica</p>
+
+      <div class="def-box">
+        El uso del <b>congiuntivo</b> en italiano no es solo una cuestión gramatical: su presencia o ausencia define el <span class="hl">nivel de cuidado lingüístico</span> del hablante. Saber cuándo es <b>obligatorio</b>, cuándo es <b>opcional</b> y cuándo es <b>sustituido</b> sistemáticamente por el indicativo es uno de los puntos clave del nivel C1.
+      </div>
+
+      <h3>Tres zonas del sistema</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Zona</th><th>Característica</th><th>Ejemplo prototípico</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="reg-badge reg-neutro">Obligatorio</span></td>
+              <td>Congiuntivo en todos los registros, escrito y oral. El indicativo es agramatical.</td>
+              <td><em>Benché <b>sia</b> tardi, continuo.</em></td>
+            </tr>
+            <tr>
+              <td><span class="reg-badge reg-formale">Preferido</span></td>
+              <td>Estándar prescriptivo y escrito; el indicativo aparece en parlato más o menos marcado.</td>
+              <td><em>Penso che <b>sia/è</b> vero.</em></td>
+            </tr>
+            <tr>
+              <td><span class="reg-badge reg-marcato">Indicativo</span></td>
+              <td>El contenido se presenta como cierto u objetivo. El congiuntivo aquí sería hipercorrección.</td>
+              <td><em>È ovvio che <b>ha</b> ragione.</em></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Por qué importa para el C1</h3>
+      <div class="green-box">
+        <b>El congiuntivo es un marcador de competencia lingüística.</b> En el <em>PLIDA C1</em> y en cualquier evaluación seria, el uso correcto (no solo sistemático) del congiuntivo distingue al hablante culto del coloquial. Saberlo usar significa también <b>saber cuándo NO usarlo</b>: forzarlo donde el italiano prefiere el indicativo es tan revelador como omitirlo donde es obligatorio.
+      </div>
+
+      <h3>Las tres preguntas que hay que hacerse</h3>
+      <div class="warn-box">
+        <span class="ico">🧭</span>
+        <div>
+          <b>1.</b> ¿El contexto exige congiuntivo de forma <b>absoluta</b>? (concesivas, hipotéticas, finales, ciertos conectores) → siempre congiuntivo.<br>
+          <b>2.</b> ¿El contexto <b>permite ambas opciones</b>? → congiuntivo en escrito/formal, indicativo solo en oral coloquial (y a veces marcado).<br>
+          <b>3.</b> ¿El contenido se presenta como <b>cierto/objetivo</b>? → indicativo siempre; el congiuntivo sería un error.
+        </div>
+      </div>
+
+      <h3>Variación diafasica: definición operativa</h3>
+      <div class="def-box">
+        <b>Variazione diafasica</b> = variación lingüística según la <span class="hl">situación comunicativa</span> (formal/informal, escrito/oral, técnico/cotidiano). El congiuntivo es uno de los marcadores <b>más visibles</b> de esta variación en italiano contemporáneo: un texto formal sin congiuntivos resulta tan extraño como una conversación informal saturada de ellos.
+      </div>
+
+      <div class="note-box">
+        <b>Esta ficha</b> integra todo lo que ya conoces sobre el congiuntivo (<em>presente</em>, <em>passato</em>, <em>imperfetto</em>, <em>trapassato</em>) y se concentra en la dimensión <span class="hl">sociolingüística</span>: ¿obligatorio? ¿preferido? ¿sustituible? ¿prohibido?
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 2: OBBLIGATORIO ============ -->
+<section id="s-obbligatorio" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">2. Congiuntivo Obbligatorio in Tutti i Registri</h2>
+      <p class="sec-subtitle">Contesti in cui l'indicativo è sempre agrammaticale</p>
+
+      <div class="def-box">
+        Hay contextos en los que el congiuntivo es <b>obligatorio</b> independientemente del registro: ni siquiera el hablante más coloquial usa indicativo. Estos contextos están blindados por la sintaxis del italiano: el conector mismo exige el modo.
+      </div>
+
+      <h3>2.1. Concessive: benché, sebbene, nonostante (che), per quanto, malgrado (che), quantunque</h3>
+      <div class="trig-card">
+        <div class="trig-head">
+          <span class="trig-name">Concesivas «concedidas» → SIEMPRE congiuntivo</span>
+          <span class="trig-tag">tutti i registri</span>
+        </div>
+        <div class="trig-verbs">benché · sebbene · nonostante (che) · per quanto · malgrado (che) · quantunque · ancorché</div>
+        <div class="example-block">
+          <div class="ex-it"><em>Benché</em> <em>sia</em> tardi, continuo a lavorare.</div>
+          <div class="ex-es">Aunque sea tarde, sigo trabajando.</div>
+          <div class="ex-anal"><b>Análisis:</b> <em>benché</em> exige congiuntivo absoluto. Ni el hablante más coloquial diría <em>*benché è tardi</em>.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Sebbene</em> <em>conosca</em> bene Roma, mi perdo sempre.</div>
+          <div class="ex-es">Aunque conozco bien Roma, siempre me pierdo.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Nonostante</em> <em>piova</em>, usciamo.</div>
+          <div class="ex-es">A pesar de que llueva, salimos.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Per quanto</em> tu <em>sia</em> intelligente, sbagli.</div>
+          <div class="ex-es">Por muy inteligente que seas, te equivocas.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Malgrado</em> il tempo <em>fosse</em> brutto, abbiamo fatto la gita.</div>
+          <div class="ex-es">A pesar de que el tiempo era malo, hicimos la excursión.</div>
+        </div>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Contraste decisivo con <em>anche se</em>:</b> <em>anche se</em> + <span class="hl">indicativo</span> (concesión real/factual). <em>«Anche se è tardi, continuo»</em> = constato que es tarde y, aun así, continúo. <em>«Benché sia tardi, continuo»</em> = aunque (sea/fuera/concedido que sea) tarde, continúo.</div>
+      </div>
+
+      <h3>2.2. Periodo ipotetico tipo II e III</h3>
+      <div class="trig-card">
+        <div class="trig-head">
+          <span class="trig-name">Prótasis con se → congiuntivo imperfetto / trapassato</span>
+          <span class="trig-tag">irreale del presente / del passato</span>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Se</em> <em>venisse</em>, sarei felice.</div>
+          <div class="ex-es">Si viniera, sería feliz.</div>
+          <div class="ex-anal"><b>Análisis:</b> tipo II (irreal del presente). <em>se + cong. imperfetto + condizionale presente</em>.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Se</em> <em>fosse venuto</em>, sarei stato felice.</div>
+          <div class="ex-es">Si hubiera venido, habría sido feliz.</div>
+          <div class="ex-anal"><b>Análisis:</b> tipo III (irreal del pasado). <em>se + cong. trapassato + condizionale passato</em>.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Se</em> <em>avessi</em> più tempo, leggerei di più.</div>
+          <div class="ex-es">Si tuviera más tiempo, leería más.</div>
+        </div>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">💡</span>
+        <div><b>Variante parlato di «basso registro»:</b> <em>«Se avevo più tempo, leggevo di più»</em> (doble indicativo imperfetto) existe en habla popular y meridional pero es un <b>fuerte marcador de registro bajo</b>. En C1 hay que evitarlo.</div>
+      </div>
+
+      <h3>2.3. Magari + desiderio irrealizzabile</h3>
+      <div class="trig-card">
+        <div class="trig-head">
+          <span class="trig-name">Magari → congiuntivo imperfetto / trapassato</span>
+          <span class="trig-tag">esclamativa di desiderio</span>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Magari</em> <em>potessi</em> farlo!</div>
+          <div class="ex-es">¡Ojalá pudiera hacerlo!</div>
+          <div class="ex-anal"><b>Análisis:</b> <em>magari</em> con valor de deseo exige congiuntivo. Es paralelo al «ojalá» español.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Magari</em> <em>fosse</em> vero!</div>
+          <div class="ex-es">¡Ojalá fuera verdad!</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Magari</em> l'<em>avessi saputo</em> prima!</div>
+          <div class="ex-es">¡Ojalá lo hubiera sabido antes!</div>
+        </div>
+      </div>
+
+      <div class="note-box">
+        <b>Atención:</b> <em>magari</em> tiene también otros valores. Como adverbio modal («tal vez, quizás») puede combinarse con indicativo: <em>«Magari viene anche Marco»</em> (= «a lo mejor también viene Marco»). Solo en la construcción <b>exclamativa de deseo</b> exige congiuntivo.
+      </div>
+
+      <h3>2.4. Come se / quasi che</h3>
+      <div class="trig-card">
+        <div class="trig-head">
+          <span class="trig-name">Come se → congiuntivo imperfetto / trapassato</span>
+          <span class="trig-tag">comparativa ipotetica</span>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Parla <em>come se</em> <em>fosse</em> il capo.</div>
+          <div class="ex-es">Habla como si fuera el jefe.</div>
+          <div class="ex-anal"><b>Análisis:</b> <em>come se</em> introduce una comparación hipotética. Nunca admite indicativo, ni siquiera en parlato.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Mi guarda <em>come se</em> non mi <em>conoscesse</em>.</div>
+          <div class="ex-es">Me mira como si no me conociera.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Si comporta <em>come se</em> non <em>fosse successo</em> niente.</div>
+          <div class="ex-es">Se comporta como si no hubiera pasado nada.</div>
+        </div>
+      </div>
+
+      <h3>2.5. Finali: affinché / perché finale</h3>
+      <div class="trig-card">
+        <div class="trig-head">
+          <span class="trig-name">Affinché / perché (finale) → SIEMPRE congiuntivo</span>
+          <span class="trig-tag">subordinata finale</span>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Lo faccio <em>affinché</em> tu <em>capisca</em>.</div>
+          <div class="ex-es">Lo hago para que entiendas.</div>
+          <div class="ex-anal"><b>Análisis:</b> <em>affinché</em> es marcadamente formal pero siempre con congiuntivo. <em>Perché</em> con valor final también.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Te lo spiego <em>perché</em> tu <em>possa</em> decidere.</div>
+          <div class="ex-es">Te lo explico para que puedas decidir.</div>
+          <div class="ex-anal"><b>Atención:</b> aquí <em>perché</em> = «para que» (finale). Si <em>perché</em> = «porque» (causal) → indicativo.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Ho chiuso la porta <em>affinché</em> non <em>entrassero</em> i gatti.</div>
+          <div class="ex-es">Cerré la puerta para que no entraran los gatos.</div>
+        </div>
+      </div>
+
+      <h3>2.6. Chiunque / qualunque / dovunque / comunque</h3>
+      <div class="trig-card">
+        <div class="trig-head">
+          <span class="trig-name">Indefiniti + che → congiuntivo</span>
+          <span class="trig-tag">tutti i registri</span>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Chiunque</em> <em>venga</em>, è benvenuto.</div>
+          <div class="ex-es">Quienquiera que venga, es bienvenido.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Qualunque cosa</em> tu <em>faccia</em>, ti sosterrò.</div>
+          <div class="ex-es">Hagas lo que hagas, te apoyaré.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Dovunque</em> <em>vada</em>, lo seguono i giornalisti.</div>
+          <div class="ex-es">Adondequiera que vaya, lo siguen los periodistas.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Comunque</em> <em>vadano</em> le cose, non disperare.</div>
+          <div class="ex-es">Como sea que vayan las cosas, no desesperes.</div>
+        </div>
+      </div>
+
+      <h3>2.7. Prima che / finché (non)</h3>
+      <div class="trig-card">
+        <div class="trig-head">
+          <span class="trig-name">Connettivi temporali di anteriorità → congiuntivo</span>
+          <span class="trig-tag">temporale</span>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Prima che</em> <em>parta</em>, salutalo.</div>
+          <div class="ex-es">Antes de que se vaya, salúdalo.</div>
+          <div class="ex-anal"><b>Análisis:</b> <em>prima che</em> exige congiuntivo siempre (la acción aún no se ha producido). Si los sujetos coinciden → <em>prima di + infinito</em>.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Aspetta <em>finché</em> non <em>arrivi</em> il treno.</div>
+          <div class="ex-es">Espera hasta que llegue el tren.</div>
+          <div class="ex-anal"><b>Atención al «non» pleonástico</b>: no se traduce, es fijo en la construcción.</div>
+        </div>
+      </div>
+
+      <h3>2.8. Purché / a patto che / a condizione che / a meno che (non)</h3>
+      <div class="trig-card">
+        <div class="trig-head">
+          <span class="trig-name">Condizionali ipotetiche → congiuntivo</span>
+          <span class="trig-tag">tutti i registri</span>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Ti aiuto <em>purché</em> tu me lo <em>chieda</em>.</div>
+          <div class="ex-es">Te ayudo siempre que me lo pidas.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Verrò <em>a patto che</em> ci <em>sia</em> anche Marco.</div>
+          <div class="ex-es">Vendré con la condición de que esté también Marco.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Esco, <em>a meno che</em> non <em>piova</em>.</div>
+          <div class="ex-es">Salgo, a menos que llueva.</div>
+        </div>
+      </div>
+
+      <div class="green-box">
+        <b>Síntesis:</b> los conectores de esta sección son <span class="hl">«marcadores fuertes»</span>: por sí solos imponen el modo. No hay variación posible. Cuando los reconozcas, no dudes: congiuntivo.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 3: SCRITTO vs PARLATO ============ -->
+<section id="s-scritto-parlato" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">3. Congiuntivo Scritto vs Indicativo Parlato</h2>
+      <p class="sec-subtitle">La zona di variazione: dove il registro decide</p>
+
+      <div class="def-box">
+        Esta es la <b>zona gris</b>: construcciones donde el <span class="hl">congiuntivo es el estándar prescriptivo</span> (gramáticas, escrito formal, hablantes cultos), pero el <span class="hl">indicativo aparece en el parlato</span> en grado variable. El nivel C1 exige reconocer estas construcciones y elegir el modo según el registro deseado.
+      </div>
+
+      <h3>3.1. Verbos de opinión: pensare / credere / sembrare</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Estructura</th><th>Estándar (escrito)</th><th>Parlato</th><th>Aceptabilidad del indicativo</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>Penso che</b> + V</td>
+              <td><em>Penso che <b>sia</b> vero.</em></td>
+              <td><em>Penso che <b>è</b> vero.</em></td>
+              <td class="warn-cell">Tolerable en oral informal, <b>marcado en escrito</b></td>
+            </tr>
+            <tr>
+              <td><b>Credo che</b> + V</td>
+              <td><em>Credo che <b>abbia</b> ragione.</em></td>
+              <td><em>Credo che <b>ha</b> ragione.</em></td>
+              <td class="warn-cell">Frecuente en oral, <b>marca registro basso</b></td>
+            </tr>
+            <tr>
+              <td><b>Mi sembra che</b> + V</td>
+              <td><em>Mi sembra che <b>vada</b> bene.</em></td>
+              <td><em>Mi sembra che <b>va</b> bene.</em></td>
+              <td class="warn-cell">Solo oral colloquial, evitar en C1</td>
+            </tr>
+            <tr>
+              <td><b>Mi pare che</b> + V</td>
+              <td><em>Mi pare che <b>piova</b>.</em></td>
+              <td><em>Mi pare che <b>piove</b>.</em></td>
+              <td class="warn-cell">Aceptable en parlato, <b>no en formale</b></td>
+            </tr>
+            <tr>
+              <td><b>Spero che</b> + V</td>
+              <td><em>Spero che <b>venga</b>.</em></td>
+              <td><em>*Spero che <b>viene</b>.</em></td>
+              <td class="err-cell">Muy marcado, casi inaceptable</td>
+            </tr>
+            <tr>
+              <td><b>Dubito che</b> + V</td>
+              <td><em>Dubito che <b>dica</b> il vero.</em></td>
+              <td><em>?Dubito che <b>dice</b> il vero.</em></td>
+              <td class="err-cell">Indicativo muy marcado</td>
+            </tr>
+            <tr>
+              <td><b>Suppongo che</b> + V</td>
+              <td><em>Suppongo che <b>sappia</b>.</em></td>
+              <td><em>?Suppongo che <b>sa</b>.</em></td>
+              <td class="err-cell">Indicativo poco aceptable</td>
+            </tr>
+            <tr>
+              <td><b>Temo che</b> + V</td>
+              <td><em>Temo che <b>sia</b> tardi.</em></td>
+              <td><em>*Temo che <b>è</b> tardi.</em></td>
+              <td class="err-cell">Indicativo muy marcado</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>La escala de aceptabilidad</h3>
+      <div class="warn-box">
+        <span class="ico">📊</span>
+        <div>
+          <b>✓ Aceptable en oral:</b> <em>penso che, credo che, mi sembra che, mi pare che</em> + indicativo (registro coloquial).<br>
+          <b>? Muy marcado:</b> <em>dubito che, suppongo che, immagino che</em> + indicativo.<br>
+          <b>✗ Casi agramatical:</b> <em>spero che, temo che, voglio che, è necessario che</em> + indicativo.<br>
+          <br>
+          <b>Razón:</b> cuanto más fuerte es la carga semántica de <b>subjetividad</b> (deseo, miedo, voluntad), más resiste el verbo a la sustitución por indicativo.
+        </div>
+      </div>
+
+      <h3>3.2. Por qué la sustitución se da con «pensare/credere» y no con «sperare»</h3>
+      <div class="def-box">
+        <em>Pensare che X</em> en parlato puede deslizarse hacia un valor cuasi-afirmativo: «pienso que es así» se asimila a «creo que es así» y de ahí a «(yo afirmo que) es así». De ahí la tolerancia con indicativo. En cambio, <em>sperare</em> mantiene la carga modal del deseo: lo deseado no es real, y por eso resiste cualquier modal «factual».
+      </div>
+
+      <h3>3.3. Indicios de registro alto</h3>
+      <div class="green-box">
+        <b>El hablante que cuida el registro</b> usa congiuntivo sistemáticamente incluso en oral cuidado. En entornos como una <em>presentación universitaria</em>, una <em>entrevista de trabajo</em>, un <em>discurso público</em>, un <em>examen oral C1</em>, el uso del indicativo donde el estándar pide congiuntivo se percibe como <span class="hl">marca de informalidad</span> o falta de cuidado.
+      </div>
+
+      <h3>3.4. Ejemplos contrastados</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="reg-badge reg-formale">scritto</span><em>Riteniamo che la proposta <b>sia</b> da approfondire.</em></div>
+        <div class="ex-es">Consideramos que la propuesta debe profundizarse.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><span class="reg-badge reg-parlato">parlato</span><em>Secondo me la proposta <b>va</b> approfondita.</em></div>
+        <div class="ex-es">Para mí la propuesta hay que profundizarla.</div>
+        <div class="ex-anal"><b>Análisis:</b> el parlato puede esquivar la subordinada con congiuntivo recurriendo a <em>secondo me + indicativo</em>, que es una construcción coloquial paralela.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><span class="reg-badge reg-formale">scritto</span><em>Mi sembra che il problema <b>vada</b> affrontato con urgenza.</em></div>
+        <div class="ex-es">Me parece que el problema debe afrontarse con urgencia.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><span class="reg-badge reg-marcato">parlato basso</span><em>Mi sembra che il problema <b>va</b> affrontato con urgenza.</em></div>
+        <div class="ex-es">(misma traducción) — registro coloquial / marcado.</div>
+        <div class="ex-anal"><b>Análisis:</b> mismo contenido proposicional, pero el uso del indicativo «delata» el hablante coloquial. En el C1 se debe usar la versión con congiuntivo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 4: ESPRESSIONI IMPERSONALI ============ -->
+<section id="s-impersonali" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">4. Congiuntivo vs Indicativo dopo Espressioni Impersonali</h2>
+      <p class="sec-subtitle">La regola della «certezza vs incertezza»</p>
+
+      <div class="def-box">
+        Las construcciones <b>è + aggettivo + che</b> rigen modo según el <span class="hl">valor semántico del adjetivo</span>: si presenta el contenido como <b>cierto/objetivo</b> → indicativo; si lo presenta como <b>incierto/deseado/valorado</b> → congiuntivo.
+      </div>
+
+      <h3>4.1. La regla operativa</h3>
+      <div class="green-box">
+        <b>REGLA:</b> espressioni che presentano il contenuto come <span class="hl">certo / ovvio / evidente</span> → INDICATIVO. Espressioni che presentano il contenuto come <span class="hl">incerto / desiderato / valutato / possibile</span> → CONGIUNTIVO.
+      </div>
+
+      <h3>4.2. Tabla maestra</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Espressione</th><th>Modo</th><th>Ejemplo</th><th>Justificación</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>È necessario che</b></td>
+              <td class="ok-cell">cong. (siempre)</td>
+              <td><em>È necessario che tu <b>venga</b>.</em></td>
+              <td>necesidad → valoración modal</td>
+            </tr>
+            <tr>
+              <td><b>Bisogna che</b></td>
+              <td class="ok-cell">cong. (siempre)</td>
+              <td><em>Bisogna che <b>parta</b> subito.</em></td>
+              <td>obligación → valoración modal</td>
+            </tr>
+            <tr>
+              <td><b>Occorre che</b></td>
+              <td class="ok-cell">cong. (siempre)</td>
+              <td><em>Occorre che lo <b>sappiano</b>.</em></td>
+              <td>necesidad formal → cong.</td>
+            </tr>
+            <tr>
+              <td><b>È possibile che</b></td>
+              <td class="ok-cell">cong. (preferido)</td>
+              <td><em>È possibile che <b>piova</b>.</em></td>
+              <td>posibilidad → incertidumbre</td>
+            </tr>
+            <tr>
+              <td><b>È probabile che</b></td>
+              <td class="ok-cell">cong. (preferido)</td>
+              <td><em>È probabile che <b>arrivi</b> tardi.</em></td>
+              <td>probabilidad → incertidumbre</td>
+            </tr>
+            <tr>
+              <td><b>È importante che</b></td>
+              <td class="ok-cell">cong. (siempre)</td>
+              <td><em>È importante che <b>capiscano</b>.</em></td>
+              <td>valoración → cong.</td>
+            </tr>
+            <tr>
+              <td><b>È strano / bello / giusto che</b></td>
+              <td class="ok-cell">cong. (siempre)</td>
+              <td><em>È strano che non <b>abbia</b> risposto.</em></td>
+              <td>valoración subjetiva → cong.</td>
+            </tr>
+            <tr>
+              <td><b>È meglio che</b></td>
+              <td class="ok-cell">cong. (siempre)</td>
+              <td><em>È meglio che <b>vada</b> a casa.</em></td>
+              <td>consejo → cong.</td>
+            </tr>
+            <tr>
+              <td><b>Sembra che / pare che</b></td>
+              <td class="ok-cell">cong. (preferido)</td>
+              <td><em>Sembra che <b>stia</b> meglio.</em></td>
+              <td>apariencia → cong.</td>
+            </tr>
+            <tr>
+              <td colspan="4" style="background:var(--accent-light);text-align:center;font-weight:600;color:var(--accent)">↓ Frontera: aquí cambia el modo ↓</td>
+            </tr>
+            <tr>
+              <td><b>È vero che</b></td>
+              <td class="err-cell">indicativo</td>
+              <td><em>È vero che <b>piove</b>.</em></td>
+              <td>verdad → hecho cierto</td>
+            </tr>
+            <tr>
+              <td><b>È certo che</b></td>
+              <td class="err-cell">indicativo</td>
+              <td><em>È certo che <b>verrà</b>.</em></td>
+              <td>certeza → hecho cierto</td>
+            </tr>
+            <tr>
+              <td><b>È chiaro che</b></td>
+              <td class="err-cell">indicativo</td>
+              <td><em>È chiaro che <b>sa</b> mentire.</em></td>
+              <td>claridad → hecho cierto</td>
+            </tr>
+            <tr>
+              <td><b>È evidente che</b></td>
+              <td class="err-cell">indicativo</td>
+              <td><em>È evidente che <b>capisce</b>.</em></td>
+              <td>evidencia → hecho cierto</td>
+            </tr>
+            <tr>
+              <td><b>È ovvio che</b></td>
+              <td class="err-cell">indicativo</td>
+              <td><em>È ovvio che <b>ha</b> ragione.</em></td>
+              <td>obviedad → hecho cierto</td>
+            </tr>
+            <tr>
+              <td><b>È sicuro che</b></td>
+              <td class="err-cell">indicativo</td>
+              <td><em>È sicuro che <b>arriva</b> oggi.</em></td>
+              <td>seguridad → hecho cierto</td>
+            </tr>
+            <tr>
+              <td><b>È fuori dubbio che</b></td>
+              <td class="err-cell">indicativo</td>
+              <td><em>È fuori dubbio che <b>è</b> bravo.</em></td>
+              <td>certeza absoluta → indic.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4.3. Un mismo adjetivo, dos modos</h3>
+      <div class="def-box">
+        Algunos adjetivos cambian de modo según se afirmen o se nieguen. La negación introduce duda y arrastra al congiuntivo.
+      </div>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Afirmativo (indicativo)</th><th>Negativo (congiuntivo)</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><em>È vero che <b>piove</b>.</em><br><span class="dim">Es verdad que llueve.</span></td>
+              <td><em>Non è vero che <b>piova</b>.</em><br><span class="dim">No es verdad que llueva.</span></td>
+            </tr>
+            <tr>
+              <td><em>È certo che <b>arriverà</b>.</em><br><span class="dim">Es seguro que llegará.</span></td>
+              <td><em>Non è certo che <b>arrivi</b>.</em><br><span class="dim">No es seguro que llegue.</span></td>
+            </tr>
+            <tr>
+              <td><em>È evidente che <b>capisce</b>.</em><br><span class="dim">Es evidente que entiende.</span></td>
+              <td><em>Non è evidente che <b>capisca</b>.</em><br><span class="dim">No es evidente que entienda.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">💡</span>
+        <div><b>Mecanismo:</b> al negar una construcción que afirma un hecho, se introduce incertidumbre sobre ese hecho, y la incertidumbre arrastra al congiuntivo. <em>«È vero che»</em> presenta el contenido como factual; <em>«non è vero che»</em> lo presenta como dudoso o falso.</div>
+      </div>
+
+      <h3>4.4. È possibile: la frontera más delicada</h3>
+      <div class="trig-card">
+        <div class="trig-head">
+          <span class="trig-name">È possibile che + congiuntivo (preferido) / + indicativo (marcado)</span>
+          <span class="trig-tag">zona di variazione</span>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><span class="reg-badge reg-formale">standard</span><em>È possibile che <b>nevichi</b> domani.</em></div>
+          <div class="ex-es">Es posible que nieve mañana.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><span class="reg-badge reg-marcato">parlato basso</span><em>È possibile che <b>nevica</b> domani.</em></div>
+          <div class="ex-es">(misma traducción) — fuertemente marcado.</div>
+          <div class="ex-anal"><b>Análisis:</b> el indicativo aquí es <b>aceptado por algunos hablantes en oral muy coloquial</b>, pero en C1 se considera error. La construcción estándar es congiuntivo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 5: VARIAZIONE DIAFASICA ============ -->
+<section id="s-diafasica" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">5. La Variazione Diafasica</h2>
+      <p class="sec-subtitle">Il congiuntivo come marca sociolinguistica</p>
+
+      <div class="def-box">
+        <b>Variazione diafasica</b>: variación lingüística según la <span class="hl">situación comunicativa</span> (grado de formalidad, canal escrito/oral, relación entre los interlocutores). Es una de las cuatro grandes variaciones del italiano contemporáneo, junto con la diatópica (geográfica), diastrática (social) y diacrónica (temporal).
+      </div>
+
+      <h3>5.1. El italiano contemporáneo y sus registros</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Registro</th><th>Ámbito típico</th><th>Tratamiento del congiuntivo</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>Formale/aulico</b></td>
+              <td>literatura, ensayo, oratoria, discurso académico</td>
+              <td>congiuntivo sistemático, también en contextos opcionales</td>
+            </tr>
+            <tr>
+              <td><b>Standard scritto</b></td>
+              <td>prensa, comunicación profesional, ensayo divulgativo</td>
+              <td>congiuntivo en todos los contextos prescritos</td>
+            </tr>
+            <tr>
+              <td><b>Standard parlato (italiano neo-standard)</b></td>
+              <td>oral cuidado, presentaciones, entrevistas, TV</td>
+              <td>congiuntivo en obligatorios; con verbos de opinión empieza a tolerar indicativo</td>
+            </tr>
+            <tr>
+              <td><b>Italiano colloquiale</b></td>
+              <td>conversación entre conocidos, mensajería informal</td>
+              <td>indicativo frecuente con <em>penso che, credo che, sembra che</em>; cong. solo en obligatorios</td>
+            </tr>
+            <tr>
+              <td><b>Italiano popolare</b></td>
+              <td>habla popular, registros bajos, dialectos regionales</td>
+              <td>indicativo casi sistemático; <em>«se avevo / volevo / sapevo»</em> en hipotéticas</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>5.2. El hablante coloquial vs el hablante culto</h3>
+      <div class="trig-card">
+        <div class="trig-head">
+          <span class="trig-name">Mismo contenido, diferente registro</span>
+          <span class="trig-tag">esempi paralleli</span>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><span class="reg-badge reg-parlato">colloquiale</span><em>Penso che Marco <b>ha</b> ragione, sai.</em></div>
+          <div class="ex-es">Pienso que Marco tiene razón, ¿sabes?</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><span class="reg-badge reg-formale">culto</span><em>Ritengo che Marco <b>abbia</b> ragione.</em></div>
+          <div class="ex-es">Considero que Marco tiene razón.</div>
+          <div class="ex-anal"><b>Análisis:</b> el hablante culto no solo elige <em>congiuntivo</em>, también elige <em>ritengo</em> (más formal que <em>penso</em>). El nivel léxico y el modal van juntos.</div>
+        </div>
+      </div>
+
+      <h3>5.3. Consecuencias prácticas</h3>
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div>
+          <b>En el PLIDA C1 (y en cualquier evaluación seria):</b><br>
+          • La <em>prueba escrita</em> exige congiuntivo en todos los contextos prescriptivos.<br>
+          • La <em>prueba oral</em> evalúa, entre otras cosas, el dominio del registro: usar indicativo en lugar de congiuntivo en «penso che, sembra che» se considera <b>error</b> de competencia, no licencia coloquial.<br>
+          • En la producción libre, el evaluador <span class="hl">cuenta</span> los usos correctos del congiuntivo como indicador objetivo de nivel.
+        </div>
+      </div>
+
+      <h3>5.4. La paradoja del «hipercorrección»</h3>
+      <div class="def-box">
+        Por reacción al miedo de «hablar mal», algunos estudiantes <b>sobreusan</b> el congiuntivo, colocándolo donde el italiano prefiere indicativo: <em>«È ovvio che <b>abbia</b> ragione»</em> (en lugar de <em>ha</em>). Esto es <span class="hl">hipercorrección</span>: tan revelador del nivel como el infrauso. El C1 implica saber distinguir ambos casos.
+      </div>
+
+      <h3>5.5. Caso italiano: el debate público</h3>
+      <div class="note-box">
+        <b>Curiosidad sociolingüística:</b> el uso del congiuntivo es periódicamente tema de debate en Italia. Cada cierto tiempo, un periodista o un político publica un artículo lamentando «la pérdida del congiuntivo» como signo de <b>decadencia cultural</b>. Más allá del valor del debate, esto demuestra que el congiuntivo es percibido por los italianos cultos como un <span class="hl">marcador identitario</span> de buena educación lingüística. Para el aprendiz C1, dominarlo es entrar en ese club.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 6: CONGIUNTIVO vs INFINITO ============ -->
+<section id="s-infinito" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">6. Congiuntivo vs Infinito: Regola di Scelta</h2>
+      <p class="sec-subtitle">Una regola assoluta dell'italiano</p>
+
+      <div class="def-box">
+        Antes incluso de preguntarse por el modo (indicativo/congiuntivo), el italiano impone una elección sintáctica: cuando los <b>dos verbos comparten sujeto</b>, no se usa <em>che + congiuntivo</em>, sino <em>di + infinito</em>. Esta regla es <span class="hl">absoluta</span> y diverge parcialmente del español.
+      </div>
+
+      <h3>6.1. La regla matriz</h3>
+      <div class="green-box">
+        <b>Sujetos coincidentes</b> en principal y subordinada → <span class="hl">infinito</span> siempre.<br>
+        <b>Sujetos distintos</b> en principal y subordinada → <span class="hl">che + congiuntivo</span>.
+      </div>
+
+      <h3>6.2. Pares contrastados</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Mismo sujeto (INFINITO)</th><th>Sujeto distinto (CHE + CONG.)</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><em>Voglio <b>partire</b>.</em><br><span class="dim">Quiero irme. (yo / yo)</span></td>
+              <td><em>Voglio che tu <b>parta</b>.</em><br><span class="dim">Quiero que te vayas. (yo / tú)</span></td>
+            </tr>
+            <tr>
+              <td><em>Spero di <b>farcela</b>.</em><br><span class="dim">Espero conseguirlo. (yo / yo)</span></td>
+              <td><em>Spero che lui <b>ce la faccia</b>.</em><br><span class="dim">Espero que él lo consiga.</span></td>
+            </tr>
+            <tr>
+              <td><em>Penso di <b>avere</b> ragione.</em><br><span class="dim">Pienso que tengo razón. (yo / yo)</span></td>
+              <td><em>Penso che lui <b>abbia</b> ragione.</em><br><span class="dim">Pienso que él tiene razón.</span></td>
+            </tr>
+            <tr>
+              <td><em>Credo di <b>capire</b>.</em><br><span class="dim">Creo que entiendo. (yo / yo)</span></td>
+              <td><em>Credo che tu <b>capisca</b>.</em><br><span class="dim">Creo que entiendes.</span></td>
+            </tr>
+            <tr>
+              <td><em>Sono contento di <b>essere</b> qui.</em><br><span class="dim">Me alegra estar aquí.</span></td>
+              <td><em>Sono contento che tu <b>sia</b> qui.</em><br><span class="dim">Me alegra que estés aquí.</span></td>
+            </tr>
+            <tr>
+              <td><em>Ho paura di <b>sbagliare</b>.</em><br><span class="dim">Tengo miedo de equivocarme.</span></td>
+              <td><em>Ho paura che lui <b>sbagli</b>.</em><br><span class="dim">Tengo miedo de que él se equivoque.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.3. Conectores que se transforman</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Con CHE (sujetos distintos)</th><th>Con INFINITO (mismo sujeto)</th></tr></thead>
+          <tbody>
+            <tr><td>prima che + cong.</td><td>prima di + inf.</td></tr>
+            <tr><td>senza che + cong.</td><td>senza + inf.</td></tr>
+            <tr><td>affinché / perché finale + cong.</td><td>per + inf.</td></tr>
+            <tr><td>a meno che (non) + cong.</td><td>a meno di + inf.</td></tr>
+            <tr><td>nonostante che + cong.</td><td>pur + gerundio / nonostante + inf.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Prima che lui <b>parta</b></em>, salutalo.</div>
+        <div class="ex-es">Antes de que se vaya, salúdalo.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it">Salutalo <em>prima di <b>partire</b></em> (tu).</div>
+        <div class="ex-es">Salúdalo antes de irte (tú).</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it">È uscito <em>senza che me ne <b>accorgessi</b></em>.</div>
+        <div class="ex-es">Salió sin que me diera cuenta.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it">È uscito <em>senza <b>salutare</b></em>.</div>
+        <div class="ex-es">Salió sin saludar. (mismo sujeto)</div>
+      </div>
+
+      <h3>6.4. Excepciones aparentes: percezione e causativi</h3>
+      <div class="def-box">
+        Algunos verbos rigen <span class="hl">infinito incluso con sujeto distinto</span>. Son las construcciones de <b>percezione</b> (vedere, sentire, udire, guardare, ascoltare) y los <b>causativi</b> (fare, lasciare).
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Vedo</em> Marco <em><b>correre</b></em>.</div>
+        <div class="ex-es">Veo correr a Marco. <span class="dim">(percezione)</span></div>
+        <div class="ex-anal"><b>Análisis:</b> sujetos distintos (yo veo / Marco corre) pero infinito, no <em>che + congiuntivo</em>. Estructura fija del italiano.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><em>Sento</em> la pioggia <em><b>cadere</b></em>.</div>
+        <div class="ex-es">Oigo caer la lluvia.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><em>Faccio</em> <em><b>riparare</b></em> la macchina (al meccanico).</div>
+        <div class="ex-es">Hago reparar el coche (al mecánico). <span class="dim">(causativo)</span></div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it">La mamma <em>lascia</em> i bambini <em><b>giocare</b></em>.</div>
+        <div class="ex-es">La mamá deja jugar a los niños. <span class="dim">(causativo)</span></div>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Atención:</b> con <em>fare</em> y <em>lasciare</em> existe también la opción <em>fare/lasciare + che + congiuntivo</em>, pero suele tener matiz más enfático o formal: <em>«Fai che tutto vada bene»</em>. La construcción con infinito es la estándar.</div>
+      </div>
+
+      <h3>6.5. Trampa hispana: el español permite «que» con mismo sujeto</h3>
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Transferencia errónea desde el español</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Penso che io abbia ragione.</div>
+          <div class="trap-right">Penso di avere ragione.</div>
+        </div>
+        <div class="trap-expl">En español es posible decir «pienso que (yo) tengo razón» con repetición del sujeto, pero en italiano la regla es absoluta: mismo sujeto → infinito. El hispanohablante debe «desaprender» esta libertad.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 7: CONSECUTIO TEMPORUM ============ -->
+<section id="s-consecutio" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">7. Consecutio Temporum: Riepilogo Integrato</h2>
+      <p class="sec-subtitle">La correlazione tra principale e subordinata al congiuntivo</p>
+
+      <div class="def-box">
+        Una vez decidido que el contexto exige congiuntivo, hay que elegir el <b>tiempo</b> correcto del congiuntivo según el tiempo del verbo principal y la relación temporal (anterior/simultáneo/posterior). Esta correlación se llama <span class="hl">consecutio temporum</span> y es una de las marcas más visibles del nivel C1.
+      </div>
+
+      <h3>7.1. Tabla maestra</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Verbo principale</th><th>Relación temporal</th><th>Tiempo del congiuntivo</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr>
+              <td rowspan="2"><b>Presente</b><br>(penso, voglio…)<br><br><b>Futuro</b><br>(penserò, vorrò…)</td>
+              <td>simultáneo / posterior</td>
+              <td class="ok-cell">cong. <b>presente</b></td>
+              <td><em>Penso che <b>parli</b> bene.</em><br><em>Spero che <b>venga</b> domani.</em></td>
+            </tr>
+            <tr>
+              <td>anterior</td>
+              <td class="ok-cell">cong. <b>passato</b></td>
+              <td><em>Penso che <b>abbia parlato</b> ieri.</em></td>
+            </tr>
+            <tr>
+              <td rowspan="2"><b>Passato</b><br>(pensavo, ho pensato, pensai…)<br><br><b>Condizionale</b><br>(penserei, avrei pensato…)</td>
+              <td>simultáneo / posterior</td>
+              <td class="ok-cell">cong. <b>imperfetto</b></td>
+              <td><em>Pensavo che <b>parlasse</b> bene.</em><br><em>Vorrei che <b>venisse</b>.</em></td>
+            </tr>
+            <tr>
+              <td>anterior</td>
+              <td class="ok-cell">cong. <b>trapassato</b></td>
+              <td><em>Pensavo che <b>avesse parlato</b>.</em></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>7.2. Las cuatro combinaciones clave</h3>
+      <div class="example-block">
+        <div class="ex-it"><em>Penso che Marco <b>arrivi</b> in tempo.</em></div>
+        <div class="ex-es">Pienso que Marco llega/llegará a tiempo.</div>
+        <div class="ex-anal"><b>Análisis:</b> principal <em>presente</em> + simultáneo/posterior → cong. <b>presente</b>.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><em>Penso che Marco <b>sia arrivato</b> ieri.</em></div>
+        <div class="ex-es">Pienso que Marco llegó ayer.</div>
+        <div class="ex-anal"><b>Análisis:</b> principal <em>presente</em> + anterior → cong. <b>passato</b>.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><em>Pensavo che Marco <b>arrivasse</b> in tempo.</em></div>
+        <div class="ex-es">Pensaba que Marco llegaba/llegaría a tiempo.</div>
+        <div class="ex-anal"><b>Análisis:</b> principal <em>passato</em> + simultáneo/posterior → cong. <b>imperfetto</b>.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><em>Pensavo che Marco <b>fosse arrivato</b> il giorno prima.</em></div>
+        <div class="ex-es">Pensaba que Marco había llegado el día anterior.</div>
+        <div class="ex-anal"><b>Análisis:</b> principal <em>passato</em> + anterior → cong. <b>trapassato</b>.</div>
+      </div>
+
+      <h3>7.3. Condizionale como «trigger» del imperfetto</h3>
+      <div class="trig-card">
+        <div class="trig-head">
+          <span class="trig-name">Condizionale presente / passato → cong. imperfetto / trapassato</span>
+          <span class="trig-tag">consecutio C1</span>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Vorrei</em> che tu <em>venissi</em> con me.</div>
+          <div class="ex-es">Quisiera que vinieras conmigo.</div>
+          <div class="ex-anal"><b>Análisis:</b> <em>vorrei</em> (condizionale) → cong. <b>imperfetto</b>. NO «*vorrei che tu venga».</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Mi piacerebbe</em> che voi <em>foste</em> contenti.</div>
+          <div class="ex-es">Me gustaría que estuvierais contentos.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Avrei voluto</em> che tu <em>fossi venuto</em>.</div>
+          <div class="ex-es">Habría querido que hubieras venido.</div>
+          <div class="ex-anal"><b>Análisis:</b> condizionale passato + anterior → cong. <b>trapassato</b>.</div>
+        </div>
+      </div>
+
+      <h3>7.4. La excepción: presentes atemporales</h3>
+      <div class="def-box">
+        Cuando la subordinada expresa una <b>verdad general</b> o un hecho válido en el momento de la enunciación, puede usarse el congiuntivo presente incluso con principal en pasado.
+      </div>
+      <div class="example-block">
+        <div class="ex-it">Galileo affermò che la Terra <em>giri</em> attorno al Sole.</div>
+        <div class="ex-es">Galileo afirmó que la Tierra gira en torno al Sol.</div>
+        <div class="ex-anal"><b>Análisis:</b> el contenido es válido siempre, no solo en el pasado. La <em>consecutio</em> estricta pediría <em>girasse</em>, pero el presente «atemporal» también es aceptable en este caso (con verbos de opinión, el congiuntivo presente es más común aquí).</div>
+      </div>
+
+      <h3>7.5. Cuadro sinóptico de las cuatro formas</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Tiempo</th><th>Forma (parlare)</th><th>Función</th></tr></thead>
+          <tbody>
+            <tr><td><b>Presente</b></td><td>che io <em>parli</em></td><td>simultáneo o posterior a principal en presente/futuro</td></tr>
+            <tr><td><b>Passato</b></td><td>che io <em>abbia parlato</em></td><td>anterior a principal en presente/futuro</td></tr>
+            <tr><td><b>Imperfetto</b></td><td>che io <em>parlassi</em></td><td>simultáneo o posterior a principal en pasado/condizionale</td></tr>
+            <tr><td><b>Trapassato</b></td><td>che io <em>avessi parlato</em></td><td>anterior a principal en pasado/condizionale</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="teal-box">
+        <b>Pista para hispanohablantes:</b> la <em>consecutio</em> italiana coincide casi al 100% con la española.<br>
+        <em>«Quería que vinieras» → Volevo che tu venissi.</em><br>
+        <em>«Habría querido que hubieras venido» → Avrei voluto che tu fossi venuto.</em><br>
+        Si dudas, traduce mentalmente al español y la forma italiana será la equivalente directa.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 8: TRAPPOLE + ESEMPI ============ -->
+<section id="s-trappole" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">8. Trappole per Ispanofoni + 20 Esempi Analizzati</h2>
+      <p class="sec-subtitle">Interferenze tipiche e pratica integrata</p>
+
+      <div class="def-box">
+        El hispanohablante tiene la <b>ventaja</b> de poseer ya un sistema de subjuntivo, pero arrastra <b>interferencias específicas</b> sobre la dimensión de registro: tendencia a sobreusar el congiuntivo, traducción literal de «aunque», confusiones con la estructura <em>che + cong. / di + inf.</em>
+      </div>
+
+      <h3>8.1. Trampas más frecuentes</h3>
+      <div id="traps-container"></div>
+
+      <h3>8.2. Veinte oraciones analizadas (registro + modo)</h3>
+      <p style="font-size:.92em;color:var(--text3)">Cada oración incluye su traducción, el modo verbal elegido, la justificación gramatical y la justificación de registro.</p>
+      <div id="sentences-container"></div>
+
+      <h3>8.3. Síntesis final: las siete reglas críticas</h3>
+      <div class="green-box">
+        <b>1.</b> <em>Benché / sebbene / nonostante / malgrado / per quanto</em> → <span class="hl">SIEMPRE congiuntivo</span>. Solo <em>anche se</em> permite indicativo.<br>
+        <b>2.</b> <em>È vero / certo / chiaro / evidente / ovvio / sicuro che</em> → <span class="hl">SIEMPRE indicativo</span>. Negados → congiuntivo.<br>
+        <b>3.</b> Mismo sujeto → <span class="hl">infinito</span> (di / a / per + inf.). Sujetos distintos → <em>che + congiuntivo</em>.<br>
+        <b>4.</b> <em>Penso / credo / mi sembra che</em> en oral admiten indicativo, pero en C1 hay que producir congiuntivo.<br>
+        <b>5.</b> <em>Sperare / temere / volere / desiderare che</em> → <span class="hl">SIEMPRE congiuntivo</span>, sin excepción de registro.<br>
+        <b>6.</b> Condizionale principal → cong. <span class="hl">imperfetto</span> en subordinada (no presente).<br>
+        <b>7.</b> Periodo ipotetico II y III: <em>se + cong. imperfetto/trapassato + condizionale</em>. Nunca doble indicativo en C1.
+      </div>
+
+      <div class="note-box">
+        <b>Última recomendación:</b> en producción libre, cuando dudes, recurre a la <span class="hl">prueba semántica</span>: ¿el contenido se presenta como <b>cierto/objetivo</b>? indicativo. ¿Como <b>valoración/deseo/incertidumbre</b>? congiuntivo. Esta prueba resuelve el 90% de los casos.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+/* =================== DATA: TRAPS =================== */
+const TRAPS = [
+  {
+    name:'Sobreuso del congiuntivo (hipercorrección hispana)',
+    wrong:'È ovvio che lui abbia ragione.',
+    right:'È ovvio che lui ha ragione.',
+    expl:'Las expresiones que presentan el contenido como CIERTO/EVIDENTE (è ovvio, è chiaro, è vero, è certo, è sicuro) rigen indicativo. El español puede usar subjuntivo aquí en algunos registros, pero el italiano no.'
+  },
+  {
+    name:'Benché / sebbene con indicativo (calco del español)',
+    wrong:'Benché è tardi, continuo.',
+    right:'Benché sia tardi, continuo.',
+    expl:'Benché, sebbene, nonostante, malgrado, per quanto → SIEMPRE congiuntivo en italiano. Solo «anche se» (que corresponde al «aunque» factual) admite indicativo.'
+  },
+  {
+    name:'Mismo sujeto con «che + congiuntivo»',
+    wrong:'Penso che (io) abbia ragione.',
+    right:'Penso di avere ragione.',
+    expl:'En español es posible «pienso que (yo) tengo razón»; en italiano la regla es absoluta: mismo sujeto → infinito (di/a/per + inf.). Sujetos distintos → che + congiuntivo.'
+  },
+  {
+    name:'Indicativo con «sperare che / temere che»',
+    wrong:'Spero che viene domani.',
+    right:'Spero che venga domani.',
+    expl:'Los verbos con fuerte carga modal (sperare, temere, volere, desiderare) NO admiten indicativo en ningún registro, ni siquiera coloquial. La sustitución solo se da con pensare/credere/sembrare.'
+  },
+  {
+    name:'Cong. presente con principal en condizionale',
+    wrong:'Vorrei che tu venga con me.',
+    right:'Vorrei che tu venissi con me.',
+    expl:'El condizionale (vorrei, mi piacerebbe, sarebbe meglio…) exige cong. IMPERFETTO en la subordinada, no presente. Es un error de consecutio temporum muy típico del hispanohablante.'
+  },
+  {
+    name:'Doble indicativo en periodo ipotetico II',
+    wrong:'Se avevo più tempo, leggevo di più.',
+    right:'Se avessi più tempo, leggerei di più.',
+    expl:'El periodo hipotético tipo II exige se + cong. imperfetto + condizionale. La construcción con doble indicativo imperfetto existe en habla popular y meridional, pero en C1 se considera error.'
+  },
+  {
+    name:'«Anche se» con congiuntivo (calco al revés)',
+    wrong:'Anche se sia tardi, continuo.',
+    right:'Anche se è tardi, continuo.',
+    expl:'«Anche se» introduce una concesión REAL/factual y por eso rige indicativo, NO congiuntivo. Es el opuesto exacto de benché/sebbene. Confundirlos es muy común.'
+  },
+  {
+    name:'Negación que no se traduce («non» pleonástico)',
+    wrong:'Aspetta finché arriva il treno.',
+    right:'Aspetta finché non arriva il treno.',
+    expl:'En italiano formal, «finché» y «a meno che» exigen un «non» pleonástico que NO se traduce. Estructura fija: finché non + cong. / a meno che + soggetto + non + cong.'
+  },
+  {
+    name:'«Magari» modal con congiuntivo (en lugar de indicativo)',
+    wrong:'Magari venga anche Marco. (= a lo mejor)',
+    right:'Magari viene anche Marco.',
+    expl:'«Magari» como adverbio de probabilidad («a lo mejor») rige indicativo. Solo en construcción exclamativa de deseo («¡Magari potessi farlo!») exige congiuntivo imperfetto.'
+  },
+  {
+    name:'Indicativo con «prima che»',
+    wrong:'Prima che parte, salutalo.',
+    right:'Prima che parta, salutalo.',
+    expl:'«Prima che» exige congiuntivo siempre (la acción aún no se ha producido). Si los sujetos coinciden, se sustituye por «prima di + infinito».'
+  }
+];
+
+/* =================== DATA: 20 SENTENCES =================== */
+const SENTENCES = [
+  {
+    it:'Benché <em>sia</em> esausto, continuo a lavorare al progetto.',
+    es:'Aunque esté agotado, sigo trabajando en el proyecto.',
+    mod:'congiuntivo presente',
+    gramm:'Benché → siempre congiuntivo. Concesiva «concedida».',
+    reg:'Obligatorio en todos los registros. Sustituir por indicativo sería agramatical.'
+  },
+  {
+    it:'Sebbene <em>conosca</em> bene la città, mi sono perso.',
+    es:'Aunque conozco bien la ciudad, me he perdido.',
+    mod:'congiuntivo presente',
+    gramm:'Sebbene exige congiuntivo. Equivalente formal de benché.',
+    reg:'Marca registro estándar/culto. En oral popular se oiría «sebbene conosco», pero es error.'
+  },
+  {
+    it:'Anche se <em>è</em> tardi, finiamo questo capitolo.',
+    es:'Aunque es tarde, terminamos este capítulo.',
+    mod:'indicativo presente',
+    gramm:'Anche se rige indicativo (concesión real/factual).',
+    reg:'Neutro en todos los registros. El congiuntivo aquí sería un error de hipercorrección.'
+  },
+  {
+    it:'Ritengo che la sua tesi <em>sia</em> da rivedere completamente.',
+    es:'Considero que su tesis debe ser revisada completamente.',
+    mod:'congiuntivo presente',
+    gramm:'Ritenere che → congiuntivo (opinión).',
+    reg:'Registro alto. «Ritengo» (más formal que «penso») se combina obligatoriamente con congiuntivo. En oral cuidado.'
+  },
+  {
+    it:'È ovvio che <em>ha</em> ragione: lo dimostrano i fatti.',
+    es:'Es obvio que tiene razón: lo demuestran los hechos.',
+    mod:'indicativo presente',
+    gramm:'È ovvio che → indicativo (contenido presentado como cierto).',
+    reg:'Obligatorio en todos los registros. Usar congiuntivo aquí es hipercorrección típica del hispanohablante.'
+  },
+  {
+    it:'Non è vero che lui <em>abbia</em> mentito: è stato frainteso.',
+    es:'No es verdad que él haya mentido: ha sido malinterpretado.',
+    mod:'congiuntivo passato',
+    gramm:'È vero che + indicativo → afirmativo; non è vero che + congiuntivo → negado.',
+    reg:'La negación arrastra al congiuntivo: marca registro estándar.'
+  },
+  {
+    it:'Se <em>avessi</em> saputo la verità, mi <em>sarei</em> comportato diversamente.',
+    es:'Si hubiera sabido la verdad, me habría comportado de otra manera.',
+    mod:'cong. trapassato + condiz. passato',
+    gramm:'Periodo ipotetico tipo III: irreale del passato.',
+    reg:'C1 exige esta forma. La variante popular «se avevo saputo, mi comportavo» marca registro bajo.'
+  },
+  {
+    it:'Magari <em>potessi</em> tornare indietro nel tempo!',
+    es:'¡Ojalá pudiera volver atrás en el tiempo!',
+    mod:'congiuntivo imperfetto',
+    gramm:'Magari + cong. imperfetto = deseo irrealizable.',
+    reg:'Construcción fija. El indicativo sería agramatical en este uso exclamativo.'
+  },
+  {
+    it:'Parla come se <em>conoscesse</em> tutti i segreti del mestiere.',
+    es:'Habla como si conociera todos los secretos del oficio.',
+    mod:'congiuntivo imperfetto',
+    gramm:'Come se → siempre cong. imperfetto / trapassato.',
+    reg:'Obligatorio en todos los registros. No admite indicativo.'
+  },
+  {
+    it:'Ti spiego il problema <em>affinché</em> tu <em>possa</em> aiutarmi.',
+    es:'Te explico el problema para que puedas ayudarme.',
+    mod:'congiuntivo presente',
+    gramm:'Affinché (finale) → siempre congiuntivo.',
+    reg:'Marcador de registro alto. En oral colloquial se preferiría «così che tu possa» o «perché tu possa».'
+  },
+  {
+    it:'Chiunque <em>arrivi</em> in ritardo dovrà aspettare fuori.',
+    es:'Quienquiera que llegue tarde tendrá que esperar fuera.',
+    mod:'congiuntivo presente',
+    gramm:'Chiunque → siempre congiuntivo (indefinido).',
+    reg:'Estructura blindada. No admite indicativo.'
+  },
+  {
+    it:'Penso <em>di avere</em> commesso un errore di valutazione.',
+    es:'Pienso que he cometido un error de valoración.',
+    mod:'infinito passato',
+    gramm:'Mismo sujeto (io penso / io ho commesso) → di + infinito, no che + congiuntivo.',
+    reg:'Regla absoluta del italiano. «Penso che (io) abbia commesso» es calco del español, error en C1.'
+  },
+  {
+    it:'Penso che Marco <em>abbia</em> commesso un errore.',
+    es:'Pienso que Marco ha cometido un error.',
+    mod:'congiuntivo passato',
+    gramm:'Sujetos distintos (io penso / Marco ha commesso) + anterior → cong. passato.',
+    reg:'Estándar escrito. En parlato basso se oye «penso che Marco ha commesso», pero en C1 hay que producir congiuntivo.'
+  },
+  {
+    it:'Vorrei che tu mi <em>dicessi</em> sempre la verità.',
+    es:'Quisiera que me dijeras siempre la verdad.',
+    mod:'congiuntivo imperfetto',
+    gramm:'Condizionale (vorrei) → cong. imperfetto, no presente.',
+    reg:'Consecutio temporum estricta. «Vorrei che tu dica» es error C1 muy típico.'
+  },
+  {
+    it:'Pensavo che voi <em>foste</em> già partiti da ore.',
+    es:'Pensaba que ya os habíais ido hace horas.',
+    mod:'congiuntivo trapassato',
+    gramm:'Principal passato (pensavo) + anterior → cong. trapassato.',
+    reg:'Estándar escrito y oral cuidado. Marca dominio de la consecutio.'
+  },
+  {
+    it:'Prima che <em>cominci</em> la riunione, vorrei dire una cosa.',
+    es:'Antes de que empiece la reunión, quisiera decir algo.',
+    mod:'congiuntivo presente',
+    gramm:'Prima che + cong. (siempre). Sujeto distinto (io / la riunione).',
+    reg:'Obligatorio en todos los registros.'
+  },
+  {
+    it:'A meno che non <em>piova</em>, faremo la passeggiata.',
+    es:'A menos que llueva, daremos el paseo.',
+    mod:'congiuntivo presente',
+    gramm:'A meno che + non pleonástico + cong. presente.',
+    reg:'Estándar escrito. En oral coloquial se preferiría «se non piove».'
+  },
+  {
+    it:'Mi sembra che la situazione <em>vada</em> migliorando lentamente.',
+    es:'Me parece que la situación va mejorando lentamente.',
+    mod:'congiuntivo presente',
+    gramm:'Sembrare che + cong. (siempre prescriptivo).',
+    reg:'Estándar. En parlato basso: «mi sembra che va migliorando», muy marcado para C1.'
+  },
+  {
+    it:'È necessario che gli studenti <em>arrivino</em> puntuali agli esami.',
+    es:'Es necesario que los estudiantes lleguen puntuales a los exámenes.',
+    mod:'congiuntivo presente',
+    gramm:'È necessario che → siempre congiuntivo (valoración modal).',
+    reg:'Obligatorio. No admite indicativo en ningún registro.'
+  },
+  {
+    it:'È chiaro che il governo <em>non vuole</em> affrontare il problema.',
+    es:'Está claro que el gobierno no quiere afrontar el problema.',
+    mod:'indicativo presente',
+    gramm:'È chiaro che → indicativo (contenido cierto/evidente).',
+    reg:'Obligatorio en todos los registros. Congiuntivo sería hipercorrección.'
+  },
+  {
+    it:'Per quanto <em>si sforzi</em>, non riesce a convincermi.',
+    es:'Por mucho que se esfuerce, no consigue convencerme.',
+    mod:'congiuntivo presente',
+    gramm:'Per quanto → siempre congiuntivo (concesiva intensiva).',
+    reg:'Obligatorio. Marca registro estándar/culto.'
+  },
+  {
+    it:'Avrei voluto che tu <em>fossi venuto</em> alla mia laurea.',
+    es:'Habría querido que hubieras venido a mi graduación.',
+    mod:'congiuntivo trapassato',
+    gramm:'Condizionale passato (avrei voluto) + anterior → cong. trapassato.',
+    reg:'Estándar escrito. Demuestra dominio máximo de la consecutio.'
+  }
+];
+
+/* =================== RENDERERS =================== */
+function renderTraps(){
+  const c = document.getElementById('traps-container');
+  let html = '';
+  TRAPS.forEach(t=>{
+    html += `<div class="trap-card">
+      <div class="trap-card-header"><span class="trap-name">${t.name}</span></div>
+      <div class="trap-vs">
+        <div class="trap-wrong">${t.wrong}</div>
+        <div class="trap-right">${t.right}</div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function renderSentences(){
+  const c = document.getElementById('sentences-container');
+  let html = '';
+  SENTENCES.forEach((s,i)=>{
+    html += `<div class="sent-card">
+      <div class="sent-it"><span class="sent-num">${i+1}</span><em>${s.it}</em></div>
+      <div class="sent-es">${s.es}</div>
+      <div class="sent-anal">
+        <b>Modo:</b> ${s.mod}<br>
+        <b>Gramática:</b> ${s.gramm}<br>
+        <b>Registro:</b> ${s.reg}
+      </div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+/* =================== UI HELPERS =================== */
+function showSection(id, btn){
+  document.querySelectorAll('.sec-block').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  else{
+    const btns = document.querySelectorAll('.snav-btn');
+    btns.forEach(b=>{ if(b.getAttribute('onclick').includes(`'${id}'`)) b.classList.add('active'); });
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function setFontSize(v){
+  document.documentElement.style.setProperty('--fs', v+'px');
+}
+
+function selectChip(ns, idx){
+  document.querySelectorAll('.chip').forEach(c=>{
+    const oc = c.getAttribute('onclick')||'';
+    if(oc.includes(`'${ns}'`)) c.classList.remove('active');
+  });
+  document.querySelectorAll('.chip').forEach(c=>{
+    const oc = c.getAttribute('onclick')||'';
+    if(oc.includes(`'${ns}',${idx}`)) c.classList.add('active');
+  });
+  document.querySelectorAll(`.chip-panel`).forEach(p=>{
+    const dc = p.getAttribute('data-chip')||'';
+    if(dc.startsWith(ns+'-')) p.classList.remove('active');
+  });
+  const target = document.querySelector(`.chip-panel[data-chip="${ns}-${idx}"]`);
+  if(target) target.classList.add('active');
+}
+
+/* =================== INIT =================== */
+renderTraps();
+renderSentences();
+</script>
+
+</body>
+</html>

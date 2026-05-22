@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Dislocazione e la Topicalizzazione · Grammatica C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ede9df;
+  --card:#faf7f1;
+  --border:#c4bead;
+  --text:#1a1814;
+  --text2:#44413a;
+  --text3:#706c64;
+  --accent:#7a5a0a;
+  --accent-light:#f0e0c0;
+  --accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,0.08);
+  --radius:14px;
+  --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --red:#a81e2e; --red-bg:#fce6e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --teal:#0e6e6e; --teal-bg:#e0f4f4;
+  --fs:15px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-size:var(--fs);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:60px;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text);margin:0 0 .4em;font-weight:600;line-height:1.2}
+h1{font-size:1.85em;font-weight:700}
+h2{font-size:1.45em}
+h3{font-size:1.15em;margin-top:1.1em}
+h4{font-size:1em;font-weight:600}
+p{margin:.5em 0}
+em{font-style:italic}
+b,strong{font-weight:600}
+
+/* HEADER */
+.site-header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 18px 16px;
+  position:relative;
+}
+.site-header .inner{max-width:860px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title-wrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.site-header h1{margin:0;font-size:1.9em;color:var(--text)}
+.header-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.85em;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid var(--accent-mid);
+}
+.subtitle{color:var(--text3);font-size:.92em;margin:4px 0 12px;font-style:italic}
+.stat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stat-pill{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:4px 10px;
+  font-size:.78em;
+  border-radius:999px;
+  font-weight:500;
+}
+.font-ctrl{display:flex;align-items:center;gap:8px;font-size:.78em;color:var(--text3)}
+.font-ctrl input[type=range]{width:90px}
+
+/* SECTION NAV */
+.section-nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:10px 18px;
+  margin-top:14px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.section-nav::-webkit-scrollbar{display:none}
+.section-nav .inner{max-width:860px;margin:0 auto;display:flex;gap:6px;flex-wrap:nowrap}
+.snav-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:6px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82em;
+  border-radius:999px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .15s;
+  font-weight:500;
+}
+.snav-btn:hover{background:var(--accent-light)}
+.snav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* MAIN LAYOUT */
+.main-layout{
+  max-width:860px;
+  margin:0 auto;
+  padding:20px 18px;
+}
+.sec-block{display:none}
+.sec-block.active{display:block;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* GRAM-CARD */
+.gram-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.gram-card-body{padding:18px}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:1.45em;
+  margin:0 0 .4em;
+  color:var(--text);
+}
+.sec-subtitle{color:var(--text3);font-style:italic;font-size:.95em;margin:0 0 14px}
+
+/* DEF-BOX */
+.def-box{
+  background:var(--warn-bg);
+  border-left:4px solid var(--accent);
+  padding:12px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:14px 0;
+  font-size:.96em;
+}
+.def-box b{color:var(--accent)}
+
+/* WARN-BOX */
+.warn-box{
+  background:#fff4e0;
+  border:1px solid #c8900a;
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:12px 0;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:.93em;
+  color:var(--text2);
+}
+.warn-box .ico{font-size:1.1em;flex-shrink:0;line-height:1.3}
+
+/* EXAMPLE BLOCK */
+.example-block{
+  background:var(--blue-bg);
+  border-left:3px solid var(--blue);
+  padding:9px 12px;
+  margin:8px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.ex-it{font-weight:500;color:var(--text)}
+.ex-it em{font-style:normal;color:var(--blue);font-weight:600}
+.ex-es{font-style:italic;color:var(--text2);font-size:.88em;margin-top:2px}
+.ex-note{font-size:.84em;color:var(--text3);margin-top:4px;font-style:italic}
+
+/* NOTE-BOX */
+.note-box{
+  background:var(--purple-bg);
+  border-left:3px solid var(--purple);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.note-box b{color:var(--purple)}
+
+/* GREEN-BOX */
+.green-box{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.green-box b{color:var(--green)}
+
+/* TEAL-BOX */
+.teal-box{
+  background:var(--teal-bg);
+  border-left:3px solid var(--teal);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.teal-box b{color:var(--teal)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.gram-table{width:100%;border-collapse:collapse;font-size:.92em;background:var(--card)}
+.gram-table th{
+  background:var(--accent-light);
+  color:var(--accent);
+  font-family:'DM Sans',sans-serif;
+  font-size:.72em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:8px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--accent-mid);
+}
+.gram-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.gram-table tr:nth-child(even) td{background:rgba(196,190,173,0.12)}
+.gram-table tr:last-child td{border-bottom:none}
+.ok-cell{color:var(--green);font-weight:500}
+.err-cell{color:var(--red);font-weight:500}
+.warn-cell{color:var(--accent);font-weight:500}
+.tbl-pron{font-weight:600;color:var(--text);background:rgba(196,190,173,0.18)}
+
+/* CHIPS */
+.chip-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:14px 0 10px;
+  padding-bottom:4px;
+}
+.chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:5px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.83em;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{background:var(--accent-light)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-panel{display:none}
+.chip-panel.active{display:block;animation:fadeIn .25s}
+
+/* TRAPS */
+.trap-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.trap-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trap-name{font-weight:600;color:var(--text);font-size:.96em}
+.trap-vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.trap-wrong{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-wrong::before{content:'✗ ';color:var(--red);font-weight:700}
+.trap-right{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-right::before{content:'✓ ';color:var(--green);font-weight:700}
+.trap-expl{font-size:.88em;color:var(--text2);font-style:italic;margin-top:6px}
+@media (max-width:520px){.trap-vs{grid-template-columns:1fr}}
+
+/* MINI-TABLE */
+.mini-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.88em;
+  background:var(--card);
+  margin:10px 0;
+}
+.mini-table td{
+  padding:5px 9px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.mini-table td:first-child{color:var(--text3);font-weight:500;width:38%}
+.mini-table td:last-child{color:var(--text);font-weight:600}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table .hl-form{color:var(--accent);font-weight:700}
+
+/* TAG/LABEL */
+.tag{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:.72em;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-right:6px;
+  border:1px solid;
+}
+.tag-sin{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.tag-des{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.tag-top{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.tag-scs{background:var(--teal-bg);color:var(--teal);border-color:var(--teal)}
+
+/* UTILS */
+.hl{color:var(--accent);font-weight:600}
+.dim{color:var(--text3)}
+
+/* ANALYSIS LIST */
+.analysis-list{
+  font-size:.86em;
+  color:var(--text2);
+  margin-top:6px;
+  padding-left:0;
+  list-style:none;
+}
+.analysis-list li{
+  margin:2px 0;
+  padding-left:12px;
+  position:relative;
+}
+.analysis-list li::before{
+  content:'·';
+  position:absolute;
+  left:2px;
+  color:var(--accent);
+  font-weight:700;
+}
+.analysis-list b{color:var(--accent)}
+
+/* INFO STRUCT DIAGRAM */
+.struct-diag{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 12px;
+  margin:10px 0;
+  font-family:'DM Sans',sans-serif;
+  font-size:.9em;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+.struct-tag{
+  padding:3px 9px;
+  border-radius:999px;
+  font-size:.78em;
+  font-weight:600;
+  border:1px solid;
+}
+.struct-tema{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.struct-rema{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.struct-pron{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.struct-arrow{color:var(--text3);font-weight:700}
+.struct-text{font-style:italic;color:var(--text2)}
+
+/* RESPONSIVE */
+@media (max-width:520px){
+  .site-header{padding:14px 14px 12px}
+  h1{font-size:1.5em}
+  .main-layout{padding:14px}
+  .gram-card-body{padding:14px}
+  .stat-pill{font-size:.72em}
+  .header-top{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="inner">
+    <div class="header-top">
+      <div>
+        <div class="header-title-wrap">
+          <h1>La Dislocazione e la Topicalizzazione</h1>
+          <span class="header-tag">Grammatica</span>
+        </div>
+        <div class="subtitle">Struttura informativa · C1 · per ispanofoni</div>
+        <div class="stat-bar">
+          <span class="stat-pill">10 sezioni</span>
+          <span class="stat-pill">sinistra + destra</span>
+          <span class="stat-pill">ripresa pronominale</span>
+          <span class="stat-pill">tema/rema</span>
+          <span class="stat-pill">20+ esempi analizzati</span>
+        </div>
+      </div>
+      <div class="font-ctrl">
+        <span>A-</span>
+        <input type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+        <span>A+</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION NAV -->
+<nav class="section-nav" id="sec-nav">
+  <div class="inner">
+    <button class="snav-btn active" onclick="showSection('s-concetto',this)">1. Concetto</button>
+    <button class="snav-btn" onclick="showSection('s-sinistra',this)">2. Sinistra</button>
+    <button class="snav-btn" onclick="showSection('s-ripresa',this)">3. Ripresa pronominale</button>
+    <button class="snav-btn" onclick="showSection('s-destra',this)">4. Destra</button>
+    <button class="snav-btn" onclick="showSection('s-confronto',this)">5. Sinistra vs Destra</button>
+    <button class="snav-btn" onclick="showSection('s-topicalizz',this)">6. Topicalizzazione</button>
+    <button class="snav-btn" onclick="showSection('s-temarema',this)">7. Tema-Rema</button>
+    <button class="snav-btn" onclick="showSection('s-registro',this)">8. Registro</button>
+    <button class="snav-btn" onclick="showSection('s-trappole',this)">9. Trappole ES</button>
+    <button class="snav-btn" onclick="showSection('s-esempi',this)">10. Esempi analizzati</button>
+  </div>
+</nav>
+
+<main class="main-layout">
+
+<!-- SECCIÓN 1 · CONCETTO -->
+<section id="s-concetto" class="sec-block active">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">1. Che cos'è la dislocazione</h2>
+      <p class="sec-subtitle">Spostare un elemento per gestire l'informazione</p>
+
+      <div class="def-box">
+        La <b>dislocazione</b> es un fenómeno de <span class="hl">estructura informativa</span> mediante el cual un elemento de la oración se extrae de su posición canónica y se coloca al inicio (<em>dislocazione a sinistra</em>) o al final (<em>dislocazione a destra</em>) del enunciado. La posición canónica queda ocupada por un <b>pronombre de retoma</b> (<em>ripresa pronominale</em>) que mantiene la cohesión sintáctica con el verbo.
+      </div>
+
+      <h3>Estructura básica del fenómeno</h3>
+      <div class="struct-diag">
+        <span class="struct-text">Frase canonica:</span>
+        <span class="struct-text">Ho letto</span>
+        <span class="struct-rema">il libro</span>
+        <span class="struct-text">ieri.</span>
+      </div>
+      <div class="struct-diag">
+        <span class="struct-tag struct-tema">DISL. SINISTRA</span>
+        <span class="struct-tema">Il libro,</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-pron">l'</span>
+        <span class="struct-text">ho letto ieri.</span>
+      </div>
+      <div class="struct-diag">
+        <span class="struct-tag struct-tema">DISL. DESTRA</span>
+        <span class="struct-pron">L'</span>
+        <span class="struct-text">ho letto ieri,</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-tema">il libro.</span>
+      </div>
+
+      <h3>Por qué existe la dislocazione</h3>
+      <p>El orden canónico italiano (S-V-O) responde a la sintaxis. Pero los hablantes <span class="hl">también necesitan gestionar la información</span>: marcar qué es ya conocido (el tema) y qué es novedad (el rema). La dislocazione es la herramienta morfosintáctica que permite reorganizar el enunciado <b>sin cambiar su contenido proposicional</b>, solo su empaquetado informativo.</p>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Para el hispanohablante:</b> el español también disloca («El libro, lo leí ayer»), pero de forma <span class="hl">menos sistemática y menos frecuente</span> que el italiano. En italiano, sobre todo en lengua oral y en registros intermedios escritos, la dislocazione es un recurso central, no marcado. Ignorarla suena demasiado rígido, libresco, traducido.</div>
+      </div>
+
+      <h3>Las cuatro figuras de la estructura informativa</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Fenómeno</th><th>Posición</th><th>Pronombre</th><th>Función</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tag-sin">DISL. SINISTRA</span></td><td>Inicio</td><td class="ok-cell">Obligatorio</td><td>Tematización (introducir el tema)</td></tr>
+            <tr><td><span class="tag tag-des">DISL. DESTRA</span></td><td>Final</td><td class="ok-cell">Obligatorio</td><td>Aclaración del referente del pronombre</td></tr>
+            <tr><td><span class="tag tag-top">TOPICALIZZAZIONE</span></td><td>Inicio</td><td class="err-cell">Sin pronombre</td><td>Contraste, énfasis marcado</td></tr>
+            <tr><td><span class="tag tag-scs">FRASE SCISSA</span></td><td>È X che…</td><td class="warn-cell">essere + che</td><td>Focalización exclusiva</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="green-box">
+        <b>Idea clave:</b> dislocazione ≠ desorden, dislocazione = <span class="hl">orden marcado con función discursiva</span>. Es la gramática del italiano poniéndose al servicio de la pragmática.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 2 · DISLOCAZIONE A SINISTRA -->
+<section id="s-sinistra" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">2. Dislocazione a sinistra</h2>
+      <p class="sec-subtitle">El elemento dislocado abre la oración como tema</p>
+
+      <div class="def-box">
+        En la <b>dislocazione a sinistra</b>, un elemento de la oración (objeto directo, objeto indirecto, complemento partitivo, complemento locativo…) se extrae de su posición canónica y se coloca <span class="hl">al inicio del enunciado</span>, separado por una pausa (en escrito, coma). La posición canónica queda ocupada por un <b>pronombre de retoma</b> obligatorio.
+      </div>
+
+      <h3>Esquema general</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-tema">TEMA</span>
+        <span class="struct-tema">elemento dislocado</span>
+        <span class="struct-text">,</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-pron">pronome di ripresa</span>
+        <span class="struct-text">+ verbo + resto</span>
+      </div>
+
+      <h3>Ejemplos con análisis</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Il libro</em>, <em>l'</em>ho letto ieri.</div>
+        <div class="ex-es">El libro, lo leí ayer.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento dislocado:</b> <em>il libro</em> (objeto directo)</li>
+          <li><b>Ripresa:</b> <em>l'</em> = pronombre directo masc. sing. (lo + apóstrofo)</li>
+          <li><b>Función:</b> el libro era ya el tema del discurso; ahora se predica algo de él (lo leí ayer = rema)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>A Marco</em>, <em>gli</em> ho scritto una lettera.</div>
+        <div class="ex-es">A Marco, le he escrito una carta.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento dislocado:</b> <em>a Marco</em> (objeto indirecto)</li>
+          <li><b>Ripresa:</b> <em>gli</em> = pronombre indirecto masc. sing.</li>
+          <li><b>Función:</b> Marco se establece como tema; el rema es «he escrito una carta»</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Di politica</em>, non <em>ne</em> voglio sentire parlare.</div>
+        <div class="ex-es">De política, no quiero ni oír hablar.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento dislocado:</b> <em>di politica</em> (complemento de argumento, introducido por <em>di</em>)</li>
+          <li><b>Ripresa:</b> <em>ne</em> = pronombre partitivo/de argumento</li>
+          <li><b>Función:</b> la política es el tema; el rechazo es el rema</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>La pizza</em>, <em>la</em> preferisco margherita.</div>
+        <div class="ex-es">La pizza, la prefiero margarita.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento dislocado:</b> <em>la pizza</em> (objeto directo fem. sing.)</li>
+          <li><b>Ripresa:</b> <em>la</em> = pronombre directo fem. sing.</li>
+          <li><b>Concordancia:</b> pizza (f.sg.) → la (f.sg.) ✓</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>In Italia</em>, <em>ci</em> sono stato due volte.</div>
+        <div class="ex-es">En Italia, he estado dos veces.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento dislocado:</b> <em>in Italia</em> (complemento locativo)</li>
+          <li><b>Ripresa:</b> <em>ci</em> = pronombre locativo</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Quel film</em>, <em>l'</em>abbiamo visto sabato scorso.</div>
+        <div class="ex-es">Esa película, la vimos el sábado pasado.</div>
+        <ul class="analysis-list">
+          <li><b>Concordancia del participio:</b> con dislocazione a sinistra del objeto directo, el participio concuerda con el pronombre clítico → <em>visto</em> (m.sg.) porque <em>l'</em> = lo</li>
+        </ul>
+      </div>
+
+      <h3>Función discursiva</h3>
+      <div class="green-box">
+        <b>El elemento dislocado a la izquierda es el TEMA del enunciado:</b><br>
+        — información <span class="hl">conocida</span> (ya mencionada o presupuesta por el contexto)<br>
+        — el <span class="hl">marco</span> al que se va a referir lo que sigue<br>
+        — el <span class="hl">referente</span> que el hablante quiere fijar antes de predicar
+      </div>
+
+      <div class="note-box">
+        <b>Prosodia:</b> en italiano hablado, el elemento dislocado a la izquierda se pronuncia con una <em>entonación ascendente</em>, seguida de una breve pausa, y luego la oración «principal» con su propia curva entonativa. En la escritura, esa pausa corresponde a la coma.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 3 · RIPRESA PRONOMINALE -->
+<section id="s-ripresa" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">3. Il pronome di ripresa · le regole</h2>
+      <p class="sec-subtitle">Qué pronombre usar y por qué es obligatorio</p>
+
+      <div class="def-box">
+        El <b>pronombre de retoma</b> (<em>pronome di ripresa</em>) es el clítico que ocupa la posición canónica del elemento dislocado dentro de la oración. Su forma depende de la <span class="hl">función sintáctica</span> del elemento desplazado y debe <span class="hl">concordar en género y número</span> con él.
+      </div>
+
+      <h3>Tabla de correspondencias</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Elemento dislocado</th><th>Función</th><th>Pronome di ripresa</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td>Il libro</td><td>OD m.sg.</td><td class="tbl-pron">lo / l'</td><td><em>Il libro, l'ho letto.</em></td></tr>
+            <tr><td>La pizza</td><td>OD f.sg.</td><td class="tbl-pron">la</td><td><em>La pizza, la mangio io.</em></td></tr>
+            <tr><td>I libri</td><td>OD m.pl.</td><td class="tbl-pron">li</td><td><em>I libri, li ho già letti.</em></td></tr>
+            <tr><td>Le case</td><td>OD f.pl.</td><td class="tbl-pron">le</td><td><em>Le case, le hanno vendute.</em></td></tr>
+            <tr><td>A Marco</td><td>OI m.sg.</td><td class="tbl-pron">gli</td><td><em>A Marco, gli scrivo domani.</em></td></tr>
+            <tr><td>A Maria</td><td>OI f.sg.</td><td class="tbl-pron">le</td><td><em>A Maria, le telefono dopo.</em></td></tr>
+            <tr><td>Ai bambini / Alle ragazze</td><td>OI pl.</td><td class="tbl-pron">gli (loro)</td><td><em>Ai bambini, gli regalo questo.</em></td></tr>
+            <tr><td>Di vino / Di amici</td><td>Partitivo / di-argumento</td><td class="tbl-pron">ne</td><td><em>Di vino, ne ho bevuto poco.</em></td></tr>
+            <tr><td>In Italia / A Roma</td><td>Locativo</td><td class="tbl-pron">ci</td><td><em>A Roma, ci vado spesso.</em></td></tr>
+            <tr><td>A questo problema</td><td>A + argumento</td><td class="tbl-pron">ci</td><td><em>A questo, ci penso io.</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Reglas críticas</h3>
+
+      <div class="green-box">
+        <b>Regla 1 — Obligatoriedad:</b> en la dislocazione, el pronombre de retoma es <span class="hl">obligatorio</span>. Sin él, la oración es agramatical o cambia de naturaleza (se convierte en topicalizzazione, mucho más marcada).<br>
+        ✗ <em>*Il libro, ho letto ieri.</em><br>
+        ✓ <em>Il libro, l'ho letto ieri.</em>
+      </div>
+
+      <div class="green-box">
+        <b>Regla 2 — Concordancia:</b> el pronombre concuerda en género y número con el elemento dislocado.<br>
+        ✗ <em>Le case, l'ho viste.</em><br>
+        ✓ <em>Le case, le ho viste.</em>
+      </div>
+
+      <div class="green-box">
+        <b>Regla 3 — Concordancia del participio:</b> en tiempos compuestos, el participio concuerda con el clítico de OD (lo, la, li, le).<br>
+        ✓ <em>La pizza, l'ho mangiata.</em> (mangiata, f.sg.)<br>
+        ✓ <em>I libri, li ho letti.</em> (letti, m.pl.)<br>
+        ✓ <em>Le case, le ho vendute.</em> (vendute, f.pl.)
+      </div>
+
+      <div class="green-box">
+        <b>Regla 4 — <em>ne</em> con partitivos:</b> cuando el elemento dislocado lleva la preposición <em>di</em> o expresa cantidad/partición, el clítico es siempre <em>ne</em>.<br>
+        ✓ <em>Di soldi, non ne ho.</em><br>
+        ✓ <em>Di amici, ne ho pochi.</em>
+      </div>
+
+      <div class="green-box">
+        <b>Regla 5 — <em>ci</em> con locativos y argumentos en «a»:</b> los locativos y ciertos argumentos preposicionales con <em>a</em> (pensare a, credere a…) retoman con <em>ci</em>.<br>
+        ✓ <em>A Roma, ci vivo da dieci anni.</em><br>
+        ✓ <em>A quello che hai detto, ci penserò.</em>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Caso problemático — OI plural:</b> en italiano contemporáneo hablado, el pronombre <em>gli</em> sustituye a <em>loro</em> también para el plural y para el femenino plural. Por eso son corrientes formas como <em>Ai bambini, gli ho dato i regali</em> o <em>Alle ragazze, gli ho detto tutto</em>, aunque la norma escrita conservadora preferiría <em>ho dato loro / ho detto loro</em>.</div>
+      </div>
+
+      <h3>Combinaciones de pronombres</h3>
+      <p>Cuando el elemento dislocado convive con otros clíticos, se combinan según las reglas habituales:</p>
+      <div class="example-block">
+        <div class="ex-it"><em>Il regalo</em>, a Marco <em>glielo</em> ho già dato.</div>
+        <div class="ex-es">El regalo, a Marco, ya se lo he dado.</div>
+        <div class="ex-note">glielo = gli (OI) + lo (OD), por la doble dislocazione</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><em>Di pizza</em>, a noi <em>ce ne</em> hanno portate due.</div>
+        <div class="ex-es">De pizza, a nosotros nos trajeron dos.</div>
+        <div class="ex-note">ce ne = ci (OI nos) + ne (partitivo)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 4 · DISLOCAZIONE A DESTRA -->
+<section id="s-destra" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">4. Dislocazione a destra</h2>
+      <p class="sec-subtitle">El elemento se añade al final como aclaración del pronombre</p>
+
+      <div class="def-box">
+        En la <b>dislocazione a destra</b>, el orden se invierte respecto a la sinistra: la oración aparece <span class="hl">completa con el pronombre clítico</span> en su posición canónica, y el elemento dislocado se añade <b>al final</b>, después de una pausa (en escrito, coma), como aclaración o reasunción del referente del pronombre.
+      </div>
+
+      <h3>Esquema general</h3>
+      <div class="struct-diag">
+        <span class="struct-pron">pronome</span>
+        <span class="struct-text">+ verbo + resto</span>
+        <span class="struct-text">,</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-tag struct-tema">TEMA</span>
+        <span class="struct-tema">elemento dislocato</span>
+      </div>
+
+      <h3>Ejemplos con análisis</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><em>L'</em>ho letto ieri, <em>il libro</em>.</div>
+        <div class="ex-es">Lo leí ayer, el libro.</div>
+        <ul class="analysis-list">
+          <li><b>Pronome anticipatorio:</b> <em>l'</em> (= il libro)</li>
+          <li><b>Aclaración pospuesta:</b> <em>il libro</em></li>
+          <li><b>Función:</b> el hablante empieza a hablar de algo que su interlocutor podría no identificar de inmediato, y precisa al final cuál es ese «lo»</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Gli</em> ho scritto, <em>a Marco</em>.</div>
+        <div class="ex-es">Le he escrito, a Marco.</div>
+        <ul class="analysis-list">
+          <li><b>Pronome:</b> <em>gli</em> (OI)</li>
+          <li><b>Aclaración:</b> <em>a Marco</em></li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Ne</em> voglio uno, <em>di caffè</em>.</div>
+        <div class="ex-es">Quiero uno, de café.</div>
+        <ul class="analysis-list">
+          <li><b>Pronome:</b> <em>ne</em> (partitivo)</li>
+          <li><b>Aclaración:</b> <em>di caffè</em></li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>La</em> conosco bene, <em>quella ragazza</em>.</div>
+        <div class="ex-es">La conozco bien, a esa chica.</div>
+        <ul class="analysis-list">
+          <li><b>Concordancia:</b> la (f.sg.) ↔ quella ragazza (f.sg.)</li>
+          <li><b>Tono típico:</b> oral, casi confidencial</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Non <em>ci</em> credo, <em>a queste storie</em>.</div>
+        <div class="ex-es">No me las creo, esas historias.</div>
+      </div>
+
+      <h3>Función discursiva</h3>
+      <div class="green-box">
+        <b>El elemento dislocado a la derecha aporta:</b><br>
+        — <span class="hl">aclaración</span> del referente del pronombre («especifico de qué hablo»)<br>
+        — un matiz de <span class="hl">énfasis afectivo</span> o evaluativo<br>
+        — la sensación de un comentario añadido, casi como un afterthought
+      </div>
+
+      <div class="note-box">
+        <b>Característica oral:</b> la dislocazione a destra es típicamente coloquial. El hablante empieza la frase, la dice entera, y solo al final añade el elemento aclarador, como si pensara «¿se entiende de qué hablo?, mejor lo especifico». Es muy común en el habla informal y en los diálogos de la narrativa.
+      </div>
+
+      <h3>Diferencia funcional con la a sinistra</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">SINISTRA</span> <em>Il libro</em>, <em>l'</em>ho letto ieri.</div>
+        <div class="ex-es">Establezco «el libro» como tema, y luego predico algo sobre él.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-des">DESTRA</span> <em>L'</em>ho letto ieri, <em>il libro</em>.</div>
+        <div class="ex-es">Hago una afirmación y aclaro al final a qué se refería el «lo».</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 5 · CONFRONTO -->
+<section id="s-confronto" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">5. Sinistra vs Destra · confronto</h2>
+      <p class="sec-subtitle">Stessi pronomi, due funzioni diverse</p>
+
+      <h3>Tabla comparativa</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Dimensione</th><th>A sinistra</th><th>A destra</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>Posición del tema</b></td>
+              <td>Inicio del enunciado</td>
+              <td>Final del enunciado</td>
+            </tr>
+            <tr>
+              <td><b>Función principal</b></td>
+              <td>Tematización (fijar el tema antes de predicar)</td>
+              <td>Aclaración / énfasis afectivo del referente</td>
+            </tr>
+            <tr>
+              <td><b>Estructura informativa</b></td>
+              <td>Tema dislocado + rema</td>
+              <td>Oración con pronombre + tema añadido</td>
+            </tr>
+            <tr>
+              <td><b>Frecuencia</b></td>
+              <td>Muy frecuente (oral y escrito informal)</td>
+              <td>Frecuente (sobre todo oral)</td>
+            </tr>
+            <tr>
+              <td><b>Registro</b></td>
+              <td>Parlato + scritto informale/intermedio</td>
+              <td>Parlato (raro en escrito formal)</td>
+            </tr>
+            <tr>
+              <td><b>Prosodia</b></td>
+              <td>Entonación ascendente sobre el tema, pausa, frase</td>
+              <td>Oración con su curva, pausa, tema en tono descendente</td>
+            </tr>
+            <tr>
+              <td><b>Pronombre de retoma</b></td>
+              <td>Obligatorio</td>
+              <td>Obligatorio</td>
+            </tr>
+            <tr>
+              <td><b>Equivalencia ES típica</b></td>
+              <td>«El X, lo verbo…»</td>
+              <td>«Lo verbo…, el X.»</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Ejemplos paralelos</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">SIN</span> <em>Il caffè</em>, <em>lo</em> prendo sempre amaro.</div>
+        <div class="ex-it"><span class="tag tag-des">DES</span> <em>Lo</em> prendo sempre amaro, <em>il caffè</em>.</div>
+        <div class="ex-es">El café, lo tomo siempre amargo. / Lo tomo siempre amargo, el café.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">SIN</span> <em>A mia madre</em>, <em>le</em> ho regalato un libro.</div>
+        <div class="ex-it"><span class="tag tag-des">DES</span> <em>Le</em> ho regalato un libro, <em>a mia madre</em>.</div>
+        <div class="ex-es">A mi madre, le he regalado un libro. / Le he regalado un libro, a mi madre.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">SIN</span> <em>Di pasta</em>, <em>ne</em> mangio tutti i giorni.</div>
+        <div class="ex-it"><span class="tag tag-des">DES</span> <em>Ne</em> mangio tutti i giorni, <em>di pasta</em>.</div>
+        <div class="ex-es">De pasta, como todos los días. / Como todos los días, de pasta.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">SIN</span> <em>A Roma</em>, <em>ci</em> sono tornato in primavera.</div>
+        <div class="ex-it"><span class="tag tag-des">DES</span> <em>Ci</em> sono tornato in primavera, <em>a Roma</em>.</div>
+        <div class="ex-es">A Roma, he vuelto en primavera. / He vuelto en primavera, a Roma.</div>
+      </div>
+
+      <div class="teal-box">
+        <b>Intuición práctica:</b> usa la <span class="hl">sinistra</span> cuando quieres <em>introducir</em> o <em>recuperar</em> el tema antes de hablar de él («Sobre X… esto es lo que digo»). Usa la <span class="hl">destra</span> cuando quieres <em>aclarar a posteriori</em> a qué se refería un pronombre que ya has soltado («Digo esto…, y por si no se entendió, hablo de X»).
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 6 · TOPICALIZZAZIONE -->
+<section id="s-topicalizz" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">6. Topicalizzazione</h2>
+      <p class="sec-subtitle">Anteposición SIN pronombre de retoma</p>
+
+      <div class="def-box">
+        La <b>topicalizzazione</b> (también llamada <em>anteposizione</em> o <em>tematizzazione</em>) es la operación por la cual un elemento se antepone al inicio del enunciado <span class="hl">sin</span> dejar un pronombre de retoma en la posición canónica. Es distinta de la dislocazione (donde el clítico es obligatorio) y produce un efecto más marcado, contrastivo o estilísticamente elevado.
+      </div>
+
+      <h3>Comparación directa</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th></th><th>Dislocazione a sinistra</th><th>Topicalizzazione</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>Pronome di ripresa</b></td>
+              <td class="ok-cell">Obligatorio</td>
+              <td class="err-cell">Ausente</td>
+            </tr>
+            <tr>
+              <td><b>Función</b></td>
+              <td>Establecer el tema</td>
+              <td>Contraste, focalización marcada</td>
+            </tr>
+            <tr>
+              <td><b>Frecuencia</b></td>
+              <td>Muy alta</td>
+              <td>Baja, marcada</td>
+            </tr>
+            <tr>
+              <td><b>Registro</b></td>
+              <td>Oral + escrito intermedio</td>
+              <td>Literario, retórico, periodístico</td>
+            </tr>
+            <tr>
+              <td><b>Ejemplo</b></td>
+              <td><em>La verità, non la diciamo mai.</em></td>
+              <td><em>La verità non diciamo mai.</em></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Ejemplos contrastivos</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">DISLOCAZIONE</span> <em>La verità</em>, non <em>la</em> diciamo mai.</div>
+        <div class="ex-es">La verdad, no la decimos nunca. <span class="dim">(neutra, conversacional)</span></div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-top">TOPICALIZZAZIONE</span> <em>La verità</em> non diciamo mai.</div>
+        <div class="ex-es">La verdad no decimos nunca. <span class="dim">(marcada: contraste implícito con «las mentiras sí» o efecto literario)</span></div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">DISLOCAZIONE</span> <em>Una cosa</em> <em>la</em> sappiamo per certo.</div>
+        <div class="ex-es">Una cosa la sabemos con certeza.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-top">TOPICALIZZAZIONE</span> <em>Una cosa</em> sappiamo per certo: …</div>
+        <div class="ex-es">Una cosa sabemos con certeza: … <span class="dim">(formula retórica, típica de discurso/oratoria)</span></div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-top">TOPICALIZZAZIONE</span> <em>Molte cose</em> ho visto, in vita mia.</div>
+        <div class="ex-es">Muchas cosas he visto, en mi vida. <span class="dim">(tono literario/narrativo elevado)</span></div>
+      </div>
+
+      <h3>Cuándo elegir cada una</h3>
+      <div class="green-box">
+        <b>Dislocazione</b> (con pronome): es la opción <span class="hl">no marcada</span> de la lengua oral y del registro intermedio. Es lo que un hablante nativo dice espontáneamente.<br>
+        <b>Topicalizzazione</b> (sin pronome): es la opción <span class="hl">marcada</span>; aparece sobre todo en:<br>
+        — focalización contrastiva («<em>Questo</em> dico, non quello.»)<br>
+        — frases hechas, máximas, sentencias («<em>Patti chiari</em>, amicizia lunga.»)<br>
+        — estilo literario o retórico elevado<br>
+        — encabezamientos periodísticos
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Para el ispanofono:</b> el español tolera más fácilmente la anteposición sin clítico («Esto digo y no aquello»), pero en italiano contemporáneo es <span class="hl">claramente marcada</span>. Si dudas, usa siempre la dislocazione con pronombre — es la opción natural en italiano hablado y en la mayoría de los textos escritos modernos.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 7 · TEMA-REMA -->
+<section id="s-temarema" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">7. Tema-Rema · l'architettura informativa</h2>
+      <p class="sec-subtitle">La dislocazione come strumento di gestione discorsiva</p>
+
+      <div class="def-box">
+        Tutta la dislocazione si capisce solo se si conosce la distinzione <b>tema/rema</b>, la coppia fondamentale della struttura informativa.<br>
+        — <b>Tema:</b> información <span class="hl">conocida</span>, ya mencionada, presupuesta por el contexto, o establecida como marco de referencia. Es <em>aquello de lo que se habla</em>.<br>
+        — <b>Rema:</b> información <span class="hl">nueva</span>, lo que se afirma sobre el tema. Es <em>lo que se dice del tema</em>.
+      </div>
+
+      <h3>Esquema en una oración canónica</h3>
+      <div class="struct-diag">
+        <span class="struct-text">Marco</span>
+        <span class="struct-tag struct-tema">TEMA</span>
+        <span class="struct-text">ha comprato</span>
+        <span class="struct-tag struct-rema">REMA</span>
+        <span class="struct-text">un libro nuovo.</span>
+      </div>
+      <p style="font-size:.92em">En orden canónico, el sujeto suele coincidir con el tema y el predicado verbal con el rema. Pero esto no siempre se cumple: la dislocazione permite romper esa coincidencia.</p>
+
+      <h3>Cómo la dislocazione manipula la estructura</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><b>Pregunta:</b> Hai visto il film di cui ti parlavo?</div>
+        <div class="ex-it"><b>Respuesta canonica:</b> Sì, ho visto <em>il film</em> ieri sera.</div>
+        <div class="ex-it"><b>Respuesta dislocada:</b> Sì, <em>il film</em>, <em>l'</em>ho visto ieri sera.</div>
+        <div class="ex-note">«Il film» ya es información conocida (lo introdujo la pregunta) → se disloca al inicio como tema; el rema es «l'ho visto ieri sera»</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>Diálogo:</b><br>
+          — A Marco non ho ancora detto della festa.<br>
+          — <em>A Marco</em>, <em>gli</em> dico io tutto stasera.</div>
+        <div class="ex-note">«A Marco» se establece como tema (recogido del turno anterior), y el rema es la promesa «gli dico io tutto»</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">— E della politica, cosa pensi?<br>
+          — <em>Di politica</em>, <em>ne</em> parlo poco volentieri.</div>
+        <div class="ex-note">El tema «di politica» queda dicho dos veces (en la pregunta y en la respuesta) — el remate es la actitud</div>
+      </div>
+
+      <h3>La dislocazione como recurso cohesivo</h3>
+      <div class="green-box">
+        <b>Por qué funciona:</b> al colocar el tema al inicio, la dislocazione <span class="hl">vincula explícitamente</span> el enunciado al contexto precedente. El oyente identifica de qué se va a hablar antes de procesar el resto. Esto:<br>
+        — reduce la <b>carga cognitiva</b><br>
+        — mejora la <b>cohesión textual</b><br>
+        — permite hacer <b>contrastes</b> entre temas distintos en discursos largos<br>
+        — refleja la <b>estrategia natural</b> del hablante: «sobre X, voy a decir Y»
+      </div>
+
+      <div class="teal-box">
+        <b>Aplicación práctica:</b> cuando escribas un texto en italiano y quieras vincular dos frases consecutivas hablando de un mismo referente, la dislocazione es a menudo más natural que el orden canónico.<br>
+        <em>Ho conosciuto Marco l'anno scorso. <b>Marco, l'ho rivisto solo la settimana scorsa.</b></em><br>
+        (vs. la versión canónica «Ho rivisto Marco solo la settimana scorsa», menos cohesiva.)
+      </div>
+
+      <h3>Cuando el tema NO es el sujeto</h3>
+      <p>La dislocazione es especialmente útil cuando el elemento que el discurso ha hecho «conocido» (= tema) <span class="hl">no es el sujeto gramatical</span>, sino un objeto u otro complemento. En esos casos, la dislocazione lo mueve a la posición temática (inicio) y el sujeto pasa al rema:</p>
+      <div class="example-block">
+        <div class="ex-it"><em>Quel romanzo</em>, <em>l'</em>ha scritto un autore sconosciuto.</div>
+        <div class="ex-es">Esa novela, la escribió un autor desconocido.</div>
+        <div class="ex-note">«Quel romanzo» = tema; «un autore sconosciuto» = información nueva (rema)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 8 · REGISTRO -->
+<section id="s-registro" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">8. Registro · quando usare la dislocazione</h2>
+      <p class="sec-subtitle">Dall'orale spontaneo alla prosa accademica</p>
+
+      <div class="def-box">
+        Saber <em>cuándo</em> usar la dislocazione es tan importante como saber <em>cómo</em>. La elección depende del <b>registro</b>: en italiano oral espontáneo es casi obligatoria; en prosa académica formal es desaconsejada.
+      </div>
+
+      <h3>Mapa de registros</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Registro</th><th>Dislocazione a sinistra</th><th>Dislocazione a destra</th></tr></thead>
+          <tbody>
+            <tr><td><b>Parlato spontaneo</b></td><td class="ok-cell">Frequentissima</td><td class="ok-cell">Frequente</td></tr>
+            <tr><td><b>Parlato formale (conferenza, intervista)</b></td><td class="ok-cell">Frequente</td><td class="warn-cell">Possibile, evitata</td></tr>
+            <tr><td><b>Email, messaggi, social</b></td><td class="ok-cell">Frequente</td><td class="warn-cell">Possibile</td></tr>
+            <tr><td><b>Narrativa moderna</b></td><td class="ok-cell">Frequente (dialogo + narrazione)</td><td class="ok-cell">Nei dialoghi</td></tr>
+            <tr><td><b>Stampa, giornalismo</b></td><td class="ok-cell">Comune</td><td class="warn-cell">Possibile</td></tr>
+            <tr><td><b>Prosa saggistica</b></td><td class="warn-cell">Limitata</td><td class="err-cell">Evitata</td></tr>
+            <tr><td><b>Prosa accademica/giuridica</b></td><td class="err-cell">Sconsigliata</td><td class="err-cell">Esclusa</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Ejemplos en distintos registros</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">ORAL ESPONTÁNEO</span> «Ah, <em>quel libro</em>, <em>l'</em>ho finito ieri sera, alla fine.»</div>
+        <div class="ex-es">«Ah, ese libro, lo terminé ayer noche, al final.»</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">EMAIL INFORMAL</span> «Ciao Marco! <em>La pratica che ti avevo mandato</em>, <em>l'</em>hai poi guardata?»</div>
+        <div class="ex-es">«¡Hola Marco! El expediente que te había mandado, ¿lo miraste al final?»</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">NARRATIVA</span> «<em>Quella sera</em>, non <em>la</em> dimenticò mai più.»</div>
+        <div class="ex-es">«Aquella noche, no la olvidó nunca más.» <span class="dim">(literario, con efecto temático fuerte)</span></div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">ACADÉMICO — evitar</span> ✗ <em>Il problema dell'inquinamento</em>, <em>lo</em> affronteremo nel prossimo capitolo.</div>
+        <div class="ex-it"><span class="tag tag-scs">ACADÉMICO — preferir</span> ✓ Affronteremo il problema dell'inquinamento nel prossimo capitolo.</div>
+        <div class="ex-es">Variante con orden canónico: más adecuada a la prosa formal escrita.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-des">ORAL — destra</span> «<em>L'</em>ho già letto, <em>quel saggio</em>. Mi è piaciuto molto.»</div>
+        <div class="ex-es">«Ya lo he leído, ese ensayo. Me gustó mucho.»</div>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">📝</span>
+        <div><b>Consejo de redacción:</b> en un examen escrito de nivel C1, la dislocazione es perfectamente aceptable si el género del texto lo permite (carta informal, ensayo argumentativo con tono personal, narración). En textos académicos puros (artículo científico, comentario filológico), conviene moderarla. La regla práctica: <span class="hl">si el texto admite «yo» y registro intermedio, admite dislocazione</span>.</div>
+      </div>
+
+      <div class="note-box">
+        <b>Históricamente:</b> la dislocazione siempre ha sido un rasgo de la lengua hablada italiana, pero su penetración en la lengua escrita ha crecido enormemente desde mediados del s. XX, con el llamado <em>italiano dell'uso medio</em> (Sabatini). Hoy es uno de los rasgos que más diferencian al italiano «vivo» del italiano puramente normativo de los manuales antiguos.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 9 · TRAPPOLE -->
+<section id="s-trappole" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">9. Trappole per ispanofoni</h2>
+      <p class="sec-subtitle">Errori tipici e perché si producono</p>
+
+      <div class="def-box">
+        El español también disloca, pero <span class="hl">menos sistemáticamente</span> y a veces sin pronombre de retoma. Esta sección compara los puntos donde el ispanofono se equivoca al transferir su intuición al italiano.
+      </div>
+
+      <div id="traps-container"></div>
+
+      <h3>Diferencias clave español/italiano</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Aspecto</th><th>Español</th><th>Italiano</th></tr></thead>
+          <tbody>
+            <tr><td><b>Pronombre de retoma con OD dislocado</b></td><td>Frecuente, a veces opcional</td><td>Obligatorio</td></tr>
+            <tr><td><b>Pronombre de retoma con OI dislocado</b></td><td>Obligatorio («A Juan le dije»)</td><td>Obligatorio («A Marco gli ho detto»)</td></tr>
+            <tr><td><b>Topicalizzazione sin pronombre</b></td><td>Aceptable en muchos contextos</td><td>Muy marcada, casi literaria</td></tr>
+            <tr><td><b>Dislocazione a destra</b></td><td>Existe pero menos frecuente</td><td>Frecuentísima en oral</td></tr>
+            <tr><td><b>Frecuencia general</b></td><td>Recurso entre otros</td><td>Recurso central de la lengua hablada</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Frase scissa vs dislocazione · no confundir</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">DISLOCAZIONE</span> <em>Il libro</em>, <em>l'</em>ho comprato io.</div>
+        <div class="ex-es">El libro, lo he comprado yo. <span class="dim">(tematización del libro)</span></div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">FRASE SCISSA</span> <em>È</em> il libro <em>che</em> ho comprato io.</div>
+        <div class="ex-es">Es el libro lo que he comprado yo. <span class="dim">(focalización exclusiva: precisamente el libro, no otra cosa)</span></div>
+      </div>
+      <div class="green-box">
+        <b>Diferencia esencial:</b> la dislocazione <span class="hl">solo desplaza</span> un elemento sin cambiar el verbo. La frase scissa <span class="hl">añade «essere + che»</span> para focalizar (= «es justamente X, no otra cosa»). Son operaciones distintas con efectos distintos.
+      </div>
+
+      <h3>La dislocazione NO es solo enfática</h3>
+      <div class="note-box">
+        Un error común del ispanofono es pensar que la dislocazione es un recurso «enfático» que se usa cuando «se quiere recalcar algo». No es así: la dislocazione a sinistra es <span class="hl">una herramienta neutra</span> de gestión del tema en italiano. No «enfatiza» el elemento dislocado; simplemente lo marca como información conocida/tema. El énfasis fuerte se hace con la <em>frase scissa</em>, no con la dislocazione.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 10 · ESEMPI ANALIZZATI -->
+<section id="s-esempi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">10. Esempi analizzati · 18 frasi</h2>
+      <p class="sec-subtitle">Sinistra e destra, ripresa pronominale, funzione informativa</p>
+
+      <h3>Bloco A · Dislocazione a sinistra</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">1</span> <em>I biglietti del concerto</em>, <em>li</em> ho già comprati online.</div>
+        <div class="ex-es">Las entradas del concierto, ya las he comprado online.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>li</em> (m.pl., OD)</li>
+          <li><b>Participio:</b> <em>comprati</em> (concordancia con li, m.pl.)</li>
+          <li><b>Función:</b> los billetes son el tema (asunto del que ya se hablaba); informa el rema («ya están comprados»)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">2</span> <em>A mia sorella</em>, <em>le</em> ho detto che arrivo domani.</div>
+        <div class="ex-es">A mi hermana, le he dicho que llego mañana.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>le</em> (f.sg., OI)</li>
+          <li><b>Función:</b> sobre «mi hermana», esto es lo que se predica</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">3</span> <em>Di soldi</em>, in questo momento <em>non ne</em> ho proprio.</div>
+        <div class="ex-es">De dinero, en este momento no tengo nada.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>ne</em> (partitivo)</li>
+          <li><b>Función:</b> el dinero es el tema (presupuesto en el contexto); el rema es la falta total</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">4</span> <em>A Parigi</em>, <em>ci</em> sono stato l'estate scorsa con la mia famiglia.</div>
+        <div class="ex-es">A París, fui el verano pasado con mi familia.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>ci</em> (locativo)</li>
+          <li><b>Función:</b> París es el marco temático; el rema añade tiempo y compañía</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">5</span> <em>Quella canzone</em>, <em>la</em> conosco a memoria fin da bambino.</div>
+        <div class="ex-es">Esa canción, la sé de memoria desde niño.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>la</em> (f.sg., OD)</li>
+          <li><b>Función:</b> establece la canción como tema antes de revelar la información nueva</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">6</span> <em>A questo problema</em>, <em>ci</em> penseremo domani con calma.</div>
+        <div class="ex-es">En este problema, pensaremos mañana con calma.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>ci</em> (argumento con <em>a</em>, con <em>pensare a</em>)</li>
+          <li><b>Función:</b> aplaza el problema; lo establece como tema y disloca la acción al futuro</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">7</span> <em>Le tue idee</em>, <em>le</em> trovo molto stimolanti.</div>
+        <div class="ex-es">Tus ideas, las encuentro muy estimulantes.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>le</em> (f.pl., OD)</li>
+          <li><b>Función:</b> hace de las ideas el tema; el rema es la valoración</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">8</span> <em>Di queste cose</em>, preferisco <em>non</em> parlar<em>ne</em> in pubblico.</div>
+        <div class="ex-es">De estas cosas, prefiero no hablar en público.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>ne</em> (enclítico al infinitivo <em>parlare</em>)</li>
+          <li><b>Función:</b> el tema queda anticipado; nota la posición enclítica del clítico en el infinitivo</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">9</span> <em>Al direttore</em>, <em>gli</em> ho già spiegato la situazione due volte.</div>
+        <div class="ex-es">Al director, ya le he explicado la situación dos veces.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>gli</em> (m.sg., OI)</li>
+          <li><b>Función:</b> el director es referente conocido y se tematiza al inicio</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">10</span> <em>Quel discorso che hai fatto</em>, <em>lo</em> hanno apprezzato tutti.</div>
+        <div class="ex-es">Ese discurso que hiciste, lo apreciaron todos.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>lo</em> (m.sg., OD)</li>
+          <li><b>Función:</b> el discurso es el tema (introducido por la relativa); el rema es la apreciación general</li>
+        </ul>
+      </div>
+
+      <h3>Bloco B · Dislocazione a destra</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-des">11</span> Non <em>l'</em>ho mai capito, <em>questo film</em>.</div>
+        <div class="ex-es">No la entendí nunca, esta película.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>l'</em> (= lo, anticipatorio)</li>
+          <li><b>Función:</b> el hablante hace una declaración y aclara al final a qué se refería; tono coloquial</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-des">12</span> <em>Gli</em> dirò tutto stasera, <em>al capo</em>.</div>
+        <div class="ex-es">Se lo diré todo esta noche, al jefe.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>gli</em> anticipa al referente que se precisa al final</li>
+          <li><b>Función:</b> aclaración pospuesta</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-des">13</span> <em>Ne</em> abbiamo bevuto troppo, <em>di vino rosso</em>.</div>
+        <div class="ex-es">Bebimos demasiado, de vino tinto.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>ne</em> (partitivo)</li>
+          <li><b>Función:</b> énfasis afectivo añadido al final, con tono casi de queja</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-des">14</span> <em>Ci</em> tengo molto, <em>a quel quadro</em>.</div>
+        <div class="ex-es">Le tengo mucho cariño, a ese cuadro.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>ci</em> (con <em>tenere a</em>)</li>
+          <li><b>Función:</b> la aclaración al final permite mantener el suspense informativo</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-des">15</span> <em>L'</em>ho vista ieri al supermercato, <em>Anna</em>.</div>
+        <div class="ex-es">La vi ayer en el supermercado, a Ana.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>l'</em> + participio concordado en femenino (<em>vista</em>)</li>
+          <li><b>Función:</b> dislocazione a destra típica del relato oral</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-des">16</span> Non <em>ci</em> credo proprio, <em>a quello che mi hai detto</em>.</div>
+        <div class="ex-es">No me lo creo en absoluto, lo que me has dicho.</div>
+        <ul class="analysis-list">
+          <li><b>Ripresa:</b> <em>ci</em> (con <em>credere a</em>)</li>
+          <li><b>Función:</b> la aclaración pospuesta refuerza el rechazo</li>
+        </ul>
+      </div>
+
+      <h3>Bloco C · Ejemplos paralelos (sinistra ↔ destra)</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">17a</span> <em>Le scarpe nuove</em>, <em>le</em> ho messe per la prima volta sabato.</div>
+        <div class="ex-it"><span class="tag tag-des">17b</span> <em>Le</em> ho messe per la prima volta sabato, <em>le scarpe nuove</em>.</div>
+        <div class="ex-es">Los zapatos nuevos, los estrené el sábado. / Los estrené el sábado, los zapatos nuevos.</div>
+        <ul class="analysis-list">
+          <li><b>17a:</b> los zapatos son tema (ya conocidos); la información nueva es cuándo se estrenaron</li>
+          <li><b>17b:</b> el hablante dice cuándo estrenó algo y aclara al final a qué se refería</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">18a</span> <em>Di matematica</em>, non <em>ne</em> capisco niente.</div>
+        <div class="ex-it"><span class="tag tag-des">18b</span> Non <em>ne</em> capisco niente, <em>di matematica</em>.</div>
+        <div class="ex-es">De matemáticas, no entiendo nada. / No entiendo nada, de matemáticas.</div>
+        <ul class="analysis-list">
+          <li><b>18a:</b> establece las matemáticas como tema (quizá tras una pregunta sobre estudios) y declara la incompetencia</li>
+          <li><b>18b:</b> declara la incompetencia y precisa el dominio; tono más resignado y oral</li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <b>Cierre práctico:</b> en italiano hablado real, prácticamente cada conversación contiene varias dislocazioni. Si quieres sonar natural en C1, no las evites — al contrario, <span class="hl">úsalas activamente</span>. Memoriza patrones fijos como <em>«il/la X, lo/la verbo…»</em>, <em>«a Y, gli/le verbo…»</em>, <em>«di Z, ne verbo…»</em>, <em>«in/a LUGAR, ci verbo…»</em>. Estos patrones reaparecen miles de veces y dominarlos es lo que separa al estudiante avanzado del estudiante avanzadísimo.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const TRAPS = [
+  {
+    name:'Omitir el pronombre de retoma',
+    wrong:'Il libro, ho letto ieri.',
+    right:'Il libro, l\'ho letto ieri.',
+    expl:'En italiano, la dislocazione a sinistra exige SIEMPRE pronombre de retoma. Sin él, la oración es agramatical o pasa a ser topicalizzazione muy marcada. El español es más tolerante con la omisión, pero el italiano no.'
+  },
+  {
+    name:'Pronombre que no concuerda con el elemento dislocado',
+    wrong:'Le case nuove, lo abbiamo viste.',
+    right:'Le case nuove, le abbiamo viste.',
+    expl:'El pronombre de retoma debe concordar en género y número con el elemento dislocado. Le case (f.pl.) → le, no lo. Y el participio también concuerda: viste (f.pl.).'
+  },
+  {
+    name:'Confundir dislocazione con frase scissa',
+    wrong:'È il libro, l\'ho letto ieri. (para tematizar)',
+    right:'Il libro, l\'ho letto ieri.',
+    expl:'La dislocazione SOLO desplaza el elemento; no añade «essere + che». Esa estructura («è … che») es la frase scissa, que tiene función de focalización contrastiva, no de tematización. Son dos operaciones distintas.'
+  },
+  {
+    name:'Olvidar concordar el participio con el clítico OD',
+    wrong:'La pizza, l\'ho mangiato.',
+    right:'La pizza, l\'ho mangiata.',
+    expl:'Cuando el OD se disloca a la izquierda, el clítico (la, lo, li, le) impone la concordancia del participio. Pizza (f.sg.) → mangiata (f.sg.). Es una regla absoluta en tiempos compuestos.'
+  },
+  {
+    name:'Usar ne donde toca lo / la (objeto directo definido)',
+    wrong:'Il caffè, ne bevo ogni mattina.',
+    right:'Il caffè, lo bevo ogni mattina.',
+    expl:'«Ne» se usa para partitivos o argumentos con «di». Pero «il caffè» con artículo definido es un objeto directo definido, que se retoma con «lo». Comparar: Di caffè, ne bevo molto (partitivo, sin artículo) vs Il caffè, lo bevo amaro (definido).'
+  },
+  {
+    name:'Usar lo donde toca ci (locativo o argumento con «a»)',
+    wrong:'A Roma, l\'ho visitata l\'anno scorso.',
+    right:'A Roma, ci sono andato l\'anno scorso.',
+    expl:'Los complementos locativos (in/a + lugar) se retoman con «ci», no con clíticos OD. Si dices «l\'ho visitata», estás haciendo de Roma un OD (visitar Roma), lo cual cambia la frase. Para el sentido «en Roma», la ripresa es «ci».'
+  },
+  {
+    name:'Topicalizzazione donde el contexto pide dislocazione',
+    wrong:'Il libro ho letto ieri. (en una conversación normal)',
+    right:'Il libro, l\'ho letto ieri.',
+    expl:'En italiano oral y en registro intermedio, la topicalizzazione sin pronombre es muy marcada (literaria, contrastiva). En conversación normal o email, lo natural es la dislocazione con pronombre. Sin él, suena rígido o artificialmente literario.'
+  },
+  {
+    name:'Pensar que la dislocazione es enfática',
+    wrong:'Il libro, l\'ho letto IO. (creyendo que enfatiza «el libro»)',
+    right:'È il libro che ho letto io. / IL LIBRO ho letto, non la rivista.',
+    expl:'La dislocazione no enfatiza el elemento dislocado: lo tematiza (lo presenta como información conocida). Si quieres focalizar contrastivamente («el libro, no otra cosa»), usa frase scissa o topicalizzazione con acento contrastivo.'
+  },
+  {
+    name:'Doble pronombre mal combinado tras dislocazione',
+    wrong:'Il libro a Marco, lo gli ho dato.',
+    right:'Il libro, a Marco, gliel\'ho dato.',
+    expl:'Cuando se combinan dos clíticos (OI + OD), el OI cambia de forma: gli + lo = glielo, le + lo = glielo, gli + la = gliela, etc. Y el orden es OI + OD, no al revés.'
+  },
+  {
+    name:'Dislocazione en prosa académica formal',
+    wrong:'Il problema dell\'inflazione, l\'analizzeremo nel capitolo quattro.',
+    right:'Analizzeremo il problema dell\'inflazione nel capitolo quattro.',
+    expl:'En registro académico escrito, la dislocazione está desaconsejada. Conviene mantener el orden canónico. La dislocazione es un recurso del italiano oral y de la prosa intermedia, pero rompe la formalidad de un texto científico.'
+  },
+  {
+    name:'Olvidar la coma en la escritura',
+    wrong:'Il libro l\'ho letto ieri.',
+    right:'Il libro, l\'ho letto ieri.',
+    expl:'En la escritura, la pausa prosódica entre el elemento dislocado y la oración se marca con coma. Sin la coma, el texto se hace ambiguo o ilegible. Es una marca obligatoria de la dislocazione escrita.'
+  },
+  {
+    name:'Usar gli para retomar un OD masculino',
+    wrong:'Il libro, gli ho letto. (queriendo decir «lo he leído»)',
+    right:'Il libro, l\'ho letto.',
+    expl:'«Gli» es objeto indirecto (a él / a ellos). Para objeto directo masculino singular, la ripresa es «lo» (con apóstrofo ante vocal: l\'). Esta confusión es muy típica del ispanofono porque el español usa «le» para ambas funciones en algunos dialectos.'
+  }
+];
+
+function renderTraps(){
+  const c = document.getElementById('traps-container');
+  let html = '';
+  TRAPS.forEach(t=>{
+    html += `<div class="trap-card">
+      <div class="trap-card-header"><span class="trap-name">${t.name}</span></div>
+      <div class="trap-vs">
+        <div class="trap-wrong">${t.wrong}</div>
+        <div class="trap-right">${t.right}</div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function showSection(id, btn){
+  document.querySelectorAll('.sec-block').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function setFontSize(v){
+  document.documentElement.style.setProperty('--fs', v+'px');
+}
+
+renderTraps();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Costruzione Assoluta · Grammatica C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ede9df;
+  --card:#faf7f1;
+  --border:#c4bead;
+  --text:#1a1814;
+  --text2:#44413a;
+  --text3:#706c64;
+  --accent:#7a5a0a;
+  --accent-light:#f0e0c0;
+  --accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,0.08);
+  --radius:14px;
+  --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --red:#a81e2e; --red-bg:#fce6e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --teal:#0e6e6e; --teal-bg:#e0f4f4;
+  --fs:15px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-size:var(--fs);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:60px;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text);margin:0 0 .4em;font-weight:600;line-height:1.2}
+h1{font-size:1.85em;font-weight:700}
+h2{font-size:1.45em}
+h3{font-size:1.15em;margin-top:1.1em}
+h4{font-size:1em;font-weight:600}
+p{margin:.5em 0}
+em{font-style:italic}
+b,strong{font-weight:600}
+
+/* HEADER */
+.site-header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 18px 16px;
+  position:relative;
+}
+.site-header .inner{max-width:860px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title-wrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.site-header h1{margin:0;font-size:1.9em;color:var(--text)}
+.header-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.85em;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid var(--accent-mid);
+}
+.subtitle{color:var(--text3);font-size:.92em;margin:4px 0 12px;font-style:italic}
+.stat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stat-pill{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:4px 10px;
+  font-size:.78em;
+  border-radius:999px;
+  font-weight:500;
+}
+.font-ctrl{display:flex;align-items:center;gap:8px;font-size:.78em;color:var(--text3)}
+.font-ctrl input[type=range]{width:90px}
+
+/* SECTION NAV */
+.section-nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:10px 18px;
+  margin-top:14px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.section-nav::-webkit-scrollbar{display:none}
+.section-nav .inner{max-width:860px;margin:0 auto;display:flex;gap:6px;flex-wrap:nowrap}
+.snav-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:6px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82em;
+  border-radius:999px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .15s;
+  font-weight:500;
+}
+.snav-btn:hover{background:var(--accent-light)}
+.snav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* MAIN LAYOUT */
+.main-layout{
+  max-width:860px;
+  margin:0 auto;
+  padding:20px 18px;
+}
+.sec-block{display:none}
+.sec-block.active{display:block;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* GRAM-CARD */
+.gram-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.gram-card-body{padding:18px}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:1.45em;
+  margin:0 0 .4em;
+  color:var(--text);
+}
+.sec-subtitle{color:var(--text3);font-style:italic;font-size:.95em;margin:0 0 14px}
+
+/* DEF-BOX */
+.def-box{
+  background:var(--warn-bg);
+  border-left:4px solid var(--accent);
+  padding:12px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:14px 0;
+  font-size:.96em;
+}
+.def-box b{color:var(--accent)}
+
+/* WARN-BOX */
+.warn-box{
+  background:#fff4e0;
+  border:1px solid #c8900a;
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:12px 0;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:.93em;
+  color:var(--text2);
+}
+.warn-box .ico{font-size:1.1em;flex-shrink:0;line-height:1.3}
+
+/* EXAMPLE BLOCK */
+.example-block{
+  background:var(--blue-bg);
+  border-left:3px solid var(--blue);
+  padding:9px 12px;
+  margin:8px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.ex-it{font-weight:500;color:var(--text)}
+.ex-it em{font-style:normal;color:var(--blue);font-weight:600}
+.ex-es{font-style:italic;color:var(--text2);font-size:.88em;margin-top:2px}
+.ex-note{font-size:.84em;color:var(--text3);margin-top:4px;font-style:italic}
+
+/* NOTE-BOX */
+.note-box{
+  background:var(--purple-bg);
+  border-left:3px solid var(--purple);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.note-box b{color:var(--purple)}
+
+/* GREEN-BOX */
+.green-box{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.green-box b{color:var(--green)}
+
+/* TEAL-BOX */
+.teal-box{
+  background:var(--teal-bg);
+  border-left:3px solid var(--teal);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.teal-box b{color:var(--teal)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.gram-table{width:100%;border-collapse:collapse;font-size:.92em;background:var(--card)}
+.gram-table th{
+  background:var(--accent-light);
+  color:var(--accent);
+  font-family:'DM Sans',sans-serif;
+  font-size:.72em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:8px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--accent-mid);
+}
+.gram-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.gram-table tr:nth-child(even) td{background:rgba(196,190,173,0.12)}
+.gram-table tr:last-child td{border-bottom:none}
+.ok-cell{color:var(--green);font-weight:500}
+.err-cell{color:var(--red);font-weight:500}
+.warn-cell{color:var(--accent);font-weight:500}
+.tbl-pron{font-weight:600;color:var(--text);background:rgba(196,190,173,0.18)}
+
+/* CHIPS */
+.chip-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:14px 0 10px;
+  padding-bottom:4px;
+}
+.chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:5px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.83em;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{background:var(--accent-light)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-panel{display:none}
+.chip-panel.active{display:block;animation:fadeIn .25s}
+
+/* TRAPS */
+.trap-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.trap-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trap-name{font-weight:600;color:var(--text);font-size:.96em}
+.trap-vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.trap-wrong{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-wrong::before{content:'✗ ';color:var(--red);font-weight:700}
+.trap-right{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-right::before{content:'✓ ';color:var(--green);font-weight:700}
+.trap-expl{font-size:.88em;color:var(--text2);font-style:italic;margin-top:6px}
+@media (max-width:520px){.trap-vs{grid-template-columns:1fr}}
+
+/* MINI-TABLE */
+.mini-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.88em;
+  background:var(--card);
+  margin:10px 0;
+}
+.mini-table td{
+  padding:5px 9px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.mini-table td:first-child{color:var(--text3);font-weight:500;width:38%}
+.mini-table td:last-child{color:var(--text);font-weight:600}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table .hl-form{color:var(--accent);font-weight:700}
+
+/* TAG/LABEL */
+.tag{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:.72em;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-right:6px;
+  border:1px solid;
+}
+.tag-temp{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.tag-caus{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.tag-conc{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.tag-cond{background:var(--teal-bg);color:var(--teal);border-color:var(--teal)}
+
+/* UTILS */
+.hl{color:var(--accent);font-weight:600}
+.dim{color:var(--text3)}
+
+/* ANALYSIS LIST */
+.analysis-list{
+  font-size:.86em;
+  color:var(--text2);
+  margin-top:6px;
+  padding-left:0;
+  list-style:none;
+}
+.analysis-list li{
+  margin:2px 0;
+  padding-left:12px;
+  position:relative;
+}
+.analysis-list li::before{
+  content:'·';
+  position:absolute;
+  left:2px;
+  color:var(--accent);
+  font-weight:700;
+}
+.analysis-list b{color:var(--accent)}
+
+/* INFO STRUCT DIAGRAM */
+.struct-diag{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 12px;
+  margin:10px 0;
+  font-family:'DM Sans',sans-serif;
+  font-size:.9em;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+.struct-tag{
+  padding:3px 9px;
+  border-radius:999px;
+  font-size:.78em;
+  font-weight:600;
+  border:1px solid;
+}
+.struct-part{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.struct-subj{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.struct-main{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.struct-arrow{color:var(--text3);font-weight:700}
+.struct-text{font-style:italic;color:var(--text2)}
+
+/* RESPONSIVE */
+@media (max-width:520px){
+  .site-header{padding:14px 14px 12px}
+  h1{font-size:1.5em}
+  .main-layout{padding:14px}
+  .gram-card-body{padding:14px}
+  .stat-pill{font-size:.72em}
+  .header-top{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="inner">
+    <div class="header-top">
+      <div>
+        <div class="header-title-wrap">
+          <h1>La Costruzione Assoluta</h1>
+          <span class="header-tag">Grammatica</span>
+        </div>
+        <div class="subtitle">Participio + soggetto proprio · C1 · per ispanofoni</div>
+        <div class="stat-bar">
+          <span class="stat-pill">10 sezioni</span>
+          <span class="stat-pill">participio assoluto</span>
+          <span class="stat-pill">4 valori semantici</span>
+          <span class="stat-pill">registro scritto</span>
+          <span class="stat-pill">15+ esempi analizzati</span>
+        </div>
+      </div>
+      <div class="font-ctrl">
+        <span>A-</span>
+        <input type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+        <span>A+</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION NAV -->
+<nav class="section-nav" id="sec-nav">
+  <div class="inner">
+    <button class="snav-btn active" onclick="showSection('s-concetto',this)">1. Concetto</button>
+    <button class="snav-btn" onclick="showSection('s-struttura',this)">2. Struttura</button>
+    <button class="snav-btn" onclick="showSection('s-accordo',this)">3. Accordo</button>
+    <button class="snav-btn" onclick="showSection('s-valori',this)">4. Valori semantici</button>
+    <button class="snav-btn" onclick="showSection('s-confronto',this)">5. vs Gerundio / Apposit.</button>
+    <button class="snav-btn" onclick="showSection('s-presente',this)">6. Part. presente</button>
+    <button class="snav-btn" onclick="showSection('s-registro',this)">7. Registro</button>
+    <button class="snav-btn" onclick="showSection('s-irregolari',this)">8. Part. irregolari</button>
+    <button class="snav-btn" onclick="showSection('s-trappole',this)">9. Trappole ES</button>
+    <button class="snav-btn" onclick="showSection('s-esempi',this)">10. Esempi analizzati</button>
+  </div>
+</nav>
+
+<main class="main-layout">
+
+<!-- SECCIÓN 1 · CONCETTO -->
+<section id="s-concetto" class="sec-block active">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">1. Che cos'è la costruzione assoluta</h2>
+      <p class="sec-subtitle">Un participio con il proprio soggetto, senza ausiliare</p>
+
+      <div class="def-box">
+        La <b>costruzione assoluta</b> (o <em>participio assoluto</em>) es una construcción en la que un <span class="hl">participio (típicamente passato)</span> aparece junto a su <span class="hl">propio sujeto explícito</span>, formando una proposición secundaria <b>sin verbo auxiliar</b>, separada por coma de la oración principal. Equivale a una subordinada implícita con valor temporal, causal, concesivo o condicional.
+      </div>
+
+      <h3>Ejemplo prototípico</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-part">PARTICIPIO</span>
+        <span class="struct-part">Arrivati</span>
+        <span class="struct-tag struct-subj">SOGGETTO</span>
+        <span class="struct-subj">i professori,</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-tag struct-main">PRINCIPALE</span>
+        <span class="struct-text">la lezione cominciò.</span>
+      </div>
+      <p class="dim" style="font-size:.88em;margin-top:-2px">= <em>«Cuando llegaron los profesores, la clase empezó.»</em> · El participio <em>arrivati</em> tiene su propio sujeto (<em>i professori</em>), distinto del sujeto de la principal (<em>la lezione</em>).</p>
+
+      <h3>Por qué se llama «assoluta»</h3>
+      <p>El nombre proviene del latín <em>absolutus</em> = «desligado». La construcción está <b>desligada</b> sintácticamente de la oración principal: no comparte sujeto con ella, no se conecta mediante conjunción explícita, no lleva auxiliar. Es una <span class="hl">cláusula reducida autónoma</span>, anclada solo por la coma y por la lógica semántica.</p>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Para el hispanohablante:</b> el español tiene una construcción gemela («Llegados los profesores, la clase empezó», «Terminada la reunión, todos se fueron»). El parecido es <span class="hl">casi total en estructura</span>, pero en italiano es de uso bastante más frecuente, sobre todo en prosa estándar escrita (artículos, contratos, narrativa), mientras que en español queda más restringida al registro muy literario o formal.</div>
+      </div>
+
+      <h3>Las tres propiedades clave</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Propiedad</th><th>Descripción</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td><b>Sujeto propio</b></td><td>Distinto del sujeto de la principal</td><td><em>Arrivat<b>i i professori</b></em>, <em>la lezione</em> cominciò.</td></tr>
+            <tr><td><b>Sin auxiliar</b></td><td>El verbo se reduce al puro participio</td><td><em>Terminata la riunione</em> (no: «<em>Essendo terminata la riunione</em>»)</td></tr>
+            <tr><td><b>Acuerdo obligatorio</b></td><td>El participio concuerda con su propio sujeto</td><td><em>Terminat<b>a la riunione</b></em> (fem. sg.) / <em>Finit<b>i i compiti</b></em> (masc. pl.)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="green-box">
+        <b>Idea clave:</b> la costruzione assoluta es una herramienta de <span class="hl">compresión sintáctica</span>: condensa en dos o tres palabras lo que en forma explícita sería una subordinada entera (<em>«dopo che…», «poiché…», «benché…»</em>). Esta brevedad la hace ideal para el italiano escrito.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 2 · STRUTTURA -->
+<section id="s-struttura" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">2. Struttura básica</h2>
+      <p class="sec-subtitle">Dos órdenes posibles, una sola lógica</p>
+
+      <div class="def-box">
+        La costruzione assoluta admite dos órdenes lineales (el primero es el más frecuente y «cult»; el segundo es posible y a veces más natural en función del peso de los constituyentes):
+      </div>
+
+      <h3>Orden A · Participio + Sujeto (más frecuente)</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-part">PARTICIPIO</span>
+        <span class="struct-arrow">+</span>
+        <span class="struct-tag struct-subj">SOGGETTO</span>
+        <span class="struct-arrow">,</span>
+        <span class="struct-tag struct-main">PRINCIPALE</span>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Arrivati i professori</em>, la lezione cominciò.</div>
+        <div class="ex-es">Llegados los profesores, la clase empezó.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Terminata la riunione</em>, tutti andarono via.</div>
+        <div class="ex-es">Terminada la reunión, todos se fueron.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Approvato il progetto</em>, si passò alla fase successiva.</div>
+        <div class="ex-es">Aprobado el proyecto, se pasó a la fase siguiente.</div>
+      </div>
+
+      <h3>Orden B · Sujeto + Participio (más raro, a veces enfatizante)</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-subj">SOGGETTO</span>
+        <span class="struct-arrow">+</span>
+        <span class="struct-tag struct-part">PARTICIPIO</span>
+        <span class="struct-arrow">,</span>
+        <span class="struct-tag struct-main">PRINCIPALE</span>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Il progetto approvato</em>, si passò alla fase successiva.</div>
+        <div class="ex-es">Aprobado el proyecto, se pasó a la fase siguiente.</div>
+        <div class="ex-note">Orden menos típico; corre el riesgo de confundirse con un sintagma nominal apositivo. Por eso se prefiere el orden A en prosa estándar.</div>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Cuidado con el orden B:</b> <em>«Il progetto approvato»</em> a inicio de frase puede leerse como un sintagma nominal (relativa reducida: «el proyecto aprobado»). Para evitar ambigüedad, en la mayoría de los casos se prefiere <span class="hl">participio + sujeto</span> (orden A).</div>
+      </div>
+
+      <h3>Constituyentes adicionales</h3>
+      <p>La costruzione assoluta puede incorporar complementos del participio: c.o.d., c. agente, c. de tiempo o lugar, etc.</p>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Letti tutti i documenti con attenzione</em>, il giudice si ritirò.</div>
+        <div class="ex-es">Leídos todos los documentos con atención, el juez se retiró.</div>
+        <ul class="analysis-list">
+          <li><b>Participio:</b> <em>letti</em></li>
+          <li><b>C.o.d. / sujeto del part. (verbo transitivo):</b> <em>tutti i documenti</em></li>
+          <li><b>Complemento de modo:</b> <em>con attenzione</em></li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Scoperto il colpevole dalla polizia</em>, il caso fu chiuso.</div>
+        <div class="ex-es">Descubierto el culpable por la policía, el caso se cerró.</div>
+        <ul class="analysis-list">
+          <li><b>Participio:</b> <em>scoperto</em> (concuerda con el c.o.d. <em>il colpevole</em>)</li>
+          <li><b>Complemento agente:</b> <em>dalla polizia</em></li>
+        </ul>
+      </div>
+
+      <h3>Marcadores temporales opcionales</h3>
+      <p>Es muy común reforzar el matiz temporal-perfectivo con marcadores como <em>una volta</em>, <em>appena</em>, <em>dopo</em>, <em>subito</em>:</p>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Una volta finita la cena</em>, ci alzammo.</div>
+        <div class="ex-es">Una vez terminada la cena, nos levantamos.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Appena pubblicata la notizia</em>, scoppiò la polemica.</div>
+        <div class="ex-es">Apenas publicada la noticia, estalló la polémica.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Dopo discussa la proposta</em>, il consiglio votò.</div>
+        <div class="ex-es">Tras discutida la propuesta, el consejo votó.</div>
+        <div class="ex-note">Variante muy formal; más frecuente: «<em>Dopo aver discusso la proposta…</em>» (infinito passato).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 3 · ACCORDO -->
+<section id="s-accordo" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">3. Accordo del participio</h2>
+      <p class="sec-subtitle">Concordancia obligatoria con el sujeto propio</p>
+
+      <div class="def-box">
+        La regla absoluta de la costruzione assoluta: el participio concuerda en <span class="hl">género y número con su propio sujeto</span> (el nombre que lo acompaña), <b>no con el sujeto de la oración principal</b>. Esta concordancia es <em>obligatoria</em>: no respetarla hace la frase agramatical.
+      </div>
+
+      <h3>Mecánica del acuerdo: ¿con quién concuerda?</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Tipo de verbo</th><th>Auxiliar implícito</th><th>Concuerda con</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td>Intransitivo</td><td><em>essere</em></td><td class="ok-cell">el sujeto</td><td><em>Arrivat<b>i</b> i professori</em> (m.pl.)</td></tr>
+            <tr><td>Reflexivo / pronominale</td><td><em>essere</em></td><td class="ok-cell">el sujeto</td><td><em>Alzat<b>asi</b> la signora</em> (f.sg.)</td></tr>
+            <tr><td>Transitivo</td><td><em>avere</em></td><td class="warn-cell">el c.o.d. (= sujeto «paciente» del participio)</td><td><em>Lett<b>a</b> la lettera</em> (f.sg.)</td></tr>
+            <tr><td>Pasivo</td><td><em>essere</em></td><td class="ok-cell">el sujeto paciente</td><td><em>Approvat<b>o</b> il progetto</em> (m.sg.)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">💡</span>
+        <div><b>Atajo mental:</b> el participio assoluto se comporta como en los tiempos compuestos. <span class="hl">Si el verbo es intransitivo/reflexivo</span> (essere) → concuerda con el sujeto. <span class="hl">Si es transitivo</span> (avere) → concuerda con el complemento directo (que aquí funciona como «sujeto» paciente de la construcción).</div>
+      </div>
+
+      <h3>Tabla de variaciones de género/número</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Sujeto del participio</th><th>Forma del participio</th><th>Ejemplo completo</th></tr></thead>
+          <tbody>
+            <tr><td>Masc. sing.</td><td>-o</td><td><em>Approvat<b>o</b> il progetto</em>, si passò avanti.</td></tr>
+            <tr><td>Fem. sing.</td><td>-a</td><td><em>Terminat<b>a</b> la riunione</em>, uscirono.</td></tr>
+            <tr><td>Masc. pl.</td><td>-i</td><td><em>Finit<b>i</b> i compiti</em>, uscirono.</td></tr>
+            <tr><td>Fem. pl.</td><td>-e</td><td><em>Stabilit<b>e</b> le regole</em>, si cominciò.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Ejemplos comparados</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Arrivati i professori</em>, la lezione cominciò.</div>
+        <div class="ex-es">Llegados los profesores, la clase empezó.</div>
+        <ul class="analysis-list">
+          <li><b>Sujeto del participio:</b> <em>i professori</em> (masc. pl.)</li>
+          <li><b>Acuerdo:</b> <em>arrivat<b>i</b></em> (masc. pl.)</li>
+          <li><b>Sujeto de la principal:</b> <em>la lezione</em> (fem. sg.) — <span class="hl">distinto</span> del sujeto del participio</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Terminata la riunione</em>, tutti andarono via.</div>
+        <div class="ex-es">Terminada la reunión, todos se fueron.</div>
+        <ul class="analysis-list">
+          <li><b>Sujeto del participio:</b> <em>la riunione</em> (fem. sg.)</li>
+          <li><b>Acuerdo:</b> <em>terminat<b>a</b></em> (fem. sg.)</li>
+          <li><b>Sujeto de la principal:</b> <em>tutti</em> (masc. pl.) — distinto</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Finiti i compiti</em>, uscirono.</div>
+        <div class="ex-es">Terminados los deberes, salieron.</div>
+        <ul class="analysis-list">
+          <li><b>Sujeto del participio:</b> <em>i compiti</em> (masc. pl.) — c.o.d. de <em>finire</em></li>
+          <li><b>Acuerdo:</b> <em>finit<b>i</b></em> (masc. pl.)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Stabilite le condizioni</em>, firmammo il contratto.</div>
+        <div class="ex-es">Establecidas las condiciones, firmamos el contrato.</div>
+        <ul class="analysis-list">
+          <li><b>Sujeto del participio:</b> <em>le condizioni</em> (fem. pl.)</li>
+          <li><b>Acuerdo:</b> <em>stabilit<b>e</b></em> (fem. pl.)</li>
+        </ul>
+      </div>
+
+      <h3>Restricción crucial: sujetos distintos</h3>
+      <div class="warn-box">
+        <span class="ico">🚫</span>
+        <div>El sujeto de la costruzione assoluta <b>debe ser distinto</b> del sujeto de la oración principal. Si fuera el mismo, no se usa esta construcción: se usa el <span class="hl">gerundio passato</span> o el <span class="hl">participio appositivo</span>.<br><br>
+        ✗ <em>Finita la riunione, i partecipanti uscirono.</em> → <span class="dim">aquí es ambiguo, pero válido porque «la riunione» ≠ «i partecipanti».</span><br>
+        ✗ <em>Mangiato un panino, sono uscito.</em> → <span class="dim">valido (yo soy el sujeto principal, «un panino» es el sujeto/c.o.d. del part.).</span><br>
+        ✗ <em>Arrivato a Roma, ho visitato il Colosseo.</em> → <span class="dim">aquí el participio se refiere al sujeto principal: NO es costruzione assoluta sino <b>participio appositivo</b> (sin sujeto propio).</span></div>
+      </div>
+
+      <div class="note-box">
+        <b>Sutileza:</b> con verbos transitivos, el «sujeto» del participio assoluto es semánticamente el <em>paciente</em> (c.o.d.) — el que «sufre» la acción. Por eso siempre va detrás del participio: <em>letti i libri</em> = «leídos los libros», donde <em>i libri</em> son los que han sido leídos, no quienes leen.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 4 · VALORI SEMANTICI -->
+<section id="s-valori" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">4. Valori semantici</h2>
+      <p class="sec-subtitle">Temporale, causale, concessivo, condizionale</p>
+
+      <div class="def-box">
+        La costruzione assoluta no lleva conjunción explícita: el valor semántico se <span class="hl">deduce del contexto</span>. Los cuatro valores principales son <b>temporal</b>, <b>causal</b>, <b>concesivo</b> y <b>condicional</b>. Saber identificarlos es clave para entender y producir el italiano escrito formal.
+      </div>
+
+      <h3>Tabla con conector explícito equivalente</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Valor</th><th>Conector explícito</th><th>Traducción ES</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="tag tag-temp">TEMPORAL</span></td>
+              <td><em>dopo che / quando / appena</em></td>
+              <td>cuando / una vez que / tras</td>
+              <td><em>Terminata la cena</em>, ci alzammo.<br><span class="dim">= dopo che la cena fu terminata…</span></td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-caus">CAUSAL</span></td>
+              <td><em>poiché / dato che / siccome</em></td>
+              <td>dado que / puesto que</td>
+              <td><em>Esaurito il budget</em>, sospesero i lavori.<br><span class="dim">= poiché il budget era esaurito…</span></td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-conc">CONCESIVO</span></td>
+              <td><em>benché / sebbene / pur</em></td>
+              <td>aunque / a pesar de</td>
+              <td><em>Vinto il premio</em>, non sembrava soddisfatto.<br><span class="dim">= sebbene avesse vinto il premio…</span></td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-cond">CONDICIONAL</span></td>
+              <td><em>se / qualora / a condizione che</em></td>
+              <td>si / siempre que</td>
+              <td><em>Rispettate le condizioni</em>, il contratto sarà valido.<br><span class="dim">= se le condizioni vengono rispettate…</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4.a) Valor TEMPORAL <span class="tag tag-temp">temporale</span></h3>
+      <p>El más frecuente. Indica una acción <b>anterior</b> a la principal (o casi inmediatamente previa). El refuerzo <em>una volta</em> o <em>appena</em> lo hace explícito.</p>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Terminata la cena</em>, ci alzammo dal tavolo.</div>
+        <div class="ex-es">Terminada la cena, nos levantamos de la mesa.</div>
+        <div class="ex-note">≈ <em>«Dopo che la cena fu terminata, ci alzammo.»</em></div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Letta la lettera</em>, sorrise.</div>
+        <div class="ex-es">Leída la carta, sonrió.</div>
+        <div class="ex-note">≈ <em>«Dopo aver letto la lettera, sorrise.»</em></div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Appena ricevuta la notizia</em>, partii immediatamente.</div>
+        <div class="ex-es">Apenas recibida la noticia, partí inmediatamente.</div>
+      </div>
+
+      <h3>4.b) Valor CAUSAL <span class="tag tag-caus">causale</span></h3>
+      <p>Indica la <b>causa</b> de lo que se predica en la principal. Suele aparecer en textos argumentativos, jurídicos, periodísticos.</p>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Esaurito il budget</em>, sospesero i lavori.</div>
+        <div class="ex-es">Agotado el presupuesto, suspendieron las obras.</div>
+        <div class="ex-note">≈ <em>«Poiché il budget era esaurito, sospesero i lavori.»</em></div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Caduto il governo</em>, si dovettero indire nuove elezioni.</div>
+        <div class="ex-es">Caído el gobierno, hubo que convocar nuevas elecciones.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Visti i risultati</em>, è chiaro che la strategia non funziona.</div>
+        <div class="ex-es">Vistos los resultados, está claro que la estrategia no funciona.</div>
+        <div class="ex-note">Fórmula muy frecuente en periodismo y en informes técnicos.</div>
+      </div>
+
+      <h3>4.c) Valor CONCESIVO <span class="tag tag-conc">concessivo</span></h3>
+      <p>Indica una <b>circunstancia que contrasta</b> con lo dicho en la principal: se esperaría algo distinto. Para reforzarlo, puede aparecer <em>pur</em> o <em>anche</em> + part.</p>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Vinto il premio</em>, non sembrava soddisfatto.</div>
+        <div class="ex-es">Aunque había ganado el premio, no parecía satisfecho.</div>
+        <div class="ex-note">≈ <em>«Benché avesse vinto il premio, non sembrava soddisfatto.»</em></div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Pur raggiunti gli obiettivi</em>, il direttore non era contento.</div>
+        <div class="ex-es">A pesar de alcanzados los objetivos, el director no estaba contento.</div>
+        <div class="ex-note">El <em>pur</em> antepuesto hace explícita la oposición.</div>
+      </div>
+
+      <h3>4.d) Valor CONDICIONAL <span class="tag tag-cond">condizionale</span></h3>
+      <p>Indica una <b>condición</b> de la que depende lo dicho en la principal. Es el valor más raro y formal; típico de la prosa jurídica y técnica.</p>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Rispettate le condizioni</em>, il contratto sarà valido.</div>
+        <div class="ex-es">Si se respetan las condiciones, el contrato será válido.</div>
+        <div class="ex-note">≈ <em>«Se le condizioni vengono rispettate…»</em></div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Ottenuto il consenso scritto</em>, si procederà al trattamento dei dati.</div>
+        <div class="ex-es">Una vez obtenido el consentimiento escrito (= si se obtiene), se procederá al tratamiento de los datos.</div>
+      </div>
+
+      <div class="note-box">
+        <b>Ambigüedad funcional:</b> a menudo el contexto admite dos lecturas (temporal y causal son las más superpuestas). Por ejemplo, <em>«Esaurito il budget, sospesero i lavori»</em> puede leerse como temporal («cuando se agotó…») o causal («dado que se había agotado…»). Esa polivalencia es una <span class="hl">característica funcional</span>, no un defecto.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 5 · CONFRONTO -->
+<section id="s-confronto" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">5. Costruzione assoluta vs gerundio vs participio appositivo</h2>
+      <p class="sec-subtitle">Tres construcciones reducidas, tres reglas distintas</p>
+
+      <div class="def-box">
+        Las tres comprimen subordinadas, pero se diferencian por el <span class="hl">sujeto</span>: la costruzione assoluta tiene sujeto propio explícito; el gerundio comparte sujeto con la principal; el participio appositivo modifica al sujeto principal sin sujeto propio. Confundirlas es uno de los errores más frecuentes a nivel C1.
+      </div>
+
+      <h3>Regla de oro: «¿quién hace qué?»</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Construcción</th><th>Sujeto del verbo no finito</th><th>Forma</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>Costruzione assoluta</b></td>
+              <td class="ok-cell">PROPIO, distinto del de la principal</td>
+              <td>Participio + sujeto</td>
+              <td><em>Terminata la riunione</em>, tutti uscirono. <span class="dim">(la riunione ≠ tutti)</span></td>
+            </tr>
+            <tr>
+              <td><b>Gerundio</b></td>
+              <td class="warn-cell">EL MISMO que el de la principal</td>
+              <td>-ando / -endo</td>
+              <td><em>Terminando la riunione</em>, prese la parola. <span class="dim">(el mismo sujeto en ambos verbos)</span></td>
+            </tr>
+            <tr>
+              <td><b>Participio appositivo</b></td>
+              <td class="ok-cell">SIN sujeto propio: se refiere al sujeto principal</td>
+              <td>Solo participio</td>
+              <td><em>Arrivato a casa</em>, si tolse le scarpe. <span class="dim">(él = sujeto principal)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Ejemplos contrastivos</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Finiti i compiti</em>, i ragazzi uscirono. <span class="tag tag-temp">c. assoluta</span></div>
+        <div class="ex-es">Terminados los deberes, los chicos salieron.</div>
+        <div class="ex-note">El participio <em>finiti</em> tiene su propio sujeto: <em>i compiti</em>. Los chicos son el sujeto de la principal. Son dos referentes distintos.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Avendo finito i compiti</em>, i ragazzi uscirono. <span class="tag tag-temp" style="background:var(--green-bg);color:var(--green);border-color:var(--green)">gerundio</span></div>
+        <div class="ex-es">Habiendo terminado los deberes, los chicos salieron.</div>
+        <div class="ex-note">Aquí los chicos son a la vez quienes terminan y quienes salen. El sujeto es único.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Stanchi dopo il viaggio</em>, i ragazzi andarono subito a letto. <span class="tag tag-temp" style="background:var(--purple-bg);color:var(--purple);border-color:var(--purple)">appositivo</span></div>
+        <div class="ex-es">Cansados tras el viaje, los chicos se fueron enseguida a la cama.</div>
+        <div class="ex-note">El participio <em>stanchi</em> califica al sujeto principal (<em>i ragazzi</em>): no tiene sujeto propio. Funciona como un adjetivo apositivo.</div>
+      </div>
+
+      <h3>Test mental para elegir</h3>
+      <div class="green-box">
+        <b>Tres preguntas en cascada:</b><br>
+        <b>1.</b> ¿El verbo subordinado tiene su <span class="hl">propio sujeto explícito</span>, distinto del de la principal? → <b>Costruzione assoluta</b>.<br>
+        <b>2.</b> ¿Comparte sujeto con la principal, y quiero expresar <span class="hl">acción simultánea o causa</span>? → <b>Gerundio</b>.<br>
+        <b>3.</b> ¿Quiero predicar una cualidad o estado <span class="hl">del sujeto principal</span>, sin sujeto propio? → <b>Participio appositivo</b>.
+      </div>
+
+      <h3>Ojo: la costruzione assoluta NO admite el mismo sujeto</h3>
+      <div class="warn-box">
+        <span class="ico">🚫</span>
+        <div>Si el sujeto del participio coincide con el de la principal, <span class="hl">la frase pasa a ser participio appositivo</span>, no costruzione assoluta.<br><br>
+        <em>«Arrivato a Roma, Marco visitò il Colosseo.»</em> → Marco es a la vez quien llega y quien visita. <b>No es</b> costruzione assoluta: es <b>participio appositivo</b>. No hay sujeto explícito propio para <em>arrivato</em>.</div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Frase</th><th>Análisis</th><th>Tipo</th></tr></thead>
+          <tbody>
+            <tr><td><em>Arrivato a Roma, Marco visitò il Colosseo.</em></td><td>«Arrivato» se refiere a Marco; no hay sujeto propio</td><td><span class="tag tag-conc">appositivo</span></td></tr>
+            <tr><td><em>Arrivato Marco a Roma, partimmo subito.</em></td><td>«Arrivato» tiene su propio sujeto (Marco); el de la principal es «noi»</td><td><span class="tag tag-temp">assoluta</span></td></tr>
+            <tr><td><em>Essendo arrivato a Roma, visitò il Colosseo.</em></td><td>Mismo sujeto; verbo no finito con auxiliar (gerundio passato)</td><td><span class="tag tag-caus">gerundio</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 6 · PARTICIPIO PRESENTE -->
+<section id="s-presente" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">6. Costruzione assoluta con participio presente</h2>
+      <p class="sec-subtitle">Un fenómeno raro, restringido a la prosa muy literaria</p>
+
+      <div class="def-box">
+        La inmensa mayoría de costruzioni assolute en italiano contemporáneo usan el <span class="hl">participio passato</span>. El uso del <b>participio presente</b> (<em>-ante / -ente</em>) en construcción assoluta es muy raro, restringido al italiano literario, jurídico, antiguo o calcado del latín.
+      </div>
+
+      <h3>Ejemplos literarios</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Vivente ancora il padre</em>, il figlio dilapidò l'eredità.</div>
+        <div class="ex-es">Estando aún vivo el padre, el hijo dilapidó la herencia.</div>
+        <div class="ex-note">≈ <em>«Mentre il padre era ancora vivente…»</em> · Construcción muy literaria, casi latinizante.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Regnante Vittorio Emanuele II</em>, l'Italia raggiunse l'unità.</div>
+        <div class="ex-es">Reinando Víctor Manuel II, Italia alcanzó la unidad.</div>
+        <div class="ex-note">Fórmula de prosa histórica; calco directo del latín <em>«regnante Caesare»</em>.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Durante perdurando la crisi</em>, le misure restarono in vigore.</div>
+        <div class="ex-es">Mientras perduraba la crisis, las medidas siguieron en vigor.</div>
+        <div class="ex-note">Construcción burocrática; en italiano corriente: <em>«Finché perdurò la crisi…»</em></div>
+      </div>
+
+      <h3>Alternativa moderna: <em>essendo</em> + participio presente / aggettivo</h3>
+      <p>El italiano contemporáneo prefiere la perífrasis con gerundio del verbo <em>essere</em>:</p>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Essendo ancora vivente il padre</em>, …</div>
+        <div class="ex-es">Estando aún vivo el padre, …</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Essendo regnante Vittorio Emanuele II</em>, …</div>
+        <div class="ex-es">Estando reinando Víctor Manuel II, …</div>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">📚</span>
+        <div><b>Para producir italiano C1:</b> reconoce el participio presente assoluto en textos literarios, históricos o jurídicos, pero <span class="hl">no lo uses en producción propia</span> salvo en imitación estilística deliberada. La opción natural es siempre el participio passato.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 7 · REGISTRO -->
+<section id="s-registro" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">7. Registro y contextos de uso</h2>
+      <p class="sec-subtitle">Una construcción del italiano escrito formal</p>
+
+      <div class="def-box">
+        La costruzione assoluta es típica del <span class="hl">registro escrito formal</span> y de la prosa elaborada. En la conversación informal suena <b>libresca o pedante</b>: el italiano oral prefiere subordinadas explícitas con conjunciones (<em>dopo che</em>, <em>quando</em>) o el gerundio.
+      </div>
+
+      <h3>Contextos típicos</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Contexto</th><th>Función</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td><b>Prosa académica</b></td><td>compresión argumentativa</td><td><em>Considerati i dati raccolti, possiamo concludere che…</em></td></tr>
+            <tr><td><b>Periodismo</b></td><td>fórmula económica de apertura</td><td><em>Approvata la legge, il presidente l'ha promulgata.</em></td></tr>
+            <tr><td><b>Lengua jurídica / contratti</b></td><td>condición o premisa</td><td><em>Sottoscritte le clausole, il contratto entra in vigore.</em></td></tr>
+            <tr><td><b>Lengua amministrativa</b></td><td>secuencia procedural</td><td><em>Presentata la domanda, l'ufficio procederà alla verifica.</em></td></tr>
+            <tr><td><b>Narrativa classica</b></td><td>ritmo y elegancia</td><td><em>Calata la notte, il viaggiatore si fermò.</em></td></tr>
+            <tr><td><b>Relazioni tecniche</b></td><td>encadenar fases</td><td><em>Completati i test, si è passati alla produzione.</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Dónde EVITARLA</h3>
+      <div class="warn-box">
+        <span class="ico">🗣️</span>
+        <div><b>En conversación informal:</b> usar la costruzione assoluta suena artificialmente literario.<br><br>
+        ✗ <em>«Mangiata la pasta, sono uscito.»</em> <span class="dim">(en una conversación oral suena raro)</span><br>
+        ✓ <em>«Dopo aver mangiato la pasta, sono uscito.»</em> / <em>«Quando ho finito di mangiare, sono uscito.»</em></div>
+      </div>
+
+      <h3>Tabla de registro</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Registro</th><th>¿Usar costruzione assoluta?</th><th>Alternativa preferida</th></tr></thead>
+          <tbody>
+            <tr><td>Conversación informal</td><td class="err-cell">NO</td><td>subordinata explicita, gerundio</td></tr>
+            <tr><td>Email amistoso</td><td class="err-cell">NO</td><td>subordinata explicita</td></tr>
+            <tr><td>Email formal</td><td class="warn-cell">OK con moderación</td><td>—</td></tr>
+            <tr><td>Articolo di giornale</td><td class="ok-cell">SÍ</td><td>—</td></tr>
+            <tr><td>Saggio académico</td><td class="ok-cell">SÍ</td><td>—</td></tr>
+            <tr><td>Contratto / norma</td><td class="ok-cell">SÍ (muy frecuente)</td><td>—</td></tr>
+            <tr><td>Narrativa</td><td class="ok-cell">SÍ (efecto literario)</td><td>—</td></tr>
+            <tr><td>Conferencia oral formal</td><td class="warn-cell">Con cuidado</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="green-box">
+        <b>Criterio práctico:</b> si dudas, pregúntate «¿esto lo escribiría un editorialista del <em>Corriere della Sera</em>?». Si la respuesta es sí, la costruzione assoluta encaja. Si no, mejor optar por una construcción explícita.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 8 · PARTICIPI IRREGOLARI -->
+<section id="s-irregolari" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">8. Participi irregolari frecuentes en costruzione assoluta</h2>
+      <p class="sec-subtitle">Inventario para reconocer y producir</p>
+
+      <div class="def-box">
+        Aunque la costruzione assoluta funciona con cualquier participio, ciertos verbos aparecen con especial frecuencia en este uso, por su contenido semántico (verbos perfectivos, de conclusión, de decisión, de constatación). Conviene memorizarlos.
+      </div>
+
+      <h3>Lista de participios irregulares y regulares de uso muy frecuente</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Infinito</th><th>Participio</th><th>Ejemplo en c. assoluta</th></tr></thead>
+          <tbody>
+            <tr><td><em>arrivare</em></td><td class="tbl-pron">arrivato</td><td><em>Arrivati i professori, …</em></td></tr>
+            <tr><td><em>terminare</em></td><td class="tbl-pron">terminato</td><td><em>Terminata la riunione, …</em></td></tr>
+            <tr><td><em>finire</em></td><td class="tbl-pron">finito</td><td><em>Finiti i compiti, …</em></td></tr>
+            <tr><td><em>esaurire</em></td><td class="tbl-pron">esaurito</td><td><em>Esaurito il budget, …</em></td></tr>
+            <tr><td><em>approvare</em></td><td class="tbl-pron">approvato</td><td><em>Approvato il progetto, …</em></td></tr>
+            <tr><td><em>stabilire</em></td><td class="tbl-pron">stabilito</td><td><em>Stabilite le regole, …</em></td></tr>
+            <tr><td><em>concludere</em></td><td class="tbl-pron">concluso</td><td><em>Concluso l'accordo, …</em></td></tr>
+            <tr><td><em>dichiarare</em></td><td class="tbl-pron">dichiarato</td><td><em>Dichiarata l'apertura, …</em></td></tr>
+            <tr><td><em>firmare</em></td><td class="tbl-pron">firmato</td><td><em>Firmato il contratto, …</em></td></tr>
+            <tr><td><em>ottenere</em></td><td class="tbl-pron">ottenuto</td><td><em>Ottenuto il consenso, …</em></td></tr>
+            <tr><td><em>raggiungere</em></td><td class="tbl-pron">raggiunto</td><td><em>Raggiunto l'accordo, …</em></td></tr>
+            <tr><td><em>definire</em></td><td class="tbl-pron">definito</td><td><em>Definiti i criteri, …</em></td></tr>
+            <tr><td><em>decidere</em></td><td class="tbl-pron">deciso</td><td><em>Deciso il da farsi, …</em></td></tr>
+            <tr><td><em>accertare</em></td><td class="tbl-pron">accertato</td><td><em>Accertati i fatti, …</em></td></tr>
+            <tr><td><em>vedere</em></td><td class="tbl-pron">visto</td><td><em>Visti i risultati, …</em></td></tr>
+            <tr><td><em>leggere</em></td><td class="tbl-pron">letto</td><td><em>Lette le istruzioni, …</em></td></tr>
+            <tr><td><em>scrivere</em></td><td class="tbl-pron">scritto</td><td><em>Scritta la lettera, …</em></td></tr>
+            <tr><td><em>fare</em></td><td class="tbl-pron">fatto</td><td><em>Fatti i conti, …</em></td></tr>
+            <tr><td><em>dire</em></td><td class="tbl-pron">detto</td><td><em>Detto ciò, …</em></td></tr>
+            <tr><td><em>perdere</em></td><td class="tbl-pron">perso / perduto</td><td><em>Persa l'occasione, …</em></td></tr>
+            <tr><td><em>vincere</em></td><td class="tbl-pron">vinto</td><td><em>Vinto il premio, …</em></td></tr>
+            <tr><td><em>chiudere</em></td><td class="tbl-pron">chiuso</td><td><em>Chiusa la discussione, …</em></td></tr>
+            <tr><td><em>aprire</em></td><td class="tbl-pron">aperto</td><td><em>Aperta la seduta, …</em></td></tr>
+            <tr><td><em>scoprire</em></td><td class="tbl-pron">scoperto</td><td><em>Scoperto il colpevole, …</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Verbos por familia semántica</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Familia</th><th>Participi típicos</th></tr></thead>
+          <tbody>
+            <tr><td><b>Conclusión / fin</b></td><td><em>terminato, finito, concluso, esaurito, chiuso, perso</em></td></tr>
+            <tr><td><b>Inicio / llegada</b></td><td><em>arrivato, cominciato, iniziato, aperto, partito</em></td></tr>
+            <tr><td><b>Decisión / acuerdo</b></td><td><em>approvato, stabilito, deciso, definito, dichiarato, sottoscritto, firmato</em></td></tr>
+            <tr><td><b>Constatación</b></td><td><em>visto, accertato, verificato, riscontrato, constatato</em></td></tr>
+            <tr><td><b>Comunicación</b></td><td><em>detto, scritto, comunicato, annunciato, letto</em></td></tr>
+            <tr><td><b>Obtención / éxito</b></td><td><em>ottenuto, raggiunto, vinto, conquistato</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note-box">
+        <b>Dato:</b> los participios de verbos <em>perfectivos</em> (= que expresan una acción con punto final claro) son los más adecuados para la costruzione assoluta, porque su semántica encaja con el valor de «acción ya concluida» que tiene la estructura.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 9 · TRAPPOLE -->
+<section id="s-trappole" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">9. Trappole per ispanofoni</h2>
+      <p class="sec-subtitle">Los errores típicos del hispanohablante avanzado</p>
+
+      <div class="def-box">
+        El español dispone de la misma construcción («Terminada la reunión, todos se fueron»), pero la usa con <span class="hl">menos frecuencia y en registros más restringidos</span>. Esta cercanía engaña: el ispanofono tiende a aplicar reglas españolas que en italiano son incorrectas. Estas son las trampas principales.
+      </div>
+
+      <div id="traps-container"></div>
+
+      <h3>Resumen de las cinco reglas no negociables</h3>
+      <div class="green-box">
+        <b>1.</b> El participio concuerda con su <span class="hl">propio sujeto</span>, no con el sujeto de la principal.<br>
+        <b>2.</b> El sujeto de la costruzione assoluta <span class="hl">debe ser distinto</span> del sujeto de la principal.<br>
+        <b>3.</b> Si los sujetos son iguales, usa <span class="hl">gerundio</span> o <span class="hl">participio appositivo</span>, no costruzione assoluta.<br>
+        <b>4.</b> Nunca añadas un auxiliar (<em>essendo</em>, <em>avendo</em>): la construcción es <span class="hl">sin auxiliar</span>.<br>
+        <b>5.</b> La <span class="hl">coma</span> entre la construcción y la principal es obligatoria en la escritura.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 10 · ESEMPI ANALIZZATI -->
+<section id="s-esempi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">10. Esempi analizzati</h2>
+      <p class="sec-subtitle">15+ frasi con traduzione, valore semantico e analisi dell'accordo</p>
+
+      <div class="def-box">
+        Cada ejemplo se desglosa en: traducción, valor semántico de la construcción (temporal / causal / concesivo / condicional) y análisis del acuerdo del participio (con qué nombre concuerda, en qué género y número, y por qué).
+      </div>
+
+      <h3>Ejemplos</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><b>1.</b> <em>Arrivati i professori</em>, la lezione cominciò. <span class="tag tag-temp">temporal</span></div>
+        <div class="ex-es">Llegados los profesores, la clase empezó.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>arrivati</em> (masc. pl.) ← <em>i professori</em> (masc. pl.). Verbo intransitivo (essere): concuerda con el sujeto.</li>
+          <li><b>Valor:</b> temporal de anterioridad ≈ <em>«quando arrivarono i professori»</em>.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>2.</b> <em>Terminata la riunione</em>, tutti andarono via. <span class="tag tag-temp">temporal</span></div>
+        <div class="ex-es">Terminada la reunión, todos se fueron.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>terminata</em> (fem. sg.) ← <em>la riunione</em> (fem. sg.). Verbo intransitivo: concuerda con el sujeto.</li>
+          <li><b>Valor:</b> temporal ≈ <em>«dopo che la riunione fu terminata»</em>.</li>
+          <li><b>Distinción sujetos:</b> sujeto del participio = <em>la riunione</em>; sujeto de la principal = <em>tutti</em>. Distintos ✓.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>3.</b> <em>Approvato il progetto</em>, si passò alla fase successiva. <span class="tag tag-temp">temporal</span></div>
+        <div class="ex-es">Aprobado el proyecto, se pasó a la fase siguiente.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>approvato</em> (masc. sg.) ← <em>il progetto</em> (masc. sg.). Verbo transitivo (avere): el participio concuerda con el c.o.d. (= sujeto paciente).</li>
+          <li><b>Valor:</b> temporal-perfectivo; admite también lectura condicional («una vez aprobado» = «si se aprueba»).</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>4.</b> <em>Esaurito il budget</em>, sospesero i lavori. <span class="tag tag-caus">causal</span></div>
+        <div class="ex-es">Agotado el presupuesto, suspendieron las obras.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>esaurito</em> (masc. sg.) ← <em>il budget</em> (masc. sg.).</li>
+          <li><b>Valor:</b> causal ≈ <em>«poiché il budget era esaurito»</em>.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>5.</b> <em>Vinto il premio</em>, non sembrava soddisfatto. <span class="tag tag-conc">concesivo</span></div>
+        <div class="ex-es">Aunque había ganado el premio, no parecía satisfecho.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>vinto</em> (masc. sg.) ← <em>il premio</em> (masc. sg.). Verbo transitivo: concuerda con el c.o.d.</li>
+          <li><b>Valor:</b> concesivo ≈ <em>«benché avesse vinto il premio»</em>; el contraste lo deja claro el contexto («no satisfecho»).</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>6.</b> <em>Rispettate le condizioni</em>, il contratto sarà valido. <span class="tag tag-cond">condicional</span></div>
+        <div class="ex-es">Si se respetan las condiciones, el contrato será válido.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>rispettate</em> (fem. pl.) ← <em>le condizioni</em> (fem. pl.).</li>
+          <li><b>Valor:</b> condicional ≈ <em>«se le condizioni vengono rispettate»</em>.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>7.</b> <em>Una volta finita la cena</em>, ci alzammo. <span class="tag tag-temp">temporal</span></div>
+        <div class="ex-es">Una vez terminada la cena, nos levantamos.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>finita</em> (fem. sg.) ← <em>la cena</em> (fem. sg.).</li>
+          <li><b>Refuerzo:</b> <em>una volta</em> hace explícito el valor temporal-perfectivo.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>8.</b> <em>Lette le istruzioni</em>, il professore cominciò l'esame. <span class="tag tag-temp">temporal</span></div>
+        <div class="ex-es">Leídas las instrucciones, el profesor empezó el examen.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>lette</em> (fem. pl.) ← <em>le istruzioni</em> (fem. pl.). Verbo transitivo: con el c.o.d.</li>
+          <li><b>Sujetos:</b> sujeto del participio = <em>le istruzioni</em>; sujeto de la principal = <em>il professore</em>. Distintos ✓.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>9.</b> <em>Visti i risultati</em>, è chiaro che la strategia non funziona. <span class="tag tag-caus">causal</span></div>
+        <div class="ex-es">Vistos los resultados, está claro que la estrategia no funciona.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>visti</em> (masc. pl.) ← <em>i risultati</em> (masc. pl.).</li>
+          <li><b>Valor:</b> causal ≈ <em>«dato che si sono visti i risultati»</em>. Fórmula prototípica en periodismo.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>10.</b> <em>Caduto il governo</em>, si dovettero indire nuove elezioni. <span class="tag tag-caus">causal</span></div>
+        <div class="ex-es">Caído el gobierno, hubo que convocar nuevas elecciones.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>caduto</em> (masc. sg.) ← <em>il governo</em> (masc. sg.). Verbo intransitivo de movimiento (essere): con el sujeto.</li>
+          <li><b>Valor:</b> causal o temporal; en este contexto, el matiz dominante es causal.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>11.</b> <em>Pur raggiunti gli obiettivi</em>, il direttore non era contento. <span class="tag tag-conc">concesivo</span></div>
+        <div class="ex-es">A pesar de haberse alcanzado los objetivos, el director no estaba contento.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>raggiunti</em> (masc. pl.) ← <em>gli obiettivi</em> (masc. pl.).</li>
+          <li><b>Marcador concesivo:</b> <em>pur</em> antepuesto al participio. Sin <em>pur</em>, la lectura por defecto sería temporal.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>12.</b> <em>Ottenuto il consenso scritto</em>, si procederà al trattamento dei dati. <span class="tag tag-cond">condicional</span></div>
+        <div class="ex-es">Una vez obtenido el consentimiento escrito, se procederá al tratamiento de los datos.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>ottenuto</em> (masc. sg.) ← <em>il consenso scritto</em> (masc. sg.).</li>
+          <li><b>Valor:</b> condicional-temporal; típico de la lengua jurídica y administrativa.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>13.</b> <em>Calata la notte</em>, il viaggiatore si fermò in un'osteria. <span class="tag tag-temp">temporal</span></div>
+        <div class="ex-es">Caída la noche, el viajero se detuvo en una posada.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>calata</em> (fem. sg.) ← <em>la notte</em> (fem. sg.). Verbo intransitivo: con el sujeto.</li>
+          <li><b>Registro:</b> narrativa clásica. Variante poética: <em>«Scesa la notte, …»</em>.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>14.</b> <em>Firmato il contratto dalle parti</em>, l'accordo entrò in vigore. <span class="tag tag-temp">temporal</span></div>
+        <div class="ex-es">Firmado el contrato por las partes, el acuerdo entró en vigor.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>firmato</em> (masc. sg.) ← <em>il contratto</em> (masc. sg.).</li>
+          <li><b>Complemento agente:</b> <em>dalle parti</em>. La construcción admite agente explícito como cualquier pasiva.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>15.</b> <em>Stabilite le regole del gioco</em>, possiamo cominciare. <span class="tag tag-cond">condicional</span></div>
+        <div class="ex-es">Establecidas las reglas del juego, podemos empezar.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>stabilite</em> (fem. pl.) ← <em>le regole</em> (fem. pl.).</li>
+          <li><b>Valor:</b> temporal-condicional, según el contexto: «una vez establecidas» / «si están establecidas».</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>16.</b> <em>Concluso l'accordo</em>, le due aziende annunciarono la fusione. <span class="tag tag-temp">temporal</span></div>
+        <div class="ex-es">Concluido el acuerdo, las dos empresas anunciaron la fusión.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>concluso</em> (masc. sg.) ← <em>l'accordo</em> (masc. sg.). Participio irregular de <em>concludere</em>.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>17.</b> <em>Accertati i fatti</em>, il magistrato emise la sentenza. <span class="tag tag-caus">causal</span></div>
+        <div class="ex-es">Constatados los hechos, el magistrado emitió la sentencia.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>accertati</em> (masc. pl.) ← <em>i fatti</em> (masc. pl.).</li>
+          <li><b>Valor:</b> causal-temporal; típico del lenguaje judicial.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>18.</b> <em>Persa l'occasione</em>, non possiamo fare altro che aspettare la prossima. <span class="tag tag-caus">causal</span></div>
+        <div class="ex-es">Perdida la ocasión, no podemos hacer otra cosa que esperar la próxima.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>persa</em> (fem. sg.) ← <em>l'occasione</em> (fem. sg.). Participio irregular: <em>perdere → perso/perduto</em>.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>19.</b> <em>Letti tutti i documenti con attenzione</em>, il giudice si ritirò in camera di consiglio. <span class="tag tag-temp">temporal</span></div>
+        <div class="ex-es">Leídos todos los documentos con atención, el juez se retiró a la sala de deliberación.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>letti</em> (masc. pl.) ← <em>tutti i documenti</em> (masc. pl.).</li>
+          <li><b>Complemento de modo:</b> <em>con attenzione</em>. La construcción admite complementos del participio.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>20.</b> <em>Dette queste parole</em>, si voltò e se ne andò. <span class="tag tag-temp">temporal</span></div>
+        <div class="ex-es">Dichas estas palabras, se dio la vuelta y se fue.</div>
+        <ul class="analysis-list">
+          <li><b>Acuerdo:</b> <em>dette</em> (fem. pl.) ← <em>queste parole</em> (fem. pl.). Variante de <em>dire → detto</em>; en fem. pl., es <em>dette</em>.</li>
+          <li><b>Registro:</b> narrativa clásica; eco estilístico de Manzoni.</li>
+        </ul>
+      </div>
+
+      <div class="green-box">
+        <b>Para retener:</b> en cada uso, verifica siempre tres puntos — (1) ¿el participio concuerda con su sujeto?, (2) ¿el sujeto del participio es distinto del de la principal?, (3) ¿qué valor semántico está expresando? Si las tres respuestas son claras, la frase está bien construida.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const TRAPS = [
+  {
+    name:'1. Acordar el participio con el sujeto de la principal',
+    wrong:'Terminato la riunione, tutti uscirono.',
+    right:'Terminata la riunione, tutti uscirono.',
+    expl:'El participio concuerda con SU PROPIO sujeto (la riunione, fem. sg. → terminata), no con el sujeto de la principal (tutti, masc. pl.). Es el error más frecuente: el ispanofono tiende a buscar un acuerdo «global» con el referente humano, pero la regla italiana es estricta y local.'
+  },
+  {
+    name:'2. Usar costruzione assoluta cuando los sujetos son iguales',
+    wrong:'Mangiato la pasta, sono uscito di casa. (queriendo decir que YO comí y YO salí)',
+    right:'Dopo aver mangiato la pasta, sono uscito di casa. / Mangiata la pasta, sono uscito.',
+    expl:'Si los sujetos son los mismos, lo natural es el gerundio passato (avendo mangiato) o el infinito passato (dopo aver mangiato). La frase «Mangiata la pasta…» es gramatical pero ambigua: la pasta es el sujeto/c.o.d. del participio, y «yo» soy el sujeto de la principal. Si quieres expresar claramente que el sujeto eres tú, usa el infinito o el gerundio passato.'
+  },
+  {
+    name:'3. Añadir el auxiliar (essendo / avendo)',
+    wrong:'Essendo terminata la riunione, tutti uscirono.',
+    right:'Terminata la riunione, tutti uscirono.',
+    expl:'La costruzione assoluta es, por definición, SIN auxiliar. Añadir «essendo» o «avendo» la convierte en gerundio passato, que es otra construcción (correcta pero distinta, más pesada estilísticamente). En italiano contemporáneo formal, la versión sin auxiliar es preferida.'
+  },
+  {
+    name:'4. Confundir costruzione assoluta con participio appositivo',
+    wrong:'Arrivati i professori, hanno cominciato la lezione. (queriendo que «i professori» sean los que han comenzado)',
+    right:'Arrivati, i professori hanno cominciato la lezione. (sin sujeto explícito en el participio: appositivo)',
+    expl:'Si los profesores son a la vez los que llegan Y los que empiezan la clase, no es costruzione assoluta sino participio appositivo: el participio se refiere al sujeto principal. La diferencia: en la costruzione assoluta, el sujeto del participio aparece junto a él (Arrivati i professori, la lezione…); en el appositivo, no aparece (Arrivati, i professori…).'
+  },
+  {
+    name:'5. Confundir con un participio adjetival / relativa reducida',
+    wrong:'La riunione terminata era stata produttiva. (interpretando como c. assoluta)',
+    right:'La riunione, terminata, era stata produttiva. (apositivo) / La riunione terminata era stata produttiva. (relativa reducida: «la reunión [que fue] terminada»)',
+    expl:'Cuando el participio sigue inmediatamente a un nombre SIN coma, es una relativa reducida que califica al nombre (= «la reunión que fue terminada»). Para que sea costruzione assoluta, el participio debe abrir la cláusula (orden A: PARTICIPIO + sujeto + , + principal) y haber una coma clara separando de la principal.'
+  },
+  {
+    name:'6. Omitir la coma',
+    wrong:'Terminata la riunione tutti andarono via.',
+    right:'Terminata la riunione, tutti andarono via.',
+    expl:'En italiano escrito, la coma entre la costruzione assoluta y la oración principal es obligatoria. Marca la pausa prosódica y delimita la frontera entre las dos cláusulas. Sin coma, el lector tropieza y la oración pierde claridad.'
+  },
+  {
+    name:'7. Olvidar concordar con el c.o.d. en verbos transitivos',
+    wrong:'Letto le istruzioni, il professore cominciò l\'esame.',
+    right:'Lette le istruzioni, il professore cominciò l\'esame.',
+    expl:'Con verbos transitivos, el participio concuerda con el c.o.d. (que funciona como sujeto paciente de la construcción). Aquí: le istruzioni (fem. pl.) → lette (fem. pl.), no letto (forma neutra invariable). El italiano no admite participios invariables en esta construcción.'
+  },
+  {
+    name:'8. Calcar la sintaxis ES con sujeto antepuesto',
+    wrong:'I professori arrivati, la lezione cominciò.',
+    right:'Arrivati i professori, la lezione cominciò.',
+    expl:'Aunque el orden «sujeto + participio» existe en italiano (orden B), es mucho menos frecuente y corre el riesgo de leerse como sintagma nominal («los profesores llegados» = «los profesores que han llegado»). El orden estándar es PARTICIPIO + SUJETO. En español, «Los profesores llegados» suena igualmente raro; el orden natural es «Llegados los profesores».'
+  },
+  {
+    name:'9. Pensar que es un recurso informal',
+    wrong:'In una chat con amici: «Mangiata la pasta, sono uscito.» (sonará libresco/extraño)',
+    right:'In una chat: «Quando ho finito di mangiare, sono uscito.» / «Dopo aver mangiato, sono uscito.»',
+    expl:'La costruzione assoluta pertenece al italiano escrito formal o a la narrativa elaborada. En conversación informal o en chat, suena pedante, libresca o calcada de un manual. El italiano oral prefiere subordinadas explícitas con conjunción o el infinito passato.'
+  },
+  {
+    name:'10. Reforzar con conjunción explícita (doble marca)',
+    wrong:'Dopo che terminata la riunione, tutti andarono via.',
+    right:'Terminata la riunione, tutti andarono via. / Dopo che la riunione fu terminata, tutti andarono via.',
+    expl:'La costruzione assoluta sustituye a la subordinada explícita: no se combina con ella. O usas la construcción reducida (sin «dopo che») o la subordinada completa (con «dopo che» + verbo finito). La combinación es agramatical.'
+  },
+  {
+    name:'11. Usar participio presente donde toca passato',
+    wrong:'Terminante la riunione, tutti uscirono.',
+    right:'Terminata la riunione, tutti uscirono.',
+    expl:'En italiano contemporáneo, la costruzione assoluta usa casi siempre el participio PASSATO (terminata, finito, arrivato…), porque expresa una acción ya concluida. El participio presente (-ante/-ente) en construcción assoluta es muy raro y reservado a registros literarios/jurídicos arcaizantes.'
+  },
+  {
+    name:'12. Acordar mal con verbos intransitivos de movimiento',
+    wrong:'Arrivate i ragazzi, la festa cominciò.',
+    right:'Arrivati i ragazzi, la festa cominciò.',
+    expl:'I ragazzi es masc. pl. → arrivati (masc. pl.), no arrivate (fem. pl.). El error nace de confundir el género del nombre o de mecanizar la terminación -e. Verifica siempre el género del sujeto antes de elegir la terminación del participio.'
+  }
+];
+
+function renderTraps(){
+  const c = document.getElementById('traps-container');
+  let html = '';
+  TRAPS.forEach(t=>{
+    html += `<div class="trap-card">
+      <div class="trap-card-header"><span class="trap-name">${t.name}</span></div>
+      <div class="trap-vs">
+        <div class="trap-wrong">${t.wrong}</div>
+        <div class="trap-right">${t.right}</div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function showSection(id, btn){
+  document.querySelectorAll('.sec-block').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function setFontSize(v){
+  document.documentElement.style.setProperty('--fs', v+'px');
+}
+
+renderTraps();
+</script>
+
+</body>
+</html>

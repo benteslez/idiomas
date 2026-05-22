@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Concordanza ad Sensum · Grammatica C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ede9df;
+  --card:#faf7f1;
+  --border:#c4bead;
+  --text:#1a1814;
+  --text2:#44413a;
+  --text3:#706c64;
+  --accent:#7a5a0a;
+  --accent-light:#f0e0c0;
+  --accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,0.08);
+  --radius:14px;
+  --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --red:#a81e2e; --red-bg:#fce6e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --teal:#0e6e6e; --teal-bg:#e0f4f4;
+  --fs:15px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-size:var(--fs);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:60px;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text);margin:0 0 .4em;font-weight:600;line-height:1.2}
+h1{font-size:1.85em;font-weight:700}
+h2{font-size:1.45em}
+h3{font-size:1.15em;margin-top:1.1em}
+h4{font-size:1em;font-weight:600}
+p{margin:.5em 0}
+em{font-style:italic}
+b,strong{font-weight:600}
+
+/* HEADER */
+.site-header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 18px 16px;
+  position:relative;
+}
+.site-header .inner{max-width:860px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title-wrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.site-header h1{margin:0;font-size:1.9em;color:var(--text)}
+.header-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.85em;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid var(--accent-mid);
+}
+.subtitle{color:var(--text3);font-size:.92em;margin:4px 0 12px;font-style:italic}
+.stat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stat-pill{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:4px 10px;
+  font-size:.78em;
+  border-radius:999px;
+  font-weight:500;
+}
+.font-ctrl{display:flex;align-items:center;gap:8px;font-size:.78em;color:var(--text3)}
+.font-ctrl input[type=range]{width:90px}
+
+/* SECTION NAV */
+.section-nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:10px 18px;
+  margin-top:14px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.section-nav::-webkit-scrollbar{display:none}
+.section-nav .inner{max-width:860px;margin:0 auto;display:flex;gap:6px;flex-wrap:nowrap}
+.snav-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:6px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82em;
+  border-radius:999px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .15s;
+  font-weight:500;
+}
+.snav-btn:hover{background:var(--accent-light)}
+.snav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* MAIN LAYOUT */
+.main-layout{
+  max-width:860px;
+  margin:0 auto;
+  padding:20px 18px;
+}
+.sec-block{display:none}
+.sec-block.active{display:block;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* GRAM-CARD */
+.gram-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.gram-card-body{padding:18px}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:1.45em;
+  margin:0 0 .4em;
+  color:var(--text);
+}
+.sec-subtitle{color:var(--text3);font-style:italic;font-size:.95em;margin:0 0 14px}
+
+/* DEF-BOX */
+.def-box{
+  background:var(--warn-bg);
+  border-left:4px solid var(--accent);
+  padding:12px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:14px 0;
+  font-size:.96em;
+}
+.def-box b{color:var(--accent)}
+
+/* WARN-BOX */
+.warn-box{
+  background:#fff4e0;
+  border:1px solid #c8900a;
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:12px 0;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:.93em;
+  color:var(--text2);
+}
+.warn-box .ico{font-size:1.1em;flex-shrink:0;line-height:1.3}
+
+/* EXAMPLE BLOCK */
+.example-block{
+  background:var(--blue-bg);
+  border-left:3px solid var(--blue);
+  padding:9px 12px;
+  margin:8px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.ex-it{font-weight:500;color:var(--text)}
+.ex-it em{font-style:normal;color:var(--blue);font-weight:600}
+.ex-es{font-style:italic;color:var(--text2);font-size:.88em;margin-top:2px}
+.ex-note{font-size:.84em;color:var(--text3);margin-top:4px;font-style:italic}
+
+/* NOTE-BOX */
+.note-box{
+  background:var(--purple-bg);
+  border-left:3px solid var(--purple);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.note-box b{color:var(--purple)}
+
+/* GREEN-BOX */
+.green-box{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.green-box b{color:var(--green)}
+
+/* TEAL-BOX */
+.teal-box{
+  background:var(--teal-bg);
+  border-left:3px solid var(--teal);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.teal-box b{color:var(--teal)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.gram-table{width:100%;border-collapse:collapse;font-size:.92em;background:var(--card)}
+.gram-table th{
+  background:var(--accent-light);
+  color:var(--accent);
+  font-family:'DM Sans',sans-serif;
+  font-size:.72em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:8px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--accent-mid);
+}
+.gram-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.gram-table tr:nth-child(even) td{background:rgba(196,190,173,0.12)}
+.gram-table tr:last-child td{border-bottom:none}
+.ok-cell{color:var(--green);font-weight:500}
+.err-cell{color:var(--red);font-weight:500}
+.warn-cell{color:var(--accent);font-weight:500}
+.tbl-pron{font-weight:600;color:var(--text);background:rgba(196,190,173,0.18)}
+
+/* CHIPS */
+.chip-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:14px 0 10px;
+  padding-bottom:4px;
+}
+.chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:5px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.83em;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{background:var(--accent-light)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-panel{display:none}
+.chip-panel.active{display:block;animation:fadeIn .25s}
+
+/* TRAPS */
+.trap-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.trap-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trap-name{font-weight:600;color:var(--text);font-size:.96em}
+.trap-vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.trap-wrong{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-wrong::before{content:'✗ ';color:var(--red);font-weight:700}
+.trap-right{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-right::before{content:'✓ ';color:var(--green);font-weight:700}
+.trap-expl{font-size:.88em;color:var(--text2);font-style:italic;margin-top:6px}
+@media (max-width:520px){.trap-vs{grid-template-columns:1fr}}
+
+/* MINI-TABLE */
+.mini-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.88em;
+  background:var(--card);
+  margin:10px 0;
+}
+.mini-table td{
+  padding:5px 9px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.mini-table td:first-child{color:var(--text3);font-weight:500;width:38%}
+.mini-table td:last-child{color:var(--text);font-weight:600}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table .hl-form{color:var(--accent);font-weight:700}
+
+/* TAG/LABEL */
+.tag{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:.72em;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-right:6px;
+  border:1px solid;
+}
+.tag-gram{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.tag-sens{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.tag-col{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.tag-perc{background:var(--teal-bg);color:var(--teal);border-color:var(--teal)}
+
+/* UTILS */
+.hl{color:var(--accent);font-weight:600}
+.dim{color:var(--text3)}
+
+/* ANALYSIS LIST */
+.analysis-list{
+  font-size:.86em;
+  color:var(--text2);
+  margin-top:6px;
+  padding-left:0;
+  list-style:none;
+}
+.analysis-list li{
+  margin:2px 0;
+  padding-left:12px;
+  position:relative;
+}
+.analysis-list li::before{
+  content:'·';
+  position:absolute;
+  left:2px;
+  color:var(--accent);
+  font-weight:700;
+}
+.analysis-list b{color:var(--accent)}
+
+/* INFO STRUCT DIAGRAM */
+.struct-diag{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 12px;
+  margin:10px 0;
+  font-family:'DM Sans',sans-serif;
+  font-size:.9em;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+.struct-tag{
+  padding:3px 9px;
+  border-radius:999px;
+  font-size:.78em;
+  font-weight:600;
+  border:1px solid;
+}
+.struct-subj{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.struct-verb{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.struct-sem{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.struct-arrow{color:var(--text3);font-weight:700}
+.struct-text{font-style:italic;color:var(--text2)}
+
+/* RESPONSIVE */
+@media (max-width:520px){
+  .site-header{padding:14px 14px 12px}
+  h1{font-size:1.5em}
+  .main-layout{padding:14px}
+  .gram-card-body{padding:14px}
+  .stat-pill{font-size:.72em}
+  .header-top{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="inner">
+    <div class="header-top">
+      <div>
+        <div class="header-title-wrap">
+          <h1>La Concordanza ad Sensum</h1>
+          <span class="header-tag">Grammatica</span>
+        </div>
+        <div class="subtitle">Accordo per significato · C1 · per ispanofoni</div>
+        <div class="stat-bar">
+          <span class="stat-pill">10 sezioni</span>
+          <span class="stat-pill">collettivi</span>
+          <span class="stat-pill">frazioni e percentuali</span>
+          <span class="stat-pill">soggetti composti</span>
+          <span class="stat-pill">15+ esempi analizzati</span>
+        </div>
+      </div>
+      <div class="font-ctrl">
+        <span>A-</span>
+        <input type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+        <span>A+</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION NAV -->
+<nav class="section-nav" id="sec-nav">
+  <div class="inner">
+    <button class="snav-btn active" onclick="showSection('s-concetto',this)">1. Concetto</button>
+    <button class="snav-btn" onclick="showSection('s-collettivi',this)">2. Collettivi</button>
+    <button class="snav-btn" onclick="showSection('s-posposto',this)">3. Soggetto posposto</button>
+    <button class="snav-btn" onclick="showSection('s-frazioni',this)">4. Frazioni e %</button>
+    <button class="snav-btn" onclick="showSection('s-composto',this)">5. Soggetto composto</button>
+    <button class="snav-btn" onclick="showSection('s-predicativo',this)">6. Predicativo</button>
+    <button class="snav-btn" onclick="showSection('s-registro',this)">7. Registro</button>
+    <button class="snav-btn" onclick="showSection('s-apposizione',this)">8. Apposizione</button>
+    <button class="snav-btn" onclick="showSection('s-trappole',this)">9. Trappole ES</button>
+    <button class="snav-btn" onclick="showSection('s-esempi',this)">10. Esempi analizzati</button>
+  </div>
+</nav>
+
+<main class="main-layout">
+
+<!-- SECCIÓN 1 · CONCETTO -->
+<section id="s-concetto" class="sec-block active">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">1. Che cos'è la concordanza ad sensum</h2>
+      <p class="sec-subtitle">Accordo per significato, non per forma</p>
+
+      <div class="def-box">
+        La <b>concordanza ad sensum</b> (o <em>accordo a senso</em>, <em>constructio ad sensum</em>) è il fenomeno per cui il verbo — o il predicativo, o un pronome — concorda non con il <span class="hl">soggetto grammaticale stretto</span> (la sua forma morfologica), bensì con il suo <span class="hl">referente semantico reale</span>, cioè con il significato implicito del soggetto. È frequente con <b>nomi collettivi</b>, <b>frazioni</b>, <b>percentuali</b> e <b>soggetti composti</b>.
+      </div>
+
+      <h3>Il principio in due frasi</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-subj">SOGGETTO</span>
+        <span class="struct-text">La gente</span>
+        <span class="struct-arrow">→ forma:</span>
+        <span class="struct-sem">3ª sing.</span>
+        <span class="struct-arrow">→ senso:</span>
+        <span class="struct-sem">3ª pl. (= le persone)</span>
+      </div>
+      <div class="struct-diag">
+        <span class="struct-tag struct-subj">GRAMMATICALE</span>
+        <span class="struct-text">La gente</span>
+        <span class="struct-verb">dice</span>
+        <span class="struct-text">che…</span>
+      </div>
+      <div class="struct-diag">
+        <span class="struct-tag struct-sem">AD SENSUM</span>
+        <span class="struct-text">La gente</span>
+        <span class="struct-verb">dicono</span>
+        <span class="struct-text">che… <span class="dim">(colloquiale)</span></span>
+      </div>
+
+      <h3>Le due strade dell'accordo</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Tipo di accordo</th><th>Concorda con</th><th>Registro tipico</th><th>Status normativo</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tag-gram">GRAMMATICALE</span></td><td>La forma del soggetto</td><td>Tutti i registri</td><td class="ok-cell">Sempre corretto</td></tr>
+            <tr><td><span class="tag tag-sens">AD SENSUM</span></td><td>Il referente semantico</td><td>Orale, giornalistico</td><td class="warn-cell">Tollerato, frequente</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Per l'ispanofono:</b> in spagnolo la concordanza ad sensum esiste ma è <span class="hl">molto meno frequente</span> che in italiano. «La gente dice» è quasi obbligatorio in spagnolo standard, mentre in italiano colto orale si sente spesso «la gente dicono». Imparare a percepirla è un passaggio chiave per il C1.</div>
+      </div>
+
+      <h3>Quando appare</h3>
+      <p>I quattro contesti tipici in cui la concordanza ad sensum si attiva sono:</p>
+      <ul>
+        <li><span class="hl">Nomi collettivi</span> singolari con referente plurale (la gente, la folla, la squadra).</li>
+        <li><span class="hl">Frazioni e percentuali</span> di un sostantivo plurale (il 30% degli italiani, la metà degli studenti).</li>
+        <li><span class="hl">Soggetti coordinati</span> con <em>o</em>, <em>né…né</em>, oppure con apposizioni del tipo <em>insieme a</em>.</li>
+        <li><span class="hl">Soggetti posposti</span> al verbo, soprattutto con <em>esserci</em>.</li>
+      </ul>
+
+      <div class="green-box">
+        <b>Idea chiave:</b> la concordanza ad sensum non è un errore: è una <span class="hl">scelta stilistica e cognitiva</span>. Il parlante segue la logica del significato anziché quella della morfologia. È il pensiero che vince sulla forma.
+      </div>
+
+      <div class="note-box">
+        <b>Storico:</b> il termine <em>constructio ad sensum</em> viene dalla grammatica latina e greca, dove era frequentissima (Cicerone: <em>«pars militum capti sunt»</em> — «parte dei soldati furono catturati», con verbo al plurale). L'italiano eredita questa flessibilità dal latino.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 2 · COLLETTIVI -->
+<section id="s-collettivi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">2. I nomi collettivi</h2>
+      <p class="sec-subtitle">Forma singolare, referente plurale</p>
+
+      <div class="def-box">
+        I <b>nomi collettivi</b> sono sostantivi che, pur essendo grammaticalmente <span class="hl">singolari</span>, designano un insieme di elementi: <em>la gente</em>, <em>la folla</em>, <em>il gruppo</em>, <em>la squadra</em>, <em>il pubblico</em>, <em>la maggioranza</em>. Con questi soggetti il verbo può andare al singolare (concordanza grammaticale) o al plurale (concordanza ad sensum).
+      </div>
+
+      <h3>Il caso prototipo: <em>la gente</em></h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-gram">GRAMM.</span> La gente <em>dice</em> che il governo non funziona.</div>
+        <div class="ex-es">La gente dice que el gobierno no funciona.</div>
+        <ul class="analysis-list">
+          <li><b>Verbo:</b> 3ª sing. (accordo con <em>la gente</em>, f.sg.)</li>
+          <li><b>Registro:</b> standard, neutro, sempre corretto</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sens">AD SENSUM</span> La gente <em>dicono</em> che il governo non funziona.</div>
+        <div class="ex-es">La gente (= las personas) dicen que el gobierno no funciona.</div>
+        <ul class="analysis-list">
+          <li><b>Verbo:</b> 3ª pl. (accordo con il referente <em>le persone</em>)</li>
+          <li><b>Registro:</b> colloquiale, orale; sempre più frequente anche per iscritto in stile informale</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-gram">GRAMM.</span> La gente <em>è stanca</em> di promesse.</div>
+        <div class="ex-it"><span class="tag tag-sens">AD SENSUM</span> La gente <em>sono stanchi</em> di promesse.</div>
+        <div class="ex-es">La gente está cansada de promesas.</div>
+        <ul class="analysis-list">
+          <li><b>Predicativo:</b> nella forma ad sensum, anche l'aggettivo va al plurale (<em>stanchi</em>)</li>
+          <li><b>Avvertimento:</b> la versione ad sensum è solo orale informale; nello scritto colto si preferisce sempre <em>è stanca</em></li>
+        </ul>
+      </div>
+
+      <h3>Tabella dei principali collettivi</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Nome collettivo</th><th>Conc. grammaticale</th><th>Conc. ad sensum</th><th>Registro ad sensum</th></tr></thead>
+          <tbody>
+            <tr><td><b>La gente</b></td><td><em>dice / è arrivata</em></td><td><em>dicono / sono arrivati</em></td><td>Orale colloquiale</td></tr>
+            <tr><td><b>La folla</b></td><td><em>applaudì / era entusiasta</em></td><td><em>applaudirono / erano entusiasti</em></td><td>Letterario / giornalistico</td></tr>
+            <tr><td><b>Il gruppo</b></td><td><em>ha deciso / è partito</em></td><td><em>hanno deciso / sono partiti</em></td><td>Orale e giornalistico</td></tr>
+            <tr><td><b>La squadra</b></td><td><em>ha vinto / è soddisfatta</em></td><td><em>hanno vinto / sono soddisfatti</em></td><td>Sportivo, orale</td></tr>
+            <tr><td><b>Il pubblico</b></td><td><em>applaude / è entusiasta</em></td><td><em>applaudono / sono entusiasti</em></td><td>Orale, raro nello scritto</td></tr>
+            <tr><td><b>La maggioranza</b></td><td><em>ha votato / è favorevole</em></td><td><em>hanno votato / sono favorevoli</em></td><td>Giornalistico, molto frequente</td></tr>
+            <tr><td><b>La minoranza</b></td><td><em>protesta / è contraria</em></td><td><em>protestano / sono contrari</em></td><td>Giornalistico</td></tr>
+            <tr><td><b>La metà</b></td><td><em>è arrivata</em></td><td><em>sono arrivati</em></td><td>Frequentissimo</td></tr>
+            <tr><td><b>Una serie di</b></td><td><em>una serie di errori ha portato…</em></td><td><em>una serie di errori hanno portato…</em></td><td>Ammesso anche nello scritto</td></tr>
+            <tr><td><b>Una quantità di</b></td><td><em>è arrivata</em></td><td><em>sono arrivati</em></td><td>Giornalistico</td></tr>
+            <tr><td><b>Un numero di</b></td><td><em>un numero di richieste è giunto</em></td><td><em>un numero di richieste sono giunte</em></td><td>Ammesso, frequente</td></tr>
+            <tr><td><b>Il resto</b></td><td><em>il resto è in attesa</em></td><td><em>il resto sono in attesa</em></td><td>Più raro</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Una serie di / un gruppo di + plurale</b> è il caso più tollerato anche nella scrittura colta: «<em>Una serie di problemi <span class="hl">hanno</span> bloccato il progetto</em>» è perfettamente accettabile, perché la mente percepisce <em>i problemi</em> come il vero soggetto. Lo stesso vale per «<em>un gruppo di studenti <span class="hl">sono</span> entrati</em>».</div>
+      </div>
+
+      <h3>Casi particolari</h3>
+
+      <div class="green-box">
+        <b>Collettivi con specificazione plurale</b> (es. «un gruppo <em>di studenti</em>», «la maggioranza <em>dei deputati</em>») rendono la concordanza ad sensum quasi inevitabile, perché il sostantivo plurale di specificazione attira l'accordo:<br>
+        ✓ <em>Un gruppo di studenti hanno protestato.</em><br>
+        ✓ <em>Un gruppo di studenti ha protestato.</em> <span class="dim">(entrambi corretti)</span>
+      </div>
+
+      <div class="green-box">
+        <b>Collettivi senza specificazione</b> tendono a mantenere l'accordo grammaticale:<br>
+        ✓ <em>La folla applaudì.</em> <span class="dim">(standard)</span><br>
+        ? <em>La folla applaudirono.</em> <span class="dim">(possibile in tono enfatico/letterario, ma più raro)</span>
+      </div>
+
+      <div class="note-box">
+        <b>Distanza dal soggetto:</b> più il verbo è lontano dal soggetto collettivo, più aumenta la probabilità della concordanza ad sensum. «<em>La gente, ormai sfinita da anni di crisi e di promesse mai mantenute, <span class="hl">sono</span> usciti in piazza</em>»: la lunga apposizione fa "perdere" il singolare iniziale.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 3 · SOGGETTO POSPOSTO -->
+<section id="s-posposto" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">3. Soggetto posposto al verbo</h2>
+      <p class="sec-subtitle">Quando il soggetto reale viene dopo il verbo</p>
+
+      <div class="def-box">
+        Quando il soggetto va <span class="hl">dopo il verbo</span>, l'accordo può comportarsi in modo particolare. In italiano standard il verbo concorda comunque con il soggetto reale (cosa o persona), anche se posposto. Con <em>esserci</em> (c'è / ci sono) la regola è chiara e obbligatoria.
+      </div>
+
+      <h3>Regola generale</h3>
+      <div class="green-box">
+        Il verbo concorda con il <span class="hl">soggetto reale</span>, anche se questo segue il verbo:<br>
+        ✓ <em>In questa città <span class="hl">ci sono</span> molti problemi.</em><br>
+        ✓ <em>Sul tavolo <span class="hl">restano</span> tre libri.</em><br>
+        ✓ <em>Nel cassetto <span class="hl">si trovavano</span> vecchie lettere.</em>
+      </div>
+
+      <h3>Il caso di <em>esserci</em></h3>
+
+      <div class="example-block">
+        <div class="ex-it"><em>C'è</em> un problema.</div>
+        <div class="ex-es">Hay un problema.</div>
+        <ul class="analysis-list">
+          <li><b>Accordo:</b> singolare con soggetto singolare</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Ci sono</em> molti problemi.</div>
+        <div class="ex-es">Hay muchos problemas.</div>
+        <ul class="analysis-list">
+          <li><b>Accordo:</b> plurale obbligatorio con soggetto plurale</li>
+          <li><b>Trappola ES:</b> in spagnolo <em>hay</em> resta invariabile («hay muchos problemas»), mentre l'italiano deve concordare</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">In quella città <em>ci sono</em> molti turisti.</div>
+        <div class="ex-es">En esa ciudad hay muchos turistas.</div>
+        <ul class="analysis-list">
+          <li><b>Accordo:</b> il soggetto reale «molti turisti» (pl.) impone <em>ci sono</em></li>
+          <li><b>Note:</b> attenzione, lo spagnolo dice «hay» invariabile</li>
+        </ul>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Distinzione importante:</b> non confondere il <em>soggetto posposto</em> (es. «<em>Sono arrivati i ragazzi</em>») con la <em>concordanza ad sensum</em>. Il soggetto posposto è solo un ordine di parole diverso, e l'accordo segue sempre la regola normale.</div>
+      </div>
+
+      <h3>Soggetto posposto con verbi di esistenza/apparizione</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Verbo</th><th>Esempio</th><th>Accordo</th></tr></thead>
+          <tbody>
+            <tr><td><b>esserci</b></td><td><em>Ci sono tre studenti.</em></td><td class="ok-cell">Con soggetto reale (pl.)</td></tr>
+            <tr><td><b>esistere</b></td><td><em>Esistono molte soluzioni.</em></td><td class="ok-cell">Con soggetto reale (pl.)</td></tr>
+            <tr><td><b>mancare</b></td><td><em>Mancano due ore alla partenza.</em></td><td class="ok-cell">Con soggetto reale (pl.)</td></tr>
+            <tr><td><b>restare</b></td><td><em>Restano pochi giorni.</em></td><td class="ok-cell">Con soggetto reale (pl.)</td></tr>
+            <tr><td><b>occorrere</b></td><td><em>Occorrono dieci euro.</em></td><td class="ok-cell">Con soggetto reale (pl.)</td></tr>
+            <tr><td><b>arrivare</b></td><td><em>Sono arrivati i pacchi.</em></td><td class="ok-cell">Con soggetto reale (pl.)</td></tr>
+            <tr><td><b>succedere</b></td><td><em>Sono successe cose strane.</em></td><td class="ok-cell">Con soggetto reale (pl.)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note-box">
+        <b>Frase impersonale ≠ posposizione:</b> «<em>si dice che…</em>» è un costrutto impersonale; «<em>arrivano notizie da Milano</em>» è un soggetto posposto. Il primo non ammette concordanza con un sostantivo successivo; il secondo sì, anzi la richiede.
+      </div>
+
+      <div class="green-box">
+        <b>Sintesi:</b> con soggetto posposto, in italiano standard il verbo concorda <span class="hl">sempre</span> con il soggetto reale. La concordanza ad sensum entra in gioco solo se il soggetto è collettivo o partitivo, ma non per la sola posizione.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 4 · FRAZIONI E PERCENTUALI -->
+<section id="s-frazioni" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">4. Frazioni, percentuali e quantitativi</h2>
+      <p class="sec-subtitle">Quando il numero attira l'accordo</p>
+
+      <div class="def-box">
+        Con <b>frazioni</b> (<em>la metà</em>, <em>un terzo</em>, <em>tre quarti</em>), <b>percentuali</b> (<em>il 30%</em>, <em>il 50%</em>) e <b>quantitativi</b> (<em>la maggioranza di</em>, <em>una serie di</em>) seguiti da un sostantivo plurale, il verbo può andare al singolare (accordo con il quantificatore) o al plurale (accordo con il sostantivo plurale).
+      </div>
+
+      <h3>Percentuali</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-gram">GRAMM.</span> Il 30% degli italiani <em>considera</em> questo un problema.</div>
+        <div class="ex-it"><span class="tag tag-sens">AD SENSUM</span> Il 30% degli italiani <em>considerano</em> questo un problema.</div>
+        <div class="ex-es">El 30% de los italianos considera esto un problema.</div>
+        <ul class="analysis-list">
+          <li><b>Versione gramm.:</b> accordo con <em>il 30%</em> (sing.)</li>
+          <li><b>Versione ad sensum:</b> accordo con <em>gli italiani</em> (pl.) — frequentissima nei giornali</li>
+          <li><b>Norma:</b> entrambe ammesse; la prima più formale, la seconda più diffusa</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Solo il 5% dei pazienti <em>ha manifestato / hanno manifestato</em> effetti collaterali.</div>
+        <div class="ex-es">Solo el 5% de los pacientes manifestó / han manifestado efectos secundarios.</div>
+        <ul class="analysis-list">
+          <li><b>Note:</b> con percentuali molto piccole (es. 1%, 5%), il singolare è più consueto</li>
+        </ul>
+      </div>
+
+      <h3>Frazioni</h3>
+
+      <div class="example-block">
+        <div class="ex-it">La metà degli studenti <em>ha superato</em> l'esame.</div>
+        <div class="ex-it">La metà degli studenti <em>hanno superato</em> l'esame.</div>
+        <div class="ex-es">La mitad de los estudiantes aprobó el examen.</div>
+        <ul class="analysis-list">
+          <li><b>Ad sensum:</b> entrambe accettabili; il plurale è più frequente nell'orale e nei giornali</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Un terzo della popolazione <em>vive</em> in città.</div>
+        <div class="ex-it">Un terzo della popolazione <em>vivono</em> in città.</div>
+        <div class="ex-es">Un tercio de la población vive en la ciudad.</div>
+        <ul class="analysis-list">
+          <li><b>Note:</b> con <em>popolazione</em> (sing.), l'accordo ad sensum al plurale è marcato; molti preferiscono il singolare</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Tre quarti dei deputati <em>hanno votato / ha votato</em> contro la riforma.</div>
+        <div class="ex-es">Tres cuartas partes de los diputados votaron contra la reforma.</div>
+        <ul class="analysis-list">
+          <li><b>Norma:</b> con <em>tre quarti, due terzi</em> (frazioni formalmente plurali), il verbo va al plurale; il sing. è raro</li>
+        </ul>
+      </div>
+
+      <h3>La maggioranza, la minoranza</h3>
+
+      <div class="example-block">
+        <div class="ex-it">La maggioranza dei deputati <em>ha votato</em> a favore.</div>
+        <div class="ex-it">La maggioranza dei deputati <em>hanno votato</em> a favore.</div>
+        <div class="ex-es">La mayoría de los diputados votó a favor.</div>
+        <ul class="analysis-list">
+          <li><b>Ad sensum:</b> molto frequente nei media; entrambe corrette</li>
+          <li><b>Stile:</b> il singolare è più formale; il plurale dà rilievo ai membri individuali</li>
+        </ul>
+      </div>
+
+      <h3>Quadro riassuntivo</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Quantitativo</th><th>Accordo standard</th><th>Accordo ad sensum</th><th>Frequenza ad sensum</th></tr></thead>
+          <tbody>
+            <tr><td><b>Il X% di + pl.</b></td><td>Singolare</td><td>Plurale</td><td>Altissima (giornali)</td></tr>
+            <tr><td><b>La metà di + pl.</b></td><td>Singolare</td><td>Plurale</td><td>Alta</td></tr>
+            <tr><td><b>Un terzo di + pl.</b></td><td>Singolare</td><td>Plurale</td><td>Media</td></tr>
+            <tr><td><b>Tre quarti / due terzi</b></td><td class="warn-cell">Plurale (preferito)</td><td>Singolare (raro)</td><td>—</td></tr>
+            <tr><td><b>La maggioranza dei + pl.</b></td><td>Singolare</td><td>Plurale</td><td>Altissima</td></tr>
+            <tr><td><b>La minoranza dei + pl.</b></td><td>Singolare</td><td>Plurale</td><td>Alta</td></tr>
+            <tr><td><b>Una serie di + pl.</b></td><td>Singolare</td><td>Plurale</td><td>Alta, ammessa</td></tr>
+            <tr><td><b>Una quantità di + pl.</b></td><td>Singolare</td><td>Plurale</td><td>Media</td></tr>
+            <tr><td><b>Un numero di + pl.</b></td><td>Singolare</td><td>Plurale</td><td>Alta</td></tr>
+            <tr><td><b>Un gruppo di + pl.</b></td><td>Singolare</td><td>Plurale</td><td>Altissima</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">📊</span>
+        <div><b>Regola pratica:</b> la concordanza grammaticale (singolare) è sempre la <span class="hl">scelta sicura</span> nello scritto formale. La ad sensum (plurale) è ammessa, frequente nei registri giornalistici e nell'orale, ma il singolare non sarà mai considerato un errore.</div>
+      </div>
+
+      <div class="note-box">
+        <b>Pe contro:</b> con <em>numero</em> seguito da un'apposizione plurale, l'italiano oscilla forse più che con qualsiasi altro caso. La grammatica normativa accetta entrambe le soluzioni come perfettamente legittime: «<em>Un gran numero di tifosi <span class="hl">è/sono</span> entrati nello stadio</em>».
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 5 · SOGGETTO COMPOSTO -->
+<section id="s-composto" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">5. Soggetto composto</h2>
+      <p class="sec-subtitle">Due o più soggetti coordinati: quale forma del verbo?</p>
+
+      <div class="def-box">
+        Quando due o più soggetti sono coordinati (con <em>e</em>, <em>o</em>, <em>né…né</em>) si parla di <b>soggetto composto</b>. L'accordo del verbo varia secondo la congiunzione e secondo l'interpretazione semantica (somma o alternativa).
+      </div>
+
+      <h3>Coordinazione con <em>e</em> · plurale obbligatorio</h3>
+
+      <div class="green-box">
+        Due o più soggetti uniti da <em>e</em> richiedono il verbo al <span class="hl">plurale</span>:<br>
+        ✓ <em>Marco e Maria <span class="hl">sono arrivati</span>.</em><br>
+        ✓ <em>Il pane e il vino <span class="hl">erano</span> sulla tavola.</em><br>
+        ✓ <em>Mio padre e mia madre <span class="hl">verranno</span> domani.</em>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Luca e Giulia <em>hanno deciso</em> di sposarsi.</div>
+        <div class="ex-es">Luca y Giulia han decidido casarse.</div>
+        <ul class="analysis-list">
+          <li><b>Accordo:</b> 3ª pl. obbligatorio</li>
+          <li><b>Genere del participio:</b> se sono di generi misti, prevale il maschile (<em>decisi</em> se concordasse; qui è <em>deciso + infinito</em>)</li>
+        </ul>
+      </div>
+
+      <h3>Coordinazione con <em>o / oppure</em> · entrambe possibili</h3>
+
+      <div class="def-box">
+        Con <em>o / oppure</em> il verbo può andare al singolare (se i soggetti sono visti come alternativa esclusiva) o al plurale (se si pensa a entrambe le possibilità insieme).
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-gram">SING.</span> O Marco o Maria <em>verrà</em> alla riunione.</div>
+        <div class="ex-it"><span class="tag tag-sens">PL.</span> O Marco o Maria <em>verranno</em> alla riunione.</div>
+        <div class="ex-es">O Marco o Maria vendrá / vendrán a la reunión.</div>
+        <ul class="analysis-list">
+          <li><b>Singolare:</b> alternativa stretta, esclusiva — solo uno dei due</li>
+          <li><b>Plurale:</b> il parlante pensa ai due come possibilità collettiva</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Una telefonata o un'email <em>sarà sufficiente / saranno sufficienti</em>.</div>
+        <div class="ex-es">Una llamada o un correo será suficiente / serán suficientes.</div>
+        <ul class="analysis-list">
+          <li><b>Note:</b> con <em>o</em>, l'accordo plurale è sempre più accettato</li>
+        </ul>
+      </div>
+
+      <h3>Coordinazione con <em>né…né</em> · entrambe possibili</h3>
+
+      <div class="def-box">
+        Con la doppia negazione <em>né…né</em>, l'italiano contemporaneo ammette sia il singolare sia il plurale. Il plurale è più frequente, soprattutto se i soggetti sono persone.
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-gram">SING.</span> Né Marco né Maria <em>è venuto</em>.</div>
+        <div class="ex-it"><span class="tag tag-sens">PL.</span> Né Marco né Maria <em>sono venuti</em>.</div>
+        <div class="ex-es">Ni Marco ni Maria vino / vinieron.</div>
+        <ul class="analysis-list">
+          <li><b>Sing.:</b> tradizionale, più formale; il participio concorda con il soggetto più vicino (qui Maria → <em>venuta</em>, ma usato il maschile)</li>
+          <li><b>Pl.:</b> ad sensum; entrambi non sono venuti — il parlante ne abbraccia il significato cumulativo della negazione</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Né la pioggia né il freddo <em>hanno fermato / ha fermato</em> i manifestanti.</div>
+        <div class="ex-es">Ni la lluvia ni el frío frenó / frenaron a los manifestantes.</div>
+        <ul class="analysis-list">
+          <li><b>Norma:</b> il plurale è oggi nettamente preferito dalla maggior parte degli scrittori contemporanei</li>
+        </ul>
+      </div>
+
+      <h3>Quadro riassuntivo · soggetto composto</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Coordinazione</th><th>Accordo</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr><td><b>S1 e S2</b></td><td class="ok-cell">Plurale obbligatorio</td><td>Senza eccezioni</td></tr>
+            <tr><td><b>S1 o S2</b></td><td class="warn-cell">Singolare o plurale</td><td>Sing. = alternativa stretta; pl. = inclusivo</td></tr>
+            <tr><td><b>S1 oppure S2</b></td><td class="warn-cell">Come sopra</td><td>Identico a <em>o</em></td></tr>
+            <tr><td><b>Né S1 né S2</b></td><td class="warn-cell">Singolare o plurale</td><td>Pl. preferito nell'uso moderno</td></tr>
+            <tr><td><b>S1, S2, S3</b> (lista)</td><td class="ok-cell">Plurale</td><td>Liste con e implicita</td></tr>
+            <tr><td><b>Non solo S1 ma anche S2</b></td><td class="ok-cell">Plurale</td><td>Effetto cumulativo</td></tr>
+            <tr><td><b>Sia S1 sia S2</b></td><td class="ok-cell">Plurale</td><td>Effetto cumulativo</td></tr>
+            <tr><td><b>Tanto S1 quanto S2</b></td><td class="ok-cell">Plurale</td><td>Effetto cumulativo</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note-box">
+        <b>Genere misto nei tempi composti:</b> quando i soggetti sono di generi diversi, il participio passato (con essere) o gli aggettivi predicativi vanno al <em>maschile plurale</em>: «<em>Marco e Maria sono <span class="hl">arrivati</span></em>», «<em>Il cane e la gatta erano <span class="hl">stanchi</span></em>». È il principio classico del maschile inclusivo.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 6 · PREDICATIVO -->
+<section id="s-predicativo" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">6. Concordanza del predicativo</h2>
+      <p class="sec-subtitle">L'aggettivo e il participio davanti al collettivo</p>
+
+      <div class="def-box">
+        Anche il <b>predicativo</b> (aggettivo, participio con <em>essere</em>) può subire l'attrazione semantica del referente reale. Con i collettivi, è frequente che l'aggettivo predicativo vada al <span class="hl">plurale ad sensum</span> mentre il verbo resta singolare, o viceversa.
+      </div>
+
+      <h3>Casi prototipici</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-gram">GRAMM.</span> La squadra <em>era soddisfatta</em> della prestazione.</div>
+        <div class="ex-it"><span class="tag tag-sens">AD SENSUM</span> La squadra <em>erano soddisfatti</em> della prestazione.</div>
+        <div class="ex-es">El equipo estaba satisfecho con la actuación.</div>
+        <ul class="analysis-list">
+          <li><b>Versione gramm.:</b> verbo singolare + aggettivo f.sg. concordato con <em>la squadra</em></li>
+          <li><b>Versione ad sensum:</b> verbo plurale + aggettivo m.pl. concordato con <em>i giocatori</em> (sottintesi)</li>
+          <li><b>Note:</b> la seconda è molto frequente nel parlato sportivo</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">La gente <em>era stanca</em> di promesse.</div>
+        <div class="ex-it">La gente <em>erano stanchi</em> di promesse.</div>
+        <div class="ex-es">La gente estaba cansada de promesas.</div>
+        <ul class="analysis-list">
+          <li><b>Norma:</b> la prima è la forma corretta in qualsiasi registro</li>
+          <li><b>Ad sensum:</b> la seconda è solo orale e marcata</li>
+        </ul>
+      </div>
+
+      <h3>Combinazioni miste · verbo sing. + aggettivo pl.</h3>
+
+      <div class="example-block">
+        <div class="ex-it">La gente <em>era</em> ormai <em>esausti</em> dall'attesa.</div>
+        <div class="ex-es">La gente estaba ya exhaustos por la espera.</div>
+        <ul class="analysis-list">
+          <li><b>Anomalia:</b> verbo singolare (<em>era</em>) ma aggettivo plurale (<em>esausti</em>)</li>
+          <li><b>Status:</b> tipico dell'italiano colto orale; ammesso ma stilisticamente "ibrido"</li>
+        </ul>
+      </div>
+
+      <h3>Concordanza del predicativo nominale</h3>
+
+      <div class="def-box">
+        Quando il verbo è copulativo (<em>essere</em>, <em>sembrare</em>, <em>diventare</em>) e segue un sostantivo, l'attrazione semantica può portare al plurale anche nel nome del predicato:<br>
+        ✓ <em>La gente sono dei lupi.</em> <span class="dim">(ad sensum, colloquiale)</span><br>
+        ✓ <em>La gente è feroce.</em> <span class="dim">(standard, grammaticale)</span>
+      </div>
+
+      <h3>Tabella riassuntiva</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Combinazione</th><th>Esempio</th><th>Registro</th></tr></thead>
+          <tbody>
+            <tr><td>Verbo sing. + agg. sing.</td><td><em>La gente è stanca.</em></td><td>Standard</td></tr>
+            <tr><td>Verbo pl. + agg. pl.</td><td><em>La gente sono stanchi.</em></td><td>Orale informale</td></tr>
+            <tr><td>Verbo sing. + agg. pl.</td><td><em>La gente è stanchi.</em></td><td>Orale colto, raro nello scritto</td></tr>
+            <tr><td>Verbo pl. + agg. sing.</td><td><em>La gente sono stanca.</em></td><td class="err-cell">Da evitare, incoerente</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="green-box">
+        <b>Coerenza:</b> se scegliete la concordanza grammaticale, mantenetela per <em>tutta</em> la frase (verbo, aggettivi, pronomi). Mescolare le due concordanze nella stessa proposizione è stilisticamente debole.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 7 · REGISTRO -->
+<section id="s-registro" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">7. Concordanza e registro</h2>
+      <p class="sec-subtitle">Quando scegliere quale forma</p>
+
+      <div class="def-box">
+        Una volta stabilita la regola grammaticale, in pratica molti italiani colti <span class="hl">ammettono la concordanza ad sensum</span> con i collettivi. La scelta dipende da: <b>tipo di testo</b>, <b>registro</b>, <b>distanza dal soggetto</b>, <b>contesto comunicativo</b>.
+      </div>
+
+      <h3>Le quattro coordinate del registro</h3>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Contesto</th><th>Conc. grammaticale</th><th>Conc. ad sensum</th></tr></thead>
+          <tbody>
+            <tr><td><b>Saggistica accademica</b></td><td class="ok-cell">Preferita</td><td class="err-cell">Sconsigliata</td></tr>
+            <tr><td><b>Documenti ufficiali</b></td><td class="ok-cell">Obbligatoria</td><td class="err-cell">Inammissibile</td></tr>
+            <tr><td><b>Letteratura colta</b></td><td class="ok-cell">Standard</td><td class="warn-cell">Per effetto stilistico</td></tr>
+            <tr><td><b>Giornalismo</b></td><td class="ok-cell">Standard</td><td class="warn-cell">Frequente (specie con %)</td></tr>
+            <tr><td><b>Email professionali</b></td><td class="ok-cell">Standard</td><td class="warn-cell">Accettabile</td></tr>
+            <tr><td><b>Orale colto</b></td><td class="warn-cell">Possibile</td><td class="ok-cell">Frequente</td></tr>
+            <tr><td><b>Orale colloquiale</b></td><td class="warn-cell">Possibile</td><td class="ok-cell">Normale</td></tr>
+            <tr><td><b>Social media</b></td><td class="warn-cell">Possibile</td><td class="ok-cell">Frequentissima</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Regola d'oro</h3>
+      <div class="green-box">
+        <b>La concordanza grammaticale è <span class="hl">sempre corretta</span>, in qualsiasi registro.</b> La ad sensum è una <span class="hl">scelta stilistica</span> che dovete saper riconoscere e usare, ma che non è obbligatoria in nessun caso. Nel dubbio, optate per la grammaticale.
+      </div>
+
+      <h3>Tre criteri pratici</h3>
+
+      <div class="note-box">
+        <b>1. Distanza:</b> se il verbo è vicino al soggetto, la concordanza grammaticale è più naturale. Se il verbo è lontano (con apposizioni, relative), aumenta la probabilità della ad sensum.
+      </div>
+
+      <div class="note-box">
+        <b>2. Plurale di specificazione:</b> se il collettivo è seguito da «di + sostantivo plurale» (<em>la maggioranza dei deputati</em>), la ad sensum diventa molto comune.
+      </div>
+
+      <div class="note-box">
+        <b>3. Tono del testo:</b> per un testo formale, la grammaticale; per un testo vivace, narrativo, giornalistico, la ad sensum può aggiungere immediatezza.
+      </div>
+
+      <h3>Confronto stilistico</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-gram">FORMALE</span> La maggioranza degli intervistati <em>ha dichiarato</em> di essere favorevole alla riforma.</div>
+        <div class="ex-it"><span class="tag tag-sens">GIORNALISTICO</span> La maggioranza degli intervistati <em>hanno dichiarato</em> di essere favorevoli alla riforma.</div>
+        <div class="ex-es">La mayoría de los encuestados ha declarado / han declarado estar a favor de la reforma.</div>
+        <ul class="analysis-list">
+          <li><b>Funzione:</b> la versione plurale dà rilievo alle persone, la singolare al collettivo come entità</li>
+        </ul>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">📰</span>
+        <div><b>Nel giornalismo italiano</b> la concordanza ad sensum con percentuali, frazioni e quantitativi è diventata quasi standard. Leggere quotidiani («Il 60% degli elettori <em>hanno votato</em>…») abitua l'orecchio a questa forma, che resta comunque <span class="hl">una scelta</span>, non l'unica strada possibile.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 8 · APPOSIZIONE -->
+<section id="s-apposizione" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">8. Soggetto + apposizione (insieme a, con…)</h2>
+      <p class="sec-subtitle">Quando un complemento non crea soggetto composto</p>
+
+      <div class="def-box">
+        Quando il soggetto è accompagnato da un'apposizione introdotta da <em>insieme a</em>, <em>con</em>, <em>oltre a</em>, <em>nonché</em>, <em>così come</em>, grammaticalmente <span class="hl">non si crea un soggetto composto</span>: il verbo va al singolare. Ma la concordanza ad sensum al plurale è frequentissima.
+      </div>
+
+      <h3>Il principio normativo</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-gram">GRAMM.</span> Il presidente, insieme ai ministri, <em>ha firmato</em> il decreto.</div>
+        <div class="ex-it"><span class="tag tag-sens">AD SENSUM</span> Il presidente, insieme ai ministri, <em>hanno firmato</em> il decreto.</div>
+        <div class="ex-es">El presidente, junto con los ministros, firmó / han firmado el decreto.</div>
+        <ul class="analysis-list">
+          <li><b>Versione gramm.:</b> il soggetto è solo «il presidente» (sing.); «insieme ai ministri» è un complemento di compagnia</li>
+          <li><b>Versione ad sensum:</b> il parlante percepisce «il presidente + i ministri» come gruppo, e accorda al plurale</li>
+          <li><b>Norma scolastica:</b> il singolare è la forma strettamente corretta</li>
+        </ul>
+      </div>
+
+      <h3>I connettori che NON creano soggetto composto</h3>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Connettore</th><th>Esempio</th><th>Accordo standard</th></tr></thead>
+          <tbody>
+            <tr><td><b>insieme a</b></td><td><em>Marco, insieme a Luca, <span class="hl">arriverà</span></em></td><td class="ok-cell">Singolare</td></tr>
+            <tr><td><b>con</b></td><td><em>Il direttore, con i suoi assistenti, <span class="hl">ha deciso</span></em></td><td class="ok-cell">Singolare</td></tr>
+            <tr><td><b>oltre a</b></td><td><em>Il sindaco, oltre ai consiglieri, <span class="hl">ha parlato</span></em></td><td class="ok-cell">Singolare</td></tr>
+            <tr><td><b>nonché</b></td><td><em>Il presidente, nonché i ministri, <span class="hl">ha approvato</span></em></td><td class="ok-cell">Singolare</td></tr>
+            <tr><td><b>così come</b></td><td><em>Marco, così come Luca, <span class="hl">arriverà</span></em></td><td class="ok-cell">Singolare</td></tr>
+            <tr><td><b>al pari di</b></td><td><em>Lui, al pari di me, <span class="hl">ha studiato</span></em></td><td class="ok-cell">Singolare</td></tr>
+            <tr><td><b>nonché</b></td><td><em>Il direttore, nonché tutto il personale, <span class="hl">ha contribuito</span></em></td><td class="ok-cell">Singolare</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Differenza con «e»:</b> il connettore <em>e</em> coordina due soggetti (= soggetto composto, verbo al plurale obbligatorio). Gli altri connettori introducono solo un'apposizione (= soggetto singolo, verbo al singolare).<br>
+        ✓ <em>Marco <span class="hl">e</span> Luca sono arrivati.</em> (pl. obbligatorio)<br>
+        ✓ <em>Marco, <span class="hl">insieme a</span> Luca, è arrivato.</em> (sing. corretto)</div>
+      </div>
+
+      <h3>Quando la ad sensum diventa quasi standard</h3>
+
+      <div class="example-block">
+        <div class="ex-it">Il ministro, accompagnato dai suoi collaboratori, <em>è entrato / sono entrati</em> nella sala.</div>
+        <div class="ex-es">El ministro, acompañado por sus colaboradores, entró / entraron en la sala.</div>
+        <ul class="analysis-list">
+          <li><b>Note:</b> nella narrativa italiana contemporanea il plurale è frequente; gli accademici puristi preferiscono il singolare</li>
+        </ul>
+      </div>
+
+      <div class="green-box">
+        <b>Indicatore pratico:</b> se l'apposizione è introdotta da una virgola (intonazione di inciso), la grammatica preferisce il singolare. Se l'apposizione è integrata (senza virgole, percepita come parte del soggetto), il plurale è più naturale:<br>
+        — <em>Il presidente<span class="hl">,</span> insieme ai ministri<span class="hl">,</span> <span class="hl">ha</span> firmato.</em> <span class="dim">(inciso → sing.)</span><br>
+        — <em>Il presidente insieme ai ministri <span class="hl">hanno</span> firmato.</em> <span class="dim">(unità → pl. ad sensum)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 9 · TRAPPOLE ES -->
+<section id="s-trappole" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">9. Trappole per ispanofoni</h2>
+      <p class="sec-subtitle">Gli errori più comuni e perché succedono</p>
+
+      <div class="def-box">
+        Lo spagnolo ha regole d'accordo <span class="hl">in parte simili</span>, in parte diverse. Riconoscere le differenze è essenziale per non trasferire male le abitudini.
+      </div>
+
+      <h3>Confronto sistematico ES ↔ IT</h3>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Caso</th><th>Spagnolo</th><th>Italiano</th></tr></thead>
+          <tbody>
+            <tr><td><b>La gente</b></td><td>Sing. quasi obbligatorio: <em>la gente dice</em></td><td>Sing. (gramm.) o pl. (ad sensum)</td></tr>
+            <tr><td><b>Percentuali</b></td><td>Sing.: <em>el 30% considera</em></td><td>Sing. o pl. (ad sensum frequente)</td></tr>
+            <tr><td><b>Hay / Ci sono</b></td><td>Invariabile: <em>hay tres</em></td><td>Concorda: <em>ci sono tre</em></td></tr>
+            <tr><td><b>O Marco o Maria</b></td><td>Spesso sing.: <em>vendrá</em></td><td>Sing. o pl., entrambe accettate</td></tr>
+            <tr><td><b>Ni Marco ni Maria</b></td><td>Spesso pl.: <em>vinieron</em></td><td>Pl. preferito, sing. ammesso</td></tr>
+            <tr><td><b>Insieme a / Junto con</b></td><td>Sing. standard</td><td>Sing. (gramm.) o pl. (ad sensum)</td></tr>
+            <tr><td><b>La metà di + pl.</b></td><td>Sing.: <em>la mitad aprobó</em></td><td>Sing. o pl. (ad sensum frequente)</td></tr>
+            <tr><td><b>La maggioranza dei + pl.</b></td><td>Spesso sing.: <em>la mayoría votó</em></td><td>Pl. molto frequente</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="traps-container"></div>
+
+      <h3>Le tre regole anti-errore</h3>
+
+      <div class="green-box">
+        <b>Regola 1:</b> con <em>esserci</em>, sempre concordare: <em>c'è</em> + sing., <em>ci sono</em> + pl. Lo spagnolo «hay» non concorda mai; l'italiano sì.
+      </div>
+
+      <div class="green-box">
+        <b>Regola 2:</b> con percentuali e frazioni, entrambe le concordanze sono ammesse, ma nel dubbio: <span class="hl">grammaticale (sing.) se è scrittura formale</span>, ad sensum (pl.) se è giornalismo o orale.
+      </div>
+
+      <div class="green-box">
+        <b>Regola 3:</b> con <em>insieme a / con</em>, la grammatica vuole il singolare. Il plurale è ad sensum, ammesso ma più colloquiale. Lo spagnolo è più rigido nel singolare.
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Per il C1:</b> non basta sapere "qual è la regola"; bisogna saper <span class="hl">riconoscere quale concordanza è stata scelta dal parlante</span> e perché. La concordanza ad sensum è una scelta cognitiva, non un capriccio: rivela che il parlante segue il significato e non la forma.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 10 · ESEMPI ANALIZZATI -->
+<section id="s-esempi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">10. Esempi analizzati · 18 frasi</h2>
+      <p class="sec-subtitle">Tipo di concordanza, giustificazione e registro</p>
+
+      <h3>Blocco A · Collettivi (la gente, la folla, il gruppo, la squadra)</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-col">1</span> La gente <em>dice</em> che la situazione sta peggiorando.</div>
+        <div class="ex-es">La gente dice que la situación está empeorando.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> concordanza grammaticale (sing.)</li>
+          <li><b>Giustificazione:</b> accordo con la forma del soggetto <em>la gente</em> (f.sg.)</li>
+          <li><b>Registro:</b> standard, qualsiasi testo</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sens">2</span> La gente <em>sono stanchi</em> di aspettare risposte.</div>
+        <div class="ex-es">La gente está harta de esperar respuestas.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> concordanza ad sensum (pl., verbo + agg.)</li>
+          <li><b>Giustificazione:</b> il parlante pensa alle <em>persone</em>, non al collettivo</li>
+          <li><b>Registro:</b> orale colloquiale; nello scritto sarebbe troppo marcato</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-col">3</span> La folla <em>era entusiasta</em> dello spettacolo.</div>
+        <div class="ex-es">La multitud estaba entusiasmada con el espectáculo.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> concordanza grammaticale (sing.)</li>
+          <li><b>Giustificazione:</b> <em>la folla</em> (f.sg.) → <em>era entusiasta</em></li>
+          <li><b>Registro:</b> standard, anche letterario</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sens">4</span> Il gruppo di studenti <em>hanno protestato</em> davanti al rettorato.</div>
+        <div class="ex-es">El grupo de estudiantes protestó / protestaron frente al rectorado.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> concordanza ad sensum (pl.)</li>
+          <li><b>Giustificazione:</b> il sostantivo plurale «studenti» attira l'accordo</li>
+          <li><b>Registro:</b> ammessa anche nello scritto giornalistico</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sens">5</span> La squadra <em>sono soddisfatti</em> del risultato.</div>
+        <div class="ex-es">El equipo está satisfecho con el resultado.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> concordanza ad sensum (pl., verbo + agg.)</li>
+          <li><b>Giustificazione:</b> il referente sono i giocatori (m.pl.)</li>
+          <li><b>Registro:</b> tipico delle telecronache sportive</li>
+        </ul>
+      </div>
+
+      <h3>Blocco B · Percentuali e frazioni</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-perc">6</span> Il 60% degli italiani <em>è</em> favorevole alla riforma.</div>
+        <div class="ex-es">El 60% de los italianos está a favor de la reforma.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> concordanza grammaticale (sing.)</li>
+          <li><b>Giustificazione:</b> accordo con <em>il 60%</em> (m.sg.)</li>
+          <li><b>Registro:</b> standard, sondaggi formali</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sens">7</span> Il 60% degli italiani <em>sono</em> favorevoli alla riforma.</div>
+        <div class="ex-es">El 60% de los italianos son favorables a la reforma.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> concordanza ad sensum (pl., verbo + agg.)</li>
+          <li><b>Giustificazione:</b> accordo con <em>gli italiani</em></li>
+          <li><b>Registro:</b> giornalistico, frequentissimo</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-perc">8</span> La metà degli invitati <em>non è venuta</em> alla festa.</div>
+        <div class="ex-es">La mitad de los invitados no vino a la fiesta.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> concordanza grammaticale (sing., participio f.sg.)</li>
+          <li><b>Giustificazione:</b> accordo con <em>la metà</em> (f.sg.)</li>
+          <li><b>Registro:</b> standard formale</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sens">9</span> La metà degli invitati <em>non sono venuti</em> alla festa.</div>
+        <div class="ex-es">La mitad de los invitados no vinieron a la fiesta.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> concordanza ad sensum (pl., participio m.pl.)</li>
+          <li><b>Giustificazione:</b> accordo con <em>gli invitati</em></li>
+          <li><b>Registro:</b> orale e giornalistico, frequentissima</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sens">10</span> Tre quarti dei deputati <em>hanno votato</em> a favore.</div>
+        <div class="ex-es">Tres cuartas partes de los diputados votaron a favor.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> concordanza con il plurale del quantificatore</li>
+          <li><b>Giustificazione:</b> <em>tre quarti</em> è formalmente plurale, quindi il verbo va al plurale; non è propriamente ad sensum, ma standard</li>
+          <li><b>Registro:</b> normale e atteso</li>
+        </ul>
+      </div>
+
+      <h3>Blocco C · Soggetti composti e apposizioni</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-col">11</span> Marco e Maria <em>sono partiti</em> per le vacanze.</div>
+        <div class="ex-es">Marco y Maria se fueron de vacaciones.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> accordo obbligatorio al plurale (soggetto composto con <em>e</em>)</li>
+          <li><b>Giustificazione:</b> regola assoluta; il maschile inclusivo per generi misti</li>
+          <li><b>Registro:</b> standard, non c'è alternativa</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-col">12</span> O Marco o Luca <em>verrà</em> alla riunione.</div>
+        <div class="ex-es">O Marco o Luca vendrá a la reunión.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> accordo al singolare con <em>o</em></li>
+          <li><b>Giustificazione:</b> alternativa esclusiva — uno solo dei due</li>
+          <li><b>Registro:</b> standard formale</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sens">13</span> Né Marco né Maria <em>sono venuti</em> alla festa.</div>
+        <div class="ex-es">Ni Marco ni Maria vinieron a la fiesta.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> accordo al plurale ad sensum (preferito nell'uso moderno)</li>
+          <li><b>Giustificazione:</b> negazione cumulativa</li>
+          <li><b>Registro:</b> uso contemporaneo dominante</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-col">14</span> Il presidente, insieme ai ministri, <em>ha firmato</em> il decreto.</div>
+        <div class="ex-es">El presidente, junto con los ministros, firmó el decreto.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> concordanza grammaticale (sing.)</li>
+          <li><b>Giustificazione:</b> <em>insieme a</em> non crea soggetto composto</li>
+          <li><b>Registro:</b> standard, anche giornalistico</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sens">15</span> Il presidente, insieme ai ministri, <em>hanno firmato</em> il decreto.</div>
+        <div class="ex-es">El presidente, junto con los ministros, firmaron el decreto.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> concordanza ad sensum (pl.)</li>
+          <li><b>Giustificazione:</b> il parlante percepisce il presidente e i ministri come un gruppo unitario</li>
+          <li><b>Registro:</b> orale e giornalistico, ammessa</li>
+        </ul>
+      </div>
+
+      <h3>Blocco D · Soggetto posposto e quantitativi</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-perc">16</span> In quella sala <em>ci sono</em> circa duecento persone.</div>
+        <div class="ex-es">En esa sala hay aproximadamente doscientas personas.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> accordo con il soggetto reale posposto</li>
+          <li><b>Giustificazione:</b> <em>esserci</em> concorda obbligatoriamente con il soggetto plurale</li>
+          <li><b>Trappola ES:</b> lo spagnolo «hay» non cambia; l'italiano sì</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sens">17</span> Una serie di problemi <em>hanno bloccato</em> il progetto.</div>
+        <div class="ex-es">Una serie de problemas bloqueó / bloquearon el proyecto.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> concordanza ad sensum (pl.)</li>
+          <li><b>Giustificazione:</b> il sostantivo plurale «problemi» è il vero referente; <em>una serie di</em> è quasi un determinante</li>
+          <li><b>Registro:</b> pienamente accettata anche nello scritto</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-col">18</span> La maggioranza dei deputati <em>ha votato</em> contro / <em>hanno votato</em> contro la riforma.</div>
+        <div class="ex-es">La mayoría de los diputados votó contra / votaron contra la reforma.</div>
+        <ul class="analysis-list">
+          <li><b>Tipo:</b> entrambe ammesse; sing. = gramm., pl. = ad sensum</li>
+          <li><b>Giustificazione:</b> caso prototipico di oscillazione</li>
+          <li><b>Registro:</b> sing. più formale, pl. più frequente nei media</li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <b>Chiusura pratica:</b> la concordanza ad sensum non è un difetto da correggere ma una <span class="hl">risorsa stilistica</span>. A livello C1 dovete saperla riconoscere, descrivere e usare consapevolmente. Nell'uso quotidiano, lasciate che il significato guidi la scelta — ma nello scritto formale, fidatevi della concordanza grammaticale, che non sbaglia mai.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const TRAPS = [
+  {
+    name:'«La gente dicen» trasferito dallo spagnolo',
+    wrong:'La gente dicen que… (per influsso dello spagnolo)',
+    right:'La gente dice che… / La gente dicono che… (ad sensum, orale)',
+    expl:'In spagnolo «la gente dice» è quasi unico; in italiano la forma standard è «la gente dice» (gramm.), ma «la gente dicono» è ammessa nel parlato. Non confondere con la forma castigliana: in italiano la regola standard è il singolare, e il plurale è una scelta colloquiale, non l\'unica alternativa naturale come in spagnolo.'
+  },
+  {
+    name:'Hay → Ci sono (mancato accordo)',
+    wrong:'In questa stanza c\'è molti libri.',
+    right:'In questa stanza ci sono molti libri.',
+    expl:'Lo spagnolo «hay» è invariabile («hay un libro», «hay muchos libros»). L\'italiano «esserci» CONCORDA sempre con il soggetto reale: c\'è + sing., ci sono + pl. Questo è uno degli errori più persistenti dell\'ispanofono.'
+  },
+  {
+    name:'Mescolare sing. e pl. nella stessa frase',
+    wrong:'La gente è stanchi di promesse.',
+    right:'La gente è stanca di promesse. / La gente sono stanchi di promesse.',
+    expl:'Se scegli la concordanza grammaticale (la gente è), mantieni il singolare anche nell\'aggettivo (stanca). Se scegli la ad sensum, vai al plurale per tutto (sono stanchi). Mescolare le due (è + stanchi) suona incoerente, anche se talvolta si sente nell\'orale colto.'
+  },
+  {
+    name:'Insieme a → trattato come soggetto composto',
+    wrong:'Il direttore insieme ai dipendenti hanno deciso. (in scritto formale)',
+    right:'Il direttore, insieme ai dipendenti, ha deciso.',
+    expl:'«Insieme a» è un complemento di compagnia, non una congiunzione di coordinazione. Il soggetto reale è solo «il direttore» (sing.). La forma plurale è ad sensum: ammessa nell\'orale ma da evitare nello scritto formale, dove la grammatica chiede il singolare.'
+  },
+  {
+    name:'Né… né con plurale obbligatorio (calco)',
+    wrong:'Pensare che il plurale sia obbligatorio con «né… né» (per influsso dell\'inglese o di altre lingue)',
+    right:'Né Marco né Maria è venuto / sono venuti.',
+    expl:'In italiano entrambe le forme sono ammesse: il singolare è la forma più tradizionale (con concordanza al soggetto più vicino), il plurale è ad sensum (oggi preferito). Nello spagnolo è simile, ma in italiano è importante sapere che le due opzioni sono entrambe corrette.'
+  },
+  {
+    name:'Percentuali sempre al singolare (calco spagnolo)',
+    wrong:'Il 70% degli intervistati ha risposto positivamente. (pensare che sia l\'unica forma corretta)',
+    right:'Il 70% degli intervistati ha risposto / hanno risposto.',
+    expl:'In spagnolo il singolare è la norma. In italiano entrambe le forme sono ammesse, e l\'ad sensum (plurale) è molto frequente nei giornali. Non rifiutare il plurale come "errore": è una scelta stilistica legittima.'
+  },
+  {
+    name:'Soggetto composto con «e» trattato al singolare',
+    wrong:'Marco e Maria è arrivato. (per analogia con «hay»)',
+    right:'Marco e Maria sono arrivati.',
+    expl:'Con due soggetti uniti da «e» il verbo va OBBLIGATORIAMENTE al plurale. Non c\'è alternativa. Per generi misti, il participio va al maschile plurale (arrivati). Questo è un automatismo da fissare assolutamente.'
+  },
+  {
+    name:'Posporre senza concordare (calco di hay)',
+    wrong:'C\'è tre studenti in classe.',
+    right:'Ci sono tre studenti in classe.',
+    expl:'Lo spagnolo «hay tres estudiantes» fa pensare che il verbo resti invariabile. In italiano, anche con soggetto posposto, il verbo concorda: «ci sono tre studenti», «mancano dieci minuti», «restano due ore». Mai dimenticarlo.'
+  },
+  {
+    name:'Una serie di + verbo al singolare in tutti i contesti',
+    wrong:'Una serie di errori ha bloccato tutto. (pensando che sia l\'unica forma)',
+    right:'Una serie di errori ha bloccato / hanno bloccato tutto.',
+    expl:'«Una serie di + pl.» ammette entrambe le concordanze; anzi, la ad sensum (plurale) è spesso preferita anche nello scritto, perché il vero referente è il sostantivo plurale che segue. Non penalizzare il plurale come "errore".'
+  },
+  {
+    name:'La maggioranza al singolare per influsso del castigliano',
+    wrong:'Pensare che «La maggioranza hanno votato» sia un errore',
+    right:'La maggioranza ha votato / hanno votato',
+    expl:'Lo spagnolo «la mayoría votó» è dominante; l\'italiano accetta volentieri «la maggioranza hanno votato», soprattutto se è seguito da «dei + plurale» (la maggioranza dei deputati hanno votato). È pienamente standard nel registro giornalistico.'
+  }
+];
+
+function renderTraps(){
+  const c = document.getElementById('traps-container');
+  let html = '';
+  TRAPS.forEach(t=>{
+    html += `<div class="trap-card">
+      <div class="trap-card-header"><span class="trap-name">${t.name}</span></div>
+      <div class="trap-vs">
+        <div class="trap-wrong">${t.wrong}</div>
+        <div class="trap-right">${t.right}</div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function showSection(id, btn){
+  document.querySelectorAll('.sec-block').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function setFontSize(v){
+  document.documentElement.style.setProperty('--fs', v+'px');
+}
+
+renderTraps();
+</script>
+
+</body>
+</html>

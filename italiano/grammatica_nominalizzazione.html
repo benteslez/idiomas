@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Nominalizzazione · Grammatica C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ede9df;
+  --card:#faf7f1;
+  --border:#c4bead;
+  --text:#1a1814;
+  --text2:#44413a;
+  --text3:#706c64;
+  --accent:#7a5a0a;
+  --accent-light:#f0e0c0;
+  --accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,0.08);
+  --radius:14px;
+  --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --red:#a81e2e; --red-bg:#fce6e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --teal:#0e6e6e; --teal-bg:#e0f4f4;
+  --fs:15px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-size:var(--fs);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:60px;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text);margin:0 0 .4em;font-weight:600;line-height:1.2}
+h1{font-size:1.85em;font-weight:700}
+h2{font-size:1.45em}
+h3{font-size:1.15em;margin-top:1.1em}
+h4{font-size:1em;font-weight:600}
+p{margin:.5em 0}
+em{font-style:italic}
+b,strong{font-weight:600}
+
+/* HEADER */
+.site-header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 18px 16px;
+  position:relative;
+}
+.site-header .inner{max-width:860px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title-wrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.site-header h1{margin:0;font-size:1.9em;color:var(--text)}
+.header-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.85em;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid var(--accent-mid);
+}
+.subtitle{color:var(--text3);font-size:.92em;margin:4px 0 12px;font-style:italic}
+.stat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stat-pill{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:4px 10px;
+  font-size:.78em;
+  border-radius:999px;
+  font-weight:500;
+}
+.font-ctrl{display:flex;align-items:center;gap:8px;font-size:.78em;color:var(--text3)}
+.font-ctrl input[type=range]{width:90px}
+
+/* SECTION NAV */
+.section-nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:10px 18px;
+  margin-top:14px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.section-nav::-webkit-scrollbar{display:none}
+.section-nav .inner{max-width:860px;margin:0 auto;display:flex;gap:6px;flex-wrap:nowrap}
+.snav-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:6px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82em;
+  border-radius:999px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .15s;
+  font-weight:500;
+}
+.snav-btn:hover{background:var(--accent-light)}
+.snav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* MAIN LAYOUT */
+.main-layout{
+  max-width:860px;
+  margin:0 auto;
+  padding:20px 18px;
+}
+.sec-block{display:none}
+.sec-block.active{display:block;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* GRAM-CARD */
+.gram-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.gram-card-body{padding:18px}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:1.45em;
+  margin:0 0 .4em;
+  color:var(--text);
+}
+.sec-subtitle{color:var(--text3);font-style:italic;font-size:.95em;margin:0 0 14px}
+
+/* DEF-BOX */
+.def-box{
+  background:var(--warn-bg);
+  border-left:4px solid var(--accent);
+  padding:12px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:14px 0;
+  font-size:.96em;
+}
+.def-box b{color:var(--accent)}
+
+/* WARN-BOX */
+.warn-box{
+  background:#fff4e0;
+  border:1px solid #c8900a;
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:12px 0;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:.93em;
+  color:var(--text2);
+}
+.warn-box .ico{font-size:1.1em;flex-shrink:0;line-height:1.3}
+
+/* EXAMPLE BLOCK */
+.example-block{
+  background:var(--blue-bg);
+  border-left:3px solid var(--blue);
+  padding:9px 12px;
+  margin:8px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.ex-it{font-weight:500;color:var(--text)}
+.ex-it em{font-style:normal;color:var(--blue);font-weight:600}
+.ex-es{font-style:italic;color:var(--text2);font-size:.88em;margin-top:2px}
+.ex-note{font-size:.84em;color:var(--text3);margin-top:4px;font-style:italic}
+
+/* NOTE-BOX */
+.note-box{
+  background:var(--purple-bg);
+  border-left:3px solid var(--purple);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.note-box b{color:var(--purple)}
+
+/* GREEN-BOX */
+.green-box{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.green-box b{color:var(--green)}
+
+/* TEAL-BOX */
+.teal-box{
+  background:var(--teal-bg);
+  border-left:3px solid var(--teal);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.teal-box b{color:var(--teal)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.gram-table{width:100%;border-collapse:collapse;font-size:.92em;background:var(--card)}
+.gram-table th{
+  background:var(--accent-light);
+  color:var(--accent);
+  font-family:'DM Sans',sans-serif;
+  font-size:.72em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:8px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--accent-mid);
+}
+.gram-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.gram-table tr:nth-child(even) td{background:rgba(196,190,173,0.12)}
+.gram-table tr:last-child td{border-bottom:none}
+.ok-cell{color:var(--green);font-weight:500}
+.err-cell{color:var(--red);font-weight:500}
+.warn-cell{color:var(--accent);font-weight:500}
+.tbl-pron{font-weight:600;color:var(--text);background:rgba(196,190,173,0.18)}
+
+/* CHIPS */
+.chip-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:14px 0 10px;
+  padding-bottom:4px;
+}
+.chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:5px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.83em;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{background:var(--accent-light)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-panel{display:none}
+.chip-panel.active{display:block;animation:fadeIn .25s}
+
+/* TRAPS */
+.trap-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.trap-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trap-name{font-weight:600;color:var(--text);font-size:.96em}
+.trap-vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.trap-wrong{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-wrong::before{content:'✗ ';color:var(--red);font-weight:700}
+.trap-right{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-right::before{content:'✓ ';color:var(--green);font-weight:700}
+.trap-expl{font-size:.88em;color:var(--text2);font-style:italic;margin-top:6px}
+@media (max-width:520px){.trap-vs{grid-template-columns:1fr}}
+
+/* MINI-TABLE */
+.mini-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.88em;
+  background:var(--card);
+  margin:10px 0;
+}
+.mini-table td{
+  padding:5px 9px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.mini-table td:first-child{color:var(--text3);font-weight:500;width:38%}
+.mini-table td:last-child{color:var(--text);font-weight:600}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table .hl-form{color:var(--accent);font-weight:700}
+
+/* TAG/LABEL */
+.tag{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:.72em;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-right:6px;
+  border:1px solid;
+}
+.tag-form{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.tag-inf{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.tag-acc{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.tag-bur{background:var(--teal-bg);color:var(--teal);border-color:var(--teal)}
+.tag-gio{background:var(--green-bg);color:var(--green);border-color:var(--green)}
+
+/* UTILS */
+.hl{color:var(--accent);font-weight:600}
+.dim{color:var(--text3)}
+
+/* ANALYSIS LIST */
+.analysis-list{
+  font-size:.86em;
+  color:var(--text2);
+  margin-top:6px;
+  padding-left:0;
+  list-style:none;
+}
+.analysis-list li{
+  margin:2px 0;
+  padding-left:12px;
+  position:relative;
+}
+.analysis-list li::before{
+  content:'·';
+  position:absolute;
+  left:2px;
+  color:var(--accent);
+  font-weight:700;
+}
+.analysis-list b{color:var(--accent)}
+
+/* INFO STRUCT DIAGRAM */
+.struct-diag{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 12px;
+  margin:10px 0;
+  font-family:'DM Sans',sans-serif;
+  font-size:.9em;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+.struct-tag{
+  padding:3px 9px;
+  border-radius:999px;
+  font-size:.78em;
+  font-weight:600;
+  border:1px solid;
+}
+.struct-verb{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.struct-nom{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.struct-arrow{color:var(--text3);font-weight:700}
+.struct-text{font-style:italic;color:var(--text2)}
+
+/* RESPONSIVE */
+@media (max-width:520px){
+  .site-header{padding:14px 14px 12px}
+  h1{font-size:1.5em}
+  .main-layout{padding:14px}
+  .gram-card-body{padding:14px}
+  .stat-pill{font-size:.72em}
+  .header-top{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="inner">
+    <div class="header-top">
+      <div>
+        <div class="header-title-wrap">
+          <h1>La Nominalizzazione</h1>
+          <span class="header-tag">Grammatica</span>
+        </div>
+        <div class="subtitle">Dal verbo al nome · C1 · per ispanofoni</div>
+        <div class="stat-bar">
+          <span class="stat-pill">9 sezioni</span>
+          <span class="stat-pill">infinito sostantivato</span>
+          <span class="stat-pill">suffissi deverbali</span>
+          <span class="stat-pill">verbi supporto</span>
+          <span class="stat-pill">15+ esempi analizzati</span>
+        </div>
+      </div>
+      <div class="font-ctrl">
+        <span>A-</span>
+        <input type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+        <span>A+</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION NAV -->
+<nav class="section-nav" id="sec-nav">
+  <div class="inner">
+    <button class="snav-btn active" onclick="showSection('s-concetto',this)">1. Concetto</button>
+    <button class="snav-btn" onclick="showSection('s-infinito',this)">2. Infinito sostantivato</button>
+    <button class="snav-btn" onclick="showSection('s-suffissi',this)">3. Suffissi deverbali</button>
+    <button class="snav-btn" onclick="showSection('s-sintassi',this)">4. Sintassi nominale</button>
+    <button class="snav-btn" onclick="showSection('s-supporto',this)">5. Verbi supporto</button>
+    <button class="snav-btn" onclick="showSection('s-proposizioni',this)">6. Proposizioni</button>
+    <button class="snav-btn" onclick="showSection('s-registro',this)">7. Registro</button>
+    <button class="snav-btn" onclick="showSection('s-trappole',this)">8. Trappole ES</button>
+    <button class="snav-btn" onclick="showSection('s-esempi',this)">9. Esempi analizzati</button>
+  </div>
+</nav>
+
+<main class="main-layout">
+
+<!-- SECCIÓN 1 · CONCETTO -->
+<section id="s-concetto" class="sec-block active">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">1. Che cos'è la nominalizzazione</h2>
+      <p class="sec-subtitle">Dal predicato verbale al sintagma nominale</p>
+
+      <div class="def-box">
+        La <b>nominalizzazione</b> es el proceso por el cual una <span class="hl">acción o proceso verbal</span> se expresa mediante un <b>nombre</b> —ya sea un <em>sustantivo deverbale</em> (formado por sufijación a partir de un verbo) o un <em>infinito sostantivato</em>— en lugar de una proposición con verbo finito. Es uno de los rasgos centrales del estilo <span class="hl">escrito formal</span>: académico, científico, periodístico, jurídico y administrativo.
+      </div>
+
+      <h3>El proceso esquematizado</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-verb">FRASE VERBALE</span>
+        <span class="struct-text">Il governo ha deciso di intervenire.</span>
+      </div>
+      <div class="struct-diag">
+        <span class="struct-tag struct-nom">FRASE NOMINALE</span>
+        <span class="struct-text">La <b>decisione</b> del governo di intervenire.</span>
+        <span class="struct-arrow">←</span>
+        <span class="struct-text">«decidere» → «decisione»</span>
+      </div>
+
+      <h3>Qué cambia entre las dos versiones</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Frase verbale</th><th>Frase nominale</th><th>Efecto</th></tr></thead>
+          <tbody>
+            <tr><td>Il prezzo è aumentato.</td><td>L'<b>aumento</b> del prezzo.</td><td>Compactación, efecto técnico</td></tr>
+            <tr><td>I dati sono stati analizzati.</td><td>L'<b>analisi</b> dei dati.</td><td>Impersonalización</td></tr>
+            <tr><td>Hanno applicato la legge.</td><td>L'<b>applicazione</b> della legge.</td><td>Densidad informativa</td></tr>
+            <tr><td>L'azienda si è sviluppata.</td><td>Lo <b>sviluppo</b> dell'azienda.</td><td>Objetivización</td></tr>
+            <tr><td>Hanno deciso di rinviare.</td><td>La <b>decisione</b> di rinviare.</td><td>Estilo administrativo</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Por qué nominalizar</h3>
+      <p>La nominalizzazione no es solo una operación gramatical: es una <span class="hl">estrategia retórica</span>. Permite:</p>
+      <ul>
+        <li><b>Compactar</b> el discurso: más información en menos palabras (alta densidad léxica).</li>
+        <li><b>Impersonalizar</b>: el sustantivo deverbale puede omitir al agente («<em>la decisione</em>» no obliga a decir quién decidió).</li>
+        <li><b>Objetivizar</b>: lo que era una acción dinámica se presenta como una entidad estable, casi como un objeto.</li>
+        <li><b>Tematizar</b>: el nombre deverbal puede ser sujeto, complemento o tema de un nuevo enunciado, facilitando la cohesión textual.</li>
+        <li><b>Marcar registro</b>: la presencia de nominalizzazioni señala automáticamente un registro elevado, técnico o formal.</li>
+      </ul>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Para el hispanohablante:</b> el español comparte muchos de estos recursos (-ción, -miento, -dad, infinitivo sustantivado), pero el italiano <span class="hl">los usa con mucha más sistematicidad</span> en la prosa formal y, sobre todo, en la lengua administrativa y periodística. Dominar la nominalizzazione es uno de los saltos cualitativos entre el B2 y el C1.</div>
+      </div>
+
+      <h3>Las dos grandes vías de nominalizzazione</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Vía</th><th>Mecanismo</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td><b>Infinito sostantivato</b></td><td>El infinitivo funciona como nombre masculino, con o sin artículo</td><td><em>Il viaggiare allarga la mente</em></td></tr>
+            <tr><td><b>Sostantivo deverbale</b></td><td>Sufijación a partir de la base verbal (-zione, -mento, -tura, etc.)</td><td><em>Lo sviluppo del progetto</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 2 · INFINITO SOSTANTIVATO -->
+<section id="s-infinito" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">2. L'infinito sostantivato</h2>
+      <p class="sec-subtitle">Il verbo che diventa nome maschile singolare</p>
+
+      <div class="def-box">
+        El <b>infinito sostantivato</b> es el uso del infinitivo como <span class="hl">nombre masculino singular</span>. Puede llevar artículo (<em>il/lo</em>), modificadores adjetivales o complementos, conservando una doble naturaleza: gramaticalmente nombre, semánticamente verbo.
+      </div>
+
+      <h3>Estructura básica</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-nom">CON ARTICOLO</span>
+        <span class="struct-text"><b>Il</b> mangiare troppo fa male.</span>
+      </div>
+      <div class="struct-diag">
+        <span class="struct-tag struct-nom">CON ARTICOLO</span>
+        <span class="struct-text"><b>Il</b> viaggiare allarga la mente.</span>
+      </div>
+      <div class="struct-diag">
+        <span class="struct-tag struct-verb">SENZA ARTICOLO</span>
+        <span class="struct-text">Mangiare è un piacere.</span>
+      </div>
+
+      <h3>Con o sin artículo: matiz de registro</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Variante</th><th>Registro</th><th>Ejemplo</th><th>Sentido</th></tr></thead>
+          <tbody>
+            <tr><td>Con artículo <em>il/lo</em></td><td class="warn-cell">Elevado, letterario</td><td>Il bere moderato è salutare.</td><td>«El beber con moderación…» (gnómico)</td></tr>
+            <tr><td>Sin artículo</td><td class="ok-cell">Neutro, comune</td><td>Bere troppo fa male.</td><td>«Beber demasiado…» (genérico)</td></tr>
+            <tr><td>Con <em>lo</em> + verbo en -<em>s/zr</em></td><td class="warn-cell">Elevado</td><td>Lo studiare costantemente è la chiave.</td><td>(eufonía con lo)</td></tr>
+            <tr><td>Con posesivo</td><td class="warn-cell">Marcato, espressivo</td><td>Il suo continuo lamentarsi mi stanca.</td><td>«Su continuo quejarse…»</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note-box">
+        <b>Regla práctica:</b> usa el infinitivo <span class="hl">con artículo</span> cuando quieras subrayar la acción como entidad abstracta, conceptual o gnómica («el comer», «el viajar»). Usa el <span class="hl">infinitivo sin artículo</span> en frases neutras y cuando el infinitivo va al inicio o tras verbos como <em>essere</em>: <em>Mangiare è un piacere</em>, no <em>*Il mangiare è un piacere</em> (aunque también es posible, suena más libresco).
+      </div>
+
+      <h3>El infinito sostantivato admite modificadores</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">1</span> <em>Il</em> continuo <em>lavorare</em> senza pausa l'ha sfinito.</div>
+        <div class="ex-es">El continuo trabajar sin pausa lo agotó.</div>
+        <ul class="analysis-list">
+          <li><b>Modificador adjetival:</b> <em>continuo</em> (adjetivo que concuerda en masculino singular)</li>
+          <li><b>Complemento:</b> <em>senza pausa</em></li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">2</span> <em>Il</em> tuo <em>fumare</em> di nascosto non inganna nessuno.</div>
+        <div class="ex-es">Tu fumar a escondidas no engaña a nadie.</div>
+        <ul class="analysis-list">
+          <li><b>Modificador:</b> posesivo <em>tuo</em></li>
+          <li><b>Complemento:</b> <em>di nascosto</em></li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">3</span> <em>Lo</em> <em>scrivere</em> a mano è ormai un'arte rara.</div>
+        <div class="ex-es">El escribir a mano es ya un arte raro.</div>
+        <ul class="analysis-list">
+          <li><b>Artículo <em>lo</em></b> ante verbo que empieza por <em>s</em> + consonante</li>
+          <li><b>Complemento:</b> <em>a mano</em></li>
+        </ul>
+      </div>
+
+      <h3>Infinitivos sustantivados lexicalizados</h3>
+      <p>Algunos infinitivos sustantivados se han convertido en nombres autónomos del léxico común, con plural posible y significado especializado:</p>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Forma</th><th>Significado</th><th>Plural</th></tr></thead>
+          <tbody>
+            <tr><td>il dovere</td><td>el deber, la obligación</td><td class="ok-cell">i doveri</td></tr>
+            <tr><td>il potere</td><td>el poder</td><td class="ok-cell">i poteri</td></tr>
+            <tr><td>il piacere</td><td>el placer</td><td class="ok-cell">i piaceri</td></tr>
+            <tr><td>il sapere</td><td>el saber, el conocimiento</td><td class="err-cell">— (no plural)</td></tr>
+            <tr><td>l'essere</td><td>el ser</td><td class="ok-cell">gli esseri</td></tr>
+            <tr><td>il parere</td><td>el parecer, la opinión</td><td class="ok-cell">i pareri</td></tr>
+            <tr><td>il dispiacere</td><td>el disgusto</td><td class="ok-cell">i dispiaceri</td></tr>
+            <tr><td>il volere</td><td>la voluntad</td><td class="ok-cell">i voleri</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="green-box">
+        <b>Confronto con lo spagnolo:</b> el español también sustantiviza el infinitivo («el comer», «el saber», «el deber»), pero lo hace con <span class="hl">mucha menor frecuencia</span>. En italiano, frases como «<em>il continuo arrivare di nuove notizie</em>» son del todo naturales en prosa formal; en español equivaldría a «la continua llegada de nuevas noticias», con sustantivo deverbal en lugar del infinitivo. El italiano mantiene viva esta opción gramatical en muchísimos más contextos.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 3 · SUFFISSI DEVERBALI -->
+<section id="s-suffissi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">3. Sostantivi deverbali · suffissi nominali</h2>
+      <p class="sec-subtitle">Dal verbo al nome attraverso la suffissazione</p>
+
+      <div class="def-box">
+        Un <b>sostantivo deverbale</b> es un nombre formado a partir de una base verbal mediante un <span class="hl">sufijo nominal</span>. Cada sufijo aporta un matiz semántico (acción, resultado, cualidad, proceso) y se asocia a clases verbales y a registros particulares.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="showChip('chip-zione',this)">-zione / -sione</button>
+        <button class="chip" onclick="showChip('chip-mento',this)">-mento</button>
+        <button class="chip" onclick="showChip('chip-tura',this)">-tura / -ura</button>
+        <button class="chip" onclick="showChip('chip-anza',this)">-anza / -enza</button>
+        <button class="chip" onclick="showChip('chip-ita',this)">-ità</button>
+        <button class="chip" onclick="showChip('chip-ezza',this)">-ezza</button>
+        <button class="chip" onclick="showChip('chip-aggine',this)">-aggine</button>
+      </div>
+
+      <!-- chip -zione -->
+      <div id="chip-zione" class="chip-panel active">
+        <h3>Sufijo <em>-zione</em> / <em>-sione</em></h3>
+        <p>Es el sufijo deverbal por excelencia. Indica <b>acción</b> y/o <b>resultado de la acción</b>. Se aplica a verbos en su mayoría de la 1ª conjugación (-are) y a verbos cultos. Equivale en español a <em>-ción</em> / <em>-sión</em>.</p>
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Verbo</th><th>Sostantivo</th><th>Traduzione</th></tr></thead>
+            <tbody>
+              <tr><td>decidere</td><td><span class="hl">decisione</span></td><td>decisión</td></tr>
+              <tr><td>produrre</td><td><span class="hl">produzione</span></td><td>producción</td></tr>
+              <tr><td>realizzare</td><td><span class="hl">realizzazione</span></td><td>realización</td></tr>
+              <tr><td>applicare</td><td><span class="hl">applicazione</span></td><td>aplicación</td></tr>
+              <tr><td>discutere</td><td><span class="hl">discussione</span></td><td>discusión</td></tr>
+              <tr><td>imprimere</td><td><span class="hl">impressione</span></td><td>impresión</td></tr>
+              <tr><td>esprimere</td><td><span class="hl">espressione</span></td><td>expresión</td></tr>
+              <tr><td>creare</td><td><span class="hl">creazione</span></td><td>creación</td></tr>
+              <tr><td>educare</td><td><span class="hl">educazione</span></td><td>educación</td></tr>
+              <tr><td>valutare</td><td><span class="hl">valutazione</span></td><td>evaluación</td></tr>
+              <tr><td>comunicare</td><td><span class="hl">comunicazione</span></td><td>comunicación</td></tr>
+              <tr><td>concludere</td><td><span class="hl">conclusione</span></td><td>conclusión</td></tr>
+              <tr><td>permettere</td><td><span class="hl">permissione</span> / il permesso</td><td>permiso</td></tr>
+              <tr><td>diffondere</td><td><span class="hl">diffusione</span></td><td>difusión</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note-box"><b>Regla mnemónica:</b> verbos en <em>-dere</em> y <em>-mettere</em> tienden a <em>-sione</em> (decidere → decisione, ammettere → ammissione). Verbos en <em>-are</em> casi siempre dan <em>-azione</em>.</div>
+      </div>
+
+      <!-- chip -mento -->
+      <div id="chip-mento" class="chip-panel">
+        <h3>Sufijo <em>-mento</em></h3>
+        <p>Indica preferentemente <b>el proceso</b> o <b>el resultado</b> de la acción. Es muy productivo, sobre todo con verbos de 1ª y 2ª conjugación. Equivale en español a <em>-miento</em>.</p>
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Verbo</th><th>Sostantivo</th><th>Traduzione</th></tr></thead>
+            <tbody>
+              <tr><td>migliorare</td><td><span class="hl">miglioramento</span></td><td>mejora, mejoramiento</td></tr>
+              <tr><td>cambiare</td><td><span class="hl">cambiamento</span></td><td>cambio</td></tr>
+              <tr><td>comportarsi</td><td><span class="hl">comportamento</span></td><td>comportamiento</td></tr>
+              <tr><td>raggiungere</td><td><span class="hl">raggiungimento</span></td><td>logro, consecución</td></tr>
+              <tr><td>movere / muovere</td><td><span class="hl">movimento</span></td><td>movimiento</td></tr>
+              <tr><td>trattare</td><td><span class="hl">trattamento</span></td><td>tratamiento</td></tr>
+              <tr><td>fallire</td><td><span class="hl">fallimento</span></td><td>fracaso, quiebra</td></tr>
+              <tr><td>investire</td><td><span class="hl">investimento</span></td><td>inversión</td></tr>
+              <tr><td>aumentare</td><td><span class="hl">aumento</span> (sin -mento)</td><td>aumento</td></tr>
+              <tr><td>sentire</td><td><span class="hl">sentimento</span></td><td>sentimiento</td></tr>
+              <tr><td>insegnare</td><td><span class="hl">insegnamento</span></td><td>enseñanza</td></tr>
+              <tr><td>finanziare</td><td><span class="hl">finanziamento</span></td><td>financiación</td></tr>
+              <tr><td>adempiere</td><td><span class="hl">adempimento</span></td><td>cumplimiento</td></tr>
+              <tr><td>pagare</td><td><span class="hl">pagamento</span></td><td>pago</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="warn-box"><span class="ico">⚠</span><div><b>Ojo:</b> <em>sviluppo</em> existe (no <em>*sviluppamento</em>), <em>aumento</em> también. Algunos verbos prefieren el sustantivo cero-derivado (sin sufijo): <em>l'arrivo</em>, <em>il ritorno</em>, <em>il calcolo</em>.</div></div>
+      </div>
+
+      <!-- chip -tura -->
+      <div id="chip-tura" class="chip-panel">
+        <h3>Sufijo <em>-tura</em> / <em>-ura</em></h3>
+        <p>Indica <b>la acción</b> y muy a menudo <b>el resultado concreto o el objeto</b> de la acción. Mucho menos frecuente que <em>-zione</em>. Equivale en español a <em>-tura</em> / <em>-ura</em>.</p>
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Verbo</th><th>Sostantivo</th><th>Traduzione</th></tr></thead>
+            <tbody>
+              <tr><td>aprire</td><td><span class="hl">apertura</span></td><td>apertura</td></tr>
+              <tr><td>chiudere</td><td><span class="hl">chiusura</span></td><td>cierre, clausura</td></tr>
+              <tr><td>leggere</td><td><span class="hl">lettura</span></td><td>lectura</td></tr>
+              <tr><td>scrivere</td><td><span class="hl">scrittura</span></td><td>escritura</td></tr>
+              <tr><td>coprire</td><td><span class="hl">copertura</span></td><td>cobertura</td></tr>
+              <tr><td>rompere</td><td><span class="hl">rottura</span></td><td>rotura, ruptura</td></tr>
+              <tr><td>cucire</td><td><span class="hl">cucitura</span></td><td>costura</td></tr>
+              <tr><td>frattura (← frangere)</td><td><span class="hl">frattura</span></td><td>fractura</td></tr>
+              <tr><td>(strutturare)</td><td><span class="hl">struttura</span></td><td>estructura</td></tr>
+              <tr><td>(temperare)</td><td><span class="hl">temperatura</span></td><td>temperatura</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- chip -anza/-enza -->
+      <div id="chip-anza" class="chip-panel">
+        <h3>Sufijo <em>-anza</em> / <em>-enza</em></h3>
+        <p>Forma nombres que indican <b>cualidad</b>, <b>estado</b> o <b>acción duradera</b>. Procede del latín <em>-antia/-entia</em>. Equivale en español a <em>-ancia/-encia</em>.</p>
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Verbo / base</th><th>Sostantivo</th><th>Traduzione</th></tr></thead>
+            <tbody>
+              <tr><td>importare</td><td><span class="hl">importanza</span></td><td>importancia</td></tr>
+              <tr><td>tollerare</td><td><span class="hl">tolleranza</span></td><td>tolerancia</td></tr>
+              <tr><td>differire</td><td><span class="hl">differenza</span></td><td>diferencia</td></tr>
+              <tr><td>dipendere</td><td><span class="hl">dipendenza</span></td><td>dependencia</td></tr>
+              <tr><td>—</td><td><span class="hl">indipendenza</span></td><td>independencia</td></tr>
+              <tr><td>conoscere</td><td><span class="hl">conoscenza</span></td><td>conocimiento</td></tr>
+              <tr><td>sperare</td><td><span class="hl">speranza</span></td><td>esperanza</td></tr>
+              <tr><td>resistere</td><td><span class="hl">resistenza</span></td><td>resistencia</td></tr>
+              <tr><td>sussistere</td><td><span class="hl">sussistenza</span></td><td>subsistencia</td></tr>
+              <tr><td>preferire</td><td><span class="hl">preferenza</span></td><td>preferencia</td></tr>
+              <tr><td>esperire / esperienza</td><td><span class="hl">esperienza</span></td><td>experiencia</td></tr>
+              <tr><td>esistere</td><td><span class="hl">esistenza</span></td><td>existencia</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- chip -ità -->
+      <div id="chip-ita" class="chip-panel">
+        <h3>Sufijo <em>-ità</em></h3>
+        <p>Forma nombres abstractos a partir de <b>adjetivos</b> (no de verbos), pero a menudo entra en cadenas de nominalización junto a sustantivos deverbales. Indica <b>cualidad</b>. Equivale en español a <em>-idad</em>.</p>
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Aggettivo</th><th>Sostantivo</th><th>Traduzione</th></tr></thead>
+            <tbody>
+              <tr><td>responsabile</td><td><span class="hl">responsabilità</span></td><td>responsabilidad</td></tr>
+              <tr><td>capace</td><td><span class="hl">capacità</span></td><td>capacidad</td></tr>
+              <tr><td>qualitativo / quale</td><td><span class="hl">qualità</span></td><td>calidad</td></tr>
+              <tr><td>necessario</td><td><span class="hl">necessità</span></td><td>necesidad</td></tr>
+              <tr><td>possibile</td><td><span class="hl">possibilità</span></td><td>posibilidad</td></tr>
+              <tr><td>utile</td><td><span class="hl">utilità</span></td><td>utilidad</td></tr>
+              <tr><td>difficile</td><td><span class="hl">difficoltà</span></td><td>dificultad</td></tr>
+              <tr><td>libero</td><td><span class="hl">libertà</span></td><td>libertad</td></tr>
+              <tr><td>vero</td><td><span class="hl">verità</span></td><td>verdad</td></tr>
+              <tr><td>identico / identitario</td><td><span class="hl">identità</span></td><td>identidad</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note-box"><b>Nota:</b> son invariables (<em>la responsabilità / le responsabilità</em>) y mantienen la tónica en la última sílaba.</div>
+      </div>
+
+      <!-- chip -ezza -->
+      <div id="chip-ezza" class="chip-panel">
+        <h3>Sufijo <em>-ezza</em></h3>
+        <p>Forma nombres abstractos a partir de <b>adjetivos</b>. Indica <b>cualidad</b>, a menudo con matiz subjetivo o expresivo. Equivale en español a <em>-eza</em>.</p>
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Aggettivo</th><th>Sostantivo</th><th>Traduzione</th></tr></thead>
+            <tbody>
+              <tr><td>bello</td><td><span class="hl">bellezza</span></td><td>belleza</td></tr>
+              <tr><td>chiaro</td><td><span class="hl">chiarezza</span></td><td>claridad</td></tr>
+              <tr><td>debole</td><td><span class="hl">debolezza</span></td><td>debilidad</td></tr>
+              <tr><td>stanco</td><td><span class="hl">stanchezza</span></td><td>cansancio</td></tr>
+              <tr><td>certo</td><td><span class="hl">certezza</span></td><td>certeza</td></tr>
+              <tr><td>tristo / triste</td><td><span class="hl">tristezza</span></td><td>tristeza</td></tr>
+              <tr><td>fermo</td><td><span class="hl">fermezza</span></td><td>firmeza</td></tr>
+              <tr><td>grande</td><td><span class="hl">grandezza</span></td><td>grandeza, tamaño</td></tr>
+              <tr><td>ricco</td><td><span class="hl">ricchezza</span></td><td>riqueza</td></tr>
+              <tr><td>tenero</td><td><span class="hl">tenerezza</span></td><td>ternura</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- chip -aggine -->
+      <div id="chip-aggine" class="chip-panel">
+        <h3>Sufijos <em>-aggine</em> / <em>-iggine</em></h3>
+        <p>Forman nombres abstractos casi siempre con <span class="hl">connotación peyorativa</span>: defecto, vicio, comportamiento criticable. Equivalentes españoles: <em>-ería</em> (de modo peyorativo), <em>-ez</em>, perífrasis.</p>
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Base</th><th>Sostantivo</th><th>Traduzione</th></tr></thead>
+            <tbody>
+              <tr><td>testardo</td><td><span class="hl">testardaggine</span></td><td>terquedad, cabezonería</td></tr>
+              <tr><td>stupido</td><td><span class="hl">stupidaggine</span></td><td>estupidez, tontería</td></tr>
+              <tr><td>pigro</td><td><span class="hl">pigrizia</span> (variante)</td><td>pereza</td></tr>
+              <tr><td>sciocco</td><td><span class="hl">sciocchezza</span> (variante)</td><td>tontería</td></tr>
+              <tr><td>balordo</td><td><span class="hl">balordaggine</span></td><td>necedad</td></tr>
+              <tr><td>scemo</td><td><span class="hl">scemenza</span> (variante)</td><td>idiotez</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="warn-box"><span class="ico">💡</span><div><b>Tono:</b> los nombres en <em>-aggine</em> son típicos del italiano coloquial y expresivo. En registro formal, se prefieren equivalentes en <em>-ità</em> o <em>-ezza</em>.</div></div>
+      </div>
+
+      <h3>Tabla sinóptica de sufijos</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Sufijo</th><th>Tipo de base</th><th>Valor semántico</th><th>ES</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-pron">-zione / -sione</td><td>Verbo</td><td>Acción y resultado</td><td>-ción / -sión</td></tr>
+            <tr><td class="tbl-pron">-mento</td><td>Verbo</td><td>Proceso y resultado</td><td>-miento</td></tr>
+            <tr><td class="tbl-pron">-tura / -ura</td><td>Verbo / adj.</td><td>Acción y objeto concreto</td><td>-tura / -ura</td></tr>
+            <tr><td class="tbl-pron">-anza / -enza</td><td>Verbo / adj.</td><td>Cualidad, estado duradero</td><td>-ancia / -encia</td></tr>
+            <tr><td class="tbl-pron">-ità</td><td>Adjetivo</td><td>Cualidad abstracta</td><td>-idad</td></tr>
+            <tr><td class="tbl-pron">-ezza</td><td>Adjetivo</td><td>Cualidad (expresiva)</td><td>-eza</td></tr>
+            <tr><td class="tbl-pron">-aggine</td><td>Adjetivo</td><td>Defecto, peyorativo</td><td>-ería / perífrasis</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 4 · SINTASSI NOMINALE -->
+<section id="s-sintassi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">4. Sintassi nominale · caratteristiche</h2>
+      <p class="sec-subtitle">Lo stile compatto della prosa formale</p>
+
+      <div class="def-box">
+        La <b>sintassi nominale</b> es el estilo discursivo que privilegia los <span class="hl">sustantivos deverbales</span> sobre las proposiciones subordinadas con verbo finito. Es la forma típica de la prosa académica, periodística y administrativa, y se caracteriza por una alta densidad léxica.
+      </div>
+
+      <h3>Cuatro rasgos centrales</h3>
+      <ol>
+        <li><b>Sostituzione di proposizioni subordinate</b> per sintagmi nominali.</li>
+        <li><b>Alta densità lessicale:</b> più informazione in meno parole.</li>
+        <li><b>Impersonalizzazione:</b> l'agente verbale tende a essere oscurato.</li>
+        <li><b>Oggettivizzazione:</b> l'azione si presenta come entità stabile, quasi reificata.</li>
+      </ol>
+
+      <h3>Cómo opera la transformación</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-verb">PROP. SUBORDINATA</span>
+        <span class="struct-text">Il fatto che si è deciso di partire subito.</span>
+      </div>
+      <div class="struct-diag">
+        <span class="struct-tag struct-nom">SINTAGMA NOMINALE</span>
+        <span class="struct-text">La <b>decisione</b> di partire subito.</span>
+      </div>
+
+      <div class="struct-diag">
+        <span class="struct-tag struct-verb">PROP. VERBALE</span>
+        <span class="struct-text">Il progetto si è sviluppato rapidamente.</span>
+      </div>
+      <div class="struct-diag">
+        <span class="struct-tag struct-nom">SINTAGMA NOMINALE</span>
+        <span class="struct-text">Lo <b>sviluppo</b> del progetto è stato rapido.</span>
+      </div>
+
+      <h3>Densità lessicale</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-inf">verbale</span> Hanno deciso di intervenire perché la situazione era peggiorata e ciò ha permesso di salvare l'azienda.</div>
+        <div class="ex-it"><span class="tag tag-form">nominale</span> La <em>decisione</em> di intervenire, dovuta al <em>peggioramento</em> della situazione, ha permesso il <em>salvataggio</em> dell'azienda.</div>
+        <ul class="analysis-list">
+          <li><b>Densità:</b> tre verbi finiti (hanno deciso / era peggiorata / ha permesso) → tre sostantivi deverbali (decisione / peggioramento / salvataggio)</li>
+          <li><b>Effetto:</b> stile più compatto, formale, oggettivo</li>
+        </ul>
+      </div>
+
+      <h3>Impersonalizzazione</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-inf">verbale</span> I ricercatori hanno applicato il metodo a un campione esteso.</div>
+        <div class="ex-it"><span class="tag tag-form">nominale</span> L'<em>applicazione</em> del metodo a un campione esteso (ha permesso…).</div>
+        <ul class="analysis-list">
+          <li><b>Agente cancellato:</b> el sustantivo deverbal omite quién aplicó el método</li>
+          <li><b>Resultado:</b> efecto técnico, científico, neutro</li>
+        </ul>
+      </div>
+
+      <h3>Oggettivizzazione</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-inf">verbale</span> I prezzi sono aumentati notevolmente.</div>
+        <div class="ex-it"><span class="tag tag-form">nominale</span> L'<em>aumento</em> notevole dei prezzi.</div>
+        <ul class="analysis-list">
+          <li><b>Reificazione:</b> «aumentar» (proceso dinámico) → «el aumento» (cosa estable)</li>
+          <li><b>Cohesión:</b> el nombre «aumento» puede ser tema de una nueva oración: <em>L'aumento dei prezzi ha colpito le famiglie</em></li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <b>Función textual:</b> los sustantivos deverbales son <span class="hl">excelentes agentes de cohesión</span>. Permiten retomar en una sola palabra lo dicho en la frase anterior («I prezzi sono aumentati. <em>Tale aumento</em>…»). Es una técnica básica de la prosa formal italiana.
+      </div>
+
+      <h3>Sintassi nominale vs verbale: confronto sistematico</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Rasgo</th><th>Sintassi verbale</th><th>Sintassi nominale</th></tr></thead>
+          <tbody>
+            <tr><td>Núcleo</td><td>Verbo finito</td><td>Sustantivo deverbal / infinitivo</td></tr>
+            <tr><td>Agente</td><td>Explícito (sujeto)</td><td>A menudo omitido</td></tr>
+            <tr><td>Tiempo</td><td>Marcado</td><td>A menudo neutralizado</td></tr>
+            <tr><td>Densidad</td><td>Media</td><td>Alta</td></tr>
+            <tr><td>Tono</td><td>Dinámico, narrativo</td><td>Estático, objetivo</td></tr>
+            <tr><td>Registro</td><td>Neutro / coloquial</td><td>Formal, técnico</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 5 · VERBI SUPPORTO -->
+<section id="s-supporto" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">5. Nominalizzazione del predicato · verbi supporto</h2>
+      <p class="sec-subtitle">Il verbo che "porta" il nome</p>
+
+      <div class="def-box">
+        Un <b>verbo supporto</b> (o <em>light verb</em>) es un verbo que, en una <span class="hl">construcción nominal</span>, <b>«soporta» a un sustantivo deverbal</b> sin añadir contenido semántico propio. El significado lo aporta el sustantivo; el verbo solo provee las marcas de tiempo, modo y persona. Estas construcciones se llaman también <em>collocazioni</em>.
+      </div>
+
+      <h3>Esquema general</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-verb">VERBO PIENO</span>
+        <span class="struct-text">decidere</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-tag struct-nom">VERBO SUPPORTO + NOME</span>
+        <span class="struct-text"><b>prendere</b> una decisione</span>
+      </div>
+      <div class="struct-diag">
+        <span class="struct-tag struct-verb">VERBO PIENO</span>
+        <span class="struct-text">pagare</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-tag struct-nom">VERBO SUPPORTO + NOME</span>
+        <span class="struct-text"><b>effettuare</b> un pagamento</span>
+      </div>
+      <div class="struct-diag">
+        <span class="struct-tag struct-verb">VERBO PIENO</span>
+        <span class="struct-text">analizzare</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-tag struct-nom">VERBO SUPPORTO + NOME</span>
+        <span class="struct-text"><b>procedere</b> all'analisi</span>
+      </div>
+
+      <h3>Lista de verbos supporto frecuentes</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Verbo supporto</th><th>Collocazioni típicas</th><th>Registro</th></tr></thead>
+          <tbody>
+            <tr><td><b>fare</b></td><td>fare una domanda, fare una telefonata, fare un passo, fare una proposta, fare attenzione, fare uso</td><td>Neutro</td></tr>
+            <tr><td><b>dare</b></td><td>dare un'occhiata, dare inizio, dare una mano, dare un consiglio, dare ascolto, dare prova</td><td>Neutro</td></tr>
+            <tr><td><b>prendere</b></td><td>prendere una decisione, prendere atto, prendere posizione, prendere in considerazione, prendere parte</td><td>Neutro/formale</td></tr>
+            <tr><td><b>effettuare</b></td><td>effettuare un pagamento, effettuare una valutazione, effettuare un controllo, effettuare un sopralluogo</td><td>Burocratico</td></tr>
+            <tr><td><b>procedere a</b></td><td>procedere all'analisi, procedere alla valutazione, procedere al voto, procedere all'arresto</td><td>Burocratico/giuridico</td></tr>
+            <tr><td><b>svolgere</b></td><td>svolgere un'attività, svolgere un ruolo, svolgere un'indagine, svolgere un compito</td><td>Formale</td></tr>
+            <tr><td><b>operare</b></td><td>operare una scelta, operare un cambiamento, operare una distinzione</td><td>Formale</td></tr>
+            <tr><td><b>condurre</b></td><td>condurre un'indagine, condurre una ricerca, condurre un'analisi, condurre un esperimento</td><td>Accademico</td></tr>
+            <tr><td><b>realizzare</b></td><td>realizzare un progetto, realizzare un'opera, realizzare un obiettivo</td><td>Formale</td></tr>
+            <tr><td><b>avere</b></td><td>avere paura, avere bisogno, avere fretta, avere fame, avere ragione</td><td>Neutro (idiomático)</td></tr>
+            <tr><td><b>porre</b></td><td>porre una domanda, porre attenzione, porre fine, porre rimedio</td><td>Formale</td></tr>
+            <tr><td><b>mettere</b></td><td>mettere in dubbio, mettere in atto, mettere in pratica, mettere a fuoco</td><td>Neutro</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Collocazioni rígidas: el verbo «correcto»</h3>
+      <p>La nominalizzazione no es libre: cada nombre deverbal <span class="hl">selecciona su verbo supporto</span>. Equivocarse de verbo produce frases agramaticales o de aspecto extranjero.</p>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Sustantivo</th><th class="ok-cell">✓ Verbo correcto</th><th class="err-cell">✗ Verbo incorrecto</th></tr></thead>
+          <tbody>
+            <tr><td>una decisione</td><td>prendere una decisione</td><td>*fare una decisione</td></tr>
+            <tr><td>una domanda</td><td>fare una domanda / porre una domanda</td><td>*dare una domanda</td></tr>
+            <tr><td>un pagamento</td><td>effettuare / fare un pagamento</td><td>*dare un pagamento</td></tr>
+            <tr><td>una telefonata</td><td>fare una telefonata</td><td>*dare una telefonata</td></tr>
+            <tr><td>un'analisi</td><td>condurre / svolgere / effettuare un'analisi</td><td>*fare un'analisi (raro)</td></tr>
+            <tr><td>un'occhiata</td><td>dare un'occhiata</td><td>*fare un'occhiata</td></tr>
+            <tr><td>atto (di qcs)</td><td>prendere atto</td><td>*fare atto</td></tr>
+            <tr><td>parte (a qcs)</td><td>prendere parte / partecipare</td><td>*fare parte (con otro significado)</td></tr>
+            <tr><td>fine</td><td>porre fine / mettere fine</td><td>*dare fine</td></tr>
+            <tr><td>una passeggiata</td><td>fare una passeggiata</td><td>*prendere una passeggiata</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠</span>
+        <div><b>Para el hispanohablante:</b> el español dice <em>tomar una decisión</em>, pero italiano <span class="hl">no acepta «tomare»</span>; debe ser <em>prendere una decisione</em>. Tampoco se dice *<em>fare una decisione</em> (calco del inglés «make a decision»). Memoriza la <span class="hl">collocazione completa</span>, no traduzcas verbo por verbo.</div>
+      </div>
+
+      <h3>Por qué usar verbo supporto en lugar de verbo pleno</h3>
+      <ul>
+        <li><b>Modulación aspectual:</b> <em>fare una passeggiata</em> ≠ <em>passeggiare</em> (la collocazione marca un acto único, delimitado).</li>
+        <li><b>Modulación cuantitativa:</b> <em>fare una breve passeggiata</em> permite añadir adjetivos que el verbo no admitiría directamente.</li>
+        <li><b>Registro elevado:</b> <em>effettuare un pagamento</em> suena más formal que <em>pagare</em>.</li>
+        <li><b>Cohesión:</b> el sustantivo deverbal puede retomarse después («<em>Tale pagamento è stato registrato</em>»).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 6 · PROPOSIZIONI -->
+<section id="s-proposizioni" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">6. Nominalizzazione delle proposizioni subordinate</h2>
+      <p class="sec-subtitle">Come una proposizione diventa un sintagma nominale</p>
+
+      <div class="def-box">
+        Una <b>proposizione subordinata</b> (causal, temporal, final, condicional, concesiva…) puede transformarse en un <span class="hl">sintagma nominal</span> equivalente. La preposición o conjunción introductoria se sustituye por una preposición + sustantivo deverbal, o por un participio absoluto.
+      </div>
+
+      <h3>Causale → sintagma nominale</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-inf">verbale</span> Dato che ha studiato molto, ha superato l'esame.</div>
+        <div class="ex-it"><span class="tag tag-form">nominale</span> <em>Vista la sua preparazione</em>, ha superato l'esame.</div>
+        <div class="ex-es">Dado que estudió mucho / Vista su preparación, aprobó el examen.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-inf">verbale</span> Poiché i prezzi sono aumentati, le vendite sono diminuite.</div>
+        <div class="ex-it"><span class="tag tag-form">nominale</span> <em>A causa dell'aumento dei prezzi</em>, le vendite sono diminuite.</div>
+      </div>
+
+      <h3>Temporale → sintagma nominale</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-inf">verbale</span> Dopo che è arrivato, abbiamo cominciato la riunione.</div>
+        <div class="ex-it"><span class="tag tag-form">nominale</span> <em>Dopo il suo arrivo</em>, abbiamo cominciato la riunione.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-inf">verbale</span> Prima che il treno parta, dobbiamo salutarci.</div>
+        <div class="ex-it"><span class="tag tag-form">nominale</span> <em>Prima della partenza del treno</em>, dobbiamo salutarci.</div>
+      </div>
+
+      <h3>Finale → sintagma nominale</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-inf">verbale</span> Affinché si raggiunga l'obiettivo, bisogna collaborare.</div>
+        <div class="ex-it"><span class="tag tag-form">nominale</span> <em>Al fine del raggiungimento dell'obiettivo</em>, bisogna collaborare.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-inf">verbale</span> Per migliorare le prestazioni, occorrono nuovi investimenti.</div>
+        <div class="ex-it"><span class="tag tag-form">nominale</span> <em>Per il miglioramento delle prestazioni</em>, occorrono nuovi investimenti.</div>
+      </div>
+
+      <h3>Tabla sistematica de transformaciones</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Tipo</th><th>Proposizione verbale</th><th>Sintagma nominale</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>Causale</b></td>
+              <td>poiché / dato che ha studiato</td>
+              <td>per via dello studio / a causa dello studio / visto lo studio</td>
+            </tr>
+            <tr>
+              <td><b>Causale</b></td>
+              <td>siccome i prezzi sono aumentati</td>
+              <td>a causa dell'aumento dei prezzi</td>
+            </tr>
+            <tr>
+              <td><b>Temporale anteriore</b></td>
+              <td>dopo che è arrivato</td>
+              <td>dopo il suo arrivo</td>
+            </tr>
+            <tr>
+              <td><b>Temporale posteriore</b></td>
+              <td>prima che parta</td>
+              <td>prima della sua partenza</td>
+            </tr>
+            <tr>
+              <td><b>Temporale contemporanea</b></td>
+              <td>mentre si svolge l'esame</td>
+              <td>durante lo svolgimento dell'esame</td>
+            </tr>
+            <tr>
+              <td><b>Finale</b></td>
+              <td>affinché si raggiunga / per raggiungere</td>
+              <td>per il / al fine del raggiungimento</td>
+            </tr>
+            <tr>
+              <td><b>Condizionale</b></td>
+              <td>se si dovesse decidere</td>
+              <td>in caso di decisione</td>
+            </tr>
+            <tr>
+              <td><b>Concessiva</b></td>
+              <td>nonostante sia stato avvisato</td>
+              <td>nonostante l'avviso</td>
+            </tr>
+            <tr>
+              <td><b>Modale</b></td>
+              <td>cercando di intervenire</td>
+              <td>attraverso un intervento / mediante l'intervento</td>
+            </tr>
+            <tr>
+              <td><b>Strumentale</b></td>
+              <td>applicando il metodo</td>
+              <td>tramite / mediante l'applicazione del metodo</td>
+            </tr>
+            <tr>
+              <td><b>Dichiarativa</b></td>
+              <td>il fatto che si sia deciso</td>
+              <td>la decisione (di…)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Preposiciones que regen la nominalización</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Función</th><th>Preposiciones / locuciones</th></tr></thead>
+          <tbody>
+            <tr><td>Causal</td><td>a causa di, per, in seguito a, visto/vista, dato/data</td></tr>
+            <tr><td>Temporal anterior</td><td>dopo, in seguito a, a partire da</td></tr>
+            <tr><td>Temporal posterior</td><td>prima di, in vista di, in attesa di</td></tr>
+            <tr><td>Temporal simultánea</td><td>durante, nel corso di, all'atto di</td></tr>
+            <tr><td>Final</td><td>per, al fine di, allo scopo di, in vista di</td></tr>
+            <tr><td>Condicional</td><td>in caso di, in mancanza di, salvo</td></tr>
+            <tr><td>Concesiva</td><td>nonostante, malgrado, a dispetto di</td></tr>
+            <tr><td>Modal / instrumental</td><td>mediante, tramite, attraverso, con</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note-box">
+        <b>Participio absoluto:</b> otra estrategia frecuentísima en italiano formal es el <em>participio passato</em> en construcción absoluta: <em>Vista la situazione, abbiamo deciso…</em> / <em>Effettuata l'analisi, si è proceduto al voto</em>. Es una variante de la nominalizzazione mediante participio, no mediante sustantivo deverbal.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 7 · REGISTRO -->
+<section id="s-registro" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">7. Registro e stile</h2>
+      <p class="sec-subtitle">Quanta nominalizzazione, e dove?</p>
+
+      <div class="def-box">
+        La densidad de nominalizzazione es un <span class="hl">marcador automático del registro</span>: cuanto más alto el grado de nominalizzazione, más formal y técnico el texto. Cada registro tiene su «cuota» natural.
+      </div>
+
+      <h3>Cuatro registros, cuatro estrategias</h3>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Registro</th><th>Nivel de nominalizzazione</th><th>Verbos supporto</th><th>Función</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tag-acc">ACCADEMICO</span></td><td>Alto</td><td>condurre, effettuare, operare, svolgere</td><td>Objetividad, impersonalidad</td></tr>
+            <tr><td><span class="tag tag-gio">GIORNALISTICO</span></td><td>Medio</td><td>fare, dare, prendere, effettuare</td><td>Brevedad, densidad, titulares</td></tr>
+            <tr><td><span class="tag tag-bur">BUROCRATICO</span></td><td>Muy alto</td><td>effettuare, procedere a, fare</td><td>Despersonalización máxima</td></tr>
+            <tr><td><span class="tag tag-inf">PARLATO</span></td><td>Bajo</td><td>raros, en collocaciones idiomáticas</td><td>Inmediatez, dinamismo</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Accademico / scientifico</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-acc">ACC.</span> L'<em>analisi</em> dei dati e la <em>valutazione</em> dei risultati hanno portato alla <em>formulazione</em> di una nuova <em>ipotesi</em> sull'<em>evoluzione</em> del fenomeno.</div>
+        <div class="ex-es">El análisis de los datos y la evaluación de los resultados condujeron a la formulación de una nueva hipótesis sobre la evolución del fenómeno.</div>
+        <ul class="analysis-list">
+          <li><b>Densidad:</b> 5 sostantivos deverbales en una sola frase</li>
+          <li><b>Agente:</b> totalmente ausente (no se dice quién analizó, valoró, etc.)</li>
+        </ul>
+      </div>
+
+      <h3>Giornalistico</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-gio">GIOR.</span> <em>Accordo</em> raggiunto. La <em>firma</em> del contratto avverrà domani dopo le <em>verifiche</em> finali.</div>
+        <div class="ex-es">Acuerdo alcanzado. La firma del contrato se producirá mañana tras las verificaciones finales.</div>
+        <ul class="analysis-list">
+          <li><b>Brevità:</b> titulare condensato in pochissime parole grazie alla nominalizzazione</li>
+          <li><b>Effetto:</b> tono informativo, neutro, tecnico</li>
+        </ul>
+      </div>
+
+      <h3>Burocratico / amministrativo</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-bur">BUR.</span> Si <em>procede</em> all'<em>esame</em> della <em>richiesta</em> e all'<em>emissione</em> del relativo <em>provvedimento</em>, previa <em>verifica</em> della <em>documentazione</em> presentata.</div>
+        <div class="ex-es">Se procede al examen de la solicitud y a la emisión del correspondiente decreto, previa verificación de la documentación presentada.</div>
+        <ul class="analysis-list">
+          <li><b>Densidad máxima:</b> casi todos los contenidos son nominales</li>
+          <li><b>Verbi supporto:</b> «procedere a», «previa verifica» (participio absoluto)</li>
+          <li><b>Distancia:</b> el ciudadano queda impersonalizado como «documentazione presentata»</li>
+        </ul>
+      </div>
+
+      <h3>Parlato</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-inf">PARL.</span> Hanno esaminato la richiesta e gli hanno mandato il documento, ma prima hanno controllato tutto quello che aveva consegnato.</div>
+        <div class="ex-es">Examinaron la solicitud y le mandaron el documento, pero antes comprobaron todo lo que había entregado.</div>
+        <ul class="analysis-list">
+          <li><b>Verbo finito:</b> cada acción se expresa con verbo conjugado</li>
+          <li><b>Agente:</b> implícito pero claro (ellos)</li>
+          <li><b>Efecto:</b> dinámico, narrativo, próximo</li>
+        </ul>
+      </div>
+
+      <h3>Confronto in una scala</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Idea: «decidimos intervenir porque la situación había empeorado»</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tag-inf">PARL.</span> Abbiamo deciso di intervenire perché la situazione era peggiorata.</td></tr>
+            <tr><td><span class="tag tag-gio">GIOR.</span> Decisione di intervento per il peggioramento della situazione.</td></tr>
+            <tr><td><span class="tag tag-acc">ACC.</span> La decisione di intervenire si è imposta in seguito al peggioramento della situazione.</td></tr>
+            <tr><td><span class="tag tag-bur">BUR.</span> Visto il peggioramento della situazione, si è proceduto alla decisione di intervento.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Lección clave:</b> la nominalizzazione no es siempre «mejor». Es un <span class="hl">recurso estilístico</span> que se adapta al registro. Excederse en contextos coloquiales o narrativos suena artificioso, burocrático, antinatural. La señal de competencia es saber <span class="hl">dosificar</span>.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 8 · TRAPPOLE -->
+<section id="s-trappole" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">8. Trappole per ispanofoni</h2>
+      <p class="sec-subtitle">I punti dove l'italiano e lo spagnolo divergono</p>
+
+      <div class="def-box">
+        La nominalizzazione italiana y española son <span class="hl">muy parecidas en apariencia</span>, pero divergen en detalles cruciales: la selección de verbos supporto, el uso del artículo con el infinitivo y la densidad apropiada a cada registro. Estos errores son los más típicos del estudiante hispanohablante en C1.
+      </div>
+
+      <div id="traps-container"></div>
+
+      <div class="note-box">
+        <b>Resumen estratégico:</b> el español comparte el aparato sufijal (-ción, -miento, -dad, -eza), pero diferencia menos los verbos supporto. El italiano es <span class="hl">estricto</span> sobre qué verbo va con qué sustantivo. Memoriza las <em>collocazioni</em> completas, no traduzcas. Y reserva la alta nominalizzazione para los registros que la piden.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 9 · ESEMPI ANALIZZATI -->
+<section id="s-esempi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">9. Esempi analizzati · formale ↔ informale</h2>
+      <p class="sec-subtitle">15+ frasi a doppia versione con analisi del processo</p>
+
+      <p class="dim">Cada par presenta la versión <span class="tag tag-form">FORM.</span> con nominalizzazione y la versión <span class="tag tag-inf">VERB.</span> con proposiciones verbales equivalentes, seguida de la traducción y el análisis del proceso de nominalizzazione.</p>
+
+      <!-- 1 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">1 FORM.</span> La <em>realizzazione</em> del progetto richiederà l'<em>approvazione</em> del consiglio.</div>
+        <div class="ex-it"><span class="tag tag-inf">1 VERB.</span> Per realizzare il progetto, bisogna che il consiglio lo approvi.</div>
+        <div class="ex-es">La realización del proyecto requerirá la aprobación del consejo.</div>
+        <ul class="analysis-list">
+          <li><b>Sostantivi deverbali:</b> realizzare → <em>realizzazione</em> (-zione); approvare → <em>approvazione</em> (-zione)</li>
+          <li><b>Reformulación:</b> dos proposiciones verbales se compactan en una sola frase nominal</li>
+          <li><b>Registro:</b> formal, típico del estilo administrativo</li>
+        </ul>
+      </div>
+
+      <!-- 2 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">2 FORM.</span> A causa dell'<em>aumento</em> del costo della vita, le famiglie hanno ridotto i consumi.</div>
+        <div class="ex-it"><span class="tag tag-inf">2 VERB.</span> Siccome il costo della vita è aumentato, le famiglie hanno ridotto i consumi.</div>
+        <div class="ex-es">A causa del aumento del coste de la vida, las familias han reducido el consumo.</div>
+        <ul class="analysis-list">
+          <li><b>Causale → nominale:</b> «siccome…è aumentato» → «a causa dell'aumento»</li>
+          <li><b>Cero-derivazione:</b> aumentare → <em>aumento</em> (sin sufijo)</li>
+          <li><b>Densidad:</b> la causa entera ocupa solo un sintagma preposicional</li>
+        </ul>
+      </div>
+
+      <!-- 3 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">3 FORM.</span> Dopo la <em>partenza</em> del direttore, l'azienda ha attraversato un periodo di <em>incertezza</em>.</div>
+        <div class="ex-it"><span class="tag tag-inf">3 VERB.</span> Dopo che il direttore è partito, l'azienda ha vissuto un periodo in cui regnava l'incertezza.</div>
+        <div class="ex-es">Tras la marcha del director, la empresa atravesó un período de incertidumbre.</div>
+        <ul class="analysis-list">
+          <li><b>Temporale → nominale:</b> «dopo che è partito» → «dopo la partenza»</li>
+          <li><b>Cero-derivazione:</b> partire → <em>partenza</em> (sufijo -enza)</li>
+          <li><b>Aggettivo → nome:</b> incerto → <em>incertezza</em> (-ezza)</li>
+        </ul>
+      </div>
+
+      <!-- 4 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">4 FORM.</span> L'azienda <em>ha proceduto</em> all'<em>assunzione</em> di venti nuovi dipendenti.</div>
+        <div class="ex-it"><span class="tag tag-inf">4 VERB.</span> L'azienda ha assunto venti nuovi dipendenti.</div>
+        <div class="ex-es">La empresa ha procedido a la contratación de veinte nuevos empleados.</div>
+        <ul class="analysis-list">
+          <li><b>Verbo supporto:</b> <em>procedere a</em> + sustantivo deverbal</li>
+          <li><b>Deverbal:</b> assumere → <em>assunzione</em> (-zione)</li>
+          <li><b>Efecto:</b> registro burocrático típico (más distante que «ha assunto»)</li>
+        </ul>
+      </div>
+
+      <!-- 5 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">5 FORM.</span> La <em>commissione</em> <em>ha effettuato</em> una <em>valutazione</em> approfondita dei candidati.</div>
+        <div class="ex-it"><span class="tag tag-inf">5 VERB.</span> La commissione ha valutato a fondo i candidati.</div>
+        <div class="ex-es">La comisión efectuó una evaluación exhaustiva de los candidatos.</div>
+        <ul class="analysis-list">
+          <li><b>Verbo supporto:</b> <em>effettuare</em> + sustantivo deverbal</li>
+          <li><b>Deverbal:</b> valutare → <em>valutazione</em> (-zione)</li>
+          <li><b>Aggettivo:</b> «approfondita» modifica al sustantivo, no al verbo (efecto técnico)</li>
+        </ul>
+      </div>
+
+      <!-- 6 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">6 FORM.</span> <em>Vista la complessità</em> della questione, si rende necessario un ulteriore <em>approfondimento</em>.</div>
+        <div class="ex-it"><span class="tag tag-inf">6 VERB.</span> Poiché la questione è complessa, bisogna approfondirla ulteriormente.</div>
+        <div class="ex-es">Vista la complejidad del asunto, se hace necesario un mayor profundizamiento.</div>
+        <ul class="analysis-list">
+          <li><b>Participio absoluto:</b> <em>vista la complessità</em> (causal nominal)</li>
+          <li><b>Cualidad:</b> complesso → <em>complessità</em> (-ità)</li>
+          <li><b>Deverbal:</b> approfondire → <em>approfondimento</em> (-mento)</li>
+        </ul>
+      </div>
+
+      <!-- 7 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">7 FORM.</span> La <em>decisione</em> del governo di intervenire ha suscitato forti <em>reazioni</em>.</div>
+        <div class="ex-it"><span class="tag tag-inf">7 VERB.</span> Il governo ha deciso di intervenire, e questo ha provocato che molti reagissero con forza.</div>
+        <div class="ex-es">La decisión del gobierno de intervenir suscitó fuertes reacciones.</div>
+        <ul class="analysis-list">
+          <li><b>Deverbali:</b> decidere → <em>decisione</em>; reagire → <em>reazione</em> (-zione/-zione)</li>
+          <li><b>Subordinada implícita:</b> el infinitivo «intervenire» pende del nombre «decisione»</li>
+          <li><b>Compactación:</b> dos oraciones se reducen a una sola con sujeto nominal</li>
+        </ul>
+      </div>
+
+      <!-- 8 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">8 FORM.</span> <em>Il continuo lamentarsi</em> dei dipendenti ha portato a una <em>revisione</em> delle politiche aziendali.</div>
+        <div class="ex-it"><span class="tag tag-inf">8 VERB.</span> I dipendenti si lamentavano continuamente, perciò sono state riviste le politiche aziendali.</div>
+        <div class="ex-es">El continuo quejarse de los empleados ha llevado a una revisión de las políticas de la empresa.</div>
+        <ul class="analysis-list">
+          <li><b>Infinito sostantivato:</b> <em>il continuo lamentarsi</em> (con artículo + adjetivo)</li>
+          <li><b>Deverbal:</b> rivedere → <em>revisione</em> (-sione)</li>
+          <li><b>Estructura:</b> dos eventos enlazados causalmente sin conjunción explícita</li>
+        </ul>
+      </div>
+
+      <!-- 9 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">9 FORM.</span> In vista del <em>raggiungimento</em> dell'obiettivo, occorre un maggiore <em>coinvolgimento</em> di tutte le parti.</div>
+        <div class="ex-it"><span class="tag tag-inf">9 VERB.</span> Per raggiungere l'obiettivo, tutte le parti devono essere coinvolte di più.</div>
+        <div class="ex-es">En vista de la consecución del objetivo, hace falta una mayor implicación de todas las partes.</div>
+        <ul class="analysis-list">
+          <li><b>Finale → nominale:</b> «per raggiungere» → «in vista del raggiungimento»</li>
+          <li><b>Deverbali:</b> raggiungere → <em>raggiungimento</em>; coinvolgere → <em>coinvolgimento</em> (-mento)</li>
+          <li><b>Pasiva nominalizada:</b> «essere coinvolte» → «coinvolgimento di…»</li>
+        </ul>
+      </div>
+
+      <!-- 10 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">10 FORM.</span> Si <em>è proceduto</em> all'<em>analisi</em> dei dati mediante l'<em>applicazione</em> di un nuovo modello statistico.</div>
+        <div class="ex-it"><span class="tag tag-inf">10 VERB.</span> Hanno analizzato i dati applicando un nuovo modello statistico.</div>
+        <div class="ex-es">Se ha procedido al análisis de los datos mediante la aplicación de un nuevo modelo estadístico.</div>
+        <ul class="analysis-list">
+          <li><b>Verbo supporto:</b> <em>procedere a</em></li>
+          <li><b>Strumentale → nominale:</b> «applicando» → «mediante l'applicazione»</li>
+          <li><b>Doble deverbal:</b> <em>analisi</em> + <em>applicazione</em> en cadena</li>
+        </ul>
+      </div>
+
+      <!-- 11 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">11 FORM.</span> La <em>responsabilità</em> della <em>gestione</em> della crisi ricade sui vertici aziendali.</div>
+        <div class="ex-it"><span class="tag tag-inf">11 VERB.</span> Spetta ai vertici aziendali essere responsabili di come si gestisce la crisi.</div>
+        <div class="ex-es">La responsabilidad de la gestión de la crisis recae en los altos directivos de la empresa.</div>
+        <ul class="analysis-list">
+          <li><b>Cualidad → nombre:</b> responsabile → <em>responsabilità</em> (-ità)</li>
+          <li><b>Deverbal:</b> gestire → <em>gestione</em> (-ione)</li>
+          <li><b>Encadenamiento genitivo:</b> «della gestione della crisi» — típico de la sintaxis nominal italiana</li>
+        </ul>
+      </div>
+
+      <!-- 12 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">12 FORM.</span> L'<em>introduzione</em> della nuova legge ha comportato un <em>cambiamento</em> radicale del sistema.</div>
+        <div class="ex-it"><span class="tag tag-inf">12 VERB.</span> Hanno introdotto la nuova legge e questo ha cambiato radicalmente il sistema.</div>
+        <div class="ex-es">La introducción de la nueva ley ha supuesto un cambio radical del sistema.</div>
+        <ul class="analysis-list">
+          <li><b>Deverbali:</b> introdurre → <em>introduzione</em>; cambiare → <em>cambiamento</em> (-mento)</li>
+          <li><b>Causa-efecto compactada:</b> el sujeto nominal contiene la causa, el objeto el efecto</li>
+        </ul>
+      </div>
+
+      <!-- 13 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">13 FORM.</span> Prima della <em>partenza</em>, i passeggeri devono <em>fare</em> il <em>check-in</em> e <em>presentare</em> i documenti.</div>
+        <div class="ex-it"><span class="tag tag-inf">13 VERB.</span> Prima che il treno parta, i passeggeri devono fare il check-in e presentare i documenti.</div>
+        <div class="ex-es">Antes de la salida, los pasajeros deben hacer el check-in y presentar los documentos.</div>
+        <ul class="analysis-list">
+          <li><b>Temporal → nominale:</b> «prima che parta» → «prima della partenza»</li>
+          <li><b>Verbo supporto:</b> <em>fare il check-in</em></li>
+        </ul>
+      </div>
+
+      <!-- 14 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">14 FORM.</span> La <em>chiusura</em> dei negozi ha causato una <em>diminuzione</em> notevole delle <em>vendite</em>.</div>
+        <div class="ex-it"><span class="tag tag-inf">14 VERB.</span> Da quando hanno chiuso i negozi, vendono molto meno.</div>
+        <div class="ex-es">El cierre de las tiendas ha causado una disminución notable de las ventas.</div>
+        <ul class="analysis-list">
+          <li><b>Deverbali:</b> chiudere → <em>chiusura</em> (-tura); diminuire → <em>diminuzione</em> (-zione); vendere → <em>vendite</em> (plural lexicalizado)</li>
+          <li><b>Tres nombres deverbales</b> en una sola frase</li>
+        </ul>
+      </div>
+
+      <!-- 15 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">15 FORM.</span> <em>Lo scrivere</em> a mano richiede <em>pazienza</em> e <em>concentrazione</em>, qualità rare ai giorni nostri.</div>
+        <div class="ex-it"><span class="tag tag-inf">15 VERB.</span> Per scrivere a mano ci vuole pazienza e bisogna concentrarsi, cose che oggi sono rare.</div>
+        <div class="ex-es">El escribir a mano requiere paciencia y concentración, cualidades raras hoy en día.</div>
+        <ul class="analysis-list">
+          <li><b>Infinito sostantivato:</b> <em>lo scrivere</em> (sujeto con artículo)</li>
+          <li><b>Cualidades nominalizadas:</b> pazienza, concentrazione</li>
+          <li><b>Estilo gnómico:</b> registro elevado, casi aforístico</li>
+        </ul>
+      </div>
+
+      <!-- 16 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">16 FORM.</span> Nonostante l'<em>opposizione</em> del sindacato, l'azienda <em>ha dato inizio</em> alla <em>ristrutturazione</em>.</div>
+        <div class="ex-it"><span class="tag tag-inf">16 VERB.</span> Anche se il sindacato si è opposto, l'azienda ha cominciato a ristrutturare.</div>
+        <div class="ex-es">A pesar de la oposición del sindicato, la empresa dio inicio a la reestructuración.</div>
+        <ul class="analysis-list">
+          <li><b>Concessiva → nominale:</b> «anche se si è opposto» → «nonostante l'opposizione»</li>
+          <li><b>Verbo supporto:</b> <em>dare inizio a</em> (en lugar de <em>cominciare</em>)</li>
+          <li><b>Deverbali:</b> opporsi → <em>opposizione</em>; ristrutturare → <em>ristrutturazione</em></li>
+        </ul>
+      </div>
+
+      <!-- 17 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">17 FORM.</span> In caso di <em>mancato pagamento</em>, si <em>procederà</em> alla <em>sospensione</em> del servizio.</div>
+        <div class="ex-it"><span class="tag tag-inf">17 VERB.</span> Se non pagate, vi sospenderemo il servizio.</div>
+        <div class="ex-es">En caso de impago, se procederá a la suspensión del servicio.</div>
+        <ul class="analysis-list">
+          <li><b>Condicional → nominale:</b> «se non pagate» → «in caso di mancato pagamento»</li>
+          <li><b>Verbo supporto:</b> <em>procedere a</em></li>
+          <li><b>Registro:</b> burocrático puro, máxima distancia con el destinatario</li>
+        </ul>
+      </div>
+
+      <!-- 18 -->
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-form">18 FORM.</span> Lo <em>sviluppo</em> dell'intelligenza artificiale solleva interrogativi sulla <em>tutela</em> della <em>privacy</em>.</div>
+        <div class="ex-it"><span class="tag tag-inf">18 VERB.</span> Siccome l'intelligenza artificiale si sviluppa rapidamente, ci si chiede come tutelare la privacy.</div>
+        <div class="ex-es">El desarrollo de la inteligencia artificial plantea preguntas sobre la tutela de la privacidad.</div>
+        <ul class="analysis-list">
+          <li><b>Cero-derivazione:</b> sviluppare → <em>sviluppo</em> (sin sufijo)</li>
+          <li><b>Deverbal:</b> tutelare → <em>tutela</em></li>
+          <li><b>Nominalizzazione tematica:</b> «lo sviluppo» se convierte en sujeto-tema de la frase</li>
+        </ul>
+      </div>
+
+      <div class="green-box">
+        <b>Práctica clave:</b> entrena con cada oración haciendo el camino en las dos direcciones. Toma una frase formal y deconstrúyela en proposiciones verbales; toma una frase verbal y nominalízala. Ese ejercicio doble es el que internaliza la <span class="hl">flexibilidad estilística</span> esperada en C1.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const TRAPS = [
+  {
+    name:'«*Fare una decisione» (calco del español/inglés)',
+    wrong:'Abbiamo fatto una decisione importante.',
+    right:'Abbiamo preso una decisione importante.',
+    expl:'En italiano, la decisione SOLO se «prende», nunca se «fa». El español «tomar una decisión» coincide con la lógica italiana, pero el calco con «fare» (probablemente del inglés «to make a decision») es uno de los errores más frecuentes. Memoriza: prendere una decisione.'
+  },
+  {
+    name:'«*Dare una telefonata» (debería ser fare)',
+    wrong:'Le ho dato una telefonata ieri sera.',
+    right:'Le ho fatto una telefonata ieri sera.',
+    expl:'Las llamadas se «fanno», no se «danno». Tampoco se «dà un esame» (se «dà» solo en algunas regiones; lo neutro es «sostenere/fare un esame»). El verbo supporto de cada sustantivo es rígido y debe aprenderse como una unidad léxica.'
+  },
+  {
+    name:'Infinito sustantivado sin artículo donde el italiano lo exige',
+    wrong:'Continuo lavorare senza pausa l\'ha sfinito.',
+    right:'Il continuo lavorare senza pausa l\'ha sfinito.',
+    expl:'Cuando el infinitivo lleva modificadores (adjetivo, posesivo) y funciona como núcleo nominal de un sintagma, el artículo es obligatorio. El español a menudo lo omite («Su constante quejarse»), pero el italiano formal lo exige: «Il suo continuo lamentarsi».'
+  },
+  {
+    name:'Calco directo de sufijos: «*svilluppamento»',
+    wrong:'Lo svilluppamento dell\'azienda è stato rapido.',
+    right:'Lo sviluppo dell\'azienda è stato rapido.',
+    expl:'No todos los verbos italianos tienen sustantivo en -mento. Algunos prefieren la derivación cero (sviluppo, arrivo, ritorno, calcolo, ricerca) o -zione (decisione). Asumir que «todo verbo italiano da -mento como en español -miento» produce no-palabras.'
+  },
+  {
+    name:'Nominalizzazione excesiva en registro coloquial',
+    wrong:'Ciao! Ho fatto l\'esecuzione di una telefonata al mio amico per la richiesta di un favore.',
+    right:'Ciao! Ho chiamato il mio amico per chiedergli un favore.',
+    expl:'En conversación o mensajes informales, la alta nominalizzazione resulta artificiosa, libresca y casi ridícula. Reserva el estilo nominal para textos escritos formales. La regla es: cuanto más informal el contexto, más verbos finitos y menos sustantivos deverbales.'
+  },
+  {
+    name:'Confundir «-sione» con «-zione»',
+    wrong:'La decizione del comitato.',
+    right:'La decisione del comitato.',
+    expl:'Verbos en -dere y -mettere dan típicamente -sione: decidere → decisione, discutere → discussione, ammettere → ammissione. Verbos en -are dan -zione: decorare → decorazione. La grafía debe respetarse: una c o una z marca la diferencia ortográfica.'
+  },
+  {
+    name:'Olvidar la preposición «di» tras sustantivo deverbal',
+    wrong:'La decisione partire subito.',
+    right:'La decisione di partire subito.',
+    expl:'Tras un sustantivo deverbal seguido de infinitivo, la preposición «di» es obligatoria en la mayoría de los casos: la decisione di…, l\'intenzione di…, la possibilità di…, la necessità di… El español es a veces más flexible, pero en italiano la preposición es estructural.'
+  },
+  {
+    name:'«*Tomare una decisione» (italianización falsa)',
+    wrong:'Bisogna tomare una decisione subito.',
+    right:'Bisogna prendere una decisione subito.',
+    expl:'«Tomare» no existe en italiano. El hispanohablante traduce automáticamente «tomar» como «tomare», pero el verbo italiano es «prendere». No solo en decisioni: prendere il treno, prendere un caffè, prendere atto, prendere il sole.'
+  },
+  {
+    name:'Confundir «procedere a» con «procedere + gerundio»',
+    wrong:'Procediamo analizzando i dati.',
+    right:'Procediamo all\'analisi dei dati.',
+    expl:'En italiano formal, «procedere» se construye con «a» + sustantivo deverbal, no con gerundio. Es una marca típica del registro burocrático y administrativo. El gerundio aquí sonaría neutro/coloquial («procediamo analizzando»), no formal.'
+  },
+  {
+    name:'Cero-derivazione donde el italiano prefiere -mento',
+    wrong:'Il raggiungo dell\'obiettivo è stato difficile.',
+    right:'Il raggiungimento dell\'obiettivo è stato difficile.',
+    expl:'«*Raggiungo» no existe como sustantivo (es la 1.ª persona del verbo). El sustantivo deverbal correcto es «raggiungimento» (-mento). El hispanohablante intuye una derivación cero por contagio con español «el logro», pero hay que respetar el sufijo italiano.'
+  },
+  {
+    name:'Plural en sustantivos en -ità',
+    wrong:'Le responsabilitàe sono molteplici.',
+    right:'Le responsabilità sono molteplici.',
+    expl:'Los sustantivos en -ità son INVARIABLES (la responsabilità / le responsabilità). No se añade -e en plural. La tónica recae en la última sílaba (acentuada gráficamente). Igual que «la città / le città», «l\'università / le università».'
+  },
+  {
+    name:'Confundir «conoscenza» con «conoscimento» (no existe)',
+    wrong:'Il conoscimento della lingua è essenziale.',
+    right:'La conoscenza della lingua è essenziale.',
+    expl:'El sustantivo deverbal de «conoscere» es «conoscenza» (-enza), no «*conoscimento». El español dice «conocimiento» con -miento, pero italiano elige -enza. Sucede también con «esperienza» (no *esperimento, que existe pero significa «experimento»).'
+  },
+  {
+    name:'Usar «portare» en lugar de «prendere» para una decisione',
+    wrong:'Hanno portato una decisione difficile.',
+    right:'Hanno preso una decisione difficile.',
+    expl:'El español «llevar» se traduce a veces como «portare», pero NO en collocaciones. «Llevar a cabo una decisión» se diría «attuare/realizzare una decisione», no «portare». Para «tomar» una decisione, siempre «prendere».'
+  },
+  {
+    name:'Acumular sustantivos genitivos sin alivio',
+    wrong:'La riduzione dell\'aumento del costo della produzione della fabbrica…',
+    right:'La riduzione dell\'aumento dei costi produttivi nella fabbrica…',
+    expl:'Encadenar más de 3-4 sintagmas genitivos («della…della…della…») resulta pesado incluso en italiano formal. Para aliviar, conviene usar adjetivos derivados («costi produttivi» en lugar de «costi della produzione») o cambiar la preposición. La nominalizzazione tiene un techo de elegancia.'
+  },
+  {
+    name:'Traducir «hacer una pregunta» como «*dare una domanda»',
+    wrong:'Mi ha dato una domanda interessante.',
+    right:'Mi ha fatto una domanda interessante. / Mi ha posto una domanda interessante.',
+    expl:'Las preguntas se «fanno» (neutro) o se «pongono» (formal). Nunca se «dan». El español «hacer una pregunta» coincide con «fare una domanda», pero el hispanohablante a veces interfiere con «dar» por confusión con otras collocaciones. Memoriza: fare/porre una domanda.'
+  }
+];
+
+function renderTraps(){
+  const c = document.getElementById('traps-container');
+  let html = '';
+  TRAPS.forEach(t=>{
+    html += `<div class="trap-card">
+      <div class="trap-card-header"><span class="trap-name">${t.name}</span></div>
+      <div class="trap-vs">
+        <div class="trap-wrong">${t.wrong}</div>
+        <div class="trap-right">${t.right}</div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function showSection(id, btn){
+  document.querySelectorAll('.sec-block').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function showChip(id, btn){
+  const parent = btn.parentElement.parentElement;
+  parent.querySelectorAll('.chip-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  parent.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function setFontSize(v){
+  document.documentElement.style.setProperty('--fs', v+'px');
+}
+
+renderTraps();
+</script>
+
+</body>
+</html>

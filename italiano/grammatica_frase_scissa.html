@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Frase Scissa e Pseudo-scissa · Grammatica C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ede9df;
+  --card:#faf7f1;
+  --border:#c4bead;
+  --text:#1a1814;
+  --text2:#44413a;
+  --text3:#706c64;
+  --accent:#7a5a0a;
+  --accent-light:#f0e0c0;
+  --accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,0.08);
+  --radius:14px;
+  --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --red:#a81e2e; --red-bg:#fce6e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --teal:#0e6e6e; --teal-bg:#e0f4f4;
+  --fs:15px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-size:var(--fs);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:60px;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text);margin:0 0 .4em;font-weight:600;line-height:1.2}
+h1{font-size:1.85em;font-weight:700}
+h2{font-size:1.45em}
+h3{font-size:1.15em;margin-top:1.1em}
+h4{font-size:1em;font-weight:600}
+p{margin:.5em 0}
+em{font-style:italic}
+b,strong{font-weight:600}
+
+/* HEADER */
+.site-header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 18px 16px;
+  position:relative;
+}
+.site-header .inner{max-width:860px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title-wrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.site-header h1{margin:0;font-size:1.9em;color:var(--text)}
+.header-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.85em;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid var(--accent-mid);
+}
+.subtitle{color:var(--text3);font-size:.92em;margin:4px 0 12px;font-style:italic}
+.stat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stat-pill{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:4px 10px;
+  font-size:.78em;
+  border-radius:999px;
+  font-weight:500;
+}
+.font-ctrl{display:flex;align-items:center;gap:8px;font-size:.78em;color:var(--text3)}
+.font-ctrl input[type=range]{width:90px}
+
+/* SECTION NAV */
+.section-nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:10px 18px;
+  margin-top:14px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.section-nav::-webkit-scrollbar{display:none}
+.section-nav .inner{max-width:860px;margin:0 auto;display:flex;gap:6px;flex-wrap:nowrap}
+.snav-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:6px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82em;
+  border-radius:999px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .15s;
+  font-weight:500;
+}
+.snav-btn:hover{background:var(--accent-light)}
+.snav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* MAIN LAYOUT */
+.main-layout{
+  max-width:860px;
+  margin:0 auto;
+  padding:20px 18px;
+}
+.sec-block{display:none}
+.sec-block.active{display:block;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* GRAM-CARD */
+.gram-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.gram-card-body{padding:18px}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:1.45em;
+  margin:0 0 .4em;
+  color:var(--text);
+}
+.sec-subtitle{color:var(--text3);font-style:italic;font-size:.95em;margin:0 0 14px}
+
+/* DEF-BOX */
+.def-box{
+  background:var(--warn-bg);
+  border-left:4px solid var(--accent);
+  padding:12px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:14px 0;
+  font-size:.96em;
+}
+.def-box b{color:var(--accent)}
+
+/* WARN-BOX */
+.warn-box{
+  background:#fff4e0;
+  border:1px solid #c8900a;
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:12px 0;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:.93em;
+  color:var(--text2);
+}
+.warn-box .ico{font-size:1.1em;flex-shrink:0;line-height:1.3}
+
+/* EXAMPLE BLOCK */
+.example-block{
+  background:var(--blue-bg);
+  border-left:3px solid var(--blue);
+  padding:9px 12px;
+  margin:8px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.ex-it{font-weight:500;color:var(--text)}
+.ex-it em{font-style:normal;color:var(--blue);font-weight:600}
+.ex-es{font-style:italic;color:var(--text2);font-size:.88em;margin-top:2px}
+.ex-note{font-size:.84em;color:var(--text3);margin-top:4px;font-style:italic}
+
+/* NOTE-BOX */
+.note-box{
+  background:var(--purple-bg);
+  border-left:3px solid var(--purple);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.note-box b{color:var(--purple)}
+
+/* GREEN-BOX */
+.green-box{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.green-box b{color:var(--green)}
+
+/* TEAL-BOX */
+.teal-box{
+  background:var(--teal-bg);
+  border-left:3px solid var(--teal);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.teal-box b{color:var(--teal)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.gram-table{width:100%;border-collapse:collapse;font-size:.92em;background:var(--card)}
+.gram-table th{
+  background:var(--accent-light);
+  color:var(--accent);
+  font-family:'DM Sans',sans-serif;
+  font-size:.72em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:8px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--accent-mid);
+}
+.gram-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.gram-table tr:nth-child(even) td{background:rgba(196,190,173,0.12)}
+.gram-table tr:last-child td{border-bottom:none}
+.ok-cell{color:var(--green);font-weight:500}
+.err-cell{color:var(--red);font-weight:500}
+.warn-cell{color:var(--accent);font-weight:500}
+.tbl-pron{font-weight:600;color:var(--text);background:rgba(196,190,173,0.18)}
+
+/* CHIPS */
+.chip-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:14px 0 10px;
+  padding-bottom:4px;
+}
+.chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:5px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.83em;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{background:var(--accent-light)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-panel{display:none}
+.chip-panel.active{display:block;animation:fadeIn .25s}
+
+/* TRAPS */
+.trap-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.trap-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trap-name{font-weight:600;color:var(--text);font-size:.96em}
+.trap-vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.trap-wrong{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-wrong::before{content:'✗ ';color:var(--red);font-weight:700}
+.trap-right{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-right::before{content:'✓ ';color:var(--green);font-weight:700}
+.trap-expl{font-size:.88em;color:var(--text2);font-style:italic;margin-top:6px}
+@media (max-width:520px){.trap-vs{grid-template-columns:1fr}}
+
+/* MINI-TABLE */
+.mini-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.88em;
+  background:var(--card);
+  margin:10px 0;
+}
+.mini-table td{
+  padding:5px 9px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.mini-table td:first-child{color:var(--text3);font-weight:500;width:38%}
+.mini-table td:last-child{color:var(--text);font-weight:600}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table .hl-form{color:var(--accent);font-weight:700}
+
+/* TAG/LABEL */
+.tag{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:.72em;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-right:6px;
+  border:1px solid;
+}
+.tag-sin{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.tag-des{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.tag-top{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.tag-scs{background:var(--teal-bg);color:var(--teal);border-color:var(--teal)}
+
+/* UTILS */
+.hl{color:var(--accent);font-weight:600}
+.dim{color:var(--text3)}
+
+/* ANALYSIS LIST */
+.analysis-list{
+  font-size:.86em;
+  color:var(--text2);
+  margin-top:6px;
+  padding-left:0;
+  list-style:none;
+}
+.analysis-list li{
+  margin:2px 0;
+  padding-left:12px;
+  position:relative;
+}
+.analysis-list li::before{
+  content:'·';
+  position:absolute;
+  left:2px;
+  color:var(--accent);
+  font-weight:700;
+}
+.analysis-list b{color:var(--accent)}
+
+/* INFO STRUCT DIAGRAM */
+.struct-diag{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 12px;
+  margin:10px 0;
+  font-family:'DM Sans',sans-serif;
+  font-size:.9em;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+.struct-tag{
+  padding:3px 9px;
+  border-radius:999px;
+  font-size:.78em;
+  font-weight:600;
+  border:1px solid;
+}
+.struct-tema{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.struct-rema{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.struct-pron{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.struct-foco{background:var(--teal-bg);color:var(--teal);border-color:var(--teal)}
+.struct-arrow{color:var(--text3);font-weight:700}
+.struct-text{font-style:italic;color:var(--text2)}
+
+/* RESPONSIVE */
+@media (max-width:520px){
+  .site-header{padding:14px 14px 12px}
+  h1{font-size:1.5em}
+  .main-layout{padding:14px}
+  .gram-card-body{padding:14px}
+  .stat-pill{font-size:.72em}
+  .header-top{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="inner">
+    <div class="header-top">
+      <div>
+        <div class="header-title-wrap">
+          <h1>La Frase Scissa e Pseudo-scissa</h1>
+          <span class="header-tag">Grammatica</span>
+        </div>
+        <div class="subtitle">Focalizzazione contrastiva · C1 · per ispanofoni</div>
+        <div class="stat-bar">
+          <span class="stat-pill">10 sezioni</span>
+          <span class="stat-pill">è X che…</span>
+          <span class="stat-pill">quello che…è X</span>
+          <span class="stat-pill">concordanza essere</span>
+          <span class="stat-pill">18+ esempi analizzati</span>
+        </div>
+      </div>
+      <div class="font-ctrl">
+        <span>A-</span>
+        <input type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+        <span>A+</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION NAV -->
+<nav class="section-nav" id="sec-nav">
+  <div class="inner">
+    <button class="snav-btn active" onclick="showSection('s-concetto',this)">1. Concetto</button>
+    <button class="snav-btn" onclick="showSection('s-struttura',this)">2. Struttura</button>
+    <button class="snav-btn" onclick="showSection('s-concordanza',this)">3. Concordanza</button>
+    <button class="snav-btn" onclick="showSection('s-elementi',this)">4. Elementi focalizzabili</button>
+    <button class="snav-btn" onclick="showSection('s-chi',this)">5. Chi nella scissa</button>
+    <button class="snav-btn" onclick="showSection('s-pseudo',this)">6. Pseudo-scissa</button>
+    <button class="snav-btn" onclick="showSection('s-confronto',this)">7. Scissa vs Pseudo</button>
+    <button class="snav-btn" onclick="showSection('s-registro',this)">8. Registro</button>
+    <button class="snav-btn" onclick="showSection('s-trappole',this)">9. Trappole ES</button>
+    <button class="snav-btn" onclick="showSection('s-esempi',this)">10. Esempi analizzati</button>
+  </div>
+</nav>
+
+<main class="main-layout">
+
+<!-- SECCIÓN 1 · CONCETTO -->
+<section id="s-concetto" class="sec-block active">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">1. Che cos'è la frase scissa</h2>
+      <p class="sec-subtitle">Estrarre un elemento per focalizzarlo</p>
+
+      <div class="def-box">
+        La <b>frase scissa</b> (literalmente «frase escindida») es una construcción mediante la cual un elemento de la oración se <span class="hl">extrae de su posición canónica</span> y se coloca dentro de una estructura <b>bipartita</b>:<br>
+        <em>È + ELEMENTO FOCALIZADO + che/chi + resto de la oración.</em><br>
+        El resultado son <span class="hl">dos cláusulas</span> donde antes había una, vinculadas por el verbo <em>essere</em> y el complementador <em>che</em> (o <em>chi</em>).
+      </div>
+
+      <h3>Estructura básica del fenómeno</h3>
+      <div class="struct-diag">
+        <span class="struct-text">Frase canonica:</span>
+        <span class="struct-text">Marco</span>
+        <span class="struct-text">ha telefonato.</span>
+      </div>
+      <div class="struct-diag">
+        <span class="struct-tag struct-foco">FRASE SCISSA</span>
+        <span class="struct-text">È</span>
+        <span class="struct-foco">Marco</span>
+        <span class="struct-text">che</span>
+        <span class="struct-text">ha telefonato.</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-text">(non Luigi)</span>
+      </div>
+
+      <h3>La funzione pragmatica</h3>
+      <p>La frase scissa cumple una función pragmática muy precisa: la <span class="hl">focalización contrastiva o identificativa</span>. No se limita a comunicar una información, sino que <b>aísla y subraya</b> un único elemento como respuesta a una pregunta (explícita o implícita) del tipo: «¿quién?, ¿qué?, ¿cuándo?, ¿dónde?, ¿por qué?».</p>
+
+      <div class="example-block">
+        <div class="ex-it">— Chi ha telefonato? <br>— <em>È Marco</em> che ha telefonato.</div>
+        <div class="ex-es">— ¿Quién llamó? — Fue Marco quien llamó.</div>
+        <div class="ex-note">El foco «Marco» se opone implícitamente a otros candidatos posibles (Luigi, Anna…). El hablante <b>identifica</b> y al mismo tiempo <b>excluye</b>.</div>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Para el hispanohablante:</b> en español la frase escindida («Es Marco quien llamó») existe pero tiene un registro <span class="hl">más literario o enfático</span>. En italiano es una construcción <span class="hl">completamente natural</span>, frecuentísima en el habla cotidiana y en la escritura no académica. No la evites: si en español dirías «el que llamó fue Marco» o «llamó Marco (con énfasis)», en italiano lo más espontáneo es «È Marco che ha chiamato».</div>
+      </div>
+
+      <h3>Las dos grandes operaciones de focalización</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Operazione</th><th>Struttura</th><th>Funzione</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tag-scs">FRASE SCISSA</span></td><td>È X che…</td><td>Focalizar X (contrastivo)</td><td><em>È Marco che ha chiamato.</em></td></tr>
+            <tr><td><span class="tag tag-top">PSEUDO-SCISSA</span></td><td>Quello che… è X</td><td>Tematizar la pregunta, focalizar X al final</td><td><em>Quello che voglio è la verità.</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="green-box">
+        <b>Idea clave:</b> la frase scissa no añade información nueva al contenido proposicional — solo lo <span class="hl">reempaqueta</span> para señalar que el elemento focalizado es la respuesta exacta a una pregunta presupuesta, excluyendo cualquier otro candidato.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 2 · STRUTTURA BÁSICA -->
+<section id="s-struttura" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">2. Struttura básica · «È X che…»</h2>
+      <p class="sec-subtitle">Tre pezzi: essere + foco + che + proposizione</p>
+
+      <div class="def-box">
+        La frase scissa italiana se construye con tres componentes obligatorios:<br>
+        <b>1.</b> el verbo <em>essere</em> conjugado (normalmente en presente: <em>è/sono</em>; pero también en otros tiempos);<br>
+        <b>2.</b> el <span class="hl">elemento focalizado</span> (nombre, pronombre, sintagma preposicional, adverbio…);<br>
+        <b>3.</b> el complementador <em>che</em> (o <em>chi</em> en casos especiales) seguido de la proposición.
+      </div>
+
+      <h3>Esquema general</h3>
+      <div class="struct-diag">
+        <span class="struct-text">È / Sono</span>
+        <span class="struct-arrow">+</span>
+        <span class="struct-tag struct-foco">FOCO</span>
+        <span class="struct-arrow">+</span>
+        <span class="struct-text">che</span>
+        <span class="struct-arrow">+</span>
+        <span class="struct-tag struct-rema">PROPOSIZIONE</span>
+      </div>
+
+      <h3>Ejemplos canónicos del manual</h3>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>Marco</em> che ha telefonato.</div>
+        <div class="ex-es">Es Marco quien ha llamado. <span class="dim">(no Luigi)</span></div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>Marco</em> (sujeto)</li>
+          <li><b>Contraste implícito:</b> no otros candidatos</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>ieri</em> che l'ho visto.</div>
+        <div class="ex-es">Fue ayer cuando lo vi. <span class="dim">(no hoy)</span></div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>ieri</em> (complemento de tiempo)</li>
+          <li><b>Contraste implícito:</b> no otro día</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>per questo</em> che sono venuto.</div>
+        <div class="ex-es">Es por esto por lo que he venido.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>per questo</em> (complemento de causa)</li>
+          <li><b>Contraste implícito:</b> no por otro motivo</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>con te</em> che voglio parlare.</div>
+        <div class="ex-es">Es contigo con quien quiero hablar. <span class="dim">(no con otro)</span></div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>con te</em> (sintagma preposicional)</li>
+          <li><b>Contraste implícito:</b> no con otra persona</li>
+        </ul>
+      </div>
+
+      <h3>Tipos de elemento que pueden ser foco</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Tipo</th><th>Foco</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td>Nome proprio</td><td class="tbl-pron">Marco</td><td><em>È Marco che chiama.</em></td></tr>
+            <tr><td>Pronome</td><td class="tbl-pron">io, tu, lui…</td><td><em>Sono io che decido.</em></td></tr>
+            <tr><td>Sintagma nominale</td><td class="tbl-pron">il mio amico</td><td><em>È il mio amico che ha vinto.</em></td></tr>
+            <tr><td>Avverbio</td><td class="tbl-pron">ieri, qui, così…</td><td><em>È qui che lavoro.</em></td></tr>
+            <tr><td>SP di luogo</td><td class="tbl-pron">a Roma</td><td><em>È a Roma che vivo.</em></td></tr>
+            <tr><td>SP di tempo</td><td class="tbl-pron">nel 2010</td><td><em>È nel 2010 che siamo arrivati.</em></td></tr>
+            <tr><td>SP di causa</td><td class="tbl-pron">per questo</td><td><em>È per questo che ti chiamo.</em></td></tr>
+            <tr><td>SP di compagnia</td><td class="tbl-pron">con lei</td><td><em>È con lei che voglio parlare.</em></td></tr>
+            <tr><td>SP di mezzo</td><td class="tbl-pron">con il treno</td><td><em>È con il treno che è arrivato.</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Variazioni temporali di <em>essere</em></h3>
+      <p>Aunque la forma más común es <em>è/sono</em> en presente, el verbo <em>essere</em> de la frase scissa puede adaptarse al tiempo del verbo subordinado, sobre todo en registros más cuidados:</p>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Era</em> Marco che chiamava.</div>
+        <div class="ex-es">Era Marco quien llamaba.</div>
+        <div class="ex-note">Imperfetto: el verbo principal está en imperfetto, essere se acomoda</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Sarà</em> lui che dovrà rispondere.</div>
+        <div class="ex-es">Será él quien tenga que responder.</div>
+        <div class="ex-note">Futuro: proyección hacia un momento posterior</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Fu</em> in quel momento che capii tutto.</div>
+        <div class="ex-es">Fue en aquel momento cuando lo entendí todo.</div>
+        <div class="ex-note">Passato remoto: registro literario/narrativo</div>
+      </div>
+
+      <div class="note-box">
+        <b>Uso non concordato (più frequente):</b> in italiano oral cotidiano è frequentissimo l'uso de <em>è</em> invariabile, anche quando il verbo subordinato è al passato: <em>«È stato Marco che ha chiamato»</em> o semplicemente <em>«È Marco che ha chiamato ieri»</em>. La concordanza temporale dello <em>essere</em> è opzionale e tende a sentirsi più letteraria.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 3 · CONCORDANZA -->
+<section id="s-concordanza" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">3. Concordanza con il soggetto reale</h2>
+      <p class="sec-subtitle">Quando «essere» smette di essere «è»</p>
+
+      <div class="def-box">
+        Cuando el elemento focalizado es el <span class="hl">sujeto real</span> de la proposición, el verbo <em>essere</em> de la frase scissa <b>concuerda</b> en persona y número con él, no permanece en 3.ª singular. En cambio, si el foco no es el sujeto (es un OD, un complemento), <em>essere</em> queda en 3.ª singular invariable.
+      </div>
+
+      <h3>Regla esencial</h3>
+      <div class="green-box">
+        <b>Caso A — el foco es el sujeto real:</b> <em>essere</em> concuerda con el foco.<br>
+        <em>Sono io che ho chiamato.</em> (1.ª sing.)<br>
+        <em>Sei tu che devi farlo.</em> (2.ª sing.)<br>
+        <em>Siamo noi che abbiamo deciso.</em> (1.ª pl.)<br>
+        <em>Sono i ragazzi che hanno vinto.</em> (3.ª pl.)<br><br>
+        <b>Caso B — el foco no es el sujeto:</b> <em>essere</em> queda en 3.ª singular (<em>è/era</em>).<br>
+        <em>È a Marco che ho scritto.</em> (foco = OI)<br>
+        <em>È ieri che l'ho visto.</em> (foco = complemento de tiempo)<br>
+        <em>È per questo che sono venuto.</em> (foco = complemento de causa)
+      </div>
+
+      <h3>Tabla de conjugación según el foco (sujeto)</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Persona del foco</th><th>Forma di <em>essere</em></th><th>Esempio</th><th>Verbo principale</th></tr></thead>
+          <tbody>
+            <tr><td>1.ª sg. (io)</td><td class="tbl-pron">sono</td><td><em>Sono io che parlo.</em></td><td>1.ª sg.</td></tr>
+            <tr><td>2.ª sg. (tu)</td><td class="tbl-pron">sei</td><td><em>Sei tu che decidi.</em></td><td>2.ª sg.</td></tr>
+            <tr><td>3.ª sg. (lui/lei)</td><td class="tbl-pron">è</td><td><em>È Marco che chiama.</em></td><td>3.ª sg.</td></tr>
+            <tr><td>1.ª pl. (noi)</td><td class="tbl-pron">siamo</td><td><em>Siamo noi che paghiamo.</em></td><td>1.ª pl.</td></tr>
+            <tr><td>2.ª pl. (voi)</td><td class="tbl-pron">siete</td><td><em>Siete voi che dovete venire.</em></td><td>2.ª pl.</td></tr>
+            <tr><td>3.ª pl. (loro)</td><td class="tbl-pron">sono</td><td><em>Sono i ragazzi che hanno deciso.</em></td><td>3.ª pl.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>El doble acuerdo: <em>essere</em> + verbo subordinado</h3>
+      <p>Nota crítica: cuando el foco es el sujeto, <span class="hl">tanto <em>essere</em> como el verbo de la proposición</span> concuerdan con él. Es una doble concordancia que el ispanofono debe interiorizar:</p>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Sono io</em> che <em>ho</em> chiamato.</div>
+        <div class="ex-es">Soy yo quien ha llamado / quien llamó.</div>
+        <ul class="analysis-list">
+          <li><b>essere:</b> <em>sono</em> (1.ª sg., concuerda con io)</li>
+          <li><b>verbo subordinato:</b> <em>ho chiamato</em> (1.ª sg., concuerda con io)</li>
+          <li><b>relativo:</b> <em>che</em></li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Sei tu</em> che <em>devi</em> farlo.</div>
+        <div class="ex-es">Eres tú quien tiene que hacerlo.</div>
+        <ul class="analysis-list">
+          <li><b>essere:</b> <em>sei</em> (2.ª sg.)</li>
+          <li><b>verbo subordinato:</b> <em>devi</em> (2.ª sg.)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Siamo noi</em> che <em>abbiamo</em> deciso.</div>
+        <div class="ex-es">Somos nosotros quienes hemos decidido.</div>
+        <ul class="analysis-list">
+          <li><b>essere:</b> <em>siamo</em> (1.ª pl.)</li>
+          <li><b>verbo subordinato:</b> <em>abbiamo deciso</em> (1.ª pl.)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Sono i ragazzi</em> che <em>hanno</em> rotto il vetro.</div>
+        <div class="ex-es">Son los chicos quienes rompieron el cristal.</div>
+        <ul class="analysis-list">
+          <li><b>essere:</b> <em>sono</em> (3.ª pl., concuerda con «i ragazzi»)</li>
+          <li><b>verbo subordinato:</b> <em>hanno rotto</em> (3.ª pl.)</li>
+        </ul>
+      </div>
+
+      <h3>Contraste con foco que no es sujeto</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><em>È a Marco</em> che ho scritto.</div>
+        <div class="ex-es">Es a Marco a quien escribí.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>a Marco</em> (OI, NO es sujeto)</li>
+          <li><b>essere:</b> <em>è</em> (3.ª sg. invariable)</li>
+          <li><b>verbo subordinato:</b> <em>ho scritto</em> (1.ª sg., conserva su sujeto «io»)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>È a voi</em> che parliamo.</div>
+        <div class="ex-es">Es a vosotros a quienes hablamos.</div>
+        <ul class="analysis-list">
+          <li><b>essere:</b> <em>è</em> invariable, aunque «voi» sea 2.ª pl., porque «a voi» es OI, no sujeto</li>
+          <li><b>verbo principale:</b> <em>parliamo</em> (1.ª pl., con sujeto «noi» implícito)</li>
+        </ul>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Trampa típica:</b> el ispanofono tiende a usar siempre <em>è</em>, como si fuera una fórmula fija. En italiano correcto, cuando el foco es el sujeto, hay que concordar: <em>«*È io che parlo»</em> es incorrecto → <em>«Sono io che parlo»</em>. Esta concordancia es <span class="hl">obligatoria</span> y no opcional.</div>
+      </div>
+
+      <div class="teal-box">
+        <b>Comparación con español:</b> en español, la fórmula equivalente «soy yo quien…» también requiere doble concordancia («soy yo quien llama» o «soy yo quien llamo», con variación entre normas), pero es muy frecuente la simplificación con «es» invariable: «es por esto que vine». En italiano normativo, la doble concordancia es la opción más correcta cuando el foco es el sujeto.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 4 · ELEMENTI FOCALIZZABILI -->
+<section id="s-elementi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">4. Quali elementi si possono focalizzare</h2>
+      <p class="sec-subtitle">Soggetto, oggetto, complementi vari</p>
+
+      <div class="def-box">
+        Casi <span class="hl">cualquier constituyente</span> de la oración puede ser foco de una frase scissa: sujeto, objeto directo, objeto indirecto, complemento de lugar, tiempo, causa, modo, compañía, instrumento… Pero el <b>verbo principal</b> no puede ser focalizado directamente con esta estructura (para focalizar el predicado se usa la <em>pseudo-scissa</em>, vid. §6).
+      </div>
+
+      <h3>Catálogo completo de focos</h3>
+
+      <h4 style="color:var(--accent);margin-top:14px">a) Soggetto</h4>
+      <div class="example-block">
+        <div class="ex-it">È <em>Marco</em> che è partito.</div>
+        <div class="ex-es">Es Marco quien se ha ido.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>Marco</em> (sujeto)</li>
+          <li><b>Frase canónica:</b> «Marco è partito»</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Sono <em>i miei amici</em> che hanno organizzato la festa.</div>
+        <div class="ex-es">Son mis amigos quienes han organizado la fiesta.</div>
+        <ul class="analysis-list">
+          <li><b>Concordanza:</b> <em>sono</em> con «i miei amici» (m.pl.)</li>
+        </ul>
+      </div>
+
+      <h4 style="color:var(--accent);margin-top:14px">b) Oggetto diretto</h4>
+      <div class="example-block">
+        <div class="ex-it">È <em>Marco</em> che ho visto.</div>
+        <div class="ex-es">Es a Marco a quien vi. <span class="dim">(no el libro)</span></div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>Marco</em> (OD, no «il libro»)</li>
+          <li><b>Frase canónica:</b> «Ho visto Marco»</li>
+          <li><b>Atención:</b> aunque el foco es OD, el italiano no usa preposición «a» (sí lo hace el español: «a Marco»)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>questo libro</em> che voglio comprare.</div>
+        <div class="ex-es">Es este libro lo que quiero comprar.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>questo libro</em> (OD)</li>
+        </ul>
+      </div>
+
+      <h4 style="color:var(--accent);margin-top:14px">c) Oggetto indiretto</h4>
+      <div class="example-block">
+        <div class="ex-it">È <em>a Marco</em> che ho scritto.</div>
+        <div class="ex-es">Es a Marco a quien le escribí.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>a Marco</em> (OI, con preposición «a»)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>a tutti gli studenti</em> che ho detto la stessa cosa.</div>
+        <div class="ex-es">Es a todos los estudiantes a quienes les dije lo mismo.</div>
+      </div>
+
+      <h4 style="color:var(--accent);margin-top:14px">d) Complemento di luogo</h4>
+      <div class="example-block">
+        <div class="ex-it">È <em>a Roma</em> che vivo.</div>
+        <div class="ex-es">Es en Roma donde vivo.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>a Roma</em> (locativo)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>in quel ristorante</em> che ci siamo conosciuti.</div>
+        <div class="ex-es">Es en aquel restaurante donde nos conocimos.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>lì</em> che l'ho trovato.</div>
+        <div class="ex-es">Es allí donde lo encontré.</div>
+        <div class="ex-note">Con adverbio de lugar (forma muy frecuente en oral)</div>
+      </div>
+
+      <h4 style="color:var(--accent);margin-top:14px">e) Complemento di tempo</h4>
+      <div class="example-block">
+        <div class="ex-it">È <em>ieri</em> che è successo.</div>
+        <div class="ex-es">Fue ayer cuando pasó.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>ieri</em> (tiempo)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>nel 1995</em> che ci siamo trasferiti qui.</div>
+        <div class="ex-es">Fue en 1995 cuando nos mudamos aquí.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>la settimana scorsa</em> che ho ricevuto la lettera.</div>
+        <div class="ex-es">Fue la semana pasada cuando recibí la carta.</div>
+      </div>
+
+      <h4 style="color:var(--accent);margin-top:14px">f) Complemento di causa</h4>
+      <div class="example-block">
+        <div class="ex-it">È <em>per questo</em> che non sono venuto.</div>
+        <div class="ex-es">Es por esto por lo que no vine.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>per questo</em> (causa)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>per amore</em> che ha lasciato tutto.</div>
+        <div class="ex-es">Es por amor por lo que lo dejó todo.</div>
+      </div>
+
+      <h4 style="color:var(--accent);margin-top:14px">g) Complemento di modo</h4>
+      <div class="example-block">
+        <div class="ex-it">È <em>così</em> che funziona.</div>
+        <div class="ex-es">Es así como funciona.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>così</em> (modo)</li>
+          <li><b>Uso frecuentísimo:</b> casi una fórmula fija del italiano oral</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>in questo modo</em> che si risolve il problema.</div>
+        <div class="ex-es">Es de este modo como se resuelve el problema.</div>
+      </div>
+
+      <h4 style="color:var(--accent);margin-top:14px">h) Complemento di compagnia / mezzo</h4>
+      <div class="example-block">
+        <div class="ex-it">È <em>con te</em> che voglio parlare.</div>
+        <div class="ex-es">Es contigo con quien quiero hablar.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>con il treno</em> che siamo arrivati.</div>
+        <div class="ex-es">Es en tren como hemos llegado.</div>
+      </div>
+
+      <h3>Lo que NO puede focalizar la frase scissa</h3>
+      <div class="warn-box">
+        <span class="ico">🚫</span>
+        <div>El <b>verbo principal</b> no se puede focalizar con la frase scissa estándar.<br>
+        ✗ <em>*È mangiare che faccio.</em> (no funciona como focalización del verbo)<br>
+        ✓ <em>Quello che faccio è mangiare.</em> (para focalizar el verbo se necesita la <span class="hl">pseudo-scissa</span>, §6)</div>
+      </div>
+
+      <div class="note-box">
+        <b>Atención al complemento de objeto directo de persona:</b> en español la a personal obliga a decir «a Marco» también en la frase escindida («es a Marco a quien vi»). En italiano <span class="hl">no hay a personal</span>: el OD es directo, sin preposición. Por eso «È Marco che ho visto» (sin «a»). Si pones «È a Marco che ho visto», cambias la función: ahora «a Marco» se interpreta como OI («es a Marco a quien le hice una visita») o como destinatario.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 5 · CHI -->
+<section id="s-chi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">5. <em>Chi</em> nella frase scissa</h2>
+      <p class="sec-subtitle">Focalizzare una categoria di persone indefinite</p>
+
+      <div class="def-box">
+        Cuando el foco es una <span class="hl">persona o categoría indefinida</span> de personas (no un individuo concreto), el complementador no es <em>che</em> sino <em>chi</em>. La estructura se vuelve: <em>È + chi + verbo + che + proposición</em>, y suele tener un valor genérico o sentencioso (proverbios, máximas, generalizaciones).
+      </div>
+
+      <h3>Esquema</h3>
+      <div class="struct-diag">
+        <span class="struct-text">È</span>
+        <span class="struct-arrow">+</span>
+        <span class="struct-tag struct-foco">chi + verbo</span>
+        <span class="struct-arrow">+</span>
+        <span class="struct-text">che</span>
+        <span class="struct-arrow">+</span>
+        <span class="struct-tag struct-rema">predicato</span>
+      </div>
+
+      <h3>Ejemplos típicos</h3>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>chi studia</em> che riesce.</div>
+        <div class="ex-es">Es el que estudia quien lo consigue.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>chi studia</em> (categoría de personas, = «quien estudia»)</li>
+          <li><b>Función:</b> generalización con valor sentencioso</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>chi lavora</em> che guadagna.</div>
+        <div class="ex-es">Es el que trabaja quien gana.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>chi lavora</em></li>
+          <li><b>Valor:</b> máxima general, casi proverbial</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>chi parla troppo</em> che si tradisce.</div>
+        <div class="ex-es">Es el que habla demasiado quien se delata.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>chi ama davvero</em> che sa aspettare.</div>
+        <div class="ex-es">Es quien ama de verdad quien sabe esperar.</div>
+        <div class="ex-note">Construcción con sabor literario/aforístico</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">È <em>chi non risica</em> che non rosica.</div>
+        <div class="ex-es">Quien no arriesga no gana. <span class="dim">(proverbio)</span></div>
+        <div class="ex-note">Frase scissa cristalizada en un refrán</div>
+      </div>
+
+      <h3>Diferencia con la frase scissa estándar</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Estructura</th><th>Foco</th><th>Esempio</th><th>Función</th></tr></thead>
+          <tbody>
+            <tr><td>È + nombre/sintagma + che…</td><td>Referente concreto</td><td><em>È Marco che chiama.</em></td><td>Identificación de individuo</td></tr>
+            <tr><td>È + chi + verbo + che…</td><td>Categoría indefinida</td><td><em>È chi parla troppo che si tradisce.</em></td><td>Generalización / sentencia</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="green-box">
+        <b>Quando usare <em>chi</em>:</b><br>
+        — quando il foco è una <em>categoría</em> e non un individuo specifico<br>
+        — quando si vuole esprimere una <em>regola generale</em>, una verità presentata come universale<br>
+        — nei proverbi e nelle massime<br>
+        — in stile retorico o argomentativo elevato
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Trampa per ispanofoni:</b> no confundas <em>chi</em> (pronome relativo indefinito, = «quien/el que») con <em>chi?</em> interrogativo. En la frase scissa con <em>chi</em>, no hay pregunta: <em>chi studia</em> = «el que estudia», no «¿quién estudia?». El equivalente español más fiel es «el que» o «quien» (sin antecedente).</div>
+      </div>
+
+      <h3>Variante con doble «che»</h3>
+      <p>Existe también una construcción híbrida, frecuente en el oral, donde el primer foco es un sintagma con artículo y se mantiene <em>che</em>:</p>
+      <div class="example-block">
+        <div class="ex-it">È <em>il più forte</em> che vince.</div>
+        <div class="ex-es">Es el más fuerte el que gana.</div>
+        <div class="ex-note">No usa «chi» porque el foco lleva artículo definido; se mantiene «che»</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 6 · PSEUDO-SCISSA -->
+<section id="s-pseudo" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">6. La frase pseudo-scissa</h2>
+      <p class="sec-subtitle">«Quello che… è X»: focalizzare attraverso una tematizzazione</p>
+
+      <div class="def-box">
+        La <b>frase pseudo-scissa</b> es la construcción <span class="hl">simétrica e inversa</span> de la frase scissa. En lugar de <em>«È X che…»</em>, se reorganiza como <em>«Quello che… è X»</em>. El elemento focalizado pasa al <b>final</b>, precedido por <em>è</em>, y la oración subordinada (con <em>quello che</em>) se coloca al inicio como tema/marco.
+      </div>
+
+      <h3>Estructura</h3>
+      <div class="struct-diag">
+        <span class="struct-text">Quello che / Ciò che</span>
+        <span class="struct-arrow">+</span>
+        <span class="struct-tag struct-rema">PROPOSIZIONE</span>
+        <span class="struct-arrow">+</span>
+        <span class="struct-text">è / sono</span>
+        <span class="struct-arrow">+</span>
+        <span class="struct-tag struct-foco">FOCO</span>
+      </div>
+
+      <h3>Ejemplos canónicos</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Quello che voglio</em> è <em>la verità</em>.</div>
+        <div class="ex-es">Lo que quiero es la verdad.</div>
+        <ul class="analysis-list">
+          <li><b>Tema (inicio):</b> <em>quello che voglio</em></li>
+          <li><b>Foco (final):</b> <em>la verità</em></li>
+          <li><b>Equivalencia scissa:</b> «È la verità che voglio»</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Quello che mi sorprende</em> è <em>la sua calma</em>.</div>
+        <div class="ex-es">Lo que me sorprende es su calma.</div>
+        <ul class="analysis-list">
+          <li><b>Tema:</b> <em>quello che mi sorprende</em></li>
+          <li><b>Foco:</b> <em>la sua calma</em></li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Quello che dobbiamo fare</em> è <em>partire subito</em>.</div>
+        <div class="ex-es">Lo que tenemos que hacer es marcharnos enseguida.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>partire subito</em> (un infinitivo, predicado entero)</li>
+          <li><b>Crucial:</b> la pseudo-scissa puede focalizar un <span class="hl">predicado verbal</span> (cosa que la scissa no permite)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Quello che non capisco</em> è <em>perché tu non me l'abbia detto</em>.</div>
+        <div class="ex-es">Lo que no entiendo es por qué no me lo has dicho.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> una oración interrogativa indirecta entera</li>
+          <li><b>Recurso muy elegante</b> para construir discurso argumentativo</li>
+        </ul>
+      </div>
+
+      <h3>La variante <em>ciò che</em> (registro más formal)</h3>
+      <p>En lugar de <em>quello che</em>, el italiano formal y escrito usa frecuentemente <em>ciò che</em>, que tiene un sabor más libresco o solemne. La estructura es idéntica:</p>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Ciò che conta</em> è <em>l'intenzione</em>.</div>
+        <div class="ex-es">Lo que cuenta es la intención.</div>
+        <div class="ex-note">Registro: escrito formal, ensayo, prosa argumentativa</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Ciò che mi preoccupa</em> è <em>il silenzio della gente</em>.</div>
+        <div class="ex-es">Lo que me preocupa es el silencio de la gente.</div>
+      </div>
+
+      <h3>Variante con interrogativo indefinido</h3>
+      <p>Existen pseudo-scisse construidas con otros pronombres relativos indefinidos:</p>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Chi mi conosce</em> sa <em>che dico la verità</em>.</div>
+        <div class="ex-es">Quien me conoce sabe que digo la verdad.</div>
+        <div class="ex-note">Variante con «chi» en lugar de «quello che» (sólo cuando el referente es humano)</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Il modo in cui parla</em> è <em>quello che mi disturba</em>.</div>
+        <div class="ex-es">El modo en que habla es lo que me molesta.</div>
+        <div class="ex-note">Pseudo-scissa con sintagma nominal complejo en posición inicial</div>
+      </div>
+
+      <h3>Función pragmática de la pseudo-scissa</h3>
+      <div class="green-box">
+        <b>La pseudo-scissa permite:</b><br>
+        — <span class="hl">tematizar una pregunta</span> implícita («¿qué hay que hacer? — lo que hay que hacer es…»)<br>
+        — focalizar el <span class="hl">predicado entero</span>, no solo un constituyente nominal<br>
+        — introducir el foco al final con <span class="hl">máximo peso retórico</span> (posición fuerte por defecto en italiano)<br>
+        — añadir un tono argumentativo o reflexivo al discurso
+      </div>
+
+      <h3>Acuerdo de essere en la pseudo-scissa</h3>
+      <p>En la pseudo-scissa, <em>essere</em> concuerda normalmente con el elemento focalizado (la parte final), no con <em>quello che</em>:</p>
+
+      <div class="example-block">
+        <div class="ex-it">Quello che mi mancano <em>sono</em> <em>i miei amici</em>.</div>
+        <div class="ex-es">Lo que echo de menos son a mis amigos.</div>
+        <ul class="analysis-list">
+          <li><b>Concordancia:</b> <em>sono</em> con «i miei amici» (3.ª pl.)</li>
+          <li><b>Atención:</b> el italiano oral puede simplificar a <em>è</em>; el escrito formal prefiere la concordancia plural</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Quello che voglio <em>sono</em> <em>delle risposte chiare</em>.</div>
+        <div class="ex-es">Lo que quiero son respuestas claras.</div>
+      </div>
+
+      <div class="note-box">
+        <b>Pseudo-scissa con <em>ecco</em>:</b> existe una variante muy enfática que sustituye <em>è</em> por <em>ecco</em>, con valor presentacional: <em>«Quello che voglio, ecco la verità»</em> o <em>«Ecco quello che voglio: la verità»</em>. Función: presentar el foco con una entonación de revelación o conclusión.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 7 · CONFRONTO -->
+<section id="s-confronto" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">7. Scissa vs Pseudo-scissa · confronto</h2>
+      <p class="sec-subtitle">Due strutture, due funzioni distinte</p>
+
+      <h3>Tabla comparativa completa</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Dimensione</th><th>Frase scissa</th><th>Pseudo-scissa</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>Struttura</b></td>
+              <td>È X che / chi …</td>
+              <td>Quello che / Ciò che … è X</td>
+            </tr>
+            <tr>
+              <td><b>Elemento focalizzato</b></td>
+              <td>Soggetto o altro complemento (nome, SP…)</td>
+              <td>Predicato, infinito, oracion sustantivada, o foco final</td>
+            </tr>
+            <tr>
+              <td><b>Posición del foco</b></td>
+              <td>Inicio (tras <em>è</em>)</td>
+              <td>Final del enunciado</td>
+            </tr>
+            <tr>
+              <td><b>Función pragmática</b></td>
+              <td>Identificación / contraste («es X, no otro»)</td>
+              <td>Tematización de la pregunta + foco final</td>
+            </tr>
+            <tr>
+              <td><b>Registro</b></td>
+              <td>Neutro: muy oral, también escrito</td>
+              <td>Neutro-formal: argumentativo, reflexivo</td>
+            </tr>
+            <tr>
+              <td><b>Esempio prototipico</b></td>
+              <td><em>È Marco che ha chiamato.</em></td>
+              <td><em>Quello che ha chiamato è Marco.</em></td>
+            </tr>
+            <tr>
+              <td><b>Equivalencia ES</b></td>
+              <td>«Es X quien…»</td>
+              <td>«Lo que… es X»</td>
+            </tr>
+            <tr>
+              <td><b>Foco con verbo entero</b></td>
+              <td class="err-cell">No posible</td>
+              <td class="ok-cell">Sí: <em>Quello che voglio è partire.</em></td>
+            </tr>
+            <tr>
+              <td><b>Concordanza essere</b></td>
+              <td>Con foco si es sujeto; si no, <em>è</em> invariable</td>
+              <td>Generalmente con el foco final</td>
+            </tr>
+            <tr>
+              <td><b>Variante formal</b></td>
+              <td>—</td>
+              <td><em>Ciò che…</em> (más formal)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Ejemplos paralelos (misma idea, dos estructuras)</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">SCISSA</span> È <em>Marco</em> che ha chiamato.</div>
+        <div class="ex-it"><span class="tag tag-top">PSEUDO</span> Quello che ha chiamato è <em>Marco</em>.</div>
+        <div class="ex-es">Es Marco quien llamó. / El que llamó es Marco.</div>
+        <ul class="analysis-list">
+          <li><b>Diferencia:</b> la scissa introduce a Marco como respuesta inmediata; la pseudo-scissa lo presenta al final, con un tono más reflexivo o argumentativo</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">SCISSA</span> È <em>la verità</em> che voglio.</div>
+        <div class="ex-it"><span class="tag tag-top">PSEUDO</span> Quello che voglio è <em>la verità</em>.</div>
+        <div class="ex-es">Es la verdad lo que quiero. / Lo que quiero es la verdad.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">SCISSA</span> È <em>la sua calma</em> che mi sorprende.</div>
+        <div class="ex-it"><span class="tag tag-top">PSEUDO</span> Quello che mi sorprende è <em>la sua calma</em>.</div>
+        <div class="ex-es">Es su calma lo que me sorprende. / Lo que me sorprende es su calma.</div>
+      </div>
+
+      <h3>Cuando solo funciona la pseudo-scissa</h3>
+      <div class="example-block">
+        <div class="ex-it">✗ <em>*È partire subito che dobbiamo fare.</em> <span class="dim">(no funciona)</span></div>
+        <div class="ex-it">✓ <em>Quello che dobbiamo fare è partire subito.</em></div>
+        <div class="ex-es">Lo que tenemos que hacer es marcharnos enseguida.</div>
+        <div class="ex-note">El predicado «partire subito» no se puede focalizar con la scissa estándar; solo con la pseudo-scissa</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">✗ <em>*È studiare di più che mi conviene.</em></div>
+        <div class="ex-it">✓ <em>Quello che mi conviene è studiare di più.</em></div>
+        <div class="ex-es">Lo que me conviene es estudiar más.</div>
+      </div>
+
+      <div class="teal-box">
+        <b>Intuición práctica:</b> usa la <span class="hl">scissa</span> cuando quieras <em>identificar</em> rápidamente un elemento con valor contrastivo («es X y no otro»). Usa la <span class="hl">pseudo-scissa</span> cuando quieras <em>introducir tematicamente una pregunta</em> y luego revelar la respuesta como clímax al final («lo que pasa es que…»), o cuando necesites focalizar un predicado verbal entero.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 8 · REGISTRO -->
+<section id="s-registro" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">8. Registro e frequenza</h2>
+      <p class="sec-subtitle">Dall'oralità quotidiana alla prosa argomentativa</p>
+
+      <div class="def-box">
+        Tanto la frase scissa como la pseudo-scissa son recursos <span class="hl">neutros</span> en italiano: aparecen en todos los registros, desde la conversación más cotidiana hasta la prosa académica. Esta es una diferencia fundamental con el español, donde la frase escindida tiende a sonar más literaria o enfática.
+      </div>
+
+      <h3>Mapa de registros</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Registro</th><th>Frase scissa</th><th>Pseudo-scissa</th></tr></thead>
+          <tbody>
+            <tr><td><b>Parlato spontaneo</b></td><td class="ok-cell">Frequentissima</td><td class="ok-cell">Frequente</td></tr>
+            <tr><td><b>Parlato formale (intervista, conferenza)</b></td><td class="ok-cell">Frequente</td><td class="ok-cell">Frequente</td></tr>
+            <tr><td><b>Email, messaggi, social</b></td><td class="ok-cell">Frequente</td><td class="ok-cell">Frequente</td></tr>
+            <tr><td><b>Narrativa</b></td><td class="ok-cell">Frequente</td><td class="ok-cell">Frequente</td></tr>
+            <tr><td><b>Stampa, giornalismo</b></td><td class="ok-cell">Comune</td><td class="ok-cell">Comune</td></tr>
+            <tr><td><b>Prosa saggistica</b></td><td class="ok-cell">Comune</td><td class="ok-cell">Comune (spesso con <em>ciò che</em>)</td></tr>
+            <tr><td><b>Prosa accademica/giuridica</b></td><td class="warn-cell">Moderata</td><td class="ok-cell">Frequente</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Ejemplos en distintos registros</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">ORAL CASUAL</span> «Guarda, <em>è qui</em> che l'ho trovato!»</div>
+        <div class="ex-es">«Mira, ¡es aquí donde lo encontré!»</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">ORAL CASUAL</span> «<em>È così</em> che funziona, fidati.»</div>
+        <div class="ex-es">«Es así como funciona, créeme.»</div>
+        <div class="ex-note">Fórmula casi cristalizada del oral cotidiano</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">EMAIL</span> «<em>Sono io</em> che ti devo ringraziare!»</div>
+        <div class="ex-es">«¡Soy yo quien tengo que darte las gracias!»</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-top">PROSA ARGUMENTATIVA</span> <em>Ciò che emerge dall'inchiesta</em> è una netta diffidenza verso le istituzioni.</div>
+        <div class="ex-es">Lo que emerge de la encuesta es una clara desconfianza hacia las instituciones.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-top">SAGGISTICA</span> <em>Ciò che importa</em>, in ultima analisi, è la coerenza dell'argomentazione.</div>
+        <div class="ex-es">Lo que importa, en último análisis, es la coherencia de la argumentación.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">NARRATIVA</span> <em>Fu in quel momento</em> che capii cosa stava succedendo.</div>
+        <div class="ex-es">Fue en aquel momento cuando entendí lo que estaba pasando.</div>
+        <div class="ex-note">Variante con passato remoto, sabor literario</div>
+      </div>
+
+      <h3>La frase scissa como recurso conversacional</h3>
+      <div class="green-box">
+        <b>En la conversación italiana cotidiana, la frase scissa aparece constantemente</b> en respuestas a preguntas y en rectificaciones espontáneas:<br>
+        — «Chi me l'ha detto? <em>È stata Anna</em> che me l'ha detto.»<br>
+        — «Quando l'hai visto? <em>È ieri</em> che l'ho visto, non oggi.»<br>
+        — «<em>È solo per questo</em> che ti chiamo, scusa il disturbo.»<br>
+        — «No no, <em>è lì</em> che devi mettere il libro, non sullo scaffale.»<br>
+        Memorizar estas fórmulas conversacionales es una vía rápida hacia la naturalidad en oral.
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Para el ispanofono:</b> en español, en cambio, decir «Es Anna quien me lo dijo» en lugar de «Me lo dijo Anna» suena <span class="hl">marcado, casi enfático o literario</span>. En italiano, la opción con frase scissa es la <span class="hl">opción natural</span> cuando se quiere responder a una pregunta sobre la identidad del sujeto. No la evites pensando que es «demasiado formal»: es perfectamente coloquial.</div>
+      </div>
+
+      <h3>Frecuencia comparada con el español</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Situación</th><th>Italiano</th><th>Español</th></tr></thead>
+          <tbody>
+            <tr><td>Respuesta a «¿quién?» en oral</td><td><em>È Marco che chiama.</em> (muy frecuente)</td><td>«Llama Marco» (preferido) / «Es Marco quien llama» (marcado)</td></tr>
+            <tr><td>Identificación de lugar</td><td><em>È qui che lavoro.</em> (natural)</td><td>«Aquí trabajo» / «Es aquí donde trabajo» (más literario)</td></tr>
+            <tr><td>Fórmula con causa</td><td><em>È per questo che vengo.</em> (natural)</td><td>«Por esto vengo» / «Es por esto que vengo» (común pero más enfático)</td></tr>
+            <tr><td>Construcción pseudo-scissa</td><td><em>Quello che voglio è la verità.</em> (frecuente, neutra)</td><td>«Lo que quiero es la verdad» (frecuente, neutra)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note-box">
+        <b>Datos:</b> los corpus de italiano contemporáneo (parlato e scritto) muestran que las frasi scisse aparecen con frecuencia mucho mayor que en español. Sabatini incluye la frase scissa entre los rasgos típicos del «italiano dell'uso medio», es decir, del italiano vivo y central de hoy.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 9 · TRAPPOLE -->
+<section id="s-trappole" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">9. Trappole per ispanofoni</h2>
+      <p class="sec-subtitle">Errori tipici e perché si producono</p>
+
+      <div class="def-box">
+        El español tiene la frase escindida, pero con frecuencias, registros y reglas <span class="hl">distintos</span> al italiano. Esta sección compara los puntos donde el ispanofono se equivoca al transferir su intuición.
+      </div>
+
+      <div id="traps-container"></div>
+
+      <h3>Diferencias clave español/italiano</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Aspecto</th><th>Español</th><th>Italiano</th></tr></thead>
+          <tbody>
+            <tr><td><b>Frecuencia general en oral</b></td><td>Media-baja, recurso marcado</td><td>Alta, recurso neutro</td></tr>
+            <tr><td><b>Concordancia de <em>ser/essere</em></b></td><td>Frecuente uso invariable de «es»</td><td>Concordancia obligatoria con sujeto real</td></tr>
+            <tr><td><b>Conector tras el foco</b></td><td>«que / quien / donde / cuando / como»</td><td>Casi siempre <em>che</em>; <em>chi</em> solo con personas indefinidas</td></tr>
+            <tr><td><b>OD personal</b></td><td>«a Marco» (con a personal)</td><td>«Marco» (sin preposición)</td></tr>
+            <tr><td><b>Pseudo-scissa formal</b></td><td>«Lo que / Lo cual…»</td><td>«Ciò che…» (más formal); «Quello che…» (neutra)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Frase scissa vs dislocazione · no confundir</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-sin">DISLOCAZIONE</span> <em>Il libro</em>, <em>l'</em>ho comprato io.</div>
+        <div class="ex-es">El libro, lo he comprado yo. <span class="dim">(tematización del libro)</span></div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">FRASE SCISSA</span> <em>È</em> il libro <em>che</em> ho comprato io.</div>
+        <div class="ex-es">Es el libro lo que he comprado yo. <span class="dim">(focalización contrastiva)</span></div>
+      </div>
+      <div class="green-box">
+        <b>Diferencia esencial:</b> la dislocazione <span class="hl">solo desplaza</span> un elemento (con pronombre de retoma). La frase scissa <span class="hl">añade «essere + che»</span> para focalizar contrastivamente. Son operaciones distintas con efectos pragmáticos distintos.
+      </div>
+
+      <h3>Frase scissa vs pseudo-scissa · no confundir</h3>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">SCISSA</span> <em>È</em> Marco <em>che</em> ha chiamato.</div>
+        <div class="ex-es">Es Marco quien ha llamado.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-top">PSEUDO-SCISSA</span> <em>Quello che</em> ha chiamato <em>è</em> Marco.</div>
+        <div class="ex-es">El que ha llamado es Marco.</div>
+      </div>
+      <div class="green-box">
+        <b>Diferencia:</b> ambas focalizan, pero la scissa pone el foco <span class="hl">al inicio</span> (tras è), mientras que la pseudo-scissa lo pone <span class="hl">al final</span>, tras un tema introducido por <em>quello che/ciò che</em>. Son herramientas distintas dentro de la misma familia de focalizaciones.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 10 · ESEMPI ANALIZZATI -->
+<section id="s-esempi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">10. Esempi analizzati · 18 frasi</h2>
+      <p class="sec-subtitle">Scisse, pseudo-scisse e analisi pragmatica</p>
+
+      <h3>Bloco A · Frasi scisse</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">1</span> È <em>Marco</em> che ha telefonato stamattina.</div>
+        <div class="ex-es">Es Marco quien ha llamado esta mañana.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento focalizado:</b> <em>Marco</em> (sujeto)</li>
+          <li><b>Concordanza:</b> <em>è</em> (3.ª sg., concuerda con Marco)</li>
+          <li><b>Función pragmática:</b> identificación de la persona, con contraste implícito (no otro candidato)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">2</span> <em>Sono io</em> che ho deciso di partire.</div>
+        <div class="ex-es">Soy yo quien ha decidido marcharse.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento focalizado:</b> <em>io</em> (sujeto en 1.ª sg.)</li>
+          <li><b>Concordanza:</b> <em>sono</em> (con io) + <em>ho deciso</em> (con io) — doble acuerdo</li>
+          <li><b>Función:</b> asunción explícita de responsabilidad, contraste con otros posibles agentes</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">3</span> <em>Siamo noi</em> che ti chiediamo scusa.</div>
+        <div class="ex-es">Somos nosotros quienes te pedimos perdón.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento focalizado:</b> <em>noi</em> (sujeto en 1.ª pl.)</li>
+          <li><b>Concordanza:</b> <em>siamo</em> (1.ª pl.) + <em>chiediamo</em> (1.ª pl.)</li>
+          <li><b>Función:</b> inversión cortés del orden esperado (el interlocutor pensaba que él debía disculparse)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">4</span> È <em>ieri sera</em> che ho ricevuto la notizia.</div>
+        <div class="ex-es">Fue ayer noche cuando recibí la noticia.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento focalizado:</b> <em>ieri sera</em> (complemento de tiempo)</li>
+          <li><b>Concordanza:</b> <em>è</em> invariable (foco no es sujeto)</li>
+          <li><b>Función:</b> precisión temporal con contraste (no antes, no después)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">5</span> È <em>a Milano</em> che ho lavorato per cinque anni.</div>
+        <div class="ex-es">Fue en Milán donde trabajé cinco años.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento focalizado:</b> <em>a Milano</em> (complemento de lugar)</li>
+          <li><b>Concordanza:</b> <em>è</em> invariable</li>
+          <li><b>Función:</b> identificación del lugar como respuesta a «¿dónde trabajaste?»</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">6</span> È <em>per la tua salute</em> che insisto.</div>
+        <div class="ex-es">Es por tu salud por lo que insisto.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento focalizado:</b> <em>per la tua salute</em> (complemento de causa/finalidad)</li>
+          <li><b>Función:</b> justificación enfatizada, casi defensiva</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">7</span> È <em>con la pratica</em> che si impara.</div>
+        <div class="ex-es">Es con la práctica como se aprende.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento focalizado:</b> <em>con la pratica</em> (complemento de medio)</li>
+          <li><b>Función:</b> aforismo / generalización; foco contrastivo (no con la teoría)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">8</span> È <em>questa borsa</em> che vorrei provare.</div>
+        <div class="ex-es">Es este bolso el que quisiera probarme.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento focalizado:</b> <em>questa borsa</em> (OD)</li>
+          <li><b>Función:</b> selección entre opciones (típica de situación comercial)</li>
+          <li><b>Nota:</b> sin preposición «a», porque el OD italiano nunca la lleva (al contrario que el español)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">9</span> È <em>a te</em> che voglio bene davvero.</div>
+        <div class="ex-es">Es a ti a quien quiero de verdad.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento focalizado:</b> <em>a te</em> (OI con «volere bene a»)</li>
+          <li><b>Concordanza:</b> <em>è</em> invariable (foco es OI, no sujeto)</li>
+          <li><b>Función:</b> declaración emocional con fuerte contraste implícito</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">10</span> È <em>chi tace</em> che acconsente.</div>
+        <div class="ex-es">Es el que calla quien consiente.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento focalizado:</b> <em>chi tace</em> (categoría de personas indefinida)</li>
+          <li><b>Conector especial:</b> <em>chi</em> en lugar de <em>che</em> (porque el foco es persona indefinida)</li>
+          <li><b>Función:</b> sentencia / generalización (proverbio italiano clásico)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">11</span> È <em>così</em> che si fa.</div>
+        <div class="ex-es">Es así como se hace.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento focalizado:</b> <em>così</em> (complemento de modo)</li>
+          <li><b>Función:</b> fórmula didáctica/instructiva, muy frecuente en oral</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">12</span> <em>Sono i giovani</em> che cambieranno il mondo.</div>
+        <div class="ex-es">Son los jóvenes quienes cambiarán el mundo.</div>
+        <ul class="analysis-list">
+          <li><b>Elemento focalizado:</b> <em>i giovani</em> (sujeto en plural)</li>
+          <li><b>Concordanza:</b> <em>sono</em> (3.ª pl. con «i giovani») + <em>cambieranno</em> (3.ª pl.)</li>
+          <li><b>Función:</b> tono retórico, casi declarativo o programático</li>
+        </ul>
+      </div>
+
+      <h3>Bloco B · Frasi pseudo-scisse</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-top">13</span> <em>Quello che voglio</em> è la verità, niente di più.</div>
+        <div class="ex-es">Lo que quiero es la verdad, nada más.</div>
+        <ul class="analysis-list">
+          <li><b>Tema:</b> <em>quello che voglio</em> (presenta la pregunta «¿qué quieres?»)</li>
+          <li><b>Foco:</b> <em>la verità</em> (al final)</li>
+          <li><b>Función:</b> revelación al final, tono reflexivo</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-top">14</span> <em>Quello che mi sorprende</em> è la sua incredibile calma.</div>
+        <div class="ex-es">Lo que me sorprende es su increíble calma.</div>
+        <ul class="analysis-list">
+          <li><b>Tema:</b> <em>quello che mi sorprende</em></li>
+          <li><b>Foco:</b> <em>la sua incredibile calma</em></li>
+          <li><b>Función:</b> introducir una observación con peso retórico al final</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-top">15</span> <em>Quello che dobbiamo fare</em> è partire subito.</div>
+        <div class="ex-es">Lo que tenemos que hacer es marcharnos enseguida.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>partire subito</em> (predicado verbal entero, infinitivo)</li>
+          <li><b>Crítico:</b> esta focalización no es posible con la scissa estándar (*È partire subito che dobbiamo fare)</li>
+          <li><b>Función:</b> resolución o conclusión argumentativa</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-top">16</span> <em>Ciò che conta veramente</em> è l'intenzione.</div>
+        <div class="ex-es">Lo que cuenta verdaderamente es la intención.</div>
+        <ul class="analysis-list">
+          <li><b>Registro:</b> formal/aforístico (<em>ciò che</em> en lugar de <em>quello che</em>)</li>
+          <li><b>Función:</b> sentencia general, máxima de estilo elevado</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-top">17</span> <em>Quello che mancano</em> sono <em>le risorse</em>, non le idee.</div>
+        <div class="ex-es">Lo que faltan son los recursos, no las ideas.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> <em>le risorse</em> (3.ª pl.)</li>
+          <li><b>Concordanza:</b> <em>sono</em> (3.ª pl.), no <em>è</em> — el verbo concuerda con el foco final</li>
+          <li><b>Función:</b> contraste explícito («no las ideas»)</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-top">18</span> <em>Quello che non capisco</em> è perché non me l'abbia detto prima.</div>
+        <div class="ex-es">Lo que no entiendo es por qué no me lo dijo antes.</div>
+        <ul class="analysis-list">
+          <li><b>Foco:</b> una <em>oración interrogativa indirecta entera</em> (con congiuntivo)</li>
+          <li><b>Función:</b> introducir una reflexión o queja con tono argumentativo</li>
+          <li><b>Nota gramatical:</b> el congiuntivo <em>abbia detto</em> es típico tras este tipo de subordinadas argumentativas</li>
+        </ul>
+      </div>
+
+      <h3>Bloco C · Esempi paralleli (scissa ↔ pseudo-scissa)</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">19a</span> È <em>la libertà</em> che chiediamo.</div>
+        <div class="ex-it"><span class="tag tag-top">19b</span> <em>Quello che chiediamo</em> è la libertà.</div>
+        <div class="ex-es">Es la libertad lo que pedimos. / Lo que pedimos es la libertad.</div>
+        <ul class="analysis-list">
+          <li><b>19a:</b> foco al inicio, contraste inmediato, sabor militante</li>
+          <li><b>19b:</b> foco al final, sabor más reflexivo, climático</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><span class="tag tag-scs">20a</span> È <em>il tuo silenzio</em> che mi preoccupa.</div>
+        <div class="ex-it"><span class="tag tag-top">20b</span> <em>Quello che mi preoccupa</em> è il tuo silenzio.</div>
+        <div class="ex-es">Es tu silencio lo que me preocupa. / Lo que me preocupa es tu silencio.</div>
+        <ul class="analysis-list">
+          <li><b>20a:</b> respuesta directa a una pregunta del tipo «¿qué te preocupa?»</li>
+          <li><b>20b:</b> introducción tematizante de una preocupación, antes de revelarla</li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <b>Cierre práctico:</b> en italiano hablado y escrito real, las frasi scisse y pseudo-scisse aparecen constantemente. Para sonar natural en C1, integra activamente patrones como:<br>
+        — <em>«È stato/a X che…»</em> (identificación)<br>
+        — <em>«Sono io che…»</em>, <em>«Sei tu che…»</em> (asunción de responsabilidad)<br>
+        — <em>«È qui/lì/così che…»</em> (locativos y modales)<br>
+        — <em>«Quello che voglio/penso/credo è…»</em> (apertura reflexiva)<br>
+        — <em>«Ciò che conta è…»</em> (registro elevado, sentencioso)<br>
+        Memorizar estas fórmulas te permite construir frases <span class="hl">expresivas y naturales</span> sin esfuerzo, y marca claramente la diferencia entre el estudiante avanzado y el estudiante avanzadísimo.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const TRAPS = [
+  {
+    name:'Usar <em>è</em> invariable cuando el foco es sujeto en otra persona',
+    wrong:'È io che ho chiamato.',
+    right:'Sono io che ho chiamato.',
+    expl:'Cuando el elemento focalizado es el sujeto real de la proposición, essere concuerda con él en persona y número. Con «io», la forma es «sono», no «è». La fórmula «è» invariable solo se usa cuando el foco NO es el sujeto.'
+  },
+  {
+    name:'No concordar el verbo subordinado con el foco-sujeto',
+    wrong:'Sono io che ha chiamato.',
+    right:'Sono io che ho chiamato.',
+    expl:'Cuando el foco es el sujeto, hay DOBLE concordancia: tanto essere como el verbo subordinado deben estar en la persona del foco. «Io» → «sono» (1.ª sg.) + «ho chiamato» (1.ª sg.).'
+  },
+  {
+    name:'Añadir <em>a</em> personal al OD focalizado (calco del español)',
+    wrong:'È a Marco che ho visto al cinema.',
+    right:'È Marco che ho visto al cinema.',
+    expl:'En español el OD personal lleva «a» («vi a Marco»), pero en italiano el OD nunca lleva preposición. Por eso «È Marco che ho visto» (= es a Marco a quien vi). Si pones «a», cambias el sentido: ahora «a Marco» se interpreta como OI o destinatario.'
+  },
+  {
+    name:'Usar <em>quien/quienes</em> traducido literalmente como <em>chi</em>',
+    wrong:'È Marco chi ha telefonato.',
+    right:'È Marco che ha telefonato.',
+    expl:'En italiano, el conector tras el foco es casi siempre «che», incluso cuando el foco es una persona concreta. «Chi» se reserva para focos genéricos/indefinidos del tipo «el que / quien sea» (chi studia, chi parla...). No traducir «quien» del español como «chi» mecánicamente.'
+  },
+  {
+    name:'Confundir frase scissa con dislocazione',
+    wrong:'È Marco, l\'ho visto ieri. (para dislocar a Marco como tema)',
+    right:'Marco, l\'ho visto ieri.',
+    expl:'La dislocazione SOLO desplaza el elemento al inicio con pronombre de retoma. La frase scissa AÑADE «essere + che» para focalizar. Son operaciones distintas. Para tematizar, basta la coma y el clítico; no añadas «è».'
+  },
+  {
+    name:'Intentar focalizar el verbo con la scissa estándar',
+    wrong:'È mangiare che voglio.',
+    right:'Quello che voglio è mangiare.',
+    expl:'La frase scissa estándar (è X che…) no puede focalizar un verbo o predicado entero. Para focalizar un infinitivo o predicado, hay que usar la pseudo-scissa: «Quello che voglio è mangiare».'
+  },
+  {
+    name:'No usar coma o pausa en escritura',
+    wrong:'È Marco che ha chiamato non Luigi.',
+    right:'È Marco che ha chiamato, non Luigi.',
+    expl:'Cuando la frase scissa lleva un complemento contrastivo explícito al final («no X»), debe ir precedido de coma. Es una marca obligatoria del contraste.'
+  },
+  {
+    name:'Olvidar la concordancia en la pseudo-scissa con foco plural',
+    wrong:'Quello che mancano è le risorse.',
+    right:'Quello che mancano sono le risorse.',
+    expl:'En la pseudo-scissa, cuando el elemento focalizado al final es plural, essere concuerda con él (sono, no è). El italiano oral puede aceptar «è», pero el escrito formal prefiere la concordancia plural.'
+  },
+  {
+    name:'Pensar que la scissa es solo enfática y evitarla en oral',
+    wrong:'Marco ha chiamato. (cuando el contexto pedía focalización)',
+    right:'È Marco che ha chiamato. / Sono io che decido.',
+    expl:'Un error típico del ispanofono es evitar la frase scissa porque en español suena «literaria» o «enfática». En italiano es completamente neutra y muy frecuente en oral. Usarla activamente es señal de naturalidad.'
+  },
+  {
+    name:'Mezclar <em>ciò che</em> y <em>quello che</em> sin coherencia de registro',
+    wrong:'Ciao Marco! Ciò che ti volevo dire è che…',
+    right:'Ciao Marco! Quello che ti volevo dire è che…',
+    expl:'«Ciò che» es más formal/literario; «quello che» es neutro. En un mensaje informal o una conversación oral, suena raro «ciò che». Usa «quello che» para registros neutros y reserva «ciò che» para textos escritos formales o argumentativos.'
+  },
+  {
+    name:'Construir scissa con preposición que no corresponde',
+    wrong:'È di Roma che vivo.',
+    right:'È a Roma che vivo.',
+    expl:'La preposición que precede al foco debe ser la misma que regía el verbo en la frase canónica. «Vivere a Roma» → «È a Roma che vivo», no «di Roma». Conservar la preposición original es esencial.'
+  },
+  {
+    name:'Olvidar el congiuntivo en la subordinada de la pseudo-scissa argumentativa',
+    wrong:'Quello che non capisco è perché non me l\'ha detto prima.',
+    right:'Quello che non capisco è perché non me l\'abbia detto prima.',
+    expl:'En la pseudo-scissa con un foco interrogativo indirecto que expresa subjetividad/duda, suele exigirse congiuntivo. «Non capisco perché» → congiuntivo. En registros orales se acepta el indicativo, pero el escrito cuidado prefiere el congiuntivo.'
+  }
+];
+
+function renderTraps(){
+  const c = document.getElementById('traps-container');
+  let html = '';
+  TRAPS.forEach(t=>{
+    html += `<div class="trap-card">
+      <div class="trap-card-header"><span class="trap-name">${t.name}</span></div>
+      <div class="trap-vs">
+        <div class="trap-wrong">${t.wrong}</div>
+        <div class="trap-right">${t.right}</div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function showSection(id, btn){
+  document.querySelectorAll('.sec-block').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function setFontSize(v){
+  document.documentElement.style.setProperty('--fs', v+'px');
+}
+
+renderTraps();
+</script>
+
+</body>
+</html>
