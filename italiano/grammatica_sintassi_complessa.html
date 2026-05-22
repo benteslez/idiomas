@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sintassi Complessa · Grammatica C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ede9df;
+  --card:#faf7f1;
+  --border:#c4bead;
+  --text:#1a1814;
+  --text2:#44413a;
+  --text3:#706c64;
+  --accent:#7a5a0a;
+  --accent-light:#f0e0c0;
+  --accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,0.08);
+  --radius:14px;
+  --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --red:#a81e2e; --red-bg:#fce6e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --teal:#0e6e6e; --teal-bg:#e0f4f4;
+  --fs:15px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-size:var(--fs);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:60px;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text);margin:0 0 .4em;font-weight:600;line-height:1.2}
+h1{font-size:1.85em;font-weight:700}
+h2{font-size:1.45em}
+h3{font-size:1.15em;margin-top:1.1em}
+h4{font-size:1em;font-weight:600}
+p{margin:.5em 0}
+em{font-style:italic}
+b,strong{font-weight:600}
+
+/* HEADER */
+.site-header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 18px 16px;
+  position:relative;
+}
+.site-header .inner{max-width:860px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title-wrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.site-header h1{margin:0;font-size:1.9em;color:var(--text)}
+.header-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.85em;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid var(--accent-mid);
+}
+.subtitle{color:var(--text3);font-size:.92em;margin:4px 0 12px;font-style:italic}
+.stat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stat-pill{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:4px 10px;
+  font-size:.78em;
+  border-radius:999px;
+  font-weight:500;
+}
+.font-ctrl{display:flex;align-items:center;gap:8px;font-size:.78em;color:var(--text3)}
+.font-ctrl input[type=range]{width:90px}
+
+/* SECTION NAV */
+.section-nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:10px 18px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.section-nav::-webkit-scrollbar{display:none}
+.section-nav .inner{max-width:860px;margin:0 auto;display:flex;gap:6px;flex-wrap:nowrap}
+.snav-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:6px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82em;
+  border-radius:999px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .15s;
+  font-weight:500;
+}
+.snav-btn:hover{background:var(--accent-light)}
+.snav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* MAIN LAYOUT */
+.main-layout{
+  max-width:860px;
+  margin:0 auto;
+  padding:20px 18px;
+}
+.sec-block{display:none}
+.sec-block.active{display:block;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* GRAM-CARD */
+.gram-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.gram-card-body{padding:18px}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:1.45em;
+  margin:0 0 .4em;
+  color:var(--text);
+}
+.sec-subtitle{color:var(--text3);font-style:italic;font-size:.95em;margin:0 0 14px}
+
+/* DEF-BOX */
+.def-box{
+  background:var(--warn-bg);
+  border-left:4px solid var(--accent);
+  padding:12px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:14px 0;
+  font-size:.96em;
+}
+.def-box b{color:var(--accent)}
+
+/* WARN-BOX */
+.warn-box{
+  background:#fff4e0;
+  border:1px solid #c8900a;
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:12px 0;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:.93em;
+  color:var(--text2);
+}
+.warn-box .ico{font-size:1.1em;flex-shrink:0;line-height:1.3}
+
+/* EXAMPLE BLOCK */
+.example-block{
+  background:var(--blue-bg);
+  border-left:3px solid var(--blue);
+  padding:9px 12px;
+  margin:8px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.ex-it{font-weight:500;color:var(--text)}
+.ex-it em{font-style:normal;color:var(--blue);font-weight:600}
+.ex-es{font-style:italic;color:var(--text2);font-size:.88em;margin-top:2px}
+.ex-an{font-size:.82em;color:var(--text3);margin-top:4px;border-top:1px dashed var(--border);padding-top:4px}
+.ex-an b{color:var(--accent)}
+.ex-analysis{font-size:.85em;color:var(--text2);margin-top:4px;border-top:1px dashed var(--border);padding-top:4px}
+.ex-analysis b{color:var(--accent)}
+
+/* NOTE-BOX */
+.note-box{
+  background:var(--purple-bg);
+  border-left:3px solid var(--purple);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.note-box b{color:var(--purple)}
+
+/* GREEN-BOX */
+.green-box{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.green-box b{color:var(--green)}
+
+/* TEAL-BOX */
+.teal-box{
+  background:var(--teal-bg);
+  border-left:3px solid var(--teal);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.teal-box b{color:var(--teal)}
+
+/* RED-BOX */
+.red-box{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.red-box b{color:var(--red)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.gram-table{width:100%;border-collapse:collapse;font-size:.92em;background:var(--card)}
+.gram-table th{
+  background:var(--accent-light);
+  color:var(--accent);
+  font-family:'DM Sans',sans-serif;
+  font-size:.72em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:8px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--accent-mid);
+}
+.gram-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.gram-table tr:nth-child(even) td{background:rgba(196,190,173,0.12)}
+.gram-table tr:last-child td{border-bottom:none}
+.ok-cell{color:var(--green);font-weight:500}
+.err-cell{color:var(--red);font-weight:500}
+.warn-cell{color:var(--accent);font-weight:500}
+.tbl-pron{font-weight:600;color:var(--text);background:rgba(196,190,173,0.18)}
+.tbl-art{font-weight:700;color:var(--accent);background:var(--accent-light);font-size:1.05em}
+
+/* CHIPS */
+.chip-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:14px 0 10px;
+  padding-bottom:4px;
+}
+.chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:5px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.83em;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{background:var(--accent-light)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-panel{display:none}
+.chip-panel.active{display:block;animation:fadeIn .25s}
+
+/* TRAPS */
+.trap-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.trap-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trap-name{font-weight:600;color:var(--text);font-size:.96em}
+.trap-vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.trap-wrong{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-wrong::before{content:'✗ ';color:var(--red);font-weight:700}
+.trap-right{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-right::before{content:'✓ ';color:var(--green);font-weight:700}
+.trap-expl{font-size:.88em;color:var(--text2);font-style:italic;margin-top:6px}
+@media (max-width:520px){.trap-vs{grid-template-columns:1fr}}
+
+/* PERIOD ANALYSIS */
+.period-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:14px 16px;
+  margin:14px 0;
+  box-shadow:var(--shadow-sm);
+}
+.period-quote{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:1.02em;
+  color:var(--text);
+  border-left:3px solid var(--accent);
+  padding:6px 12px;
+  background:var(--warn-bg);
+  margin-bottom:10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.period-level{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:10px;
+  padding:6px 0;
+  border-bottom:1px dashed var(--border);
+  align-items:start;
+}
+.period-level:last-child{border-bottom:none}
+.period-label{
+  display:inline-block;
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  font-size:.74em;
+  font-weight:600;
+  padding:2px 8px;
+  border-radius:999px;
+  white-space:nowrap;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.period-level-l0 .period-label{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.period-level-l1 .period-label{background:var(--green-bg);color:var(--green);border-color:var(--green)}
+.period-level-l2 .period-label{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.period-level-l3 .period-label{background:var(--teal-bg);color:var(--teal);border-color:var(--teal)}
+.period-text{font-size:.93em;color:var(--text)}
+.period-text em{font-style:italic;color:var(--accent);font-weight:600}
+.period-comment{font-size:.86em;color:var(--text3);margin-top:3px;font-style:italic}
+
+/* CHECKLIST */
+.checklist{list-style:none;padding:0;margin:14px 0}
+.checklist li{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-left:4px solid var(--green);
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:8px 0;
+  font-size:.94em;
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  box-shadow:var(--shadow-sm);
+}
+.checklist li::before{
+  content:'✓';
+  color:var(--green);
+  font-weight:700;
+  font-size:1.15em;
+  flex-shrink:0;
+}
+.checklist li b{color:var(--accent)}
+
+/* REWRITE CARD */
+.rewrite-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.rewrite-level{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:8px 0;
+  border-bottom:1px dashed var(--border);
+}
+.rewrite-level:last-child{border-bottom:none}
+.rewrite-tag{
+  display:inline-block;
+  font-size:.7em;
+  font-weight:700;
+  padding:3px 9px;
+  border-radius:999px;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  white-space:nowrap;
+  flex-shrink:0;
+  min-width:90px;
+  text-align:center;
+}
+.rewrite-tag.simple{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue)}
+.rewrite-tag.intermedio{background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-mid)}
+.rewrite-tag.formale{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple)}
+.rewrite-text{font-size:.94em;color:var(--text);flex:1}
+.rewrite-text em{font-style:normal;color:var(--accent);font-weight:600}
+.rewrite-analysis{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:8px 12px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.88em;
+  color:var(--text2);
+  margin-top:8px;
+}
+.rewrite-analysis b{color:var(--green)}
+
+/* SENTENCE LIST */
+.sentence-row{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.sentence-it{font-weight:500;color:var(--text);font-size:1em}
+.sentence-it em{font-style:normal;color:var(--blue);font-weight:700;background:var(--blue-bg);padding:0 4px;border-radius:3px}
+.sentence-it .strike{color:var(--red);text-decoration:line-through;font-weight:600;background:var(--red-bg);padding:0 4px;border-radius:3px}
+.sentence-es{font-style:italic;color:var(--text2);font-size:.9em;margin-top:4px}
+.sentence-an{font-size:.85em;color:var(--text3);margin-top:6px;border-top:1px dashed var(--border);padding-top:6px}
+.sentence-an b{color:var(--accent)}
+.sentence-num{
+  display:inline-block;
+  background:var(--accent-light);
+  color:var(--accent);
+  font-weight:700;
+  font-size:.78em;
+  border-radius:999px;
+  padding:2px 8px;
+  margin-right:8px;
+  border:1px solid var(--accent-mid);
+}
+.sentence-wrong-block{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:6px 10px;
+  margin:6px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+  color:var(--text);
+}
+.sentence-wrong-block::before{content:'✗ ';color:var(--red);font-weight:700}
+.sentence-right-block{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:6px 10px;
+  margin:6px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+  color:var(--text);
+}
+.sentence-right-block::before{content:'✓ ';color:var(--green);font-weight:700}
+
+/* UTILS */
+.hl{color:var(--accent);font-weight:600}
+.dim{color:var(--text3)}
+
+/* RESPONSIVE */
+@media (max-width:520px){
+  .site-header{padding:14px 14px 12px}
+  h1{font-size:1.5em}
+  .main-layout{padding:14px}
+  .gram-card-body{padding:14px}
+  .stat-pill{font-size:.72em}
+  .header-top{flex-direction:column;align-items:flex-start}
+  .rewrite-level{flex-direction:column}
+  .rewrite-tag{min-width:0}
+  .period-level{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="inner">
+    <div class="header-top">
+      <div>
+        <div class="header-title-wrap">
+          <h1>La Sintassi Complessa</h1>
+          <span class="header-tag">Grammatica</span>
+        </div>
+        <div class="subtitle">Controllo produttivo del periodo complesso · Subordinazione multipla · Consecutio temporum · C1</div>
+        <div class="stat-bar">
+          <span class="stat-pill">11 sezioni</span>
+          <span class="stat-pill">Livello C1</span>
+          <span class="stat-pill">Tabella consecutio</span>
+          <span class="stat-pill">15+ periodi analizzati</span>
+          <span class="stat-pill">Checklist PLIDA</span>
+        </div>
+      </div>
+      <div class="font-ctrl">
+        <span>A-</span>
+        <input type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+        <span>A+</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION NAV -->
+<nav class="section-nav" id="sec-nav">
+  <div class="inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Cos'è</button>
+    <button class="snav-btn" onclick="showSection('s-subord',this)">2. Subordinazione multipla</button>
+    <button class="snav-btn" onclick="showSection('s-espl-impl',this)">3. Esplicite/Implicite</button>
+    <button class="snav-btn" onclick="showSection('s-consecutio',this)">4. Consecutio congiuntivo</button>
+    <button class="snav-btn" onclick="showSection('s-misti',this)">5. Periodi misti</button>
+    <button class="snav-btn" onclick="showSection('s-gerundi',this)">6. Gerundi pendenti</button>
+    <button class="snav-btn" onclick="showSection('s-pronomi',this)">7. Pronomi ambigui</button>
+    <button class="snav-btn" onclick="showSection('s-errori',this)">8. Errori C1</button>
+    <button class="snav-btn" onclick="showSection('s-riscrittura',this)">9. Riscrittura</button>
+    <button class="snav-btn" onclick="showSection('s-checklist',this)">10. Checklist C1</button>
+    <button class="snav-btn" onclick="showSection('s-esempi',this)">11. Periodi analizzati</button>
+  </div>
+</nav>
+
+<main class="main-layout">
+
+<!-- ============ SECCIÓN 1: INTRO ============ -->
+<section id="s-intro" class="sec-block active">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">1. Che cos'è la sintassi complessa</h2>
+      <p class="sec-subtitle">Controllo produttivo del periodo articolato al livello C1</p>
+
+      <div class="def-box">
+        Si chiama <b>sintassi complessa</b> la capacità di <span class="hl">costruire, sostenere e variare strutture di subordinazione multipla</span> con piena correttezza grammaticale e coesione stilistica. A livello C1 non basta riconoscere una subordinata isolata: bisogna saper articolare <em>periodi a più livelli</em>, alternare proposizioni esplicite e implicite, governare la consecutio temporum del congiuntivo e <b>evitare gli errori avanzati</b> tipici di chi traduce mentalmente dallo spagnolo.
+      </div>
+
+      <h3>Le tre dimensioni del controllo C1</h3>
+      <p>Il candidato C1 deve dominare tre aree distinte ma interdipendenti:</p>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Dimensione</th><th>Cosa significa</th><th>Errore tipico C1</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="tbl-pron">Costruzione</td>
+              <td>Saper concatenare più subordinate senza perdere il filo del periodo</td>
+              <td>Periodi troppo lunghi e incoerenti, perdita del soggetto</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Concordanza</td>
+              <td>Rispettare la <em>consecutio temporum</em> e la coerenza modale</td>
+              <td>*Penso che ieri ha fatto freddo (→ <em>facesse</em>)</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Coesione</td>
+              <td>Garantire un riferimento chiaro per pronomi, soggetti, connettivi</td>
+              <td>Gerundi pendenti, pronomi senza antecedente univoco</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Perché è il vero spartiacque del C1</h3>
+      <p>Il B2 si riconosce dalla capacità di <em>usare</em> le subordinate principali (causali, finali, concessive, relative). Il C1 si distingue dalla capacità di <span class="hl">orchestrarle insieme</span> in periodi di tre o quattro livelli, mantenendo la coerenza temporale e logica anche su frasi lunghe. È il livello in cui l'errore non è più di forma (verbo singolo, articolo singolo) ma di <b>architettura</b>: la frase «funziona» localmente ma si sgretola se la si legge intera.</p>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div>Lo spagnolo possiede una sintassi complessa molto simile a quella italiana, ma <b>le scelte microscopiche divergono</b>: il modo della subordinata concessiva, la concordanza dei tempi con i verbi di opinione al passato, l'uso del gerundio con cambio di soggetto. <span class="hl">L'errore C1 è quasi sempre un calco silenzioso</span>: la frase suona naturale in spagnolo, è scorretta in italiano.</div>
+      </div>
+
+      <h3>Come è organizzata questa scheda</h3>
+      <p>Le sezioni 2–4 trattano la <span class="hl">costruzione</span>: subordinazione multipla, alternanza esplicite/implicite, consecutio del congiuntivo. La sezione 5 affronta i periodi misti (passato + presente). Le sezioni 6–8 sono dedicate ai <span class="hl">tre errori tipici di livello C1</span>: gerundi pendenti, pronomi ambigui, periodi incoerenti. La sezione 9 mostra la <em>riscrittura stilistica</em> dal registro semplice a quello formale. La sezione 10 propone una <em>checklist PLIDA C1</em> di controllo. La sezione 11 raccoglie più di quindici periodi commentati nivello per nivello, con correzione di versioni erronee.</p>
+
+      <div class="green-box">
+        <b>Idea chiave:</b> al C1 non si chiede di scrivere periodi più lunghi, ma <span class="hl">più articolati</span> e <span class="hl">più precisi</span>. Tre subordinate ben concatenate valgono dieci frasi giustapposte. La complessità senza controllo è confusione; la semplicità senza varietà è povertà. Il punto d'equilibrio è proprio il dominio produttivo del periodo complesso.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 2: SUBORDINAZIONE MULTIPLA ============ -->
+<section id="s-subord" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">2. Subordinazione multipla — struttura e controllo</h2>
+      <p class="sec-subtitle">Periodi a tre o più livelli senza perdita di coerenza</p>
+
+      <div class="def-box">
+        Si parla di <b>subordinazione multipla</b> quando un periodo contiene <span class="hl">più di un livello di subordinazione</span>: una principale, una subordinata di primo grado, una subordinata di secondo grado che dipende dalla prima subordinata, e così via. La regola fondamentale è che <b>la coerenza temporale e modale deve mantenersi a ogni livello</b>: ciascuna subordinata si concorda con il suo verbo reggente immediato, non con la principale.
+      </div>
+
+      <h3>Tre tipi di subordinazione multipla</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Tipo</th><th>Struttura</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="tbl-pron">A cascata</td>
+              <td>Princ. → Sub1 → Sub2 → Sub3 (ogni subordinata dipende dalla precedente)</td>
+              <td><em>Penso che tu creda che lui sappia che è in pericolo.</em></td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">A ventaglio</td>
+              <td>Princ. → Sub1 + Sub2 + Sub3 (più subordinate sullo stesso piano)</td>
+              <td><em>Quando arrivai, mentre i bambini dormivano, sebbene fosse tardi…</em></td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Misto (incassato)</td>
+              <td>Princ. → Sub1 (con incidentali e relative) → Sub2</td>
+              <td><em>Ritengo che, sebbene il problema sia stato identificato in anticipo, la soluzione adottata non abbia funzionato.</em></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Esempio analizzato livello per livello</h3>
+      <div class="period-card">
+        <div class="period-quote">«Ritengo che, sebbene il problema sia stato identificato in anticipo, la soluzione che è stata adottata non abbia prodotto i risultati sperati, il che dimostra che le misure preventive, per quanto necessarie, non siano sempre sufficienti.»</div>
+
+        <div class="period-level period-level-l0">
+          <span class="period-label">Livello 0 · Principale</span>
+          <div>
+            <div class="period-text"><em>Ritengo</em> [che…]</div>
+            <div class="period-comment">Verbo principale d'opinione (1ª pers. sing., indicativo presente). Regge una completiva dichiarativa con il congiuntivo.</div>
+          </div>
+        </div>
+
+        <div class="period-level period-level-l1">
+          <span class="period-label">Livello 1 · Sub. oggettiva</span>
+          <div>
+            <div class="period-text">che la soluzione… <em>non abbia prodotto</em> i risultati sperati</div>
+            <div class="period-comment">Congiuntivo passato. Concorda con <em>ritengo</em> (presente): consecutio simultanea/anteriore.</div>
+          </div>
+        </div>
+
+        <div class="period-level period-level-l2">
+          <span class="period-label">Livello 2 · Concessiva</span>
+          <div>
+            <div class="period-text">sebbene il problema <em>sia stato identificato</em> in anticipo</div>
+            <div class="period-comment">Concessiva incassata nella sub. di livello 1. Congiuntivo passato perché esprime anteriorità rispetto a <em>non abbia prodotto</em>.</div>
+          </div>
+        </div>
+
+        <div class="period-level period-level-l2">
+          <span class="period-label">Livello 2 · Relativa</span>
+          <div>
+            <div class="period-text">la soluzione <em>che è stata adottata</em></div>
+            <div class="period-comment">Relativa restrittiva all'indicativo: definisce un fatto reale (la soluzione esiste). Si potrebbe condensare in implicita: <em>la soluzione adottata</em>.</div>
+          </div>
+        </div>
+
+        <div class="period-level period-level-l3">
+          <span class="period-label">Livello 3 · Sub. relativa esplicativa</span>
+          <div>
+            <div class="period-text">il che <em>dimostra</em> che le misure… non <em>siano</em> sempre sufficienti</div>
+            <div class="period-comment">Relativa esplicativa con <em>il che</em> (= «cosa che»). Regge a sua volta una nuova oggettiva con congiuntivo (<em>non siano</em>) e una concessiva ulteriore (<em>per quanto necessarie</em>).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note-box">
+        <b>Osservazione chiave:</b> ogni subordinata <span class="hl">si concorda con il suo verbo reggente immediato</span>, non con la principale assoluta. <em>Sia stato identificato</em> (liv. 2) si concorda con <em>non abbia prodotto</em> (liv. 1), non direttamente con <em>ritengo</em> (liv. 0).
+      </div>
+
+      <h3>Regole pratiche per costruire periodi multipli</h3>
+      <div class="green-box">
+        <ol style="margin:0;padding-left:20px">
+          <li><b>Identifica il verbo principale</b>: stabilisce il riferimento temporale e modale di base.</li>
+          <li><b>Decidi il grado di certezza</b>: oggettiva con <em>che</em> + congiuntivo (opinione/dubbio) o indicativo (constatazione).</li>
+          <li><b>Aggiungi le subordinate in ordine logico</b>: causale → concessiva → finale, oppure temporale → modale.</li>
+          <li><b>Verifica ogni livello</b>: chiediti se il modo e il tempo della subordinata si accordano con il suo reggente immediato.</li>
+          <li><b>Controlla la lunghezza</b>: oltre tre livelli, il lettore perde il filo. Considera di spezzare il periodo.</li>
+        </ol>
+      </div>
+
+      <h3>Errore tipico: rottura della catena modale</h3>
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Modo verbale sbagliato in subordinata di secondo grado</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Penso che, sebbene <strong>ha</strong> studiato, non passerà l'esame.</div>
+          <div class="trap-right">Penso che, sebbene <strong>abbia</strong> studiato, non passerà l'esame.</div>
+        </div>
+        <div class="trap-expl"><em>Sebbene</i> regge <b>sempre</b> il congiuntivo (qui passato per anteriorità). L'errore è frequentissimo nei calchi dallo spagnolo, perché «aunque + indicativo» è ammesso.</div>
+      </div>
+
+      <h3>Esempi di periodi a tre livelli</h3>
+      <div class="example-block">
+        <div class="ex-it">Sapevo che, <em>quando arrivassero</em>, avrebbero trovato la casa vuota, <em>perché</em> tutti erano partiti.</div>
+        <div class="ex-es">Sabía que, cuando llegaran, encontrarían la casa vacía, porque todos se habían marchado.</div>
+        <div class="ex-analysis"><b>Liv. 0:</b> Sapevo (passato). <b>Liv. 1:</b> avrebbero trovato (condizionale composto = futuro nel passato). <b>Liv. 2:</b> quando arrivassero (congiuntivo imperfetto, temporale ipotetica). <b>Liv. 1':</b> perché tutti erano partiti (causale, trapassato).</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Mi domando se <em>sia possibile</em> che quel libro, <em>che credevo perduto</em>, <em>si trovi ancora</em> nella biblioteca dello zio.</div>
+        <div class="ex-es">Me pregunto si es posible que aquel libro, que creía perdido, se encuentre todavía en la biblioteca del tío.</div>
+        <div class="ex-analysis"><b>Liv. 0:</b> Mi domando (dubbio). <b>Liv. 1:</b> se sia possibile (congiuntivo, dubbio indiretto). <b>Liv. 2:</b> che si trovi (congiuntivo, oggettiva di «possibile»). <b>Liv. 2':</b> che credevo perduto (relativa con verbo di opinione, indicativo imperfetto).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 3: ESPLICITE / IMPLICITE ============ -->
+<section id="s-espl-impl" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">3. Alternanza esplicite / implicite</h2>
+      <p class="sec-subtitle">Quando usare la forma esplicita e quando preferire quella implicita</p>
+
+      <div class="def-box">
+        Una proposizione subordinata è <b>esplicita</b> quando il suo verbo è di modo <span class="hl">finito</span> (indicativo, congiuntivo, condizionale) e <span class="hl">coniugato</span>; è <b>implicita</b> quando il verbo è di modo <span class="hl">indefinito</span> (infinito, gerundio, participio). La scelta non è libera: dipende dal soggetto, dal connettivo e dal registro.
+      </div>
+
+      <h3>La regola fondamentale del soggetto</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Soggetto della subordinata</th><th>Forma preferita</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="tbl-pron">Uguale a quello della principale</td>
+              <td class="ok-cell">Implicita</td>
+              <td><em>Penso <b>di</b> aver capito</em> (= io penso, io ho capito)</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Diverso da quello della principale</td>
+              <td class="ok-cell">Esplicita</td>
+              <td><em>Penso <b>che tu</b> abbia capito</em> (io penso, tu hai capito)</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Indeterminato / generico</td>
+              <td class="warn-cell">Implicita (impersonale)</td>
+              <td><em>È difficile <b>capire</b> tutto.</em></td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Verbi di percezione</td>
+              <td class="warn-cell">Implicita con infinito o gerundio</td>
+              <td><em>Ho visto Marco <b>uscire</b> di corsa.</em></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>I tre modi indefiniti nelle implicite</h3>
+      <div class="chip-bar" id="impl-chips">
+        <button class="chip active" onclick="selectChip('impl',0)">Infinito</button>
+        <button class="chip" onclick="selectChip('impl',1)">Gerundio</button>
+        <button class="chip" onclick="selectChip('impl',2)">Participio</button>
+      </div>
+
+      <!-- IMPL 1: Infinito -->
+      <div class="chip-panel active" data-chip="impl-0">
+        <div class="note-box"><b>Infinito.</b> Forma più frequente nelle implicite. Si usa per oggettive (<em>penso di…</em>), finali (<em>per fare…</em>), causali (<em>per aver fatto…</em>), temporali (<em>prima di…</em>), modali (<em>senza dire…</em>).</div>
+        <div class="example-block">
+          <div class="ex-it">Sono uscito <em>senza salutare</em> nessuno.</div>
+          <div class="ex-es">Salí sin saludar a nadie.</div>
+          <div class="ex-an"><b>Implicita modale</b>: stesso soggetto (io) → <em>senza + infinito</em>. Esplicita: <em>senza che salutassi…</em> (poco usato).</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Prima di partire</em>, controlla che le finestre siano chiuse.</div>
+          <div class="ex-es">Antes de salir, comprueba que las ventanas estén cerradas.</div>
+          <div class="ex-an"><b>Implicita temporale</b>: stesso soggetto (tu controlli / tu parti) → <em>prima di + infinito</em>.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Mi pento <em>di aver detto</em> quelle parole.</div>
+          <div class="ex-es">Me arrepiento de haber dicho aquellas palabras.</div>
+          <div class="ex-an"><b>Implicita oggettiva</b> con infinito passato per anteriorità: stesso soggetto. Esplicita: <em>che ho detto</em> (registro più colloquiale).</div>
+        </div>
+      </div>
+
+      <!-- IMPL 2: Gerundio -->
+      <div class="chip-panel" data-chip="impl-1">
+        <div class="note-box"><b>Gerundio.</b> Esprime modalità, causa, tempo o condizione. <span class="hl">Esige tassativamente che il soggetto coincida con quello della principale</span>: in caso contrario si produce il temuto <em>gerundio pendente</em> (sez. 6).</div>
+        <div class="example-block">
+          <div class="ex-it"><em>Camminando</em> lungo il fiume, ho incontrato un vecchio amico.</div>
+          <div class="ex-es">Caminando junto al río, me encontré con un viejo amigo.</div>
+          <div class="ex-an"><b>Implicita modale-temporale</b>: io camminavo / io ho incontrato. Soggetti coincidenti → gerundio corretto.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Avendo finito</em> il lavoro, posso finalmente riposarmi.</div>
+          <div class="ex-es">Habiendo terminado el trabajo, por fin puedo descansar.</div>
+          <div class="ex-an"><b>Gerundio composto</b> per anteriorità: io ho finito / io posso riposarmi. Sostituisce <em>poiché ho finito</em>.</div>
+        </div>
+      </div>
+
+      <!-- IMPL 3: Participio -->
+      <div class="chip-panel" data-chip="impl-2">
+        <div class="note-box"><b>Participio passato.</b> Tipico del registro formale, narrativo o giornalistico. Costituisce la <span class="hl">costruzione assoluta</span> quando ha soggetto proprio.</div>
+        <div class="example-block">
+          <div class="ex-it"><em>Finito</em> il discorso, il presidente lasciò la sala.</div>
+          <div class="ex-es">Terminado el discurso, el presidente abandonó la sala.</div>
+          <div class="ex-an"><b>Costruzione assoluta</b>: il participio ha soggetto proprio (<em>il discorso</em>), diverso da quello della principale (<em>il presidente</em>). Sostituisce <em>quando finì il discorso</em>.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Convocati</em> con urgenza, i membri del consiglio si riunirono in pochi minuti.</div>
+          <div class="ex-es">Convocados con urgencia, los miembros del consejo se reunieron en pocos minutos.</div>
+          <div class="ex-an"><b>Participio con valore passivo-causale</b>: i membri furono convocati / si riunirono. Soggetto coincidente.</div>
+        </div>
+      </div>
+
+      <h3>Vantaggi stilistici delle implicite</h3>
+      <div class="teal-box">
+        <b>Tre vantaggi:</b>
+        <ol style="margin:6px 0 0;padding-left:18px">
+          <li><b>Condensazione</b>: una frase di otto parole ne risparmia tre o quattro.</li>
+          <li><b>Eleganza formale</b>: le implicite sono tipiche dello stile letterario e accademico.</li>
+          <li><b>Varietà sintattica</b>: alternarle alle esplicite evita la monotonia del «che, che, che».</li>
+        </ol>
+      </div>
+
+      <h3>Tabella di equivalenze esplicite ↔ implicite</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Tipo</th><th>Esplicita</th><th>Implicita</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="tbl-pron">Temporale anteriorità</td>
+              <td>dopo che è arrivato</td>
+              <td>dopo essere arrivato / dopo essere arrivati</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Temporale posteriorità</td>
+              <td>prima che parta</td>
+              <td>prima di partire</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Causale</td>
+              <td>poiché ha studiato</td>
+              <td>per aver studiato / avendo studiato</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Finale</td>
+              <td>affinché capisca</td>
+              <td>per capire (stesso sogg.) / per fargli capire</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Concessiva</td>
+              <td>benché sia stanco</td>
+              <td>pur essendo stanco</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Condizionale</td>
+              <td>se studiassi di più</td>
+              <td>studiando di più</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Modale</td>
+              <td>senza che dica nulla</td>
+              <td>senza dire nulla</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Oggettiva</td>
+              <td>che ho sbagliato</td>
+              <td>di aver sbagliato</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Relativa</td>
+              <td>che è stato pubblicato</td>
+              <td>pubblicato (part. passato)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Coppie chiave: <em>prima / dopo</em></h3>
+      <div class="example-block">
+        <div class="ex-it"><em>Prima di partire</em>, salutò tutti. = <em>Prima che partisse</em>, salutò tutti.</div>
+        <div class="ex-an"><b>Prima di + infinito</b> → stesso soggetto (lui parte, lui saluta). <b>Prima che + congiuntivo</b> → soggetti diversi.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><em>Dopo aver finito</em> il lavoro, uscì. = <em>Dopo che ebbe finito</em> il lavoro, uscì.</div>
+        <div class="ex-an"><b>Dopo + infinito passato</b> → stesso soggetto. <b>Dopo che + indicativo</b> → di solito soggetti diversi o registro più formale.</div>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Errore classico ispanofono:</b> usare <em>prima che / dopo che</em> anche con stesso soggetto, per calco di «antes de que / después de que». In italiano si preferisce decisamente l'implicita quando i soggetti coincidono.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 4: CONSECUTIO TEMPORUM ============ -->
+<section id="s-consecutio" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">4. Consecutio temporum del congiuntivo</h2>
+      <p class="sec-subtitle">Il sistema completo dei tempi del congiuntivo in subordinata</p>
+
+      <div class="def-box">
+        La <b>consecutio temporum</b> (concordanza dei tempi) regola la scelta del tempo della subordinata in base al <span class="hl">tempo del verbo reggente</span> e al <span class="hl">rapporto temporale</span> tra le due azioni: simultaneità, anteriorità o posteriorità. Con i verbi che reggono il congiuntivo (opinione, volontà, dubbio, sentimento, costruzioni impersonali) si applica uno schema rigoroso che è una delle marche più chiare del livello C1.
+      </div>
+
+      <h3>Tabella maestra della consecutio (congiuntivo)</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Verbo principale</th><th>Rapporto temporale</th><th>Modo della subordinata</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="tbl-pron">Presente / Futuro</td>
+              <td>Simultaneo / posteriore</td>
+              <td class="ok-cell">Cong. presente</td>
+              <td>Penso che <em>arrivi</em> oggi.</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Presente / Futuro</td>
+              <td>Anteriore</td>
+              <td class="ok-cell">Cong. passato</td>
+              <td>Penso che <em>sia arrivato</em> ieri.</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Passato (imperf., pass. pross., pass. rem., trapassato)</td>
+              <td>Simultaneo / posteriore</td>
+              <td class="ok-cell">Cong. imperfetto</td>
+              <td>Pensavo che <em>arrivasse</em> presto.</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Passato</td>
+              <td>Anteriore</td>
+              <td class="ok-cell">Cong. trapassato</td>
+              <td>Pensavo che <em>fosse arrivato</em> il giorno prima.</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Condizionale presente</td>
+              <td>Simultaneo / posteriore</td>
+              <td class="ok-cell">Cong. imperfetto</td>
+              <td>Vorrei che <em>venisse</em> con noi.</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Condizionale composto</td>
+              <td>Anteriore</td>
+              <td class="ok-cell">Cong. trapassato</td>
+              <td>Avrei voluto che <em>fosse venuto</em> con noi.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Esempi cellula per cellula</h3>
+
+      <h4>Verbo principale al presente</h4>
+      <div class="example-block">
+        <div class="ex-it">Credo che Marco <em>sia</em> a casa adesso.</div>
+        <div class="ex-es">Creo que Marco está en casa ahora.</div>
+        <div class="ex-an"><b>Presente + simultaneo</b> → cong. presente.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it">Credo che Marco <em>sia stato</em> a Roma la settimana scorsa.</div>
+        <div class="ex-es">Creo que Marco estuvo en Roma la semana pasada.</div>
+        <div class="ex-an"><b>Presente + anteriore</b> → cong. passato.</div>
+      </div>
+
+      <h4>Verbo principale al futuro</h4>
+      <div class="example-block">
+        <div class="ex-it">Spererò sempre che tu <em>cambi</em> idea.</div>
+        <div class="ex-es">Esperaré siempre que cambies de opinión.</div>
+        <div class="ex-an"><b>Futuro + posteriore</b> → cong. presente (il cong. non ha tempo futuro proprio).</div>
+      </div>
+
+      <h4>Verbo principale al passato</h4>
+      <div class="example-block">
+        <div class="ex-it">Pensavo che lui <em>fosse</em> più giovane.</div>
+        <div class="ex-es">Pensaba que era más joven.</div>
+        <div class="ex-an"><b>Imperfetto + simultaneo</b> → cong. imperfetto.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it">Pensai che <em>fosse partito</em> da poco.</div>
+        <div class="ex-es">Pensé que había salido hacía poco.</div>
+        <div class="ex-an"><b>Passato remoto + anteriore</b> → cong. trapassato.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it">Avevo creduto che <em>arrivassero</em> in orario.</div>
+        <div class="ex-es">Había creído que llegarían a tiempo.</div>
+        <div class="ex-an"><b>Trapassato + posteriore nel passato</b> → cong. imperfetto.</div>
+      </div>
+
+      <h4>Verbo principale al condizionale</h4>
+      <div class="example-block">
+        <div class="ex-it">Vorrei che tu <em>fossi</em> qui con me.</div>
+        <div class="ex-es">Quisiera que estuvieras aquí conmigo.</div>
+        <div class="ex-an"><b>Condiz. presente + simultaneo</b> → cong. imperfetto.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it">Avrei voluto che tu <em>fossi stato</em> presente alla cerimonia.</div>
+        <div class="ex-es">Habría querido que hubieras estado presente en la ceremonia.</div>
+        <div class="ex-an"><b>Condiz. composto + anteriore</b> → cong. trapassato.</div>
+      </div>
+
+      <h3>Periodi con due subordinate concatenate</h3>
+      <p>Quando un periodo presenta due livelli di subordinazione con verbi al congiuntivo, ciascun livello applica la consecutio in modo <span class="hl">indipendente</span> rispetto al suo verbo reggente immediato.</p>
+
+      <div class="period-card">
+        <div class="period-quote">«Vorrei che tu sapessi che ho fatto tutto il possibile.»</div>
+        <div class="period-level period-level-l0">
+          <span class="period-label">Liv. 0</span>
+          <div>
+            <div class="period-text"><em>Vorrei</em> (condiz. pres.)</div>
+            <div class="period-comment">Verbo principale.</div>
+          </div>
+        </div>
+        <div class="period-level period-level-l1">
+          <span class="period-label">Liv. 1</span>
+          <div>
+            <div class="period-text">che tu <em>sapessi</em> (cong. imperf.)</div>
+            <div class="period-comment">Condiz. + simultaneo → cong. imperfetto.</div>
+          </div>
+        </div>
+        <div class="period-level period-level-l2">
+          <span class="period-label">Liv. 2</span>
+          <div>
+            <div class="period-text">che <em>ho fatto</em> (ind. pass. pross.)</div>
+            <div class="period-comment">Qui il verbo reggente è <em>sapessi</em>, ma il verbo <em>sapere</em> regge l'indicativo perché esprime un dato di fatto («io ho davvero fatto tutto»). L'indicativo non segue la consecutio del congiuntivo.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="period-card">
+        <div class="period-quote">«Temevo che credesse che io avessi mentito.»</div>
+        <div class="period-level period-level-l0">
+          <span class="period-label">Liv. 0</span>
+          <div>
+            <div class="period-text"><em>Temevo</em> (imperf.)</div>
+            <div class="period-comment">Verbo principale al passato.</div>
+          </div>
+        </div>
+        <div class="period-level period-level-l1">
+          <span class="period-label">Liv. 1</span>
+          <div>
+            <div class="period-text">che <em>credesse</em> (cong. imperf.)</div>
+            <div class="period-comment">Imperf. + simultaneo → cong. imperfetto.</div>
+          </div>
+        </div>
+        <div class="period-level period-level-l2">
+          <span class="period-label">Liv. 2</span>
+          <div>
+            <div class="period-text">che io <em>avessi mentito</em> (cong. trapass.)</div>
+            <div class="period-comment">Cong. imperf. (al passato) + anteriore → cong. trapassato.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Errore frequentissimo:</b> usare il cong. presente dopo un verbo principale al passato (<em>*Pensavo che sia stanco</em> → <em>Pensavo che fosse stanco</em>). È il calco diretto dello spagnolo orale <em>«Pensaba que esté…»</em>, ammesso solo in registri molto informali. In italiano formale e scritto è <span class="hl">sempre</span> un errore.</div>
+      </div>
+
+      <div class="green-box">
+        <b>Strategia mnemonica:</b> dopo un verbo principale al <span class="hl">passato</span> o al <span class="hl">condizionale</span>, scattare automaticamente al <em>congiuntivo imperfetto o trapassato</em>. Mai presente o passato.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 5: PERIODI MISTI ============ -->
+<section id="s-misti" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">5. Concordanza nei periodi misti</h2>
+      <p class="sec-subtitle">Quando la consecutio canonica cede a esigenze logico-pragmatiche</p>
+
+      <div class="def-box">
+        La consecutio temporum non è un automatismo cieco: tre situazioni la <span class="hl">infrangono legittimamente</span>, perché il contenuto della subordinata si riferisce a una realtà che <b>trascende il piano temporale del verbo reggente</b>. Il C1 si misura proprio nella capacità di riconoscere e produrre questi periodi misti.
+      </div>
+
+      <h3>Caso 1 — Verbo principale al passato + subordinata al presente</h3>
+      <div class="note-box">
+        <b>Verità generale, fatto ancora valido.</b> Quando la subordinata esprime una <em>verità atemporale</em>, una <em>legge scientifica</em> o un <em>fatto tuttora valido</em>, si può usare l'indicativo presente anche dopo un verbo principale al passato.
+      </div>
+      <div class="example-block">
+        <div class="ex-it">Aristotele affermò che il mondo <em>è</em> finito.</div>
+        <div class="ex-es">Aristóteles afirmó que el mundo es finito.</div>
+        <div class="ex-an"><b>È</b> (indicativo presente) e non <em>fosse</em>: si presenta come tesi atemporale di Aristotele, ancora discutibile/valida oggi.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it">Galileo scoprì che la Terra <em>gira</em> intorno al Sole.</div>
+        <div class="ex-es">Galileo descubrió que la Tierra gira alrededor del Sol.</div>
+        <div class="ex-an"><b>Legge fisica permanente</b>: presente, non imperfetto. Se usassimo <em>girava</em>, suggeriremmo che oggi non gira più.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it">Mi disse che <em>vive</em> a Milano.</div>
+        <div class="ex-es">Me dijo que vive en Milán.</div>
+        <div class="ex-an"><b>Fatto ancora valido</b>: vive tuttora a Milano. Se dicessimo <em>viveva</em>, suggeriremmo che adesso non più.</div>
+      </div>
+
+      <h3>Caso 2 — Verbo principale al passato + subordinata al passato (fatto storico)</h3>
+      <div class="note-box">
+        <b>Discorso indiretto storico.</b> Quando si riporta un'affermazione passata su un fatto passato che <em>non si proietta sul presente</em>, la consecutio canonica torna in vigore.
+      </div>
+      <div class="example-block">
+        <div class="ex-it">Mi ha detto che <em>era</em> stanco.</div>
+        <div class="ex-es">Me dijo que estaba cansado.</div>
+        <div class="ex-an"><b>Stanchezza puntuale</b> contestuale al momento in cui parlò: imperfetto canonico.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it">Disse che <em>aveva visto</em> il film la sera prima.</div>
+        <div class="ex-es">Dijo que había visto la película la noche anterior.</div>
+        <div class="ex-an"><b>Anteriorità nel passato</b>: trapassato prossimo.</div>
+      </div>
+
+      <h3>Caso 3 — Verbo principale al presente + relativa con congiuntivo</h3>
+      <div class="note-box">
+        <b>Indefinitezza dell'antecedente.</b> Quando l'antecedente della relativa è <em>indefinito o ipotetico</em> (qualcuno, qualcosa, nessuno, l'unico, il primo…), il verbo della relativa va al congiuntivo.
+      </div>
+      <div class="example-block">
+        <div class="ex-it">Cerco qualcuno che <em>parli</em> italiano.</div>
+        <div class="ex-es">Busco a alguien que hable italiano.</div>
+        <div class="ex-an"><b>Indefinito</b>: non so se esiste, non l'ho identificato → cong. presente.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><span class="dim">vs.</span> Conosco qualcuno che <em>parla</em> italiano.</div>
+        <div class="ex-an"><b>Definito</b>: lo conosco, esiste, lo so identificare → ind. presente.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it">È l'unico libro che <em>valga</em> la pena leggere.</div>
+        <div class="ex-es">Es el único libro que vale la pena leer.</div>
+        <div class="ex-an"><b>Superlativo / unico</b> → relativa con congiuntivo (registro formale; nell'orale familiare si trova anche l'indicativo).</div>
+      </div>
+
+      <h3>Tabella riassuntiva dei tre casi misti</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Caso</th><th>Criterio di scelta</th><th>Modo / tempo</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="tbl-pron">Verità generale</td>
+              <td>Validità tuttora attuale</td>
+              <td>Indicativo presente</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Fatto storico puntuale</td>
+              <td>Validità solo nel passato</td>
+              <td>Imperfetto / trapassato</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Antecedente indefinito</td>
+              <td>L'antecedente non è identificato/esistente</td>
+              <td>Congiuntivo (presente o imperf.)</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Antecedente con superlativo o «unico»</td>
+              <td>Esclusività dell'antecedente</td>
+              <td>Congiuntivo</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Antecedente reale e definito</td>
+              <td>Identificazione concreta</td>
+              <td>Indicativo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="green-box">
+        <b>Test pratico:</b> chiediti se ciò che dice la subordinata <em>vale ancora oggi</em>, oppure <em>esiste davvero</em>. Se sì → presente / indicativo. Se no → consecutio canonica / congiuntivo.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 6: GERUNDI PENDENTI ============ -->
+<section id="s-gerundi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">6. Evitare i gerundi pendenti</h2>
+      <p class="sec-subtitle">L'errore avanzato più frequente nella scrittura C1</p>
+
+      <div class="def-box">
+        Si chiama <b>gerundio pendente</b> (o <em>dangling gerund</em>) la costruzione in cui il <span class="hl">soggetto logico del gerundio non coincide con quello della principale</span>. È un errore grave, perché produce frasi tecnicamente assurde anche se formalmente «pulite». Il lettore italiano colto lo nota immediatamente.
+      </div>
+
+      <h3>La regola del gerundio</h3>
+      <div class="red-box">
+        <b>Regola assoluta:</b> il gerundio (presente o composto) ha <span class="hl">come soggetto logico quello della principale</span>. Se le due azioni hanno soggetti diversi, il gerundio è <b>pendente</b> e va riscritto con una subordinata esplicita.
+      </div>
+
+      <h3>Esempio canonico</h3>
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Gerundio pendente classico</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Arrivando a Roma, la pioggia ci ha sorpresi.</div>
+          <div class="trap-right">Quando siamo arrivati a Roma, la pioggia ci ha sorpresi.</div>
+        </div>
+        <div class="trap-expl">Nel primo periodo il soggetto del gerundio <em>arrivando</em> è <em>noi</em>, ma il soggetto della principale è <em>la pioggia</em>. Quindi sarebbe «la pioggia arrivò a Roma», cosa logicamente assurda. Soluzione: trasformare il gerundio in subordinata temporale esplicita.</div>
+      </div>
+
+      <h3>Catalogo di gerundi pendenti frequenti</h3>
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Con verbi di percezione passiva</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Camminando per la città, il suo cellulare è stato rubato.</div>
+          <div class="trap-right">Mentre camminava per la città, le hanno rubato il cellulare.</div>
+        </div>
+        <div class="trap-expl">Il cellulare non camminava. Soggetto del gerundio (lei) ≠ soggetto del passivo (il cellulare).</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Con costruzioni impersonali</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Studiando con costanza, i risultati arrivano.</div>
+          <div class="trap-right">Se si studia con costanza, i risultati arrivano. / Studiando con costanza, si ottengono risultati.</div>
+        </div>
+        <div class="trap-expl">I risultati non studiano. La struttura impersonale o passivante mantiene la coerenza.</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Con verbo «esserci» o presentativo</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Entrando in casa, c'era un forte odore di fumo.</div>
+          <div class="trap-right">Quando sono entrato in casa, c'era un forte odore di fumo.</div>
+        </div>
+        <div class="trap-expl">L'odore non entrava. Esserci non ha soggetto agentivo cui collegare il gerundio.</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Con verbi atmosferici</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Tornando a casa, pioveva a dirotto.</div>
+          <div class="trap-right">Quando tornavo a casa, pioveva a dirotto. / Mentre tornavo a casa…</div>
+        </div>
+        <div class="trap-expl">«Piovere» è impersonale, non ha soggetto che possa tornare a casa.</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Con possessivi che dovrebbero coincidere</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Avendo studiato tutta la notte, l'esame è andato bene.</div>
+          <div class="trap-right">Avendo studiato tutta la notte, ho superato l'esame senza difficoltà.</div>
+        </div>
+        <div class="trap-expl">L'esame non studiava. Soluzione: rendere esplicito il soggetto (io) come soggetto della principale.</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Con risultati o conseguenze</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Lavorando senza sosta, il progetto è stato completato in tempo.</div>
+          <div class="trap-right">Lavorando senza sosta, abbiamo completato il progetto in tempo.</div>
+        </div>
+        <div class="trap-expl">Il progetto non lavorava. Cambiare la voce da passiva ad attiva risolve l'incoerenza.</div>
+      </div>
+
+      <h3>Strategie di correzione</h3>
+      <div class="green-box">
+        <b>Tre strategie:</b>
+        <ol style="margin:6px 0 0;padding-left:18px">
+          <li><b>Trasformare il gerundio in subordinata esplicita</b>: <em>arrivando → quando siamo arrivati</em>.</li>
+          <li><b>Cambiare il soggetto della principale</b> per farlo coincidere con quello del gerundio: <em>l'esame è andato bene → ho superato l'esame</em>.</li>
+          <li><b>Sostituire il gerundio con un altro modo implicito appropriato</b>: <em>essendo… → con il…</em>, <em>vedendo… → alla vista di…</em>.</li>
+        </ol>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">💡</span>
+        <div><b>Verifica rapida:</b> prima di pubblicare un testo, sottolinea ogni gerundio e chiediti: «<em>chi</em> compie l'azione del gerundio?». Se la risposta non coincide con il soggetto della principale, riscrivi.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 7: PRONOMI AMBIGUI ============ -->
+<section id="s-pronomi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">7. Pronomi senza antecedente chiaro</h2>
+      <p class="sec-subtitle">La trappola della referenza ambigua nelle frasi articolate</p>
+
+      <div class="def-box">
+        Un <b>pronome</b> deve avere un <span class="hl">antecedente univoco e individuabile</span>. Quando il periodo contiene più di un possibile referente dello stesso genere e numero, il pronome diventa <span class="hl">ambiguo</span> e il lettore non sa più di chi si stia parlando. È uno degli errori più comuni e più difficili da rilevare, perché chi scrive ha in mente il referente corretto e non si accorge dell'incertezza.
+      </div>
+
+      <h3>L'esempio canonico</h3>
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Ambiguità con «lui» o «egli»</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Marco ha parlato con Luca; lui era molto soddisfatto.</div>
+          <div class="trap-right">Marco ha parlato con Luca; quest'ultimo era molto soddisfatto. <span class="dim">[oppure: il primo / Luca / Marco — rendere esplicito]</span></div>
+        </div>
+        <div class="trap-expl">«Lui» può riferirsi a Marco o a Luca: due maschili singolari. La frase è grammaticalmente perfetta ma logicamente ambigua.</div>
+      </div>
+
+      <h3>Strategie di disambiguazione</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Strategia</th><th>Quando usarla</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="tbl-pron">Ripetere il nome</td>
+              <td>Quando i pronomi rischiano di confondere</td>
+              <td>Marco ha parlato con Luca; <em>Marco</em> era molto soddisfatto.</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Quest'ultimo / il primo</td>
+              <td>Per indicare ordine di menzione</td>
+              <td>…<em>quest'ultimo</em> era molto soddisfatto. <span class="dim">[= Luca]</span></td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Il quale / la quale</td>
+              <td>In subordinata relativa formale</td>
+              <td>Ho incontrato Anna con Maria, <em>la quale</em> mi ha salutato cordialmente.</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Cui (preposizionale)</td>
+              <td>Quando si vuole evitare ambiguità con «che»</td>
+              <td>Il libro <em>di cui</em> ti ho parlato è in biblioteca.</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Demolire e ricostruire</td>
+              <td>Quando nessuna soluzione locale funziona</td>
+              <td>Marco e Luca hanno parlato. Luca era molto soddisfatto.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Casi tipici di ambiguità</h3>
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Doppio antecedente femminile</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Maria ha invitato Anna a cena; lei aveva preparato tutto.</div>
+          <div class="trap-right">Maria ha invitato Anna a cena; Maria aveva preparato tutto. <span class="dim">[oppure: la prima / la padrona di casa]</span></div>
+        </div>
+        <div class="trap-expl">«Lei» è ambiguo tra Maria e Anna. La disambiguazione passa dalla ripetizione o da espressioni perifrastiche.</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">«Ne» con antecedente lontano</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Ho letto un articolo sul libro di Saviano, ma non ne ho parlato con nessuno.</div>
+          <div class="trap-right">Ho letto un articolo sul libro di Saviano, ma non ho parlato con nessuno <em>né dell'articolo né del libro</em>.</div>
+        </div>
+        <div class="trap-expl">«Ne» può riferirsi all'articolo o al libro. Specificare quando l'antecedente non è univoco.</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">«Questo» o «ciò» con antecedente vasto</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Il governo ha aumentato le tasse, ha ridotto le pensioni e ha tagliato la sanità. Questo è inaccettabile.</div>
+          <div class="trap-right">Il governo ha aumentato le tasse, ha ridotto le pensioni e ha tagliato la sanità. <em>Questo insieme di misure</em> è inaccettabile.</div>
+        </div>
+        <div class="trap-expl">«Questo» si riferisce a tutte e tre le misure o solo all'ultima? Riformulare con un sintagma nominale esplicito.</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Pronome relativo «che» con antecedente plurale</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Ho comprato un libro e una rivista che mi è piaciuta molto.</div>
+          <div class="trap-right">Ho comprato un libro e una rivista, <em>la quale</em> mi è piaciuta molto. <span class="dim">[se solo la rivista è piaciuta]</span></div>
+        </div>
+        <div class="trap-expl">«Che» è ambiguo. «La quale» concorda solo con «rivista» (fem. sing.) e disambigua. Lo stesso vale per «il quale, i quali, le quali».</div>
+      </div>
+
+      <h3>Il caso particolare di «egli», «ella», «essi»</h3>
+      <div class="note-box">
+        <b>Registro formale.</b> In testi formali, <em>egli/ella/essi/esse</em> tendono a riferirsi al soggetto della frase precedente, mentre <em>lui/lei/loro</em> sono più liberi e possono riferirsi a un complemento. Ma questa convenzione è debole e non risolve l'ambiguità completamente: meglio ripetere il nome se c'è rischio.
+      </div>
+
+      <div class="green-box">
+        <b>Test di lettura:</b> al termine di ogni paragrafo, rileggi pensando «di chi si parla in ogni pronome?». Se hai bisogno di tornare indietro per essere sicuro, il lettore lo farà anche lui. Riscrivi.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 8: ERRORI C1 ============ -->
+<section id="s-errori" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">8. Periodi incoerenti — errori frequenti a livello C1</h2>
+      <p class="sec-subtitle">I quattro errori avanzati che marcano la differenza tra B2 e C1</p>
+
+      <div class="def-box">
+        Al livello C1 gli errori non sono più di morfologia: sono di <span class="hl">architettura del periodo</span>. La frase è quasi sempre comprensibile, ma rivela un controllo imperfetto della logica sintattica. Quattro errori in particolare sono spie del livello incompleto.
+      </div>
+
+      <h3>Errore 1 — Cambio di soggetto non marcato</h3>
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Salto di soggetto brusco</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Ho studiato tutta la notte e il professore ci ha fatto un esame difficile.</div>
+          <div class="trap-right">Ho studiato tutta la notte, <em>ma</em> il professore ci ha fatto un esame difficile. <span class="dim">[oppure: «…tutta la notte; nonostante questo, il professore…»]</span></div>
+        </div>
+        <div class="trap-expl">Due frasi giustapposte con soggetti diversi (io / il professore) e relazione logica implicita (avversativa o concessiva). La «e» semplice non basta: serve un connettivo che chiarisca il legame.</div>
+      </div>
+
+      <h3>Errore 2 — Connettivo inadeguato alla funzione logica</h3>
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">«Però» dove serve «quindi»</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Studio molto, però ho capito tutto.</div>
+          <div class="trap-right">Studio molto, <em>quindi</em> ho capito tutto.</div>
+        </div>
+        <div class="trap-expl">«Però» è avversativo (introduce un contrasto). Qui la relazione è consecutiva: lo studio causa la comprensione. Serve un connettivo conclusivo.</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">«Anche se» con valore causale</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Sono andato in farmacia anche se ero raffreddato.</div>
+          <div class="trap-right">Sono andato in farmacia <em>perché</em> ero raffreddato. <span class="dim">[se è la causa]</span></div>
+        </div>
+        <div class="trap-expl">«Anche se» è concessivo (introduce un ostacolo superato), non causale. Calco involontario di «aunque» spagnolo, che è polisemico.</div>
+      </div>
+
+      <h3>Errore 3 — Modo verbale sbagliato in subordinata</h3>
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">«Sebbene» + indicativo</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Sebbene <strong>ha</strong> studiato, non ha passato l'esame.</div>
+          <div class="trap-right">Sebbene <em>abbia</em> studiato, non ha passato l'esame.</div>
+        </div>
+        <div class="trap-expl"><em>Sebbene, benché, nonostante, malgrado, ancorché, quantunque, per quanto</em> reggono <b>sempre</b> il congiuntivo. Mai indicativo, neanche oralmente.</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Indicativo dopo verbi di opinione/dubbio</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Credo che è una buona idea.</div>
+          <div class="trap-right">Credo che <em>sia</em> una buona idea.</div>
+        </div>
+        <div class="trap-expl">I verbi di opinione (<em>credere, pensare, ritenere, supporre, immaginare</em>) reggono il congiuntivo. Lo spagnolo ammette l'indicativo dopo «creo que»; l'italiano formale no.</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">«Affinché» + indicativo</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Te lo dico affinché lo <strong>sai</strong>.</div>
+          <div class="trap-right">Te lo dico affinché <em>tu lo sappia</em>.</div>
+        </div>
+        <div class="trap-expl">Le finali (<em>affinché, perché</em> con valore finale, <em>che</em> finale) reggono il congiuntivo.</div>
+      </div>
+
+      <h3>Errore 4 — Tempo verbale incompatibile con la consecutio</h3>
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Consecutio violata</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Penso che ieri ha fatto freddo.</div>
+          <div class="trap-right">Penso che ieri <em>facesse</em> freddo. <span class="dim">[oppure: «abbia fatto freddo» se cong. passato]</span></div>
+        </div>
+        <div class="trap-expl">Verbo principale al presente + anteriorità → cong. passato (<em>abbia fatto</em>) o cong. imperfetto (<em>facesse</em>) se si descrive lo stato. Mai indicativo.</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Imperfetto invece di trapassato</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Pensavo che lui arrivava il giorno prima.</div>
+          <div class="trap-right">Pensavo che lui <em>fosse arrivato</em> il giorno prima.</div>
+        </div>
+        <div class="trap-expl">Anteriorità rispetto a un verbo principale al passato → cong. trapassato. È l'errore più diagnostico del livello B2 incompleto.</div>
+      </div>
+
+      <h3>Tabella riassuntiva dei quattro errori C1</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Errore</th><th>Sintomo</th><th>Strategia di prevenzione</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="tbl-pron">Cambio di soggetto</td>
+              <td>Due frasi con soggetti diversi unite da «e»</td>
+              <td>Inserire connettivo logico (ma, anche se, sebbene, mentre)</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Connettivo inadeguato</td>
+              <td>«Però» / «anche se» fuori posto</td>
+              <td>Identificare la relazione logica (causale, conseq., avversativa) e scegliere il connettivo giusto</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Modo sbagliato</td>
+              <td>Indicativo dopo congiunzione che vuole congiuntivo</td>
+              <td>Memorizzare le congiunzioni che reggono il congiuntivo</td>
+            </tr>
+            <tr>
+              <td class="tbl-pron">Tempo sbagliato</td>
+              <td>Cong. presente dopo verbo principale al passato</td>
+              <td>Applicare la tabella della consecutio (sez. 4)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div>Questi quattro errori sono <b>cumulativi</b>: spesso una sola frase ne contiene due o tre insieme. La revisione richiede di leggere il proprio testo <span class="hl">due volte</span>, una concentrandosi sui connettivi, l'altra sulla consecutio.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 9: RISCRITTURA ============ -->
+<section id="s-riscrittura" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">9. Riscrittura stilistica — dal semplice al complesso</h2>
+      <p class="sec-subtitle">Tre versioni dello stesso contenuto: come cresce la complessità sintattica</p>
+
+      <div class="def-box">
+        Saper <span class="hl">riscrivere lo stesso contenuto a livelli diversi di complessità</span> è una competenza C1 esplicita. La versione semplice non è meno corretta della complessa, ma è meno adatta al registro accademico, giornalistico o argomentativo. Vediamo tre esempi paralleli.
+      </div>
+
+      <h3>Esempio 1 — Una decisione personale</h3>
+      <div class="rewrite-card">
+        <div class="rewrite-level">
+          <span class="rewrite-tag simple">Semplice</span>
+          <div class="rewrite-text">Ho deciso di cambiare lavoro. Lo stipendio era basso. Le condizioni erano difficili.</div>
+        </div>
+        <div class="rewrite-level">
+          <span class="rewrite-tag intermedio">Intermedio</span>
+          <div class="rewrite-text">Ho deciso di cambiare lavoro <em>perché</em> lo stipendio era basso <em>e</em> le condizioni erano difficili.</div>
+        </div>
+        <div class="rewrite-level">
+          <span class="rewrite-tag formale">Formale</span>
+          <div class="rewrite-text"><em>A motivare</em> la mia decisione di cambiare lavoro <em>hanno concorso</em> sia la modestia dello stipendio, <em>sia</em> le difficili condizioni in cui si svolgeva l'attività.</div>
+        </div>
+        <div class="rewrite-analysis">
+          <b>Recursos aggiunti:</b> 1) nominalizzazione (<em>la mia decisione</em> sostituisce <em>ho deciso</em>); 2) verbo astratto (<em>concorrere a motivare</em>); 3) correlativa <em>sia… sia…</em>; 4) relativa esplicita (<em>in cui si svolgeva</em>); 5) imperfetto durativo (<em>si svolgeva</em>) per indicare condizione abituale.
+        </div>
+      </div>
+
+      <h3>Esempio 2 — Una constatazione sociale</h3>
+      <div class="rewrite-card">
+        <div class="rewrite-level">
+          <span class="rewrite-tag simple">Semplice</span>
+          <div class="rewrite-text">Molti giovani non leggono libri. Usano il telefono. Il livello culturale si abbassa.</div>
+        </div>
+        <div class="rewrite-level">
+          <span class="rewrite-tag intermedio">Intermedio</span>
+          <div class="rewrite-text">Molti giovani non leggono libri <em>ma</em> usano il telefono, <em>quindi</em> il livello culturale si abbassa.</div>
+        </div>
+        <div class="rewrite-level">
+          <span class="rewrite-tag formale">Formale</span>
+          <div class="rewrite-text"><em>La progressiva sostituzione</em> della lettura libraria <em>con</em> l'uso costante del telefono cellulare, <em>fenomeno particolarmente evidente</em> nelle nuove generazioni, <em>sembra incidere</em> sul progressivo abbassamento del livello culturale medio.</div>
+        </div>
+        <div class="rewrite-analysis">
+          <b>Recursos aggiunti:</b> 1) doppia nominalizzazione (<em>sostituzione, abbassamento</em>); 2) apposizione con incidentale (<em>fenomeno particolarmente evidente</em>); 3) verbo modale di cautela epistemica (<em>sembra</em>); 4) eliminazione dei soggetti personali; 5) registro impersonale-saggistico.
+        </div>
+      </div>
+
+      <h3>Esempio 3 — Un evento storico</h3>
+      <div class="rewrite-card">
+        <div class="rewrite-level">
+          <span class="rewrite-tag simple">Semplice</span>
+          <div class="rewrite-text">La crisi è arrivata nel 2008. Le banche sono fallite. La gente ha perso il lavoro.</div>
+        </div>
+        <div class="rewrite-level">
+          <span class="rewrite-tag intermedio">Intermedio</span>
+          <div class="rewrite-text">Quando la crisi è arrivata nel 2008, le banche sono fallite <em>e</em> molti hanno perso il lavoro.</div>
+        </div>
+        <div class="rewrite-level">
+          <span class="rewrite-tag formale">Formale</span>
+          <div class="rewrite-text"><em>Con lo scoppio della crisi finanziaria del 2008</em>, il fallimento di numerosi istituti bancari <em>provocò</em> una drammatica ondata di disoccupazione, <em>i cui effetti</em> si sarebbero protratti per oltre un decennio.</div>
+        </div>
+        <div class="rewrite-analysis">
+          <b>Recursos aggiunti:</b> 1) sintagma temporale assoluto (<em>con lo scoppio…</em>); 2) passato remoto narrativo (<em>provocò</em>); 3) lessico tecnico (<em>istituti bancari, ondata di disoccupazione</em>); 4) relativa con pronome doppio (<em>i cui effetti</em>); 5) condizionale composto per «futuro nel passato» (<em>si sarebbero protratti</em>).
+        </div>
+      </div>
+
+      <h3>Catalogo dei recursi della complessità</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Recurso</th><th>Funzione stilistica</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-pron">Nominalizzazione</td><td>Trasforma azioni in entità astratte</td><td>«decidere» → «la decisione di»</td></tr>
+            <tr><td class="tbl-pron">Subordinata relativa</td><td>Aggiunge specificazione senza spezzare il periodo</td><td>«la situazione che…»</td></tr>
+            <tr><td class="tbl-pron">Costruzione assoluta</td><td>Compatta una circostanza in implicita</td><td>«Finita la riunione, …»</td></tr>
+            <tr><td class="tbl-pron">Incidentale</td><td>Inserisce un commento o una precisazione</td><td>«… , come sappiamo, …»</td></tr>
+            <tr><td class="tbl-pron">Gerundio composto</td><td>Esprime causa/anteriorità in modo elegante</td><td>«Avendo letto…»</td></tr>
+            <tr><td class="tbl-pron">Passivante / impersonale</td><td>Rimuove il soggetto personale, eleva il registro</td><td>«si è osservato che…»</td></tr>
+            <tr><td class="tbl-pron">Connettivi specifici</td><td>Sostituisce «ma/e/quindi» con marcatori precisi</td><td>«tuttavia, di conseguenza, in tal senso»</td></tr>
+            <tr><td class="tbl-pron">Correlative</td><td>Distribuisce due elementi in parallelo</td><td>«sia… sia…», «non solo… ma anche…»</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="green-box">
+        <b>Esercizio mentale:</b> prendi una frase semplice (3 parole + 3 parole + 3 parole) e prova a riscriverla in un solo periodo di 25–30 parole, conservando il significato. Annota quali recursi hai utilizzato. Questo è il <span class="hl">vero esercizio C1</span>.
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">💡</span>
+        <div><b>Avvertenza:</b> la complessità non è sempre meglio. In contesti orali, narrativi o emotivi, la frase semplice è più efficace. Il C1 si misura nella <em>scelta consapevole</em> tra registri, non nell'uso obbligatorio del registro più formale.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 10: CHECKLIST ============ -->
+<section id="s-checklist" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">10. Tabella di controllo produttivo C1 (checklist PLIDA)</h2>
+      <p class="sec-subtitle">I sette punti che devi dominare per la produzione scritta C1</p>
+
+      <div class="def-box">
+        Prima di consegnare un testo nella prova di produzione scritta del <b>PLIDA C1</b> (o di un esame equivalente: CILS, CELI), rileggi sistematicamente verificando questi <span class="hl">sette punti critici</span>. Ciascuno corrisponde a una sezione di questa scheda. Un solo errore in uno qualsiasi di questi sette punti può fare la differenza tra un voto sufficiente e uno eccellente.
+      </div>
+
+      <h3>I sette punti del controllo C1</h3>
+      <ul class="checklist">
+        <li><div><b>Consecutio temporum con congiuntivo.</b> Verifica che ogni subordinata al congiuntivo si concordi correttamente con il proprio verbo reggente: presente/passato dopo principale al presente; imperfetto/trapassato dopo passato o condizionale. <span class="dim">[Sez. 4]</span></div></li>
+        <li><div><b>Alternanza esplicite / implicite.</b> Stesso soggetto → preferisci l'implicita (<em>di + infinito</em>, gerundio, participio). Soggetti diversi → esplicita con <em>che + cong./ind.</em> Riduci il numero di «che» introducendo varietà. <span class="dim">[Sez. 3]</span></div></li>
+        <li><div><b>Assenza di gerundi pendenti.</b> Per ogni gerundio del testo, identifica il soggetto logico e verifica che coincida con quello della principale. In caso contrario, riscrivi con subordinata esplicita. <span class="dim">[Sez. 6]</span></div></li>
+        <li><div><b>Pronomi con antecedente chiaro.</b> Ogni <em>lui, lei, lo, la, ne, ci, questo, quello, ciò</em> deve avere un referente univoco. Quando ci sono due possibili antecedenti dello stesso genere, ripeti il nome o usa <em>quest'ultimo / il primo / il quale</em>. <span class="dim">[Sez. 7]</span></div></li>
+        <li><div><b>Connettivi adeguati alla funzione.</b> Identifica la relazione logica (causale, consecutiva, avversativa, concessiva, finale, temporale, esplicativa) e scegli il connettivo che la esprime con precisione. Evita le sostituzioni generiche («e» per «ma», «però» per «quindi»). <span class="dim">[Sez. 8]</span></div></li>
+        <li><div><b>Coerenza di registro.</b> Mantieni un registro omogeneo dall'inizio alla fine del testo: formale-accademico, neutro-informativo o medio-comunicativo. Evita commistioni («tuttavia… però»; «pertanto… allora»; «altresì… insomma»). <span class="dim">[Sez. 9]</span></div></li>
+        <li><div><b>Subordinazione multipla senza errori di concordanza.</b> Quando il periodo ha tre o più livelli, verifica che ogni subordinata sia accordata al verbo reggente immediato e non saltato di livello. Se il controllo è incerto, spezza il periodo. <span class="dim">[Sez. 2]</span></div></li>
+      </ul>
+
+      <h3>Sintomi diagnostici di livello incompleto</h3>
+      <div class="red-box">
+        Se nel tuo testo trovi anche uno solo di questi sintomi, il livello C1 non è ancora consolidato:
+        <ul style="margin:6px 0 0;padding-left:20px">
+          <li>Indicativo dopo <em>sebbene, nonostante, benché, malgrado</em></li>
+          <li>Cong. presente dopo verbo principale al passato</li>
+          <li>«Che» ambiguo che potrebbe riferirsi a due antecedenti</li>
+          <li>Gerundio con soggetto diverso dalla principale</li>
+          <li>«E» tra due frasi con relazione logica chiaramente avversativa o causale</li>
+          <li>Tre o più «che» di seguito in un singolo periodo</li>
+          <li>Frasi sotto le 8 parole nel registro saggistico</li>
+        </ul>
+      </div>
+
+      <h3>Sintomi positivi di livello consolidato</h3>
+      <div class="green-box">
+        Se il tuo testo presenta questi tratti, il C1 è probabilmente consolidato:
+        <ul style="margin:6px 0 0;padding-left:20px">
+          <li>Alternanza naturale di esplicite e implicite</li>
+          <li>Uso corretto del cong. trapassato in subordinate di anteriorità</li>
+          <li>Connettivi specifici (<em>tuttavia, di conseguenza, peraltro, infatti, ovvero, ossia</em>) al posto di quelli generici</li>
+          <li>Almeno una costruzione assoluta o un participio assoluto</li>
+          <li>Almeno una incidentale o apposizione complessa</li>
+          <li>Variazione del registro per scopi retorici (formale + colloquiale per citazione)</li>
+          <li>Nominalizzazioni equilibrate (non eccessive)</li>
+        </ul>
+      </div>
+
+      <h3>Strategia di revisione finale</h3>
+      <div class="teal-box">
+        <b>Tre passaggi di revisione:</b>
+        <ol style="margin:6px 0 0;padding-left:18px">
+          <li><b>Lettura ad alta voce.</b> Se inciampi nella lettura, il lettore inciamperà nella comprensione.</li>
+          <li><b>Lettura sintattica.</b> Cerchia ogni verbo e verifica il modo/tempo. Sottolinea ogni gerundio e verifica il soggetto.</li>
+          <li><b>Lettura logica.</b> Per ogni pronome, scrivi sopra l'antecedente. Per ogni connettivo, scrivi la relazione logica (CAUS, AVV, CONC, FIN, CONS).</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 11: ESEMPI ANALIZZATI ============ -->
+<section id="s-esempi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">11. Periodi complessi analizzati nivel por nivel</h2>
+      <p class="sec-subtitle">Quindici periodi commentati con correzione di versioni erronee</p>
+
+      <div class="def-box">
+        Quindici periodi di livello C1, analizzati livello per livello, con la versione <span class="hl">erronea</span> tipica del livello B2 incompleto a confronto con la versione <span class="hl">corretta</span>. Ogni analisi indica il verbo principale, le subordinate concatenate, il modo e tempo di ciascuna, e la regola applicata.
+      </div>
+
+      <div id="periods-container"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const PERIODS = [
+  {
+    wrong: 'Penso che ieri ha fatto freddo e che oggi farà brutto tempo.',
+    right: 'Penso che ieri <em>abbia fatto</em> freddo e che oggi <em>faccia</em> brutto tempo.',
+    es: 'Creo que ayer hizo frío y que hoy hará mal tiempo.',
+    analysis: '<b>Liv. 0:</b> Penso (pres.). <b>Liv. 1a:</b> che abbia fatto (cong. passato per anteriorità). <b>Liv. 1b:</b> che faccia (cong. pres. per simultaneità con un futuro implicito). <b>Errore originale:</b> «ha fatto» è indicativo, violazione della consecutio.'
+  },
+  {
+    wrong: 'Sebbene non ha studiato molto, è riuscito a passare l\'esame.',
+    right: 'Sebbene non <em>abbia studiato</em> molto, è riuscito a passare l\'esame.',
+    es: 'Aunque no estudió mucho, consiguió aprobar el examen.',
+    analysis: '<b>Liv. 0:</b> è riuscito (pass. pross. ind.). <b>Liv. 1:</b> sebbene abbia studiato (concessiva con cong. passato, anteriorità). <b>Errore originale:</b> sebbene + indicativo, calco di «aunque».'
+  },
+  {
+    wrong: 'Vorrei che tu sei qui con me adesso.',
+    right: 'Vorrei che tu <em>fossi</em> qui con me adesso.',
+    es: 'Querría que estuvieras aquí conmigo ahora.',
+    analysis: '<b>Liv. 0:</b> Vorrei (condiz. pres.). <b>Liv. 1:</b> che tu fossi (cong. imperf., simultaneo a un condizionale). <b>Errore originale:</b> indicativo dopo verbo di desiderio al condizionale.'
+  },
+  {
+    wrong: 'Arrivando in ufficio, mi è stato detto che la riunione era annullata.',
+    right: '<em>Quando sono arrivato</em> in ufficio, mi è stato detto che la riunione era annullata.',
+    es: 'Cuando llegué a la oficina, me dijeron que la reunión había sido cancelada.',
+    analysis: '<b>Gerundio pendente:</b> il soggetto di «arrivando» è «io», quello del passivo «è stato detto» è impersonale. Soluzione: trasformare il gerundio in subordinata temporale esplicita. <b>Liv. 1:</b> che la riunione era annullata (ind. imperf., simultaneità nel passato, accettabile come dato di fatto).'
+  },
+  {
+    wrong: 'Pensavo che lui arriva il giorno dopo.',
+    right: 'Pensavo che lui <em>sarebbe arrivato</em> il giorno dopo.',
+    es: 'Pensaba que él llegaría al día siguiente.',
+    analysis: '<b>Liv. 0:</b> Pensavo (imperf.). <b>Liv. 1:</b> sarebbe arrivato (condiz. composto = futuro nel passato). <b>Errore originale:</b> indicativo presente dopo verbo di opinione al passato; il presente è invece «sarebbe arrivato» (posteriorità nel passato).'
+  },
+  {
+    wrong: 'Marco ha detto a Luca che lui doveva partire subito.',
+    right: 'Marco ha detto a Luca che <em>quest\'ultimo</em> doveva partire subito. <span class="dim">[se «lui» = Luca]</span>',
+    es: 'Marco le dijo a Luca que este último tenía que marcharse de inmediato.',
+    analysis: '<b>Pronome ambiguo:</b> «lui» può riferirsi a Marco o a Luca. Disambiguazione con «quest\'ultimo» (= il secondo menzionato) o con ripetizione del nome. <b>Liv. 0:</b> ha detto (pass. pross.). <b>Liv. 1:</b> doveva (imperf. ind., obbligo nel passato).'
+  },
+  {
+    wrong: 'È necessario che tutti rispettano le regole, anche se non sono d\'accordo.',
+    right: 'È necessario che tutti <em>rispettino</em> le regole, anche se non <em>sono</em> d\'accordo.',
+    es: 'Es necesario que todos respeten las reglas, aunque no estén de acuerdo.',
+    analysis: '<b>Liv. 0:</b> è necessario (costruz. impersonale, regge cong.). <b>Liv. 1:</b> che tutti rispettino (cong. pres.). <b>Liv. 2:</b> anche se non sono (concessiva fattuale → indicativo ammesso). <b>Variante:</b> «sebbene non siano» (concessiva non fattuale → cong.).'
+  },
+  {
+    wrong: 'Studiando tutta la notte, l\'esame è andato bene.',
+    right: '<em>Avendo studiato</em> tutta la notte, ho superato l\'esame senza difficoltà.',
+    es: 'Habiendo estudiado toda la noche, superé el examen sin dificultades.',
+    analysis: '<b>Gerundio pendente:</b> l\'esame non ha studiato. Correzione doppia: (1) gerundio composto per anteriorità (<em>avendo studiato</em>); (2) cambio di soggetto della principale (<em>ho superato</em> invece di <em>l\'esame è andato bene</em>), così il soggetto coincide con quello del gerundio.'
+  },
+  {
+    wrong: 'Sapevo che, quando arriva, troverà la casa vuota.',
+    right: 'Sapevo che, <em>quando fosse arrivato</em>, <em>avrebbe trovato</em> la casa vuota.',
+    es: 'Sabía que, cuando llegara, encontraría la casa vacía.',
+    analysis: '<b>Liv. 0:</b> Sapevo (imperf.). <b>Liv. 1:</b> avrebbe trovato (condiz. composto, futuro nel passato). <b>Liv. 2:</b> quando fosse arrivato (cong. trapass., temporale anteriore al condiz. composto, nel passato). <b>Errore originale:</b> «arriva» e «troverà» sono presente/futuro indicativo, non concordati con il passato della principale.'
+  },
+  {
+    wrong: 'Aristotele affermò che il mondo fosse finito.',
+    right: 'Aristotele affermò che il mondo <em>è</em> finito.',
+    es: 'Aristóteles afirmó que el mundo es finito.',
+    analysis: '<b>Periodo misto:</b> verbo principale al passato remoto + subordinata che esprime una <em>tesi atemporale</em> ancora discutibile. Si usa l\'indicativo presente, non il cong. imperfetto. L\'errore «fosse finito» applica meccanicamente la consecutio senza considerare il caso speciale.'
+  },
+  {
+    wrong: 'Cerco una segretaria che parla inglese e francese.',
+    right: 'Cerco una segretaria che <em>parli</em> inglese e francese.',
+    es: 'Busco una secretaria que hable inglés y francés.',
+    analysis: '<b>Antecedente indefinito:</b> «una segretaria» è generica, non identificata. La relativa richiede il congiuntivo. Confronta: «Conosco una segretaria che <em>parla</em> inglese» (definita, conosciuta).'
+  },
+  {
+    wrong: 'Il professore, dopo che aveva spiegato la lezione, lui ci ha dato i compiti.',
+    right: 'Il professore, <em>dopo aver spiegato</em> la lezione, ci ha dato i compiti.',
+    es: 'El profesor, después de explicar la lección, nos dio los deberes.',
+    analysis: '<b>Doppio difetto:</b> (1) ridondanza pronominale «il professore… lui» (dislocazione non motivata); (2) esplicita «dopo che aveva spiegato» dove sarebbe più elegante l\'implicita «dopo aver spiegato» (stesso soggetto). <b>Liv. 1:</b> dopo aver spiegato (implicita temporale).'
+  },
+  {
+    wrong: 'Penso che è importante che ognuno fa quello che può.',
+    right: 'Penso che <em>sia</em> importante che ognuno <em>faccia</em> quello che <em>può</em>.',
+    es: 'Pienso que es importante que cada uno haga lo que puede.',
+    analysis: '<b>Liv. 0:</b> Penso (pres.). <b>Liv. 1:</b> che sia importante (cong. pres., oggettiva di opinione). <b>Liv. 2:</b> che ognuno faccia (cong. pres., oggettiva di «importante», costruzione impersonale). <b>Liv. 3:</b> quello che può (ind., relativa con antecedente definito).'
+  },
+  {
+    wrong: 'Avrei voluto che mio padre sarebbe venuto alla mia laurea.',
+    right: 'Avrei voluto che mio padre <em>fosse venuto</em> alla mia laurea.',
+    es: 'Habría querido que mi padre hubiera venido a mi licenciatura.',
+    analysis: '<b>Liv. 0:</b> Avrei voluto (condiz. composto). <b>Liv. 1:</b> che mio padre fosse venuto (cong. trapass., anteriorità rispetto al condiz. composto). <b>Errore originale:</b> «sarebbe venuto» è condizionale composto, non congiuntivo trapassato. La consecutio impone il cong. trapass. dopo il condiz. composto per esprimere anteriorità.'
+  },
+  {
+    wrong: 'Quando finita la conferenza, tutti hanno applaudito a lungo.',
+    right: '<em>Una volta finita</em> la conferenza, tutti hanno applaudito a lungo.',
+    es: 'Una vez terminada la conferencia, todos aplaudieron largamente.',
+    analysis: '<b>Costruzione assoluta:</b> il participio passato «finita» concorda con «la conferenza» (soggetto proprio diverso dal soggetto della principale «tutti»). Va introdotto da «una volta» o «finita» da solo, non da «quando» (che richiederebbe verbo finito).'
+  },
+  {
+    wrong: 'Mi ha detto che lui veniva domani.',
+    right: 'Mi ha detto che <em>sarebbe venuto</em> oggi/il giorno dopo.',
+    es: 'Me dijo que vendría hoy / al día siguiente.',
+    analysis: '<b>Discorso indiretto:</b> «verrà domani» (discorso diretto) → «sarebbe venuto il giorno dopo» (indiretto al passato). <b>Errore originale:</b> «veniva domani» mescola imperfetto e «domani», impossibile. La consecutio del discorso indiretto al passato richiede condiz. composto + adeguamento dei deittici temporali.'
+  },
+  {
+    wrong: 'Ho comprato un libro e una rivista che mi è piaciuta molto.',
+    right: 'Ho comprato un libro e una rivista, <em>la quale</em> mi è piaciuta molto.',
+    es: 'Compré un libro y una revista, la cual me gustó mucho.',
+    analysis: '<b>Pronome relativo ambiguo:</b> «che» potrebbe riferirsi a entrambi (libro o rivista). Il participio «piaciuta» (femm. sing.) indica che il riferimento è solo «rivista», ma «che» è invariabile e ambiguo all\'orecchio. <b>La quale</b> esplicita il genere e il numero, eliminando l\'ambiguità.'
+  }
+];
+
+/* =================== RENDERER PERIODS =================== */
+function renderPeriods(){
+  const c = document.getElementById('periods-container');
+  let html = '';
+  PERIODS.forEach((p, idx) => {
+    html += `<div class="sentence-row">
+      <div><span class="sentence-num">${String(idx+1).padStart(2,'0')}</span></div>
+      <div class="sentence-wrong-block">${p.wrong}</div>
+      <div class="sentence-right-block">${p.right}</div>
+      <div class="sentence-es">${p.es}</div>
+      <div class="sentence-an"><b>Analisi:</b> ${p.analysis}</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+/* =================== UI HELPERS =================== */
+function showSection(id, btn){
+  document.querySelectorAll('.sec-block').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  else{
+    const btns = document.querySelectorAll('.snav-btn');
+    btns.forEach(b=>{ if(b.getAttribute('onclick').includes(`'${id}'`)) b.classList.add('active'); });
+  }
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function setFontSize(v){
+  document.documentElement.style.setProperty('--fs', v+'px');
+}
+
+function selectChip(ns, idx){
+  document.querySelectorAll('.chip').forEach(c=>{
+    const oc = c.getAttribute('onclick')||'';
+    if(oc.includes(`'${ns}'`)) c.classList.remove('active');
+  });
+  document.querySelectorAll('.chip').forEach(c=>{
+    const oc = c.getAttribute('onclick')||'';
+    if(oc.includes(`'${ns}',${idx}`)) c.classList.add('active');
+  });
+  document.querySelectorAll(`.chip-panel`).forEach(p=>{
+    const dc = p.getAttribute('data-chip')||'';
+    if(dc.startsWith(ns+'-')) p.classList.remove('active');
+  });
+  const target = document.querySelector(`.chip-panel[data-chip="${ns}-${idx}"]`);
+  if(target) target.classList.add('active');
+}
+
+/* =================== INIT =================== */
+renderPeriods();
+</script>
+
+</body>
+</html>

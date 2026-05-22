@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Formazione delle Parole · Grammatica C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ede9df;
+  --card:#faf7f1;
+  --border:#c4bead;
+  --text:#1a1814;
+  --text2:#44413a;
+  --text3:#706c64;
+  --accent:#7a5a0a;
+  --accent-light:#f0e0c0;
+  --accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,0.08);
+  --radius:14px;
+  --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --red:#a81e2e; --red-bg:#fce6e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --teal:#0e6e6e; --teal-bg:#e0f4f4;
+  --fs:15px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-size:var(--fs);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:60px;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text);margin:0 0 .4em;font-weight:600;line-height:1.2}
+h1{font-size:1.85em;font-weight:700}
+h2{font-size:1.45em}
+h3{font-size:1.15em;margin-top:1.1em}
+h4{font-size:1em;font-weight:600}
+p{margin:.5em 0}
+em{font-style:italic}
+b,strong{font-weight:600}
+
+/* HEADER */
+.site-header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 18px 16px;
+  position:relative;
+}
+.site-header .inner{max-width:860px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title-wrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.site-header h1{margin:0;font-size:1.9em;color:var(--text)}
+.header-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.85em;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid var(--accent-mid);
+}
+.subtitle{color:var(--text3);font-size:.92em;margin:4px 0 12px;font-style:italic}
+.stat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stat-pill{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:4px 10px;
+  font-size:.78em;
+  border-radius:999px;
+  font-weight:500;
+}
+.font-ctrl{display:flex;align-items:center;gap:8px;font-size:.78em;color:var(--text3)}
+.font-ctrl input[type=range]{width:90px}
+
+/* SECTION NAV */
+.section-nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:10px 18px;
+  margin-top:14px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.section-nav::-webkit-scrollbar{display:none}
+.section-nav .inner{max-width:860px;margin:0 auto;display:flex;gap:6px;flex-wrap:nowrap}
+.snav-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:6px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82em;
+  border-radius:999px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .15s;
+  font-weight:500;
+}
+.snav-btn:hover{background:var(--accent-light)}
+.snav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* MAIN LAYOUT */
+.main-layout{
+  max-width:860px;
+  margin:0 auto;
+  padding:20px 18px;
+}
+.sec-block{display:none}
+.sec-block.active{display:block;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* GRAM-CARD */
+.gram-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.gram-card-body{padding:18px}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:1.45em;
+  margin:0 0 .4em;
+  color:var(--text);
+}
+.sec-subtitle{color:var(--text3);font-style:italic;font-size:.95em;margin:0 0 14px}
+
+/* DEF-BOX */
+.def-box{
+  background:var(--warn-bg);
+  border-left:4px solid var(--accent);
+  padding:12px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:14px 0;
+  font-size:.96em;
+}
+.def-box b{color:var(--accent)}
+
+/* WARN-BOX */
+.warn-box{
+  background:#fff4e0;
+  border:1px solid #c8900a;
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:12px 0;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:.93em;
+  color:var(--text2);
+}
+.warn-box .ico{font-size:1.1em;flex-shrink:0;line-height:1.3}
+
+/* EXAMPLE BLOCK */
+.example-block{
+  background:var(--blue-bg);
+  border-left:3px solid var(--blue);
+  padding:9px 12px;
+  margin:8px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.ex-it{font-weight:500;color:var(--text)}
+.ex-it em{font-style:normal;color:var(--blue);font-weight:600}
+.ex-es{font-style:italic;color:var(--text2);font-size:.88em;margin-top:2px}
+.ex-note{font-size:.84em;color:var(--text3);margin-top:4px;font-style:italic}
+
+/* NOTE-BOX */
+.note-box{
+  background:var(--purple-bg);
+  border-left:3px solid var(--purple);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.note-box b{color:var(--purple)}
+
+/* GREEN-BOX */
+.green-box{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.green-box b{color:var(--green)}
+
+/* TEAL-BOX */
+.teal-box{
+  background:var(--teal-bg);
+  border-left:3px solid var(--teal);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.teal-box b{color:var(--teal)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.gram-table{width:100%;border-collapse:collapse;font-size:.92em;background:var(--card)}
+.gram-table th{
+  background:var(--accent-light);
+  color:var(--accent);
+  font-family:'DM Sans',sans-serif;
+  font-size:.72em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:8px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--accent-mid);
+}
+.gram-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.gram-table tr:nth-child(even) td{background:rgba(196,190,173,0.12)}
+.gram-table tr:last-child td{border-bottom:none}
+.ok-cell{color:var(--green);font-weight:500}
+.err-cell{color:var(--red);font-weight:500}
+.warn-cell{color:var(--accent);font-weight:500}
+.tbl-pron{font-weight:600;color:var(--text);background:rgba(196,190,173,0.18)}
+
+/* CHIPS */
+.chip-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:14px 0 10px;
+  padding-bottom:4px;
+}
+.chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:5px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.83em;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{background:var(--accent-light)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-panel{display:none}
+.chip-panel.active{display:block;animation:fadeIn .25s}
+
+/* TRAPS */
+.trap-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.trap-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trap-name{font-weight:600;color:var(--text);font-size:.96em}
+.trap-vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.trap-wrong{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-wrong::before{content:'✗ ';color:var(--red);font-weight:700}
+.trap-right{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-right::before{content:'✓ ';color:var(--green);font-weight:700}
+.trap-expl{font-size:.88em;color:var(--text2);font-style:italic;margin-top:6px}
+@media (max-width:520px){.trap-vs{grid-template-columns:1fr}}
+
+/* MINI-TABLE */
+.mini-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.88em;
+  background:var(--card);
+  margin:10px 0;
+}
+.mini-table td{
+  padding:5px 9px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.mini-table td:first-child{color:var(--text3);font-weight:500;width:38%}
+.mini-table td:last-child{color:var(--text);font-weight:600}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table .hl-form{color:var(--accent);font-weight:700}
+
+/* TAG/LABEL */
+.tag{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:.72em;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-right:6px;
+  border:1px solid;
+}
+.tag-form{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.tag-inf{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.tag-acc{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.tag-bur{background:var(--teal-bg);color:var(--teal);border-color:var(--teal)}
+.tag-gio{background:var(--green-bg);color:var(--green);border-color:var(--green)}
+
+/* UTILS */
+.hl{color:var(--accent);font-weight:600}
+.dim{color:var(--text3)}
+
+/* ANALYSIS LIST */
+.analysis-list{
+  font-size:.86em;
+  color:var(--text2);
+  margin-top:6px;
+  padding-left:0;
+  list-style:none;
+}
+.analysis-list li{
+  margin:2px 0;
+  padding-left:12px;
+  position:relative;
+}
+.analysis-list li::before{
+  content:'·';
+  position:absolute;
+  left:2px;
+  color:var(--accent);
+  font-weight:700;
+}
+.analysis-list b{color:var(--accent)}
+
+/* INFO STRUCT DIAGRAM */
+.struct-diag{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 12px;
+  margin:10px 0;
+  font-family:'DM Sans',sans-serif;
+  font-size:.9em;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+.struct-tag{
+  padding:3px 9px;
+  border-radius:999px;
+  font-size:.78em;
+  font-weight:600;
+  border:1px solid;
+}
+.struct-verb{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.struct-nom{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.struct-arrow{color:var(--text3);font-weight:700}
+.struct-text{font-style:italic;color:var(--text2)}
+
+/* RESPONSIVE */
+@media (max-width:520px){
+  .site-header{padding:14px 14px 12px}
+  h1{font-size:1.5em}
+  .main-layout{padding:14px}
+  .gram-card-body{padding:14px}
+  .stat-pill{font-size:.72em}
+  .header-top{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="inner">
+    <div class="header-top">
+      <div>
+        <div class="header-title-wrap">
+          <h1>La Formazione delle Parole</h1>
+          <span class="header-tag">Grammatica</span>
+        </div>
+        <div class="subtitle">Suffissi, prefissi, alterati e composizione · B2–C1 · per ispanofoni</div>
+        <div class="stat-bar">
+          <span class="stat-pill">8 sezioni</span>
+          <span class="stat-pill">suffissi nominali</span>
+          <span class="stat-pill">suffissi aggettivali</span>
+          <span class="stat-pill">prefissi</span>
+          <span class="stat-pill">alterati</span>
+          <span class="stat-pill">composizione</span>
+          <span class="stat-pill">22 esempi analizzati</span>
+        </div>
+      </div>
+      <div class="font-ctrl">
+        <span>A-</span>
+        <input type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+        <span>A+</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION NAV -->
+<nav class="section-nav" id="sec-nav">
+  <div class="inner">
+    <button class="snav-btn active" onclick="showSection('s-concetto',this)">1. Concetto</button>
+    <button class="snav-btn" onclick="showSection('s-suff-nom',this)">2. Suffissi nominali</button>
+    <button class="snav-btn" onclick="showSection('s-suff-agg',this)">3. Suffissi aggettivali</button>
+    <button class="snav-btn" onclick="showSection('s-prefissi',this)">4. Prefissi</button>
+    <button class="snav-btn" onclick="showSection('s-alterati',this)">5. Alterati</button>
+    <button class="snav-btn" onclick="showSection('s-composizione',this)">6. Composizione</button>
+    <button class="snav-btn" onclick="showSection('s-trappole',this)">7. Trappole ES</button>
+    <button class="snav-btn" onclick="showSection('s-esempi',this)">8. Esempi analizzati</button>
+  </div>
+</nav>
+
+<main class="main-layout">
+
+<!-- SECCIÓN 1 · CONCETTO -->
+<section id="s-concetto" class="sec-block active">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">1. Che cos'è la formazione delle parole</h2>
+      <p class="sec-subtitle">Il sistema dei meccanismi derivativi e compositivi dell'italiano</p>
+
+      <div class="def-box">
+        La <b>formazione delle parole</b> (o <em>morfologia derivativa</em>) es el conjunto de procedimientos por los cuales el italiano crea palabras nuevas a partir de bases ya existentes. Los tres grandes mecanismos son la <span class="hl">suffissazione</span> (añadir un sufijo: <em>real→realtà</em>), la <span class="hl">prefissazione</span> (añadir un prefijo: <em>fare→rifare</em>) y la <span class="hl">composizione</span> (combinar dos lexemas: <em>capo+lavoro→capolavoro</em>). A esto se añade el sistema de los <span class="hl">alterati</span>, que modifican el significado por matiz emocional o de tamaño sin cambiar la categoría léxica.
+      </div>
+
+      <h3>El esquema general</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-verb">BASE</span>
+        <span class="struct-text">verbo / nome / aggettivo</span>
+        <span class="struct-arrow">+</span>
+        <span class="struct-tag struct-nom">AFFISSO</span>
+        <span class="struct-text">prefisso, suffisso, alteratore</span>
+        <span class="struct-arrow">=</span>
+        <span class="struct-text"><b>PAROLA DERIVATA</b></span>
+      </div>
+
+      <h3>Por qué importa para el hispanohablante</h3>
+      <p>El español y el italiano comparten la inmensa mayoría de los <b>sufijos cultos latinos</b> (-zione/-ción, -bile/-ble, -tà/-dad, -mento/-miento, -oso/-oso), pero la <span class="hl">distribución</span> y la <span class="hl">productividad</span> de cada sufijo no coinciden siempre. El hispanohablante que confíe ciegamente en la analogía produce no-palabras como <em>*svilluppamento</em> o <em>*conoscimento</em>. Dominar el inventario de sufijos italianos —y sus excepciones— es el camino más rápido para multiplicar el vocabulario productivo y acceder al léxico C1.</p>
+
+      <h3>Los cuatro mecanismos a mano</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Mecanismo</th><th>Operación</th><th>Ejemplo</th><th>Resultado</th></tr></thead>
+          <tbody>
+            <tr><td><b>Suffissazione</b></td><td>base + suffisso</td><td>real- + -tà</td><td><em>realtà</em> (nome)</td></tr>
+            <tr><td><b>Prefissazione</b></td><td>prefisso + base</td><td>ri- + leggere</td><td><em>rileggere</em> (verbo)</td></tr>
+            <tr><td><b>Composizione</b></td><td>lexema + lexema</td><td>capo + lavoro</td><td><em>capolavoro</em> (nome)</td></tr>
+            <tr><td><b>Alterazione</b></td><td>base + alteratore</td><td>casa + -ina</td><td><em>casina</em> (nome diminutivo)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Para el hispanohablante:</b> la formazione delle parole es uno de los terrenos donde más se nota el salto del B2 al C1. No se trata solo de reconocer palabras, sino de <span class="hl">crearlas con seguridad</span> a partir de bases conocidas, sabiendo qué sufijo elegir, qué prefijo evitar y qué alterati están lexicalizados (han perdido su valor diminutivo o aumentativo y significan otra cosa).</div>
+      </div>
+
+      <h3>Cómo leer un sufijo</h3>
+      <p>Cada sufijo tiene tres dimensiones que conviene aprender juntas:</p>
+      <ul>
+        <li><b>Significado:</b> ¿qué valor semántico añade? (acción, cualidad, agente, posibilidad…)</li>
+        <li><b>Base:</b> ¿de qué categoría parte? (de verbo, de nombre, de adjetivo…)</li>
+        <li><b>Registro:</b> ¿es neutro, formal, técnico, marcado?</li>
+      </ul>
+      <p>Estas tres dimensiones se reflejan en cada ficha de las secciones siguientes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 2 · SUFFISSI NOMINALI -->
+<section id="s-suff-nom" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">2. Suffissi nominali — il sistema completo</h2>
+      <p class="sec-subtitle">Cómo formar nombres a partir de verbos, adjetivos y otros nombres</p>
+
+      <div class="def-box">
+        Los <b>suffissi nominali</b> son los sufijos que generan <span class="hl">sostantivi</span>. Se dividen en <em>deverbali</em> (parten de un verbo: <em>decidere→decisione</em>), <em>deaggettivali</em> (parten de un adjetivo: <em>bello→bellezza</em>) y <em>denominali</em> (parten de otro nombre: <em>capitalismo→capitalista</em>). Conocerlos sistemáticamente permite multiplicar el léxico activo y leer prosa formal sin tropezar.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="showChip('cn-zione',this)">-zione/-sione</button>
+        <button class="chip" onclick="showChip('cn-mento',this)">-mento</button>
+        <button class="chip" onclick="showChip('cn-tura',this)">-tura</button>
+        <button class="chip" onclick="showChip('cn-anza',this)">-anza/-enza</button>
+        <button class="chip" onclick="showChip('cn-ita',this)">-ità</button>
+        <button class="chip" onclick="showChip('cn-ezza',this)">-ezza</button>
+        <button class="chip" onclick="showChip('cn-ismo',this)">-ismo/-ista</button>
+        <button class="chip" onclick="showChip('cn-tore',this)">-tore/-trice</button>
+      </div>
+
+      <!-- -ZIONE / -SIONE -->
+      <div id="cn-zione" class="chip-panel active">
+        <h3>-zione / -sione · <span class="dim">acción / resultado</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-bur">burocratico</span> Es el sufijo deverbal <span class="hl">más frecuente del italiano formal</span>. Forma sustantivos femeninos que indican la acción del verbo o su resultado. <b>-zione</b> es el patrón general (sobre verbos en -are y muchos otros); <b>-sione</b> aparece principalmente con verbos en <em>-dere</em>, <em>-mettere</em>, <em>-ttere</em>.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Verbo base</th><th>Sostantivo</th><th>Variante</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>decidere</td><td class="tbl-pron">decisione</td><td>-sione</td><td>decisión</td></tr>
+              <tr><td>produrre</td><td class="tbl-pron">produzione</td><td>-zione</td><td>producción</td></tr>
+              <tr><td>trasmettere</td><td class="tbl-pron">trasmissione</td><td>-sione</td><td>transmisión</td></tr>
+              <tr><td>discutere</td><td class="tbl-pron">discussione</td><td>-sione</td><td>discusión</td></tr>
+              <tr><td>ammettere</td><td class="tbl-pron">ammissione</td><td>-sione</td><td>admisión</td></tr>
+              <tr><td>applicare</td><td class="tbl-pron">applicazione</td><td>-zione</td><td>aplicación</td></tr>
+              <tr><td>spiegare</td><td class="tbl-pron">spiegazione</td><td>-zione</td><td>explicación</td></tr>
+              <tr><td>creare</td><td class="tbl-pron">creazione</td><td>-zione</td><td>creación</td></tr>
+              <tr><td>educare</td><td class="tbl-pron">educazione</td><td>-zione</td><td>educación</td></tr>
+              <tr><td>tradurre</td><td class="tbl-pron">traduzione</td><td>-zione</td><td>traducción</td></tr>
+              <tr><td>esprimere</td><td class="tbl-pron">espressione</td><td>-sione</td><td>expresión</td></tr>
+              <tr><td>concedere</td><td class="tbl-pron">concessione</td><td>-sione</td><td>concesión</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">La <em>produzione</em> industriale richiede una <em>decisione</em> politica.</div>
+          <div class="ex-es">La producción industrial requiere una decisión política.</div>
+        </div>
+
+        <div class="warn-box"><span class="ico">⚠️</span><div>Atención al cambio ortográfico: <em>decid-ere → deci<b>s</b>ione</em> (c→s), <em>discut-ere → discus<b>s</b>ione</em> (doble s). No es <em>*decizione</em>.</div></div>
+      </div>
+
+      <!-- -MENTO -->
+      <div id="cn-mento" class="chip-panel">
+        <h3>-mento · <span class="dim">acción / proceso / instrumento</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-inf">neutro</span> Forma sustantivos masculinos a partir de <span class="hl">verbos</span> (sobre todo en -are y -ire). Indica la acción, el proceso o, a veces, el instrumento. Compite con -zione: <em>sviluppo</em> (cero-derivazione) vs. <em>sviluppamento</em> (no existe), <em>miglioramento</em> vs. <em>miglioria</em>.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Verbo base</th><th>Sostantivo</th><th>Significato</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>migliorare</td><td class="tbl-pron">miglioramento</td><td>proceso de mejora</td><td>mejora / mejoramiento</td></tr>
+              <tr><td>comportarsi</td><td class="tbl-pron">comportamento</td><td>modo de actuar</td><td>comportamiento</td></tr>
+              <tr><td>raggiungere</td><td class="tbl-pron">raggiungimento</td><td>logro / consecución</td><td>logro</td></tr>
+              <tr><td>cambiare</td><td class="tbl-pron">cambiamento</td><td>cambio (proceso)</td><td>cambio</td></tr>
+              <tr><td>sentire</td><td class="tbl-pron">sentimento</td><td>sentir / emoción</td><td>sentimiento</td></tr>
+              <tr><td>insegnare</td><td class="tbl-pron">insegnamento</td><td>enseñanza</td><td>enseñanza</td></tr>
+              <tr><td>movere/muovere</td><td class="tbl-pron">movimento</td><td>movimiento</td><td>movimiento</td></tr>
+              <tr><td>pagare</td><td class="tbl-pron">pagamento</td><td>pago</td><td>pago</td></tr>
+              <tr><td>finanziare</td><td class="tbl-pron">finanziamento</td><td>financiación</td><td>financiación</td></tr>
+              <tr><td>investire</td><td class="tbl-pron">investimento</td><td>inversión</td><td>inversión</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-box"><b>Cero-derivazione:</b> algunos verbos italianos forman el sustantivo sin sufijo: <em>sviluppare→sviluppo</em>, <em>arrivare→arrivo</em>, <em>ritornare→ritorno</em>, <em>calcolare→calcolo</em>, <em>ricercare→ricerca</em>, <em>aumentare→aumento</em>. No fuerce <em>*sviluppamento</em>.</div>
+
+        <div class="example-block">
+          <div class="ex-it">Il <em>raggiungimento</em> dell'obiettivo dipende dal <em>comportamento</em> della squadra.</div>
+          <div class="ex-es">El logro del objetivo depende del comportamiento del equipo.</div>
+        </div>
+      </div>
+
+      <!-- -TURA -->
+      <div id="cn-tura" class="chip-panel">
+        <h3>-tura · <span class="dim">acción / resultado / objeto</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-inf">neutro</span> Forma sustantivos femeninos a partir de verbos (sobre todo en -ere). Puede designar la acción, su resultado o el objeto producido. A menudo se opone a -zione: la <em>scrittura</em> (acto/resultado material) vs. la <em>scrizione</em> (no existe; sería <em>iscrizione</em>, otra cosa).</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Verbo base</th><th>Sostantivo</th><th>Significato</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>aprire</td><td class="tbl-pron">apertura</td><td>acto/momento de abrir</td><td>apertura</td></tr>
+              <tr><td>chiudere</td><td class="tbl-pron">chiusura</td><td>acto de cerrar / cierre</td><td>cierre / clausura</td></tr>
+              <tr><td>leggere</td><td class="tbl-pron">lettura</td><td>acto de leer / lectura</td><td>lectura</td></tr>
+              <tr><td>scrivere</td><td class="tbl-pron">scrittura</td><td>escritura / texto</td><td>escritura</td></tr>
+              <tr><td>coprire</td><td class="tbl-pron">copertura</td><td>acto/objeto que cubre</td><td>cobertura</td></tr>
+              <tr><td>cucire</td><td class="tbl-pron">cucitura</td><td>costura</td><td>costura</td></tr>
+              <tr><td>dipingere</td><td class="tbl-pron">pittura</td><td>acto/obra de pintar</td><td>pintura</td></tr>
+              <tr><td>rompere</td><td class="tbl-pron">rottura</td><td>rotura / ruptura</td><td>rotura</td></tr>
+              <tr><td>misurare</td><td class="tbl-pron">misura</td><td>medida</td><td>medida</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">L'<em>apertura</em> della mostra è prevista per le 18; la <em>chiusura</em> alle 22.</div>
+          <div class="ex-es">La apertura de la exposición está prevista para las 18; el cierre a las 22.</div>
+        </div>
+      </div>
+
+      <!-- -ANZA / -ENZA -->
+      <div id="cn-anza" class="chip-panel">
+        <h3>-anza / -enza · <span class="dim">cualidad, estado, acción</span></h3>
+        <p><span class="tag tag-form">formale</span> Forma sustantivos femeninos a partir de <span class="hl">verbos en -are</span> (→ -anza) o <span class="hl">verbos en -ere/-ire y adjetivos en -ente</span> (→ -enza). Indica una cualidad abstracta, un estado o el resultado de la acción.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Base</th><th>Sostantivo</th><th>Tipo</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>tollerare</td><td class="tbl-pron">tolleranza</td><td>de verbo -are</td><td>tolerancia</td></tr>
+              <tr><td>importare</td><td class="tbl-pron">importanza</td><td>de verbo -are</td><td>importancia</td></tr>
+              <tr><td>abbondare</td><td class="tbl-pron">abbondanza</td><td>de verbo -are</td><td>abundancia</td></tr>
+              <tr><td>distante</td><td class="tbl-pron">distanza</td><td>de aggettivo</td><td>distancia</td></tr>
+              <tr><td>dipendere</td><td class="tbl-pron">dipendenza</td><td>de verbo -ere</td><td>dependencia</td></tr>
+              <tr><td>indipendente</td><td class="tbl-pron">indipendenza</td><td>de aggettivo</td><td>independencia</td></tr>
+              <tr><td>conoscere</td><td class="tbl-pron">conoscenza</td><td>de verbo -ere</td><td>conocimiento</td></tr>
+              <tr><td>esperire</td><td class="tbl-pron">esperienza</td><td>de verbo -ire</td><td>experiencia</td></tr>
+              <tr><td>pazientare</td><td class="tbl-pron">pazienza</td><td>de aggettivo paziente</td><td>paciencia</td></tr>
+              <tr><td>sofferente</td><td class="tbl-pron">sofferenza</td><td>de aggettivo</td><td>sufrimiento</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-box"><b>Atención:</b> el italiano dice <em>conoscenza</em>, no <em>*conoscimento</em>; <em>esperienza</em>, no <em>*esperimento</em> (este último existe pero significa «experimento»). El español -miento se corresponde aquí con italiano -enza.</div>
+      </div>
+
+      <!-- -ITÀ -->
+      <div id="cn-ita" class="chip-panel">
+        <h3>-ità (-età, -tà) · <span class="dim">cualidad abstracta</span></h3>
+        <p><span class="tag tag-form">formale</span> Forma sustantivos <span class="hl">femeninos invariables</span> a partir de adjetivos. Es el equivalente directo del español -dad: <em>responsabile→responsabilità</em> ≈ responsable→responsabilidad. La tónica recae siempre en la última sílaba (acento gráfico obligatorio).</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Aggettivo base</th><th>Sostantivo</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>responsabile</td><td class="tbl-pron">responsabilità</td><td>responsabilidad</td></tr>
+              <tr><td>capace</td><td class="tbl-pron">capacità</td><td>capacidad</td></tr>
+              <tr><td>necessario</td><td class="tbl-pron">necessità</td><td>necesidad</td></tr>
+              <tr><td>possibile</td><td class="tbl-pron">possibilità</td><td>posibilidad</td></tr>
+              <tr><td>qualis (lat.)</td><td class="tbl-pron">qualità</td><td>calidad</td></tr>
+              <tr><td>quanto</td><td class="tbl-pron">quantità</td><td>cantidad</td></tr>
+              <tr><td>reale</td><td class="tbl-pron">realtà</td><td>realidad</td></tr>
+              <tr><td>libero</td><td class="tbl-pron">libertà</td><td>libertad</td></tr>
+              <tr><td>vero</td><td class="tbl-pron">verità</td><td>verdad</td></tr>
+              <tr><td>società (← socio)</td><td class="tbl-pron">società</td><td>sociedad</td></tr>
+              <tr><td>identico</td><td class="tbl-pron">identità</td><td>identidad</td></tr>
+              <tr><td>universale</td><td class="tbl-pron">università</td><td>universidad</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="warn-box"><span class="ico">⚠️</span><div>Los sustantivos en <b>-ità</b> son <span class="hl">invariables</span>: <em>la responsabilità</em> / <em>le responsabilità</em>. Nunca <em>*responsabilitàe</em>.</div></div>
+
+        <div class="example-block">
+          <div class="ex-it">La <em>necessità</em> di accordare libertà e <em>responsabilità</em> è una <em>realtà</em> politica.</div>
+          <div class="ex-es">La necesidad de conciliar libertad y responsabilidad es una realidad política.</div>
+        </div>
+      </div>
+
+      <!-- -EZZA -->
+      <div id="cn-ezza" class="chip-panel">
+        <h3>-ezza · <span class="dim">cualidad (más concreta/sensible)</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-inf">neutro</span> Forma sustantivos femeninos a partir de <span class="hl">adjetivos</span>. A diferencia de -ità (cualidad muy abstracta), -ezza tiende a designar cualidades <em>perceptibles, sensoriales o vitales</em>. Sin equivalencia directa en español: a veces -eza (belleza→bellezza), a veces traducción libre.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Aggettivo</th><th>Sostantivo</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>bello</td><td class="tbl-pron">bellezza</td><td>belleza</td></tr>
+              <tr><td>chiaro</td><td class="tbl-pron">chiarezza</td><td>claridad</td></tr>
+              <tr><td>debole</td><td class="tbl-pron">debolezza</td><td>debilidad</td></tr>
+              <tr><td>stanco</td><td class="tbl-pron">stanchezza</td><td>cansancio</td></tr>
+              <tr><td>certo</td><td class="tbl-pron">certezza</td><td>certeza</td></tr>
+              <tr><td>giovane</td><td class="tbl-pron">giovinezza</td><td>juventud</td></tr>
+              <tr><td>vecchio</td><td class="tbl-pron">vecchiezza</td><td>vejez</td></tr>
+              <tr><td>ricco</td><td class="tbl-pron">ricchezza</td><td>riqueza</td></tr>
+              <tr><td>dolce</td><td class="tbl-pron">dolcezza</td><td>dulzura</td></tr>
+              <tr><td>tristo/triste</td><td class="tbl-pron">tristezza</td><td>tristeza</td></tr>
+              <tr><td>amaro</td><td class="tbl-pron">amarezza</td><td>amargura</td></tr>
+              <tr><td>fermo</td><td class="tbl-pron">fermezza</td><td>firmeza</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-box"><b>Regla práctica -ità vs. -ezza:</b> los adjetivos en <em>-bile, -ale, -are, -oso</em> casi siempre dan <b>-ità</b> (responsabilità, nazionalità, popolarità, generosità). Los adjetivos cortos y «sensibles» (bello, debole, stanco, dolce) dan <b>-ezza</b>. No hay frontera perfecta; conviene aprenderlos en pareja.</div>
+      </div>
+
+      <!-- -ISMO / -ISTA -->
+      <div id="cn-ismo" class="chip-panel">
+        <h3>-ismo / -ista · <span class="dim">doctrina / seguidor o practicante</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-inf">neutro</span> Pareja muy productiva, idéntica al español. <b>-ismo</b> forma nombres de doctrinas, sistemas, corrientes; <b>-ista</b> forma el nombre del seguidor o profesional (común a ambos géneros: <em>il/la giornalista</em>).</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Base</th><th>Doctrina</th><th>Seguidor / profesión</th></tr></thead>
+            <tbody>
+              <tr><td>capital-</td><td class="tbl-pron">capitalismo</td><td>capitalista</td></tr>
+              <tr><td>giornal- (giornale)</td><td class="tbl-pron">giornalismo</td><td>giornalista</td></tr>
+              <tr><td>real-</td><td class="tbl-pron">realismo</td><td>realista</td></tr>
+              <tr><td>social-</td><td class="tbl-pron">socialismo</td><td>socialista</td></tr>
+              <tr><td>fasc-</td><td class="tbl-pron">fascismo</td><td>fascista</td></tr>
+              <tr><td>femmin-</td><td class="tbl-pron">femminismo</td><td>femminista</td></tr>
+              <tr><td>impressi-</td><td class="tbl-pron">impressionismo</td><td>impressionista</td></tr>
+              <tr><td>turis-</td><td class="tbl-pron">turismo</td><td>turista</td></tr>
+              <tr><td>art-</td><td>—</td><td>artista</td></tr>
+              <tr><td>dent-</td><td>—</td><td>dentista</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Il <em>giornalista</em> ha criticato il <em>populismo</em> del nuovo partito.</div>
+          <div class="ex-es">El periodista criticó el populismo del nuevo partido.</div>
+        </div>
+      </div>
+
+      <!-- -TORE / -TRICE -->
+      <div id="cn-tore" class="chip-panel">
+        <h3>-tore / -trice · <span class="dim">agente (quien hace)</span></h3>
+        <p><span class="tag tag-form">formale</span> Forma nombres de agente a partir de verbos. <b>-tore</b> para el masculino, <b>-trice</b> para el femenino: <em>scrittore / scrittrice</em>. Variantes: -sore (sobre la misma base que -sione: <em>decidere→decisore</em>).</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Verbo</th><th>Maschile</th><th>Femminile</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>scrivere</td><td class="tbl-pron">scrittore</td><td class="tbl-pron">scrittrice</td><td>escritor/-a</td></tr>
+              <tr><td>produrre</td><td class="tbl-pron">produttore</td><td class="tbl-pron">produttrice</td><td>productor/-a</td></tr>
+              <tr><td>dirigere</td><td class="tbl-pron">direttore</td><td class="tbl-pron">direttrice</td><td>director/-a</td></tr>
+              <tr><td>attendere</td><td class="tbl-pron">attentatore</td><td class="tbl-pron">attentatrice</td><td>atentador/-a</td></tr>
+              <tr><td>leggere</td><td class="tbl-pron">lettore</td><td class="tbl-pron">lettrice</td><td>lector/-a</td></tr>
+              <tr><td>creare</td><td class="tbl-pron">creatore</td><td class="tbl-pron">creatrice</td><td>creador/-a</td></tr>
+              <tr><td>insegnare</td><td class="tbl-pron">insegnante</td><td class="tbl-pron">insegnante</td><td>profesor/-a (-ante)</td></tr>
+              <tr><td>cantare</td><td class="tbl-pron">cantante</td><td class="tbl-pron">cantante</td><td>cantante (-ante)</td></tr>
+              <tr><td>guidare</td><td class="tbl-pron">guidatore</td><td class="tbl-pron">guidatrice</td><td>conductor/-a</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-box"><b>Variante en -ante / -ente:</b> verbos como <em>insegnare, cantare, dirigere</em> también admiten el participio activo como nombre de agente: <em>insegnante, cantante, dirigente</em>. Suelen ser de género común (un/una insegnante).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 3 · SUFFISSI AGGETTIVALI -->
+<section id="s-suff-agg" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">3. Suffissi aggettivali</h2>
+      <p class="sec-subtitle">Cómo formar adjetivos a partir de verbos y nombres</p>
+
+      <div class="def-box">
+        Los <b>suffissi aggettivali</b> generan adjetivos a partir de verbos (<em>mangiare→mangiabile</em>), nombres (<em>pericolo→pericoloso</em>) o adjetivos preexistentes. Cada sufijo aporta un matiz semántico preciso: posibilidad, abundancia, relación, capacidad activa, mérito, carácter.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="showChip('ca-bile',this)">-bile</button>
+        <button class="chip" onclick="showChip('ca-oso',this)">-oso</button>
+        <button class="chip" onclick="showChip('ca-ale',this)">-ale/-are</button>
+        <button class="chip" onclick="showChip('ca-ivo',this)">-ivo</button>
+        <button class="chip" onclick="showChip('ca-evole',this)">-evole</button>
+        <button class="chip" onclick="showChip('ca-esco',this)">-esco</button>
+      </div>
+
+      <!-- -BILE -->
+      <div id="ca-bile" class="chip-panel active">
+        <h3>-bile · <span class="dim">posibilidad pasiva ("que puede ser")</span></h3>
+        <p><span class="tag tag-form">formale</span> Forma adjetivos a partir de <span class="hl">verbos</span>. Significa «que puede ser X-ado». Correspondencia casi perfecta con el español -ble: <em>realizzabile = realizable</em>. Muy productivo; se combina con el prefijo negativo <b>in-</b> para crear el contrario.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Verbo</th><th>Aggettivo</th><th>Negativo</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>mangiare</td><td class="tbl-pron">mangiabile</td><td>immangiabile</td><td>comible / incomible</td></tr>
+              <tr><td>realizzare</td><td class="tbl-pron">realizzabile</td><td>irrealizzabile</td><td>realizable / irrealizable</td></tr>
+              <tr><td>comprendere</td><td class="tbl-pron">comprensibile</td><td>incomprensibile</td><td>comprensible / incomprensible</td></tr>
+              <tr><td>sostenere</td><td class="tbl-pron">sostenibile</td><td>insostenibile</td><td>sostenible / insostenible</td></tr>
+              <tr><td>credere</td><td class="tbl-pron">credibile</td><td>incredibile</td><td>creíble / increíble</td></tr>
+              <tr><td>leggere</td><td class="tbl-pron">leggibile</td><td>illeggibile</td><td>legible / ilegible</td></tr>
+              <tr><td>amare</td><td class="tbl-pron">amabile</td><td>—</td><td>amable</td></tr>
+              <tr><td>tradurre</td><td class="tbl-pron">traducibile</td><td>intraducibile</td><td>traducible / intraducible</td></tr>
+              <tr><td>vedere</td><td class="tbl-pron">visibile</td><td>invisibile</td><td>visible / invisible</td></tr>
+              <tr><td>sopportare</td><td class="tbl-pron">sopportabile</td><td>insopportabile</td><td>soportable / insoportable</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="warn-box"><span class="ico">🎯</span><div><b>Para el hispanohablante:</b> este sufijo es <span class="hl">oro puro</span>. La equivalencia con -ble es casi 1:1. Si conoces el verbo, generalmente puedes derivar el adjetivo en -bile. Ojo a los cambios ortográficos: <em>leggere→leggibile</em> (no *leggibile→leggibile mantiene gg).</div></div>
+      </div>
+
+      <!-- -OSO -->
+      <div id="ca-oso" class="chip-panel">
+        <h3>-oso · <span class="dim">"que tiene mucho de"</span></h3>
+        <p><span class="tag tag-inf">neutro</span> Forma adjetivos a partir de <span class="hl">nombres</span>, indicando abundancia, presencia o cualidad. Equivalente directo del español -oso.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Nome base</th><th>Aggettivo</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>pericolo</td><td class="tbl-pron">pericoloso</td><td>peligroso</td></tr>
+              <tr><td>coraggio</td><td class="tbl-pron">coraggioso</td><td>valiente</td></tr>
+              <tr><td>meraviglia</td><td class="tbl-pron">meraviglioso</td><td>maravilloso</td></tr>
+              <tr><td>fama</td><td class="tbl-pron">famoso</td><td>famoso</td></tr>
+              <tr><td>rumore</td><td class="tbl-pron">rumoroso</td><td>ruidoso</td></tr>
+              <tr><td>amore</td><td class="tbl-pron">amoroso</td><td>amoroso</td></tr>
+              <tr><td>fortuna</td><td class="tbl-pron">fortunato/fortunoso</td><td>afortunado</td></tr>
+              <tr><td>generoso (← genere)</td><td class="tbl-pron">generoso</td><td>generoso</td></tr>
+              <tr><td>noia</td><td class="tbl-pron">noioso</td><td>aburrido</td></tr>
+              <tr><td>gusto</td><td class="tbl-pron">gustoso</td><td>sabroso</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">È un'impresa <em>coraggiosa</em> ma <em>pericolosa</em>: il risultato è incerto.</div>
+          <div class="ex-es">Es una empresa valiente pero peligrosa: el resultado es incierto.</div>
+        </div>
+      </div>
+
+      <!-- -ALE / -ARE -->
+      <div id="ca-ale" class="chip-panel">
+        <h3>-ale / -are · <span class="dim">relativo a, perteneciente a</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-bur">tecnico</span> Forma adjetivos relacionales a partir de <span class="hl">nombres</span>. -ale es el patrón general; -are aparece tras bases que ya contienen una /l/ por disimilación (popolo→popolare, no *popolale).</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Nome</th><th>Aggettivo</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>nazione</td><td class="tbl-pron">nazionale</td><td>nacional</td></tr>
+              <tr><td>società</td><td class="tbl-pron">sociale</td><td>social</td></tr>
+              <tr><td>cultura</td><td class="tbl-pron">culturale</td><td>cultural</td></tr>
+              <tr><td>professione</td><td class="tbl-pron">professionale</td><td>profesional</td></tr>
+              <tr><td>musica</td><td class="tbl-pron">musicale</td><td>musical</td></tr>
+              <tr><td>commercio</td><td class="tbl-pron">commerciale</td><td>comercial</td></tr>
+              <tr><td>centro</td><td class="tbl-pron">centrale</td><td>central</td></tr>
+              <tr><td>popolo</td><td class="tbl-pron">popolare</td><td>popular</td></tr>
+              <tr><td>famiglia</td><td class="tbl-pron">familiare</td><td>familiar</td></tr>
+              <tr><td>lineare (← linea)</td><td class="tbl-pron">lineare</td><td>lineal</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-box"><b>Disimilación -ale/-are:</b> tras una /l/ en la base, el italiano cambia el sufijo a <b>-are</b> para evitar la repetición: <em>famigl<b>i</b>a→familiare</em>, <em>popo<b>l</b>o→popolare</em>, <em>solare</em> (← sole+are por evitar reiteración).</div>
+      </div>
+
+      <!-- -IVO -->
+      <div id="ca-ivo" class="chip-panel">
+        <h3>-ivo · <span class="dim">capacidad activa, tendencia</span></h3>
+        <p><span class="tag tag-form">formale</span> Forma adjetivos a partir de <span class="hl">verbos</span> (sobre el tema del participio pasado): indica la capacidad o tendencia de hacer la acción. Equivalente al español -ivo.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Verbo</th><th>Aggettivo</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>creare</td><td class="tbl-pron">creativo</td><td>creativo</td></tr>
+              <tr><td>costruire</td><td class="tbl-pron">costruttivo</td><td>constructivo</td></tr>
+              <tr><td>distruggere</td><td class="tbl-pron">distruttivo</td><td>destructivo</td></tr>
+              <tr><td>competere</td><td class="tbl-pron">competitivo</td><td>competitivo</td></tr>
+              <tr><td>definire</td><td class="tbl-pron">definitivo</td><td>definitivo</td></tr>
+              <tr><td>produrre</td><td class="tbl-pron">produttivo</td><td>productivo</td></tr>
+              <tr><td>attivare</td><td class="tbl-pron">attivo</td><td>activo</td></tr>
+              <tr><td>passare</td><td class="tbl-pron">passivo</td><td>pasivo</td></tr>
+              <tr><td>preventivare</td><td class="tbl-pron">preventivo</td><td>preventivo</td></tr>
+              <tr><td>educare</td><td class="tbl-pron">educativo</td><td>educativo</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Un dialogo <em>costruttivo</em> richiede un'attitudine <em>attiva</em> e <em>creativa</em>.</div>
+          <div class="ex-es">Un diálogo constructivo requiere una actitud activa y creativa.</div>
+        </div>
+      </div>
+
+      <!-- -EVOLE -->
+      <div id="ca-evole" class="chip-panel">
+        <h3>-evole · <span class="dim">que produce / que merece</span></h3>
+        <p><span class="tag tag-form">formale</span> Forma adjetivos a partir sobre todo de <span class="hl">verbos</span> y algunos nombres. Indica que el sujeto produce, causa o merece lo expresado por la base. No tiene equivalencia directa simple en español.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Base</th><th>Aggettivo</th><th>Significato</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>piacere</td><td class="tbl-pron">piacevole</td><td>que da placer</td><td>agradable</td></tr>
+              <tr><td>ragione</td><td class="tbl-pron">ragionevole</td><td>que tiene razón</td><td>razonable</td></tr>
+              <tr><td>ammirare</td><td class="tbl-pron">ammirevole</td><td>que merece admiración</td><td>admirable</td></tr>
+              <tr><td>lodare</td><td class="tbl-pron">lodevole</td><td>que merece elogio</td><td>loable</td></tr>
+              <tr><td>onorare</td><td class="tbl-pron">onorevole</td><td>que merece honor</td><td>honorable</td></tr>
+              <tr><td>biasimare</td><td class="tbl-pron">biasimevole</td><td>reprochable</td><td>censurable</td></tr>
+              <tr><td>amare</td><td class="tbl-pron">amorevole</td><td>cariñoso</td><td>cariñoso</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-box"><b>Variante -iente / -ente del participio activo:</b> <em>convenire→conveniente</em>, <em>sufficere→sufficiente</em>. No es exactamente -evole, pero comparte la lógica de capacidad activa.</div>
+      </div>
+
+      <!-- -ESCO -->
+      <div id="ca-esco" class="chip-panel">
+        <h3>-esco · <span class="dim">que tiene el carácter de, "a la manera de"</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-acc">marcato</span> Forma adjetivos que indican el estilo, carácter o manera de algo, a menudo con matiz pintoresco, irónico o despectivo. Equivalente parcial al español -esco.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Base</th><th>Aggettivo</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>pittore (← pitto-)</td><td class="tbl-pron">pittoresco</td><td>pintoresco</td></tr>
+              <tr><td>grotta</td><td class="tbl-pron">grottesco</td><td>grotesco</td></tr>
+              <tr><td>Roma (Romano)</td><td class="tbl-pron">romanesco</td><td>romano (dialectal)</td></tr>
+              <tr><td>cavaliere</td><td class="tbl-pron">cavalleresco</td><td>caballeresco</td></tr>
+              <tr><td>scolaro</td><td class="tbl-pron">scolaresco</td><td>escolar (despectivo)</td></tr>
+              <tr><td>dantesco (← Dante)</td><td class="tbl-pron">dantesco</td><td>dantesco</td></tr>
+              <tr><td>burlare</td><td class="tbl-pron">burlesco</td><td>burlesco</td></tr>
+              <tr><td>(Kafka)</td><td class="tbl-pron">kafkiano</td><td>kafkiano (adapt. -iano)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 4 · PREFISSI -->
+<section id="s-prefissi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">4. Prefissi — il sistema completo</h2>
+      <p class="sec-subtitle">Negación, repetición, intensidad, anterioridad, oposición</p>
+
+      <div class="def-box">
+        Los <b>prefissi</b> se anteponen a la base sin cambiar (normalmente) su categoría gramatical: el verbo sigue siendo verbo, el adjetivo sigue siendo adjetivo. Modifican el <span class="hl">significado</span> añadiendo nociones de negación, repetición, exceso, anterioridad, oposición, etc. La mayoría proceden del latín y tienen equivalente directo en español; algunos asimilan su consonante final a la inicial de la base.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="showChip('pr-in',this)">in-/im-/il-/ir-</button>
+        <button class="chip" onclick="showChip('pr-dis',this)">dis-</button>
+        <button class="chip" onclick="showChip('pr-ri',this)">ri-</button>
+        <button class="chip" onclick="showChip('pr-super',this)">super-/sovra-</button>
+        <button class="chip" onclick="showChip('pr-iper',this)">iper-/ultra-</button>
+        <button class="chip" onclick="showChip('pr-sub',this)">sotto-/sub-</button>
+        <button class="chip" onclick="showChip('pr-pre',this)">pre-/post-</button>
+        <button class="chip" onclick="showChip('pr-anti',this)">anti-/co-</button>
+      </div>
+
+      <!-- IN- -->
+      <div id="pr-in" class="chip-panel active">
+        <h3>in- / im- / il- / ir- · <span class="dim">negación, privación</span></h3>
+        <p><span class="tag tag-form">formale</span> Es el prefijo de negación más productivo. <span class="hl">Asimila</span> su consonante final a la consonante inicial de la base: <em>in+p/b → im-</em>, <em>in+l → il-</em>, <em>in+r → ir-</em>. Igual que en español.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Base</th><th>Forma asimilada</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>felice</td><td class="tbl-pron">infelice</td><td>infeliz</td></tr>
+              <tr><td>utile</td><td class="tbl-pron">inutile</td><td>inútil</td></tr>
+              <tr><td>possibile</td><td class="tbl-pron">impossibile</td><td>imposible (im- ante p)</td></tr>
+              <tr><td>maturo</td><td class="tbl-pron">immaturo</td><td>inmaduro (im- ante m)</td></tr>
+              <tr><td>legale</td><td class="tbl-pron">illegale</td><td>ilegal (il- ante l)</td></tr>
+              <tr><td>logico</td><td class="tbl-pron">illogico</td><td>ilógico</td></tr>
+              <tr><td>razionale</td><td class="tbl-pron">irrazionale</td><td>irracional (ir- ante r)</td></tr>
+              <tr><td>ragionevole</td><td class="tbl-pron">irragionevole</td><td>irrazonable</td></tr>
+              <tr><td>responsabile</td><td class="tbl-pron">irresponsabile</td><td>irresponsable</td></tr>
+              <tr><td>sostenibile</td><td class="tbl-pron">insostenibile</td><td>insostenible</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="warn-box"><span class="ico">⚠️</span><div><b>Regla mnemotécnica:</b> in + <em>p/b/m</em> → <b>im</b>-; in + <em>l</em> → <b>il</b>- (doble l); in + <em>r</em> → <b>ir</b>- (doble r). En todos los demás casos, <b>in</b>- se mantiene.</div></div>
+      </div>
+
+      <!-- DIS- -->
+      <div id="pr-dis" class="chip-panel">
+        <h3>dis- · <span class="dim">negación, separación, inversión</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-inf">neutro</span> Indica negación, separación o inversión de la acción/cualidad. Productivo con verbos, nombres y adjetivos. Equivalente al español des-/dis-.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Base</th><th>Derivato</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>accordo</td><td class="tbl-pron">disaccordo</td><td>desacuerdo</td></tr>
+              <tr><td>onesto</td><td class="tbl-pron">disonesto</td><td>deshonesto</td></tr>
+              <tr><td>approvare</td><td class="tbl-pron">disapprovare</td><td>desaprobar</td></tr>
+              <tr><td>fare</td><td class="tbl-pron">disfare</td><td>deshacer</td></tr>
+              <tr><td>occupare</td><td class="tbl-pron">disoccupare</td><td>desocupar</td></tr>
+              <tr><td>ordine</td><td class="tbl-pron">disordine</td><td>desorden</td></tr>
+              <tr><td>uguale</td><td class="tbl-pron">disuguale</td><td>desigual</td></tr>
+              <tr><td>attento</td><td class="tbl-pron">disattento</td><td>distraído</td></tr>
+              <tr><td>continuo</td><td class="tbl-pron">discontinuo</td><td>discontinuo</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- RI- -->
+      <div id="pr-ri" class="chip-panel">
+        <h3>ri- · <span class="dim">repetición, intensidad</span></h3>
+        <p><span class="tag tag-inf">neutro</span> Es el prefijo más productivo del italiano para indicar <span class="hl">repetición</span> («otra vez»). Equivale a re- del español o a «volver a + inf.». Se aplica a casi cualquier verbo.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Verbo</th><th>Derivato</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>leggere</td><td class="tbl-pron">rileggere</td><td>releer</td></tr>
+              <tr><td>stampare</td><td class="tbl-pron">ristampare</td><td>reimprimir</td></tr>
+              <tr><td>cominciare</td><td class="tbl-pron">ricominciare</td><td>volver a empezar</td></tr>
+              <tr><td>fare</td><td class="tbl-pron">rifare</td><td>rehacer</td></tr>
+              <tr><td>vedere</td><td class="tbl-pron">rivedere</td><td>volver a ver</td></tr>
+              <tr><td>scrivere</td><td class="tbl-pron">riscrivere</td><td>reescribir</td></tr>
+              <tr><td>nascere</td><td class="tbl-pron">rinascere</td><td>renacer</td></tr>
+              <tr><td>aprire</td><td class="tbl-pron">riaprire</td><td>reabrir</td></tr>
+              <tr><td>vendere</td><td class="tbl-pron">rivendere</td><td>revender</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Devo <em>rifare</em> tutto da capo: il file si è cancellato.</div>
+          <div class="ex-es">Tengo que rehacer todo desde el principio: el archivo se borró.</div>
+        </div>
+      </div>
+
+      <!-- SUPER- -->
+      <div id="pr-super" class="chip-panel">
+        <h3>super- / sovra- / sopra- · <span class="dim">superioridad, exceso</span></h3>
+        <p><span class="tag tag-form">formale</span> Indican posición superior, exceso o paso por encima. <b>super-</b> es de origen latino culto; <b>sovra-/sopra-</b> son la versión italiana popular.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Base</th><th>Derivato</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>uomo</td><td class="tbl-pron">superuomo</td><td>superhombre</td></tr>
+              <tr><td>superare</td><td class="tbl-pron">superato</td><td>superado / obsoleto</td></tr>
+              <tr><td>naturale</td><td class="tbl-pron">soprannaturale</td><td>sobrenatural</td></tr>
+              <tr><td>tutto</td><td class="tbl-pron">soprattutto</td><td>sobre todo</td></tr>
+              <tr><td>nominare</td><td class="tbl-pron">soprannominare</td><td>apodar</td></tr>
+              <tr><td>valutare</td><td class="tbl-pron">sopravvalutare</td><td>sobrevalorar</td></tr>
+              <tr><td>facie (lat.)</td><td class="tbl-pron">superficiale</td><td>superficial</td></tr>
+              <tr><td>vivere</td><td class="tbl-pron">sopravvivere</td><td>sobrevivir</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- IPER- / ULTRA- -->
+      <div id="pr-iper" class="chip-panel">
+        <h3>iper- / ultra- · <span class="dim">exceso, extremo</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-bur">tecnico</span> Ambos indican grado extremo o exceso. <b>iper-</b> es de origen griego y se usa sobre todo en términos técnicos (medicina, física); <b>ultra-</b> es de origen latino y se usa para «más allá del límite», a menudo con valor político o publicitario.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Base</th><th>Derivato</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>attivo</td><td class="tbl-pron">iperattivo</td><td>hiperactivo</td></tr>
+              <tr><td>calorico</td><td class="tbl-pron">ipercalorico</td><td>hipercalórico</td></tr>
+              <tr><td>tensione</td><td class="tbl-pron">ipertensione</td><td>hipertensión</td></tr>
+              <tr><td>mercato</td><td class="tbl-pron">ipermercato</td><td>hipermercado</td></tr>
+              <tr><td>moderno</td><td class="tbl-pron">ultramoderno</td><td>ultramoderno</td></tr>
+              <tr><td>conservatore</td><td class="tbl-pron">ultraconservatore</td><td>ultraconservador</td></tr>
+              <tr><td>violetto</td><td class="tbl-pron">ultravioletto</td><td>ultravioleta</td></tr>
+              <tr><td>suono</td><td class="tbl-pron">ultrasuono</td><td>ultrasonido</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-box"><b>Pareja antonímica:</b> <b>iper-</b> (exceso) ↔ <b>ipo-</b> (defecto). <em>ipertensione/ipotensione, iperglicemia/ipoglicemia</em>. Ambos son de origen griego, marcadamente técnicos.</div>
+      </div>
+
+      <!-- SOTTO- / SUB- -->
+      <div id="pr-sub" class="chip-panel">
+        <h3>sotto- / sub- · <span class="dim">inferioridad, subordinación</span></h3>
+        <p><span class="tag tag-form">formale</span> Indican posición inferior, valor menor, o categoría subordinada. <b>sotto-</b> es la forma italiana popular; <b>sub-</b> es la culta de origen latino.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Base</th><th>Derivato</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>valutare</td><td class="tbl-pron">sottovalutare</td><td>subestimar</td></tr>
+              <tr><td>sviluppato</td><td class="tbl-pron">sottosviluppato</td><td>subdesarrollado</td></tr>
+              <tr><td>scrivere</td><td class="tbl-pron">sottoscrivere</td><td>suscribir</td></tr>
+              <tr><td>terra</td><td class="tbl-pron">sotterraneo</td><td>subterráneo</td></tr>
+              <tr><td>linea</td><td class="tbl-pron">sottolineare</td><td>subrayar</td></tr>
+              <tr><td>acqueo</td><td class="tbl-pron">subacqueo</td><td>subacuático</td></tr>
+              <tr><td>marino</td><td class="tbl-pron">sottomarino</td><td>submarino</td></tr>
+              <tr><td>titolare</td><td class="tbl-pron">subentrare</td><td>suplir / subrogar</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PRE- / POST- -->
+      <div id="pr-pre" class="chip-panel">
+        <h3>pre- / post- · <span class="dim">anterioridad / posterioridad temporal</span></h3>
+        <p><span class="tag tag-form">formale</span> Pareja temporal muy productiva, idéntica al español.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Base</th><th>Derivato</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>vedere</td><td class="tbl-pron">prevedere</td><td>prever</td></tr>
+              <tr><td>visto</td><td class="tbl-pron">previsto</td><td>previsto</td></tr>
+              <tr><td>storia</td><td class="tbl-pron">preistoria</td><td>prehistoria</td></tr>
+              <tr><td>occupare</td><td class="tbl-pron">preoccupare</td><td>preocupar</td></tr>
+              <tr><td>parare</td><td class="tbl-pron">preparare</td><td>preparar</td></tr>
+              <tr><td>moderno</td><td class="tbl-pron">postmoderno</td><td>postmoderno</td></tr>
+              <tr><td>bellico</td><td class="tbl-pron">postbellico</td><td>de posguerra</td></tr>
+              <tr><td>operatorio</td><td class="tbl-pron">postoperatorio</td><td>postoperatorio</td></tr>
+              <tr><td>laurea</td><td class="tbl-pron">postlaurea</td><td>posgrado</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ANTI- / CO- -->
+      <div id="pr-anti" class="chip-panel">
+        <h3>anti- · <span class="dim">oposición, defensa contra</span></h3>
+        <p>Indica oposición, contrariedad o defensa contra algo. Equivale al español anti-.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Base</th><th>Derivato</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>simpatico</td><td class="tbl-pron">antipatico</td><td>antipático</td></tr>
+              <tr><td>fascista</td><td class="tbl-pron">antifascista</td><td>antifascista</td></tr>
+              <tr><td>corpo</td><td class="tbl-pron">anticorpo</td><td>anticuerpo</td></tr>
+              <tr><td>biotico</td><td class="tbl-pron">antibiotico</td><td>antibiótico</td></tr>
+              <tr><td>orario</td><td class="tbl-pron">antiorario</td><td>antihorario</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="margin-top:1em">co- / con- · <span class="dim">unión, coparticipación</span></h3>
+        <p>Indica unión, asociación o participación conjunta. <b>co-</b> ante vocal o consonante simple; <b>con-</b> (con asimilaciones <em>col-, com-, cor-</em>) ante consonante.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Base</th><th>Derivato</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td>operare</td><td class="tbl-pron">cooperare</td><td>cooperar</td></tr>
+              <tr><td>esistere</td><td class="tbl-pron">coesistere</td><td>coexistir</td></tr>
+              <tr><td>autore</td><td class="tbl-pron">coautore</td><td>coautor</td></tr>
+              <tr><td>fondere</td><td class="tbl-pron">confondere</td><td>confundir</td></tr>
+              <tr><td>vivere</td><td class="tbl-pron">convivere</td><td>convivir</td></tr>
+              <tr><td>laborare</td><td class="tbl-pron">collaborare</td><td>colaborar (col- ante l)</td></tr>
+              <tr><td>reggere</td><td class="tbl-pron">corregere</td><td>corregir (cor- ante r)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 5 · ALTERATI -->
+<section id="s-alterati" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">5. Gli alterati — il sistema completo</h2>
+      <p class="sec-subtitle">Diminutivos, aumentativos, despectivos y afectivos</p>
+
+      <div class="def-box">
+        Los <b>alterati</b> son palabras derivadas por sufijos que <span class="hl">modifican el matiz</span> (tamaño, afecto, desprecio) sin cambiar la categoría gramatical: <em>casa</em> es nombre, <em>casina</em> también. Son extraordinariamente productivos en italiano hablado y literario. Cuatro categorías clásicas: <em>diminutivi, accrescitivi, vezzeggiativi</em> (afectivos) y <em>peggiorativi/dispregiativi</em>. Atención: muchos alterati están <span class="hl">lexicalizados</span> y han perdido su valor original.
+      </div>
+
+      <h3>Inventario de sufijos alteratori</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Sufijo</th><th>Tipo</th><th>Matiz</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td><b>-ino/a</b></td><td>diminutivo + afecto</td><td>pequeño y simpático</td><td>casa→<em>casina</em>, libro→<em>librino</em></td></tr>
+            <tr><td><b>-etto/a</b></td><td>diminutivo neutro</td><td>pequeño, sin connotación</td><td>libro→<em>libretto</em>, casa→<em>casetta</em></td></tr>
+            <tr><td><b>-ello/a</b></td><td>diminutivo + matiz</td><td>pequeño (a veces con leve desprecio)</td><td>fiume→<em>fiumicello</em>, paese→<em>paesello</em></td></tr>
+            <tr><td><b>-uccio/a</b></td><td>diminutivo afectivo</td><td>cariño o lástima</td><td>casa→<em>casuccia</em>, caldo→<em>calduccio</em></td></tr>
+            <tr><td><b>-one/a</b></td><td>accrescitivo</td><td>grande</td><td>libro→<em>librone</em>, donna→<em>donnone</em></td></tr>
+            <tr><td><b>-accio/a</b></td><td>peggiorativo</td><td>despectivo, feo</td><td>parola→<em>parolaccia</em>, giorno→<em>giornataccia</em></td></tr>
+            <tr><td><b>-astro/a</b></td><td>peggiorativo</td><td>de mala calidad</td><td>poeta→<em>poetastro</em>, giovane→<em>giovinastro</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Ejemplos productivos por sufijo</h3>
+
+      <h4>-ino / -ina · diminutivo afectivo</h4>
+      <p>El más frecuente. Forma diminutivos cariñosos.</p>
+      <ul>
+        <li><em>casa → casina</em> (casita) — <em>tavolo → tavolino</em> (mesita) — <em>libro → librino</em> (librito)</li>
+        <li><em>gatto → gattino</em> (gatito) — <em>momento → momentino</em> (momentito) — <em>poco → pochino</em> (poquito)</li>
+      </ul>
+
+      <h4>-etto / -etta · diminutivo neutro</h4>
+      <p>Diminutivo sin carga emocional fuerte. Muy frecuente, especialmente lexicalizado.</p>
+      <ul>
+        <li><em>libro → libretto</em> (librito / programa) — <em>casa → casetta</em> (casita) — <em>finestra → finestrella</em> (ventanita)</li>
+        <li><em>cucchiaio → cucchiaino</em> y <em>cucchiaietto</em> (cuchara pequeña) — <em>bagno → bagnetto</em> (cuarto de baño pequeño)</li>
+      </ul>
+
+      <h4>-ello / -ella · diminutivo con matiz</h4>
+      <ul>
+        <li><em>fiume → fiumicello</em> (riachuelo) — <em>paese → paesello</em> (pueblecito) — <em>asino → asinello</em> (asnillo)</li>
+        <li><em>finestra → finestrella</em> — <em>vento → venticello</em> (brisita)</li>
+      </ul>
+
+      <h4>-uccio / -uccia · diminutivo afectivo o de lástima</h4>
+      <ul>
+        <li><em>casa → casuccia</em> (casita modesta, con cariño) — <em>caldo → calduccio</em> (calorcito acogedor)</li>
+        <li><em>boccuccia</em> (boquita, frecuentemente con cariño) — <em>cavalluccio</em> (caballito)</li>
+      </ul>
+
+      <h4>-one / -ona · accrescitivo</h4>
+      <p>Indica gran tamaño. Atención: ¡muchos cambian de género! <em>la donna → il donnone</em> (un mujerón); <em>la palla → il pallone</em> (el balón).</p>
+      <ul>
+        <li><em>libro → librone</em> (librote) — <em>casa → casona</em> (casona, también con cambio: <em>il casone</em>)</li>
+        <li><em>uomo → omone</em> (un hombretón) — <em>festa → festone</em> (fiestón / guirnalda)</li>
+      </ul>
+
+      <h4>-accio / -accia · peggiorativo</h4>
+      <p>Indica desprecio, fealdad o mala calidad. Muy frecuente para insultos suaves.</p>
+      <ul>
+        <li><em>parola → parolaccia</em> (palabrota) — <em>giornata → giornataccia</em> (día malo)</li>
+        <li><em>tempo → tempaccio</em> (mal tiempo atmosférico) — <em>ragazzo → ragazzaccio</em> (mal chico) — <em>libro → libraccio</em> (mal libro)</li>
+      </ul>
+
+      <h4>-astro / -astra · peggiorativo profesional o moral</h4>
+      <ul>
+        <li><em>poeta → poetastro</em> (mal poeta, poetastro) — <em>medico → medicastro</em> (matasanos)</li>
+        <li><em>giovane → giovinastro</em> (mal joven, golfo) — <em>politico → politicastro</em> (politicastro)</li>
+      </ul>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Atención · alterati lexicalizados:</b> muchos alterati han perdido su valor original y significan otra cosa:
+        <ul style="margin:6px 0">
+          <li><em>bottone</em> NO es «botón grande» sino simplemente «botón» (de origen accrescitivo).</li>
+          <li><em>mattone</em> NO es «mate grande» sino «ladrillo».</li>
+          <li><em>manichino</em> NO es «mano pequeña» sino «maniquí».</li>
+          <li><em>focaccia</em> NO es «mal fuego» sino un tipo de pan plano.</li>
+          <li><em>cavalletto</em> NO es «caballito» sino «trípode/caballete».</li>
+          <li><em>libretto</em> diminutivo, pero también «libreto» (de ópera) o «cartilla».</li>
+        </ul>
+        Estos casos requieren memorización individual: no se pueden derivar a partir de la regla.</div>
+      </div>
+
+      <h3>Combinaciones y restricciones</h3>
+      <p>Los alterati pueden <b>combinarse en cadena</b>: <em>casa → casina → casinetta</em> (a veces). Pero hay restricciones formales:</p>
+      <ul>
+        <li>No se aplican a nombres ya alterados (no <em>*casinaina</em>).</li>
+        <li>Algunos sufijos son incompatibles entre sí.</li>
+        <li>El italiano hablado los usa con creatividad: <em>amorino, amoruccio, amorone</em>.</li>
+      </ul>
+
+      <div class="example-block">
+        <div class="ex-it">Mio nipote ha una <em>casetta</em> in collina; davanti c'è un <em>cancelletto</em> di legno e un <em>cagnolino</em> che abbaia a chiunque passi.</div>
+        <div class="ex-es">Mi sobrino tiene una casita en la colina; delante hay un portoncillo de madera y un perrito que ladra a cualquiera que pase.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 6 · COMPOSIZIONE -->
+<section id="s-composizione" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">6. La composizione — palabras compuestas</h2>
+      <p class="sec-subtitle">Combinación de dos (o más) lexemas en una única palabra</p>
+
+      <div class="def-box">
+        La <b>composizione</b> consiste en formar una palabra nueva combinando <span class="hl">dos lexemas independientes</span>. Es muy productiva en italiano, sobre todo en los compuestos verbo+nombre que designan instrumentos u objetos. Los tipos principales se clasifican según las categorías de los elementos combinados.
+      </div>
+
+      <h3>Tipo 1 · Nome + nome</h3>
+      <p>El segundo elemento suele especificar al primero (o viceversa). El género del compuesto suele coincidir con el del primer elemento. El plural a menudo recae solo en el segundo elemento.</p>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Composto</th><th>Componenti</th><th>Significato</th><th>Spagnolo</th></tr></thead>
+          <tbody>
+            <tr><td>ferrovia</td><td>ferro + via</td><td>vía de hierro</td><td>ferrocarril</td></tr>
+            <tr><td>capolavoro</td><td>capo + lavoro</td><td>la cima del trabajo</td><td>obra maestra</td></tr>
+            <tr><td>banconota</td><td>banca + nota</td><td>nota del banco</td><td>billete</td></tr>
+            <tr><td>pescecane</td><td>pesce + cane</td><td>pez-perro</td><td>tiburón</td></tr>
+            <tr><td>arcobaleno</td><td>arco + baleno</td><td>arco de relámpago</td><td>arcoíris</td></tr>
+            <tr><td>capostazione</td><td>capo + stazione</td><td>jefe de estación</td><td>jefe de estación</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Tipo 2 · Aggettivo + nome (o nome + aggettivo)</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Composto</th><th>Componenti</th><th>Spagnolo</th></tr></thead>
+          <tbody>
+            <tr><td>altoparlante</td><td>alto + parlante</td><td>altavoz</td></tr>
+            <tr><td>bassorilievo</td><td>basso + rilievo</td><td>bajorrelieve</td></tr>
+            <tr><td>francobollo</td><td>franco + bollo</td><td>sello (de correos)</td></tr>
+            <tr><td>terzomondo</td><td>terzo + mondo</td><td>tercer mundo</td></tr>
+            <tr><td>cassaforte</td><td>cassa + forte</td><td>caja fuerte</td></tr>
+            <tr><td>acquaforte</td><td>acqua + forte</td><td>aguafuerte</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Tipo 3 · Verbo + nome</h3>
+      <p>Muy productivo. El verbo (a veces en imperativo, a veces como tema) se une al nombre que es su objeto. El resultado es siempre masculino y suele ser invariable en plural.</p>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Composto</th><th>Componenti</th><th>Significato literal</th><th>Spagnolo</th></tr></thead>
+          <tbody>
+            <tr><td>portafoglio</td><td>porta + foglio</td><td>lleva-hoja</td><td>cartera</td></tr>
+            <tr><td>apribottiglie</td><td>apri + bottiglie</td><td>abre-botellas</td><td>abrebotellas</td></tr>
+            <tr><td>lavastoviglie</td><td>lava + stoviglie</td><td>lava-vajilla</td><td>lavavajillas</td></tr>
+            <tr><td>asciugacapelli</td><td>asciuga + capelli</td><td>seca-cabellos</td><td>secador</td></tr>
+            <tr><td>portacenere</td><td>porta + cenere</td><td>lleva-ceniza</td><td>cenicero</td></tr>
+            <tr><td>spazzaneve</td><td>spazza + neve</td><td>barre-nieve</td><td>quitanieves</td></tr>
+            <tr><td>cavatappi</td><td>cava + tappi</td><td>saca-tapones</td><td>sacacorchos</td></tr>
+            <tr><td>parafulmine</td><td>para + fulmine</td><td>para-rayos</td><td>pararrayos</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note-box"><b>Equivalencia con español:</b> el tipo verbo+nombre coincide casi perfectamente con el español (abrebotellas, lavavajillas, sacacorchos, pararrayos). Pero el italiano lo grafia <span class="hl">en una sola palabra</span>, mientras que el español puede usar también guion o separación.</div>
+
+      <h3>Tipo 4 · Verbo + verbo</h3>
+      <p>Menos productivo, generalmente con valor onomatopéyico o iterativo.</p>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <tbody>
+            <tr><td>saliscendi</td><td>sale + scende</td><td>vaivén / pestillo</td></tr>
+            <tr><td>fuggifuggi</td><td>fugge + fugge</td><td>desbandada</td></tr>
+            <tr><td>dormiveglia</td><td>dorme + veglia</td><td>duermevela</td></tr>
+            <tr><td>tiremmolla</td><td>tira + e + molla</td><td>tira y afloja</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Tipo 5 · Composizione con elementos cultos (confissi)</h3>
+      <p>El italiano formal y técnico utiliza prefijos y sufijos cultos de origen griego o latino, llamados <em>confissi</em>: bio-, geo-, idro-, -logia, -grafia, -fonia, etc.</p>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <tbody>
+            <tr><td>biologia</td><td>bio + logia</td><td>biología</td></tr>
+            <tr><td>geografia</td><td>geo + grafia</td><td>geografía</td></tr>
+            <tr><td>telefono</td><td>tele + fono</td><td>teléfono</td></tr>
+            <tr><td>autostrada</td><td>auto + strada</td><td>autopista</td></tr>
+            <tr><td>idroelettrico</td><td>idro + elettrico</td><td>hidroeléctrico</td></tr>
+            <tr><td>microonda</td><td>micro + onda</td><td>microonda</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>El plural de los compuestos</h3>
+      <p>El plural depende del tipo de compuesto y es <span class="hl">una de las trampas clásicas</span>:</p>
+      <ul>
+        <li><b>Verbo+nome:</b> generalmente invariable si el nombre ya es plural (<em>l'apribottiglie / gli apribottiglie</em>) o si es masculino (<em>il portafoglio / i portafogli</em> — solo cambia la o final).</li>
+        <li><b>Nome+nome:</b> a veces solo cambia el segundo (<em>la banconota / le banconote</em>), a veces ambos (<em>il pescecane / i pescecani</em>).</li>
+        <li><b>Aggettivo+nome:</b> generalmente solo el segundo (<em>il bassorilievo / i bassorilievi</em>).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 7 · TRAPPOLE -->
+<section id="s-trappole" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">7. Trappole per ispanofoni</h2>
+      <p class="sec-subtitle">Calcos, falsas analogías y errores recurrentes</p>
+
+      <p>El español y el italiano comparten el mismo fondo derivativo latino, pero los sufijos no se distribuyen igual. Lo que en español es -miento puede ser -enza, -ura, -mento, -zione o cero-derivazione en italiano. La intuición traiciona. Estas son las trampas más frecuentes.</p>
+
+      <div id="traps-container"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 8 · ESEMPI ANALIZZATI -->
+<section id="s-esempi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">8. Esempi analizzati in contesto</h2>
+      <p class="sec-subtitle">22 oraciones con análisis del proceso de formazione</p>
+
+      <p>Cada oración va acompañada de su traducción y de un breve análisis de las palabras derivadas que contiene, identificando la base, el sufijo o prefijo aplicado y el resultado.</p>
+
+      <!-- 1 -->
+      <div class="example-block">
+        <div class="ex-it">La <em>decisione</em> del governo ha generato una forte <em>contestazione</em> tra i cittadini.</div>
+        <div class="ex-es">La decisión del gobierno ha generado una fuerte contestación entre los ciudadanos.</div>
+        <ul class="analysis-list">
+          <li><b>decisione:</b> verbo <em>decidere</em> + sufijo <b>-sione</b> (deverbal de acción)</li>
+          <li><b>contestazione:</b> verbo <em>contestare</em> + sufijo <b>-zione</b> (deverbal de acción)</li>
+          <li><b>cittadini:</b> nombre <em>città</em> + sufijo <b>-ino</b> (denominal, habitante)</li>
+        </ul>
+      </div>
+
+      <!-- 2 -->
+      <div class="example-block">
+        <div class="ex-it">Il <em>raggiungimento</em> della <em>sostenibilità</em> ambientale richiede un <em>cambiamento</em> radicale dei <em>comportamenti</em>.</div>
+        <div class="ex-es">La consecución de la sostenibilidad ambiental requiere un cambio radical de los comportamientos.</div>
+        <ul class="analysis-list">
+          <li><b>raggiungimento:</b> verbo <em>raggiungere</em> + sufijo <b>-mento</b></li>
+          <li><b>sostenibilità:</b> verbo <em>sostenere</em> → adjetivo <em>sostenibile</em> (-bile) → sustantivo <em>sostenibilità</em> (-ità). <span class="hl">Doble derivazione</span>.</li>
+          <li><b>cambiamento:</b> verbo <em>cambiare</em> + sufijo <b>-mento</b></li>
+          <li><b>comportamenti:</b> verbo <em>comportarsi</em> + sufijo <b>-mento</b>, plural</li>
+        </ul>
+      </div>
+
+      <!-- 3 -->
+      <div class="example-block">
+        <div class="ex-it">Quella <em>casetta</em> in montagna è davvero <em>incantevole</em>, anche se un po' <em>vecchiotta</em>.</div>
+        <div class="ex-es">Esa casita en la montaña es realmente encantadora, aunque un poco vejecita.</div>
+        <ul class="analysis-list">
+          <li><b>casetta:</b> nombre <em>casa</em> + alteratore <b>-etta</b> (diminutivo neutro)</li>
+          <li><b>incantevole:</b> verbo <em>incantare</em> + sufijo <b>-evole</b> (aggettivo: que encanta)</li>
+          <li><b>vecchiotta:</b> adjetivo <em>vecchio</em> + alteratore <b>-otta</b> (variante de -etto/a)</li>
+        </ul>
+      </div>
+
+      <!-- 4 -->
+      <div class="example-block">
+        <div class="ex-it">Il <em>giornalista</em> ha criticato la <em>superficialità</em> del <em>politicastro</em>, accusandolo di <em>incoerenza</em>.</div>
+        <div class="ex-es">El periodista criticó la superficialidad del politicastro, acusándolo de incoherencia.</div>
+        <ul class="analysis-list">
+          <li><b>giornalista:</b> nombre <em>giornale</em> + sufijo <b>-ista</b> (agente, professione)</li>
+          <li><b>superficialità:</b> adjetivo <em>superficiale</em> + sufijo <b>-ità</b> (cualidad abstracta)</li>
+          <li><b>politicastro:</b> nombre <em>politico</em> + alteratore <b>-astro</b> (peggiorativo)</li>
+          <li><b>incoerenza:</b> prefijo negativo <b>in-</b> + <em>coerenza</em> (← coerente + -enza)</li>
+        </ul>
+      </div>
+
+      <!-- 5 -->
+      <div class="example-block">
+        <div class="ex-it">È <em>impossibile</em> dare una <em>spiegazione</em> <em>convincente</em> di un fenomeno così <em>imprevedibile</em>.</div>
+        <div class="ex-es">Es imposible dar una explicación convincente de un fenómeno tan impredecible.</div>
+        <ul class="analysis-list">
+          <li><b>impossibile:</b> <b>in-</b> (asimilado <b>im-</b> ante p) + <em>possibile</em></li>
+          <li><b>spiegazione:</b> verbo <em>spiegare</em> + sufijo <b>-zione</b></li>
+          <li><b>convincente:</b> verbo <em>convincere</em> + sufijo de participio activo <b>-ente</b></li>
+          <li><b>imprevedibile:</b> <b>im-</b> + <em>prevedibile</em> (← prevedere + -bile). Triple derivación.</li>
+        </ul>
+      </div>
+
+      <!-- 6 -->
+      <div class="example-block">
+        <div class="ex-it">L'<em>apertura</em> della nuova <em>biblioteca</em> ha attirato molti <em>lettori</em> entusiasti.</div>
+        <div class="ex-es">La apertura de la nueva biblioteca atrajo a muchos lectores entusiastas.</div>
+        <ul class="analysis-list">
+          <li><b>apertura:</b> verbo <em>aprire</em> + sufijo <b>-tura</b></li>
+          <li><b>biblioteca:</b> composizione culta <em>biblio-</em> + <em>-teca</em></li>
+          <li><b>lettori:</b> verbo <em>leggere</em> + sufijo <b>-tore</b>, plural (agente)</li>
+        </ul>
+      </div>
+
+      <!-- 7 -->
+      <div class="example-block">
+        <div class="ex-it">La <em>conoscenza</em> di una lingua straniera è una <em>ricchezza</em> personale e <em>professionale</em>.</div>
+        <div class="ex-es">El conocimiento de una lengua extranjera es una riqueza personal y profesional.</div>
+        <ul class="analysis-list">
+          <li><b>conoscenza:</b> verbo <em>conoscere</em> + sufijo <b>-enza</b> (¡no *conoscimento!)</li>
+          <li><b>ricchezza:</b> adjetivo <em>ricco</em> + sufijo <b>-ezza</b></li>
+          <li><b>professionale:</b> nombre <em>professione</em> + sufijo relacional <b>-ale</b></li>
+        </ul>
+      </div>
+
+      <!-- 8 -->
+      <div class="example-block">
+        <div class="ex-it">Il <em>sottosviluppo</em> economico genera <em>disuguaglianze</em> <em>insopportabili</em>.</div>
+        <div class="ex-es">El subdesarrollo económico genera desigualdades insoportables.</div>
+        <ul class="analysis-list">
+          <li><b>sottosviluppo:</b> prefijo <b>sotto-</b> + <em>sviluppo</em> (cero-derivación de sviluppare)</li>
+          <li><b>disuguaglianze:</b> <b>dis-</b> + <em>uguaglianza</em> (← uguale + -anza), plural</li>
+          <li><b>insopportabili:</b> <b>in-</b> + <em>sopportabile</em> (← sopportare + -bile), plural</li>
+        </ul>
+      </div>
+
+      <!-- 9 -->
+      <div class="example-block">
+        <div class="ex-it">L'<em>iperattività</em> dei bambini è spesso un segno di <em>insicurezza</em> emotiva.</div>
+        <div class="ex-es">La hiperactividad de los niños es a menudo un signo de inseguridad emocional.</div>
+        <ul class="analysis-list">
+          <li><b>iperattività:</b> prefijo <b>iper-</b> + <em>attività</em> (← attivo + -ità)</li>
+          <li><b>insicurezza:</b> <b>in-</b> + <em>sicurezza</em> (← sicuro + -ezza)</li>
+        </ul>
+      </div>
+
+      <!-- 10 -->
+      <div class="example-block">
+        <div class="ex-it">Il <em>capolavoro</em> del <em>regista</em> ha ricevuto <em>applausi</em> a livello <em>internazionale</em>.</div>
+        <div class="ex-es">La obra maestra del director recibió aplausos a nivel internacional.</div>
+        <ul class="analysis-list">
+          <li><b>capolavoro:</b> composizione nome+nome (capo + lavoro)</li>
+          <li><b>regista:</b> nombre <em>regia</em> + sufijo <b>-ista</b></li>
+          <li><b>applausi:</b> verbo <em>applaudire</em> con cero-derivazione (<em>applauso</em>), plural</li>
+          <li><b>internazionale:</b> prefijo <b>inter-</b> + <em>nazionale</em> (← nazione + -ale)</li>
+        </ul>
+      </div>
+
+      <!-- 11 -->
+      <div class="example-block">
+        <div class="ex-it">Dobbiamo <em>rifare</em> tutto il <em>lavoro</em>: la <em>traduzione</em> è <em>illeggibile</em>.</div>
+        <div class="ex-es">Tenemos que rehacer todo el trabajo: la traducción es ilegible.</div>
+        <ul class="analysis-list">
+          <li><b>rifare:</b> prefijo <b>ri-</b> (repetición) + <em>fare</em></li>
+          <li><b>traduzione:</b> verbo <em>tradurre</em> + sufijo <b>-zione</b></li>
+          <li><b>illeggibile:</b> <b>in-</b> (asimilado <b>il-</b> ante l) + <em>leggibile</em> (← leggere + -bile)</li>
+        </ul>
+      </div>
+
+      <!-- 12 -->
+      <div class="example-block">
+        <div class="ex-it">Quella <em>parolaccia</em> non si dice in <em>società</em>: dimostra <em>maleducazione</em>.</div>
+        <div class="ex-es">Esa palabrota no se dice en sociedad: demuestra mala educación.</div>
+        <ul class="analysis-list">
+          <li><b>parolaccia:</b> nombre <em>parola</em> + alteratore <b>-accia</b> (peggiorativo)</li>
+          <li><b>società:</b> sufijo culto <b>-tà</b> sobre base latina <em>socius</em></li>
+          <li><b>maleducazione:</b> prefijo <b>mal(e)-</b> + <em>educazione</em> (← educare + -zione)</li>
+        </ul>
+      </div>
+
+      <!-- 13 -->
+      <div class="example-block">
+        <div class="ex-it">L'<em>indipendenza</em> economica è una <em>conquista</em> <em>lodevole</em>.</div>
+        <div class="ex-es">La independencia económica es una conquista loable.</div>
+        <ul class="analysis-list">
+          <li><b>indipendenza:</b> <b>in-</b> + <em>dipendenza</em> (← dipendere + -enza). Alternativamente: <em>indipendente</em> + -enza.</li>
+          <li><b>conquista:</b> verbo <em>conquistare</em> con cero-derivazione</li>
+          <li><b>lodevole:</b> verbo <em>lodare</em> + sufijo <b>-evole</b> (que merece elogio)</li>
+        </ul>
+      </div>
+
+      <!-- 14 -->
+      <div class="example-block">
+        <div class="ex-it">Il <em>portafoglio</em> di mio padre era nascosto in un <em>cassetto</em> del <em>tavolino</em>.</div>
+        <div class="ex-es">La cartera de mi padre estaba escondida en un cajón de la mesita.</div>
+        <ul class="analysis-list">
+          <li><b>portafoglio:</b> composizione verbo+nome (porta + foglio)</li>
+          <li><b>cassetto:</b> nombre <em>cassa</em> + alteratore <b>-etto</b> (lexicalizado: «cajón», no «cajita»)</li>
+          <li><b>tavolino:</b> nombre <em>tavolo</em> + alteratore <b>-ino</b></li>
+        </ul>
+      </div>
+
+      <!-- 15 -->
+      <div class="example-block">
+        <div class="ex-it">Il <em>postoperatorio</em> richiede una <em>sorveglianza</em> <em>attenta</em> da parte del personale <em>infermieristico</em>.</div>
+        <div class="ex-es">El postoperatorio requiere una vigilancia atenta por parte del personal de enfermería.</div>
+        <ul class="analysis-list">
+          <li><b>postoperatorio:</b> prefijo <b>post-</b> + <em>operatorio</em> (← operare + -torio)</li>
+          <li><b>sorveglianza:</b> verbo <em>sorvegliare</em> + sufijo <b>-anza</b></li>
+          <li><b>infermieristico:</b> nombre <em>infermiere</em> + sufijo relacional <b>-istico</b></li>
+        </ul>
+      </div>
+
+      <!-- 16 -->
+      <div class="example-block">
+        <div class="ex-it">Le <em>autostrade</em> italiane sono famose per il loro <em>rumoroso</em> <em>traffico</em>.</div>
+        <div class="ex-es">Las autopistas italianas son famosas por su ruidoso tráfico.</div>
+        <ul class="analysis-list">
+          <li><b>autostrade:</b> composizione culta <em>auto-</em> + <em>strada</em>, plural</li>
+          <li><b>rumoroso:</b> nombre <em>rumore</em> + sufijo <b>-oso</b> (que tiene mucho de)</li>
+          <li><b>traffico:</b> cero-derivazione del verbo <em>trafficare</em></li>
+        </ul>
+      </div>
+
+      <!-- 17 -->
+      <div class="example-block">
+        <div class="ex-it">Una <em>collaborazione</em> <em>internazionale</em> è <em>indispensabile</em> per affrontare la <em>crisi</em> climatica.</div>
+        <div class="ex-es">Una colaboración internacional es indispensable para enfrentar la crisis climática.</div>
+        <ul class="analysis-list">
+          <li><b>collaborazione:</b> <b>col-</b> (← con-, asimilado ante l) + <em>laborazione</em>. O: <em>collaborare</em> + -zione.</li>
+          <li><b>internazionale:</b> <b>inter-</b> + <em>nazionale</em></li>
+          <li><b>indispensabile:</b> <b>in-</b> + <em>dispensabile</em> (← dispensare + -bile)</li>
+        </ul>
+      </div>
+
+      <!-- 18 -->
+      <div class="example-block">
+        <div class="ex-it">Il <em>contadinello</em> aveva un <em>cagnolino</em> e una <em>caprettina</em> che lo seguivano ovunque.</div>
+        <div class="ex-es">El campesinito tenía un perrito y una cabritita que lo seguían por todas partes.</div>
+        <ul class="analysis-list">
+          <li><b>contadinello:</b> doble alterazione: <em>contadino</em> + <b>-ello</b></li>
+          <li><b>cagnolino:</b> doble alterazione: <em>cane</em> → cagn- (variante) + <b>-olino</b> (combinación -ol- + -ino)</li>
+          <li><b>caprettina:</b> doble alterazione: <em>capra</em> + <b>-etta</b> + <b>-ina</b></li>
+        </ul>
+        <p class="ex-note">Ejemplo de cómo el italiano apila sufijos diminutivos en registro afectivo o literario.</p>
+      </div>
+
+      <!-- 19 -->
+      <div class="example-block">
+        <div class="ex-it">L'<em>antifascismo</em> e l'<em>antinazionalismo</em> sono <em>componenti</em> essenziali della <em>cultura</em> democratica.</div>
+        <div class="ex-es">El antifascismo y el antinacionalismo son componentes esenciales de la cultura democrática.</div>
+        <ul class="analysis-list">
+          <li><b>antifascismo:</b> <b>anti-</b> + <em>fascismo</em> (← fascio + -ismo)</li>
+          <li><b>antinazionalismo:</b> <b>anti-</b> + <em>nazionalismo</em> (← nazionale + -ismo)</li>
+          <li><b>componenti:</b> verbo <em>comporre</em> + sufijo de participio activo <b>-ente</b>, plural</li>
+        </ul>
+      </div>
+
+      <!-- 20 -->
+      <div class="example-block">
+        <div class="ex-it">Il <em>lavavetri</em> ha lasciato la <em>finestrella</em> <em>splendente</em> nonostante la <em>stanchezza</em>.</div>
+        <div class="ex-es">El limpiacristales dejó la ventanita reluciente a pesar del cansancio.</div>
+        <ul class="analysis-list">
+          <li><b>lavavetri:</b> composizione verbo+nome (lava + vetri)</li>
+          <li><b>finestrella:</b> nombre <em>finestra</em> + alteratore <b>-ella</b> (diminutivo)</li>
+          <li><b>splendente:</b> verbo <em>splendere</em> + sufijo <b>-ente</b> (participio activo)</li>
+          <li><b>stanchezza:</b> adjetivo <em>stanco</em> + sufijo <b>-ezza</b></li>
+        </ul>
+      </div>
+
+      <!-- 21 -->
+      <div class="example-block">
+        <div class="ex-it">La <em>chiarezza</em> espositiva del <em>professore</em> rende <em>comprensibili</em> anche le <em>teorie</em> più <em>complesse</em>.</div>
+        <div class="ex-es">La claridad expositiva del profesor hace comprensibles incluso las teorías más complejas.</div>
+        <ul class="analysis-list">
+          <li><b>chiarezza:</b> adjetivo <em>chiaro</em> + sufijo <b>-ezza</b></li>
+          <li><b>professore:</b> nombre de agente con sufijo culto <b>-ore</b> (de <em>profitere</em>, latín)</li>
+          <li><b>comprensibili:</b> verbo <em>comprendere</em> → <em>comprensibile</em> + plural</li>
+          <li><b>teorie / complesse:</b> formas heredadas, no derivadas en italiano moderno</li>
+        </ul>
+      </div>
+
+      <!-- 22 -->
+      <div class="example-block">
+        <div class="ex-it">La <em>ristrutturazione</em> dell'edificio comporterà la <em>sostituzione</em> di tutti gli <em>infissi</em> e l'<em>installazione</em> di un <em>impianto</em> <em>antincendio</em>.</div>
+        <div class="ex-es">La reestructuración del edificio comportará la sustitución de todos los marcos y la instalación de un sistema antiincendios.</div>
+        <ul class="analysis-list">
+          <li><b>ristrutturazione:</b> <b>ri-</b> + <em>strutturazione</em> (← strutturare + -zione)</li>
+          <li><b>sostituzione:</b> verbo <em>sostituire</em> + sufijo <b>-zione</b></li>
+          <li><b>infissi:</b> participio nominalizado del verbo <em>infiggere</em></li>
+          <li><b>installazione:</b> verbo <em>installare</em> + sufijo <b>-zione</b></li>
+          <li><b>impianto:</b> cero-derivazione del verbo <em>impiantare</em></li>
+          <li><b>antincendio:</b> prefijo <b>anti-</b> + <em>incendio</em></li>
+        </ul>
+      </div>
+
+      <div class="green-box">
+        <b>Práctica clave:</b> entrena con cada oración haciendo el camino en las dos direcciones. Toma un texto y subraya todas las palabras derivadas; identifica la base; intenta predecir el sufijo o prefijo antes de leer el análisis. Después, intenta el camino inverso: a partir de la base, ¿qué derivados conoces o puedes formar? Ese ejercicio doble es el que internaliza el <span class="hl">sistema derivativo</span> y lo convierte en una herramienta productiva, no solo pasiva.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const TRAPS = [
+  {
+    name:'«*Svilluppamento» en lugar de «sviluppo»',
+    wrong:'Lo svilluppamento dell\'azienda è stato rapido.',
+    right:'Lo sviluppo dell\'azienda è stato rapido.',
+    expl:'No todo verbo italiano da sustantivo en -mento. <em>Sviluppare</em> sigue la vía de la cero-derivazione: <em>sviluppo</em>. La intuición del español «desarrollo» (también cero-derivación) ayuda aquí, pero el hispanohablante a veces inventa -mento por analogía con «cambiamento, miglioramento». Otros casos similares: <em>arrivo, ritorno, calcolo, ricerca, aumento</em>.'
+  },
+  {
+    name:'«*Conoscimento» en lugar de «conoscenza»',
+    wrong:'Il conoscimento della lingua è essenziale.',
+    right:'La conoscenza della lingua è essenziale.',
+    expl:'El español «conocimiento» con -miento empuja a inventar <em>*conoscimento</em>, que no existe. El italiano usa <b>-enza</b>: <em>conoscenza</em>. Mismo error con <em>esperienza</em> (¡no *esperimento!) y <em>sofferenza</em>. Regla: muchos verbos en -ere y los adjetivos en -ente dan -enza, no -mento.'
+  },
+  {
+    name:'«*Decizione» en lugar de «decisione»',
+    wrong:'La decizione del comitato è stata unanime.',
+    right:'La decisione del comitato è stata unanime.',
+    expl:'Verbos en -dere (decidere, deridere) y -mettere (trasmettere, ammettere) dan sustantivos en <b>-sione</b>, no en -zione. La grafía es decisiva: <em>decisione, discussione, ammissione, trasmissione</em>. Verbos en -are dan -zione: <em>decorazione</em>. La c o la z marca la diferencia.'
+  },
+  {
+    name:'«*Responsabilitàe» — plural mal formado en -ità',
+    wrong:'Le responsabilitàe sono molteplici.',
+    right:'Le responsabilità sono molteplici.',
+    expl:'Los sustantivos en <b>-ità</b> son INVARIABLES: <em>la responsabilità / le responsabilità</em>. No se añade -e ni -i en plural. La tónica final acentuada bloquea la flexión. Igual con <em>la città / le città</em>, <em>l\'università / le università</em>, <em>la realtà / le realtà</em>.'
+  },
+  {
+    name:'«*Impossible» — calco gráfico del español',
+    wrong:'È impossible accettare questa proposta.',
+    right:'È impossibile accettare questa proposta.',
+    expl:'El italiano siempre añade la <b>vocal final -e</b> en el sufijo <b>-bile</b>, mientras que el español pierde la e final: <em>posible / possibile, terrible / terribile, increíble / incredibile</em>. Es un error ortográfico muy frecuente del hispanohablante.'
+  },
+  {
+    name:'Asimilación del prefijo in- olvidada',
+    wrong:'Una conclusione inlogica e inreale.',
+    right:'Una conclusione illogica e irreale.',
+    expl:'El prefijo negativo <b>in-</b> ASIMILA: in+l → <b>il-</b> (illogico), in+r → <b>ir-</b> (irreale, irrazionale), in+p/b/m → <b>im-</b> (impossibile, immobile). El español aplica la misma regla (ilegal, irreal), pero el hispanohablante a veces se distrae. Memoriza: la consonante se duplica.'
+  },
+  {
+    name:'«*Bottone piccolo» (redundancia)',
+    wrong:'Mi serve un bottone piccolo per la camicia.',
+    right:'Mi serve un bottoncino per la camicia.',
+    expl:'<em>Bottone</em> NO significa «botón grande» a pesar de la forma accrescitiva (-one): es lexicalizado y significa simplemente «botón». Para un botón pequeño se dice <em>bottoncino</em>. Mismo caso: <em>mattone</em> (ladrillo, no «mate grande»), <em>manichino</em> (maniquí, no «mano pequeña»), <em>focaccia</em> (pan plano, no «mal fuego»).'
+  },
+  {
+    name:'Alterazione excesiva en registro formal',
+    wrong:'Nella riunioncina abbiamo discusso del problemino con il documentino.',
+    right:'Nella riunione abbiamo discusso del problema con il documento.',
+    expl:'Los alterati pertenecen al registro coloquial o afectivo. En textos formales (académicos, burocráticos, periodísticos) suenan inadecuados, casi ridículos. La regla: cuanto más formal el contexto, menos alterati. El hispanohablante a veces los usa por exceso de calor expresivo.'
+  },
+  {
+    name:'«*Lavavajilla» como singular',
+    wrong:'Ho comprato un lavastoviglio nuovo.',
+    right:'Ho comprato una lavastoviglie nuova.',
+    expl:'Los compuestos verbo+nombre en italiano son MASCULINOS por defecto, pero algunos (lavastoviglie, asciugacapelli) son INVARIABLES en plural porque el segundo elemento ya está en plural. <em>La lavastoviglie / le lavastoviglie</em> — femenino y invariable. Importante: el género depende del compuesto, no del verbo.'
+  },
+  {
+    name:'Plural en -ità o sufijos invariables: «*città-ies»',
+    wrong:'Ho visitato molte cittàs italiane.',
+    right:'Ho visitato molte città italiane.',
+    expl:'Influencia del inglés/español: el hispanohablante con conocimiento de inglés puede añadir -s al plural italiano. Pero en italiano los sustantivos en -ità y monosílabos acentuados (città, virtù, gioventù) son invariables. Nunca -s al final.'
+  },
+  {
+    name:'Confusión -ezza / -ità (registro y matiz)',
+    wrong:'La bellità del paesaggio mi ha commosso.',
+    right:'La bellezza del paesaggio mi ha commosso.',
+    expl:'<em>Bello</em> da <b>bellezza</b>, no *bellità. Adjetivos cortos y «sensibles» (bello, dolce, debole, certo, stanco, ricco, triste) dan -ezza. Adjetivos terminados en -bile, -ale, -oso, -are dan -ità. Memorizar la pareja base→sustantivo es esencial.'
+  },
+  {
+    name:'«*Sostantivo astratto in -aje» (no existe en italiano)',
+    wrong:'Il bagagio non è arrivato.',
+    right:'Il bagaglio non è arrivato.',
+    expl:'El español tiene -aje (bagaje, paisaje, lenguaje). El italiano usa <b>-aggio</b> (bagaglio, paesaggio, linguaggio). El cambio no es solo gráfico: la consonante doble es típica del italiano. Otros: <em>coraggio, viaggio, formaggio, vantaggio, garaggio (garage)</em>.'
+  },
+  {
+    name:'Prefijo «re-» en lugar de «ri-»',
+    wrong:'Devo releggere questo testo.',
+    right:'Devo rileggere questo testo.',
+    expl:'En español el prefijo de repetición es <b>re-</b> (releer, rehacer). En italiano es <b>ri-</b> (rileggere, rifare, ricominciare). Es un calco ortográfico frecuente. La forma <em>re-</em> existe en italiano pero es restringida y culta: <em>retroattivo</em>. Para repetición productiva, siempre <b>ri-</b>.'
+  },
+  {
+    name:'«*Generosidad» como «generositàe»',
+    wrong:'Apprezzo molto la sua generositàe.',
+    right:'Apprezzo molto la sua generosità.',
+    expl:'No se añade -e final tras la vocal acentuada del sufijo -ità. La forma correcta es <em>generosità, sensibilità, possibilità</em>. La tónica final marcada con acento gráfico bloquea cualquier desinencia adicional.'
+  },
+  {
+    name:'Calco de sufijos cultos: «*objetividade»',
+    wrong:'L\'oggettividade dell\'analisi è discutibile.',
+    right:'L\'oggettività dell\'analisi è discutibile.',
+    expl:'El sufijo culto del español -dad / portugués -dade se traduce siempre por <b>-ità</b> en italiano: <em>oggettività, soggettività, attività, autorità, realtà</em>. Nunca *-idade, *-idad. La consonante final del español desaparece en italiano.'
+  },
+  {
+    name:'«*Cooperazione» con doble o sin asimilación',
+    wrong:'Una conoperazione tra i due paesi è auspicabile.',
+    right:'Una cooperazione tra i due paesi è auspicabile.',
+    expl:'El prefijo <b>co-</b> (variante de con-) se simplifica ante vocal: <em>cooperazione, coesistere, coautore</em>. Ante consonante usa <b>con-</b> o sus asimilados: <em>convivere, collaborare</em> (col- ante l), <em>correggere</em> (cor- ante r). No mezcle las dos formas.'
+  }
+];
+
+function renderTraps(){
+  const c = document.getElementById('traps-container');
+  let html = '';
+  TRAPS.forEach(t=>{
+    html += `<div class="trap-card">
+      <div class="trap-card-header"><span class="trap-name">${t.name}</span></div>
+      <div class="trap-vs">
+        <div class="trap-wrong">${t.wrong}</div>
+        <div class="trap-right">${t.right}</div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function showSection(id, btn){
+  document.querySelectorAll('.sec-block').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function showChip(id, btn){
+  const parent = btn.parentElement.parentElement;
+  parent.querySelectorAll('.chip-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  parent.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function setFontSize(v){
+  document.documentElement.style.setProperty('--fs', v+'px');
+}
+
+renderTraps();
+</script>
+
+</body>
+</html>

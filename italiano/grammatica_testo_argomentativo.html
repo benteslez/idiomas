@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Testo Argomentativo · Grammatica C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ede9df;
+  --card:#faf7f1;
+  --border:#c4bead;
+  --text:#1a1814;
+  --text2:#44413a;
+  --text3:#706c64;
+  --accent:#7a5a0a;
+  --accent-light:#f0e0c0;
+  --accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,0.08);
+  --radius:14px;
+  --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --red:#a81e2e; --red-bg:#fce6e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --teal:#0e6e6e; --teal-bg:#e0f4f4;
+  --fs:15px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-size:var(--fs);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:60px;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text);margin:0 0 .4em;font-weight:600;line-height:1.2}
+h1{font-size:1.85em;font-weight:700}
+h2{font-size:1.45em}
+h3{font-size:1.15em;margin-top:1.1em}
+h4{font-size:1em;font-weight:600}
+p{margin:.5em 0}
+em{font-style:italic}
+b,strong{font-weight:600}
+
+/* HEADER */
+.site-header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 18px 16px;
+  position:relative;
+}
+.site-header .inner{max-width:860px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title-wrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.site-header h1{margin:0;font-size:1.9em;color:var(--text)}
+.header-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.85em;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid var(--accent-mid);
+}
+.subtitle{color:var(--text3);font-size:.92em;margin:4px 0 12px;font-style:italic}
+.stat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stat-pill{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:4px 10px;
+  font-size:.78em;
+  border-radius:999px;
+  font-weight:500;
+}
+.font-ctrl{display:flex;align-items:center;gap:8px;font-size:.78em;color:var(--text3)}
+.font-ctrl input[type=range]{width:90px}
+
+/* SECTION NAV */
+.section-nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:10px 18px;
+  margin-top:14px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.section-nav::-webkit-scrollbar{display:none}
+.section-nav .inner{max-width:860px;margin:0 auto;display:flex;gap:6px;flex-wrap:nowrap}
+.snav-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:6px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82em;
+  border-radius:999px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .15s;
+  font-weight:500;
+}
+.snav-btn:hover{background:var(--accent-light)}
+.snav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* MAIN LAYOUT */
+.main-layout{
+  max-width:860px;
+  margin:0 auto;
+  padding:20px 18px;
+}
+.sec-block{display:none}
+.sec-block.active{display:block;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* GRAM-CARD */
+.gram-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.gram-card-body{padding:18px}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:1.45em;
+  margin:0 0 .4em;
+  color:var(--text);
+}
+.sec-subtitle{color:var(--text3);font-style:italic;font-size:.95em;margin:0 0 14px}
+
+/* DEF-BOX */
+.def-box{
+  background:var(--warn-bg);
+  border-left:4px solid var(--accent);
+  padding:12px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:14px 0;
+  font-size:.96em;
+}
+.def-box b{color:var(--accent)}
+
+/* WARN-BOX */
+.warn-box{
+  background:#fff4e0;
+  border:1px solid #c8900a;
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:12px 0;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:.93em;
+  color:var(--text2);
+}
+.warn-box .ico{font-size:1.1em;flex-shrink:0;line-height:1.3}
+
+/* EXAMPLE BLOCK */
+.example-block{
+  background:var(--blue-bg);
+  border-left:3px solid var(--blue);
+  padding:9px 12px;
+  margin:8px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.ex-it{font-weight:500;color:var(--text)}
+.ex-it em{font-style:normal;color:var(--blue);font-weight:600}
+.ex-es{font-style:italic;color:var(--text2);font-size:.88em;margin-top:2px}
+.ex-note{font-size:.84em;color:var(--text3);margin-top:4px;font-style:italic}
+
+/* NOTE-BOX */
+.note-box{
+  background:var(--purple-bg);
+  border-left:3px solid var(--purple);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.note-box b{color:var(--purple)}
+
+/* GREEN-BOX */
+.green-box{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.green-box b{color:var(--green)}
+
+/* TEAL-BOX */
+.teal-box{
+  background:var(--teal-bg);
+  border-left:3px solid var(--teal);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.teal-box b{color:var(--teal)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.gram-table{width:100%;border-collapse:collapse;font-size:.92em;background:var(--card)}
+.gram-table th{
+  background:var(--accent-light);
+  color:var(--accent);
+  font-family:'DM Sans',sans-serif;
+  font-size:.72em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:8px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--accent-mid);
+}
+.gram-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.gram-table tr:nth-child(even) td{background:rgba(196,190,173,0.12)}
+.gram-table tr:last-child td{border-bottom:none}
+.ok-cell{color:var(--green);font-weight:500}
+.err-cell{color:var(--red);font-weight:500}
+.warn-cell{color:var(--accent);font-weight:500}
+.tbl-pron{font-weight:600;color:var(--text);background:rgba(196,190,173,0.18)}
+
+/* CHIPS */
+.chip-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:14px 0 10px;
+  padding-bottom:4px;
+}
+.chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:5px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.83em;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{background:var(--accent-light)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-panel{display:none}
+.chip-panel.active{display:block;animation:fadeIn .25s}
+
+/* TRAPS */
+.trap-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.trap-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trap-name{font-weight:600;color:var(--text);font-size:.96em}
+.trap-vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.trap-wrong{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-wrong::before{content:'✗ ';color:var(--red);font-weight:700}
+.trap-right{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-right::before{content:'✓ ';color:var(--green);font-weight:700}
+.trap-expl{font-size:.88em;color:var(--text2);font-style:italic;margin-top:6px}
+@media (max-width:520px){.trap-vs{grid-template-columns:1fr}}
+
+/* MINI-TABLE */
+.mini-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.88em;
+  background:var(--card);
+  margin:10px 0;
+}
+.mini-table td{
+  padding:5px 9px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.mini-table td:first-child{color:var(--text3);font-weight:500;width:38%}
+.mini-table td:last-child{color:var(--text);font-weight:600}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table .hl-form{color:var(--accent);font-weight:700}
+
+/* TAG/LABEL */
+.tag{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:.72em;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-right:6px;
+  border:1px solid;
+}
+.tag-form{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.tag-inf{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.tag-acc{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.tag-bur{background:var(--teal-bg);color:var(--teal);border-color:var(--teal)}
+.tag-gio{background:var(--green-bg);color:var(--green);border-color:var(--green)}
+
+/* UTILS */
+.hl{color:var(--accent);font-weight:600}
+.dim{color:var(--text3)}
+
+/* ANALYSIS LIST */
+.analysis-list{
+  font-size:.86em;
+  color:var(--text2);
+  margin-top:6px;
+  padding-left:0;
+  list-style:none;
+}
+.analysis-list li{
+  margin:2px 0;
+  padding-left:12px;
+  position:relative;
+}
+.analysis-list li::before{
+  content:'·';
+  position:absolute;
+  left:2px;
+  color:var(--accent);
+  font-weight:700;
+}
+.analysis-list b{color:var(--accent)}
+
+/* INFO STRUCT DIAGRAM */
+.struct-diag{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 12px;
+  margin:10px 0;
+  font-family:'DM Sans',sans-serif;
+  font-size:.9em;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+.struct-tag{
+  padding:3px 9px;
+  border-radius:999px;
+  font-size:.78em;
+  font-weight:600;
+  border:1px solid;
+}
+.struct-verb{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.struct-nom{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.struct-arrow{color:var(--text3);font-weight:700}
+.struct-text{font-style:italic;color:var(--text2)}
+
+/* STRUTTURA BLOCK (specific to argumentative text) */
+.struttura-block{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin:14px 0;
+}
+.struttura-step{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-left:5px solid var(--accent);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  box-shadow:var(--shadow-sm);
+}
+.struttura-step h4{
+  margin:0 0 6px;
+  color:var(--accent);
+  font-family:'Playfair Display',serif;
+  font-size:1.05em;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.struttura-num{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:var(--accent);
+  color:#fff;
+  font-size:.78em;
+  font-weight:700;
+  font-family:'DM Sans',sans-serif;
+}
+.struttura-step.s-intro{border-left-color:var(--blue)}
+.struttura-step.s-intro h4{color:var(--blue)}
+.struttura-step.s-intro .struttura-num{background:var(--blue)}
+.struttura-step.s-arg{border-left-color:var(--green)}
+.struttura-step.s-arg h4{color:var(--green)}
+.struttura-step.s-arg .struttura-num{background:var(--green)}
+.struttura-step.s-ref{border-left-color:var(--red)}
+.struttura-step.s-ref h4{color:var(--red)}
+.struttura-step.s-ref .struttura-num{background:var(--red)}
+.struttura-step.s-conc{border-left-color:var(--purple)}
+.struttura-step.s-conc h4{color:var(--purple)}
+.struttura-step.s-conc .struttura-num{background:var(--purple)}
+
+/* ANNOTATED MODEL TEXT */
+.model-text{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:16px 18px;
+  margin:14px 0;
+  box-shadow:var(--shadow-sm);
+  font-family:'Playfair Display',serif;
+  font-size:1.02em;
+  line-height:1.7;
+  color:var(--text);
+  position:relative;
+}
+.model-text p{margin:.6em 0;text-align:justify}
+.annot{
+  position:relative;
+  cursor:help;
+  border-bottom:1.5px dashed var(--accent-mid);
+  padding:0 1px;
+}
+.annot-intro{background:linear-gradient(transparent 60%, rgba(22,52,148,0.18) 60%)}
+.annot-tesi{background:linear-gradient(transparent 60%, rgba(122,90,10,0.25) 60%);font-weight:600}
+.annot-arg{background:linear-gradient(transparent 60%, rgba(26,96,40,0.18) 60%)}
+.annot-ref{background:linear-gradient(transparent 60%, rgba(168,30,46,0.18) 60%)}
+.annot-conc{background:linear-gradient(transparent 60%, rgba(106,26,138,0.18) 60%)}
+.annot-conn{color:var(--accent);font-weight:600;font-style:italic}
+
+.model-legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:10px 0 14px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82em;
+}
+.legend-item{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:3px 9px;
+  border-radius:999px;
+  border:1px solid;
+  background:var(--card);
+}
+.legend-dot{
+  display:inline-block;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+}
+.l-intro{border-color:var(--blue);color:var(--blue)}
+.l-intro .legend-dot{background:var(--blue)}
+.l-tesi{border-color:var(--accent-mid);color:var(--accent)}
+.l-tesi .legend-dot{background:var(--accent)}
+.l-arg{border-color:var(--green);color:var(--green)}
+.l-arg .legend-dot{background:var(--green)}
+.l-ref{border-color:var(--red);color:var(--red)}
+.l-ref .legend-dot{background:var(--red)}
+.l-conc{border-color:var(--purple);color:var(--purple)}
+.l-conc .legend-dot{background:var(--purple)}
+
+.model-annotations{
+  margin-top:14px;
+  padding:12px 14px;
+  background:rgba(196,190,173,0.18);
+  border-radius:var(--radius-sm);
+  font-family:'DM Sans',sans-serif;
+  font-size:.88em;
+}
+.model-annotations h4{
+  margin:0 0 8px;
+  color:var(--text2);
+  font-family:'DM Sans',sans-serif;
+  font-size:.78em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.model-annotations ul{margin:4px 0 0;padding-left:0;list-style:none}
+.model-annotations li{
+  margin:4px 0;
+  padding-left:14px;
+  position:relative;
+  color:var(--text2);
+}
+.model-annotations li::before{
+  content:'▸';
+  position:absolute;
+  left:0;
+  color:var(--accent);
+}
+.model-annotations b{color:var(--accent)}
+
+/* FORMULA LIST */
+.formula-list{
+  list-style:none;
+  padding:0;
+  margin:10px 0;
+}
+.formula-list li{
+  padding:6px 10px;
+  margin:4px 0;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  font-size:.93em;
+}
+.formula-list li em{color:var(--blue);font-style:normal;font-weight:600}
+.formula-list li .formula-trad{color:var(--text3);font-style:italic;font-size:.86em;margin-left:6px}
+
+/* RESPONSIVE */
+@media (max-width:520px){
+  .site-header{padding:14px 14px 12px}
+  h1{font-size:1.5em}
+  .main-layout{padding:14px}
+  .gram-card-body{padding:14px}
+  .stat-pill{font-size:.72em}
+  .header-top{flex-direction:column;align-items:flex-start}
+  .model-text{padding:12px 14px;font-size:.96em}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="inner">
+    <div class="header-top">
+      <div>
+        <div class="header-title-wrap">
+          <h1>Il Testo Argomentativo</h1>
+          <span class="header-tag">Grammatica</span>
+        </div>
+        <div class="subtitle">Saggio breve, articolo d'opinione, lettera al direttore · C1 · per ispanofoni</div>
+        <div class="stat-bar">
+          <span class="stat-pill">10 sezioni</span>
+          <span class="stat-pill">struttura canonica</span>
+          <span class="stat-pill">tesi e argomenti</span>
+          <span class="stat-pill">refutazione</span>
+          <span class="stat-pill">connettivi</span>
+          <span class="stat-pill">modello annotato</span>
+          <span class="stat-pill">trappole ES</span>
+        </div>
+      </div>
+      <div class="font-ctrl">
+        <span>A-</span>
+        <input type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+        <span>A+</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION NAV -->
+<nav class="section-nav" id="sec-nav">
+  <div class="inner">
+    <button class="snav-btn active" onclick="showSection('s-concetto',this)">1. Concetto</button>
+    <button class="snav-btn" onclick="showSection('s-struttura',this)">2. Struttura</button>
+    <button class="snav-btn" onclick="showSection('s-tesi',this)">3. La tesi</button>
+    <button class="snav-btn" onclick="showSection('s-argomenti',this)">4. Argomenti</button>
+    <button class="snav-btn" onclick="showSection('s-refutazione',this)">5. Refutazione</button>
+    <button class="snav-btn" onclick="showSection('s-conclusione',this)">6. Conclusione</button>
+    <button class="snav-btn" onclick="showSection('s-registro',this)">7. Registro</button>
+    <button class="snav-btn" onclick="showSection('s-connettivi',this)">8. Connettivi</button>
+    <button class="snav-btn" onclick="showSection('s-modello',this)">9. Modello</button>
+    <button class="snav-btn" onclick="showSection('s-trappole',this)">10. Trappole ES</button>
+  </div>
+</nav>
+
+<main class="main-layout">
+
+<!-- SECCIÓN 1 · CONCETTO -->
+<section id="s-concetto" class="sec-block active">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">1. Che cos'è il testo argomentativo</h2>
+      <p class="sec-subtitle">Il genere testuale che difende una tesi mediante argomenti razionali</p>
+
+      <div class="def-box">
+        Il <b>testo argomentativo</b> è quel tipo di testo il cui obiettivo principale è <span class="hl">difendere una tesi</span> — una posizione, un'opinione, un giudizio — attraverso una catena di argomenti razionali, dati ed esempi. Comporta, in più, la <span class="hl">confutazione</span> (o <em>refutazione</em>) delle tesi avverse e si chiude con una <span class="hl">conclusione</span> che riprende e rafforza la posizione iniziale alla luce di tutto quanto si è esposto. Non si limita a informare (come il testo espositivo) né a raccontare (come il testo narrativo): cerca di <em>persuadere</em> il lettore.
+      </div>
+
+      <h3>I generi del testo argomentativo</h3>
+      <p>Sotto la categoria di «testo argomentativo» rientrano diversi <span class="hl">generi testuali</span>, ognuno con le sue convenzioni specifiche. L'esame C1 ne chiede in particolare alcuni:</p>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Genere</th><th>Caratteristiche</th><th>Registro</th><th>Esempio d'uso</th></tr></thead>
+          <tbody>
+            <tr><td><b>Saggio breve</b></td><td>Testo strutturato 300–600 parole, con tesi esplicita, argomenti documentati e citazioni</td><td class="warn-cell">Formale / accademico</td><td>Esame di certificazione, scuola</td></tr>
+            <tr><td><b>Articolo d'opinione</b></td><td>Testo giornalistico in cui l'autore difende una posizione su un tema d'attualità</td><td class="warn-cell">Formale / pubblicistico</td><td>Editoriali di quotidiani</td></tr>
+            <tr><td><b>Lettera al direttore</b></td><td>Testo breve, indirizzato a un destinatario esplicito, che reagisce a un articolo o evento</td><td class="warn-cell">Formale con tratti dialogici</td><td>Lettere ai giornali</td></tr>
+            <tr><td><b>Testo per dibattito</b></td><td>Discorso preparato per una discussione orale, con tesi, argomenti e refutazione anticipata</td><td>Formale orale</td><td>Dibattiti accademici, debate</td></tr>
+            <tr><td><b>Recensione argomentata</b></td><td>Valutazione critica di un'opera con tesi (positiva/negativa) e argomenti</td><td>Formale</td><td>Riviste culturali</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Lo schema funzionale</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-verb">TESI</span>
+        <span class="struct-text">posizione difesa</span>
+        <span class="struct-arrow">+</span>
+        <span class="struct-tag struct-nom">ARGOMENTI</span>
+        <span class="struct-text">prove a favore</span>
+        <span class="struct-arrow">+</span>
+        <span class="struct-tag struct-verb">ANTITESI</span>
+        <span class="struct-text">refutata</span>
+        <span class="struct-arrow">=</span>
+        <span class="struct-text"><b>PERSUASIONE</b></span>
+      </div>
+
+      <h3>Perché importa per l'ispanofono</h3>
+      <p>Lo spagnolo e l'italiano condividono una tradizione retorica latina comune, ma il <b>saggio italiano formale</b> di livello C1 ha alcune esigenze proprie che lo distinguono dal <em>texto argumentativo</em> spagnolo:</p>
+      <ul>
+        <li>La <span class="hl">refutazione</span> non è opzionale: un saggio C1 che si limiti a presentare gli argomenti a favore della propria tesi è considerato <em>incompleto</em>.</li>
+        <li>Il registro impone l'uso <span class="hl">sistematico del congiuntivo</span> dopo i verbi di opinione, di dubbio e in molte subordinate; in spagnolo l'indicativo è più tollerato in registro scritto.</li>
+        <li>Le <span class="hl">transizioni</span> fra paragrafi devono essere esplicite e marcate con connettivi; il lettore italiano cerca attivamente questi segnali di coesione.</li>
+        <li>Il lessico tende alla <span class="hl">nominalizzazione</span>: «la decisione di intervenire» è preferibile a «decidere di intervenire». [[grammatica_nominalizzazione]]</li>
+      </ul>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Per l'ispanofono:</b> il salto dal B2 al C1 nella produzione scritta passa per la padronanza del <span class="hl">testo argomentativo</span>. Non si tratta solo di avere idee, ma di organizzarle secondo una <em>struttura canonica riconoscibile</em>, di scegliere il <em>registro</em> giusto e di usare un repertorio <em>codificato</em> di formule introduttive, connettivi e marcatori del discorso.</div>
+      </div>
+
+      <h3>Testo argomentativo vs. altri tipi testuali</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Tipo testuale</th><th>Funzione dominante</th><th>Verbi tipici</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td>Narrativo</td><td>Raccontare fatti</td><td>passato remoto, imperfetto</td><td>Racconto, romanzo</td></tr>
+            <tr><td>Descrittivo</td><td>Rappresentare oggetti, luoghi, persone</td><td>presente, imperfetto</td><td>Descrizione di un paesaggio</td></tr>
+            <tr><td>Espositivo</td><td>Informare, spiegare</td><td>presente, indicativo</td><td>Articolo enciclopedico</td></tr>
+            <tr><td class="tbl-pron">Argomentativo</td><td class="tbl-pron">Persuadere, difendere una tesi</td><td class="tbl-pron">congiuntivo, condizionale, modali</td><td class="tbl-pron">Saggio, editoriale</td></tr>
+            <tr><td>Regolativo</td><td>Dare istruzioni</td><td>imperativo, infinito</td><td>Manuale, ricetta</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 2 · STRUTTURA CANONICA -->
+<section id="s-struttura" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">2. La struttura canonica</h2>
+      <p class="sec-subtitle">Quattro tappe obbligatorie: introduzione, argomentazione, refutazione, conclusione</p>
+
+      <div class="def-box">
+        Il testo argomentativo italiano segue uno <b>schema canonico in quattro tappe</b>. Ognuna ha una funzione retorica precisa e un repertorio proprio di formule e connettivi. Saltare una tappa — soprattutto la refutazione — è il difetto più frequente nei saggi di livello C1.
+      </div>
+
+      <div class="struttura-block">
+        <div class="struttura-step s-intro">
+          <h4><span class="struttura-num">1</span>Introduzione</h4>
+          <p>Presenta il <b>tema</b>, lo <b>contestualizza</b> (perché è attuale, controverso, rilevante) e formula esplicitamente la <b>tesi</b> che si intende difendere. Deve agganciare il lettore e impegnarlo intellettualmente, ma non deve anticipare gli argomenti né dilungarsi: 15–20% del testo totale.</p>
+          <ul class="analysis-list">
+            <li><b>Aggancio:</b> dato, citazione, domanda retorica, fatto d'attualità</li>
+            <li><b>Contestualizzazione:</b> situa il tema in un quadro più ampio</li>
+            <li><b>Tesi:</b> dichiarazione esplicita della propria posizione</li>
+          </ul>
+        </div>
+
+        <div class="struttura-step s-arg">
+          <h4><span class="struttura-num">2</span>Argomentazione</h4>
+          <p>Sviluppa i <b>2–3 argomenti</b> a favore della tesi. Ogni argomento occupa un paragrafo proprio, con una <em>frase tematica</em> all'inizio, lo sviluppo (dati, esempi, citazioni di autorità) e una frase di chiusura che ricollega l'argomento alla tesi. È il <span class="hl">corpo</span> del saggio: 40–50% del totale.</p>
+          <ul class="analysis-list">
+            <li><b>Ordine dei paragrafi:</b> dal più forte al più debole, oppure dal più generale al più particolare</li>
+            <li><b>Tipologie:</b> argomento d'autorità, empirico, logico, per analogia, ad absurdum (sezione 4)</li>
+            <li><b>Coesione:</b> connettivi di addizione e progressione (<em>inoltre, per di più, va aggiunto che…</em>)</li>
+          </ul>
+        </div>
+
+        <div class="struttura-step s-ref">
+          <h4><span class="struttura-num">3</span>Refutazione (antitesi)</h4>
+          <p>Espone gli argomenti dei <b>sostenitori della tesi contraria</b> e li <em>confuta</em> uno per uno. La struttura tipica è <span class="hl">concessione + controrisposta</span>: si riconosce ciò che la posizione opposta ha di valido (concessione) e si mostra perché, nonostante questo, non è sufficiente o è errata (controrisposta). 20–25% del testo.</p>
+          <ul class="analysis-list">
+            <li><b>Concessione:</b> «<em>È vero che…</em>» / «<em>Non si può negare che…</em>»</li>
+            <li><b>Controrisposta:</b> «<em>Tuttavia…</em>» / «<em>Eppure…</em>» / «<em>Nondimeno…</em>»</li>
+            <li><b>Funzione:</b> dimostra obiettività, anticipa obiezioni, rafforza la tesi</li>
+          </ul>
+        </div>
+
+        <div class="struttura-step s-conc">
+          <h4><span class="struttura-num">4</span>Conclusione</h4>
+          <p>Tira le <b>somme</b> degli argomenti esposti, <b>riafferma la tesi</b> ormai sostanziata dalle prove e <b>apre</b> a implicazioni più ampie (conseguenze pratiche, prospettive future, riflessioni sociali). Non introduce mai argomenti nuovi: il suo compito è chiudere, non aprire. 15–20% del testo.</p>
+          <ul class="analysis-list">
+            <li><b>Sintesi:</b> riassume i punti-chiave senza ripetere parola per parola</li>
+            <li><b>Riaffermazione:</b> ricolloca la tesi con il peso delle prove portate</li>
+            <li><b>Apertura:</b> implicazioni, prospettive, domanda finale, citazione</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Proporzioni indicative</h3>
+      <p>Per un saggio di circa <b>500 parole</b>, le proporzioni canoniche sono:</p>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Sezione</th><th>% del testo</th><th>Parole indicative</th><th>Numero di paragrafi</th></tr></thead>
+          <tbody>
+            <tr><td>Introduzione</td><td>15–20%</td><td>75–100</td><td>1 paragrafo</td></tr>
+            <tr><td>Argomentazione</td><td>40–50%</td><td>200–250</td><td>2–3 paragrafi</td></tr>
+            <tr><td>Refutazione</td><td>20–25%</td><td>100–125</td><td>1–2 paragrafi</td></tr>
+            <tr><td>Conclusione</td><td>15–20%</td><td>75–100</td><td>1 paragrafo</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="green-box">
+        <b>Regola d'oro:</b> ogni paragrafo deve avere una <span class="hl">frase tematica</span> all'inizio (che annuncia il contenuto del paragrafo) e una <span class="hl">frase di chiusura</span> (che lo lega al paragrafo successivo). Senza queste due cornici, la coesione del saggio crolla.
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div>Errore frequente dell'ispanofono: <b>omettere la refutazione</b>. In Spagna è ammesso il saggio «monologico» (solo tesi + argomenti). In Italia, al C1, l'assenza di refutazione vale come <em>struttura incompleta</em> e abbassa il voto.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 3 · LA TESI -->
+<section id="s-tesi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">3. La tesi — formulazione</h2>
+      <p class="sec-subtitle">Come dichiarare la posizione che si intende difendere</p>
+
+      <div class="def-box">
+        La <b>tesi</b> è il cuore del testo argomentativo: la <span class="hl">posizione</span> che l'autore intende difendere. Deve essere <em>discutibile</em> (un fatto neutro non è una tesi), <em>chiara</em> (formulata in modo esplicito) e <em>presente fin dall'introduzione</em>. Un saggio senza tesi esplicita è, semplicemente, non argomentativo.
+        </div>
+
+      <h3>Caratteristiche di una buona tesi</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Caratteristica</th><th>Spiegazione</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td><b>Discutibile</b></td><td>Deve poter essere contestata da una tesi opposta</td><td class="ok-cell">«L'intelligenza artificiale deve essere regolamentata.»</td></tr>
+            <tr><td><b>Esplicita</b></td><td>Dichiarata, non lasciata implicita</td><td class="ok-cell">«Ritengo che…», «La mia tesi è che…»</td></tr>
+            <tr><td><b>Precisa</b></td><td>Definita nei suoi limiti, non vaga</td><td class="ok-cell">«… in ambito sanitario, prima che si diffonda su larga scala.»</td></tr>
+            <tr><td><b>Sostenibile</b></td><td>Difendibile con argomenti razionali, non solo emotivi</td><td class="ok-cell">Argomenti basati su dati, esempi, autorità</td></tr>
+            <tr><td><b>Non banale</b></td><td>Non un'ovvietà che nessuno contesterebbe</td><td class="err-cell">No: «È bello viaggiare.» (nessuno lo nega)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Formule canoniche per introdurre la tesi</h3>
+
+      <h4>Registro personale (prima persona moderata)</h4>
+      <ul class="formula-list">
+        <li><em>Ritengo che…</em> <span class="formula-trad">creo que… [+ congiuntivo]</span></li>
+        <li><em>Sono convinto/-a che…</em> <span class="formula-trad">estoy convencido/-a de que… [+ congiuntivo]</span></li>
+        <li><em>A mio avviso / A mio parere…</em> <span class="formula-trad">en mi opinión… [+ indicativo]</span></li>
+        <li><em>Secondo me…</em> <span class="formula-trad">según yo… [registro più colloquiale]</span></li>
+        <li><em>È mia convinzione che…</em> <span class="formula-trad">es mi convicción que… [+ congiuntivo]</span></li>
+        <li><em>Intendo sostenere che…</em> <span class="formula-trad">pretendo sostener que… [+ congiuntivo]</span></li>
+        <li><em>La tesi che intendo difendere è che…</em> <span class="formula-trad">la tesis que defenderé es que… [+ congiuntivo]</span></li>
+      </ul>
+
+      <h4>Registro impersonale (più formale)</h4>
+      <ul class="formula-list">
+        <li><em>È innegabile che…</em> <span class="formula-trad">es innegable que… [+ congiuntivo]</span></li>
+        <li><em>Risulta evidente che…</em> <span class="formula-trad">resulta evidente que… [+ indicativo]</span></li>
+        <li><em>Si può sostenere che…</em> <span class="formula-trad">se puede sostener que… [+ congiuntivo]</span></li>
+        <li><em>Vi sono buone ragioni per ritenere che…</em> <span class="formula-trad">hay buenas razones para creer que… [+ congiuntivo]</span></li>
+        <li><em>La questione presente lascia pochi dubbi: …</em> <span class="formula-trad">presentación assertiva senza «io»</span></li>
+        <li><em>Pare ormai assodato che…</em> <span class="formula-trad">parece ya establecido que… [+ congiuntivo]</span></li>
+      </ul>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Congiuntivo obbligatorio</b> dopo verbi e formule di opinione, convinzione, ritenere, parere: <em>ritengo che <b>sia</b> giusto</em>, non <em>*ritengo che <b>è</b> giusto</em>. Lo spagnolo ammette l'indicativo dopo <em>creer que</em> in molte zone; l'italiano scritto C1 esige il congiuntivo. [[grammatica_congiuntivo_presente]]</div>
+      </div>
+
+      <h3>Tesi forte vs. tesi debole</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><b>Tesi forte:</b> «<em>Sono convinto che l'introduzione obbligatoria dell'educazione affettiva nelle scuole italiane sia la misura più urgente per ridurre la violenza di genere fra i giovani.</em>»</div>
+        <div class="ex-note">Esplicita, precisa (chi: scuole italiane; cosa: educazione affettiva; perché: ridurre violenza di genere; quale destinatario: i giovani), discutibile.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>Tesi debole:</b> «<em>Penso che la violenza sia un problema importante.</em>»</div>
+        <div class="ex-note">Vaga, banale, non contestabile: nessuno difenderebbe la tesi opposta. Non si potrà costruire una vera argomentazione su di essa.</div>
+      </div>
+
+      <h3>Posizione della tesi nel testo</h3>
+      <p>La tesi può comparire in tre posizioni canoniche; ognuna ha effetti retorici diversi:</p>
+      <ul>
+        <li><b>Tesi all'inizio</b> (modello deduttivo): la più comune nell'esame C1. Si dichiara subito e poi si dimostra. Maggiore chiarezza.</li>
+        <li><b>Tesi alla fine</b> (modello induttivo): si presentano prima i fatti e si tira la conclusione. Maggiore effetto persuasivo se ben fatto, ma rischioso.</li>
+        <li><b>Tesi all'inizio e ripresa alla fine</b> (modello a cornice): la più solida. Si annuncia, si dimostra, si riafferma.</li>
+      </ul>
+
+      <div class="green-box">
+        <b>Per l'esame C1:</b> opta per il modello <span class="hl">a cornice</span>. Tesi esplicita nell'introduzione, ripresa rafforzata nella conclusione. Questo schema soddisfa le aspettative dei valutatori italiani e offre una struttura chiara al lettore.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 4 · GLI ARGOMENTI -->
+<section id="s-argomenti" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">4. Gli argomenti — tipologie e struttura</h2>
+      <p class="sec-subtitle">I cinque tipi di argomento e come costruirli</p>
+
+      <div class="def-box">
+        Un <b>argomento</b> è una ragione che sostiene la tesi. La retorica classica distingue diversi <span class="hl">tipi di argomento</span> a seconda della loro fonte: l'autorità di un esperto, i dati empirici, la deduzione logica, l'analogia o l'assurdo. Un saggio C1 di qualità mescola <em>almeno due o tre tipologie</em>; usarne una sola produce un testo monotono e poco persuasivo.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="showChip('arg-autorita',this)">Autorità</button>
+        <button class="chip" onclick="showChip('arg-empirico',this)">Empirico</button>
+        <button class="chip" onclick="showChip('arg-logico',this)">Logico</button>
+        <button class="chip" onclick="showChip('arg-analogia',this)">Analogia</button>
+        <button class="chip" onclick="showChip('arg-absurdum',this)">Ad absurdum</button>
+        <button class="chip" onclick="showChip('arg-esempio',this)">Esempio</button>
+      </div>
+
+      <!-- AUTORITÀ -->
+      <div id="arg-autorita" class="chip-panel active">
+        <h3>Argomento d'autorità · <span class="dim">citazione di esperti</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-acc">accademico</span> Si appoggia sul <span class="hl">prestigio di una fonte</span> riconosciuta: studiosi, istituzioni, organismi internazionali, classici della cultura. La forza dipende dalla <em>credibilità</em> dell'autorità citata e dalla <em>pertinenza</em> al tema.</p>
+
+        <h4>Formule introduttive</h4>
+        <ul class="formula-list">
+          <li><em>Secondo X, ricercatrice di…, …</em> <span class="formula-trad">según X, investigadora de…</span></li>
+          <li><em>Come ha sostenuto X, …</em> <span class="formula-trad">como ha sostenido X…</span></li>
+          <li><em>X afferma che…</em> <span class="formula-trad">X afirma que… [+ indicativo o cong.]</span></li>
+          <li><em>Stando alle dichiarazioni di X, …</em> <span class="formula-trad">según las declaraciones de X…</span></li>
+          <li><em>A giudizio di X, …</em> <span class="formula-trad">a juicio de X…</span></li>
+          <li><em>Come ricorda X nel suo libro…</em> <span class="formula-trad">como recuerda X en su libro…</span></li>
+          <li><em>L'OMS / l'Istat / il MIUR ha riconosciuto che…</em> <span class="formula-trad">istituzioni come autorità</span></li>
+        </ul>
+
+        <div class="example-block">
+          <div class="ex-it"><em>Secondo</em> Tullio De Mauro, linguista e autore di numerosi studi sull'analfabetismo funzionale in Italia, oltre il 30% degli adulti italiani non riesce a comprendere un testo di media complessità.</div>
+          <div class="ex-es">Según Tullio De Mauro, lingüista y autor de numerosos estudios sobre el analfabetismo funcional en Italia, más del 30% de los adultos italianos no logra comprender un texto de complejidad media.</div>
+        </div>
+
+        <div class="warn-box"><span class="ico">⚠️</span><div>L'autorità citata deve essere <b>pertinente</b> al tema. Citare un fisico su questioni morali, o un filosofo su dati epidemiologici, indebolisce l'argomento invece di rafforzarlo.</div></div>
+      </div>
+
+      <!-- EMPIRICO -->
+      <div id="arg-empirico" class="chip-panel">
+        <h3>Argomento empirico · <span class="dim">dati, statistiche, fatti</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-bur">documentato</span> Si appoggia su <span class="hl">dati misurabili</span>: percentuali, statistiche, risultati di ricerche, fatti storici. È l'argomento più «oggettivo» e quello che convince di più nei saggi di taglio scientifico o sociologico.</p>
+
+        <h4>Formule introduttive</h4>
+        <ul class="formula-list">
+          <li><em>I dati Istat del 2024 mostrano che…</em> <span class="formula-trad">los datos del Istat de 2024 muestran que…</span></li>
+          <li><em>Secondo un recente rapporto di X, …</em> <span class="formula-trad">según un reciente informe de X…</span></li>
+          <li><em>Una ricerca condotta da X ha rilevato che…</em> <span class="formula-trad">una investigación realizada por X ha detectado que…</span></li>
+          <li><em>Le statistiche indicano un aumento del X%…</em> <span class="formula-trad">las estadísticas indican un aumento del X%…</span></li>
+          <li><em>Basta pensare che…</em> <span class="formula-trad">basta pensar en que…</span></li>
+          <li><em>I numeri parlano chiaro: …</em> <span class="formula-trad">los números hablan claro:…</span></li>
+          <li><em>Nel solo anno scorso, …</em> <span class="formula-trad">solo el año pasado…</span></li>
+        </ul>
+
+        <div class="example-block">
+          <div class="ex-it">I <em>dati</em> Istat <em>mostrano</em> che, nel 2024, oltre 1,5 milioni di giovani italiani fra i 15 e i 29 anni rientravano nella categoria dei NEET — un dato che colloca l'Italia all'ultimo posto in Europa.</div>
+          <div class="ex-es">Los datos del Istat muestran que, en 2024, más de 1,5 millones de jóvenes italianos entre 15 y 29 años entraban en la categoría NEET — un dato que coloca a Italia en el último puesto de Europa.</div>
+        </div>
+
+        <div class="note-box"><b>Pulizia retorica:</b> nei saggi d'esame non occorre <em>inventare</em> dati precisi; basta riferirsi a fonti plausibili («<em>secondo recenti studi sociologici</em>», «<em>i dati Istat degli ultimi anni</em>»). L'importante è la <em>forma argomentativa</em>, non l'esattezza della cifra.</div>
+      </div>
+
+      <!-- LOGICO -->
+      <div id="arg-logico" class="chip-panel">
+        <h3>Argomento logico · <span class="dim">deduzione causale</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-acc">accademico</span> Si appoggia su una <span class="hl">catena di inferenze</span>: se A è vero, allora B; se B, allora C, ergo C è vero. Tipico del discorso filosofico, giuridico, scientifico.</p>
+
+        <h4>Formule introduttive</h4>
+        <ul class="formula-list">
+          <li><em>Se è vero che…, allora ne consegue che…</em> <span class="formula-trad">si es cierto que…, entonces se sigue que…</span></li>
+          <li><em>Da ciò si deduce che…</em> <span class="formula-trad">de ello se deduce que…</span></li>
+          <li><em>Ne deriva necessariamente che…</em> <span class="formula-trad">deriva necesariamente que…</span></li>
+          <li><em>Per ciò stesso, …</em> <span class="formula-trad">por ello mismo…</span></li>
+          <li><em>Pertanto / Di conseguenza / Dunque…</em> <span class="formula-trad">por consiguiente / por lo tanto…</span></li>
+          <li><em>Se accettiamo che…, dobbiamo riconoscere che…</em> <span class="formula-trad">si aceptamos que…, debemos reconocer que…</span></li>
+          <li><em>Ciò implica che…</em> <span class="formula-trad">ello implica que… [+ congiuntivo]</span></li>
+        </ul>
+
+        <div class="example-block">
+          <div class="ex-it"><em>Se è vero che</em> l'istruzione è un diritto fondamentale, <em>allora ne consegue che</em> ogni barriera all'accesso scolastico — economica, geografica o culturale — costituisce una violazione di tale diritto.</div>
+          <div class="ex-es">Si es cierto que la educación es un derecho fundamental, entonces se sigue que toda barrera al acceso escolar — económica, geográfica o cultural — constituye una violación de tal derecho.</div>
+        </div>
+      </div>
+
+      <!-- ANALOGIA -->
+      <div id="arg-analogia" class="chip-panel">
+        <h3>Argomento per analogia · <span class="dim">confronto fra casi simili</span></h3>
+        <p><span class="tag tag-form">formale</span> Si appoggia sulla <span class="hl">somiglianza</span> fra il caso in discussione e un altro caso noto, di cui si conosce l'esito. Se in X è successo Y, allora plausibilmente anche nel caso attuale succederà Y.</p>
+
+        <h4>Formule introduttive</h4>
+        <ul class="formula-list">
+          <li><em>Come nel caso di X, anche in questo…</em> <span class="formula-trad">como en el caso de X, también en este…</span></li>
+          <li><em>Analogamente a quanto è avvenuto in X, …</em> <span class="formula-trad">de modo análogo a lo ocurrido en X…</span></li>
+          <li><em>Allo stesso modo in cui…</em> <span class="formula-trad">del mismo modo en que…</span></li>
+          <li><em>Un caso del tutto paragonabile è…</em> <span class="formula-trad">un caso del todo comparable es…</span></li>
+          <li><em>Sull'esempio di X, …</em> <span class="formula-trad">siguiendo el ejemplo de X…</span></li>
+          <li><em>L'esperienza di X insegna che…</em> <span class="formula-trad">la experiencia de X enseña que…</span></li>
+        </ul>
+
+        <div class="example-block">
+          <div class="ex-it"><em>Come nel caso</em> dei paesi scandinavi, che hanno introdotto il congedo di paternità obbligatorio negli anni Settanta, <em>anche in</em> Italia una misura simile potrebbe favorire una distribuzione più equa del lavoro domestico.</div>
+          <div class="ex-es">Como en el caso de los países escandinavos, que introdujeron el permiso de paternidad obligatorio en los años setenta, también en Italia una medida similar podría favorecer una distribución más equitativa del trabajo doméstico.</div>
+        </div>
+
+        <div class="warn-box"><span class="ico">⚠️</span><div>L'analogia funziona solo se i due casi sono <b>davvero comparabili</b>. Confondere situazioni diverse produce la fallacia della <em>falsa analogia</em>, debolezza facile da smontare.</div></div>
+      </div>
+
+      <!-- AD ABSURDUM -->
+      <div id="arg-absurdum" class="chip-panel">
+        <h3>Argomento ad absurdum · <span class="dim">conseguenze inaccettabili</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-acc">retorico</span> Si appoggia sull'<span class="hl">esibizione delle conseguenze inaccettabili</span> della tesi opposta o dell'inazione. «Se non facessimo X, succederebbe Y, che è chiaramente inaccettabile.» Usa spesso il <span class="hl">periodo ipotetico dell'irrealtà</span>.</p>
+
+        <h4>Formule introduttive</h4>
+        <ul class="formula-list">
+          <li><em>Se non si adottassero misure, si arriverebbe a…</em> <span class="formula-trad">si no se adoptasen medidas, se llegaría a…</span></li>
+          <li><em>Immaginiamo per un momento che…</em> <span class="formula-trad">imaginemos por un momento que…</span></li>
+          <li><em>Si pensi a cosa significherebbe…</em> <span class="formula-trad">piénsese en lo que significaría…</span></li>
+          <li><em>Se accogliessimo questa tesi, dovremmo accettare che…</em> <span class="formula-trad">si aceptáramos esta tesis, deberíamos aceptar que…</span></li>
+          <li><em>Ciò porterebbe inevitabilmente a…</em> <span class="formula-trad">ello llevaría inevitablemente a…</span></li>
+          <li><em>Spinto alle estreme conseguenze, questo ragionamento implicherebbe che…</em> <span class="formula-trad">llevado a sus últimas consecuencias…</span></li>
+        </ul>
+
+        <div class="example-block">
+          <div class="ex-it"><em>Se non si adottassero</em> misure urgenti per il contenimento delle emissioni, <em>si arriverebbe</em>, secondo le proiezioni dell'IPCC, a un aumento medio di 3°C entro fine secolo — uno scenario in cui ampie zone del Mediterraneo diverrebbero inabitabili.</div>
+          <div class="ex-es">Si no se adoptasen medidas urgentes para la contención de las emisiones, se llegaría, según las proyecciones del IPCC, a un aumento medio de 3 °C para finales de siglo — un escenario en que amplias zonas del Mediterráneo se volverían inhabitables.</div>
+        </div>
+
+        <div class="note-box"><b>Periodo ipotetico:</b> l'argomento <em>ad absurdum</em> usa quasi sempre il <span class="hl">periodo ipotetico di terzo tipo</span> (irrealtà presente o futura): <em>se non si facesse X, si avrebbe Y</em>. [[grammatica_periodo_ipotetico]]</div>
+      </div>
+
+      <!-- ESEMPIO -->
+      <div id="arg-esempio" class="chip-panel">
+        <h3>Argomento per esempio · <span class="dim">caso concreto illustrativo</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-inf">neutro</span> Si appoggia su un <span class="hl">caso concreto</span> che illustra la tesi. Non è una prova in senso stretto, ma serve a <em>dare carne</em> a un argomento astratto e a fissarlo nella memoria del lettore.</p>
+
+        <h4>Formule introduttive</h4>
+        <ul class="formula-list">
+          <li><em>Basti pensare a…</em> <span class="formula-trad">baste pensar en…</span></li>
+          <li><em>Si consideri il caso di…</em> <span class="formula-trad">considérese el caso de…</span></li>
+          <li><em>Per fare un esempio…</em> <span class="formula-trad">por poner un ejemplo…</span></li>
+          <li><em>Un caso emblematico è quello di…</em> <span class="formula-trad">un caso emblemático es el de…</span></li>
+          <li><em>Prendiamo il caso di…</em> <span class="formula-trad">tomemos el caso de…</span></li>
+          <li><em>A titolo di esempio, …</em> <span class="formula-trad">a título de ejemplo…</span></li>
+          <li><em>Emblematica in tal senso è la vicenda di…</em> <span class="formula-trad">emblemática en este sentido es la historia de…</span></li>
+        </ul>
+
+        <div class="example-block">
+          <div class="ex-it"><em>Si consideri il caso</em> della città di Bologna, che già nel 2018 ha introdotto la sperimentazione delle «zone 30» nei quartieri residenziali: i dati comunali registrano una riduzione del 40% degli incidenti gravi.</div>
+          <div class="ex-es">Considérese el caso de la ciudad de Bolonia, que ya en 2018 introdujo la experimentación de las «zonas 30» en los barrios residenciales: los datos municipales registran una reducción del 40% de los accidentes graves.</div>
+        </div>
+      </div>
+
+      <h3>Struttura tipica di un paragrafo argomentativo</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-verb">FRASE TEMATICA</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-tag struct-nom">SVILUPPO</span>
+        <span class="struct-text">(dato, esempio, citazione)</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-tag struct-verb">CHIUSURA</span>
+        <span class="struct-text">(riaggancia alla tesi)</span>
+      </div>
+
+      <div class="green-box">
+        <b>Mix vincente per il C1:</b> nell'argomentazione, alterna un <em>argomento empirico</em> (con dati) + un <em>argomento d'autorità</em> (con citazione) + un <em>argomento logico</em> (con deduzione). Questa triade è la combinazione più solida e impressiona positivamente i valutatori italiani.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 5 · LA REFUTAZIONE -->
+<section id="s-refutazione" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">5. La refutazione (antitesi)</h2>
+      <p class="sec-subtitle">Come confutare le tesi avverse: concessione + controrisposta</p>
+
+      <div class="def-box">
+        La <b>refutazione</b> (o <em>confutazione</em>) è la parte del saggio in cui si <span class="hl">presentano gli argomenti della tesi contraria e li si smonta</span>. Non è facoltativa: nel saggio italiano C1 è un <em>requisito strutturale</em> e la sua assenza viene sanzionata. Il modello canonico segue lo schema <span class="hl">concessione + controrisposta</span>: si riconosce ciò che la posizione avversa ha di valido (mostrandosi obiettivi) per poi smontarla con efficacia.
+      </div>
+
+      <h3>Lo schema concessivo-avversativo</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-verb">CONCESSIONE</span>
+        <span class="struct-text">«È vero che X…»</span>
+        <span class="struct-arrow">+</span>
+        <span class="struct-tag struct-nom">CONTRORISPOSTA</span>
+        <span class="struct-text">«Tuttavia / Eppure Y…»</span>
+        <span class="struct-arrow">=</span>
+        <span class="struct-text"><b>REFUTAZIONE</b></span>
+      </div>
+
+      <h3>Formule di concessione</h3>
+      <p>La concessione mostra che <em>capiamo</em> e <em>rispettiamo</em> la posizione opposta. Non la accettiamo, ma riconosciamo che ha qualche fondamento. Tipicamente regge il <span class="hl">congiuntivo</span> nelle subordinate.</p>
+
+      <ul class="formula-list">
+        <li><em>È vero che chi sostiene il contrario afferma…</em> <span class="formula-trad">es cierto que quien sostiene lo contrario afirma…</span></li>
+        <li><em>Bisogna ammettere che…</em> <span class="formula-trad">hay que admitir que… [+ cong./ind.]</span></li>
+        <li><em>Non si può negare che…</em> <span class="formula-trad">no se puede negar que… [+ congiuntivo]</span></li>
+        <li><em>Pur riconoscendo che…</em> <span class="formula-trad">aun reconociendo que… [+ congiuntivo via gerundio]</span></li>
+        <li><em>Sebbene sia comprensibile che…</em> <span class="formula-trad">aunque sea comprensible que… [+ congiuntivo]</span></li>
+        <li><em>Per quanto sia legittimo sostenere che…</em> <span class="formula-trad">por más que sea legítimo sostener que…</span></li>
+        <li><em>Certo, può sembrare che…</em> <span class="formula-trad">cierto, puede parecer que… [+ congiuntivo]</span></li>
+        <li><em>Vi è chi ritiene che…</em> <span class="formula-trad">hay quienes consideran que… [+ congiuntivo]</span></li>
+        <li><em>Si potrebbe obiettare che…</em> <span class="formula-trad">se podría objetar que… [+ congiuntivo]</span></li>
+        <li><em>Una possibile obiezione è che…</em> <span class="formula-trad">una posible objeción es que…</span></li>
+        <li><em>Ammesso che…, …</em> <span class="formula-trad">admitido que… [+ congiuntivo]</span></li>
+        <li><em>Pur ammettendo che…, …</em> <span class="formula-trad">aun admitiendo que…</span></li>
+      </ul>
+
+      <h3>Formule di controrisposta (smontaggio)</h3>
+      <p>La controrisposta è la parte che <em>confuta</em> davvero la concessione. Si introduce con un connettivo avversativo forte.</p>
+
+      <ul class="formula-list">
+        <li><em>Tuttavia, …</em> <span class="formula-trad">sin embargo… [il più frequente]</span></li>
+        <li><em>Eppure, …</em> <span class="formula-trad">y sin embargo… [enfatico]</span></li>
+        <li><em>Nondimeno, …</em> <span class="formula-trad">no obstante… [formale, letterario]</span></li>
+        <li><em>Ciò nonostante / Nonostante ciò, …</em> <span class="formula-trad">a pesar de ello…</span></li>
+        <li><em>D'altra parte, …</em> <span class="formula-trad">por otra parte…</span></li>
+        <li><em>In realtà, …</em> <span class="formula-trad">en realidad…</span></li>
+        <li><em>A ben vedere, …</em> <span class="formula-trad">si se mira bien…</span></li>
+        <li><em>Bisogna però osservare che…</em> <span class="formula-trad">hay que observar sin embargo que…</span></li>
+        <li><em>Va però precisato che…</em> <span class="formula-trad">conviene sin embargo precisar que…</span></li>
+        <li><em>Resta il fatto che…</em> <span class="formula-trad">queda el hecho de que…</span></li>
+        <li><em>Questa argomentazione, però, non regge se…</em> <span class="formula-trad">esta argumentación, sin embargo, no se sostiene si…</span></li>
+        <li><em>Tale tesi appare però difficilmente sostenibile…</em> <span class="formula-trad">tal tesis resulta sin embargo difícilmente sostenible…</span></li>
+      </ul>
+
+      <h3>Esempi di refutazione completa</h3>
+
+      <div class="example-block">
+        <div class="ex-it"><em>È vero che</em> l'introduzione dell'obbligo vaccinale comprime, in una certa misura, la libertà individuale di scelta sanitaria. <em>Tuttavia</em>, tale compressione risulta proporzionata al bene collettivo della salute pubblica: l'immunità di gregge protegge proprio coloro che, per ragioni mediche, non possono vaccinarsi.</div>
+        <div class="ex-es">Es cierto que la introducción de la obligación vacunal comprime, en cierta medida, la libertad individual de elección sanitaria. Sin embargo, tal compresión resulta proporcionada al bien colectivo de la salud pública: la inmunidad de grupo protege precisamente a quienes, por razones médicas, no pueden vacunarse.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Si potrebbe obiettare che</em> la regolamentazione dell'intelligenza artificiale freni l'innovazione tecnologica. <em>Eppure</em>, l'esperienza dell'industria farmaceutica mostra il contrario: le regole rigorose hanno spinto la ricerca verso soluzioni più sicure e affidabili, e proprio per questo più competitive sul mercato globale.</div>
+        <div class="ex-es">Se podría objetar que la regulación de la inteligencia artificial frene la innovación tecnológica. Y sin embargo, la experiencia de la industria farmacéutica muestra lo contrario: las reglas rigurosas han empujado a la investigación hacia soluciones más seguras y fiables, y precisamente por ello más competitivas en el mercado global.</div>
+      </div>
+
+      <h3>Tre modalità di refutazione</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Modalità</th><th>Strategia</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td><b>Smontare le premesse</b></td><td>Mostrare che la premessa dell'avversario è falsa</td><td><em>Non è vero che X: i dati mostrano che…</em></td></tr>
+            <tr><td><b>Smontare la deduzione</b></td><td>Accettare le premesse ma negare che ne consegua la tesi avversa</td><td><em>Anche ammesso X, da ciò non discende che…</em></td></tr>
+            <tr><td><b>Ridimensionare</b></td><td>Riconoscere parte della tesi ma circoscriverne la portata</td><td><em>X è vero in certi casi, ma non per la maggioranza…</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Per l'ispanofono:</b> la <span class="hl">refutazione è obbligatoria</span> nel saggio italiano di livello C1. Saltarla — anche in un saggio di soli 300 parole — significa scrivere un testo strutturalmente <em>incompleto</em>. Un buon paragrafo di refutazione dimostra al valutatore che si padroneggia la complessità del problema e che si sa difendere la tesi <em>contro</em> le obiezioni, non solo <em>a favore</em>.</div>
+      </div>
+
+      <div class="note-box"><b>Posizione della refutazione:</b> di solito viene <em>dopo</em> l'argomentazione (introduzione → argomenti → refutazione → conclusione). In alcuni casi, però, conviene <em>anticipare</em> l'obiezione subito dopo la tesi («<em>Si potrebbe obiettare che…, ma…</em>») per togliere terreno all'avversario fin dall'inizio.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 6 · LA CONCLUSIONE -->
+<section id="s-conclusione" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">6. La conclusione</h2>
+      <p class="sec-subtitle">Sintesi, riaffermazione della tesi e apertura</p>
+
+      <div class="def-box">
+        La <b>conclusione</b> chiude il saggio. Ha tre compiti precisi: <span class="hl">sintetizzare</span> i punti-chiave dell'argomentazione (senza ripeterli parola per parola), <span class="hl">riaffermare la tesi</span> alla luce delle prove portate, e <span class="hl">aprire</span> a implicazioni più ampie. <em>Non</em> è il luogo per nuovi argomenti: ogni idea introdotta qui rimane sospesa senza sviluppo.
+      </div>
+
+      <h3>I tre movimenti della conclusione</h3>
+
+      <div class="struttura-block">
+        <div class="struttura-step s-conc">
+          <h4><span class="struttura-num">A</span>Sintesi</h4>
+          <p>Riprende i punti-chiave dell'argomentazione in forma <em>riassuntiva</em>. Non è una ripetizione, ma una <span class="hl">ricapitolazione</span>: si distillano gli argomenti nella loro forma più condensata e si mostra come si collegano fra loro.</p>
+        </div>
+        <div class="struttura-step s-conc">
+          <h4><span class="struttura-num">B</span>Riaffermazione</h4>
+          <p>La tesi è già stata dichiarata nell'introduzione. Qui si <span class="hl">ricolloca</span> nel testo, ma <em>arricchita</em> dal peso delle prove portate. La formulazione può essere identica o riformulata, ma il contenuto deve essere lo stesso.</p>
+        </div>
+        <div class="struttura-step s-conc">
+          <h4><span class="struttura-num">C</span>Apertura</h4>
+          <p>Il saggio si chiude con un'<span class="hl">apertura</span>: una conseguenza pratica della tesi, una prospettiva futura, una domanda retorica, una citazione, un appello al lettore. Lascia il lettore con qualcosa da pensare.</p>
+        </div>
+      </div>
+
+      <h3>Formule per la conclusione</h3>
+
+      <h4>Introdurre la conclusione</h4>
+      <ul class="formula-list">
+        <li><em>In conclusione, …</em> <span class="formula-trad">en conclusión…</span></li>
+        <li><em>In definitiva, …</em> <span class="formula-trad">en definitiva… [molto formale]</span></li>
+        <li><em>Alla luce di quanto detto / esposto, …</em> <span class="formula-trad">a la luz de lo expuesto…</span></li>
+        <li><em>Per concludere, …</em> <span class="formula-trad">para concluir…</span></li>
+        <li><em>In sintesi, …</em> <span class="formula-trad">en síntesis…</span></li>
+        <li><em>Tirando le somme, …</em> <span class="formula-trad">haciendo balance…</span></li>
+        <li><em>Riassumendo, …</em> <span class="formula-trad">resumiendo…</span></li>
+        <li><em>Alla fine di questa riflessione, …</em> <span class="formula-trad">al final de esta reflexión…</span></li>
+        <li><em>Per quanto si è visto, …</em> <span class="formula-trad">por lo que se ha visto…</span></li>
+      </ul>
+
+      <h4>Riaffermare la tesi</h4>
+      <ul class="formula-list">
+        <li><em>Ne consegue che…</em> <span class="formula-trad">se sigue que… [+ congiuntivo]</span></li>
+        <li><em>Risulta chiaro, dunque, che…</em> <span class="formula-trad">resulta claro, pues, que…</span></li>
+        <li><em>Si può quindi affermare con sicurezza che…</em> <span class="formula-trad">se puede pues afirmar con seguridad que…</span></li>
+        <li><em>Tutto ciò conferma la tesi iniziale: …</em> <span class="formula-trad">todo ello confirma la tesis inicial:…</span></li>
+        <li><em>Le ragioni esposte autorizzano a sostenere che…</em> <span class="formula-trad">las razones expuestas autorizan a sostener que…</span></li>
+      </ul>
+
+      <h4>Aprire a implicazioni</h4>
+      <ul class="formula-list">
+        <li><em>Resta da chiedersi se…</em> <span class="formula-trad">queda por preguntarse si…</span></li>
+        <li><em>Sarebbe ora di…</em> <span class="formula-trad">sería hora de…</span></li>
+        <li><em>Una riflessione che ci interpella tutti…</em> <span class="formula-trad">una reflexión que nos interpela a todos…</span></li>
+        <li><em>Si apre dunque un orizzonte…</em> <span class="formula-trad">se abre pues un horizonte…</span></li>
+        <li><em>Resta il compito, urgente, di…</em> <span class="formula-trad">queda la tarea, urgente, de…</span></li>
+        <li><em>Solo il futuro dirà se…</em> <span class="formula-trad">solo el futuro dirá si…</span></li>
+      </ul>
+
+      <h3>Esempio di conclusione completa</h3>
+      <div class="example-block">
+        <div class="ex-it"><em>Alla luce di quanto esposto</em>, il quadro che emerge è coerente: i dati Istat, le esperienze di paesi paragonabili al nostro e la stessa logica del diritto fondamentale all'istruzione convergono nel mostrare che un investimento pubblico nella scuola dell'obbligo non è un costo, ma una <em>condizione di possibilità</em> della democrazia. <em>Si può dunque affermare con sicurezza che</em> ogni taglio in questo settore rappresenta un debito contratto con le generazioni future. <em>Resta da chiedersi</em> per quanto tempo ancora la politica italiana potrà permettersi di rimandare questa scelta.</div>
+        <div class="ex-es">A la luz de lo expuesto, el cuadro que emerge es coherente: los datos del Istat, las experiencias de países comparables al nuestro y la propia lógica del derecho fundamental a la educación convergen en mostrar que una inversión pública en la enseñanza obligatoria no es un coste, sino una condición de posibilidad de la democracia. Se puede pues afirmar con seguridad que todo recorte en este sector representa una deuda contraída con las generaciones futuras. Queda por preguntarse durante cuánto tiempo más la política italiana podrá permitirse aplazar esta elección.</div>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Errore frequente:</b> introdurre <span class="hl">nuovi argomenti nella conclusione</span>. La conclusione chiude, non apre nuovi fronti. Se un argomento è importante, sviluppalo nel corpo del saggio; se viene in mente solo alla fine, conviene riscrivere il saggio piuttosto che infilarlo qui.</div>
+      </div>
+
+      <div class="green-box">
+        <b>Effetto a cornice:</b> per chiusura di forte impatto, riprendi nella conclusione un'<em>immagine</em>, una <em>citazione</em> o un <em>dato</em> usati nell'introduzione, ma rivisitati ora alla luce di tutta l'argomentazione. Questo effetto «<em>a cornice</em>» (o <em>ring composition</em>) è il marchio di un saggio ben strutturato.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 7 · REGISTRO -->
+<section id="s-registro" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">7. Registro e risorse linguistiche</h2>
+      <p class="sec-subtitle">Le scelte stilistiche del saggio formale italiano</p>
+
+      <div class="def-box">
+        Il saggio italiano formale impone alcune <span class="hl">scelte stilistiche</span> precise che lo distinguono dal parlato e dalla prosa colloquiale: nominalizzazione, frequenza del passivo, uso sistematico del congiuntivo, alternanza fra prima persona moderata e impersonale, varietà lessicale. Non si tratta di pignoleria: queste scelte costruiscono la <em>credibilità</em> dello scrittore e la <em>chiarezza</em> dell'argomentazione.
+      </div>
+
+      <h3>Le sette risorse del registro formale</h3>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="showChip('reg-nominalizz',this)">Nominalizzazione</button>
+        <button class="chip" onclick="showChip('reg-passiva',this)">Passiva</button>
+        <button class="chip" onclick="showChip('reg-congiuntivo',this)">Congiuntivo</button>
+        <button class="chip" onclick="showChip('reg-persona',this)">Persona</button>
+        <button class="chip" onclick="showChip('reg-lessico',this)">Lessico</button>
+        <button class="chip" onclick="showChip('reg-frasi',this)">Frasi</button>
+        <button class="chip" onclick="showChip('reg-evitare',this)">Da evitare</button>
+      </div>
+
+      <!-- NOMINALIZZAZIONE -->
+      <div id="reg-nominalizz" class="chip-panel active">
+        <h3>Nominalizzazione · <span class="dim">verbi → sostantivi</span></h3>
+        <p>Il registro formale italiano preferisce le <span class="hl">forme nominali</span> alle verbali. Invece di «<em>decidere di intervenire</em>», si scrive «<em>la decisione di intervenire</em>»; invece di «<em>quando si è chiusa la riunione</em>», «<em>alla chiusura della riunione</em>». Questa scelta concentra l'informazione e abbassa il numero di verbi finiti. [[grammatica_nominalizzazione]]</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Forma verbale (informale)</th><th>Forma nominalizzata (formale)</th></tr></thead>
+            <tbody>
+              <tr><td>quando il governo ha deciso di intervenire</td><td class="tbl-pron">in seguito alla decisione governativa di intervenire</td></tr>
+              <tr><td>quando si applica la legge</td><td class="tbl-pron">all'atto dell'applicazione della legge</td></tr>
+              <tr><td>perché i dati aumentano</td><td class="tbl-pron">a causa dell'aumento dei dati</td></tr>
+              <tr><td>quando arriverà</td><td class="tbl-pron">al suo arrivo</td></tr>
+              <tr><td>perché si sviluppa l'industria</td><td class="tbl-pron">per via dello sviluppo industriale</td></tr>
+              <tr><td>se si introducesse questa norma</td><td class="tbl-pron">con l'introduzione di questa norma</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PASSIVA -->
+      <div id="reg-passiva" class="chip-panel">
+        <h3>Forma passiva · <span class="dim">spostare l'attenzione sull'oggetto</span></h3>
+        <p>Il passivo è uno strumento del formale: <em>sposta l'attenzione</em> sull'oggetto del verbo (chi/che cosa subisce l'azione) e permette di omettere l'agente quando non è rilevante. Per il saggio si usano: <span class="hl">essere + participio</span>, <span class="hl">venire + participio</span> e <span class="hl">andare + participio</span> (quest'ultimo solo con valore di dovere). [[grammatica_forma_passiva]]</p>
+
+        <div class="example-block">
+          <div class="ex-it"><b>Attivo:</b> Il legislatore ha approvato la riforma. → <b>Passivo:</b> La riforma <em>è stata approvata</em> dal legislatore.</div>
+          <div class="ex-it"><b>Attivo:</b> Bisogna applicare la norma. → <b>Passivo con «andare»:</b> La norma <em>va applicata</em>.</div>
+        </div>
+
+        <div class="note-box"><b>Si passivante:</b> spesso preferibile al passivo «pieno» nelle argomentazioni generali: «<em>Si può sostenere che…</em>» suona più formale e impersonale di «<em>Si è sostenuto che…</em>». [[grammatica_si_impersonale]]</div>
+      </div>
+
+      <!-- CONGIUNTIVO -->
+      <div id="reg-congiuntivo" class="chip-panel">
+        <h3>Congiuntivo · <span class="dim">obbligatorio dopo opinione e dubbio</span></h3>
+        <p>Nel saggio formale, il <span class="hl">congiuntivo</span> dopo verbi e formule di opinione, dubbio, possibilità, necessità <em>non è opzionale</em>. È un marcatore di registro: la sua assenza segnala automaticamente un livello inferiore al C1. [[grammatica_congiuntivo_registro]]</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Trigger</th><th>Congiuntivo presente</th><th>Congiuntivo imperfetto/trapassato</th></tr></thead>
+            <tbody>
+              <tr><td>Ritengo che…</td><td class="ok-cell">…sia importante</td><td class="ok-cell">…fosse importante</td></tr>
+              <tr><td>Non si può negare che…</td><td class="ok-cell">…esista un problema</td><td class="ok-cell">…esistesse un problema</td></tr>
+              <tr><td>Sebbene…</td><td class="ok-cell">…sia vero</td><td class="ok-cell">…fosse vero</td></tr>
+              <tr><td>Affinché…</td><td class="ok-cell">…si possa intervenire</td><td class="ok-cell">…si potesse intervenire</td></tr>
+              <tr><td>Bisogna che…</td><td class="ok-cell">…si agisca</td><td class="ok-cell">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="warn-box"><span class="ico">⚠️</span><div>Errore tipico ispanofono: <em>*Ritengo che <b>è</b> giusto</em>. Forma corretta: <em>Ritengo che <b>sia</b> giusto</em>. In spagnolo l'indicativo è ammesso dopo «creer que» (afermativo); in italiano scritto C1, è inaccettabile.</div></div>
+      </div>
+
+      <!-- PERSONA -->
+      <div id="reg-persona" class="chip-panel">
+        <h3>Prima persona vs. impersonale · <span class="dim">due voci possibili</span></h3>
+        <p>Il saggio italiano ammette due voci principali. La <span class="hl">prima persona moderata</span> (io o noi) è usata per dichiarare la tesi e le opinioni personali. L'<span class="hl">impersonale</span> (si passivante, soggetto generico) è preferito nello sviluppo argomentativo, per ragioni di maggiore obiettività.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Persona</th><th>Uso tipico</th><th>Esempio</th></tr></thead>
+            <tbody>
+              <tr><td><b>Prima singolare (io)</b></td><td>Dichiarazione della tesi</td><td><em>Ritengo che… / A mio avviso…</em></td></tr>
+              <tr><td><b>Prima plurale (noi)</b></td><td>Coinvolge il lettore</td><td><em>Dobbiamo riconoscere che… / Pensiamo a…</em></td></tr>
+              <tr><td><b>Impersonale «si»</b></td><td>Argomentazione obiettiva</td><td><em>Si può sostenere che… / Si è osservato che…</em></td></tr>
+              <tr><td><b>Passivo</b></td><td>Resoconto di dati e ricerche</td><td><em>È stato dimostrato che…</em></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-box"><b>Equilibrio raccomandato:</b> dichiara la tesi in <em>io/a mio avviso</em>, sviluppa gli argomenti con <em>si/passivo</em>, e riaffermala alla fine in <em>io/noi</em>. L'alternanza è naturale e non disturba.</div>
+      </div>
+
+      <!-- LESSICO -->
+      <div id="reg-lessico" class="chip-panel">
+        <h3>Lessico · <span class="dim">precisione, varietà, registro alto</span></h3>
+        <p>Il saggio formale evita le <span class="hl">ripetizioni lessicali</span> usando sinonimi, iperonimi e parafrasi. Sostituisce verbi generici (<em>fare, dire, cosa</em>) con verbi precisi (<em>realizzare, sostenere, questione</em>). Predilige il lessico di origine culta latina e i tecnicismi del registro.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Generico (da evitare)</th><th>Preciso (preferito)</th><th>Contesto</th></tr></thead>
+            <tbody>
+              <tr><td>fare un'analisi</td><td class="tbl-pron">condurre / realizzare / svolgere un'analisi</td><td>argomentazione</td></tr>
+              <tr><td>fare una scelta</td><td class="tbl-pron">operare / compiere una scelta</td><td>argomentazione</td></tr>
+              <tr><td>fare un cambiamento</td><td class="tbl-pron">apportare un cambiamento / introdurre una modifica</td><td>argomentazione</td></tr>
+              <tr><td>la cosa importante è…</td><td class="tbl-pron">la questione / l'aspetto cruciale è…</td><td>tesi</td></tr>
+              <tr><td>tante cose</td><td class="tbl-pron">numerosi aspetti / molteplici elementi</td><td>argomentazione</td></tr>
+              <tr><td>dire che…</td><td class="tbl-pron">sostenere / affermare / dichiarare / argomentare che…</td><td>argomentazione</td></tr>
+              <tr><td>parlare di…</td><td class="tbl-pron">trattare di… / occuparsi di… / soffermarsi su…</td><td>introduzione</td></tr>
+              <tr><td>vedere che…</td><td class="tbl-pron">constatare / rilevare / osservare che…</td><td>argomentazione</td></tr>
+              <tr><td>il problema</td><td class="tbl-pron">la questione / la problematica / il nodo</td><td>varie</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="green-box"><b>Tecnica della «coppia sinonimica»:</b> quando un termine compare per la seconda volta nel saggio, sostituiscilo con un sinonimo o un iperonimo. Esempio: <em>la decisione</em> → <em>la scelta</em> → <em>il provvedimento</em> → <em>la misura</em>. Questa varietà lessicale è uno dei tratti più riconoscibili del registro alto.</div>
+      </div>
+
+      <!-- FRASI -->
+      <div id="reg-frasi" class="chip-panel">
+        <h3>Costruzione delle frasi · <span class="dim">né troppo brevi né troppo lunghe</span></h3>
+        <p>Il saggio italiano formale preferisce frasi di <span class="hl">media lunghezza</span> (15–25 parole), con una struttura ipotattica (subordinate) ma non bizantina. Le frasi troppo brevi suonano spezzettate e infantili; quelle troppo lunghe perdono il lettore.</p>
+
+        <div class="example-block">
+          <div class="ex-it" style="color:var(--red)"><b>Troppo breve:</b> «<em>L'inquinamento è grave. Bisogna agire. Non c'è tempo. È urgente.</em>»</div>
+          <div class="ex-it" style="color:var(--green)"><b>Equilibrato:</b> «<em>L'inquinamento atmosferico ha ormai raggiunto livelli tali da richiedere un intervento immediato, senza che vi sia ancora margine per ulteriori rinvii.</em>»</div>
+        </div>
+
+        <div class="note-box"><b>Ipotassi controllata:</b> usa subordinate relative, causali, concessive, ipotetiche per articolare il pensiero. Ma non sovrapporre più di 2–3 livelli di subordinazione nella stessa frase: si rischia di perdere la trasparenza. [[grammatica_proposizioni_subordinate]]</div>
+      </div>
+
+      <!-- DA EVITARE -->
+      <div id="reg-evitare" class="chip-panel">
+        <h3>Cosa evitare nel saggio formale</h3>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Da evitare</th><th>Perché</th><th>Sostituire con</th></tr></thead>
+            <tbody>
+              <tr><td><em>fare</em> generico</td><td>Verbo vuoto, segnala povertà lessicale</td><td>verbi precisi (realizzare, compiere, svolgere)</td></tr>
+              <tr><td><em>cosa</em> al posto di un sostantivo preciso</td><td>Vago</td><td>questione, aspetto, elemento, fenomeno</td></tr>
+              <tr><td>Linguaggio colloquiale (<em>un sacco di, tanto, ok</em>)</td><td>Registro inadatto</td><td>numerosi, considerevolmente, accettabile</td></tr>
+              <tr><td>Contrazioni colloquiali</td><td>Tipiche dell'orale</td><td>forme estese</td></tr>
+              <tr><td>Domande retoriche eccessive</td><td>Suonano enfatiche</td><td>limitarne il numero (1–2 al massimo)</td></tr>
+              <tr><td>Esclamazioni</td><td>Inadatte al saggio</td><td>argomentare razionalmente</td></tr>
+              <tr><td>Ripetizioni lessicali</td><td>Povertà di lessico</td><td>sinonimi, iperonimi, parafrasi</td></tr>
+              <tr><td>Frasi «io penso/credo» a raffica</td><td>Stile fastidioso</td><td>alternare con impersonali</td></tr>
+              <tr><td>Anglicismi inutili</td><td>Suonano poco curati</td><td>termini italiani equivalenti</td></tr>
+              <tr><td>Connettivi colloquiali (<em>poi, allora, comunque</em>)</td><td>Tipici dell'orale</td><td>quindi, di conseguenza, in ogni caso</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 8 · CONNETTIVI -->
+<section id="s-connettivi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">8. Connettivi argomentativi</h2>
+      <p class="sec-subtitle">Repertorio organizzato per posizione e funzione nel saggio</p>
+
+      <div class="def-box">
+        I <b>connettivi argomentativi</b> sono il <span class="hl">scheletro coesivo</span> del saggio: segnalano al lettore la funzione logica di ogni frase rispetto a quanto precede (aggiunta, contrasto, causa, conclusione, esempio). Senza connettivi espliciti, il lettore italiano si sente «perso»; al C1, la <em>scarsa coesione</em> è un difetto immediatamente percepibile. Per il sistema completo dei connettivi italiani [[grammatica_connettivi]].
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="showChip('conn-intro',this)">Introdurre</button>
+        <button class="chip" onclick="showChip('conn-aggiungere',this)">Aggiungere</button>
+        <button class="chip" onclick="showChip('conn-concedere',this)">Concedere</button>
+        <button class="chip" onclick="showChip('conn-confutare',this)">Confutare</button>
+        <button class="chip" onclick="showChip('conn-causa',this)">Causa/conseguenza</button>
+        <button class="chip" onclick="showChip('conn-esempio',this)">Esempio/precisare</button>
+        <button class="chip" onclick="showChip('conn-concludere',this)">Concludere</button>
+      </div>
+
+      <!-- INTRODURRE -->
+      <div id="conn-intro" class="chip-panel active">
+        <h3>Introdurre il tema · <span class="dim">apertura del saggio</span></h3>
+        <p>Si usano nei primi paragrafi per <span class="hl">aprire il discorso</span>, presentare il tema e situarlo nel contesto. La maggior parte regge un sintagma nominale (con preposizione).</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Connettivo</th><th>Spagnolo</th><th>Costruzione</th></tr></thead>
+            <tbody>
+              <tr><td class="tbl-pron">In merito a</td><td>en lo referente a / por lo que respecta a</td><td>+ sintagma nominale</td></tr>
+              <tr><td class="tbl-pron">Riguardo a</td><td>respecto a / en cuanto a</td><td>+ sintagma nominale</td></tr>
+              <tr><td class="tbl-pron">Quanto a</td><td>en cuanto a</td><td>+ sintagma nominale</td></tr>
+              <tr><td class="tbl-pron">Per quanto concerne</td><td>por lo que concierne a</td><td>+ sintagma nominale (formale)</td></tr>
+              <tr><td class="tbl-pron">In relazione a</td><td>en relación con</td><td>+ sintagma nominale</td></tr>
+              <tr><td class="tbl-pron">Il tema di…</td><td>el tema de…</td><td>+ sintagma nominale</td></tr>
+              <tr><td class="tbl-pron">La questione di…</td><td>la cuestión de…</td><td>+ sintagma nominale</td></tr>
+              <tr><td class="tbl-pron">Negli ultimi anni</td><td>en los últimos años</td><td>circostanziale temporale</td></tr>
+              <tr><td class="tbl-pron">È noto che…</td><td>es sabido que… [+ indicativo]</td><td>frase</td></tr>
+              <tr><td class="tbl-pron">Tutti riconoscono che…</td><td>todos reconocen que… [+ cong.]</td><td>frase</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it"><em>In merito alla</em> questione dell'intelligenza artificiale generativa, il dibattito pubblico italiano resta sorprendentemente immaturo.</div>
+        </div>
+      </div>
+
+      <!-- AGGIUNGERE -->
+      <div id="conn-aggiungere" class="chip-panel">
+        <h3>Aggiungere argomenti · <span class="dim">progressione</span></h3>
+        <p>Si usano nell'argomentazione per <span class="hl">aggiungere</span> un nuovo argomento o un nuovo elemento allo stesso argomento. Marcano la progressione logica del testo.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Connettivo</th><th>Spagnolo</th><th>Forza</th></tr></thead>
+            <tbody>
+              <tr><td class="tbl-pron">Inoltre</td><td>además</td><td>neutro, molto frequente</td></tr>
+              <tr><td class="tbl-pron">Per di più</td><td>es más / más aún</td><td>enfatico</td></tr>
+              <tr><td class="tbl-pron">A ciò si aggiunge che…</td><td>a ello se añade que…</td><td>formale</td></tr>
+              <tr><td class="tbl-pron">Va aggiunto che…</td><td>hay que añadir que…</td><td>formale</td></tr>
+              <tr><td class="tbl-pron">Bisogna anche considerare che…</td><td>hay que considerar también que…</td><td>formale</td></tr>
+              <tr><td class="tbl-pron">Altrettanto importante è…</td><td>igualmente importante es…</td><td>enfatico</td></tr>
+              <tr><td class="tbl-pron">Non solo… ma anche…</td><td>no solo… sino también…</td><td>strutturale</td></tr>
+              <tr><td class="tbl-pron">Oltre a ciò</td><td>además de eso</td><td>neutro</td></tr>
+              <tr><td class="tbl-pron">In aggiunta</td><td>en añadidura</td><td>formale</td></tr>
+              <tr><td class="tbl-pron">D'altronde</td><td>por otra parte / por lo demás</td><td>neutro</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Il fenomeno coinvolge ormai milioni di persone. <em>Inoltre</em>, i dati Istat mostrano una crescita esponenziale negli ultimi cinque anni. <em>A ciò si aggiunge che</em> le istituzioni faticano a tenere il passo.</div>
+        </div>
+      </div>
+
+      <!-- CONCEDERE -->
+      <div id="conn-concedere" class="chip-panel">
+        <h3>Concedere · <span class="dim">riconoscere la tesi opposta</span></h3>
+        <p>Aprono la <span class="hl">refutazione</span>. Riconoscono ciò che la posizione avversa ha di valido, prima di smontarla con il connettivo avversativo.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Connettivo</th><th>Spagnolo</th><th>Modo</th></tr></thead>
+            <tbody>
+              <tr><td class="tbl-pron">È vero che…</td><td>es cierto que…</td><td>+ indicativo / cong.</td></tr>
+              <tr><td class="tbl-pron">Bisogna ammettere che…</td><td>hay que admitir que…</td><td>+ indicativo / cong.</td></tr>
+              <tr><td class="tbl-pron">Non si può negare che…</td><td>no se puede negar que…</td><td>+ congiuntivo</td></tr>
+              <tr><td class="tbl-pron">Pur riconoscendo che…</td><td>aun reconociendo que…</td><td>gerundio + cong.</td></tr>
+              <tr><td class="tbl-pron">Sebbene / Benché / Per quanto</td><td>aunque / por más que</td><td>+ congiuntivo</td></tr>
+              <tr><td class="tbl-pron">Pur + gerundio</td><td>aun + gerundio</td><td>«pur essendo vero che…»</td></tr>
+              <tr><td class="tbl-pron">Ammesso che…</td><td>admitido que…</td><td>+ congiuntivo</td></tr>
+              <tr><td class="tbl-pron">Si potrebbe obiettare che…</td><td>se podría objetar que…</td><td>+ congiuntivo</td></tr>
+              <tr><td class="tbl-pron">Certo, …</td><td>cierto…</td><td>incipit avversativo</td></tr>
+              <tr><td class="tbl-pron">Vi è chi sostiene che…</td><td>hay quienes sostienen que…</td><td>+ congiuntivo</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CONFUTARE -->
+      <div id="conn-confutare" class="chip-panel">
+        <h3>Confutare · <span class="dim">smontare la concessione</span></h3>
+        <p>Segnano la <span class="hl">controrisposta</span> nella refutazione. Stabiliscono un contrasto forte con quanto appena concesso. Sono il «<em>però</em>» del registro formale.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Connettivo</th><th>Spagnolo</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td class="tbl-pron">Tuttavia</td><td>sin embargo</td><td>formale neutro, il più frequente</td></tr>
+              <tr><td class="tbl-pron">Eppure</td><td>y sin embargo</td><td>enfatico</td></tr>
+              <tr><td class="tbl-pron">Ciò nonostante</td><td>a pesar de ello</td><td>formale</td></tr>
+              <tr><td class="tbl-pron">Nonostante ciò</td><td>no obstante</td><td>formale</td></tr>
+              <tr><td class="tbl-pron">Nondimeno</td><td>no obstante</td><td>letterario</td></tr>
+              <tr><td class="tbl-pron">D'altra parte</td><td>por otra parte</td><td>neutro</td></tr>
+              <tr><td class="tbl-pron">In realtà</td><td>en realidad</td><td>neutro</td></tr>
+              <tr><td class="tbl-pron">A ben vedere</td><td>si se mira bien</td><td>argomentativo</td></tr>
+              <tr><td class="tbl-pron">Per contro</td><td>por el contrario</td><td>formale</td></tr>
+              <tr><td class="tbl-pron">Al contrario</td><td>al contrario</td><td>neutro</td></tr>
+              <tr><td class="tbl-pron">Bisogna però precisare che…</td><td>hay que precisar sin embargo que…</td><td>formale</td></tr>
+              <tr><td class="tbl-pron">Va detto però che…</td><td>conviene decir sin embargo que…</td><td>neutro</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">È vero che la regolamentazione introduce nuovi costi. <em>Tuttavia</em>, tali costi sono ampiamente compensati dai benefici sociali a lungo termine.</div>
+        </div>
+      </div>
+
+      <!-- CAUSA / CONSEGUENZA -->
+      <div id="conn-causa" class="chip-panel">
+        <h3>Causa e conseguenza · <span class="dim">catena logica</span></h3>
+        <p>Servono a costruire i <span class="hl">nessi causali</span> nell'argomentazione: introducono cause, motivi, conseguenze, deduzioni.</p>
+
+        <h4>Causa</h4>
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Connettivo</th><th>Spagnolo</th><th>Costruzione</th></tr></thead>
+            <tbody>
+              <tr><td class="tbl-pron">Poiché / Dato che / Visto che</td><td>dado que / puesto que</td><td>+ indicativo</td></tr>
+              <tr><td class="tbl-pron">Giacché</td><td>ya que</td><td>+ indicativo (letterario)</td></tr>
+              <tr><td class="tbl-pron">Per il fatto che…</td><td>por el hecho de que…</td><td>+ indicativo</td></tr>
+              <tr><td class="tbl-pron">In virtù del fatto che…</td><td>en virtud del hecho que…</td><td>formale</td></tr>
+              <tr><td class="tbl-pron">Per via di / A causa di</td><td>por / a causa de</td><td>+ sintagma nominale</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Conseguenza</h4>
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Connettivo</th><th>Spagnolo</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td class="tbl-pron">Pertanto</td><td>por tanto / por lo tanto</td><td>formale</td></tr>
+              <tr><td class="tbl-pron">Di conseguenza</td><td>en consecuencia</td><td>neutro</td></tr>
+              <tr><td class="tbl-pron">Dunque</td><td>pues</td><td>neutro</td></tr>
+              <tr><td class="tbl-pron">Quindi</td><td>así que / por tanto</td><td>neutro</td></tr>
+              <tr><td class="tbl-pron">Ne consegue che…</td><td>se sigue que… [+ cong.]</td><td>formale, deduttivo</td></tr>
+              <tr><td class="tbl-pron">Ne deriva che…</td><td>se deriva que…</td><td>formale</td></tr>
+              <tr><td class="tbl-pron">Per ciò stesso</td><td>por ello mismo</td><td>formale</td></tr>
+              <tr><td class="tbl-pron">Sicché</td><td>de modo que</td><td>letterario</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ESEMPIO / PRECISARE -->
+      <div id="conn-esempio" class="chip-panel">
+        <h3>Esempio e precisazione · <span class="dim">illustrare e specificare</span></h3>
+
+        <h4>Introdurre un esempio</h4>
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Connettivo</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td class="tbl-pron">Per esempio / Ad esempio</td><td>por ejemplo</td></tr>
+              <tr><td class="tbl-pron">Si pensi a…</td><td>piénsese en…</td></tr>
+              <tr><td class="tbl-pron">Basti citare il caso di…</td><td>basta citar el caso de…</td></tr>
+              <tr><td class="tbl-pron">A titolo di esempio</td><td>a título de ejemplo</td></tr>
+              <tr><td class="tbl-pron">Un caso emblematico è…</td><td>un caso emblemático es…</td></tr>
+              <tr><td class="tbl-pron">Come emerge dal caso di…</td><td>como se desprende del caso de…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Precisare o riformulare</h4>
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Connettivo</th><th>Spagnolo</th></tr></thead>
+            <tbody>
+              <tr><td class="tbl-pron">In altre parole</td><td>en otras palabras</td></tr>
+              <tr><td class="tbl-pron">Ovvero / Ossia</td><td>o sea / es decir</td></tr>
+              <tr><td class="tbl-pron">Vale a dire</td><td>vale decir</td></tr>
+              <tr><td class="tbl-pron">Più precisamente</td><td>más precisamente</td></tr>
+              <tr><td class="tbl-pron">Cioè</td><td>es decir [registro neutro]</td></tr>
+              <tr><td class="tbl-pron">Detto altrimenti</td><td>dicho de otro modo</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CONCLUDERE -->
+      <div id="conn-concludere" class="chip-panel">
+        <h3>Concludere · <span class="dim">chiusura del saggio</span></h3>
+        <p>Aprono il paragrafo conclusivo o segnalano una <span class="hl">deduzione finale</span> all'interno dell'argomentazione.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Connettivo</th><th>Spagnolo</th><th>Uso</th></tr></thead>
+            <tbody>
+              <tr><td class="tbl-pron">In definitiva</td><td>en definitiva</td><td>conclusione globale</td></tr>
+              <tr><td class="tbl-pron">In conclusione</td><td>en conclusión</td><td>conclusione formale</td></tr>
+              <tr><td class="tbl-pron">Alla luce di quanto detto</td><td>a la luz de lo expuesto</td><td>conclusione argomentativa</td></tr>
+              <tr><td class="tbl-pron">Alla luce di quanto esposto</td><td>a la luz de lo expuesto</td><td>idem, più tecnico</td></tr>
+              <tr><td class="tbl-pron">Ne consegue che…</td><td>se sigue que… [+ cong.]</td><td>deduzione finale</td></tr>
+              <tr><td class="tbl-pron">In sintesi</td><td>en síntesis</td><td>ricapitolazione</td></tr>
+              <tr><td class="tbl-pron">Per concludere</td><td>para concluir</td><td>chiusura esplicita</td></tr>
+              <tr><td class="tbl-pron">Tirando le somme</td><td>haciendo balance</td><td>neutro, espressivo</td></tr>
+              <tr><td class="tbl-pron">Riassumendo</td><td>resumiendo</td><td>più tecnico</td></tr>
+              <tr><td class="tbl-pron">In ultima analisi</td><td>en última instancia</td><td>conclusione argomentativa</td></tr>
+              <tr><td class="tbl-pron">Insomma</td><td>en suma</td><td>meno formale</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="green-box"><b>Tecnica:</b> nel saggio C1, ogni paragrafo dovrebbe iniziare con un connettivo o un sintagma che ne segnali la funzione. <em>Inoltre…, In secondo luogo…, Tuttavia…, In conclusione…</em>: questi marcatori non sono pignoleria, sono la <em>mappa</em> che il lettore italiano cerca attivamente.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 9 · MODELLO ANNOTATO -->
+<section id="s-modello" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">9. Modello annotato</h2>
+      <p class="sec-subtitle">Un saggio breve completo (≈ 280 parole) con annotazioni strutturali</p>
+
+      <div class="def-box">
+        Quello che segue è un <b>modello di saggio breve</b> sul tema dell'educazione affettiva nelle scuole. Tutti gli elementi strutturali (introduzione, tesi, argomenti, refutazione, conclusione) e i principali connettivi sono <span class="hl">evidenziati</span>. L'analisi sotto il testo identifica funzione e risorse linguistiche di ogni segmento.
+      </div>
+
+      <div class="model-legend">
+        <span class="legend-item l-intro"><span class="legend-dot"></span>Introduzione / contestualizzazione</span>
+        <span class="legend-item l-tesi"><span class="legend-dot"></span>Tesi</span>
+        <span class="legend-item l-arg"><span class="legend-dot"></span>Argomenti</span>
+        <span class="legend-item l-ref"><span class="legend-dot"></span>Refutazione</span>
+        <span class="legend-item l-conc"><span class="legend-dot"></span>Conclusione</span>
+      </div>
+
+      <div class="model-text">
+        <p><span class="annot annot-intro">Negli ultimi anni il dibattito pubblico italiano è stato attraversato a più riprese dalla questione dell'introduzione dell'educazione affettiva nelle scuole. I dati Istat sulla violenza di genere, insieme alla crescente diffusione del bullismo digitale, rendono l'argomento di un'attualità che difficilmente può essere ignorata.</span> <span class="annot annot-tesi">Ritengo che l'inserimento obbligatorio di un'ora settimanale di educazione affettiva nelle scuole secondarie italiane rappresenti la misura più urgente per costruire una cittadinanza emotivamente competente.</span></p>
+
+        <p><span class="annot-conn">In primo luogo</span>, <span class="annot annot-arg">gli studi condotti dall'Università Bocconi hanno dimostrato come gli adolescenti privi di alfabetizzazione emotiva sviluppino con maggiore frequenza comportamenti aggressivi, sia online sia offline. Si tratta di un dato empirico difficilmente confutabile, che illumina il legame fra la mancata educazione delle emozioni e la diffusione di pratiche violente.</span> <span class="annot-conn">Inoltre</span>, <span class="annot annot-arg">come ricorda Galimberti nei suoi saggi sull'adolescenza, la scuola italiana ha sempre avuto un compito che eccede la mera trasmissione di nozioni: forma cittadini, non solo studenti.</span></p>
+
+        <p><span class="annot-conn">Si potrebbe obiettare che</span> <span class="annot annot-ref">una simile materia rischierebbe di invadere uno spazio educativo che spetta in primo luogo alle famiglie. <span class="annot-conn">Tuttavia</span>, l'esperienza dimostra che molte famiglie italiane non dispongono né degli strumenti culturali né del tempo per assolvere a questa funzione. La scuola, in tal senso, non si sostituisce alla famiglia: la integra e la sostiene.</span></p>
+
+        <p><span class="annot-conn">Alla luce di quanto esposto</span>, <span class="annot annot-conc">i dati, l'autorità degli studiosi e la natura stessa dell'istituzione scolastica convergono nel mostrare che l'educazione affettiva non è un lusso ma una necessità. <span class="annot-conn">Resta da chiedersi</span> per quanto tempo ancora la politica italiana riterrà accettabile non rispondere a questa urgenza.</span></p>
+      </div>
+
+      <div class="model-annotations">
+        <h4>Analisi del modello</h4>
+        <ul>
+          <li><b>Introduzione (1° paragrafo):</b> aggancio sul dibattito pubblico → contestualizzazione con dato (Istat) e fenomeno collegato (bullismo digitale) → <em>tesi esplicita</em> introdotta da «<em>Ritengo che…</em>» + congiuntivo (<em>rappresenti</em>). La tesi è precisa: dice <em>cosa</em> (un'ora settimanale obbligatoria), <em>dove</em> (scuole secondarie) e <em>perché</em> (cittadinanza emotivamente competente).</li>
+          <li><b>Argomentazione (2° paragrafo):</b> due argomenti collegati da «<em>In primo luogo</em>» e «<em>Inoltre</em>». Il primo è <em>empirico</em> (studi della Bocconi) e <em>logico</em> (legame causa-effetto); il secondo è di <em>autorità</em> (Galimberti) e di <em>principio</em> (funzione civile della scuola).</li>
+          <li><b>Refutazione (3° paragrafo):</b> schema canonico <em>concessione + controrisposta</em>: «<em>Si potrebbe obiettare che…</em>» riconosce l'obiezione (invasione di spazio familiare); «<em>Tuttavia</em>» introduce lo smontaggio (le famiglie non sempre dispongono di strumenti). Si chiude ridimensionando l'antitesi: la scuola <em>integra</em>, non <em>sostituisce</em>.</li>
+          <li><b>Conclusione (4° paragrafo):</b> aperta da «<em>Alla luce di quanto esposto</em>». Sintesi compatta dei tre argomenti (dati, autorità, natura dell'istituzione). Riaffermazione della tesi con immagine forte («<em>non è un lusso ma una necessità</em>»). Apertura con domanda retorica che lancia il tema al lettore.</li>
+          <li><b>Risorse linguistiche:</b> congiuntivo dopo opinione (<em>ritengo che rappresenti</em>, <em>obiettare che rischierebbe</em>); nominalizzazione (<em>l'introduzione, l'inserimento, l'alfabetizzazione, la trasmissione</em>); passivi (<em>è stato attraversato, è dimostrato</em>); periodo ipotetico nella refutazione (<em>rischierebbe</em>); connettivi espliciti all'inizio di ogni paragrafo.</li>
+          <li><b>Lessico curato:</b> variazione fra <em>introduzione → inserimento → alfabetizzazione → integrare</em>; verbi precisi (<em>condurre, dimostrare, illuminare, eccedere</em>); evitate ripetizioni di <em>scuola</em> grazie a <em>istituzione scolastica</em>.</li>
+        </ul>
+      </div>
+
+      <h3>Cosa imitare di questo modello</h3>
+      <ol>
+        <li>La <span class="hl">tesi esplicita</span> a fine introduzione, riprese «a cornice» nella conclusione.</li>
+        <li>L'<span class="hl">apertura di ogni paragrafo</span> con un connettivo che ne segnala la funzione.</li>
+        <li>Il <span class="hl">mix di tipologie argomentative</span> (empirico + autorità + logico) nello stesso saggio.</li>
+        <li>La <span class="hl">refutazione completa</span> con schema concessione/controrisposta, non «buttata lì» ma argomentata.</li>
+        <li>La <span class="hl">conclusione a cornice</span> che riprende il tema iniziale (urgenza) e lancia una domanda al lettore.</li>
+        <li>Il <span class="hl">congiuntivo sistematico</span> dopo ritenere, obiettare, riconoscere, ammettere.</li>
+      </ol>
+
+      <div class="warn-box">
+        <span class="ico">📝</span>
+        <div><b>Esercizio:</b> prendi un saggio che hai scritto e <span class="hl">colora</span> ogni segmento secondo la legenda: blu (introduzione), oro (tesi), verde (argomenti), rosso (refutazione), viola (conclusione). Se uno dei colori manca, o ne occupa una porzione sbilanciata, hai trovato il punto da rivedere.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 10 · TRAPPOLE -->
+<section id="s-trappole" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">10. Trappole per ispanofoni</h2>
+      <p class="sec-subtitle">Errori frequenti che abbassano la valutazione al C1</p>
+
+      <div class="def-box">
+        Lo spagnolo e l'italiano condividono molte convenzioni retoriche, ma il <b>saggio italiano formale</b> ha alcune esigenze proprie che producono <span class="hl">errori ricorrenti</span> negli ispanofoni. Sono errori strutturali, lessicali e morfosintattici che il valutatore C1 individua immediatamente: conoscerli è il modo più rapido per evitarli.
+      </div>
+
+      <div id="traps-container"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const TRAPS = [
+  {
+    name:'Omissione della refutazione',
+    wrong:'[saggio: introduzione → tre argomenti pro-tesi → conclusione]',
+    right:'[saggio: introduzione → due argomenti pro-tesi → refutazione di un\'obiezione → conclusione]',
+    expl:'Nel saggio italiano C1 la refutazione è strutturalmente obbligatoria. Un testo che si limita ad accumulare argomenti a favore (modello «monologico») è considerato strutturalmente incompleto, anche se ben scritto. Lo spagnolo è più tollerante; l\'italiano no. Riserva sempre almeno un paragrafo (20–25% del testo) all\'antitesi e alla sua confutazione.'
+  },
+  {
+    name:'Indicativo dopo verbi di opinione',
+    wrong:'Ritengo che l\'educazione è la chiave del progresso.',
+    right:'Ritengo che l\'educazione sia la chiave del progresso.',
+    expl:'In spagnolo «creo que es» (indicativo) è ammesso in registro scritto. In italiano formale, ritenere/credere/pensare/parere reggono sempre il congiuntivo. La regola vale per affermative e negative: «<em>ritengo / non ritengo che sia…</em>». L\'errore è uno dei più segnalati dai valutatori C1.'
+  },
+  {
+    name:'Connettivi colloquiali nel saggio',
+    wrong:'Poi c\'è il fatto che i giovani non studiano. Allora bisogna fare qualcosa.',
+    right:'A ciò si aggiunge il fatto che i giovani studiano poco. Di conseguenza, è necessario intervenire.',
+    expl:'«Poi» e «allora» sono connettivi tipici dell\'orale o dell\'informale. Nel saggio formale, sostituiscili con «<em>inoltre</em>», «<em>a ciò si aggiunge che</em>», «<em>di conseguenza</em>», «<em>pertanto</em>». L\'ispanofono spesso traduce alla lettera «luego» / «entonces», che in italiano scritto sono inadatti.'
+  },
+  {
+    name:'«Fare» generico al posto di verbi precisi',
+    wrong:'Bisogna fare un cambiamento e fare nuove leggi per fare una società migliore.',
+    right:'Bisogna apportare un cambiamento e introdurre nuove leggi per costruire una società migliore.',
+    expl:'In italiano formale, «fare» segnala povertà lessicale. Sostituiscilo con verbi specifici: <em>apportare</em> (un cambiamento), <em>introdurre</em> (una norma), <em>realizzare</em> (un progetto), <em>compiere</em> (un\'azione), <em>operare</em> (una scelta), <em>condurre</em> (un\'analisi), <em>svolgere</em> (un compito), <em>costruire</em> (una società), <em>perseguire</em> (un obiettivo).'
+  },
+  {
+    name:'«Cosa» al posto di un sostantivo preciso',
+    wrong:'La cosa più importante è la cosa dell\'inquinamento, e ci sono molte cose da fare.',
+    right:'La questione più importante è quella dell\'inquinamento, e vi sono molteplici interventi da realizzare.',
+    expl:'«Cosa» è il sostantivo generico per eccellenza. Nel saggio formale, sostituiscilo con: <em>questione, problema, problematica, aspetto, elemento, fenomeno, fattore, situazione, vicenda, condizione</em>. L\'uso ripetuto di «cosa» è un indicatore immediato di registro basso.'
+  },
+  {
+    name:'Tesi vaga o banale',
+    wrong:'Penso che l\'ambiente sia importante.',
+    right:'Ritengo che la transizione energetica rappresenti, per l\'Italia, una priorità strategica non più rinviabile.',
+    expl:'Una tesi C1 deve essere PRECISA (definita nei suoi limiti), DISCUTIBILE (qualcuno potrebbe difendere il contrario), SOSTANZIATA (argomentabile con prove). «L\'ambiente è importante» non è una tesi: è un truismo. Riformula in termini operativi: cosa, dove, perché, per chi.'
+  },
+  {
+    name:'Refutazione senza concessione',
+    wrong:'Alcuni dicono che l\'IA è pericolosa. Si sbagliano: non lo è.',
+    right:'È vero che i rischi dell\'intelligenza artificiale meritano attenzione. Tuttavia, una regolamentazione ben costruita può convertirli in opportunità di crescita controllata.',
+    expl:'La refutazione efficace segue lo schema CONCESSIONE + CONTRORISPOSTA. Negare brutalmente l\'avversario senza riconoscere ciò che la sua posizione ha di valido suona aggressivo e debole. Concedere prima di confutare mostra obiettività e indebolisce l\'antitesi più efficacemente.'
+  },
+  {
+    name:'Conclusione che introduce argomenti nuovi',
+    wrong:'In conclusione, oltre a quanto detto, bisogna ricordare il problema della corruzione politica…',
+    right:'Alla luce di quanto esposto, gli argomenti portati convergono nel mostrare che…',
+    expl:'La conclusione SINTETIZZA, RIAFFERMA e APRE: non introduce mai un nuovo argomento sostanziale. «Oltre a quanto detto…» è il tipico incipit dell\'errore. Se viene in mente un argomento nuovo alla conclusione, è il segnale che bisogna riscrivere il corpo del saggio, non aggiungerlo qui.'
+  },
+  {
+    name:'Frasi troppo brevi (stile spezzettato)',
+    wrong:'L\'inquinamento è grave. Bisogna agire. Non c\'è tempo. La situazione peggiora.',
+    right:'L\'inquinamento atmosferico ha raggiunto livelli tali da rendere urgente un intervento immediato, dal momento che la situazione continua a deteriorarsi senza che si intraveda alcuna inversione di tendenza.',
+    expl:'Il saggio italiano formale predilige frasi di media lunghezza (15–25 parole) con subordinate. Le frasi troppo brevi appartengono al registro pubblicitario o telegrafico. Costruisci ipotassi (subordinazione) usando relative, causali, concessive, ipotetiche, ma senza eccedere (max 2–3 livelli di subordinazione per frase).'
+  },
+  {
+    name:'Calco diretto di «por lo tanto» / «sin embargo»',
+    wrong:'Per tanto, dobbiamo agire. Senza imbargo, non è facile.',
+    right:'Pertanto, dobbiamo agire. Tuttavia, non è facile.',
+    expl:'«Pertanto» è una sola parola in italiano (≠ «per tanto», che esiste ma significa altro). «Sin embargo» si traduce con TUTTAVIA / EPPURE / NONDIMENO / NONOSTANTE CIÒ; «*senza imbargo» o «*senza embargo» non esistono. Memorizza i connettivi avversativi e causali, non improvvisarli con calchi.'
+  },
+  {
+    name:'«Tante» al posto di «numerosi/molteplici»',
+    wrong:'Ci sono tante ragioni per cui la riforma è necessaria.',
+    right:'Vi sono numerose / molteplici / svariate ragioni per cui la riforma risulta necessaria.',
+    expl:'«Tante» nel saggio formale è considerato troppo colloquiale. Sostituisci con NUMEROSI, MOLTEPLICI, SVARIATE, DIVERSE, MOLTE. Stessa cosa per «un sacco di» → CONSIDEREVOLE, INGENTE, COSPICUO. Il registro alto preferisce termini culti latini.'
+  },
+  {
+    name:'Domande retoriche eccessive',
+    wrong:'Possiamo accettare questo? Chi non sarebbe indignato? Cosa dovremmo fare? Dove andiamo?',
+    right:'Una simile situazione non può essere accettata senza una reazione critica da parte della società civile.',
+    expl:'La domanda retorica è uno strumento potente ma da usare con parsimonia: una o due in tutto il saggio, mai in serie. L\'accumulo di interrogative trasforma il saggio in arringa retorica e abbassa il registro. Convertile in dichiarative argomentate.'
+  },
+  {
+    name:'Coesione zero: paragrafi senza connettivo iniziale',
+    wrong:'I dati Istat mostrano un calo. La popolazione invecchia. Le famiglie hanno meno figli. Le politiche sono inadeguate.',
+    right:'I dati Istat mostrano un calo demografico. Inoltre, la popolazione italiana invecchia rapidamente. A ciò si aggiunge che le famiglie hanno sempre meno figli. Di conseguenza, le politiche pubbliche attuali risultano inadeguate.',
+    expl:'Ogni paragrafo (e spesso ogni frase chiave) del saggio italiano formale dovrebbe iniziare con un connettivo che ne marchi la funzione: «<em>Inoltre…, In secondo luogo…, Tuttavia…, In conclusione…</em>». Il lettore italiano cerca attivamente questi segnali di coesione: la loro assenza viene percepita come frammentazione.'
+  },
+  {
+    name:'Mescolare prima e terza persona senza criterio',
+    wrong:'Penso che l\'ambiente è importante. Si deve riconoscere che. Io credo che dobbiamo agire. È necessario intervenire.',
+    right:'Ritengo che l\'ambiente costituisca una priorità. Si tratta di una constatazione che impone di intervenire senza ulteriori indugi.',
+    expl:'L\'alternanza fra «io», «si», «noi», «passivo» deve essere CONTROLLATA: io/a mio avviso per la tesi e poche dichiarazioni personali; impersonale/passivo per lo sviluppo argomentativo. Saltare da «io credo» a «si deve» a «è necessario» a ogni frase produce un effetto di sballotto stilistico fastidioso.'
+  },
+  {
+    name:'«Per concludere…» dopo un solo paragrafo',
+    wrong:'[saggio di 200 parole: introduzione + 1 argomento + «Per concludere…»]',
+    right:'[saggio di 500 parole: introduzione + 2-3 argomenti + refutazione + conclusione di 80 parole]',
+    expl:'La conclusione non può essere annunciata dopo poche frasi. Per giustificare un «Per concludere» / «In definitiva» / «Alla luce di quanto esposto», occorre aver effettivamente argomentato. Un saggio troppo breve non ha materiale da concludere: rischia di sembrare uno scheletro senza corpo. Rispetta le proporzioni canoniche.'
+  },
+  {
+    name:'«La gente» come soggetto del saggio',
+    wrong:'La gente pensa che la politica sia corrotta. La gente vuole cambiamenti.',
+    right:'L\'opinione pubblica ritiene che la politica sia attraversata da fenomeni di corruzione. I cittadini chiedono cambiamenti significativi.',
+    expl:'«La gente» è un termine colloquiale, poco preciso. Nel saggio formale preferisci: <em>i cittadini, l\'opinione pubblica, la collettività, la società civile, gli individui, la popolazione, i lettori</em>. Maggiore precisione lessicale, maggiore registro formale.'
+  },
+  {
+    name:'Anglicismi inutili (smart, problem, gap)',
+    wrong:'C\'è un gap tra le aspettative e la realtà; serve una soluzione smart.',
+    right:'Vi è un divario fra le aspettative e la realtà; occorre una soluzione intelligente / mirata.',
+    expl:'Il saggio formale italiano evita gli anglicismi quando esiste un equivalente italiano consolidato: GAP → divario / scarto; SMART → intelligente / mirato / efficace; PROBLEM → problema / questione; FAKE → falso; TREND → tendenza. Gli anglicismi accettati (come «<em>computer, software, internet</em>») restano per i tecnicismi senza equivalente.'
+  }
+];
+
+function renderTraps(){
+  const c = document.getElementById('traps-container');
+  let html = '';
+  TRAPS.forEach(t=>{
+    html += `<div class="trap-card">
+      <div class="trap-card-header"><span class="trap-name">${t.name}</span></div>
+      <div class="trap-vs">
+        <div class="trap-wrong">${t.wrong}</div>
+        <div class="trap-right">${t.right}</div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function showSection(id, btn){
+  document.querySelectorAll('.sec-block').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function showChip(id, btn){
+  const parent = btn.parentElement.parentElement;
+  parent.querySelectorAll('.chip-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  parent.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function setFontSize(v){
+  document.documentElement.style.setProperty('--fs', v+'px');
+}
+
+renderTraps();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Testo Espositivo-Descrittivo · Grammatica C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ede9df;
+  --card:#faf7f1;
+  --border:#c4bead;
+  --text:#1a1814;
+  --text2:#44413a;
+  --text3:#706c64;
+  --accent:#7a5a0a;
+  --accent-light:#f0e0c0;
+  --accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,0.08);
+  --radius:14px;
+  --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --red:#a81e2e; --red-bg:#fce6e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --teal:#0e6e6e; --teal-bg:#e0f4f4;
+  --fs:15px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-size:var(--fs);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:60px;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text);margin:0 0 .4em;font-weight:600;line-height:1.2}
+h1{font-size:1.85em;font-weight:700}
+h2{font-size:1.45em}
+h3{font-size:1.15em;margin-top:1.1em}
+h4{font-size:1em;font-weight:600}
+p{margin:.5em 0}
+em{font-style:italic}
+b,strong{font-weight:600}
+
+/* HEADER */
+.site-header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 18px 16px;
+  position:relative;
+}
+.site-header .inner{max-width:860px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title-wrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.site-header h1{margin:0;font-size:1.9em;color:var(--text)}
+.header-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.85em;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid var(--accent-mid);
+}
+.subtitle{color:var(--text3);font-size:.92em;margin:4px 0 12px;font-style:italic}
+.stat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stat-pill{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:4px 10px;
+  font-size:.78em;
+  border-radius:999px;
+  font-weight:500;
+}
+.font-ctrl{display:flex;align-items:center;gap:8px;font-size:.78em;color:var(--text3)}
+.font-ctrl input[type=range]{width:90px}
+
+/* SECTION NAV */
+.section-nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:10px 18px;
+  margin-top:14px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.section-nav::-webkit-scrollbar{display:none}
+.section-nav .inner{max-width:860px;margin:0 auto;display:flex;gap:6px;flex-wrap:nowrap}
+.snav-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:6px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82em;
+  border-radius:999px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .15s;
+  font-weight:500;
+}
+.snav-btn:hover{background:var(--accent-light)}
+.snav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* MAIN LAYOUT */
+.main-layout{
+  max-width:860px;
+  margin:0 auto;
+  padding:20px 18px;
+}
+.sec-block{display:none}
+.sec-block.active{display:block;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* GRAM-CARD */
+.gram-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.gram-card-body{padding:18px}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:1.45em;
+  margin:0 0 .4em;
+  color:var(--text);
+}
+.sec-subtitle{color:var(--text3);font-style:italic;font-size:.95em;margin:0 0 14px}
+
+/* DEF-BOX */
+.def-box{
+  background:var(--warn-bg);
+  border-left:4px solid var(--accent);
+  padding:12px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:14px 0;
+  font-size:.96em;
+}
+.def-box b{color:var(--accent)}
+
+/* WARN-BOX */
+.warn-box{
+  background:#fff4e0;
+  border:1px solid #c8900a;
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:12px 0;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:.93em;
+  color:var(--text2);
+}
+.warn-box .ico{font-size:1.1em;flex-shrink:0;line-height:1.3}
+
+/* EXAMPLE BLOCK */
+.example-block{
+  background:var(--blue-bg);
+  border-left:3px solid var(--blue);
+  padding:9px 12px;
+  margin:8px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.ex-it{font-weight:500;color:var(--text)}
+.ex-it em{font-style:normal;color:var(--blue);font-weight:600}
+.ex-es{font-style:italic;color:var(--text2);font-size:.88em;margin-top:2px}
+.ex-note{font-size:.84em;color:var(--text3);margin-top:4px;font-style:italic}
+
+/* NOTE-BOX */
+.note-box{
+  background:var(--purple-bg);
+  border-left:3px solid var(--purple);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.note-box b{color:var(--purple)}
+
+/* GREEN-BOX */
+.green-box{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.green-box b{color:var(--green)}
+
+/* TEAL-BOX */
+.teal-box{
+  background:var(--teal-bg);
+  border-left:3px solid var(--teal);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.teal-box b{color:var(--teal)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.gram-table{width:100%;border-collapse:collapse;font-size:.92em;background:var(--card)}
+.gram-table th{
+  background:var(--accent-light);
+  color:var(--accent);
+  font-family:'DM Sans',sans-serif;
+  font-size:.72em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:8px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--accent-mid);
+}
+.gram-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.gram-table tr:nth-child(even) td{background:rgba(196,190,173,0.12)}
+.gram-table tr:last-child td{border-bottom:none}
+.ok-cell{color:var(--green);font-weight:500}
+.err-cell{color:var(--red);font-weight:500}
+.warn-cell{color:var(--accent);font-weight:500}
+.tbl-pron{font-weight:600;color:var(--text);background:rgba(196,190,173,0.18)}
+
+/* CHIPS */
+.chip-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:14px 0 10px;
+  padding-bottom:4px;
+}
+.chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:5px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.83em;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{background:var(--accent-light)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-panel{display:none}
+.chip-panel.active{display:block;animation:fadeIn .25s}
+
+/* TRAPS */
+.trap-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.trap-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trap-name{font-weight:600;color:var(--text);font-size:.96em}
+.trap-vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.trap-wrong{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-wrong::before{content:'✗ ';color:var(--red);font-weight:700}
+.trap-right{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-right::before{content:'✓ ';color:var(--green);font-weight:700}
+.trap-expl{font-size:.88em;color:var(--text2);font-style:italic;margin-top:6px}
+@media (max-width:520px){.trap-vs{grid-template-columns:1fr}}
+
+/* MINI-TABLE */
+.mini-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.88em;
+  background:var(--card);
+  margin:10px 0;
+}
+.mini-table td{
+  padding:5px 9px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.mini-table td:first-child{color:var(--text3);font-weight:500;width:38%}
+.mini-table td:last-child{color:var(--text);font-weight:600}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table .hl-form{color:var(--accent);font-weight:700}
+
+/* TAG/LABEL */
+.tag{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:.72em;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-right:6px;
+  border:1px solid;
+}
+.tag-form{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.tag-inf{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.tag-acc{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.tag-bur{background:var(--teal-bg);color:var(--teal);border-color:var(--teal)}
+.tag-gio{background:var(--green-bg);color:var(--green);border-color:var(--green)}
+
+/* UTILS */
+.hl{color:var(--accent);font-weight:600}
+.dim{color:var(--text3)}
+
+/* ANALYSIS LIST */
+.analysis-list{
+  font-size:.86em;
+  color:var(--text2);
+  margin-top:6px;
+  padding-left:0;
+  list-style:none;
+}
+.analysis-list li{
+  margin:2px 0;
+  padding-left:12px;
+  position:relative;
+}
+.analysis-list li::before{
+  content:'·';
+  position:absolute;
+  left:2px;
+  color:var(--accent);
+  font-weight:700;
+}
+.analysis-list b{color:var(--accent)}
+
+/* INFO STRUCT DIAGRAM */
+.struct-diag{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 12px;
+  margin:10px 0;
+  font-family:'DM Sans',sans-serif;
+  font-size:.9em;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+.struct-tag{
+  padding:3px 9px;
+  border-radius:999px;
+  font-size:.78em;
+  font-weight:600;
+  border:1px solid;
+}
+.struct-verb{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.struct-nom{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.struct-arrow{color:var(--text3);font-weight:700}
+.struct-text{font-style:italic;color:var(--text2)}
+
+/* PROGRESSION DIAGRAM */
+.progression-box{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:12px 0;
+  font-size:.92em;
+}
+.prog-line{margin:6px 0;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.prog-tema{
+  background:var(--blue-bg);
+  color:var(--blue);
+  padding:2px 8px;
+  border-radius:4px;
+  font-weight:600;
+  border:1px solid var(--blue);
+  font-size:.85em;
+}
+.prog-rema{
+  background:var(--accent-light);
+  color:var(--accent);
+  padding:2px 8px;
+  border-radius:4px;
+  font-weight:600;
+  border:1px solid var(--accent-mid);
+  font-size:.85em;
+}
+.prog-arrow{color:var(--text3);font-weight:700;margin:0 4px}
+.prog-label{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  color:var(--text3);
+  font-size:.85em;
+  margin-bottom:4px;
+}
+
+/* ANNOTATED TEXT */
+.annotated{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:14px 16px;
+  margin:14px 0;
+  line-height:1.7;
+  font-size:.95em;
+}
+.ann-passiva{background:rgba(22,52,148,0.13);padding:1px 4px;border-radius:3px;border-bottom:2px solid var(--blue)}
+.ann-nomin{background:rgba(122,90,10,0.15);padding:1px 4px;border-radius:3px;border-bottom:2px solid var(--accent)}
+.ann-anafora{background:rgba(106,26,138,0.13);padding:1px 4px;border-radius:3px;border-bottom:2px solid var(--purple)}
+.ann-conn{background:rgba(14,110,110,0.13);padding:1px 4px;border-radius:3px;border-bottom:2px solid var(--teal)}
+.ann-impers{background:rgba(26,96,40,0.13);padding:1px 4px;border-radius:3px;border-bottom:2px solid var(--green)}
+.ann-legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:12px;
+  font-size:.82em;
+  padding:8px 10px;
+  background:rgba(196,190,173,0.18);
+  border-radius:var(--radius-sm);
+}
+.ann-legend-item{display:flex;align-items:center;gap:5px}
+.ann-legend-swatch{
+  display:inline-block;
+  width:14px;
+  height:14px;
+  border-radius:3px;
+  border-bottom:2px solid;
+}
+
+/* RESPONSIVE */
+@media (max-width:520px){
+  .site-header{padding:14px 14px 12px}
+  h1{font-size:1.5em}
+  .main-layout{padding:14px}
+  .gram-card-body{padding:14px}
+  .stat-pill{font-size:.72em}
+  .header-top{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="inner">
+    <div class="header-top">
+      <div>
+        <div class="header-title-wrap">
+          <h1>Il Testo Espositivo-Descrittivo</h1>
+          <span class="header-tag">Grammatica</span>
+        </div>
+        <div class="subtitle">Relazione, sintesi, riassunto critico · C1 · per ispanofoni</div>
+        <div class="stat-bar">
+          <span class="stat-pill">11 sezioni</span>
+          <span class="stat-pill">struttura canonica</span>
+          <span class="stat-pill">oggettivizzazione</span>
+          <span class="stat-pill">progressione tema-rema</span>
+          <span class="stat-pill">anafore lessicali</span>
+          <span class="stat-pill">densità lessicale</span>
+          <span class="stat-pill">relazione modello</span>
+        </div>
+      </div>
+      <div class="font-ctrl">
+        <span>A-</span>
+        <input type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+        <span>A+</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION NAV -->
+<nav class="section-nav" id="sec-nav">
+  <div class="inner">
+    <button class="snav-btn active" onclick="showSection('s-cose',this)">1. Cos'è</button>
+    <button class="snav-btn" onclick="showSection('s-struttura',this)">2. Struttura</button>
+    <button class="snav-btn" onclick="showSection('s-relazione',this)">3. Relazione</button>
+    <button class="snav-btn" onclick="showSection('s-sintesi',this)">4. Sintesi</button>
+    <button class="snav-btn" onclick="showSection('s-riassunto',this)">5. Riassunto critico</button>
+    <button class="snav-btn" onclick="showSection('s-oggetti',this)">6. Oggettivizzazione</button>
+    <button class="snav-btn" onclick="showSection('s-temarema',this)">7. Tema-rema</button>
+    <button class="snav-btn" onclick="showSection('s-anafore',this)">8. Anafore lessicali</button>
+    <button class="snav-btn" onclick="showSection('s-densita',this)">9. Densità lessicale</button>
+    <button class="snav-btn" onclick="showSection('s-trappole',this)">10. Trappole ES</button>
+    <button class="snav-btn" onclick="showSection('s-modello',this)">11. Relazione modello</button>
+  </div>
+</nav>
+
+<main class="main-layout">
+
+<!-- ============ SECCIÓN 1: CHE COS'È ============ -->
+<section id="s-cose" class="sec-block active">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">1. Che cos'è il testo espositivo-descrittivo</h2>
+      <p class="sec-subtitle">La tipologia testuale che presenta un tema in modo oggettivo e sistematico</p>
+
+      <div class="def-box">
+        Il <b>testo espositivo-descrittivo</b> è quel testo che <span class="hl">presenta, spiega o descrive</span> un tema in modo oggettivo e sistematico, senza necessariamente difendere una posizione personale. La sua funzione dominante non è persuadere (testo argomentativo) né raccontare (testo narrativo), ma <em>informare</em> il lettore su uno stato di cose, un fenomeno, un risultato di ricerca, un concetto.
+      </div>
+
+      <h3>Funzioni e finalità</h3>
+      <p>Diversamente dal testo argomentativo, il testo espositivo non si propone di <em>convincere</em>: il suo scopo è <span class="hl">trasmettere conoscenze</span> in modo verificabile e ordinato. Il narratore-espositore si presenta come una voce neutra, che mette a disposizione del lettore informazioni elaborate da una fonte (uno studio, un'osservazione, un'esperienza, una sintesi di altri testi). Anche quando il tema implica giudizi di valore, il testo espositivo li espone come <em>oggetti di analisi</em> più che come opinioni proprie.</p>
+
+      <h3>I generi principali</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Genere</th><th>Definizione</th><th>Contesto tipico</th></tr></thead>
+          <tbody>
+            <tr><td><b>Relazione</b></td><td>Rapporto tecnico o accademico su un'indagine o esperienza</td><td>università, azienda, istituzioni</td></tr>
+            <tr><td><b>Sintesi</b></td><td>Riduzione fedele del contenuto di uno o più testi fonte</td><td>esami, lettura accademica, giornalismo</td></tr>
+            <tr><td><b>Riassunto critico</b></td><td>Sintesi accompagnata da valutazione personale</td><td>recensioni, peer review, saggistica</td></tr>
+            <tr><td><b>Presentazione</b></td><td>Esposizione orale o scritta di un argomento</td><td>conferenze, lezioni, workshop</td></tr>
+            <tr><td><b>Articolo informativo</b></td><td>Testo divulgativo o specialistico per un pubblico ampio</td><td>riviste, quotidiani, blog tematici</td></tr>
+            <tr><td><b>Descrizione di fenomeni</b></td><td>Caratterizzazione sistematica di un oggetto o processo</td><td>manualistica, divulgazione scientifica</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Le proprietà distintive</h3>
+      <ul>
+        <li><b>Oggettività:</b> il punto di vista soggettivo è ridotto al minimo; le affermazioni sono attribuite a fonti o presentate come dati di fatto.</li>
+        <li><b>Chiarezza:</b> ogni concetto viene introdotto, definito e illustrato con esempi pertinenti.</li>
+        <li><b>Ordine logico:</b> la progressione del discorso segue criteri identificabili (cronologico, gerarchico, causale, classificatorio).</li>
+        <li><b>Coesione:</b> i passaggi sono legati da connettivi, anafore, ripresa di temi.</li>
+        <li><b>Registro formale:</b> lessico preciso, sintassi controllata, assenza di colloquialismi.</li>
+      </ul>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Per l'ispanofono:</b> il testo espositivo italiano applica con maggiore <span class="hl">sistematicità</span> alcuni dispositivi che lo spagnolo formale usa in modo più sfumato — soprattutto la <em>passiva</em>, la <em>nominalizzazione</em> e l'evitazione della ripetizione lessicale. Il calco letterale di uno scritto spagnolo accademico produce in italiano un testo che, pur grammaticalmente corretto, suona <em>poco italiano</em>.</div>
+      </div>
+
+      <h3>Come è organizzata questa scheda</h3>
+      <p>Dopo la presentazione della struttura canonica (sezione 2), vediamo i tre generi principali in dettaglio: relazione (3), sintesi (4), riassunto critico (5). Le sezioni 6–9 trattano i <span class="hl">dispositivi linguistici</span> trasversali: oggettivizzazione, progressione tema-rema, anafore lessicali, densità lessicale. La sezione 10 raccoglie le trappole tipiche per gli ispanofoni e la sezione 11 propone una <em>relazione modello</em> annotata.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 2: STRUTTURA ============ -->
+<section id="s-struttura" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">2. Struttura canonica</h2>
+      <p class="sec-subtitle">Introduzione · Sviluppo · Conclusione</p>
+
+      <div class="def-box">
+        Il testo espositivo segue una <b>tripartizione canonica</b>: <span class="hl">introduzione</span> (delimitazione del tema e del piano del discorso), <span class="hl">sviluppo</span> (esposizione ordinata del contenuto), <span class="hl">conclusione</span> (sintesi e possibile apertura). Ogni parte ha funzioni specifiche e richiede strategie linguistiche proprie.
+      </div>
+
+      <div class="struct-diag">
+        <span class="struct-tag struct-verb">INTRODUZIONE</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-tag struct-nom">SVILUPPO</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-tag struct-verb">CONCLUSIONE</span>
+      </div>
+
+      <h3>a) L'introduzione</h3>
+      <p>L'introduzione svolge tre operazioni fondamentali:</p>
+      <ul>
+        <li><b>Delimitazione del tema:</b> circoscrivere l'oggetto di cui si tratterà, escludendo ciò che non sarà affrontato.</li>
+        <li><b>Indicazione dell'obiettivo:</b> chiarire <em>perché</em> si scrive (informare, descrivere, sintetizzare, valutare).</li>
+        <li><b>Anticipazione della struttura:</b> presentare il piano del testo che si seguirà.</li>
+      </ul>
+
+      <div class="example-block">
+        <div class="ex-it">Il presente lavoro si propone di <em>analizzare</em> i fattori che influenzano l'adozione delle energie rinnovabili in Italia. Dopo una <em>panoramica</em> del quadro normativo, verranno <em>esaminati</em> i dati relativi al periodo 2015–2024; infine, si <em>discuteranno</em> le prospettive per il prossimo decennio.</div>
+        <div class="ex-es">El presente trabajo se propone analizzar los factores que influyen en la adopción de las energías renovables en Italia...</div>
+        <div class="ex-note">Tre verbi che esplicitano i tre passaggi: <em>analizzare → esaminati → discuteranno</em>.</div>
+      </div>
+
+      <div class="teal-box"><b>Formule introduttive tipiche:</b> <em>Il presente lavoro/studio/articolo si propone di...; L'obiettivo di questa relazione è...; Nelle pagine seguenti verrà esaminato...; Si intende qui presentare...; Lo scopo del seguente testo consiste nel...</em></div>
+
+      <h3>b) Lo sviluppo</h3>
+      <p>Lo sviluppo costituisce il <span class="hl">corpo</span> del testo. La sua organizzazione interna può seguire criteri diversi a seconda dell'oggetto:</p>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Criterio</th><th>Descrizione</th><th>Esempio di tema</th></tr></thead>
+          <tbody>
+            <tr><td><b>Cronologico</b></td><td>dal prima al dopo</td><td>storia di un'istituzione</td></tr>
+            <tr><td><b>Spaziale</b></td><td>dal vicino al lontano (o viceversa)</td><td>descrizione di un territorio</td></tr>
+            <tr><td><b>Causa–effetto</b></td><td>dalle cause ai risultati</td><td>fenomeno climatico</td></tr>
+            <tr><td><b>Problema–soluzione</b></td><td>diagnosi e proposta</td><td>relazione tecnica</td></tr>
+            <tr><td><b>Generale–particolare</b></td><td>dal concetto all'esempio</td><td>esposizione teorica</td></tr>
+            <tr><td><b>Particolare–generale</b></td><td>dai casi alla legge</td><td>induzione scientifica</td></tr>
+            <tr><td><b>Classificatorio</b></td><td>per categorie</td><td>tipologie di un fenomeno</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>All'interno dello sviluppo, ogni paragrafo dovrebbe contenere <span class="hl">un'unità tematica</span> (un'idea principale e i suoi dettagli) e collegarsi al successivo tramite connettivi o anafore.</p>
+
+      <h3>c) La conclusione</h3>
+      <p>La conclusione non aggiunge informazioni nuove di sostanza: <span class="hl">sintetizza</span>, <span class="hl">trae conseguenze</span> da quanto esposto e, eventualmente, <span class="hl">apre</span> verso prospettive ulteriori o domande lasciate insolute.</p>
+
+      <div class="example-block">
+        <div class="ex-it"><em>In conclusione</em>, l'analisi condotta evidenzia <em>tre tendenze principali</em>: l'accelerazione degli investimenti pubblici, la riduzione dei costi di produzione e la crescente accettazione sociale del fotovoltaico. <em>Resta da chiarire</em>, tuttavia, in quale misura tali tendenze siano sostenibili sul lungo periodo.</div>
+        <div class="ex-es">En conclusión, el análisis llevado a cabo evidencia tres tendencias principales...</div>
+        <div class="ex-note">Sintesi (tre tendenze) + apertura (resta da chiarire).</div>
+      </div>
+
+      <div class="teal-box"><b>Formule conclusive tipiche:</b> <em>In conclusione...; Per quanto esposto...; Da quanto detto emerge che...; In sintesi...; Resta tuttavia da chiarire...; Si può quindi affermare che...; In definitiva...</em></div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div>La conclusione <span class="hl">non è un copia-incolla</span> dell'introduzione né una semplice ripetizione: deve <em>riformulare</em> i punti chiave alla luce di quanto è stato sviluppato, mostrando il valore informativo del testo nel suo insieme.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 3: RELAZIONE ============ -->
+<section id="s-relazione" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">3. La relazione</h2>
+      <p class="sec-subtitle">Il rapporto tecnico o accademico — caratteristiche e struttura</p>
+
+      <div class="def-box">
+        La <b>relazione</b> è un testo espositivo che riferisce in modo sistematico l'<span class="hl">esito di un'indagine, di un esperimento o di un'esperienza professionale</span>. È il genere standard della comunicazione accademica, scientifica e aziendale; la sua struttura è altamente codificata e prevedibile.
+      </div>
+
+      <h3>Struttura canonica della relazione</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Sezione</th><th>Contenuto</th><th>Domanda guida</th></tr></thead>
+          <tbody>
+            <tr><td><b>Obiettivi</b></td><td>perché si è svolta l'indagine</td><td><em>che cosa si voleva sapere?</em></td></tr>
+            <tr><td><b>Metodologia</b></td><td>come si è proceduto</td><td><em>quali strumenti, quali dati?</em></td></tr>
+            <tr><td><b>Risultati</b></td><td>cosa è emerso</td><td><em>che cosa si è osservato?</em></td></tr>
+            <tr><td><b>Conclusioni</b></td><td>che cosa significano i risultati</td><td><em>quali implicazioni?</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Caratteristiche linguistiche</h3>
+      <ul>
+        <li><b>Registro molto formale:</b> lessico tecnico, sintassi controllata, periodi articolati.</li>
+        <li><b>Alta nominalizzazione:</b> preferenza per i sostantivi astratti rispetto ai verbi (<em>l'analisi dei dati</em> invece di <em>analizzare i dati</em>).</li>
+        <li><b>Uso sistematico della passiva:</b> <em>è stato analizzato, sono stati raccolti, viene presentato</em>.</li>
+        <li><b>Prima persona plurale o forma impersonale:</b> <em>abbiamo proceduto / si è proceduto a verificare</em>.</li>
+        <li><b>Riferimenti espliciti alle fonti:</b> <em>secondo X, come indicato da Y, in base ai dati di Z</em>.</li>
+      </ul>
+
+      <h3>Esempi di apertura per ciascuna sezione</h3>
+      <div class="example-block">
+        <div class="ex-it"><b>Obiettivi:</b> <em>La presente relazione si propone di esaminare l'incidenza dei nuovi protocolli di sicurezza sulla produttività del reparto produttivo.</em></div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><b>Metodologia:</b> <em>L'indagine si è svolta tra gennaio e marzo 2025. Sono stati somministrati questionari a 240 lavoratori e si è proceduto a interviste semi-strutturate con i responsabili di linea.</em></div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><b>Risultati:</b> <em>I dati raccolti indicano un incremento medio del 14% nelle segnalazioni di anomalie, accompagnato da una riduzione del 7% degli infortuni sul lavoro.</em></div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><b>Conclusioni:</b> <em>Le evidenze emerse suggeriscono che i nuovi protocolli, pur comportando un costo iniziale di adattamento, garantiscono un beneficio netto in termini di sicurezza.</em></div>
+      </div>
+
+      <h3>Prima persona plurale o impersonale?</h3>
+      <p>Entrambe le strategie sono ammesse, ma comunicano sfumature diverse:</p>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Strategia</th><th>Esempio</th><th>Effetto</th></tr></thead>
+          <tbody>
+            <tr><td><b>Noi inclusivo</b></td><td><em>Abbiamo somministrato 240 questionari.</em></td><td>Coinvolgimento del team; toni accademici classici.</td></tr>
+            <tr><td><b>Si impersonale</b></td><td><em>Si sono somministrati 240 questionari.</em></td><td>Massima oggettività; allontana l'autore.</td></tr>
+            <tr><td><b>Passiva</b></td><td><em>Sono stati somministrati 240 questionari.</em></td><td>Mette in primo piano l'oggetto dell'azione.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Coerenza interna:</b> una volta scelta la strategia (noi / si / passiva), conviene mantenerla per tutta la relazione. Il passaggio brusco da <em>«abbiamo intervistato»</em> a <em>«sono stati intervistati»</em> nello stesso paragrafo è percepito come una <span class="hl">discontinuità di voce</span>.</div>
+      </div>
+
+      <h3>Per l'ispanofono</h3>
+      <p>Lo spagnolo accademico tende a preferire la prima persona plurale (<em>hemos analizado, observamos que</em>) e usa la passiva con minor frequenza. L'italiano formale è <span class="hl">più passivo</span> e <span class="hl">più impersonale</span>: il calco diretto può sembrare meno asettico del registro atteso.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 4: SINTESI ============ -->
+<section id="s-sintesi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">4. La sintesi</h2>
+      <p class="sec-subtitle">La riduzione fedele del contenuto di uno o più testi fonte</p>
+
+      <div class="def-box">
+        La <b>sintesi</b> è la riduzione fedele del contenuto di uno o più testi fonte. Non interpreta, non valuta, non aggiunge: <span class="hl">riorganizza e condensa</span>. La buona sintesi conserva la gerarchia delle informazioni dell'originale e rispetta la sua progressione logica, pur con un'estensione inferiore (di solito tra un terzo e un decimo del testo di partenza).
+      </div>
+
+      <h3>Le regole d'oro</h3>
+      <ol>
+        <li><b>Fedeltà al contenuto:</b> nessuna idea presente nell'originale può essere distorta o omessa nelle sue articolazioni principali.</li>
+        <li><b>Neutralità:</b> non si esprimono giudizi né opinioni proprie.</li>
+        <li><b>Riformulazione:</b> non si copia. Le frasi sono parafrasate.</li>
+        <li><b>Coerenza:</b> il testo finale deve essere autosufficiente, comprensibile anche a chi non ha letto la fonte.</li>
+        <li><b>Progressione tema-rema:</b> ogni frase nuova parte da un'informazione già stabilita.</li>
+      </ol>
+
+      <h3>Le tecniche operative</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Tecnica</th><th>In cosa consiste</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td><b>Selezione</b></td><td>scegliere le informazioni principali, eliminando il superfluo</td><td>tagliare gli esempi ridondanti</td></tr>
+            <tr><td><b>Eliminazione</b></td><td>rimuovere ripetizioni, esempi, digressioni, formule di cortesia</td><td>via le citazioni d'apertura</td></tr>
+            <tr><td><b>Generalizzazione</b></td><td>sostituire elenchi specifici con iperonimi</td><td><em>mele, pere, banane</em> → <em>frutta</em></td></tr>
+            <tr><td><b>Riformulazione parafrastica</b></td><td>esprimere lo stesso concetto con altre parole</td><td>cambiare il verbo, ridurre subordinate</td></tr>
+            <tr><td><b>Riorganizzazione</b></td><td>raggruppare informazioni dello stesso tipo</td><td>unire dati sparsi in un solo paragrafo</td></tr>
+            <tr><td><b>Nominalizzazione</b></td><td>condensare un periodo in un sintagma nominale</td><td><em>quando i prezzi sono saliti</em> → <em>con l'aumento dei prezzi</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Esempio di operazione di sintesi</h3>
+      <div class="green-box">
+        <b>Testo originale (50 parole):</b><br>
+        <em>«Le precipitazioni piovose della primavera 2024 sono state particolarmente abbondanti su tutta la fascia centrale dell'Italia, e in particolare nelle regioni Emilia-Romagna, Toscana e Marche, dove si sono registrati incrementi rispetto alla media decennale che hanno superato il 30%, con punte locali ancora più elevate.»</em>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><b>Sintesi (16 parole):</b> <em>Nella primavera 2024 il centro Italia ha registrato precipitazioni superiori del 30% alla media decennale.</em></div>
+        <div class="ex-note">Operazioni applicate: <b>generalizzazione</b> (Emilia-Romagna, Toscana, Marche → centro Italia), <b>nominalizzazione</b> (le precipitazioni piovose sono state... → ha registrato precipitazioni), <b>eliminazione</b> (delle punte locali, dato accessorio).</div>
+      </div>
+
+      <h3>Progressione tema-rema nella sintesi</h3>
+      <p>Una sintesi ben costruita non è una sequenza di frasi giustapposte: <span class="hl">ogni frase deve agganciarsi alla precedente</span> tramite la ripresa di un elemento già introdotto. È il principio della progressione tema-rema (sezione 7).</p>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Errore tipico dell'ispanofono:</b> trasformare la sintesi in un <em>resumen libre</em>, in cui l'autore parafrasa con eccessiva libertà aggiungendo nessi causali o valutativi che <span class="hl">non sono nell'originale</span>. La sintesi italiana è più <em>chirurgica</em>: meno «io penso che il testo dica», più «il testo dice».</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 5: RIASSUNTO CRITICO ============ -->
+<section id="s-riassunto" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">5. Il riassunto critico</h2>
+      <p class="sec-subtitle">Sintesi + valutazione personale del contenuto</p>
+
+      <div class="def-box">
+        Il <b>riassunto critico</b> combina due operazioni: prima una <span class="hl">esposizione fedele</span> del testo fonte (come nella sintesi), poi una <span class="hl">valutazione critica</span> del suo contenuto. È il genere tipico delle recensioni accademiche, dei <em>book reports</em> universitari, della saggistica di secondo livello e del <em>peer review</em>.
+      </div>
+
+      <h3>Le due fasi</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Fase</th><th>Operazione</th><th>Registro</th></tr></thead>
+          <tbody>
+            <tr><td><b>1. Esposizione</b></td><td>presentare oggettivamente la tesi, gli argomenti, la struttura del testo</td><td>impersonale, indicativo, parafrasi</td></tr>
+            <tr><td><b>2. Valutazione</b></td><td>esaminare validità degli argomenti, coerenza, limiti, contributi originali</td><td>formale, congiuntivo, modalizzazione</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Che cosa valutare</h3>
+      <ul>
+        <li><b>Validità degli argomenti:</b> sono ben fondati? Le evidenze sostengono le tesi?</li>
+        <li><b>Coerenza interna:</b> la struttura è ordinata? Le parti si collegano senza salti?</li>
+        <li><b>Originalità:</b> il testo aggiunge qualcosa al dibattito o si limita a riformulare posizioni note?</li>
+        <li><b>Chiarezza espositiva:</b> il contenuto è comunicato in modo efficace?</li>
+        <li><b>Limitazioni:</b> quali aspetti non sono affrontati? Quali fonti non sono considerate?</li>
+        <li><b>Pubblico di destinazione:</b> per chi è pensato il testo, e funziona per quel pubblico?</li>
+      </ul>
+
+      <h3>Il ruolo del congiuntivo</h3>
+      <p>Nella fase valutativa, il <b>congiuntivo</b> è uno strumento prezioso per esprimere giudizi modalizzati, senza affermazioni recise:</p>
+      <div class="example-block">
+        <div class="ex-it">Sebbene l'autore <em>sostenga</em> la tesi con dati cospicui, appare discutibile che le conclusioni <em>possano</em> essere estese ad altri contesti culturali.</div>
+        <div class="ex-es">Aunque el autor sostenga la tesis con datos cuantiosos, parece discutible que las conclusiones puedan extenderse a otros contextos culturales.</div>
+        <div class="ex-note">Doppio congiuntivo: <em>sebbene sostenga</em> (concessivo), <em>appare discutibile che possano</em> (valutazione con verbo di opinione modalizzata).</div>
+      </div>
+
+      <h3>Formule tipiche della parte valutativa</h3>
+      <div class="teal-box">
+        <b>Per esprimere apprezzamento:</b> <em>il pregio principale del lavoro consiste nel...; l'autore offre un contributo significativo...; particolarmente convincente risulta...; appare innovativa l'analisi di...</em>
+      </div>
+      <div class="teal-box">
+        <b>Per esprimere riserve:</b> <em>tuttavia non si può non rilevare che...; rimane discutibile la scelta di...; sarebbe stato auspicabile un approfondimento di...; un limite del lavoro consiste nel fatto che...; si potrebbe obiettare che...</em>
+      </div>
+      <div class="teal-box">
+        <b>Per concludere la valutazione:</b> <em>nel complesso, il volume rappresenta...; nonostante alcuni limiti, il contributo si segnala per...; in definitiva, il lavoro fornisce uno strumento prezioso per...</em>
+      </div>
+
+      <h3>Esempio di articolazione</h3>
+      <div class="example-block">
+        <div class="ex-it"><b>[Esposizione]</b> <em>Il saggio di Rossi prende in esame l'evoluzione del concetto di cittadinanza nell'Italia repubblicana, articolandosi in cinque capitoli che ripercorrono cronologicamente le riforme legislative dal 1948 al 2020.</em></div>
+        <div class="ex-it" style="margin-top:8px"><b>[Valutazione]</b> <em>Pur risultando ben documentato sul piano normativo, il testo mostra una scarsa attenzione al dibattito politologico contemporaneo: si avverte l'assenza di un confronto con la letteratura internazionale degli ultimi vent'anni.</em></div>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Per l'ispanofono:</b> la valutazione critica in italiano è di solito <span class="hl">più modalizzata</span> e meno diretta di quella spagnola. Espressioni come <em>«questo è sbagliato»</em> o <em>«l'autore non capisce»</em> suonano aggressive: si preferisce <em>«questa posizione appare discutibile»</em>, <em>«si potrebbe obiettare che»</em>, <em>«sarebbe stato auspicabile»</em>.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 6: OGGETTIVIZZAZIONE ============ -->
+<section id="s-oggetti" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">6. Oggettivizzazione: i mezzi linguistici</h2>
+      <p class="sec-subtitle">Passiva, si impersonale, nominalizzazione, modi indefiniti, attribuzione a fonti</p>
+
+      <div class="def-box">
+        L'<b>oggettivizzazione</b> è l'insieme dei mezzi linguistici con cui il testo espositivo <span class="hl">cancella o riduce l'agente individuale</span> e presenta le informazioni come dati di fatto verificabili. Sono cinque i dispositivi principali, raramente isolati: nel testo accademico convivono e si rinforzano a vicenda.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="showChip('og-passiva',this)">1. Passiva</button>
+        <button class="chip" onclick="showChip('og-si',this)">2. Si impersonale</button>
+        <button class="chip" onclick="showChip('og-nomin',this)">3. Nominalizzazione</button>
+        <button class="chip" onclick="showChip('og-indef',this)">4. Modi indefiniti</button>
+        <button class="chip" onclick="showChip('og-fonti',this)">5. Attribuzione a fonti</button>
+      </div>
+
+      <!-- 1. PASSIVA -->
+      <div id="og-passiva" class="chip-panel active">
+        <h3>1. La passiva · <span class="dim">cancellare l'agente, focalizzare l'oggetto</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-acc">accademico</span> La forma passiva mette in primo piano <span class="hl">ciò che è stato fatto</span> piuttosto che <em>chi</em> l'ha fatto. È uno dei tratti più stabili del registro espositivo-scientifico italiano.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Forma attiva</th><th>Forma passiva</th><th>Effetto</th></tr></thead>
+            <tbody>
+              <tr><td>Abbiamo dimostrato che X.</td><td class="tbl-pron">È stato dimostrato che X.</td><td>oggettività, autorità</td></tr>
+              <tr><td>Gli studiosi hanno rilevato che Y.</td><td class="tbl-pron">È stato rilevato che Y.</td><td>l'agente sfuma</td></tr>
+              <tr><td>La comunità scientifica accetta Z.</td><td class="tbl-pron">Viene comunemente accettato che Z.</td><td>consenso impersonale</td></tr>
+              <tr><td>I dati confermano l'ipotesi.</td><td class="tbl-pron">L'ipotesi viene confermata dai dati.</td><td>focus su ipotesi</td></tr>
+              <tr><td>L'autore prende in considerazione i fattori economici.</td><td class="tbl-pron">Vengono presi in considerazione i fattori economici.</td><td>focus su fattori</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-box"><b>Passiva con essere vs. venire:</b> <em>essere</em> esprime stato/risultato (<em>il libro è pubblicato</em> = è già uscito), <em>venire</em> esprime processo/azione abituale (<em>il libro viene pubblicato ogni anno</em>). Nei testi espositivi convivono le due forme.</div>
+
+        <div class="example-block">
+          <div class="ex-it"><em>È stato dimostrato</em> che la riduzione dei consumi energetici dipende strettamente dall'isolamento termico degli edifici. <em>Sono stati analizzati</em>, a tale scopo, i dati raccolti tra il 2018 e il 2024.</div>
+          <div class="ex-es">Se ha demostrado que... Se han analizado, con este fin...</div>
+        </div>
+      </div>
+
+      <!-- 2. SI IMPERSONALE -->
+      <div id="og-si" class="chip-panel">
+        <h3>2. Il si impersonale · <span class="dim">il «si» dell'esposizione neutra</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-acc">accademico</span> Il <em>si</em> impersonale e passivante è una delle costruzioni più tipicamente italiane dell'esposizione neutra. Permette di <span class="hl">presentare azioni o stati</span> senza specificare chi ne sia il soggetto.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Forma esplicita</th><th>Forma con SI</th><th>Tipo</th></tr></thead>
+            <tbody>
+              <tr><td>Notiamo che la curva sale.</td><td class="tbl-pron">Si osserva che la curva sale.</td><td>impersonale</td></tr>
+              <tr><td>Possiamo affermare che X.</td><td class="tbl-pron">Si può affermare che X.</td><td>impersonale</td></tr>
+              <tr><td>Distinguiamo tre categorie.</td><td class="tbl-pron">Si distinguono tre categorie.</td><td>passivante</td></tr>
+              <tr><td>Si è proceduto all'analisi dei dati.</td><td class="tbl-pron">Si è proceduto all'analisi dei dati.</td><td>impersonale (passato)</td></tr>
+              <tr><td>Si sono ottenuti risultati significativi.</td><td class="tbl-pron">Si sono ottenuti risultati significativi.</td><td>passivante (passato)</td></tr>
+              <tr><td>Si tratta di un fenomeno complesso.</td><td class="tbl-pron">Si tratta di un fenomeno complesso.</td><td>impersonale (formula fissa)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="warn-box"><span class="ico">⚠️</span><div><b>Accordo:</b> il si passivante si accorda con il sostantivo che lo segue. Singolare: <em>si osserva un fenomeno</em>; plurale: <em>si osservano fenomeni</em>. Stesso meccanismo nei tempi composti: <em>si è osservato un fenomeno / si sono osservati fenomeni</em>.</div></div>
+      </div>
+
+      <!-- 3. NOMINALIZZAZIONE -->
+      <div id="og-nomin" class="chip-panel">
+        <h3>3. La nominalizzazione · <span class="dim">condensare l'azione in un sostantivo</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-bur">burocratico</span> La <b>nominalizzazione</b> trasforma un verbo (azione) in un sostantivo (entità astratta). Il risultato è una <span class="hl">maggiore densità informativa</span> e un tono più impersonale, perché il sostantivo astratto «assorbe» il soggetto agente.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Forma verbale</th><th>Forma nominalizzata</th></tr></thead>
+            <tbody>
+              <tr><td>Quando hanno analizzato i dati, è emerso che...</td><td class="tbl-pron">L'analisi dei dati ha mostrato che...</td></tr>
+              <tr><td>Per raggiungere gli obiettivi è necessario...</td><td class="tbl-pron">Il raggiungimento degli obiettivi richiede...</td></tr>
+              <tr><td>Hanno applicato il nuovo metodo con successo.</td><td class="tbl-pron">L'applicazione del nuovo metodo è risultata efficace.</td></tr>
+              <tr><td>Bisogna riformare il sistema.</td><td class="tbl-pron">È necessaria una riforma del sistema.</td></tr>
+              <tr><td>Hanno discusso a lungo il problema.</td><td class="tbl-pron">Il problema è stato oggetto di un'ampia discussione.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>La nominalizzazione consente inoltre di <span class="hl">rimandare al tema</span> già discusso in un sintagma unico, riducendo la lunghezza delle subordinate.</p>
+
+        <div class="example-block">
+          <div class="ex-it"><em>L'analisi dei dati</em> raccolti tra il 2015 e il 2024 evidenzia <em>un incremento sostanziale del consumo di energia elettrica</em>. <em>Tale incremento</em> dipende sia dalla diffusione delle pompe di calore sia dalla crescita del settore dei data center.</div>
+          <div class="ex-note">Le due nominalizzazioni («l'analisi dei dati», «un incremento sostanziale») condensano azioni e permettono al «tale incremento» di richiamarle compattamente nella frase successiva.</div>
+        </div>
+
+        <div class="warn-box"><span class="ico">⚠️</span><div><b>Attenzione all'eccesso:</b> la nominalizzazione spinta è tipica del registro burocratico-amministrativo e può risultare <em>artificiale</em> se accumulata. Buon testo espositivo = equilibrio tra forma nominale e forma verbale. Vedi la sezione [[grammatica_nominalizzazione]].</div></div>
+      </div>
+
+      <!-- 4. MODI INDEFINITI -->
+      <div id="og-indef" class="chip-panel">
+        <h3>4. Modi indefiniti · <span class="dim">gerundio, participio, infinito</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-acc">accademico</span> I modi indefiniti permettono di <span class="hl">compattare proposizioni</span> senza esplicitare un soggetto, contribuendo all'effetto di oggettività e di densità del testo espositivo. Si rimanda alla scheda [[grammatica_modi_indefiniti]] e [[grammatica_costruzione_assoluta]] per il dettaglio.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Modo</th><th>Costruzione esplicita</th><th>Versione con modo indefinito</th></tr></thead>
+            <tbody>
+              <tr><td><b>Gerundio</b></td><td>Se si analizzano i dati, emerge che...</td><td class="tbl-pron">Analizzando i dati, emerge che...</td></tr>
+              <tr><td><b>Gerundio composto</b></td><td>Dopo aver letto i risultati, abbiamo concluso che...</td><td class="tbl-pron">Letti i risultati, si è concluso che...</td></tr>
+              <tr><td><b>Participio passato</b></td><td>I risultati che sono stati ottenuti indicano...</td><td class="tbl-pron">I risultati ottenuti indicano...</td></tr>
+              <tr><td><b>Participio passato assoluto</b></td><td>Quando si è conclusa l'analisi, si è proceduto a...</td><td class="tbl-pron">Conclusa l'analisi, si è proceduto a...</td></tr>
+              <tr><td><b>Participio presente</b></td><td>I fattori che riguardano la sicurezza...</td><td class="tbl-pron">I fattori riguardanti la sicurezza...</td></tr>
+              <tr><td><b>Infinito sostantivato</b></td><td>Il fatto che si lavori in gruppo favorisce...</td><td class="tbl-pron">Il lavorare in gruppo favorisce...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it"><em>Analizzando i dati raccolti</em>, emerge un quadro coerente. <em>I risultati ottenuti</em> confermano l'ipotesi iniziale: <em>conclusa l'indagine</em>, è possibile formulare alcune raccomandazioni.</div>
+          <div class="ex-note">Gerundio + participio passato + participio assoluto in un solo paragrafo: tre meccanismi di compattazione del discorso espositivo.</div>
+        </div>
+      </div>
+
+      <!-- 5. ATTRIBUZIONE A FONTI -->
+      <div id="og-fonti" class="chip-panel">
+        <h3>5. Attribuzione a fonti · <span class="dim">trasferire la responsabilità a una voce esterna</span></h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-acc">accademico</span> L'attribuzione a fonti esterne è il dispositivo per <span class="hl">trasferire la responsabilità</span> dell'affermazione a un'autorità riconosciuta, rafforzando contemporaneamente l'effetto di oggettività.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Formula</th><th>Esempio</th><th>Sfumatura</th></tr></thead>
+            <tbody>
+              <tr><td><b>Secondo X...</b></td><td>Secondo Eco, la semiotica include...</td><td>neutra, ampiamente usata</td></tr>
+              <tr><td><b>Come afferma Y...</b></td><td>Come afferma Calvino nelle Lezioni americane...</td><td>introduzione di citazione</td></tr>
+              <tr><td><b>I dati raccolti da Z indicano...</b></td><td>I dati raccolti dall'ISTAT indicano un calo...</td><td>fonte istituzionale</td></tr>
+              <tr><td><b>In base a...</b></td><td>In base agli studi più recenti, si può affermare che...</td><td>generica, riferimento aggregato</td></tr>
+              <tr><td><b>Come è stato osservato da X</b></td><td>Come è stato osservato da Sabatini...</td><td>passiva + attribuzione</td></tr>
+              <tr><td><b>X sostiene/argomenta/rileva...</b></td><td>Bourdieu sostiene che il capitale culturale...</td><td>parafrasi di tesi</td></tr>
+              <tr><td><b>A giudizio di X...</b></td><td>A giudizio di Eco, ogni testo è...</td><td>opinione modalizzata</td></tr>
+              <tr><td><b>Stando a quanto riportato da Y...</b></td><td>Stando a quanto riportato dal Corriere...</td><td>resoconto giornalistico</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it"><em>Secondo</em> i dati ISTAT del 2024, il tasso di disoccupazione giovanile è diminuito di 2,3 punti percentuali. <em>Come osserva</em> Eco in un noto saggio, <em>il dato statistico</em> non è mai neutro: dipende dalla definizione di «giovane» che si adotta.</div>
+          <div class="ex-note">Combinazione di tre dispositivi: <b>attribuzione a fonte</b> (Secondo... Come osserva), <b>nominalizzazione</b> (il tasso di disoccupazione, il dato statistico), <b>passiva implicita</b> (è diminuito).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 7: TEMA-REMA ============ -->
+<section id="s-temarema" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">7. La progressione tema-rema</h2>
+      <p class="sec-subtitle">Come si concatenano le frasi nel testo espositivo</p>
+
+      <div class="def-box">
+        In ogni frase si distinguono due parti: il <b>tema</b> (l'informazione già data, il punto di partenza, di solito posto all'inizio) e il <b>rema</b> (l'informazione nuova, ciò che si dice sul tema, di solito alla fine). La <span class="hl">progressione tema-rema</span> è il modo in cui le frasi successive si agganciano reciprocamente tramite la ripresa del tema o del rema precedente. È il principale meccanismo di <em>coerenza</em> di un testo espositivo.
+      </div>
+
+      <h3>Tre tipi di progressione</h3>
+
+      <h4 style="margin-top:14px">a) Progressione lineare</h4>
+      <p>Il <b>rema</b> di una frase diventa il <b>tema</b> della frase successiva. È la progressione più dinamica: ogni frase aggiunge informazione spostando il fuoco in avanti.</p>
+
+      <div class="progression-box">
+        <div class="prog-label">Schema: T1 → R1 ⇒ T2 (=R1) → R2 ⇒ T3 (=R2) → R3</div>
+        <div class="prog-line">
+          <span class="prog-tema">Tema 1: L'energia solare</span>
+          <span class="prog-arrow">→</span>
+          <span class="prog-rema">Rema 1: dipende dai pannelli fotovoltaici.</span>
+        </div>
+        <div class="prog-line">
+          <span class="prog-tema">Tema 2: I pannelli fotovoltaici</span>
+          <span class="prog-arrow">→</span>
+          <span class="prog-rema">Rema 2: convertono la radiazione in corrente elettrica.</span>
+        </div>
+        <div class="prog-line">
+          <span class="prog-tema">Tema 3: La corrente elettrica</span>
+          <span class="prog-arrow">→</span>
+          <span class="prog-rema">Rema 3: viene poi immessa nella rete.</span>
+        </div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">L'energia solare dipende dai <em>pannelli fotovoltaici</em>. I <em>pannelli fotovoltaici</em> convertono la radiazione in <em>corrente elettrica</em>. Tale <em>corrente</em> viene poi immessa nella rete.</div>
+        <div class="ex-note">Ogni rema si trasforma nel tema successivo: pannelli → pannelli; corrente → corrente.</div>
+      </div>
+
+      <h4>b) Progressione a tema costante</h4>
+      <p>Tutte le frasi partono dallo <b>stesso tema</b>, sul quale si accumulano remi diversi. È utile per descrivere un oggetto, illustrare le proprietà di un fenomeno, presentare i tratti di una persona.</p>
+
+      <div class="progression-box">
+        <div class="prog-label">Schema: T → R1; T → R2; T → R3</div>
+        <div class="prog-line">
+          <span class="prog-tema">Tema: Il fotovoltaico</span>
+          <span class="prog-arrow">→</span>
+          <span class="prog-rema">è una fonte rinnovabile.</span>
+        </div>
+        <div class="prog-line">
+          <span class="prog-tema">Tema: Il fotovoltaico</span>
+          <span class="prog-arrow">→</span>
+          <span class="prog-rema">richiede investimenti iniziali rilevanti.</span>
+        </div>
+        <div class="prog-line">
+          <span class="prog-tema">Tema: Il fotovoltaico</span>
+          <span class="prog-arrow">→</span>
+          <span class="prog-rema">è in espansione anche nei paesi mediterranei.</span>
+        </div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Il <em>fotovoltaico</em> è una fonte rinnovabile. <em>Esso</em> richiede investimenti iniziali rilevanti, ma si ammortizza nell'arco di dieci-quindici anni. <em>Tale tecnologia</em> è oggi in espansione anche nei paesi mediterranei.</div>
+        <div class="ex-note">Il tema «fotovoltaico» è ripreso tre volte: forma piena → pronome (esso) → anafora lessicale (tale tecnologia). Vedi anche la sezione successiva.</div>
+      </div>
+
+      <h4>c) Progressione con temi derivati (o «iperterma»)</h4>
+      <p>Le frasi partono da <b>sotto-temi</b> diversi che derivano da un tema generale (iperterma). È la progressione tipica dei testi che presentano una classificazione, un elenco di componenti, una scomposizione analitica.</p>
+
+      <div class="progression-box">
+        <div class="prog-label">Schema: iperterma T → T1, T2, T3 (sotto-temi) → R1, R2, R3</div>
+        <div class="prog-line">
+          <span class="prog-tema">Iperterma: Le energie rinnovabili</span>
+        </div>
+        <div class="prog-line">
+          <span class="prog-tema">T1: L'eolico</span>
+          <span class="prog-arrow">→</span>
+          <span class="prog-rema">sfrutta la forza del vento.</span>
+        </div>
+        <div class="prog-line">
+          <span class="prog-tema">T2: Il solare</span>
+          <span class="prog-arrow">→</span>
+          <span class="prog-rema">utilizza la radiazione luminosa.</span>
+        </div>
+        <div class="prog-line">
+          <span class="prog-tema">T3: L'idroelettrico</span>
+          <span class="prog-arrow">→</span>
+          <span class="prog-rema">si basa sulla caduta dell'acqua.</span>
+        </div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Le <em>energie rinnovabili</em> si articolano in tre grandi famiglie. L'<em>eolico</em> sfrutta la forza del vento mediante turbine. Il <em>solare</em> utilizza la radiazione luminosa attraverso pannelli fotovoltaici o termici. L'<em>idroelettrico</em>, infine, si basa sulla caduta dell'acqua in invasi naturali o artificiali.</div>
+        <div class="ex-note">Iperterma («energie rinnovabili») seguito da tre sotto-temi («eolico, solare, idroelettrico»), ciascuno con il proprio rema.</div>
+      </div>
+
+      <h3>Mescolare le progressioni</h3>
+      <p>Un testo reale <span class="hl">non si limita a un solo tipo</span>. In genere combina i tre schemi: progressione lineare per spiegare un processo, tema costante per descrivere proprietà, temi derivati per classificare. Il bravo scrittore varia per evitare la monotonia e organizzare il discorso in modo gerarchico.</p>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Per l'ispanofono:</b> la progressione tema-rema funziona allo stesso modo in italiano e in spagnolo, ma il calco di un testo spagnolo letterale spesso <em>rompe la progressione</em>: il pronome italiano (<em>esso, tale</em>) e le anafore lessicali (vedi sezione 8) sono usati più sistematicamente e in modo meno «pesante» del relativo spagnolo. <span class="hl">Non temere di ripetere il tema</span> in forme variate.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 8: ANAFORE LESSICALI ============ -->
+<section id="s-anafore" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">8. Anafore lessicali e coesione</h2>
+      <p class="sec-subtitle">Come riprendere un tema senza ripeterlo letteralmente</p>
+
+      <div class="def-box">
+        L'<b>anafora lessicale</b> è il dispositivo per cui un elemento del testo richiama un elemento già introdotto, evitando la ripetizione letterale. È uno dei meccanismi fondamentali della <span class="hl">coesione testuale</span>. Il testo espositivo italiano colto evita la ripetizione lessicale grezza <em>più sistematicamente</em> dello spagnolo: usa pronomi, dimostrativi, sinonimi, iperonimi, denominazioni metonimiche.
+      </div>
+
+      <h3>Tipi di anafora lessicale</h3>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="showChip('an-pron',this)">Pronomi</button>
+        <button class="chip" onclick="showChip('an-dim',this)">Dimostrativi</button>
+        <button class="chip" onclick="showChip('an-sin',this)">Sinonimi</button>
+        <button class="chip" onclick="showChip('an-iper',this)">Iperonimi</button>
+        <button class="chip" onclick="showChip('an-meton',this)">Metonimia</button>
+      </div>
+
+      <!-- PRONOMI -->
+      <div id="an-pron" class="chip-panel active">
+        <h3>1. Pronomi atoni · <span class="dim">lo / la / li / le / ne / ci</span></h3>
+        <p>I pronomi atoni sostituiscono un elemento già nominato senza appesantire la frase. Sono il dispositivo anaforico più leggero. Vedi la scheda [[grammatica_pronomi_atoni]].</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Pronome</th><th>Riprende</th><th>Esempio</th></tr></thead>
+            <tbody>
+              <tr><td class="tbl-pron">lo / la / li / le</td><td>oggetto diretto</td><td>Ha presentato il piano. <em>Lo</em> ha illustrato in cinque punti.</td></tr>
+              <tr><td class="tbl-pron">ne</td><td>«di + qualcosa» / partitivo</td><td>Abbiamo letto il rapporto. <em>Ne</em> riportiamo qui i punti principali.</td></tr>
+              <tr><td class="tbl-pron">ci</td><td>«a / su / in + qualcosa»</td><td>Sull'argomento, <em>ci</em> torneremo nella sezione successiva.</td></tr>
+              <tr><td class="tbl-pron">vi</td><td>(letterario) «a + qualcosa»</td><td>Il problema è complesso; <em>vi</em> dedicheremo un intero capitolo.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Il <em>nuovo regolamento</em> è entrato in vigore lo scorso gennaio. <em>Lo</em> commenteremo brevemente. <em>Ne</em> abbiamo già discusso le implicazioni economiche.</div>
+          <div class="ex-note">Due anafore pronominali per evitare la ripetizione di «regolamento»: <em>lo</em> (oggetto diretto) e <em>ne</em> (= di esso).</div>
+        </div>
+      </div>
+
+      <!-- DIMOSTRATIVI -->
+      <div id="an-dim" class="chip-panel">
+        <h3>2. Dimostrativi · <span class="dim">questo / quello / tale / ciò</span></h3>
+        <p>I dimostrativi riprendono un elemento già introdotto enfatizzandone l'identificazione. <em>Tale</em> e <em>il suddetto</em> sono di registro più formale; <em>questo</em> è neutro.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Dimostrativo</th><th>Funzione</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td class="tbl-pron">questo, questi, questa, queste</td><td>ripresa di un elemento appena nominato</td><td>neutro</td></tr>
+              <tr><td class="tbl-pron">tale, tali</td><td>ripresa formale, equivale a «questo» / «quello»</td><td>formale</td></tr>
+              <tr><td class="tbl-pron">ciò</td><td>ripresa di una frase o di un concetto intero</td><td>formale</td></tr>
+              <tr><td class="tbl-pron">il suddetto, il sopraccitato</td><td>ripresa burocratica</td><td>burocratico</td></tr>
+              <tr><td class="tbl-pron">il summenzionato, il succitato</td><td>ripresa giuridico-amministrativa</td><td>giuridico</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Il rapporto presenta <em>tre nuove proposte di legge</em>. <em>Tali proposte</em> riguardano la sanità, l'istruzione e l'ambiente. <em>Ciò</em> dimostra l'ampiezza dell'agenda riformista.</div>
+          <div class="ex-note"><em>Tali</em> riprende «tre proposte»; <em>ciò</em> riprende l'intero stato di cose della frase precedente.</div>
+        </div>
+      </div>
+
+      <!-- SINONIMI -->
+      <div id="an-sin" class="chip-panel">
+        <h3>3. Sinonimi · <span class="dim">variare il lessico mantenendo il riferimento</span></h3>
+        <p>L'uso di <b>sinonimi</b> nelle riprese è una delle tecniche di scrittura più italiane: evita la ripetizione lessicale e arricchisce il testo. La scelta del sinonimo non è gratuita: ogni variante può aggiungere una sfumatura interpretativa.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Termine introdotto</th><th>Possibili riprese sinonimiche</th></tr></thead>
+            <tbody>
+              <tr><td>il fenomeno</td><td class="tbl-pron">il processo, il meccanismo, la dinamica, l'evoluzione</td></tr>
+              <tr><td>la legge</td><td class="tbl-pron">la normativa, il provvedimento, la disposizione, la regola</td></tr>
+              <tr><td>l'analisi</td><td class="tbl-pron">lo studio, l'esame, l'indagine, la ricerca</td></tr>
+              <tr><td>l'opera</td><td class="tbl-pron">il lavoro, il testo, lo scritto, la pubblicazione</td></tr>
+              <tr><td>l'autore</td><td class="tbl-pron">lo studioso, il ricercatore, lo scrittore, il saggista</td></tr>
+              <tr><td>il risultato</td><td class="tbl-pron">l'esito, la conclusione, l'effetto, l'output</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">L'<em>opera</em> di Eco affronta il rapporto tra testo e lettore. <em>Il volume</em> articola la sua tesi in cinque capitoli. <em>Lo scritto</em> è considerato uno dei contributi fondamentali della semiotica del Novecento.</div>
+          <div class="ex-note">Tre sinonimi successivi (opera → volume → scritto) impediscono la ripetizione del termine, mantenendo il riferimento e variando l'angolo di osservazione.</div>
+        </div>
+
+        <div class="warn-box"><span class="ico">⚠️</span><div><b>Non sostituire a caso:</b> ogni sinonimo introduce una sfumatura. <em>Opera</em> è generico; <em>volume</em> evidenzia la natura materiale del libro; <em>scritto</em> sottolinea la dimensione testuale. La sinonimia deve essere coerente con l'angolo informativo del discorso.</div></div>
+      </div>
+
+      <!-- IPERONIMI -->
+      <div id="an-iper" class="chip-panel">
+        <h3>4. Iperonimi · <span class="dim">riprendere con un termine più generale</span></h3>
+        <p>L'<b>iperonimo</b> è il termine generale che include un insieme di termini specifici (<em>iponimi</em>). Riprendere un elenco con un iperonimo è una potente tecnica di compattazione del discorso.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Iponimi (elementi specifici)</th><th>Iperonimo (ripresa generale)</th></tr></thead>
+            <tbody>
+              <tr><td>il cane, il gatto, il coniglio, il criceto</td><td class="tbl-pron">gli animali domestici</td></tr>
+              <tr><td>la storia, la filosofia, la letteratura</td><td class="tbl-pron">le discipline umanistiche</td></tr>
+              <tr><td>il rosso, il blu, il verde, il giallo</td><td class="tbl-pron">i colori primari / le tinte</td></tr>
+              <tr><td>il solare, l'eolico, l'idroelettrico</td><td class="tbl-pron">le fonti rinnovabili</td></tr>
+              <tr><td>Eco, Calvino, Pasolini, Sciascia</td><td class="tbl-pron">gli autori novecenteschi</td></tr>
+              <tr><td>asma, allergia, dermatite</td><td class="tbl-pron">le patologie infiammatorie</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Negli ultimi anni si è registrata una crescita significativa del <em>solare</em>, dell'<em>eolico</em> e dell'<em>idroelettrico</em>. <em>Tali fonti rinnovabili</em> coprono ormai oltre il 40% del fabbisogno energetico nazionale.</div>
+          <div class="ex-note">L'iperonimo «fonti rinnovabili» chiude e generalizza l'elenco precedente, preparando il discorso a passare al livello superiore di astrazione.</div>
+        </div>
+      </div>
+
+      <!-- METONIMIA -->
+      <div id="an-meton" class="chip-panel">
+        <h3>5. Denominazione metonimica · <span class="dim">riprendere con un termine vicino</span></h3>
+        <p>La <b>metonimia</b> è la ripresa di un termine attraverso un'entità che gli è strettamente associata (parte/tutto, causa/effetto, contenuto/contenitore, fonte/risultato). È un dispositivo molto frequente nel giornalismo e nell'esposizione tecnica.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Termine introdotto</th><th>Ripresa metonimica</th><th>Tipo di rapporto</th></tr></thead>
+            <tbody>
+              <tr><td>i risultati</td><td class="tbl-pron">i dati → le cifre → i numeri</td><td>specificazione progressiva</td></tr>
+              <tr><td>il governo</td><td class="tbl-pron">Palazzo Chigi / l'esecutivo / il Consiglio dei Ministri</td><td>sede / istituzione / componente</td></tr>
+              <tr><td>la Casa Bianca</td><td class="tbl-pron">Washington / l'amministrazione americana</td><td>città / istituzione</td></tr>
+              <tr><td>Manzoni</td><td class="tbl-pron">il romanziere lombardo / l'autore dei Promessi Sposi</td><td>provenienza / opera</td></tr>
+              <tr><td>l'università</td><td class="tbl-pron">l'ateneo / l'istituzione / il corpo docente</td><td>nome alternativo / componente</td></tr>
+              <tr><td>la pandemia</td><td class="tbl-pron">l'emergenza sanitaria / la crisi / il fenomeno</td><td>caratterizzazione</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">L'<em>indagine</em> ha esaminato 1.200 casi clinici. <em>I dati raccolti</em> sono stati elaborati statisticamente. <em>Le cifre</em> emerse mostrano una correlazione significativa tra esposizione e patologia.</div>
+          <div class="ex-note">Catena metonimica: <b>indagine</b> → <b>dati raccolti</b> → <b>cifre</b>. Ciascun termine specifica progressivamente l'aspetto rilevante (l'attività, il suo prodotto, la sua forma quantitativa).</div>
+        </div>
+
+        <div class="warn-box">
+          <span class="ico">🎯</span>
+          <div><b>Per l'ispanofono:</b> la scrittura colta italiana evita la ripetizione lessicale <span class="hl">più sistematicamente</span> dello spagnolo equivalente. Dove uno scrittore spagnolo ripeterebbe «el gobierno... el gobierno...», l'italiano alternerebbe «il governo... l'esecutivo... Palazzo Chigi... la compagine ministeriale». Allenare il gusto per la variazione lessicale è un passo cruciale verso il C1.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 9: DENSITÀ LESSICALE ============ -->
+<section id="s-densita" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">9. La densità lessicale</h2>
+      <p class="sec-subtitle">Quante informazioni un testo veicola per unità di parole</p>
+
+      <div class="def-box">
+        La <b>densità lessicale</b> è la proporzione tra <span class="hl">parole di contenuto</span> (sostantivi, verbi pieni, aggettivi, avverbi) e <span class="hl">parole grammaticali</span> (articoli, preposizioni, congiunzioni, ausiliari, pronomi). Un testo a <em>alta densità</em> trasmette molte informazioni in poche parole; un testo a <em>bassa densità</em> diluisce l'informazione su molte parole grammaticali. Il testo espositivo formale ha <b>tipicamente alta densità lessicale</b>.
+      </div>
+
+      <h3>Le tecniche per aumentare la densità</h3>
+      <ul>
+        <li><b>Nominalizzazione:</b> un sostantivo astratto incorpora un'intera frase verbale.</li>
+        <li><b>Composti nominali:</b> due o più nomi formano un'unità semantica densa (<em>aumento dei prezzi del carburante</em>).</li>
+        <li><b>Sintagmi complessi:</b> aggettivi e complementi che modificano il sostantivo (<em>l'analisi accurata dei dati raccolti</em>).</li>
+        <li><b>Aggettivi specificativi:</b> <em>economico, politico, sociale, normativo</em> incorporano interi ambiti.</li>
+        <li><b>Eliminazione delle parole vuote:</b> ridurre tic linguistici, ripetizioni, riempitivi.</li>
+      </ul>
+
+      <h3>Esempio comparativo</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Registro</th><th>Esempio</th><th>N° parole</th><th>Densità</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>Colloquiale</b><br>(bassa densità)</td>
+              <td><em>I prezzi del carburante sono saliti tanto e questa cosa ha fatto sì che la gente spendesse meno per gli altri prodotti.</em></td>
+              <td>22</td>
+              <td>~40%</td>
+            </tr>
+            <tr>
+              <td><b>Formale espositivo</b><br>(alta densità)</td>
+              <td><em>L'aumento dei prezzi del carburante ha determinato una contrazione dei consumi non essenziali.</em></td>
+              <td>13</td>
+              <td>~70%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>La versione formale veicola la stessa informazione con il 60% delle parole, grazie a tre nominalizzazioni (<em>l'aumento dei prezzi</em>, <em>una contrazione dei consumi</em>) e all'aggettivo specificativo (<em>non essenziali</em>) che incorpora un'intera proposizione (<em>che la gente non ha bisogno necessariamente</em>).</p>
+
+      <h3>Quando NON usare alta densità</h3>
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div>L'alta densità lessicale richiede uno sforzo cognitivo maggiore al lettore. Non è sempre la scelta migliore:
+          <ul style="margin:4px 0">
+            <li>Nei testi divulgativi destinati a un pubblico ampio.</li>
+            <li>Negli scritti didattici per chi impara.</li>
+            <li>Quando si vuole un effetto chiaro e diretto.</li>
+          </ul>
+          La densità deve essere <span class="hl">proporzionata al destinatario</span>: massima in un articolo scientifico per specialisti, moderata in un saggio divulgativo, ridotta in un articolo di giornale.
+        </div>
+      </div>
+
+      <h3>Per l'ispanofono</h3>
+      <p>Lo spagnolo accademico ha generalmente densità lessicale elevata. Il problema per l'ispanofono non è dunque <em>raggiungere</em> la densità — la sa già produrre — ma <span class="hl">non eccedere</span> nel registro burocratico-amministrativo. La nominalizzazione spinta combinata con la passiva può produrre un italiano <em>artificioso</em>, percepito come «scrittura da concorso pubblico». Buon equilibrio: 60–70% di densità nei testi accademici, alternando forme nominali e verbali.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 10: TRAPPOLE ============ -->
+<section id="s-trappole" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">10. Trappole per l'ispanofono</h2>
+      <p class="sec-subtitle">Gli errori più frequenti nel testo espositivo italiano</p>
+
+      <div class="def-box">
+        Lo scritto espositivo italiano e quello spagnolo condividono la stessa architettura concettuale (introduzione, sviluppo, conclusione), ma le <span class="hl">scelte di registro</span> e i <span class="hl">dispositivi linguistici</span> non sono perfettamente sovrapponibili. Le trappole più frequenti riguardano la frequenza della passiva, l'uso della nominalizzazione, la libertà nella sintesi e la sistematicità delle anafore.
+      </div>
+
+      <div id="traps-container"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 11: RELAZIONE MODELLO ============ -->
+<section id="s-modello" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">11. Relazione modello con annotazioni</h2>
+      <p class="sec-subtitle">Un esempio integrale di 230 parole con i meccanismi evidenziati</p>
+
+      <div class="def-box">
+        Il testo che segue è una <b>relazione modello</b> di circa 230 parole, costruita in modo da contenere tutti i dispositivi descritti nelle sezioni precedenti: oggettivizzazione (passiva, si impersonale, nominalizzazione), progressione tema-rema, anafore lessicali, attribuzione a fonti, alta densità.
+      </div>
+
+      <h3>Legenda dei colori</h3>
+      <div class="ann-legend">
+        <div class="ann-legend-item"><span class="ann-legend-swatch" style="background:rgba(22,52,148,0.13);border-bottom-color:var(--blue)"></span> Passiva</div>
+        <div class="ann-legend-item"><span class="ann-legend-swatch" style="background:rgba(122,90,10,0.15);border-bottom-color:var(--accent)"></span> Nominalizzazione</div>
+        <div class="ann-legend-item"><span class="ann-legend-swatch" style="background:rgba(106,26,138,0.13);border-bottom-color:var(--purple)"></span> Anafora lessicale</div>
+        <div class="ann-legend-item"><span class="ann-legend-swatch" style="background:rgba(14,110,110,0.13);border-bottom-color:var(--teal)"></span> Connettivo / fonte</div>
+        <div class="ann-legend-item"><span class="ann-legend-swatch" style="background:rgba(26,96,40,0.13);border-bottom-color:var(--green)"></span> Si impersonale</div>
+      </div>
+
+      <h3>Testo: "Diffusione del telelavoro nelle imprese italiane (2019–2024)"</h3>
+
+      <div class="annotated">
+        <p><b>[Introduzione]</b> <span class="ann-nomin">La presente relazione</span> si propone di esaminare <span class="ann-nomin">la diffusione del telelavoro</span> nelle imprese italiane tra il 2019 e il 2024. <span class="ann-impers">Si intende</span> ricostruire <span class="ann-nomin">l'evoluzione del fenomeno</span> in tre fasi successive: pre-pandemia, fase emergenziale, assestamento post-pandemico.</p>
+
+        <p><b>[Metodologia]</b> <span class="ann-conn">A tale scopo</span>, <span class="ann-passiva">sono stati analizzati</span> i dati dell'Osservatorio Smart Working del Politecnico di Milano e i rapporti annuali ISTAT. <span class="ann-impers">Si è proceduto</span> inoltre a un confronto con <span class="ann-nomin">le rilevazioni</span> di Eurostat per il quinquennio considerato.</p>
+
+        <p><b>[Risultati]</b> <span class="ann-conn">Dai dati emerge</span> che <span class="ann-nomin">la diffusione del telelavoro</span> ha conosciuto una crescita repentina nel 2020, passando dal 4% al 35% dei lavoratori dipendenti. <span class="ann-anafora">Tale incremento</span> <span class="ann-passiva">è stato determinato</span> dalle restrizioni sanitarie, ma <span class="ann-anafora">il fenomeno</span> ha mostrato una sorprendente persistenza: nel 2024 la quota di lavoratori in modalità ibrida si attesta sul 22%. <span class="ann-conn">Secondo</span> <span class="ann-nomin">le stime</span> dell'Osservatorio, <span class="ann-anafora">il dato</span> riflette un cambiamento culturale duraturo, non un mero residuo emergenziale.</p>
+
+        <p><b>[Conclusioni]</b> <span class="ann-conn">In definitiva</span>, <span class="ann-nomin">l'analisi condotta</span> evidenzia che <span class="ann-anafora">il telelavoro</span> <span class="ann-passiva">si è consolidato</span> come modalità strutturale del mercato del lavoro italiano. <span class="ann-impers">Si può quindi affermare</span> che <span class="ann-nomin">la trasformazione</span> avviata dall'emergenza pandemica abbia prodotto effetti permanenti, meritevoli di ulteriori approfondimenti.</p>
+      </div>
+
+      <h3>Analisi dei meccanismi</h3>
+
+      <h4 style="color:var(--blue);margin-top:14px">Passiva</h4>
+      <ul class="analysis-list">
+        <li><b>sono stati analizzati</b> (i dati) — l'agente è cancellato, l'oggetto in primo piano</li>
+        <li><b>è stato determinato</b> (dalle restrizioni) — passiva con complemento d'agente formale</li>
+        <li><b>si è consolidato</b> — passivante con risultato di stato</li>
+      </ul>
+
+      <h4 style="color:var(--accent);margin-top:14px">Nominalizzazione</h4>
+      <ul class="analysis-list">
+        <li><b>la presente relazione</b> — sostituisce «questo testo»</li>
+        <li><b>la diffusione del telelavoro</b> — invece di «il fatto che il telelavoro si sia diffuso»</li>
+        <li><b>l'evoluzione del fenomeno</b> — condensa «come il fenomeno è cambiato»</li>
+        <li><b>l'analisi condotta</b> — partizio passato in funzione restrittiva</li>
+        <li><b>la trasformazione avviata...</b> — partizio passato + complemento</li>
+      </ul>
+
+      <h4 style="color:var(--purple);margin-top:14px">Anafore lessicali</h4>
+      <ul class="analysis-list">
+        <li><b>il telelavoro</b> → <b>la diffusione del telelavoro</b> → <b>tale incremento</b> → <b>il fenomeno</b> → <b>il dato</b> — catena anaforica con dimostrativo (tale), sinonimo (incremento, fenomeno) e specificazione metonimica (il dato)</li>
+        <li><b>tale incremento</b> — dimostrativo formale per ripresa</li>
+      </ul>
+
+      <h4 style="color:var(--teal);margin-top:14px">Connettivi e attribuzione a fonti</h4>
+      <ul class="analysis-list">
+        <li><b>a tale scopo</b> — connettivo di finalità che lega introduzione e metodologia</li>
+        <li><b>dai dati emerge che</b> — formula tipica di presentazione dei risultati</li>
+        <li><b>secondo le stime dell'Osservatorio</b> — attribuzione esplicita alla fonte</li>
+        <li><b>in definitiva</b> — connettivo conclusivo</li>
+      </ul>
+
+      <h4 style="color:var(--green);margin-top:14px">Si impersonale</h4>
+      <ul class="analysis-list">
+        <li><b>si intende ricostruire</b> — annuncia l'obiettivo senza esplicitare il soggetto</li>
+        <li><b>si è proceduto a</b> — formula classica della metodologia</li>
+        <li><b>si può affermare che</b> — modalizzazione finale impersonale</li>
+      </ul>
+
+      <h3>Sintesi della struttura</h3>
+      <div class="green-box">
+        <ul style="margin:4px 0">
+          <li><b>Introduzione</b> (2 frasi): delimitazione del tema, obiettivo, struttura del testo.</li>
+          <li><b>Metodologia</b> (2 frasi): fonti utilizzate e operazioni svolte.</li>
+          <li><b>Risultati</b> (3 frasi): dato quantitativo principale + spiegazione + sfumatura interpretativa con fonte.</li>
+          <li><b>Conclusioni</b> (2 frasi): sintesi del fenomeno + apertura su possibili approfondimenti.</li>
+        </ul>
+        <p style="margin-top:6px">Struttura quadripartita classica della relazione (obiettivi / metodologia / risultati / conclusioni), in cui ciascuna parte usa formule e dispositivi linguistici coerenti con il suo ruolo.</p>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Esercizio suggerito:</b> riscrivere lo stesso contenuto in registro colloquiale e contare le parole. Il numero salirà a circa 350–400. La differenza misura concretamente la <em>densità lessicale</em> ottenuta dai dispositivi espositivi.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const TRAPS = [
+  {
+    name:'La sintesi come «riassunto libero»',
+    wrong:'(Sintesi di un articolo sulle migrazioni) Penso che l\'autore voglia dire che le migrazioni sono inevitabili e che dovremmo accoglierle meglio.',
+    right:'L\'autore sostiene che le migrazioni costituiscono un fenomeno strutturale del mondo contemporaneo e che le politiche di accoglienza richiedono una revisione.',
+    expl:'La sintesi italiana esige <b>fedeltà</b> al contenuto e <b>neutralità</b>: non si interpretano le intenzioni dell\'autore («voglia dire»), non si aggiungono giudizi («dovremmo»). Si parafrasa ciò che il testo dice esplicitamente. L\'ispanofono trasferisce in italiano un\'abitudine al <em>resumen libre</em> più discorsivo: in italiano è penalizzato.'
+  },
+  {
+    name:'Sottoutilizzo della passiva nella relazione',
+    wrong:'Abbiamo analizzato i dati. Abbiamo intervistato 200 lavoratori. Abbiamo proceduto con un\'analisi statistica.',
+    right:'Sono stati analizzati i dati. Sono stati intervistati 200 lavoratori. Si è proceduto con un\'analisi statistica.',
+    expl:'Lo spagnolo accademico tollera bene la prima persona plurale («hemos analizado»); l\'italiano formale della relazione preferisce in modo <b>più sistematico</b> la passiva o il si impersonale, soprattutto nella sezione metodologica. La sequenza di «abbiamo X, abbiamo Y, abbiamo Z» suona meno asettica del registro atteso.'
+  },
+  {
+    name:'Calco del «se» riflessivo spagnolo come «si» pieno',
+    wrong:'Si dice che il modello è obsoleto.',
+    right:'Si dice che il modello sia obsoleto.',
+    expl:'Dopo il <b>si dichiarativo</b> con verbi di opinione (si dice, si pensa, si ritiene, si afferma), l\'italiano formale richiede il <b>congiuntivo</b> nella subordinata. Lo spagnolo usa l\'indicativo («se dice que es obsoleto»). Trasferire l\'indicativo è uno dei tic più tenaci dell\'ispanofono in registro accademico.'
+  },
+  {
+    name:'Nominalizzazione eccessiva (registro burocratico)',
+    wrong:'Per l\'effettuazione dell\'analisi si è proceduto all\'esecuzione di una raccolta di dati attraverso la somministrazione di questionari.',
+    right:'Per analizzare il fenomeno, sono stati raccolti dati attraverso questionari.',
+    expl:'L\'accumulo di nominalizzazioni («effettuazione», «esecuzione», «somministrazione») è tipico del peggior italiano amministrativo. La nominalizzazione è uno strumento utile, ma <b>non va sovraccaricato</b>. La buona scrittura espositiva alterna sostantivi e verbi. L\'ispanofono che vuole «sembrare formale» a volte cade in questa trappola.'
+  },
+  {
+    name:'Ripetizione lessicale eccessiva',
+    wrong:'Il governo ha approvato il decreto. Il governo ha annunciato che il governo continuerà sulla stessa linea. Il governo intende inoltre rafforzare il bilancio.',
+    right:'Il governo ha approvato il decreto. L\'esecutivo ha annunciato che continuerà sulla stessa linea. La compagine ministeriale intende inoltre rafforzare il bilancio.',
+    expl:'L\'italiano scritto culto evita la ripetizione lessicale <b>più sistematicamente</b> dello spagnolo. La ripresa va variata con sinonimi (esecutivo, compagine ministeriale), iperonimi (le istituzioni), o pronomi. Il calco di un testo spagnolo letterale produce un italiano monotono.'
+  },
+  {
+    name:'«Resumir» con omissione delle articolazioni logiche',
+    wrong:'I dati mostrano un aumento. Il fenomeno è duraturo. Bisogna agire.',
+    right:'I dati mostrano un aumento; tale incremento, peraltro, sembra duraturo. Si rende quindi necessario un intervento.',
+    expl:'La sintesi italiana non è solo una riduzione di parole: è una <b>riorganizzazione logica</b> che conserva i nessi del testo originale (causa, conseguenza, concessione). Eliminare i connettivi («tale», «quindi», «peraltro») produce uno stile «da elenco» percepito come deficitario in registro C1.'
+  },
+  {
+    name:'Confusione tra «si» passivante e «si» impersonale',
+    wrong:'Si analizza i dati raccolti.',
+    right:'Si analizzano i dati raccolti.',
+    expl:'Con verbo transitivo + oggetto plurale, il <b>si passivante</b> si accorda con l\'oggetto: <em>si analizzano i dati</em> (= i dati vengono analizzati). Con oggetto singolare: <em>si analizza il dato</em>. È un errore frequente quando lo scrittore percepisce il «si» come puramente impersonale (sempre singolare).'
+  },
+  {
+    name:'Apertura della relazione con «In questo lavoro voglio parlare di...»',
+    wrong:'In questo lavoro voglio parlare delle energie rinnovabili e dire come secondo me dovrebbero essere sviluppate.',
+    right:'Il presente lavoro si propone di analizzare lo sviluppo delle energie rinnovabili in Italia, esaminando il quadro normativo e i dati di consumo del decennio 2014–2024.',
+    expl:'L\'apertura «voglio parlare» mescola due registri estranei alla relazione: la <b>prima persona singolare</b> e il <b>verbo modale di volontà</b>. Il registro accademico italiano preferisce formule impersonali: <em>il presente lavoro si propone di / l\'obiettivo del seguente testo consiste nel</em>. Non si dichiara cosa si vuole, si dichiara cosa il testo fa.'
+  },
+  {
+    name:'Uso del «yo» come marca di soggettività in valutazione',
+    wrong:'Io penso che la tesi sia errata e che l\'autore non capisca il fenomeno.',
+    right:'La tesi appare discutibile sotto diversi profili; si potrebbe obiettare, in particolare, che l\'autore non considera...',
+    expl:'La valutazione critica italiana è <b>più modalizzata</b> e impersonale di quella spagnola. «Io penso che X sia errato» è percepito come aggressivo e poco accademico. Si preferisce: <em>appare discutibile / si potrebbe obiettare / sarebbe stato auspicabile / rimane problematico</em>. La distanza è una forma di cortesia accademica.'
+  },
+  {
+    name:'«Tema-rema» rotto: nuova informazione all\'inizio',
+    wrong:'Tre nuovi protocolli di sicurezza sono entrati in vigore. La produttività del reparto è migliorata.',
+    right:'Sono entrati in vigore tre nuovi protocolli di sicurezza. Tali protocolli hanno determinato un miglioramento della produttività del reparto.',
+    expl:'La prima versione mette al posto del <b>tema</b> (informazione data) un <b>rema</b> (informazione nuova: i tre protocolli). La seconda versione, posticipando l\'informazione nuova al rema della prima frase, permette di riprenderla come tema della seconda. È il principio della <b>progressione tema-rema</b>: ogni frase nuova parte da qualcosa che è già stato detto.'
+  },
+  {
+    name:'«Si dice di che» — preposizione di troppo',
+    wrong:'Si dice di che il fenomeno è in espansione.',
+    right:'Si dice che il fenomeno sia in espansione.',
+    expl:'Calco dallo spagnolo «se dice de que». In italiano la subordinata oggettiva si introduce con la sola congiunzione <b>che</b>, senza preposizione. È uno dei tic più tenaci della prosa accademica dell\'ispanofono. Verbi simili: <em>si afferma che, si ritiene che, si pensa che, si sostiene che, risulta che, emerge che</em>.'
+  },
+  {
+    name:'Conclusioni che ripetono l\'introduzione',
+    wrong:'In conclusione, questo lavoro ha analizzato le energie rinnovabili in Italia tra il 2014 e il 2024 esaminando il quadro normativo e i dati di consumo.',
+    right:'In conclusione, l\'analisi condotta evidenzia tre tendenze di fondo: l\'accelerazione degli investimenti, la riduzione dei costi e la crescente accettazione sociale. Resta da chiarire in quale misura tali tendenze saranno sostenibili nel lungo periodo.',
+    expl:'La conclusione non è una <b>parafrasi dell\'introduzione</b>: deve <em>tirare le fila</em>, identificare ciò che è emerso, e possibilmente <em>aprire</em> verso prospettive ulteriori. Lo studente ispanofono tende, sotto pressione, a chiudere riformulando l\'incipit: penalizzante in valutazione C1.'
+  },
+  {
+    name:'Sinonimi inappropriati per stretching lessicale',
+    wrong:'Il governo ha approvato il decreto. La pletora ministeriale ha annunciato che proseguirà sulla stessa linea.',
+    right:'Il governo ha approvato il decreto. L\'esecutivo ha annunciato che proseguirà sulla stessa linea.',
+    expl:'Variare il lessico è bene, ma <b>non a ogni costo</b>: «pletora ministeriale» è inappropriato e suona pedantesco. La sinonimia funziona se il termine è realmente equivalente e di registro coerente. Sinonimi tipici di «governo»: <em>esecutivo, gabinetto, Palazzo Chigi, compagine ministeriale</em>. Non si usano arcaismi né calchi forzati.'
+  },
+  {
+    name:'Mancata attribuzione delle fonti',
+    wrong:'Il fenomeno è in crescita. Le cause sono molteplici. È necessario un intervento normativo.',
+    right:'Secondo i dati ISTAT, il fenomeno è in crescita. Come rileva Bourdieu, le cause vanno cercate sia nella struttura economica sia nelle dinamiche culturali. Diversi studiosi auspicano un intervento normativo.',
+    expl:'Il testo espositivo C1 <b>attribuisce le affermazioni a fonti</b>: dati, autori, istituzioni. La versione senza attribuzioni è percepita come opinione personale non sostenuta. L\'ispanofono che sintetizza tende a far cadere le marche di attribuzione: ricostruirle è essenziale.'
+  },
+  {
+    name:'«Mostrare» calco generico al posto di verbi più precisi',
+    wrong:'L\'analisi mostra che il fenomeno è duraturo. I dati mostrano un aumento. Lo studio mostra una correlazione.',
+    right:'L\'analisi evidenzia che il fenomeno è duraturo. I dati indicano un aumento. Lo studio rileva una correlazione.',
+    expl:'Lo spagnolo «mostrar» è generico e copre vari contesti. L\'italiano formale dispone di un <b>ventaglio più ricco</b> di verbi epistemici: <em>evidenziare, indicare, rilevare, mettere in luce, denotare, attestare, documentare, segnalare</em>. La ripetizione di «mostrare» appiattisce il testo. La precisione lessicale è un tratto distintivo del registro C1.'
+  }
+];
+
+function renderTraps(){
+  const c = document.getElementById('traps-container');
+  let html = '';
+  TRAPS.forEach(t=>{
+    html += `<div class="trap-card">
+      <div class="trap-card-header"><span class="trap-name">${t.name}</span></div>
+      <div class="trap-vs">
+        <div class="trap-wrong">${t.wrong}</div>
+        <div class="trap-right">${t.right}</div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function showSection(id, btn){
+  document.querySelectorAll('.sec-block').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function showChip(id, btn){
+  const parent = btn.parentElement.parentElement;
+  parent.querySelectorAll('.chip-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  parent.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function setFontSize(v){
+  document.documentElement.style.setProperty('--fs', v+'px');
+}
+
+renderTraps();
+</script>
+
+</body>
+</html>

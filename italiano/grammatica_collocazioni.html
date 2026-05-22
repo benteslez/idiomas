@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collocazioni · Grammatica C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ede9df;
+  --card:#faf7f1;
+  --border:#c4bead;
+  --text:#1a1814;
+  --text2:#44413a;
+  --text3:#706c64;
+  --accent:#7a5a0a;
+  --accent-light:#f0e0c0;
+  --accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,0.08);
+  --radius:14px;
+  --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --red:#a81e2e; --red-bg:#fce6e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --teal:#0e6e6e; --teal-bg:#e0f4f4;
+  --fs:15px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-size:var(--fs);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:60px;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text);margin:0 0 .4em;font-weight:600;line-height:1.2}
+h1{font-size:1.85em;font-weight:700}
+h2{font-size:1.45em}
+h3{font-size:1.15em;margin-top:1.1em}
+h4{font-size:1em;font-weight:600}
+p{margin:.5em 0}
+em{font-style:italic}
+b,strong{font-weight:600}
+
+/* HEADER */
+.site-header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 18px 16px;
+  position:relative;
+}
+.site-header .inner{max-width:860px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title-wrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.site-header h1{margin:0;font-size:1.9em;color:var(--text)}
+.header-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.85em;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid var(--accent-mid);
+}
+.subtitle{color:var(--text3);font-size:.92em;margin:4px 0 12px;font-style:italic}
+.stat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stat-pill{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:4px 10px;
+  font-size:.78em;
+  border-radius:999px;
+  font-weight:500;
+}
+.font-ctrl{display:flex;align-items:center;gap:8px;font-size:.78em;color:var(--text3)}
+.font-ctrl input[type=range]{width:90px}
+
+/* SECTION NAV */
+.section-nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:10px 18px;
+  margin-top:14px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.section-nav::-webkit-scrollbar{display:none}
+.section-nav .inner{max-width:860px;margin:0 auto;display:flex;gap:6px;flex-wrap:nowrap}
+.snav-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:6px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82em;
+  border-radius:999px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .15s;
+  font-weight:500;
+}
+.snav-btn:hover{background:var(--accent-light)}
+.snav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* MAIN LAYOUT */
+.main-layout{
+  max-width:860px;
+  margin:0 auto;
+  padding:20px 18px;
+}
+.sec-block{display:none}
+.sec-block.active{display:block;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* GRAM-CARD */
+.gram-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.gram-card-body{padding:18px}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:1.45em;
+  margin:0 0 .4em;
+  color:var(--text);
+}
+.sec-subtitle{color:var(--text3);font-style:italic;font-size:.95em;margin:0 0 14px}
+
+/* DEF-BOX */
+.def-box{
+  background:var(--warn-bg);
+  border-left:4px solid var(--accent);
+  padding:12px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:14px 0;
+  font-size:.96em;
+}
+.def-box b{color:var(--accent)}
+
+/* WARN-BOX */
+.warn-box{
+  background:#fff4e0;
+  border:1px solid #c8900a;
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:12px 0;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:.93em;
+  color:var(--text2);
+}
+.warn-box .ico{font-size:1.1em;flex-shrink:0;line-height:1.3}
+
+/* EXAMPLE BLOCK */
+.example-block{
+  background:var(--blue-bg);
+  border-left:3px solid var(--blue);
+  padding:9px 12px;
+  margin:8px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.ex-it{font-weight:500;color:var(--text)}
+.ex-it em{font-style:normal;color:var(--blue);font-weight:600}
+.ex-es{font-style:italic;color:var(--text2);font-size:.88em;margin-top:2px}
+.ex-analysis{font-size:.85em;color:var(--text3);margin-top:4px;border-top:1px dashed var(--border);padding-top:4px}
+.ex-analysis b{color:var(--text2)}
+
+/* NOTE-BOX */
+.note-box{
+  background:var(--purple-bg);
+  border-left:3px solid var(--purple);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.note-box b{color:var(--purple)}
+
+/* GREEN-BOX */
+.green-box{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.green-box b{color:var(--green)}
+
+/* TEAL-BOX */
+.teal-box{
+  background:var(--teal-bg);
+  border-left:3px solid var(--teal);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.teal-box b{color:var(--teal)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.gram-table{width:100%;border-collapse:collapse;font-size:.92em;background:var(--card)}
+.gram-table th{
+  background:var(--accent-light);
+  color:var(--accent);
+  font-family:'DM Sans',sans-serif;
+  font-size:.72em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:8px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--accent-mid);
+}
+.gram-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.gram-table tr:nth-child(even) td{background:rgba(196,190,173,0.12)}
+.gram-table tr:last-child td{border-bottom:none}
+.ok-cell{color:var(--green);font-weight:500}
+.err-cell{color:var(--red);font-weight:500}
+.warn-cell{color:var(--accent);font-weight:500}
+.tbl-pron{font-weight:600;color:var(--text);background:rgba(196,190,173,0.18)}
+.tbl-verb{font-weight:700;color:var(--accent);font-family:'Playfair Display',serif;font-size:1.05em;background:var(--accent-light)}
+
+/* CHIPS */
+.chip-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:14px 0 10px;
+  padding-bottom:4px;
+}
+.chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:5px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.83em;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{background:var(--accent-light)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-panel{display:none}
+.chip-panel.active{display:block;animation:fadeIn .25s}
+
+/* TRAPS */
+.trap-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.trap-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trap-name{font-weight:600;color:var(--text);font-size:.96em}
+.trap-vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.trap-wrong{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-wrong::before{content:'✗ ';color:var(--red);font-weight:700}
+.trap-right{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-right::before{content:'✓ ';color:var(--green);font-weight:700}
+.trap-expl{font-size:.88em;color:var(--text2);font-style:italic;margin-top:6px}
+@media (max-width:520px){.trap-vs{grid-template-columns:1fr}}
+
+/* MINI-TABLE */
+.mini-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.88em;
+  background:var(--card);
+  margin:10px 0;
+}
+.mini-table td{
+  padding:5px 9px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.mini-table td:first-child{color:var(--text3);font-weight:500;width:38%}
+.mini-table td:last-child{color:var(--text);font-weight:600}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table .hl-form{color:var(--accent);font-weight:700}
+
+/* UTILS */
+.hl{color:var(--accent);font-weight:600}
+.dim{color:var(--text3)}
+.tag{
+  display:inline-block;
+  padding:1px 7px;
+  border-radius:999px;
+  font-size:.72em;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.tag-di{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue)}
+.tag-a{background:var(--green-bg);color:var(--green);border:1px solid var(--green)}
+.tag-con{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple)}
+.tag-in{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal)}
+.tag-da{background:var(--red-bg);color:var(--red);border:1px solid var(--red)}
+.tag-su{background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-mid)}
+.tag-loc{background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-mid)}
+.tag-warn{background:var(--red-bg);color:var(--red);border:1px solid var(--red)}
+.tag-form{background:var(--green-bg);color:var(--green);border:1px solid var(--green)}
+.tag-neu{background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-mid)}
+.tag-agg{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue)}
+.tag-sost{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple)}
+.tag-verb{background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-mid)}
+.tag-giorn{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal)}
+
+/* RESPONSIVE */
+@media (max-width:520px){
+  .site-header{padding:14px 14px 12px}
+  h1{font-size:1.5em}
+  .main-layout{padding:14px}
+  .gram-card-body{padding:14px}
+  .stat-pill{font-size:.72em}
+  .header-top{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="inner">
+    <div class="header-top">
+      <div>
+        <div class="header-title-wrap">
+          <h1>Collocazioni</h1>
+          <span class="header-tag">Grammatica</span>
+        </div>
+        <div class="subtitle">Le combinazioni convenzionali di parole: la chiave del lessico nativo · livello C1</div>
+        <div class="stat-bar">
+          <span class="stat-pill">9 sezioni</span>
+          <span class="stat-pill">10 verbi colocacionales</span>
+          <span class="stat-pill">15+ falsi amici</span>
+          <span class="stat-pill">Registro giornalistico</span>
+          <span class="stat-pill">25+ esempi</span>
+        </div>
+      </div>
+      <div class="font-ctrl">
+        <span>A-</span>
+        <input type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+        <span>A+</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION NAV -->
+<nav class="section-nav" id="sec-nav">
+  <div class="inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Cosa sono</button>
+    <button class="snav-btn" onclick="showSection('s-verbo-nome',this)">2. Verbo + Nome</button>
+    <button class="snav-btn" onclick="showSection('s-agg-nome',this)">3. Aggettivo + Nome</button>
+    <button class="snav-btn" onclick="showSection('s-nome-prep',this)">4. Nome + Prep. + Nome</button>
+    <button class="snav-btn" onclick="showSection('s-falsi',this)">5. Falsi amici ES/IT</button>
+    <button class="snav-btn" onclick="showSection('s-giorn',this)">6. Registro giornalistico</button>
+    <button class="snav-btn" onclick="showSection('s-strategia',this)">7. Come impararle</button>
+    <button class="snav-btn" onclick="showSection('s-trappole',this)">8. Trappole</button>
+    <button class="snav-btn" onclick="showSection('s-esempi',this)">9. Esempi</button>
+  </div>
+</nav>
+
+<main class="main-layout">
+
+<!-- ============ SECCIÓN 1: INTRO ============ -->
+<section id="s-intro" class="sec-block active">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">1. Cosa sono le collocazioni</h2>
+      <p class="sec-subtitle">Le combinazioni di parole che il parlante nativo «sente» giuste — e che lo studente avanzato deve memorizzare</p>
+
+      <div class="def-box">
+        Si chiamano <b>collocazioni</b> le <span class="hl">combinazioni di parole che si usano insieme con alta frequenza</span> e la cui unione è <b>convenzionalizzata dall'uso</b>. Non sono né combinazioni completamente libere (come <em>mangiare una mela</em>, dove qualunque cibo può sostituire <em>mela</em>) né locuzioni idiomatiche completamente fisse (come <em>tagliare la corda</em> = «escaparse»). La scelta del verbo o dell'aggettivo che si combina con un certo nome è <span class="hl">prevedibile per il nativo, ma non per lo studente</span>.
+      </div>
+
+      <p>Per esempio, il nome <em>decisione</em> in italiano <span class="hl">si prende</span> (<b>prendere</b> una decisione), non si <em>fa</em>. Il nome <em>conclusioni</em> <span class="hl">si trae</span> (<b>trarre</b> conclusioni), non si <em>tira fuori</em>. Il nome <em>preoccupazione</em> <span class="hl">si desta</span> (<b>destare</b> preoccupazione), non si <em>fa</em> né si <em>provoca</em>. Sono scelte lessicali fisse che il dizionario bilingue raramente segnala in modo esplicito.</p>
+
+      <h3>Tre tipi di combinazione: lo spettro</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Tipo</th><th>Caratteristiche</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td><b>Combinazione libera</b></td><td>Qualunque elemento compatibile va bene. Significato composizionale.</td><td><em>leggere un libro / un giornale / una lettera</em></td></tr>
+            <tr><td class="tbl-pron"><b>Collocazione</b></td><td>Combinazione frequente, convenzionalizzata. Significato trasparente ma la scelta dell'altro elemento è obbligata.</td><td><em>prendere una decisione</em> (no *<em>fare</em>)</td></tr>
+            <tr><td><b>Locuzione idiomatica</b></td><td>Espressione completamente fissa. Significato non composizionale.</td><td><em>tagliare la corda</em> = «escaparse»</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Le tre principali strutture collocazionali</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Struttura</th><th>Schema</th><th>Esempi-tipo</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tag-verb">verbo + nome</span></td><td>verbo «leggero» + nome con il peso semantico</td><td>prendere una decisione, fare una domanda, trarre conclusioni</td></tr>
+            <tr><td><span class="tag tag-agg">aggettivo + nome</span></td><td>aggettivo che intensifica o caratterizza il nome</td><td>ricerca approfondita, problema complesso, ruolo fondamentale</td></tr>
+            <tr><td><span class="tag tag-sost">nome + prep. + nome</span></td><td>nome principale + preposizione + nome di specificazione</td><td>punto di riferimento, fattore di rischio, margine di manovra</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Perché sono un punto critico per gli ispanofoni</h3>
+      <p>Lo spagnolo e l'italiano hanno collocazioni in gran parte <span class="hl">parallele</span>, ma anche numerose divergenze silenziose. Il rischio è il <b>calco diretto</b>:</p>
+      <ul>
+        <li>«tomar una decisión» → ✓ <span class="hl">prendere una decisione</span> (no *<em>fare</em>)</li>
+        <li>«sacar conclusiones» → ✓ <span class="hl">trarre conclusioni</span> (no *<em>tirare fuori</em>, no *<em>fare</em>)</li>
+        <li>«tener un papel» → ✓ <span class="hl">svolgere/avere un ruolo</span> (no *<em>fare</em>)</li>
+        <li>«plantear un problema» → ✓ <span class="hl">porre/sollevare un problema</span> (no *<em>piantare</em>)</li>
+        <li>«provocar preocupación» → ✓ <span class="hl">destare preoccupazione</span> (no *<em>provocare</em>)</li>
+      </ul>
+
+      <div class="note-box">
+        <b>Distinzione fondamentale:</b> il vocabolario tradizionale ti insegna i singoli nomi e i singoli verbi. Le collocazioni ti insegnano <span class="hl">come si combinano nella lingua reale</span>. La differenza tra un C1 e un nativo non sta quasi mai nel sapere più parole — sta nel sapere quali parole vanno insieme. È la frontiera del lessico avanzato.
+      </div>
+
+      <h3>Come è organizzata questa scheda</h3>
+      <p>Le sezioni 2–4 presentano le tre strutture collocazionali principali, con tabelle esaustive verbo per verbo. La sezione 5 affronta i <span class="hl">falsi amici colocacionali</span> tra italiano e spagnolo. La sezione 6 si concentra sulle collocazioni del registro giornalistico, indispensabili per la lettura e la scrittura formale. La sezione 7 offre una nota metodologica sull'apprendimento delle collocazioni; le sezioni 8–9 riassumono le trappole più frequenti e propongono più di venti esempi commentati.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 2: VERBO + NOME ============ -->
+<section id="s-verbo-nome" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">2. Collocazioni Verbo + Nome</h2>
+      <p class="sec-subtitle">Il verbo «giusto» che accompagna ogni nome astratto — la struttura più produttiva e più rischiosa</p>
+
+      <div class="def-box">
+        Nelle collocazioni <b>verbo + nome</b>, il verbo ha un significato <span class="hl">«leggero» o desemantizzato</span> (prendere, fare, dare, trarre, porre…) e il peso semantico ricade sul nome. La scelta del verbo è <b>convenzionale</b>: si dice <em>prendere una decisione</em> ma <em>fare una scelta</em>, <em>trarre conclusioni</em> ma <em>raggiungere un risultato</em>. Lo studente che sceglie il verbo «a caso» finisce sempre per scivolare sul calco spagnolo.
+      </div>
+
+      <h3>PRENDERE — decisioni, impegni, posizioni</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Collocazione</th><th>Traduzione</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-verb">prendere una decisione</td><td>tomar una decisión</td><td>Abbiamo <em>preso una decisione</em> dolorosa ma necessaria.</td></tr>
+            <tr><td class="tbl-verb">prendere un impegno</td><td>asumir un compromiso</td><td>Il governo ha <em>preso l'impegno</em> di ridurre il debito.</td></tr>
+            <tr><td class="tbl-verb">prendere un'iniziativa</td><td>tomar una iniciativa</td><td>Nessuno è disposto a <em>prendere l'iniziativa</em>.</td></tr>
+            <tr><td class="tbl-verb">prendere parte a</td><td>tomar parte en, participar en</td><td>Più di mille persone hanno <em>preso parte alla</em> manifestazione.</td></tr>
+            <tr><td class="tbl-verb">prendere posizione</td><td>tomar posición, posicionarse</td><td>Il presidente ha <em>preso posizione</em> contro la riforma.</td></tr>
+            <tr><td class="tbl-verb">prendere nota di</td><td>tomar nota de</td><td>La segretaria ha <em>preso nota delle</em> richieste.</td></tr>
+            <tr><td class="tbl-verb">prendere atto di</td><td>tomar nota / constatar</td><td>Dobbiamo <em>prendere atto del</em> fallimento del progetto.</td></tr>
+            <tr><td class="tbl-verb">prendere in considerazione</td><td>tomar en consideración</td><td>L'ipotesi va <em>presa in seria considerazione</em>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div>L'ispanofono dice spesso *<em>fare una decisione</em> per calco con «hacer» (in italiano regionale si sente, ma è scorretto nello standard). La forma canonica è <span class="hl">prendere una decisione</span>. Stesso schema per <em>impegno</em>, <em>iniziativa</em>, <em>posizione</em>: <b>prendere</b>, non <em>fare</em>.</div>
+      </div>
+
+      <h3>FARE — proposte, scelte, distinzioni</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Collocazione</th><th>Traduzione</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-verb">fare una proposta</td><td>hacer una propuesta</td><td>Vi <em>faccio una proposta</em> alternativa.</td></tr>
+            <tr><td class="tbl-verb">fare una domanda</td><td>hacer una pregunta</td><td>Posso <em>farti una domanda</em> personale?</td></tr>
+            <tr><td class="tbl-verb">fare una scelta</td><td>hacer una elección, elegir</td><td>È difficile <em>fare una scelta</em> tra due alternative ottime.</td></tr>
+            <tr><td class="tbl-verb">fare un'eccezione</td><td>hacer una excepción</td><td>Per te <em>faccio un'eccezione</em>.</td></tr>
+            <tr><td class="tbl-verb">fare una valutazione</td><td>hacer una valoración</td><td>Bisogna <em>fare una valutazione</em> oggettiva dei rischi.</td></tr>
+            <tr><td class="tbl-verb">fare una distinzione</td><td>hacer una distinción</td><td>Occorre <em>fare una distinzione</em> tra forma e sostanza.</td></tr>
+            <tr><td class="tbl-verb">fare riferimento a</td><td>hacer referencia a</td><td>L'articolo <em>fa riferimento a</em> un documento del 2010.</td></tr>
+            <tr><td class="tbl-verb">fare fronte a</td><td>hacer frente a</td><td>L'azienda deve <em>fare fronte alle</em> nuove sfide del mercato.</td></tr>
+            <tr><td class="tbl-verb">fare progressi</td><td>hacer progresos</td><td>Il paziente sta <em>facendo progressi</em> evidenti.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>TRARRE — conclusioni, vantaggi, ispirazione</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Collocazione</th><th>Traduzione</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-verb">trarre conclusioni</td><td>sacar conclusiones</td><td>È prematuro <em>trarre conclusioni</em> definitive.</td></tr>
+            <tr><td class="tbl-verb">trarre vantaggio da</td><td>sacar provecho de</td><td>Hanno saputo <em>trarre vantaggio dalla</em> situazione.</td></tr>
+            <tr><td class="tbl-verb">trarre beneficio da</td><td>obtener beneficio de</td><td>L'intera comunità può <em>trarre beneficio dal</em> progetto.</td></tr>
+            <tr><td class="tbl-verb">trarre ispirazione da</td><td>inspirarse en</td><td>L'autore <em>trae ispirazione dai</em> classici del Settecento.</td></tr>
+            <tr><td class="tbl-verb">trarre insegnamento da</td><td>aprender una lección de</td><td>Da quest'esperienza dobbiamo <em>trarre un insegnamento</em>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Trarre</b> è il verbo specifico per <em>conclusioni, vantaggio, beneficio, ispirazione, insegnamento</em>. L'ispanofono tende a usare <em>*tirare fuori conclusioni</em> (calco di «sacar»), <em>*sacare</em> (italianizzazione inventata) o <em>*fare conclusioni</em>: tutti scorretti. Il verbo giusto è <span class="hl">trarre</span> (forme: <em>traggo, trai, trae, traiamo, traete, traggono</em>; passato remoto <em>trassi</em>; participio <em>tratto</em>).</div>
+      </div>
+
+      <h3>AFFRONTARE — problemi, sfide, conseguenze</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Collocazione</th><th>Traduzione</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-verb">affrontare un problema</td><td>afrontar / abordar un problema</td><td>Bisogna <em>affrontare il problema</em> alla radice.</td></tr>
+            <tr><td class="tbl-verb">affrontare una sfida</td><td>afrontar un reto</td><td>Siamo pronti ad <em>affrontare una sfida</em> ambiziosa.</td></tr>
+            <tr><td class="tbl-verb">affrontare una situazione</td><td>afrontar una situación</td><td>Sa <em>affrontare situazioni</em> di grande pressione.</td></tr>
+            <tr><td class="tbl-verb">affrontare le conseguenze</td><td>afrontar las consecuencias</td><td>Dovrai <em>affrontare le conseguenze</em> delle tue azioni.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>RAGGIUNGERE — accordi, obiettivi, risultati</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Collocazione</th><th>Traduzione</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-verb">raggiungere un accordo</td><td>alcanzar / llegar a un acuerdo</td><td>Le parti hanno <em>raggiunto un accordo</em> dopo settimane di trattative.</td></tr>
+            <tr><td class="tbl-verb">raggiungere un obiettivo</td><td>alcanzar un objetivo</td><td>Per <em>raggiungere l'obiettivo</em> serve disciplina.</td></tr>
+            <tr><td class="tbl-verb">raggiungere un compromesso</td><td>alcanzar un compromiso</td><td>È stato possibile <em>raggiungere un compromesso</em> accettabile.</td></tr>
+            <tr><td class="tbl-verb">raggiungere un risultato</td><td>alcanzar un resultado</td><td>Il team ha <em>raggiunto risultati</em> eccezionali.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>SVOLGERE — ruoli, attività, compiti</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Collocazione</th><th>Traduzione</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-verb">svolgere un ruolo</td><td>desempeñar un papel</td><td>La famiglia <em>svolge un ruolo</em> centrale nell'educazione.</td></tr>
+            <tr><td class="tbl-verb">svolgere un'attività</td><td>desempeñar / desarrollar una actividad</td><td>L'associazione <em>svolge attività</em> di volontariato.</td></tr>
+            <tr><td class="tbl-verb">svolgere un compito</td><td>desempeñar un cometido / una tarea</td><td>Hai <em>svolto il tuo compito</em> in modo egregio.</td></tr>
+            <tr><td class="tbl-verb">svolgere ricerche</td><td>realizar investigaciones</td><td>L'università <em>svolge ricerche</em> nel campo della genetica.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div>Per <em>ruolo</em> il verbo canonico è <span class="hl">svolgere</span> o <span class="hl">avere</span>. *<em>Fare un ruolo</em> è un calco di «hacer un papel» tipico dell'ispanofono ed è scorretto. In contesto teatrale invece sì: <em>fare il ruolo di Amleto</em> (interpretare).</div>
+      </div>
+
+      <h3>ESERCITARE — pressioni, influenza, professione</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Collocazione</th><th>Traduzione</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-verb">esercitare pressione</td><td>ejercer presión</td><td>I sindacati <em>esercitano pressione</em> sul governo.</td></tr>
+            <tr><td class="tbl-verb">esercitare influenza</td><td>ejercer influencia</td><td>La pubblicità <em>esercita un'enorme influenza</em> sui consumatori.</td></tr>
+            <tr><td class="tbl-verb">esercitare un ruolo</td><td>ejercer un papel</td><td>La Banca centrale <em>esercita un ruolo</em> di garanzia.</td></tr>
+            <tr><td class="tbl-verb">esercitare una professione</td><td>ejercer una profesión</td><td>Per <em>esercitare la professione</em> serve l'iscrizione all'albo.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>RAPPRESENTARE — problemi, opportunità, rischi</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Collocazione</th><th>Traduzione</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-verb">rappresentare un problema</td><td>representar / suponer un problema</td><td>L'inflazione <em>rappresenta un problema</em> serio.</td></tr>
+            <tr><td class="tbl-verb">rappresentare un'opportunità</td><td>representar una oportunidad</td><td>La crisi <em>rappresenta un'opportunità</em> di rinnovamento.</td></tr>
+            <tr><td class="tbl-verb">rappresentare un rischio</td><td>representar un riesgo</td><td>L'operazione <em>rappresenta un rischio</em> finanziario notevole.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>COSTITUIRE — ostacoli, problemi, minacce</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Collocazione</th><th>Traduzione</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-verb">costituire un ostacolo</td><td>constituir un obstáculo</td><td>La burocrazia <em>costituisce un ostacolo</em> all'innovazione.</td></tr>
+            <tr><td class="tbl-verb">costituire un problema</td><td>constituir un problema</td><td>La mancanza di fondi <em>costituisce un problema</em> strutturale.</td></tr>
+            <tr><td class="tbl-verb">costituire una minaccia</td><td>constituir una amenaza</td><td>Il fenomeno <em>costituisce una minaccia</em> per la stabilità.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note-box">
+        <b>Sfumatura:</b> <em>rappresentare</em>, <em>costituire</em> e <em>configurare</em> sono semi-sinonimi nel registro formale. <span class="hl">Rappresentare</span> è il più neutro e flessibile; <span class="hl">costituire</span> ha un tono più giuridico-formale; <em>configurare</em> è ancora più tecnico (giuridico). Saper alternarli alza il registro.
+      </div>
+
+      <h3>DESTARE — preoccupazione, sospetti, interesse</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Collocazione</th><th>Traduzione</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-verb">destare preoccupazione</td><td>suscitar preocupación</td><td>I dati economici <em>destano preoccupazione</em>.</td></tr>
+            <tr><td class="tbl-verb">destare interesse</td><td>despertar interés</td><td>La conferenza ha <em>destato grande interesse</em>.</td></tr>
+            <tr><td class="tbl-verb">destare sospetti</td><td>despertar sospechas</td><td>Quel comportamento <em>desta sospetti</em>.</td></tr>
+            <tr><td class="tbl-verb">destare scalpore</td><td>causar revuelo / escándalo</td><td>La notizia ha <em>destato scalpore</em> in tutta Europa.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div><b>Destare</b> (letteralmente «svegliare») è il verbo specifico per <em>preoccupazione, sospetti, interesse, scalpore</em>. L'ispanofono tende a usare *<em>fare preoccupazione</em> (calco di «causar») o *<em>provocare preoccupazione</em> (provocare esiste, ma in collocazioni diverse: <em>provocare una reazione, un incidente</em>). Sinonimi alti: <span class="hl">suscitare</span> (<em>suscitare polemiche, dubbi</em>), <span class="hl">sollevare</span> (<em>sollevare obiezioni</em>).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 3: AGGETTIVO + NOME ============ -->
+<section id="s-agg-nome" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">3. Collocazioni Aggettivo + Nome</h2>
+      <p class="sec-subtitle">L'aggettivo «giusto» che intensifica o caratterizza ogni nome — la firma del registro alto</p>
+
+      <div class="def-box">
+        Nelle collocazioni <b>aggettivo + nome</b>, l'aggettivo è quello che il nativo associa abitualmente al nome. Non si tratta di sinonimi intercambiabili: <em>una ricerca <span class="hl">approfondita</span></em> ≠ <em>una ricerca *<span class="dim">profonda</span></em>; <em>un'analisi <span class="hl">dettagliata</span></em> ≠ <em>un'analisi *<span class="dim">particolare</span></em>. La scelta dell'aggettivo è un <b>indicatore di competenza C1</b>: un parlante avanzato non dice solo <em>«buono»</em> o <em>«importante»</em> ma <em>«fondamentale, significativo, sostanziale, rilevante»</em>, secondo il nome.
+      </div>
+
+      <h3>Tabella esaustiva: aggettivo + nome</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Collocazione</th><th>Traduzione</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-pron">ricerca approfondita</td><td>investigación exhaustiva</td><td>È stata condotta una <em>ricerca approfondita</em> sull'argomento.</td></tr>
+            <tr><td class="tbl-pron">analisi dettagliata</td><td>análisis detallado</td><td>Il rapporto presenta un'<em>analisi dettagliata</em> dei dati.</td></tr>
+            <tr><td class="tbl-pron">problema complesso</td><td>problema complejo</td><td>Si tratta di un <em>problema complesso</em>, non riducibile a una soluzione semplice.</td></tr>
+            <tr><td class="tbl-pron">situazione delicata</td><td>situación delicada</td><td>Stiamo gestendo una <em>situazione delicata</em>.</td></tr>
+            <tr><td class="tbl-pron">questione spinosa</td><td>cuestión espinosa</td><td>L'immigrazione resta una <em>questione spinosa</em>.</td></tr>
+            <tr><td class="tbl-pron">impatto significativo</td><td>impacto significativo</td><td>La riforma ha avuto un <em>impatto significativo</em> sull'economia.</td></tr>
+            <tr><td class="tbl-pron">ruolo fondamentale</td><td>papel fundamental</td><td>La scuola svolge un <em>ruolo fondamentale</em> nella formazione.</td></tr>
+            <tr><td class="tbl-pron">peso specifico</td><td>peso específico</td><td>Ogni voto ha un <em>peso specifico</em> nel risultato finale.</td></tr>
+            <tr><td class="tbl-pron">margine di errore</td><td>margen de error</td><td>Bisogna calcolare un <em>margine di errore</em> del 5%.</td></tr>
+            <tr><td class="tbl-pron">livello elevato</td><td>nivel elevado</td><td>Si richiede un <em>livello elevato</em> di preparazione.</td></tr>
+            <tr><td class="tbl-pron">grado di difficoltà</td><td>grado de dificultad</td><td>L'esercizio ha un alto <em>grado di difficoltà</em>.</td></tr>
+            <tr><td class="tbl-pron">effetto collaterale</td><td>efecto secundario</td><td>Il farmaco può avere <em>effetti collaterali</em> indesiderati.</td></tr>
+            <tr><td class="tbl-pron">misura drastica</td><td>medida drástica</td><td>Sono state adottate <em>misure drastiche</em> contro l'evasione.</td></tr>
+            <tr><td class="tbl-pron">soluzione efficace</td><td>solución eficaz</td><td>Non esiste una <em>soluzione efficace</em> a breve termine.</td></tr>
+            <tr><td class="tbl-pron">risultato tangibile</td><td>resultado tangible</td><td>Pretendiamo <em>risultati tangibili</em>, non promesse.</td></tr>
+            <tr><td class="tbl-pron">contributo significativo</td><td>contribución significativa</td><td>L'autrice ha dato un <em>contributo significativo</em> agli studi linguistici.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note-box">
+        <b>Falso amico aggettivale:</b> <em>«efecto secundario»</em> in italiano è <span class="hl">effetto collaterale</span>, non *<em>effetto secondario</em> (che si usa in altri contesti: <em>l'effetto secondario di una causa principale</em>). Stessa attenzione per <em>«daño colateral» → danno collaterale</em>.
+      </div>
+
+      <h3>Esempi commentati</h3>
+      <div class="example-block">
+        <div class="ex-it">Lo studio richiede una <em>ricerca approfondita</em> della letteratura esistente.</div>
+        <div class="ex-es">El estudio requiere una investigación exhaustiva de la literatura existente.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>ricerca approfondita</em> (no *<em>ricerca profonda</em>). L'aggettivo <em>approfondito</em> è il colocacional fisso per <em>ricerca, analisi, studio, esame</em>.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">La famiglia svolge un <em>ruolo fondamentale</em> nello sviluppo del bambino.</div>
+        <div class="ex-es">La familia desempeña un papel fundamental en el desarrollo del niño.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>ruolo fondamentale</em> + verbo <em>svolgere</em>. Doppia collocazione (verbo+nome e aggettivo+nome).</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Il governo ha adottato <em>misure drastiche</em> per contenere l'inflazione.</div>
+        <div class="ex-es">El gobierno ha adoptado medidas drásticas para contener la inflación.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>misure drastiche</em> + verbo <em>adottare</em>. Tipica del registro giornalistico.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 4: NOME + PREP + NOME ============ -->
+<section id="s-nome-prep" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">4. Collocazioni Nome + Preposizione + Nome</h2>
+      <p class="sec-subtitle">I composti nominali con preposizione fissa — strutture quasi-lessicalizzate</p>
+
+      <div class="def-box">
+        Si tratta di <span class="hl">gruppi nominali con preposizione fissa</span>: la combinazione è così frequente che il nativo la percepisce come un'unica unità lessicale. La preposizione (quasi sempre <b>di</b>) è obbligata: non si può sostituire né omettere.
+      </div>
+
+      <h3>Tabella: collocazioni Nome + di + Nome</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Collocazione</th><th>Traduzione</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-pron">punto di riferimento</td><td>punto de referencia</td><td>Quel professore è stato un <em>punto di riferimento</em> per tutti noi.</td></tr>
+            <tr><td class="tbl-pron">margine di manovra</td><td>margen de maniobra</td><td>Il governo ha poco <em>margine di manovra</em> sul bilancio.</td></tr>
+            <tr><td class="tbl-pron">fattore di rischio</td><td>factor de riesgo</td><td>Il fumo è un <em>fattore di rischio</em> per molte patologie.</td></tr>
+            <tr><td class="tbl-pron">campo di applicazione</td><td>ámbito de aplicación</td><td>Il <em>campo di applicazione</em> della norma è molto ampio.</td></tr>
+            <tr><td class="tbl-pron">oggetto di critica</td><td>objeto de crítica</td><td>La sua proposta è stata <em>oggetto di critica</em> da più parti.</td></tr>
+            <tr><td class="tbl-pron">centro di gravità</td><td>centro de gravedad</td><td>Roma è il <em>centro di gravità</em> politico del paese.</td></tr>
+            <tr><td class="tbl-pron">area di intervento</td><td>área de intervención</td><td>L'<em>area di intervento</em> del progetto si estende a tre regioni.</td></tr>
+            <tr><td class="tbl-pron">settore di attività</td><td>sector de actividad</td><td>Operiamo in più <em>settori di attività</em>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Esempi commentati</h3>
+      <div class="example-block">
+        <div class="ex-it">L'azienda non ha più <em>margine di manovra</em> per evitare i licenziamenti.</div>
+        <div class="ex-es">La empresa ya no tiene margen de maniobra para evitar los despidos.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>margine di manovra</em>. Tipica del lessico economico e politico.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Il sedentarismo è un <em>fattore di rischio</em> cardiovascolare ben documentato.</div>
+        <div class="ex-es">El sedentarismo es un factor de riesgo cardiovascular bien documentado.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>fattore di rischio</em>. Tipica del registro medico-scientifico.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Il direttivo è stato <em>oggetto di critica</em> per la gestione delle risorse.</div>
+        <div class="ex-es">El consejo directivo ha sido objeto de crítica por la gestión de los recursos.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>oggetto di critica</em>. Si combina con il verbo <em>essere</em>. Variante: <em>oggetto di indagine, di studio, di discussione</em>.</div>
+      </div>
+
+      <div class="note-box">
+        <b>Produttività:</b> <em>oggetto di</em> è uno schema collocazionale produttivo, che si combina con molti nomi astratti: <span class="hl">oggetto di indagine, di studio, di discussione, di analisi, di valutazione, di controllo, di sospetto</span>. Memorizzarne lo schema permette di generarne molte altre.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 5: FALSI AMICI ============ -->
+<section id="s-falsi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">5. Falsi amici colocacionales con lo spagnolo</h2>
+      <p class="sec-subtitle">Quando la collocazione cambia tra le due lingue: tavola contrastiva</p>
+
+      <div class="def-box">
+        Lo spagnolo e l'italiano condividono <span class="hl">gran parte</span> del repertorio collocazionale, ma divergono in molte combinazioni-chiave. Conoscere le differenze è essenziale per evitare i calchi più comuni. Qui sotto la tavola sistematica.
+      </div>
+
+      <h3>Tavola contrastiva: collocazioni che cambiano</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Spagnolo</th><th>Collocazione ES</th><th>Italiano</th><th>Collocazione IT</th></tr></thead>
+          <tbody>
+            <tr><td>decisión</td><td>tomar una decisión</td><td>decisione</td><td class="ok-cell">prendere una decisione</td></tr>
+            <tr><td>pregunta</td><td>hacer una pregunta</td><td>domanda</td><td class="ok-cell">fare una domanda</td></tr>
+            <tr><td>respuesta</td><td>dar una respuesta</td><td>risposta</td><td class="ok-cell">dare una risposta</td></tr>
+            <tr><td>papel/rol</td><td>tener / hacer un papel</td><td>ruolo</td><td class="ok-cell">svolgere / avere un ruolo</td></tr>
+            <tr><td>conclusiones</td><td>sacar conclusiones</td><td>conclusioni</td><td class="ok-cell">trarre conclusioni</td></tr>
+            <tr><td>problema</td><td>plantear un problema</td><td>problema</td><td class="ok-cell">porre / sollevare un problema</td></tr>
+            <tr><td>consecuencias</td><td>sufrir consecuencias</td><td>conseguenze</td><td class="ok-cell">subire le conseguenze</td></tr>
+            <tr><td>preocupación</td><td>causar / provocar preocupación</td><td>preoccupazione</td><td class="ok-cell">destare preoccupazione</td></tr>
+            <tr><td>sospechas</td><td>levantar sospechas</td><td>sospetti</td><td class="ok-cell">destare sospetti</td></tr>
+            <tr><td>presión</td><td>ejercer presión</td><td>pressione</td><td class="ok-cell">esercitare pressione</td></tr>
+            <tr><td>compromiso</td><td>asumir un compromiso</td><td>impegno</td><td class="ok-cell">prendere / assumere un impegno</td></tr>
+            <tr><td>obstáculo</td><td>suponer un obstáculo</td><td>ostacolo</td><td class="ok-cell">costituire un ostacolo</td></tr>
+            <tr><td>amenaza</td><td>suponer una amenaza</td><td>minaccia</td><td class="ok-cell">costituire una minaccia</td></tr>
+            <tr><td>oportunidad</td><td>brindar una oportunidad</td><td>opportunità</td><td class="ok-cell">offrire / rappresentare un'opportunità</td></tr>
+            <tr><td>acuerdo</td><td>llegar a un acuerdo</td><td>accordo</td><td class="ok-cell">raggiungere un accordo</td></tr>
+            <tr><td>investigaciones</td><td>realizar investigaciones</td><td>ricerche</td><td class="ok-cell">svolgere / condurre ricerche</td></tr>
+            <tr><td>medidas</td><td>tomar / adoptar medidas</td><td>misure</td><td class="ok-cell">adottare / prendere misure</td></tr>
+            <tr><td>récord</td><td>batir un récord</td><td>record</td><td class="ok-cell">battere / segnare un record</td></tr>
+            <tr><td>excepción</td><td>hacer una excepción</td><td>eccezione</td><td class="ok-cell">fare un'eccezione</td></tr>
+            <tr><td>frente</td><td>hacer frente a</td><td>fronte</td><td class="ok-cell">fare fronte a</td></tr>
+            <tr><td>provecho</td><td>sacar provecho de</td><td>vantaggio</td><td class="ok-cell">trarre vantaggio da</td></tr>
+            <tr><td>distinción</td><td>hacer una distinción</td><td>distinzione</td><td class="ok-cell">fare una distinzione</td></tr>
+            <tr><td>debate</td><td>abrir un debate</td><td>dibattito</td><td class="ok-cell">aprire un dibattito</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Schemi di divergenza ricorrenti</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Schema ES</th><th>Schema IT</th><th>Esempi</th></tr></thead>
+          <tbody>
+            <tr><td>hacer + nome</td><td>prendere / fare / svolgere</td><td>hacer una decisión → <span class="hl">prendere</span>; hacer un papel → <span class="hl">svolgere</span>; hacer una pregunta → <span class="hl">fare</span></td></tr>
+            <tr><td>sacar + nome</td><td>trarre + nome</td><td>sacar conclusiones / provecho / beneficio → <span class="hl">trarre</span></td></tr>
+            <tr><td>tomar + nome</td><td>prendere + nome (✓)</td><td>tomar una decisión, una iniciativa, posición → coincide</td></tr>
+            <tr><td>provocar/causar + nome</td><td>destare + nome</td><td>provocar preocupación / sospechas → <span class="hl">destare</span></td></tr>
+            <tr><td>suponer + nome</td><td>costituire / rappresentare</td><td>suponer un obstáculo / una amenaza → <span class="hl">costituire / rappresentare</span></td></tr>
+            <tr><td>realizar + nome</td><td>svolgere / condurre</td><td>realizar investigaciones → <span class="hl">svolgere / condurre ricerche</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="green-box">
+        <b>Regola pratica:</b> davanti a un nome astratto, prima di scegliere il verbo italiano, chiedetevi: <span class="hl">qual è il verbo «colocacional» italiano, non quello logicamente più vicino allo spagnolo?</span> Spesso il verbo italiano è un altro (trarre, destare, svolgere, costituire), e l'unico modo per saperlo è averlo memorizzato. Il dizionario combinatorio (Tullio De Mauro, Francesco Urzì) è il riferimento principale.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 6: REGISTRO GIORNALISTICO ============ -->
+<section id="s-giorn" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">6. Collocazioni del registro giornalistico</h2>
+      <p class="sec-subtitle">Le formule fisse di titoli e articoli — il lessico che ogni C1 deve riconoscere</p>
+
+      <div class="def-box">
+        Il <span class="hl">linguaggio giornalistico</span> italiano è particolarmente ricco di collocazioni convenzionalizzate, spesso ricorrenti in titoli e <em>occhielli</em>. Padroneggiarle è essenziale sia per la <b>comprensione</b> (capire un giornale italiano è impossibile senza riconoscere queste formule) sia per la <b>produzione scritta formale</b>.
+      </div>
+
+      <h3>Tabella: collocazioni giornalistiche frequenti</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Collocazione</th><th>Traduzione</th><th>Esempio di titolo / frase</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-verb">registrare un aumento</td><td>registrar un aumento</td><td>L'inflazione <em>registra un aumento</em> dello 0,3%.</td></tr>
+            <tr><td class="tbl-verb">registrare un calo</td><td>registrar una caída</td><td>Il PIL <em>registra un calo</em> del 2% nel trimestre.</td></tr>
+            <tr><td class="tbl-verb">segnare un record</td><td>marcar un récord</td><td>Le esportazioni <em>segnano un record</em> storico.</td></tr>
+            <tr><td class="tbl-verb">riportare danni</td><td>sufrir daños</td><td>L'edificio ha <em>riportato danni</em> ingenti.</td></tr>
+            <tr><td class="tbl-verb">subire perdite</td><td>sufrir pérdidas</td><td>L'azienda <em>ha subìto perdite</em> milionarie.</td></tr>
+            <tr><td class="tbl-verb">adottare misure</td><td>adoptar medidas</td><td>Il governo <em>ha adottato misure</em> straordinarie.</td></tr>
+            <tr><td class="tbl-verb">varare un provvedimento</td><td>aprobar / promulgar una medida</td><td>Il Parlamento <em>ha varato un provvedimento</em> antievasione.</td></tr>
+            <tr><td class="tbl-verb">avanzare una proposta</td><td>presentar una propuesta</td><td>Il sindaco <em>ha avanzato una proposta</em> di mediazione.</td></tr>
+            <tr><td class="tbl-verb">esprimere preoccupazione</td><td>expresar preocupación</td><td>L'OMS <em>esprime preoccupazione</em> per l'epidemia.</td></tr>
+            <tr><td class="tbl-verb">lanciare un appello</td><td>lanzar un llamamiento</td><td>Le ONG <em>lanciano un appello</em> alla comunità internazionale.</td></tr>
+            <tr><td class="tbl-verb">formulare una critica</td><td>formular una crítica</td><td>L'opposizione <em>formula una dura critica</em> al governo.</td></tr>
+            <tr><td class="tbl-verb">aprire un dibattito</td><td>abrir un debate</td><td>La sentenza <em>apre un dibattito</em> sulla bioetica.</td></tr>
+            <tr><td class="tbl-verb">sollevare una questione</td><td>plantear una cuestión</td><td>Il deputato <em>solleva una questione</em> di legittimità.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">⚠️</span>
+        <div>Lo spagnolo dice <em>«presentar una propuesta»</em>, ma in italiano il giornalese preferisce <span class="hl">avanzare una proposta</span> (più alto e specifico) accanto a <em>presentare una proposta</em> (neutro). Stessa attenzione per <em>varare</em> = «aprobar/promulgar» (un provvedimento, una legge, una riforma): è un verbo squisitamente giornalistico, originariamente nautico (<em>varare una nave</em> = «botar un barco»).</div>
+      </div>
+
+      <h3>Esempi commentati</h3>
+      <div class="example-block">
+        <div class="ex-it">L'ISTAT <em>registra</em> un <em>aumento</em> del 4,5% dei prezzi al consumo. <span class="tag tag-giorn">giornalistico</span></div>
+        <div class="ex-es">El ISTAT registra un aumento del 4,5% de los precios al consumo.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>registrare un aumento / un calo</em>. Tipica delle aperture di notizia economica.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Il governo ha <em>varato un pacchetto</em> di misure economiche per fronteggiare la crisi. <span class="tag tag-giorn">giornalistico</span></div>
+        <div class="ex-es">El gobierno ha aprobado un paquete de medidas económicas para hacer frente a la crisis.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>varare un provvedimento / un pacchetto</em>. Tipico del giornalese politico.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Le opposizioni <em>hanno sollevato</em> una <em>questione</em> di legittimità costituzionale. <span class="tag tag-giorn">giornalistico</span></div>
+        <div class="ex-es">Las oposiciones plantearon una cuestión de legitimidad constitucional.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>sollevare una questione</em>. Sinonimo formale di <em>«plantear»</em>. Variante alta: <em>porre una questione</em>.</div>
+      </div>
+
+      <div class="note-box">
+        <b>Strategia di lettura:</b> i quotidiani italiani usano in titolo collocazioni-formula molto compresse: <em>«PIL: registrato calo dello 0,2%»</em>, <em>«Varato pacchetto sicurezza»</em>, <em>«Lanciato appello dall'ONU»</em>. Riconoscerle vi permette di decodificare immediatamente il senso del titolo. Una buona pratica è leggere ogni giorno tre titoli del <em>Corriere</em> o di <em>Repubblica</em> e annotare le collocazioni nuove.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 7: STRATEGIA ============ -->
+<section id="s-strategia" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">7. Come imparare le collocazioni — strategia</h2>
+      <p class="sec-subtitle">Nota metodologica breve per studenti C1</p>
+
+      <div class="def-box">
+        Le collocazioni non si imparano come la grammatica: <span class="hl">non si applicano regole</span>, si memorizzano <em>chunk</em> (blocchi indivisibili). Lo studente di livello C1 deve sviluppare un'attenzione specifica al modo in cui le parole si combinano nei testi reali.
+      </div>
+
+      <h3>Cinque principi operativi</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Principio</th><th>Cosa significa in pratica</th></tr></thead>
+          <tbody>
+            <tr><td><b>1. Mai il nome solo</b></td><td>Imparate sempre il <span class="hl">nome insieme al verbo (o aggettivo) colocacional</span>: non <em>«decisione»</em> ma <em>«prendere una decisione»</em>; non <em>«ruolo»</em> ma <em>«svolgere un ruolo»</em>; non <em>«ricerca»</em> ma <em>«ricerca approfondita»</em>.</td></tr>
+            <tr><td><b>2. Registrare in contesto</b></td><td>Annotate la collocazione <span class="hl">dentro una frase reale</span> (presa da un articolo, un libro, un film). Il contesto fissa la memoria meglio dell'elenco astratto.</td></tr>
+            <tr><td><b>3. Distinguere ES vs IT</b></td><td>Quando trovate una collocazione nuova, chiedetevi: <span class="hl">come si dice in spagnolo? Coincide o divergono?</span> Se divergono, segnalatelo con un asterisco — quelle sono le collocazioni a rischio.</td></tr>
+            <tr><td><b>4. Usare un dizionario combinatorio</b></td><td>Per l'italiano: <em>Dizionario delle Combinazioni Lessicali</em> di F. Urzì, <em>Dizionario combinatorio compatto italiano</em> di V. Lo Cascio. Treccani online ha le combinazioni più frequenti sotto la voce dei nomi.</td></tr>
+            <tr><td><b>5. Imitare i nativi</b></td><td>Leggete giornali italiani (Corriere, Repubblica, Il Post), saggistica, contratti, lettere formali. <span class="hl">Riproducete le collocazioni che vi colpiscono</span>: copia consapevole.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="green-box">
+        <b>Esercizio di automatizzazione:</b> create un quaderno («quaderno delle collocazioni») diviso in tre colonne: <em>nome – verbo colocacional – esempio</em>. Aggiornatelo ogni volta che incontrate una collocazione nuova. Rileggetelo prima di ogni produzione scritta o orale. In sei mesi, il vostro italiano «suonerà» nativo.
+      </div>
+
+      <div class="note-box">
+        <b>Errore tipico da evitare:</b> non studiate liste astratte di sinonimi (<em>importante = fondamentale = sostanziale = rilevante</em>). I sinonimi <span class="hl">non sono intercambiabili</span> nelle collocazioni: <em>ruolo fondamentale</em> ✓ vs <em>?ruolo sostanziale</em>; <em>differenza sostanziale</em> ✓ vs <em>?differenza fondamentale</em>. Imparate i sinonimi sempre dentro la loro collocazione tipica.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 8: TRAPPOLE ============ -->
+<section id="s-trappole" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">8. Trappole per ispanofoni</h2>
+      <p class="sec-subtitle">I quattro calchi colocacionali più frequenti e come evitarli</p>
+
+      <div class="def-box">
+        Riepiloghiamo qui i punti critici visti nelle sezioni precedenti. Sono pochi e ricorrenti: la maggior parte degli errori colocacionali degli ispanofoni avanzati ricade su questi quattro schemi.
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header">
+          <span class="tag tag-warn">trappola 1</span>
+          <span class="trap-name">«sacar conclusiones» ≠ *<em>tirare fuori conclusioni</em></span>
+        </div>
+        <div class="trap-vs">
+          <div class="trap-wrong">È prematuro <em>*tirare fuori conclusioni</em> / *<em>fare conclusioni</em>.</div>
+          <div class="trap-right">È prematuro <em>trarre conclusioni</em>.</div>
+        </div>
+        <div class="trap-expl">In italiano il verbo è <b>trarre</b>, non <em>tirare fuori</em> (calco letterale di «sacar»). Vale anche per <em>trarre vantaggio, beneficio, ispirazione, insegnamento</em>. Il verbo <em>trarre</em> è irregolare: <em>traggo, trai, trae… ho tratto</em>.</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header">
+          <span class="tag tag-warn">trappola 2</span>
+          <span class="trap-name">«tomar una decisión» — il verbo coincide, ma attento a «hacer»</span>
+        </div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Bisogna <em>*fare una decisione</em> rapida.</div>
+          <div class="trap-right">Bisogna <em>prendere una decisione</em> rapida.</div>
+        </div>
+        <div class="trap-expl">In italiano <b>prendere</b> = «tomar». L'errore è dell'ispanofono che cerca di calcare «hacer» nei contesti in cui in italiano si dice «tomar»: <em>prendere una decisione, un impegno, posizione, l'iniziativa</em>. Tutti con <b>prendere</b>, mai con <em>fare</em>.</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header">
+          <span class="tag tag-warn">trappola 3</span>
+          <span class="trap-name">«tener / hacer un papel» ≠ *<em>fare un ruolo</em></span>
+        </div>
+        <div class="trap-vs">
+          <div class="trap-wrong">La famiglia <em>*fa un ruolo</em> importante.</div>
+          <div class="trap-right">La famiglia <em>svolge un ruolo</em> importante.</div>
+        </div>
+        <div class="trap-expl">Per il ruolo (= «papel» nel senso astratto, di funzione) il verbo è <b>svolgere</b> o <b>avere</b>: <em>svolgere/avere un ruolo centrale</em>. Solo nel senso teatrale si dice <em>fare/interpretare il ruolo di Amleto</em>. Lo stesso vale per <em>esercitare un ruolo</em> in registro alto-formale.</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header">
+          <span class="tag tag-warn">trappola 4</span>
+          <span class="trap-name">«causar / provocar preocupación» ≠ *<em>fare preoccupazione</em></span>
+        </div>
+        <div class="trap-vs">
+          <div class="trap-wrong">I dati <em>*fanno preoccupazione</em> / *<em>provocano preoccupazione</em>.</div>
+          <div class="trap-right">I dati <em>destano preoccupazione</em>.</div>
+        </div>
+        <div class="trap-expl">Per <em>preoccupazione, sospetti, interesse, scalpore</em> il verbo italiano è <b>destare</b> (letteralmente «svegliare»). Variante alta: <span class="hl">suscitare</span>. Il verbo <em>provocare</em> esiste in italiano ma ha collocazioni diverse: <em>provocare una reazione, un incidente, un effetto</em>.</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header">
+          <span class="tag tag-warn">trappola 5</span>
+          <span class="trap-name">«plantear un problema» ≠ *<em>piantare un problema</em></span>
+        </div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Il deputato ha <em>*piantato un problema</em> di legittimità.</div>
+          <div class="trap-right">Il deputato ha <em>posto / sollevato un problema</em> di legittimità.</div>
+        </div>
+        <div class="trap-expl">In italiano <em>piantare</em> esiste, ma significa solo «plantar» (piantare un albero, piantare la tenda) o «abbandonare» colloquiale (<em>l'ha piantato in asso</em>). Per «plantear un problema, una cuestión» si usa <b>porre</b> (registro formale) o <b>sollevare</b> (anche giornalistico).</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header">
+          <span class="tag tag-warn">trappola 6</span>
+          <span class="trap-name">«suponer un obstáculo» ≠ *<em>supporre un ostacolo</em></span>
+        </div>
+        <div class="trap-vs">
+          <div class="trap-wrong">La burocrazia <em>*suppone un ostacolo</em> all'innovazione.</div>
+          <div class="trap-right">La burocrazia <em>costituisce / rappresenta un ostacolo</em> all'innovazione.</div>
+        </div>
+        <div class="trap-expl">Il verbo italiano <em>supporre</em> = «suponer» solo nel senso di «hipotetizar» (<em>suppongo che tu abbia ragione</em>). Per «suponer un obstáculo / una amenaza / una oportunidad» si usa <b>costituire</b> (registro alto) o <b>rappresentare</b> (registro neutro).</div>
+      </div>
+
+      <div class="trap-card">
+        <div class="trap-card-header">
+          <span class="tag tag-warn">trappola 7</span>
+          <span class="trap-name">«hacer una pregunta» ≠ *<em>fare domanda</em> senza articolo</span>
+        </div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Posso <em>fare domanda</em>? (= «postular», iscriversi)</div>
+          <div class="trap-right">Posso <em>fare <b>una</b> domanda</em>? (= «hacer una pregunta»)</div>
+        </div>
+        <div class="trap-expl">Attenzione all'articolo: <span class="hl">fare una domanda</span> = «hacer una pregunta» (interrogare); <span class="hl">fare domanda (di X)</span> = «solicitar / inscribirse» (<em>fare domanda di iscrizione, di lavoro, di asilo</em>). Lo stesso nome <em>domanda</em> ha due collocazioni diverse a seconda dell'articolo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 9: ESEMPI ============ -->
+<section id="s-esempi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">9. Esempi commentati (20+)</h2>
+      <p class="sec-subtitle">Frasi reali con identificazione della collocazione e confronto con lo spagnolo</p>
+
+      <p class="dim">In ogni esempio: la <span class="hl">collocazione</span> è evidenziata, e nell'analisi vengono indicati il verbo (o aggettivo) colocacional, l'equivalente spagnolo e l'eventuale divergenza.</p>
+
+      <h3>Verbo + Nome</h3>
+
+      <div class="example-block">
+        <div class="ex-it">Il Consiglio di amministrazione ha <em>preso una decisione</em> all'unanimità. <span class="tag tag-verb">prendere</span></div>
+        <div class="ex-es">El Consejo de administración tomó una decisión por unanimidad.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>prendere una decisione</em>. ES «tomar una decisión» coincide (mai *<em>fare una decisione</em>).</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">L'analista <em>ha tratto conclusioni</em> opposte a quelle attese. <span class="tag tag-verb">trarre</span></div>
+        <div class="ex-es">El analista sacó conclusiones opuestas a las esperadas.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>trarre conclusioni</em>. <span class="hl">Diverge</span> dallo spagnolo «sacar»: in italiano è <em>trarre</em>, mai *<em>tirare fuori</em>.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">L'università <em>svolge un ruolo</em> determinante nella ricerca scientifica. <span class="tag tag-verb">svolgere</span></div>
+        <div class="ex-es">La universidad desempeña un papel determinante en la investigación científica.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>svolgere un ruolo</em>. <span class="hl">Diverge</span> dallo spagnolo: ES «desempeñar / tener / jugar», IT <em>svolgere / avere</em>. Mai *<em>fare un ruolo</em>.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">I dati pubblicati ieri <em>destano serie preoccupazioni</em> negli operatori del settore. <span class="tag tag-verb">destare</span></div>
+        <div class="ex-es">Los datos publicados ayer suscitan serias preocupaciones en los operadores del sector.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>destare preoccupazione</em>. <span class="hl">Diverge</span> dallo spagnolo «causar/provocar»: in italiano <em>destare</em> (o, alto-formale, <em>suscitare</em>).</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Le due parti hanno <em>raggiunto un accordo</em> dopo dieci ore di trattativa. <span class="tag tag-verb">raggiungere</span></div>
+        <div class="ex-es">Las dos partes alcanzaron un acuerdo tras diez horas de negociación.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>raggiungere un accordo</em>. ES «alcanzar / llegar a un acuerdo» — coincide concettualmente.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Il governo <em>ha esercitato pressione</em> sulla Banca centrale per abbassare i tassi. <span class="tag tag-verb">esercitare</span></div>
+        <div class="ex-es">El gobierno ejerció presión sobre el Banco central para bajar los tipos.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>esercitare pressione</em>. ES «ejercer presión» — coincide.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">La burocrazia <em>costituisce un ostacolo</em> serio allo sviluppo delle piccole imprese. <span class="tag tag-verb">costituire</span></div>
+        <div class="ex-es">La burocracia supone / constituye un obstáculo serio para el desarrollo de las pequeñas empresas.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>costituire un ostacolo</em>. <span class="hl">Diverge</span> dallo spagnolo: ES «suponer / constituir», IT <em>costituire / rappresentare</em>, mai *<em>supporre</em>.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">L'azienda <em>ha affrontato una sfida</em> tecnologica senza precedenti. <span class="tag tag-verb">affrontare</span></div>
+        <div class="ex-es">La empresa afrontó un reto tecnológico sin precedentes.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>affrontare una sfida</em>. ES «afrontar un reto» — coincide.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Il deputato <em>ha posto una questione</em> di metodo durante la seduta. <span class="tag tag-verb">porre</span></div>
+        <div class="ex-es">El diputado planteó una cuestión de método durante la sesión.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>porre una questione / un problema</em>. <span class="hl">Diverge</span> dallo spagnolo «plantear»: in italiano <em>porre</em> (formale) o <em>sollevare</em> (anche giornalistico).</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Lasciatemi <em>fare una distinzione</em> tra principio e applicazione. <span class="tag tag-verb">fare</span></div>
+        <div class="ex-es">Permítanme hacer una distinción entre principio y aplicación.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>fare una distinzione</em>. ES «hacer una distinción» — coincide (eccezione importante allo schema «hacer ≠ fare»).</div>
+      </div>
+
+      <h3>Aggettivo + Nome</h3>
+
+      <div class="example-block">
+        <div class="ex-it">Lo studio offre un'<em>analisi dettagliata</em> dei meccanismi inflattivi. <span class="tag tag-agg">analisi dettagliata</span></div>
+        <div class="ex-es">El estudio ofrece un análisis detallado de los mecanismos inflacionarios.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>analisi dettagliata</em>. ES coincide. Sinonimo: <em>analisi approfondita</em>.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">La riforma ha avuto un <em>impatto significativo</em> sulle famiglie a basso reddito. <span class="tag tag-agg">impatto significativo</span></div>
+        <div class="ex-es">La reforma ha tenido un impacto significativo sobre las familias de bajos ingresos.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>impatto significativo</em>. Sinonimi: <em>impatto rilevante, sostanziale</em>. Mai *<em>impatto importante</em> (calco corretto in alcuni casi ma di registro più basso).</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">La conciliazione tra lavoro e famiglia resta una <em>questione spinosa</em>. <span class="tag tag-agg">questione spinosa</span></div>
+        <div class="ex-es">La conciliación entre trabajo y familia sigue siendo una cuestión espinosa.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>questione spinosa</em>. ES «cuestión espinosa» — coincide perfettamente (la metafora della spina è identica).</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Il farmaco è efficace ma comporta <em>effetti collaterali</em> non trascurabili. <span class="tag tag-agg">effetti collaterali</span></div>
+        <div class="ex-es">El fármaco es eficaz pero conlleva efectos secundarios no desdeñables.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>effetto collaterale</em>. <span class="hl">Diverge dallo spagnolo</span>: ES «efecto secundario» (= <em>secondario</em> sarebbe scorretto in questo contesto medico).</div>
+      </div>
+
+      <h3>Nome + Preposizione + Nome</h3>
+
+      <div class="example-block">
+        <div class="ex-it">Il sindaco è diventato un <em>punto di riferimento</em> per l'intera comunità. <span class="tag tag-sost">punto di riferimento</span></div>
+        <div class="ex-es">El alcalde se ha convertido en un punto de referencia para toda la comunidad.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>punto di riferimento</em>. Coincide.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Dopo le ultime spese, il bilancio non ha più <em>margine di manovra</em>. <span class="tag tag-sost">margine di manovra</span></div>
+        <div class="ex-es">Tras los últimos gastos, el presupuesto ya no tiene margen de maniobra.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>margine di manovra</em>. Tipica del registro economico-politico.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">L'ipertensione è considerata il principale <em>fattore di rischio</em> per le malattie cardiovascolari. <span class="tag tag-sost">fattore di rischio</span></div>
+        <div class="ex-es">La hipertensión está considerada el principal factor de riesgo de las enfermedades cardiovasculares.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>fattore di rischio</em>. Coincide. Registro medico-scientifico.</div>
+      </div>
+
+      <h3>Registro giornalistico</h3>
+
+      <div class="example-block">
+        <div class="ex-it">Le esportazioni italiane <em>hanno registrato un aumento</em> del 7% nel primo semestre. <span class="tag tag-giorn">giornalistico</span></div>
+        <div class="ex-es">Las exportaciones italianas registraron un aumento del 7% en el primer semestre.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>registrare un aumento / un calo</em>. Formula fissa delle aperture economiche.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Il Parlamento <em>ha varato un provvedimento</em> contro l'evasione fiscale. <span class="tag tag-giorn">giornalistico</span></div>
+        <div class="ex-es">El Parlamento aprobó / promulgó una medida contra la evasión fiscal.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>varare un provvedimento</em>. <span class="hl">Diverge dallo spagnolo</span>: ES «aprobar/promulgar», IT <em>varare</em> (originariamente nautico).</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">L'UNHCR <em>ha lanciato un appello</em> ai paesi membri per aumentare i contributi. <span class="tag tag-giorn">giornalistico</span></div>
+        <div class="ex-es">ACNUR lanzó un llamamiento a los países miembros para aumentar las contribuciones.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>lanciare un appello</em>. ES «lanzar un llamamiento» — coincide.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">La sentenza della Corte costituzionale <em>apre un dibattito</em> sulla bioetica. <span class="tag tag-giorn">giornalistico</span></div>
+        <div class="ex-es">La sentencia del Tribunal constitucional abre un debate sobre la bioética.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>aprire un dibattito</em>. ES «abrir un debate» — coincide.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Le forze dell'ordine <em>hanno adottato misure</em> straordinarie in vista del vertice internazionale. <span class="tag tag-giorn">giornalistico</span></div>
+        <div class="ex-es">Las fuerzas del orden adoptaron medidas extraordinarias con vistas a la cumbre internacional.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>adottare misure</em>. Sinonimo: <em>prendere misure</em>. Registro neutro-formale.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Il portavoce <em>ha espresso preoccupazione</em> per l'escalation del conflitto. <span class="tag tag-giorn">giornalistico</span></div>
+        <div class="ex-es">El portavoz expresó preocupación por la escalada del conflicto.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>esprimere preoccupazione</em>. Variante alta: <em>manifestare preoccupazione</em>. Più «attiva»: <em>destare preoccupazione</em> (sono i fatti che destano, non i portavoce).</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">L'opposizione <em>ha formulato dure critiche</em> alla manovra finanziaria. <span class="tag tag-giorn">giornalistico</span></div>
+        <div class="ex-es">La oposición formuló duras críticas a la ley de presupuestos.</div>
+        <div class="ex-analysis"><b>Collocazione:</b> <em>formulare una critica</em>. Sinonimi: <em>muovere una critica, avanzare una critica</em>. Registro alto.</div>
+      </div>
+
+      <div class="green-box">
+        <b>Esercizio di sintesi:</b> rileggete tutti gli esempi e cercate di sostituire ogni verbo colocacional con un'altra versione possibile (<em>raggiungere → conseguire</em>; <em>destare → suscitare</em>; <em>varare → approvare</em>). Notate come <span class="hl">cambia il registro</span> senza che cambi il significato di base. Saper alternare collocazioni di registri diversi è la firma del C1 maturo.
+      </div>
+
+      <div class="note-box">
+        <b>Strategia di memorizzazione:</b> non studiate le collocazioni come liste astratte. Studiatele <span class="hl">dentro frasi-modello brevi</span> (preferibilmente da contesti reali: titoli di giornale, contratti, lettere formali). Il cervello memorizza meglio i <em>chunk</em> (prendere una decisione, destare preoccupazione, svolgere un ruolo, varare un provvedimento) che le singole parole con il loro verbo collocazionale separato.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+/* =================== UI HELPERS =================== */
+function showSection(id, btn){
+  document.querySelectorAll('.sec-block').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  else{
+    const btns = document.querySelectorAll('.snav-btn');
+    btns.forEach(b=>{ if(b.getAttribute('onclick').includes(`'${id}'`)) b.classList.add('active'); });
+  }
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function setFontSize(v){
+  document.documentElement.style.setProperty('--fs', v+'px');
+}
+
+function selectChip(ns, idx){
+  document.querySelectorAll('.chip').forEach(c=>{
+    const oc = c.getAttribute('onclick')||'';
+    if(oc.includes(`'${ns}'`)) c.classList.remove('active');
+  });
+  document.querySelectorAll('.chip').forEach(c=>{
+    const oc = c.getAttribute('onclick')||'';
+    if(oc.includes(`'${ns}',${idx}`)) c.classList.add('active');
+  });
+  document.querySelectorAll(`.chip-panel`).forEach(p=>{
+    const dc = p.getAttribute('data-chip')||'';
+    if(dc.startsWith(ns+'-')) p.classList.remove('active');
+  });
+  const target = document.querySelector(`.chip-panel[data-chip="${ns}-${idx}"]`);
+  if(target) target.classList.add('active');
+}
+</script>
+
+</body>
+</html>

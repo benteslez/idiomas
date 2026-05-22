@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coesione e Coerenza Testuale · Grammatica C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ede9df;
+  --card:#faf7f1;
+  --border:#c4bead;
+  --text:#1a1814;
+  --text2:#44413a;
+  --text3:#706c64;
+  --accent:#7a5a0a;
+  --accent-light:#f0e0c0;
+  --accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,0.08);
+  --radius:14px;
+  --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --red:#a81e2e; --red-bg:#fce6e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --teal:#0e6e6e; --teal-bg:#e0f4f4;
+  --fs:15px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-size:var(--fs);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:60px;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text);margin:0 0 .4em;font-weight:600;line-height:1.2}
+h1{font-size:1.85em;font-weight:700}
+h2{font-size:1.45em}
+h3{font-size:1.15em;margin-top:1.1em}
+h4{font-size:1em;font-weight:600}
+p{margin:.5em 0}
+em{font-style:italic}
+b,strong{font-weight:600}
+
+/* HEADER */
+.site-header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 18px 16px;
+  position:relative;
+}
+.site-header .inner{max-width:860px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title-wrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.site-header h1{margin:0;font-size:1.9em;color:var(--text)}
+.header-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.85em;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid var(--accent-mid);
+}
+.subtitle{color:var(--text3);font-size:.92em;margin:4px 0 12px;font-style:italic}
+.stat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stat-pill{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:4px 10px;
+  font-size:.78em;
+  border-radius:999px;
+  font-weight:500;
+}
+.font-ctrl{display:flex;align-items:center;gap:8px;font-size:.78em;color:var(--text3)}
+.font-ctrl input[type=range]{width:90px}
+
+/* SECTION NAV */
+.section-nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:10px 18px;
+  margin-top:14px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.section-nav::-webkit-scrollbar{display:none}
+.section-nav .inner{max-width:860px;margin:0 auto;display:flex;gap:6px;flex-wrap:nowrap}
+.snav-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:6px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82em;
+  border-radius:999px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .15s;
+  font-weight:500;
+}
+.snav-btn:hover{background:var(--accent-light)}
+.snav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* MAIN LAYOUT */
+.main-layout{
+  max-width:860px;
+  margin:0 auto;
+  padding:20px 18px;
+}
+.sec-block{display:none}
+.sec-block.active{display:block;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* GRAM-CARD */
+.gram-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.gram-card-body{padding:18px}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:1.45em;
+  margin:0 0 .4em;
+  color:var(--text);
+}
+.sec-subtitle{color:var(--text3);font-style:italic;font-size:.95em;margin:0 0 14px}
+
+/* DEF-BOX */
+.def-box{
+  background:var(--warn-bg);
+  border-left:4px solid var(--accent);
+  padding:12px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:14px 0;
+  font-size:.96em;
+}
+.def-box b{color:var(--accent)}
+
+/* WARN-BOX */
+.warn-box{
+  background:#fff4e0;
+  border:1px solid #c8900a;
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:12px 0;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:.93em;
+  color:var(--text2);
+}
+.warn-box .ico{font-size:1.1em;flex-shrink:0;line-height:1.3}
+
+/* EXAMPLE BLOCK */
+.example-block{
+  background:var(--blue-bg);
+  border-left:3px solid var(--blue);
+  padding:9px 12px;
+  margin:8px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.ex-it{font-weight:500;color:var(--text)}
+.ex-it em{font-style:normal;color:var(--blue);font-weight:600}
+.ex-es{font-style:italic;color:var(--text2);font-size:.88em;margin-top:2px}
+.ex-note{font-size:.84em;color:var(--text3);margin-top:4px;font-style:italic}
+
+/* NOTE-BOX */
+.note-box{
+  background:var(--purple-bg);
+  border-left:3px solid var(--purple);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.note-box b{color:var(--purple)}
+
+/* GREEN-BOX */
+.green-box{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.green-box b{color:var(--green)}
+
+/* TEAL-BOX */
+.teal-box{
+  background:var(--teal-bg);
+  border-left:3px solid var(--teal);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.teal-box b{color:var(--teal)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.gram-table{width:100%;border-collapse:collapse;font-size:.92em;background:var(--card)}
+.gram-table th{
+  background:var(--accent-light);
+  color:var(--accent);
+  font-family:'DM Sans',sans-serif;
+  font-size:.72em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:8px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--accent-mid);
+}
+.gram-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.gram-table tr:nth-child(even) td{background:rgba(196,190,173,0.12)}
+.gram-table tr:last-child td{border-bottom:none}
+.ok-cell{color:var(--green);font-weight:500}
+.err-cell{color:var(--red);font-weight:500}
+.warn-cell{color:var(--accent);font-weight:500}
+.tbl-pron{font-weight:600;color:var(--text);background:rgba(196,190,173,0.18)}
+
+/* CHIPS */
+.chip-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:14px 0 10px;
+  padding-bottom:4px;
+}
+.chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:5px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.83em;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{background:var(--accent-light)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-panel{display:none}
+.chip-panel.active{display:block;animation:fadeIn .25s}
+
+/* TRAPS */
+.trap-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.trap-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trap-name{font-weight:600;color:var(--text);font-size:.96em}
+.trap-vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.trap-wrong{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-wrong::before{content:'✗ ';color:var(--red);font-weight:700}
+.trap-right{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-right::before{content:'✓ ';color:var(--green);font-weight:700}
+.trap-expl{font-size:.88em;color:var(--text2);font-style:italic;margin-top:6px}
+@media (max-width:520px){.trap-vs{grid-template-columns:1fr}}
+
+/* MINI-TABLE */
+.mini-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.88em;
+  background:var(--card);
+  margin:10px 0;
+}
+.mini-table td{
+  padding:5px 9px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.mini-table td:first-child{color:var(--text3);font-weight:500;width:38%}
+.mini-table td:last-child{color:var(--text);font-weight:600}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table .hl-form{color:var(--accent);font-weight:700}
+
+/* TAG/LABEL */
+.tag{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:.72em;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-right:6px;
+  border:1px solid;
+}
+.tag-form{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.tag-inf{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.tag-acc{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.tag-bur{background:var(--teal-bg);color:var(--teal);border-color:var(--teal)}
+.tag-gio{background:var(--green-bg);color:var(--green);border-color:var(--green)}
+
+/* UTILS */
+.hl{color:var(--accent);font-weight:600}
+.dim{color:var(--text3)}
+
+/* ANALYSIS LIST */
+.analysis-list{
+  font-size:.86em;
+  color:var(--text2);
+  margin-top:6px;
+  padding-left:0;
+  list-style:none;
+}
+.analysis-list li{
+  margin:2px 0;
+  padding-left:12px;
+  position:relative;
+}
+.analysis-list li::before{
+  content:'·';
+  position:absolute;
+  left:2px;
+  color:var(--accent);
+  font-weight:700;
+}
+.analysis-list b{color:var(--accent)}
+
+/* INFO STRUCT DIAGRAM */
+.struct-diag{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 12px;
+  margin:10px 0;
+  font-family:'DM Sans',sans-serif;
+  font-size:.9em;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+.struct-tag{
+  padding:3px 9px;
+  border-radius:999px;
+  font-size:.78em;
+  font-weight:600;
+  border:1px solid;
+}
+.struct-verb{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.struct-nom{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.struct-arrow{color:var(--text3);font-weight:700}
+.struct-text{font-style:italic;color:var(--text2)}
+
+/* PROGRESSION DIAGRAM */
+.prog-diag{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:14px;
+  margin:12px 0;
+  font-size:.9em;
+}
+.prog-diag h4{margin:0 0 8px;color:var(--accent);font-family:'DM Sans',sans-serif;font-size:.85em;text-transform:uppercase;letter-spacing:.05em}
+.prog-row{display:flex;gap:8px;align-items:center;margin:6px 0;flex-wrap:wrap}
+.prog-tema{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:3px 9px;
+  border-radius:6px;
+  font-weight:600;
+  font-size:.85em;
+}
+.prog-rema{
+  background:var(--blue-bg);
+  color:var(--blue);
+  border:1px solid var(--blue);
+  padding:3px 9px;
+  border-radius:6px;
+  font-weight:600;
+  font-size:.85em;
+}
+.prog-arrow{color:var(--text3);font-weight:700;font-size:1.1em}
+.prog-text{color:var(--text2);font-style:italic;font-size:.88em}
+.prog-link{color:var(--red);font-weight:700;font-size:.85em}
+
+/* ANNOTATED TEXT */
+.annotated-text{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-left:4px solid var(--accent);
+  border-radius:var(--radius-sm);
+  padding:14px 16px;
+  margin:12px 0;
+  font-size:1.02em;
+  line-height:1.75;
+  color:var(--text);
+}
+.ann-mark{
+  background:var(--accent-light);
+  color:var(--accent);
+  padding:1px 4px;
+  border-radius:3px;
+  font-weight:600;
+  border-bottom:2px solid var(--accent);
+  cursor:help;
+  position:relative;
+}
+.ann-conn{background:var(--blue-bg);color:var(--blue);border-bottom-color:var(--blue)}
+.ann-pron{background:var(--purple-bg);color:var(--purple);border-bottom-color:var(--purple)}
+.ann-elli{background:var(--green-bg);color:var(--green);border-bottom-color:var(--green);font-style:italic}
+.ann-lex{background:var(--teal-bg);color:var(--teal);border-bottom-color:var(--teal)}
+.ann-sup{font-size:.65em;font-weight:700;vertical-align:super;margin-left:1px}
+
+/* LEGEND */
+.legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:10px 0;
+  font-size:.85em;
+}
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+.legend-swatch{
+  width:14px;
+  height:14px;
+  border-radius:3px;
+  border:1px solid;
+}
+
+/* RESPONSIVE */
+@media (max-width:520px){
+  .site-header{padding:14px 14px 12px}
+  h1{font-size:1.5em}
+  .main-layout{padding:14px}
+  .gram-card-body{padding:14px}
+  .stat-pill{font-size:.72em}
+  .header-top{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="inner">
+    <div class="header-top">
+      <div>
+        <div class="header-title-wrap">
+          <h1>Coesione e Coerenza Testuale</h1>
+          <span class="header-tag">Grammatica</span>
+        </div>
+        <div class="subtitle">Meccanismi formali e unità di significato del testo · C1 · per ispanofoni</div>
+        <div class="stat-bar">
+          <span class="stat-pill">9 sezioni</span>
+          <span class="stat-pill">coesione vs coerenza</span>
+          <span class="stat-pill">anafora · catafora</span>
+          <span class="stat-pill">progressione tematica</span>
+          <span class="stat-pill">coerenza di registro</span>
+          <span class="stat-pill">errori frequenti</span>
+          <span class="stat-pill">testo analizzato</span>
+        </div>
+      </div>
+      <div class="font-ctrl">
+        <span>A-</span>
+        <input type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+        <span>A+</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION NAV -->
+<nav class="section-nav" id="sec-nav">
+  <div class="inner">
+    <button class="snav-btn active" onclick="showSection('s-distinzione',this)">1. Distinzione</button>
+    <button class="snav-btn" onclick="showSection('s-meccanismi',this)">2. Meccanismi</button>
+    <button class="snav-btn" onclick="showSection('s-anafora',this)">3. Anafora</button>
+    <button class="snav-btn" onclick="showSection('s-catafora',this)">4. Catafora</button>
+    <button class="snav-btn" onclick="showSection('s-progressione',this)">5. Progressione</button>
+    <button class="snav-btn" onclick="showSection('s-registro',this)">6. Coerenza registro</button>
+    <button class="snav-btn" onclick="showSection('s-logica',this)">7. Coerenza logica</button>
+    <button class="snav-btn" onclick="showSection('s-errori',this)">8. Errori frequenti</button>
+    <button class="snav-btn" onclick="showSection('s-trappole',this)">9. Trappole ES</button>
+    <button class="snav-btn" onclick="showSection('s-testo',this)">10. Testo analizzato</button>
+  </div>
+</nav>
+
+<main class="main-layout">
+
+<!-- SECCIÓN 1 · DISTINZIONE -->
+<section id="s-distinzione" class="sec-block active">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">1. La distinzione fondamentale: coesione vs. coerenza</h2>
+      <p class="sec-subtitle">Due dimensioni del testo che spesso si confondono</p>
+
+      <div class="def-box">
+        La <b>coesione</b> e la <b>coerenza</b> sono le due qualità che fanno di una successione di frasi un <em>testo</em>, e non un semplice elenco. La <span class="hl">coesione</span> riguarda i mezzi <em>linguistici espliciti</em> che legano formalmente le parti del testo (pronomi, connettivi, anafore, ellissi). La <span class="hl">coerenza</span> riguarda l'<em>unità di significato</em>: la logica interna, la continuità tematica, la non contraddizione. La prima è <b>formale</b>, la seconda è <b>semantica</b>.
+      </div>
+
+      <h3>Come si articolano</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Dimensione</th><th>Natura</th><th>Si manifesta in</th><th>Si valuta osservando</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-pron">COESIONE</td><td>formale, di superficie</td><td>pronomi, connettivi, anafore, ellissi, sostituzioni lessicali</td><td>i legami <em>visibili</em> tra una frase e l'altra</td></tr>
+            <tr><td class="tbl-pron">COERENZA</td><td>semantica, di profondità</td><td>contenuto logico, sviluppo tematico, unità di registro</td><td>se il testo «ha senso» come unità di significato</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Le quattro combinazioni possibili</h3>
+      <p>I due assi sono <span class="hl">indipendenti</span>. Un testo può presentarsi in una delle quattro configurazioni seguenti:</p>
+
+      <div class="example-block">
+        <div class="ex-it"><b>① Coeso e coerente</b> — <em>il testo ben formato</em></div>
+        <div class="ex-es">Ho perso il treno delle 8. <em>Per questo</em> sono arrivato in ritardo alla riunione. <em>I miei colleghi</em>, però, <em>mi</em> hanno aspettato.</div>
+        <div class="ex-note">Connettivi («per questo», «però»), anafora pronominale («mi»), ripresa lessicale («colleghi»). Tutto fluisce.</div>
+      </div>
+
+      <div class="example-block" style="background:var(--purple-bg);border-left-color:var(--purple)">
+        <div class="ex-it"><b>② Coeso ma incoerente</b> — <em>i pezzi sono ben uniti, ma non hanno logica</em></div>
+        <div class="ex-es">Ho perso il treno delle 8. <em>Per questo</em> il sole illumina i tetti. <em>Tuttavia</em> la matematica è una scienza esatta.</div>
+        <div class="ex-note">I connettivi sono perfetti dal punto di vista formale, ma collegano frasi che non hanno alcuna relazione semantica.</div>
+      </div>
+
+      <div class="example-block" style="background:var(--warn-bg);border-left-color:var(--accent)">
+        <div class="ex-it"><b>③ Coerente ma poco coeso</b> — <em>la logica c'è, ma manca il «cemento»</em></div>
+        <div class="ex-es">Marco è andato al mercato. Marco ha comprato la frutta. Marco è tornato a casa. Marco ha preparato la macedonia.</div>
+        <div class="ex-note">Le frasi raccontano una storia coerente, ma la ripetizione di «Marco», l'assenza di pronomi e connettivi rendono il testo telegrafico, infantile.</div>
+      </div>
+
+      <div class="example-block" style="background:var(--red-bg);border-left-color:var(--red)">
+        <div class="ex-it"><b>④ Né coeso né coerente</b> — <em>non è un testo</em></div>
+        <div class="ex-es">Treno otto. Sole tetti. Matematica scienza. Macedonia frutta domani.</div>
+        <div class="ex-note">Nessun legame formale, nessuna logica. È un elenco di parole.</div>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Lezione operativa:</b> un buon redattore lavora sui due piani contemporaneamente. Aggiungere connettivi a un testo logicamente confuso non lo salva (caso ②); avere idee chiare ma non saperle legare produce prosa primitiva (caso ③). Il C1 si raggiunge quando si dominano i due livelli insieme.</div>
+      </div>
+
+      <h3>Una metafora utile</h3>
+      <div class="note-box">
+        Si può pensare alla <b>coerenza</b> come allo scheletro di una casa (la sua logica strutturale, lo spazio organizzato) e alla <b>coesione</b> come ai materiali da costruzione che tengono insieme i mattoni (cemento, viti, chiodi). Senza scheletro coerente, una casa non sta in piedi; senza coesione, i muri crollano anche se il progetto è bello.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 2 · MECCANISMI DI COESIONE -->
+<section id="s-meccanismi" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">2. Meccanismi di coesione — il catalogo completo</h2>
+      <p class="sec-subtitle">I cinque grandi gruppi di strumenti per legare le frasi</p>
+
+      <div class="def-box">
+        I <b>meccanismi di coesione</b> sono i mezzi linguistici espliciti con cui le frasi si agganciano l'una all'altra. La linguistica testuale ne identifica cinque famiglie: <span class="hl">riferimento</span> (pronomi e dimostrativi), <span class="hl">sostituzione</span> (lessicale e verbale), <span class="hl">ellissi</span> (omissione di elementi recuperabili), <span class="hl">connessione</span> (connettivi) e <span class="hl">coesione lessicale</span> (ripetizione, sinonimia, iperonimia). Ogni meccanismo ha un costo informativo diverso e un campo di applicazione preciso.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="showChip('cm-rif',this)">1. Riferimento</button>
+        <button class="chip" onclick="showChip('cm-sos',this)">2. Sostituzione</button>
+        <button class="chip" onclick="showChip('cm-ell',this)">3. Ellissi</button>
+        <button class="chip" onclick="showChip('cm-con',this)">4. Connessione</button>
+        <button class="chip" onclick="showChip('cm-lex',this)">5. Coesione lessicale</button>
+      </div>
+
+      <!-- 1. RIFERIMENTO -->
+      <div id="cm-rif" class="chip-panel active">
+        <h3>1. Riferimento (pronomi e dimostrativi)</h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-inf">neutro</span> Il <b>riferimento</b> è il meccanismo per cui un elemento del testo rimanda a un altro elemento (l'<em>antecedente</em> o il <em>conseguente</em>). Si realizza tipicamente attraverso <span class="hl">pronomi</span>, <span class="hl">dimostrativi</span> e <span class="hl">aggettivi possessivi</span>. È il cemento più frequente dei testi italiani.</p>
+
+        <h4>Riferimento anaforico — verso indietro</h4>
+        <p>L'elemento di riferimento rimanda a un antecedente <em>già menzionato</em>. È la forma più comune.</p>
+        <div class="example-block">
+          <div class="ex-it">Il <em>presidente</em> ha firmato il decreto. <em>Esso</em> entrerà in vigore domani.</div>
+          <div class="ex-es">El presidente firmó el decreto. Este entrará en vigor mañana.</div>
+          <div class="ex-note">«Esso» riprende «il decreto» (non «il presidente»: il contesto disambigua).</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Ho conosciuto <em>Marta</em> a Bologna. <em>L'</em>ho rivista ieri e <em>le</em> ho parlato di te.</div>
+          <div class="ex-es">Conocí a Marta en Bolonia. La vi de nuevo ayer y le hablé de ti.</div>
+          <div class="ex-note">«L'» (oggetto diretto) e «le» (oggetto indiretto) sono entrambi anafore di «Marta».</div>
+        </div>
+
+        <h4>Riferimento cataforico — verso avanti</h4>
+        <p>L'elemento di riferimento <em>anticipa</em> un conseguente che sarà esplicitato in seguito. Frequente nei testi formali e nella prosa giornalistica.</p>
+        <div class="example-block">
+          <div class="ex-it"><em>Quello</em> che non si capisce è <em>questo</em>: perché non ha risposto?</div>
+          <div class="ex-es">Lo que no se entiende es esto: por qué no ha respondido.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it"><em>Ecco</em> la notizia: il governo ha approvato la riforma.</div>
+          <div class="ex-es">Esta es la noticia: el gobierno ha aprobado la reforma.</div>
+        </div>
+
+        <h4>Tipi di pronomi anaforici</h4>
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Categoria</th><th>Forme</th><th>Esempio anaforico</th></tr></thead>
+            <tbody>
+              <tr><td><b>Personali atoni</b></td><td>lo, la, li, le, ne, ci, vi</td><td>Ho visto il film. <em>Lo</em> consiglio.</td></tr>
+              <tr><td><b>Personali tonici</b></td><td>lui, lei, loro, esso/-a/-i/-e</td><td>Carlo è arrivato. Con <em>lui</em> c'era Anna.</td></tr>
+              <tr><td><b>Dimostrativi</b></td><td>questo, quello, ciò, tale, lo stesso</td><td>Ha proposto un piano. <em>Tale</em> piano è ambizioso.</td></tr>
+              <tr><td><b>Relativi</b></td><td>che, cui, il quale</td><td>Il libro <em>che</em> ho letto è di Calvino.</td></tr>
+              <tr><td><b>Possessivi</b></td><td>suo, loro, proprio</td><td>Marta è partita. La <em>sua</em> decisione è definitiva.</td></tr>
+              <tr><td><b>Particelle</b></td><td>ne, ci, vi</td><td>Parliamo di politica. <em>Ne</em> discutiamo spesso.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="warn-box"><span class="ico">⚠️</span><div><b>Ambiguità referenziale:</b> il pronome deve avere un antecedente <em>univoco</em>. Frase tipo: «Marco ha incontrato Luca. <b>Lui</b> era stanco.» — chi era stanco? Marco o Luca? Si risolve con una ripresa lessicale: «<b>L'amico</b> era stanco» o «<b>quest'ultimo</b> era stanco».</div></div>
+      </div>
+
+      <!-- 2. SOSTITUZIONE -->
+      <div id="cm-sos" class="chip-panel">
+        <h3>2. Sostituzione (lessicale e verbale)</h3>
+        <p><span class="tag tag-form">formale</span> A differenza del riferimento (che rimanda con pronome), la <b>sostituzione</b> rimpiazza un elemento con un'<em>altra parola lessicale</em>: sinonimo, iperonimo, parafrasi, o un verbo sostitutivo. È un meccanismo essenziale per evitare la ripetizione e arricchire il testo.</p>
+
+        <h4>Sostituzione lessicale (sinonimi, iperonimi, parafrasi)</h4>
+        <div class="example-block">
+          <div class="ex-it">La <em>decisione</em> è stata presa all'unanimità. La <em>scelta</em> ha sorpreso tutti.</div>
+          <div class="ex-es">La decisión fue tomada por unanimidad. La elección sorprendió a todos.</div>
+          <div class="ex-note">«Scelta» è quasi sinonimo di «decisione»: rimanda allo stesso evento ma evita la ripetizione.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Il <em>cane</em> abbaiava furiosamente. La <em>bestia</em> sembrava impazzita.</div>
+          <div class="ex-es">El perro ladraba furiosamente. La bestia parecía haber enloquecido.</div>
+          <div class="ex-note">«Bestia» è iperonimo di «cane»: rimanda alla stessa entità con una categoria più ampia.</div>
+        </div>
+
+        <h4>Verbo sostitutivo (farlo, fare lo stesso)</h4>
+        <p>L'italiano dispone di sostituti verbali che evitano la ripetizione del verbo principale.</p>
+        <div class="example-block">
+          <div class="ex-it">Marco è partito per Roma. Anche Lucia <em>ha fatto lo stesso</em>.</div>
+          <div class="ex-es">Marco se fue a Roma. Lucía hizo lo mismo.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Devi studiare di più. <em>Farlo</em> ti aiuterà a passare l'esame.</div>
+          <div class="ex-es">Tienes que estudiar más. Hacerlo te ayudará a aprobar el examen.</div>
+        </div>
+        <div class="example-block">
+          <div class="ex-it">Lucia non vuole partire. Suo fratello <em>nemmeno</em>.</div>
+          <div class="ex-es">Lucía no quiere irse. Su hermano tampoco.</div>
+          <div class="ex-note">«Nemmeno» implica la ripetizione del verbo «vuole partire» evitandola.</div>
+        </div>
+
+        <div class="note-box"><b>Distinzione fine:</b> il riferimento usa <em>pronomi</em> (Lo so); la sostituzione usa <em>parole lessicali piene</em> (la decisione → la scelta) o <em>sostituti grammaticali specializzati</em> (farlo, lo stesso). I due meccanismi si combinano costantemente nel testo reale.</div>
+      </div>
+
+      <!-- 3. ELLISSI -->
+      <div id="cm-ell" class="chip-panel">
+        <h3>3. Ellissi (omissione)</h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-inf">neutro</span> L'<b>ellissi</b> consiste nell'<em>omettere</em> un elemento che il lettore può recuperare dal contesto. È un meccanismo di coesione perché crea legame: per capire la frase incompleta bisogna risalire all'antecedente. È la forma più economica di coesione.</p>
+
+        <h4>Ellissi del soggetto (la più frequente in italiano)</h4>
+        <div class="example-block">
+          <div class="ex-it"><em>Marco</em> studia italiano e [Marco] impara anche il francese.</div>
+          <div class="ex-es">Marco estudia italiano y aprende también el francés.</div>
+          <div class="ex-note">Il soggetto della seconda frase è omesso: la desinenza verbale («impara») lo recupera.</div>
+        </div>
+
+        <h4>Ellissi dell'oggetto / di sintagma nominale</h4>
+        <div class="example-block">
+          <div class="ex-it">Vuoi un caffè o [vuoi] un tè?</div>
+          <div class="ex-es">¿Quieres un café o un té?</div>
+        </div>
+
+        <h4>Ellissi del verbo</h4>
+        <div class="example-block">
+          <div class="ex-it">Marco ha letto tre libri, Lucia [ha letto] cinque.</div>
+          <div class="ex-es">Marco leyó tres libros, Lucía cinco.</div>
+        </div>
+
+        <h4>Ellissi di proposizione intera</h4>
+        <div class="example-block">
+          <div class="ex-it">— Vieni alla festa? — Certo [vengo alla festa]!</div>
+          <div class="ex-es">— ¿Vienes a la fiesta? — ¡Claro!</div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Tipo</th><th>Cosa si omette</th><th>Esempio</th></tr></thead>
+            <tbody>
+              <tr><td><b>Nominale</b></td><td>un sintagma nominale</td><td>Mangio una mela rossa, tu [mangi] una [mela] verde.</td></tr>
+              <tr><td><b>Verbale</b></td><td>il verbo</td><td>Io leggo molto, lui [legge] poco.</td></tr>
+              <tr><td><b>Proposizionale</b></td><td>tutta una proposizione</td><td>Pensi che pioverà? Credo di sì [che pioverà].</td></tr>
+              <tr><td><b>Del soggetto</b></td><td>il pronome soggetto</td><td>[Io] sono stanco e [io] vado a dormire.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="warn-box"><span class="ico">⚠️</span><div><b>Limite dell'ellissi:</b> se l'elemento omesso non è univocamente recuperabile, l'ellissi genera <em>ambiguità</em>. Esempio: «Marco ha visto Luca e ha sorriso» — chi ha sorriso? Bisogna o esplicitare il soggetto («Marco ha sorriso») o usare un pronome enfatico.</div></div>
+      </div>
+
+      <!-- 4. CONNESSIONE -->
+      <div id="cm-con" class="chip-panel">
+        <h3>4. Connessione (connettivi)</h3>
+        <p><span class="tag tag-form">formale</span> <span class="tag tag-bur">burocratico</span> I <b>connettivi</b> sono le parole o locuzioni che esplicitano il <em>tipo</em> di rapporto logico fra due frasi. Sono il cuore della coesione esplicita. Si veda la scheda 36 sui <b>connettivi</b> per il repertorio completo; qui ne ricordiamo le sei grandi funzioni.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Funzione</th><th>Connettivi tipici</th><th>Esempio</th></tr></thead>
+            <tbody>
+              <tr><td class="tbl-pron">Aggiuntivi</td><td>inoltre, in più, oltre a ciò, peraltro</td><td>Ha rifiutato l'offerta. <em>Inoltre</em>, ha chiesto le sue dimissioni.</td></tr>
+              <tr><td class="tbl-pron">Avversativi</td><td>tuttavia, però, ciò nonostante, eppure, d'altra parte</td><td>Sembrava facile. <em>Tuttavia</em>, ci sono volute ore.</td></tr>
+              <tr><td class="tbl-pron">Causali</td><td>poiché, dato che, infatti, in quanto, visto che</td><td>Non è venuto, <em>poiché</em> era ammalato.</td></tr>
+              <tr><td class="tbl-pron">Consecutivi</td><td>quindi, pertanto, di conseguenza, perciò, cosicché</td><td>Pioveva. <em>Di conseguenza</em>, abbiamo annullato la gita.</td></tr>
+              <tr><td class="tbl-pron">Concessivi</td><td>sebbene, benché, malgrado, nonostante, anche se</td><td><em>Sebbene</em> fosse stanco, ha continuato a lavorare.</td></tr>
+              <tr><td class="tbl-pron">Riformulativi</td><td>cioè, ossia, in altre parole, vale a dire, in altri termini</td><td>L'azienda è in crisi, <em>cioè</em> rischia il fallimento.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-box"><b>Connettivi e ordine logico:</b> i connettivi non solo legano, ma <em>indirizzano</em> l'interpretazione. «Marco ha studiato, <em>quindi</em> ha superato l'esame» esprime una causa; «Marco ha studiato, <em>tuttavia</em> ha superato l'esame» è quasi un controsenso (presuppone che studiare doveva impedire di passare). Scegliere il connettivo sbagliato compromette la coerenza logica.</div>
+      </div>
+
+      <!-- 5. COESIONE LESSICALE -->
+      <div id="cm-lex" class="chip-panel">
+        <h3>5. Coesione lessicale</h3>
+        <p><span class="tag tag-form">formale</span> La <b>coesione lessicale</b> consiste nell'uso ripetuto di parole, sinonimi, iperonimi o termini dello stesso campo semantico per mantenere la continuità tematica. È meno meccanica del riferimento ma fondamentale per la fluidità del testo C1.</p>
+
+        <h4>Tipi</h4>
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Tipo</th><th>Cosa è</th><th>Esempio</th></tr></thead>
+            <tbody>
+              <tr><td><b>Ripetizione</b></td><td>stessa parola ripetuta</td><td>Il <em>presidente</em> ha parlato. Il <em>presidente</em> ha confermato la riforma.</td></tr>
+              <tr><td><b>Sinonimia</b></td><td>parole di significato simile</td><td>Il <em>medico</em> mi ha visitato. Il <em>dottore</em> mi ha rassicurato.</td></tr>
+              <tr><td><b>Iperonimia</b></td><td>parola più generale</td><td>Ho comprato <em>rose</em> e <em>tulipani</em>. I <em>fiori</em> erano per Anna.</td></tr>
+              <tr><td><b>Iponimia</b></td><td>parola più specifica</td><td>Adoro la <em>frutta</em>. Le <em>mele</em> sono le mie preferite.</td></tr>
+              <tr><td><b>Antonimia</b></td><td>parole di significato opposto</td><td>Aveva mostrato <em>coraggio</em>; la sua <em>codardia</em> arrivò solo dopo.</td></tr>
+              <tr><td><b>Co-iponimia</b></td><td>parole della stessa categoria</td><td>Tavolo, sedia, armadio: i <em>mobili</em> erano antichi.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="warn-box"><span class="ico">🎯</span><div><b>Variatio anaforica:</b> nell'italiano scritto colto è considerato un <span class="hl">pregio</span> variare le riprese lessicali (cane → animale → bestia → quadrupede). La ripetizione meccanica è giudicata debole stilisticamente. È un punto in cui l'italiano è più esigente dello spagnolo.</div></div>
+
+        <div class="example-block">
+          <div class="ex-it">Il <em>romanzo</em> è uscito ieri. L'<em>opera</em> di Calvino è già un caso editoriale. Il <em>libro</em>, in pochi giorni, ha venduto 50.000 copie.</div>
+          <div class="ex-es">La novela salió ayer. La obra de Calvino es ya un caso editorial. El libro, en pocos días, ha vendido 50.000 copias.</div>
+          <div class="ex-note">Tre riprese lessicali (<em>romanzo → opera → libro</em>) della stessa entità: variatio.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 3 · ANAFORA -->
+<section id="s-anafora" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">3. Anafora — tipologia completa</h2>
+      <p class="sec-subtitle">Le cinque modalità in cui un testo «guarda indietro»</p>
+
+      <div class="def-box">
+        L'<b>anafora</b> (dal greco <em>ana-phorá</em>, «riportare indietro») è il meccanismo per cui un elemento del testo <span class="hl">rimanda a un antecedente già menzionato</span>. È la spina dorsale della coesione: ogni testo ben costruito è una rete di anafore. L'italiano dispone di cinque modalità principali, dalla più «leggera» (pronome) alla più «pesante» (nominalizzazione). Ogni modalità ha un costo informativo e un effetto stilistico diverso.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="showChip('an-pron',this)">a) Pronominale</button>
+        <button class="chip" onclick="showChip('an-sin',this)">b) Sinonimo</button>
+        <button class="chip" onclick="showChip('an-ipe',this)">c) Iperonimo</button>
+        <button class="chip" onclick="showChip('an-dim',this)">d) Dimostrativo</button>
+        <button class="chip" onclick="showChip('an-nom',this)">e) Nominalizzazione</button>
+      </div>
+
+      <!-- a) PRONOMINALE -->
+      <div id="an-pron" class="chip-panel active">
+        <h3>a) Anafora pronominale</h3>
+        <p>L'antecedente viene ripreso da un <span class="hl">pronome</span> (personale, possessivo, relativo, riflessivo). È il tipo più frequente e «leggero»: il pronome non aggiunge informazione nuova, marca solo la continuità.</p>
+
+        <div class="example-block">
+          <div class="ex-it">Ho visto <em>Paolo</em> al cinema. Non mi sembrava <em>lui</em>: aveva un'aria stanca, quasi spettrale.</div>
+          <div class="ex-es">Vi a Paolo en el cine. No parecía él: tenía un aspecto cansado, casi espectral.</div>
+          <div class="ex-note">«lui» riprende «Paolo» tonicamente.</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Il <em>direttore</em> ha convocato la riunione. <em>Egli</em> ha esposto i risultati e <em>li</em> ha commentati.</div>
+          <div class="ex-es">El director convocó la reunión. Expuso los resultados y los comentó.</div>
+          <div class="ex-note">Doppia anafora: «egli» (soggetto) e «li» (oggetto: i risultati).</div>
+        </div>
+
+        <div class="note-box"><b>Forme dell'anafora pronominale:</b> personali atoni (lo/la/li/le/ne/ci), tonici (lui/lei/loro), egli/esso/essa (letterari), possessivi (suo/loro), riflessivi (sé/si).</div>
+      </div>
+
+      <!-- b) SINONIMO -->
+      <div id="an-sin" class="chip-panel">
+        <h3>b) Anafora lessicale per sinonimo</h3>
+        <p>L'antecedente viene ripreso da un <span class="hl">sinonimo</span> o quasi-sinonimo. Aggiunge un piccolo carico informativo (la prospettiva cambia leggermente) ed è tipica della prosa letteraria e giornalistica.</p>
+
+        <div class="example-block">
+          <div class="ex-it">Il <em>bambino</em> piangeva inconsolabile. Il <em>piccolo</em> non si calmava nonostante le carezze della madre.</div>
+          <div class="ex-es">El niño lloraba inconsolable. El pequeño no se calmaba a pesar de las caricias de la madre.</div>
+          <div class="ex-note">«Piccolo» è sinonimo affettivo di «bambino».</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Il <em>romanzo</em> di Ferrante ha conquistato il pubblico. L'<em>opera</em> è stata tradotta in trenta lingue.</div>
+          <div class="ex-es">La novela de Ferrante conquistó al público. La obra ha sido traducida a treinta idiomas.</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">L'<em>auto</em> di lusso era parcheggiata davanti al palazzo. La <em>vettura</em> apparteneva al presidente.</div>
+          <div class="ex-es">El auto de lujo estaba aparcado frente al palacio. El vehículo pertenecía al presidente.</div>
+        </div>
+
+        <div class="warn-box"><span class="ico">🎯</span><div><b>Stile italiano formale:</b> l'uso sapiente di sinonimi è considerato un segno di padronanza stilistica. In un testo C1 si alternano: <em>il provvedimento → la misura → la decisione → l'atto normativo</em>; <em>l'incidente → l'episodio → l'accaduto → il fatto</em>.</div></div>
+      </div>
+
+      <!-- c) IPERONIMO -->
+      <div id="an-ipe" class="chip-panel">
+        <h3>c) Anafora con iperonimo</h3>
+        <p>L'antecedente viene ripreso da un <span class="hl">termine più generale</span>. Tipica della ripresa di un elenco con una parola che lo riassume.</p>
+
+        <div class="example-block">
+          <div class="ex-it">Ho comprato <em>rose, garofani e gigli</em>. I <em>fiori</em> erano meravigliosi.</div>
+          <div class="ex-es">Compré rosas, claveles y lirios. Las flores eran maravillosas.</div>
+          <div class="ex-note">«Fiori» è l'iperonimo che riassume l'elenco.</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Aveva con sé <em>una chiave, un coltello e un orologio</em>. Gli <em>oggetti</em> furono catalogati dalla polizia.</div>
+          <div class="ex-es">Llevaba consigo una llave, un cuchillo y un reloj. Los objetos fueron catalogados por la policía.</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Berlino, Parigi, Roma, Madrid: queste <em>capitali europee</em> hanno firmato l'accordo.</div>
+          <div class="ex-es">Berlín, París, Roma, Madrid: estas capitales europeas firmaron el acuerdo.</div>
+        </div>
+
+        <div class="note-box"><b>Funzione cognitiva:</b> l'iperonimo classifica, raggruppa, semplifica. È particolarmente utile dopo un elenco lungo o dopo l'introduzione di una categoria nuova.</div>
+      </div>
+
+      <!-- d) DIMOSTRATIVO -->
+      <div id="an-dim" class="chip-panel">
+        <h3>d) Anafora con dimostrativo</h3>
+        <p>L'antecedente viene ripreso da un <span class="hl">dimostrativo</span> (questo, quello, tale, ciò, lo stesso). Marca una distanza referenziale: <em>questo</em> indica vicinanza al discorso appena pronunciato; <em>quello</em>, distanza maggiore.</p>
+
+        <div class="example-block">
+          <div class="ex-it">Il professore ha proposto una <em>soluzione</em> innovativa. <em>Questa</em> mi ha convinto immediatamente.</div>
+          <div class="ex-es">El profesor propuso una solución innovadora. Esta me convenció inmediatamente.</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Il governo ha approvato una <em>riforma</em> impopolare. <em>Tale</em> provvedimento ha suscitato proteste.</div>
+          <div class="ex-es">El gobierno aprobó una reforma impopular. Tal medida suscitó protestas.</div>
+          <div class="ex-note">«Tale» è dimostrativo formale: rimanda con un sostantivo di accompagnamento («provvedimento»). Tipico del registro burocratico-giornalistico.</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Marco ha detto che sarebbe arrivato presto. <em>Ciò</em> non è accaduto.</div>
+          <div class="ex-es">Marco dijo que llegaría pronto. Esto no ocurrió.</div>
+          <div class="ex-note">«Ciò» riprende l'intera proposizione precedente, non un solo elemento.</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Lucia ha vinto il premio. <em>Lo stesso</em> risultato lo ha ottenuto suo fratello.</div>
+          <div class="ex-es">Lucía ganó el premio. El mismo resultado lo obtuvo su hermano.</div>
+        </div>
+
+        <div class="warn-box"><span class="ico">⚠️</span><div><b>«Ciò» è cruciale per ispanofoni:</b> in spagnolo si usa «esto/eso» per riprendere proposizioni intere; in italiano è spesso preferibile <b>ciò</b>, soprattutto al registro formale. «Esto no ha sucedido» → «<em>Ciò</em> non è accaduto».</div></div>
+      </div>
+
+      <!-- e) NOMINALIZZAZIONE -->
+      <div id="an-nom" class="chip-panel">
+        <h3>e) Anafora con nominale deverbale (nominalizzazione)</h3>
+        <p>Un'azione espressa con un verbo viene ripresa con il <span class="hl">sostantivo derivato</span> (nominalizzazione). È un meccanismo di altissimo registro, fondamentale nei testi giornalistici e burocratici. Vedi anche la scheda <em>Nominalizzazione</em>.</p>
+
+        <div class="example-block">
+          <div class="ex-it">Il consiglio ha <em>deciso</em> di sospendere le trattative. La <em>decisione</em> ha sorpreso tutti.</div>
+          <div class="ex-es">El consejo decidió suspender las negociaciones. La decisión sorprendió a todos.</div>
+          <div class="ex-note">Verbo «decidere» → sostantivo «decisione». L'anafora qui non ripete il verbo: lo trasforma in nome e così introduce nuova predicazione su di esso.</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Il governo ha <em>approvato</em> la legge. L'<em>approvazione</em> avviene dopo tre mesi di dibattito.</div>
+          <div class="ex-es">El gobierno aprobó la ley. La aprobación ocurre tras tres meses de debate.</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Gli operai hanno <em>scioperato</em> per due settimane. Lo <em>sciopero</em> ha paralizzato la produzione.</div>
+          <div class="ex-es">Los obreros estuvieron en huelga durante dos semanas. La huelga paralizó la producción.</div>
+        </div>
+
+        <div class="note-box"><b>Vantaggio comunicativo:</b> la nominalizzazione permette di <span class="hl">predicare sull'evento</span> (la decisione è impopolare, l'approvazione è stata rapida, lo sciopero è durato). Senza nominalizzazione si dovrebbe ricorrere a perifrasi pesanti.</div>
+
+        <h4>Cinque modalità a confronto: stesso antecedente</h4>
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Tipo</th><th>Frase di ripresa</th><th>Effetto</th></tr></thead>
+            <tbody>
+              <tr><td>Pronominale</td><td><em>L'</em>ho letto ieri.</td><td>continuità leggera, neutra</td></tr>
+              <tr><td>Sinonimo</td><td>L'<em>opera</em> è notevole.</td><td>variatio, colore stilistico</td></tr>
+              <tr><td>Iperonimo</td><td>Il <em>testo</em> mi è piaciuto.</td><td>classificazione</td></tr>
+              <tr><td>Dimostrativo</td><td><em>Tale romanzo</em> ha avuto successo.</td><td>distanza referenziale, formale</td></tr>
+              <tr><td>Nominalizzazione</td><td>La <em>pubblicazione</em> è stata un evento.</td><td>predicare sull'evento</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="dim" style="font-size:.88em;font-style:italic">Antecedente: «<em>Ho letto un romanzo di Calvino.</em>»</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 4 · CATAFORA -->
+<section id="s-catafora" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">4. Catafora — l'anticipazione</h2>
+      <p class="sec-subtitle">Quando l'elemento referenziale precede il referente</p>
+
+      <div class="def-box">
+        La <b>catafora</b> (dal greco <em>kata-phorá</em>, «portare giù/in avanti») è il meccanismo inverso dell'anafora: un elemento del testo <span class="hl">rimanda a un referente che sarà esplicitato dopo</span>. È meno frequente dell'anafora ma stilisticamente più marcata: crea attesa, suspense, enfasi. È tipica della prosa giornalistica, narrativa e degli incipit.
+      </div>
+
+      <h3>Forme tipiche della catafora</h3>
+
+      <h4>Con «ecco»</h4>
+      <div class="example-block">
+        <div class="ex-it"><em>Ecco</em> il problema: nessuno vuole assumersi la responsabilità della decisione.</div>
+        <div class="ex-es">Aquí está el problema: nadie quiere asumir la responsabilidad de la decisión.</div>
+        <div class="ex-note">«il problema» è cataforico: viene esplicitato solo dopo i due punti.</div>
+      </div>
+
+      <h4>Con dimostrativi anticipatori</h4>
+      <div class="example-block">
+        <div class="ex-it"><em>Questo</em> è il punto centrale: il bilancio non torna.</div>
+        <div class="ex-es">Este es el punto central: el balance no cuadra.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it">Voglio dirti <em>una sola cosa</em>: non tornerò mai più in quella città.</div>
+        <div class="ex-es">Quiero decirte una sola cosa: no volveré jamás a esa ciudad.</div>
+      </div>
+
+      <h4>Con relative anticipatorie</h4>
+      <div class="example-block">
+        <div class="ex-it"><em>Quanto segue</em> chiarirà la situazione: l'azienda chiuderà entro tre mesi.</div>
+        <div class="ex-es">Lo que sigue aclarará la situación: la empresa cerrará en tres meses.</div>
+      </div>
+      <div class="example-block">
+        <div class="ex-it"><em>Ciò che mi preoccupa</em> è una sola cosa: la salute di mia madre.</div>
+        <div class="ex-es">Lo que me preocupa es una sola cosa: la salud de mi madre.</div>
+      </div>
+
+      <h4>Catafora pronominale</h4>
+      <div class="example-block">
+        <div class="ex-it">Prima di partire, <em>lo</em> avvisò: <em>Marco</em> non sapeva ancora nulla.</div>
+        <div class="ex-es">Antes de irse, le avisó: Marco aún no sabía nada.</div>
+        <div class="ex-note">«lo» rimanda a «Marco», che viene nominato dopo.</div>
+      </div>
+
+      <h3>Funzioni discorsive della catafora</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Funzione</th><th>Effetto</th><th>Tipico di</th></tr></thead>
+          <tbody>
+            <tr><td>Crear suspense</td><td>tiene il lettore in attesa</td><td>romanzo, racconto, cronaca</td></tr>
+            <tr><td>Annunciare un argomento</td><td>presenta ciò che sta per essere trattato</td><td>saggio, articolo, prefazione</td></tr>
+            <tr><td>Enfatizzare</td><td>mette in primo piano il referente</td><td>discorso retorico, manifesto</td></tr>
+            <tr><td>Strutturare</td><td>articola il testo in unità</td><td>relazione, tesi, esposizione</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><b>Apertura di articolo:</b> <em>È</em> in arrivo: la grande riforma del sistema fiscale.</div>
+        <div class="ex-es">Está en camino: la gran reforma del sistema fiscal.</div>
+        <div class="ex-note">La catafora dell'incipit costringe il lettore ad avanzare per capire di cosa si parla. Strategia molto usata in giornalismo.</div>
+      </div>
+
+      <div class="warn-box"><span class="ico">🎯</span><div><b>Per ispanofoni:</b> la catafora esiste anche in spagnolo, ma è meno tematizzata nella didattica. Riconoscerla in italiano (e usarla) è un marchio di registro alto. La struttura «<em>quanto segue / ciò che / questo è</em>» seguita da due punti è un'arma stilistica essenziale al C1.</div></div>
+
+      <h3>Anafora vs. catafora — tabella di confronto</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Caratteristica</th><th>Anafora</th><th>Catafora</th></tr></thead>
+          <tbody>
+            <tr><td>Direzione</td><td>← indietro</td><td>→ in avanti</td></tr>
+            <tr><td>Frequenza</td><td>altissima</td><td>limitata, marcata</td></tr>
+            <tr><td>Registro</td><td>neutro / tutti i registri</td><td>tendenzialmente alto / formale</td></tr>
+            <tr><td>Funzione</td><td>continuità tematica</td><td>attesa, enfasi, struttura</td></tr>
+            <tr><td>Posizione tipica</td><td>seconda menzione</td><td>introduzione, incipit, transizione</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 5 · PROGRESSIONE TEMATICA -->
+<section id="s-progressione" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">5. Progressione tematica</h2>
+      <p class="sec-subtitle">Come l'informazione si distribuisce e avanza nel testo</p>
+
+      <div class="def-box">
+        La <b>progressione tematica</b> descrive il modo in cui le frasi di un testo distribuiscono l'informazione lungo l'asse <span class="hl">tema</span> (ciò di cui si parla, l'informazione data) e <span class="hl">rema</span> (l'informazione nuova che si dice del tema). La scelta della progressione determina la <em>fluidità</em> e la <em>chiarezza</em> del testo. Si distinguono tre tipi fondamentali. Vedi anche la scheda 48 sul testo espositivo.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="showChip('pr-lin',this)">Lineare</button>
+        <button class="chip" onclick="showChip('pr-cos',this)">A tema costante</button>
+        <button class="chip" onclick="showChip('pr-der',this)">A temi derivati</button>
+      </div>
+
+      <!-- LINEARE -->
+      <div id="pr-lin" class="chip-panel active">
+        <h3>Progressione lineare</h3>
+        <p>Il <span class="hl">rema della frase precedente diventa il tema della successiva</span>. È la progressione più dinamica: l'informazione avanza «a catena», ogni frase parte da dove la precedente si è chiusa.</p>
+
+        <div class="prog-diag">
+          <h4>Schema</h4>
+          <div class="prog-row">
+            <span class="prog-tema">T₁</span> <span class="prog-arrow">→</span> <span class="prog-rema">R₁</span>
+          </div>
+          <div class="prog-row">
+            <span class="prog-link">↓</span>
+          </div>
+          <div class="prog-row">
+            <span class="prog-tema">T₂ (=R₁)</span> <span class="prog-arrow">→</span> <span class="prog-rema">R₂</span>
+          </div>
+          <div class="prog-row">
+            <span class="prog-link">↓</span>
+          </div>
+          <div class="prog-row">
+            <span class="prog-tema">T₃ (=R₂)</span> <span class="prog-arrow">→</span> <span class="prog-rema">R₃</span>
+          </div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it"><b>T₁</b> Il <em>governo</em> ha approvato <b>R₁</b> <em>una nuova riforma</em>. <b>T₂</b> <em>La riforma</em> introduce <b>R₂</b> <em>diverse misure fiscali</em>. <b>T₃</b> <em>Tali misure</em> entreranno in vigore <b>R₃</b> <em>dal prossimo anno</em>.</div>
+          <div class="ex-es">El gobierno aprobó una nueva reforma. La reforma introduce diversas medidas fiscales. Tales medidas entrarán en vigor desde el próximo año.</div>
+          <div class="ex-note">Ogni rema (riforma → misure → entrata in vigore) diventa il tema della frase seguente.</div>
+        </div>
+
+        <div class="note-box"><b>Quando usarla:</b> spiegazioni, narrazioni causali, ragionamenti deduttivi. Permette di avanzare rapidamente nell'informazione nuova.</div>
+      </div>
+
+      <!-- A TEMA COSTANTE -->
+      <div id="pr-cos" class="chip-panel">
+        <h3>Progressione a tema costante</h3>
+        <p>La stessa entità è <span class="hl">tema in più frasi consecutive</span>: si accumulano predicazioni diverse sullo stesso elemento. È la progressione tipica del ritratto, della descrizione di una persona o di un'entità.</p>
+
+        <div class="prog-diag">
+          <h4>Schema</h4>
+          <div class="prog-row">
+            <span class="prog-tema">T</span> <span class="prog-arrow">→</span> <span class="prog-rema">R₁</span>
+          </div>
+          <div class="prog-row">
+            <span class="prog-tema">T</span> <span class="prog-arrow">→</span> <span class="prog-rema">R₂</span>
+          </div>
+          <div class="prog-row">
+            <span class="prog-tema">T</span> <span class="prog-arrow">→</span> <span class="prog-rema">R₃</span>
+          </div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it"><b>T</b> <em>Calvino</em> nacque a Cuba nel 1923. <b>T</b> <em>Calvino / Egli</em> visse l'esperienza partigiana. <b>T</b> <em>Lo scrittore</em> pubblicò <em>Il sentiero dei nidi di ragno</em> nel 1947. <b>T</b> <em>Calvino</em> morì a Siena nel 1985.</div>
+          <div class="ex-es">Calvino nació en Cuba en 1923. Vivió la experiencia partisana. El escritor publicó El sendero de los nidos de araña en 1947. Calvino murió en Siena en 1985.</div>
+          <div class="ex-note">Lo stesso tema (Calvino) attraversa il testo; ogni frase aggiunge un rema nuovo. La variatio anaforica (Calvino → Egli → Lo scrittore → Calvino) evita la ripetizione monotona.</div>
+        </div>
+
+        <div class="note-box"><b>Quando usarla:</b> biografie, descrizioni di persone, ritratti, monografie. Concentra l'attenzione su un'entità privilegiata.</div>
+      </div>
+
+      <!-- A TEMI DERIVATI -->
+      <div id="pr-der" class="chip-panel">
+        <h3>Progressione a temi derivati</h3>
+        <p>Un tema generale (<em>iper-tema</em>) si articola in <span class="hl">sotto-temi derivati</span>, ciascuno sviluppato a turno. È la progressione tipica dei testi espositivi e descrittivi articolati.</p>
+
+        <div class="prog-diag">
+          <h4>Schema</h4>
+          <div class="prog-row">
+            <span class="prog-tema">T (iper-tema)</span>
+          </div>
+          <div class="prog-row">
+            <span class="prog-link">↙ &nbsp; ↓ &nbsp; ↘</span>
+          </div>
+          <div class="prog-row">
+            <span class="prog-tema">T₁</span> <span class="prog-arrow">→</span> <span class="prog-rema">R₁</span>
+            <span class="prog-tema" style="margin-left:10px">T₂</span> <span class="prog-arrow">→</span> <span class="prog-rema">R₂</span>
+            <span class="prog-tema" style="margin-left:10px">T₃</span> <span class="prog-arrow">→</span> <span class="prog-rema">R₃</span>
+          </div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it"><b>T</b> L'<em>Italia</em> presenta una grande varietà geografica. <b>T₁</b> Le <em>Alpi</em> dominano il nord. <b>T₂</b> Gli <em>Appennini</em> percorrono la penisola da nord a sud. <b>T₃</b> Le <em>coste</em>, soprattutto al sud, offrono paesaggi mediterranei. <b>T₄</b> Le <em>isole maggiori</em>, Sicilia e Sardegna, completano il quadro.</div>
+          <div class="ex-es">Italia presenta una gran variedad geográfica. Los Alpes dominan el norte. Los Apeninos recorren la península de norte a sur. Las costas, sobre todo al sur, ofrecen paisajes mediterráneos. Las islas mayores, Sicilia y Cerdeña, completan el cuadro.</div>
+          <div class="ex-note">L'iper-tema «Italia» si articola in quattro sotto-temi (Alpi, Appennini, coste, isole), ciascuno con un proprio rema.</div>
+        </div>
+
+        <div class="note-box"><b>Quando usarla:</b> testi espositivi, descrizioni articolate, capitoli di saggio. Conferisce ordine e gerarchia.</div>
+      </div>
+
+      <h3>Le tre progressioni a confronto</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Tipo</th><th>Caratteristica</th><th>Tipico di</th><th>Effetto</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-pron">Lineare</td><td>R diventa T</td><td>narrazione, deduzione</td><td>dinamismo</td></tr>
+            <tr><td class="tbl-pron">A tema costante</td><td>stesso T</td><td>biografia, ritratto</td><td>concentrazione</td></tr>
+            <tr><td class="tbl-pron">A temi derivati</td><td>iper-T → sotto-T</td><td>esposizione, descrizione</td><td>articolazione</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box"><span class="ico">🎯</span><div><b>Testi reali:</b> raramente un testo segue un unico tipo di progressione. La prosa C1 alterna i tre modelli in base alle esigenze: lineare per spiegare, costante per descrivere, derivata per articolare. Riconoscere il tipo dominante in un paragrafo è un esercizio di analisi essenziale.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 6 · COERENZA DI REGISTRO -->
+<section id="s-registro" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">6. Coerenza di registro</h2>
+      <p class="sec-subtitle">Il testo deve mantenere lo stesso livello stilistico dall'inizio alla fine</p>
+
+      <div class="def-box">
+        Un testo è <b>coerente nel registro</b> se mantiene lo stesso <em>livello stilistico</em> lungo tutto il suo sviluppo. Cambiare registro senza ragione comunicativa esplicita produce un effetto di <span class="hl">incoerenza stilistica</span>: il lettore percepisce una rottura. La coerenza di registro è uno dei criteri di valutazione più rigorosi al C1, perché distingue chi scrive «in italiano» da chi assembla pezzi di italiani diversi.
+      </div>
+
+      <h3>I tre fattori da controllare</h3>
+
+      <h4>1. Lessico</h4>
+      <p>Il lessico colto, formale, tecnico non si mescola al lessico colloquiale o gergale, salvo intenzione precisa (ironia, parodia, citazione).</p>
+      <div class="example-block" style="background:var(--red-bg);border-left-color:var(--red)">
+        <div class="ex-it"><b>✗ Incoerente:</b> Il Consiglio dei Ministri ha deliberato in merito alla riforma, ma <em>il capo</em> non era <em>per niente convinto</em>.</div>
+        <div class="ex-note">«Deliberato in merito» è burocratico; «il capo non era per niente convinto» è colloquiale. Stridente.</div>
+      </div>
+      <div class="example-block" style="background:var(--green-bg);border-left-color:var(--green)">
+        <div class="ex-it"><b>✓ Coerente:</b> Il Consiglio dei Ministri ha deliberato in merito alla riforma, ma <em>il presidente</em> non era <em>pienamente convinto</em>.</div>
+      </div>
+
+      <h4>2. Forme di indirizzo</h4>
+      <p>Non si alternano <em>tu</em> e <em>Lei</em> senza motivo, né <em>voi</em> formale e informale.</p>
+      <div class="example-block" style="background:var(--red-bg);border-left-color:var(--red)">
+        <div class="ex-it"><b>✗ Incoerente:</b> Gentile cliente, <em>Le</em> ricordiamo che <em>Lei</em> ha un appuntamento. <em>Ti</em> aspettiamo in sede.</div>
+      </div>
+      <div class="example-block" style="background:var(--green-bg);border-left-color:var(--green)">
+        <div class="ex-it"><b>✓ Coerente:</b> Gentile cliente, <em>Le</em> ricordiamo che <em>Lei</em> ha un appuntamento. <em>La</em> aspettiamo in sede.</div>
+      </div>
+
+      <h4>3. Grado di nominalizzazione</h4>
+      <p>Un testo formale usa molte nominalizzazioni (l'<em>approvazione</em> della legge è avvenuta); un testo medio usa il verbo (la legge <em>è stata approvata</em>). Alternare senza criterio frantuma l'omogeneità.</p>
+      <div class="example-block" style="background:var(--red-bg);border-left-color:var(--red)">
+        <div class="ex-it"><b>✗ Incoerente:</b> L'<em>approvazione</em> della normativa <em>è stata espletata</em> dal Parlamento; <em>poi</em>, ecco, <em>si è messo</em> a discutere il bilancio.</div>
+      </div>
+      <div class="example-block" style="background:var(--green-bg);border-left-color:var(--green)">
+        <div class="ex-it"><b>✓ Coerente:</b> L'<em>approvazione</em> della normativa <em>è stata espletata</em> dal Parlamento; <em>successivamente</em>, <em>si è proceduto</em> alla discussione del bilancio.</div>
+      </div>
+
+      <h3>I tre grandi registri</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Registro</th><th>Lessico</th><th>Sintassi</th><th>Pronomi</th></tr></thead>
+          <tbody>
+            <tr><td><b>Formale / burocratico</b></td><td>culto, latinismi, tecnico</td><td>complessa, ipotattica, nominalizzata</td><td>Lei / Loro / passivo</td></tr>
+            <tr><td><b>Medio / standard</b></td><td>neutro, comune</td><td>varia, equilibrata</td><td>tu o Lei secondo il contesto</td></tr>
+            <tr><td><b>Informale / colloquiale</b></td><td>familiare, espressivo</td><td>paratattica, frammentaria</td><td>tu / voi / dislocazioni</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box"><span class="ico">🎯</span><div><b>Trappola dell'ispanofono:</b> in spagnolo si tollera meglio la mescolanza di registri (è frequente nella stampa il salto dal formale al colloquiale per «alleggerire»). L'italiano scritto colto è <span class="hl">più rigoroso</span>: il salto di registro va segnalato (virgolette, corsivo, parentetica) e giustificato.</div></div>
+
+      <div class="note-box"><b>Eccezioni stilistiche:</b> il cambio di registro può essere <em>voluto</em> e produrre effetti potenti: ironia, satira, parodia, contrasto patetico. Ma deve essere segnalato e percepibile come scelta, non come errore. Es: «Il primo ministro ha esposto la propria <em>visione</em>, anzi — diciamolo — il proprio <em>delirio</em>». La rottura è cosciente.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 7 · COERENZA LOGICA -->
+<section id="s-logica" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">7. Coerenza logica</h2>
+      <p class="sec-subtitle">L'unità di significato e la non contraddizione del testo</p>
+
+      <div class="def-box">
+        La <b>coerenza logica</b> è il livello più profondo della coerenza: riguarda la <span class="hl">non contraddizione</span>, la <span class="hl">progressione tematica corretta</span>, le <span class="hl">relazioni causali e temporali rispettate</span>, e l'<span class="hl">unità del tema centrale</span>. Un testo logicamente coerente «sta in piedi» indipendentemente dai mezzi formali di coesione.
+      </div>
+
+      <h3>I tre criteri della coerenza logica</h3>
+
+      <h4>① Non contraddizione</h4>
+      <p>Il testo non afferma simultaneamente A e non-A. Le contraddizioni più sottili riguardano <em>presupposizioni</em>: ciò che il testo dà per scontato.</p>
+      <div class="example-block" style="background:var(--red-bg);border-left-color:var(--red)">
+        <div class="ex-it"><b>✗ Contraddittorio:</b> Marco non è mai stato a Roma. La capitale gli era familiare fin dall'infanzia.</div>
+      </div>
+
+      <h4>② Relazioni temporali e causali rispettate</h4>
+      <p>Le azioni si succedono secondo un ordine cronologico chiaro; le cause precedono gli effetti.</p>
+      <div class="example-block" style="background:var(--red-bg);border-left-color:var(--red)">
+        <div class="ex-it"><b>✗ Sequenza confusa:</b> Marco arrivò a casa. Si svegliò alle sette. Andò a lavorare. Bevve il caffè.</div>
+      </div>
+      <div class="example-block" style="background:var(--green-bg);border-left-color:var(--green)">
+        <div class="ex-it"><b>✓ Sequenza chiara:</b> Marco si svegliò alle sette. Bevve il caffè. Andò a lavorare. Tornò a casa la sera.</div>
+      </div>
+
+      <h4>③ Unità tematica del paragrafo</h4>
+      <p>Ogni paragrafo sviluppa un sotto-tema chiaramente legato alla tesi o all'argomento centrale. Un paragrafo che «salta» argomento senza transizione rompe la coerenza globale.</p>
+      <div class="example-block" style="background:var(--red-bg);border-left-color:var(--red)">
+        <div class="ex-it"><b>✗ Salto tematico ingiustificato:</b> L'economia italiana è in difficoltà. Il PIL è sceso. Il debito pubblico aumenta. <em>Mia nonna fa il miglior tiramisù del mondo.</em></div>
+      </div>
+
+      <h3>Tipi di incoerenza logica più frequenti</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Tipo</th><th>Descrizione</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr><td><b>Contraddizione diretta</b></td><td>A e non-A</td><td>Era ricchissimo, ma non aveva un soldo.</td></tr>
+            <tr><td><b>Contraddizione presupposizionale</b></td><td>presuppone qualcosa di falso</td><td>Ha smesso di fumare (lo presuppone fumatore prima)</td></tr>
+            <tr><td><b>Inversione causale</b></td><td>effetto prima della causa</td><td>Si bagnò; poi cominciò a piovere.</td></tr>
+            <tr><td><b>Salto tematico</b></td><td>argomento non collegato</td><td>vedi esempio sopra</td></tr>
+            <tr><td><b>Doppia tesi inconciliata</b></td><td>il testo difende due tesi opposte</td><td>I migranti danneggiano l'economia → arricchiscono il PIL.</td></tr>
+            <tr><td><b>Falsa progressione</b></td><td>la conclusione non segue dalle premesse</td><td>Piove. Quindi domani sarà soleggiato.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Coerenza globale vs. locale</h3>
+      <div class="note-box">
+        <b>Coerenza locale:</b> tra due frasi adiacenti (logica frase-frase).<br>
+        <b>Coerenza globale:</b> tra tutte le parti del testo rispetto al tema centrale (logica testo intero).<br>
+        Un testo può essere localmente coerente ma globalmente incoerente: ogni passaggio fila ma l'insieme contraddice la tesi iniziale.
+      </div>
+
+      <div class="warn-box"><span class="ico">🎯</span><div><b>Strategia C1:</b> dopo aver scritto un testo, rileggerlo cercando i tre criteri separatamente. Prima la <em>non contraddizione</em>, poi le <em>relazioni temporali/causali</em>, infine l'<em>unità tematica</em>. Spesso un testo «strano» soffre di un'incoerenza precisa che si può individuare e correggere.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 8 · ERRORI FREQUENTI -->
+<section id="s-errori" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">8. Errori frequenti di coesione e coerenza</h2>
+      <p class="sec-subtitle">I cinque «peccati» tipici dello studente C1</p>
+
+      <div class="def-box">
+        Gli errori di coesione e coerenza sono i più difficili da diagnosticare perché non sono errori «grammaticali» nel senso stretto: ogni frase è corretta, ma il testo non funziona. Sono però i più visibili a un madrelingua colto. Riconoscerli è il primo passo per evitarli.
+      </div>
+
+      <h3>① Pronome senza antecedente chiaro (ambiguità referenziale)</h3>
+      <p>Il pronome rimanda a un antecedente, ma il lettore non sa quale.</p>
+      <div class="example-block" style="background:var(--red-bg);border-left-color:var(--red)">
+        <div class="ex-it"><b>✗</b> Marco ha incontrato Luca al bar. <em>Lui</em> aveva l'aria preoccupata.</div>
+        <div class="ex-note">Chi era preoccupato, Marco o Luca?</div>
+      </div>
+      <div class="example-block" style="background:var(--green-bg);border-left-color:var(--green)">
+        <div class="ex-it"><b>✓</b> Marco ha incontrato Luca al bar. <em>Quest'ultimo</em> aveva l'aria preoccupata.</div>
+        <div class="ex-note">«Quest'ultimo» disambigua: si tratta di Luca.</div>
+      </div>
+      <div class="note-box"><b>Risorse di disambiguazione:</b> <em>quest'ultimo / il primo / il secondo</em>; ripresa lessicale («l'amico», «il giovane»); riformulazione completa.</div>
+
+      <h3>② Connettivo inadeguato</h3>
+      <p>Si usa un connettivo che esprime una relazione logica diversa da quella effettivamente presente.</p>
+      <div class="example-block" style="background:var(--red-bg);border-left-color:var(--red)">
+        <div class="ex-it"><b>✗</b> Marco aveva studiato molto, <em>quindi</em> ha fallito l'esame.</div>
+        <div class="ex-note">«Quindi» implica conseguenza logica: se studi → passi, non fallisci. Il connettivo giusto è avversativo.</div>
+      </div>
+      <div class="example-block" style="background:var(--green-bg);border-left-color:var(--green)">
+        <div class="ex-it"><b>✓</b> Marco aveva studiato molto, <em>tuttavia</em> ha fallito l'esame.</div>
+      </div>
+
+      <h3>③ Salto tematico senza transizione</h3>
+      <p>Si passa da un argomento all'altro senza segnale di transizione, lasciando il lettore disorientato.</p>
+      <div class="example-block" style="background:var(--red-bg);border-left-color:var(--red)">
+        <div class="ex-it"><b>✗</b> Il governo ha approvato la riforma fiscale. Il PIL è cresciuto del 2%. Le scuole sono in sciopero. I prezzi della benzina aumentano.</div>
+      </div>
+      <div class="example-block" style="background:var(--green-bg);border-left-color:var(--green)">
+        <div class="ex-it"><b>✓</b> Il governo ha approvato la riforma fiscale, <em>in un contesto</em> in cui il PIL è cresciuto del 2%. <em>Sul piano sociale</em>, però, la situazione resta tesa: le scuole sono in sciopero <em>e</em> i prezzi della benzina aumentano.</div>
+      </div>
+
+      <h3>④ Ripetizione lessicale eccessiva</h3>
+      <p>La stessa parola si ripete più volte quando si potrebbe variare con un'anafora pronominale o lessicale.</p>
+      <div class="example-block" style="background:var(--red-bg);border-left-color:var(--red)">
+        <div class="ex-it"><b>✗</b> <em>Marco</em> è arrivato. <em>Marco</em> era stanco. <em>Marco</em> ha mangiato qualcosa. <em>Marco</em> è andato a letto.</div>
+      </div>
+      <div class="example-block" style="background:var(--green-bg);border-left-color:var(--green)">
+        <div class="ex-it"><b>✓</b> <em>Marco</em> è arrivato. Era stanco; ha mangiato qualcosa e <em>poi</em> è andato a letto.</div>
+        <div class="ex-note">Ellissi del soggetto e connettivo temporale risolvono il problema.</div>
+      </div>
+
+      <h3>⑤ Ellissi eccessiva → ambiguità</h3>
+      <p>L'omissione è troppo aggressiva e il lettore non riesce a recuperare gli elementi mancanti.</p>
+      <div class="example-block" style="background:var(--red-bg);border-left-color:var(--red)">
+        <div class="ex-it"><b>✗</b> Marco e Luca sono partiti per Roma. Ha visitato il Colosseo e poi è tornato.</div>
+        <div class="ex-note">Chi ha visitato? Chi è tornato? L'ellissi del soggetto non è univocamente recuperabile (i candidati sono due).</div>
+      </div>
+      <div class="example-block" style="background:var(--green-bg);border-left-color:var(--green)">
+        <div class="ex-it"><b>✓</b> Marco e Luca sono partiti per Roma. <em>Marco</em> ha visitato il Colosseo e poi è tornato; <em>Luca</em> è rimasto un giorno in più.</div>
+      </div>
+
+      <h3>⑥ Ipercohesion: troppi connettivi</h3>
+      <p>Il testo è soffocato da connettivi. Il lettore percepisce uno sforzo eccessivo di esplicitazione: il testo non fluisce.</p>
+      <div class="example-block" style="background:var(--red-bg);border-left-color:var(--red)">
+        <div class="ex-it"><b>✗</b> <em>Innanzitutto</em>, <em>poiché</em> pioveva, <em>quindi</em> Marco ha preso l'ombrello. <em>Tuttavia</em>, <em>dopo</em>, <em>poiché</em> era tardi, <em>perciò</em>, <em>di conseguenza</em>, ha preso un taxi.</div>
+      </div>
+      <div class="example-block" style="background:var(--green-bg);border-left-color:var(--green)">
+        <div class="ex-it"><b>✓</b> Poiché pioveva, Marco ha preso l'ombrello. Era tardi, però; ha quindi chiamato un taxi.</div>
+      </div>
+
+      <div class="warn-box"><span class="ico">🎯</span><div><b>Regola d'oro:</b> usare il numero <em>strettamente necessario</em> di connettivi. Se la relazione logica è ovvia dal contesto, il connettivo è superfluo. Se è ambigua, è obbligatorio. Né più né meno.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 9 · TRAPPOLE ES -->
+<section id="s-trappole" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">9. Trappole specifiche per ispanofoni</h2>
+      <p class="sec-subtitle">Errori sistematici che derivano dall'interferenza dello spagnolo</p>
+
+      <div class="def-box">
+        Gli ispanofoni che apprendono l'italiano colto incontrano specifiche difficoltà nei meccanismi di coesione. Le cause sono tre: <span class="hl">una diversa tolleranza alla ripetizione lessicale</span>, <span class="hl">una didattica della coesione/coerenza meno esplicita in ambito ispanico</span>, e <span class="hl">la tentazione del calco diretto</span> di certe forme (esto → questo, lo → lo) senza verificare l'idiomaticità italiana.
+      </div>
+
+      <div id="traps-container"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 10 · TESTO ANALIZZATO -->
+<section id="s-testo" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">10. Testo analizzato — un caso reale</h2>
+      <p class="sec-subtitle">Identificazione e valutazione di tutti i meccanismi di coesione</p>
+
+      <div class="def-box">
+        Di seguito, un frammento di prosa argomentativa di registro medio-alto. Tutti i meccanismi di coesione sono <span class="hl">annotati</span>: connettivi <span class="ann-mark ann-conn">(blu)</span>, pronomi e dimostrativi <span class="ann-mark ann-pron">(viola)</span>, ellissi <span class="ann-mark ann-elli">(verde)</span>, anafore lessicali e nominalizzazioni <span class="ann-mark ann-lex">(verde acqua)</span>. Dopo il testo, una valutazione globale della coerenza.
+      </div>
+
+      <h3>Legenda</h3>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--blue-bg);border-color:var(--blue)"></span> connettivo</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--purple-bg);border-color:var(--purple)"></span> pronome / dimostrativo</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--green-bg);border-color:var(--green)"></span> ellissi</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--teal-bg);border-color:var(--teal)"></span> anafora lessicale / nominalizzazione</div>
+      </div>
+
+      <h3>Il testo annotato</h3>
+      <div class="annotated-text">
+        <p>Il <span class="ann-mark ann-lex">governo italiano<span class="ann-sup">¹</span></span> ha approvato ieri una <span class="ann-mark ann-lex">riforma fiscale<span class="ann-sup">²</span></span> di portata storica. <span class="ann-mark ann-pron">Tale provvedimento<span class="ann-sup">³</span></span>, atteso da mesi, modifica radicalmente il sistema tributario nazionale. L'<span class="ann-mark ann-lex">approvazione<span class="ann-sup">⁴</span></span>, avvenuta dopo lunghe trattative, è stata salutata <span class="ann-mark ann-conn">tuttavia<span class="ann-sup">⁵</span></span> da reazioni contrastanti.</p>
+        <p>Da un lato, le imprese hanno espresso il <span class="ann-mark ann-lex">proprio<span class="ann-sup">⁶</span></span> sostegno. <span class="ann-mark ann-pron">Esse<span class="ann-sup">⁷</span></span> beneficeranno <span class="ann-mark ann-conn">infatti<span class="ann-sup">⁸</span></span> di una riduzione dell'IRES dal 24% al 20%. <span class="ann-mark ann-conn">Dall'altro<span class="ann-sup">⁹</span></span>, i sindacati hanno duramente criticato la <span class="ann-mark ann-lex">misura<span class="ann-sup">¹⁰</span></span>: <span class="ann-mark ann-pron">essa<span class="ann-sup">¹¹</span></span>, secondo <span class="ann-mark ann-pron">loro<span class="ann-sup">¹²</span></span>, favorirebbe il capitale a scapito del lavoro dipendente.</p>
+        <p>Il dibattito si è acceso <span class="ann-mark ann-conn">in particolare<span class="ann-sup">¹³</span></span> sulla questione dell'IVA. Il governo <span class="ann-mark ann-elli">[ha ridotto]<span class="ann-sup">¹⁴</span></span> l'IVA sui beni di prima necessità dal 10% al 5%; l'opposizione, <span class="ann-mark ann-conn">invece<span class="ann-sup">¹⁵</span></span>, chiedeva una riduzione più drastica. <span class="ann-mark ann-pron">Quest'ultima<span class="ann-sup">¹⁶</span></span> ha annunciato un emendamento per portare l'aliquota al 4%.</p>
+        <p>La <span class="ann-mark ann-lex">riforma<span class="ann-sup">¹⁷</span></span> entrerà in vigore il primo gennaio. <span class="ann-mark ann-conn">Da quel momento<span class="ann-sup">¹⁸</span></span>, le nuove aliquote si applicheranno a tutti i contribuenti. <span class="ann-mark ann-pron">Ciò<span class="ann-sup">¹⁹</span></span> rappresenta, <span class="ann-mark ann-conn">secondo gli analisti<span class="ann-sup">²⁰</span></span>, una svolta significativa nella politica economica del paese.</p>
+      </div>
+
+      <h3>Analisi dettagliata dei meccanismi</h3>
+
+      <ul class="analysis-list">
+        <li><b>¹ «governo italiano»:</b> prima introduzione del referente. Costituirà il tema costante del testo (progressione a tema costante per il primo paragrafo).</li>
+        <li><b>² «riforma fiscale»:</b> rema del primo enunciato. Diventerà il tema del periodo successivo (progressione lineare).</li>
+        <li><b>³ «tale provvedimento»:</b> anafora dimostrativa di alto registro (formale-giornalistico). Riprende «riforma fiscale» con un sinonimo classificatorio. Doppio lavoro: dimostrativo + sostituzione lessicale.</li>
+        <li><b>⁴ «approvazione»:</b> anafora per nominalizzazione del verbo «ha approvato» (riga 1). Permette di predicare sull'evento («avvenuta dopo lunghe trattative»).</li>
+        <li><b>⁵ «tuttavia»:</b> connettivo avversativo. Introduce il contrasto fra l'attesa dell'approvazione (positiva) e le reazioni contrastanti (problematiche).</li>
+        <li><b>⁶ «proprio»:</b> possessivo riflessivo che riprende le imprese — anafora possessiva.</li>
+        <li><b>⁷ «esse»:</b> pronome personale anaforico (forma colta-letteraria di «loro»). Riprende «le imprese». Registro alto.</li>
+        <li><b>⁸ «infatti»:</b> connettivo causale-esplicativo. Giustifica il sostegno delle imprese.</li>
+        <li><b>⁹ «dall'altro»:</b> connettivo correlativo (correlato a «da un lato»). Struttura il contrasto bipolare imprese/sindacati.</li>
+        <li><b>¹⁰ «misura»:</b> anafora lessicale per sinonimia. Riprende «riforma fiscale» evitando di ripetere il termine già usato («provvedimento» è stato usato; ora «misura»). Variatio.</li>
+        <li><b>¹¹ «essa»:</b> ripresa pronominale di «misura».</li>
+        <li><b>¹² «loro»:</b> pronome possessivo anaforico — riprende «i sindacati».</li>
+        <li><b>¹³ «in particolare»:</b> connettivo di focalizzazione. Restringe il discorso alla questione specifica dell'IVA.</li>
+        <li><b>¹⁴ «[ha ridotto]»:</b> ellissi verbale ricostruibile dal contesto. Il verbo è recuperato a partire dalla logica della frase (riduzione dal 10% al 5%).</li>
+        <li><b>¹⁵ «invece»:</b> connettivo avversativo. Oppone la posizione dell'opposizione a quella del governo.</li>
+        <li><b>¹⁶ «quest'ultima»:</b> anafora dimostrativa disambiguante. Fra «governo» e «opposizione» (entrambe menzionate prima), «quest'ultima» seleziona univocamente «l'opposizione». Risorsa essenziale di chiarezza.</li>
+        <li><b>¹⁷ «riforma»:</b> ripresa lessicale (terza menzione del referente principale: provvedimento → misura → riforma). Variatio mantenuta.</li>
+        <li><b>¹⁸ «da quel momento»:</b> connettivo temporale che rimanda al «primo gennaio» appena menzionato.</li>
+        <li><b>¹⁹ «ciò»:</b> dimostrativo neutro anaforico. Riprende l'intera proposizione precedente («le nuove aliquote si applicheranno…»), non un solo sintagma. Risorsa altamente formale.</li>
+        <li><b>²⁰ «secondo gli analisti»:</b> connettivo di fonte / inciso evidenziale che attribuisce la valutazione finale a una voce terza.</li>
+      </ul>
+
+      <h3>Valutazione della coerenza</h3>
+
+      <div class="green-box"><b>Coesione:</b> molto ricca. Il testo presenta tutti i tipi di meccanismi: connettivi avversativi, causali, correlativi, di focalizzazione, temporali; anafore pronominali, dimostrative, lessicali, nominalizzate; un'ellissi verbale ben recuperabile. La <em>variatio anaforica</em> sul referente principale (riforma fiscale → tale provvedimento → la misura → la riforma) è esemplare.</div>
+
+      <div class="green-box"><b>Coerenza logica:</b> impeccabile. La progressione è chiara: introduzione del fatto (par. 1) → reazioni contrastanti articolate (par. 2) → focus su un sottotema specifico (par. 3) → conclusione valutativa (par. 4). Non ci sono contraddizioni; le relazioni causali e temporali sono rispettate.</div>
+
+      <div class="green-box"><b>Coerenza di registro:</b> mantenuta dall'inizio alla fine. Lessico formale-giornalistico («provvedimento», «aliquota», «contribuenti», «svolta»), sintassi articolata con subordinate, uso di pronomi colti (esse, ciò, quest'ultima), nominalizzazioni costanti. Nessun salto verso il colloquiale.</div>
+
+      <div class="teal-box"><b>Struttura progressiva:</b> il primo paragrafo è una <em>progressione lineare</em> (governo → riforma → approvazione). I paragrafi 2-3 sono di <em>progressione a temi derivati</em> (la riforma → reazioni imprese / reazioni sindacati / IVA / IRES). Il paragrafo 4 è una sintesi conclusiva. Il modello strutturale è quello dell'articolo giornalistico di registro alto.</div>
+
+      <h3>Esercizio: smontare e rimontare</h3>
+      <p>Un esercizio utile per fissare i meccanismi è il seguente: prendere un paragrafo (per esempio il secondo), sostituire ogni meccanismo di coesione con la sua forma più «elementare» (ripetizione totale, niente connettivi), poi confrontare il risultato con l'originale.</p>
+
+      <div class="example-block" style="background:var(--red-bg);border-left-color:var(--red)">
+        <div class="ex-it"><b>Versione «scoesa»:</b> Le imprese hanno espresso il sostegno. Le imprese beneficeranno di una riduzione dell'IRES dal 24% al 20%. I sindacati hanno duramente criticato la riforma fiscale. La riforma fiscale, secondo i sindacati, favorirebbe il capitale a scapito del lavoro dipendente.</div>
+      </div>
+
+      <p>L'effetto è immediato: il testo è meccanico, ripetitivo, povero. Confrontare con la versione originale del paragrafo 2 mostra il <span class="hl">valore reale</span> dei meccanismi di coesione: non sono ornamenti, sono ciò che trasforma un elenco di frasi in <em>prosa</em>.</p>
+
+      <div class="warn-box"><span class="ico">🎯</span><div><b>Esercizio di sintesi per ispanofoni:</b> prendere un testo italiano colto, individuare ogni meccanismo di coesione, classificarlo (riferimento / sostituzione / ellissi / connessione / coesione lessicale), e provare a riscriverlo cambiando il tipo di meccanismo (sostituire una nominalizzazione con un verbo, un sinonimo con un pronome, ecc.). È il modo più rapido per internalizzare il <span class="hl">sistema</span> della coesione italiana.</div></div>
+
+      <div class="green-box">
+        <b>Sintesi finale:</b> coesione e coerenza sono i due assi su cui si gioca la qualità di un testo C1. La coesione si <em>impara</em> attraverso il catalogo dei meccanismi (questa scheda + scheda 36 sui connettivi); la coerenza si <em>esercita</em> nella revisione critica del proprio testo, paragrafo per paragrafo. Insieme, le due dimensioni fanno la differenza fra l'italiano di chi «sa scrivere» e quello di chi «mette in fila le frasi».
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const TRAPS = [
+  {
+    name:'Calco di «esto» con «questo» dove serve «ciò»',
+    wrong:'Marco non ha risposto. Questo mi ha sorpreso.',
+    right:'Marco non ha risposto. Ciò mi ha sorpreso.',
+    expl:'Lo spagnolo usa «esto» per riprendere un\'intera proposizione («Esto me sorprendió»). In italiano formale, quando si riprende una proposizione intera, è preferibile <b>ciò</b>: <em>ciò mi ha sorpreso</em>. «Questo» rimanda di solito a un sostantivo singolare maschile esplicito. Il calco diretto è frequentissimo e produce un effetto di registro abbassato.'
+  },
+  {
+    name:'Ripetizione lessicale eccessiva (calco dell\'italiano scolastico spagnolo)',
+    wrong:'Il libro è interessante. Il libro parla di filosofia. Il libro è stato pubblicato nel 2020.',
+    right:'Il libro è interessante. L\'opera tratta di filosofia ed è stata pubblicata nel 2020.',
+    expl:'Lo spagnolo tollera meglio la ripetizione lessicale; in italiano colto la <em>variatio anaforica</em> (libro → opera → testo → volume) è considerata un pregio. La ripetizione di «il libro» in tre frasi consecutive è giudicata povera stilisticamente, anche se è grammaticalmente corretta.'
+  },
+  {
+    name:'«Lo» come ripresa di proposizione (calco di spagnolo)',
+    wrong:'Marco non viene alla festa. Lo so.',
+    right:'Marco non viene alla festa. Lo so. ✓ (qui è corretto!)',
+    expl:'Caso interessante: in spagnolo si dice «Lo sé». In italiano, <em>lo</em> come ripresa di proposizione è corretto: «Lo so / Lo capisco / Lo dico anch\'io». Però quando si vuole un riferimento più formale o quando il pronome non è oggetto di un verbo, si preferisce <b>ciò</b>: «Ciò mi preoccupa», non «*Lo mi preoccupa». La trappola è scegliere fra <em>lo</em> (corretto in contesti oggetto-pronominali) e <em>ciò</em> (per soggetti o complementi più ampi).'
+  },
+  {
+    name:'Confusione «quindi» / «tuttavia» (connettivo sbagliato)',
+    wrong:'Marco aveva studiato molto, quindi ha fallito l\'esame.',
+    right:'Marco aveva studiato molto, tuttavia ha fallito l\'esame.',
+    expl:'L\'ispanofono associa <em>quindi</em> a «por tanto» e lo usa anche quando il rapporto non è di conseguenza ma di contrasto. <b>Quindi</b> = consecutivo (causa → effetto coerente); <b>tuttavia</b> = avversativo (contrasto inatteso). Studiare → fallire è un contrasto, non una conseguenza logica. Scegliere il connettivo sbagliato compromette la coerenza logica del testo.'
+  },
+  {
+    name:'Pronome «lui/lei» con antecedente ambiguo',
+    wrong:'Marco ha incontrato Luca. Lui era stanco.',
+    right:'Marco ha incontrato Luca. Quest\'ultimo era stanco. (oppure: Marco era stanco / Luca era stanco)',
+    expl:'In spagnolo l\'uso di «él/ella» con antecedente ambiguo è frequente (a volte risolto dal contesto). In italiano scritto colto è considerato un errore di coesione. Le risorse disambiguanti tipiche sono: <em>quest\'ultimo / quegli / il primo / il secondo</em>, oppure la ripresa lessicale completa. Mai lasciare un pronome che potrebbe rimandare a due antecedenti.'
+  },
+  {
+    name:'Ipercohesion: troppi connettivi (calco di prosa scolastica spagnola)',
+    wrong:'Innanzitutto, in primo luogo, dobbiamo considerare che, poiché pioveva, quindi, di conseguenza, ho preso l\'ombrello.',
+    right:'Poiché pioveva, ho preso l\'ombrello.',
+    expl:'La scuola ispanofona spesso insegna a usare molti connettivi («en primer lugar», «por tanto», «en consecuencia») come segno di buon italiano scritto. Il risultato è l\'opposto: in italiano colto contemporaneo l\'eccesso di connettivi (<em>ipercohesion</em>) è giudicato pesante e scolastico. Usare quelli strettamente necessari, mai accumulati.'
+  },
+  {
+    name:'Mantenere «esso/essa» nei testi italiani moderni',
+    wrong:'Il libro è interessante. Esso parla di filosofia.',
+    right:'Il libro è interessante. Parla di filosofia. (ellissi del soggetto)',
+    expl:'In italiano moderno, dove lo spagnolo usa «este/él» come ripresa, l\'italiano spesso preferisce l\'<em>ellissi del soggetto</em> (la desinenza verbale basta). «Esso/essa» è formale-letterario e nei testi medi suona artificioso. Usare ellissi (più naturale) o <em>tale + sostantivo</em>, <em>quest\'ultimo</em> (più formali). Riservare «esso» a contesti di registro elevato consapevole.'
+  },
+  {
+    name:'Confusione coesione/coerenza nella valutazione',
+    wrong:'Il mio testo è coerente: ho usato molti connettivi.',
+    right:'Il mio testo è coeso (uso di connettivi) ma devo verificare anche la coerenza (logica, unità tematica).',
+    expl:'Confondere le due dimensioni è il tipico errore concettuale. Usare connettivi <em>non garantisce</em> la coerenza: un testo può essere coeso ma incoerente (i pezzi sono ben legati ma non significano niente di unitario) o coerente ma non coeso (la logica c\'è ma manca il cemento). Lavorare sulle due dimensioni separatamente nella revisione.'
+  },
+  {
+    name:'Salto di registro non giustificato',
+    wrong:'Il governo ha deliberato in merito alla normativa. Ma poi, sai, le cose non sono andate come previsto.',
+    right:'Il governo ha deliberato in merito alla normativa. Tuttavia, gli esiti non hanno corrisposto alle previsioni.',
+    expl:'L\'ispanofono passa con facilità dal registro alto a quello colloquiale (frequente nella stampa ispanica). L\'italiano colto richiede coerenza di registro: una volta scelto il formale, mantenerlo. «Sai», «le cose», «non sono andate» sono colloquiali e rompono il tono burocratico-istituzionale dell\'apertura.'
+  },
+  {
+    name:'Ellissi del soggetto in contesto ambiguo',
+    wrong:'Marco e Luca sono arrivati. Ha aperto la porta e ha sorriso.',
+    right:'Marco e Luca sono arrivati. Marco ha aperto la porta e ha sorriso. (oppure: Luca, oppure: entrambi)',
+    expl:'In spagnolo si tende a ricorrere all\'ellissi del soggetto anche con due antecedenti possibili. In italiano l\'ellissi è obbligatoriamente univoca: se più di un antecedente è candidato, va esplicitato. L\'ellissi diventa allora <em>ambigua</em> e va evitata.'
+  },
+  {
+    name:'«Mismo» calcato in «stesso» mal collocato',
+    wrong:'Marta è arrivata. La stessa ha portato i documenti.',
+    right:'Marta è arrivata. Lei stessa ha portato i documenti. (oppure: Marta in persona)',
+    expl:'In spagnolo «la misma» come ripresa anaforica è grammaticale ma stilisticamente brutta; in italiano è ancora più sgradevole. La forma corretta è <em>«lei stessa / lui stesso»</em> con il pronome, oppure una ripresa lessicale («la donna», «l\'arrivata»). «La stessa» / «lo stesso» come ripresa di persona è considerato burocratico-amministrativo e va evitato in prosa colta.'
+  },
+  {
+    name:'«Por una parte... por otra» tradotto male',
+    wrong:'Per una parte le imprese sostengono. Per l\'altra i sindacati criticano.',
+    right:'Da un lato le imprese sostengono. Dall\'altro i sindacati criticano.',
+    expl:'La struttura correlativa italiana è <b>da un lato... dall\'altro</b> (o <em>da una parte... dall\'altra</em>), non «*per una parte». È un calco grafico-sintattico dallo spagnolo molto frequente. Lo stesso vale per altri correlativi: <em>né... né</em> (non «*ni... ni»), <em>o... o / sia... sia</em>.'
+  }
+];
+
+function renderTraps(){
+  const c = document.getElementById('traps-container');
+  let html = '';
+  TRAPS.forEach(t=>{
+    html += `<div class="trap-card">
+      <div class="trap-card-header"><span class="trap-name">${t.name}</span></div>
+      <div class="trap-vs">
+        <div class="trap-wrong">${t.wrong}</div>
+        <div class="trap-right">${t.right}</div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function showSection(id, btn){
+  document.querySelectorAll('.sec-block').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function showChip(id, btn){
+  const parent = btn.parentElement.parentElement;
+  parent.querySelectorAll('.chip-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  parent.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function setFontSize(v){
+  document.documentElement.style.setProperty('--fs', v+'px');
+}
+
+renderTraps();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Punteggiatura · Grammatica C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ede9df;
+  --card:#faf7f1;
+  --border:#c4bead;
+  --text:#1a1814;
+  --text2:#44413a;
+  --text3:#706c64;
+  --accent:#7a5a0a;
+  --accent-light:#f0e0c0;
+  --accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,0.08);
+  --radius:14px;
+  --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --red:#a81e2e; --red-bg:#fce6e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --teal:#0e6e6e; --teal-bg:#e0f4f4;
+  --fs:15px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-size:var(--fs);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:60px;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text);margin:0 0 .4em;font-weight:600;line-height:1.2}
+h1{font-size:1.85em;font-weight:700}
+h2{font-size:1.45em}
+h3{font-size:1.15em;margin-top:1.1em}
+h4{font-size:1em;font-weight:600}
+p{margin:.5em 0}
+em{font-style:italic}
+b,strong{font-weight:600}
+
+/* HEADER */
+.site-header{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:20px 18px 16px;
+  position:relative;
+}
+.site-header .inner{max-width:860px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title-wrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.site-header h1{margin:0;font-size:1.9em;color:var(--text)}
+.header-tag{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.85em;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:3px 10px;
+  border-radius:999px;
+  border:1px solid var(--accent-mid);
+}
+.subtitle{color:var(--text3);font-size:.92em;margin:4px 0 12px;font-style:italic}
+.stat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stat-pill{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:4px 10px;
+  font-size:.78em;
+  border-radius:999px;
+  font-weight:500;
+}
+.font-ctrl{display:flex;align-items:center;gap:8px;font-size:.78em;color:var(--text3)}
+.font-ctrl input[type=range]{width:90px}
+
+/* SECTION NAV */
+.section-nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:10px 18px;
+  margin-top:14px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.section-nav::-webkit-scrollbar{display:none}
+.section-nav .inner{max-width:860px;margin:0 auto;display:flex;gap:6px;flex-wrap:nowrap}
+.snav-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:6px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.82em;
+  border-radius:999px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .15s;
+  font-weight:500;
+}
+.snav-btn:hover{background:var(--accent-light)}
+.snav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* MAIN LAYOUT */
+.main-layout{
+  max-width:860px;
+  margin:0 auto;
+  padding:20px 18px;
+}
+.sec-block{display:none}
+.sec-block.active{display:block;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* GRAM-CARD */
+.gram-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.gram-card-body{padding:18px}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:1.45em;
+  margin:0 0 .4em;
+  color:var(--text);
+}
+.sec-subtitle{color:var(--text3);font-style:italic;font-size:.95em;margin:0 0 14px}
+
+/* DEF-BOX */
+.def-box{
+  background:var(--warn-bg);
+  border-left:4px solid var(--accent);
+  padding:12px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:14px 0;
+  font-size:.96em;
+}
+.def-box b{color:var(--accent)}
+
+/* WARN-BOX */
+.warn-box{
+  background:#fff4e0;
+  border:1px solid #c8900a;
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin:12px 0;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:.93em;
+  color:var(--text2);
+}
+.warn-box .ico{font-size:1.1em;flex-shrink:0;line-height:1.3}
+
+/* EXAMPLE BLOCK */
+.example-block{
+  background:var(--blue-bg);
+  border-left:3px solid var(--blue);
+  padding:9px 12px;
+  margin:8px 0;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.ex-it{font-weight:500;color:var(--text)}
+.ex-it em{font-style:normal;color:var(--blue);font-weight:600}
+.ex-es{font-style:italic;color:var(--text2);font-size:.88em;margin-top:2px}
+.ex-note{font-size:.84em;color:var(--text3);margin-top:4px;font-style:italic}
+
+/* NOTE-BOX */
+.note-box{
+  background:var(--purple-bg);
+  border-left:3px solid var(--purple);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.note-box b{color:var(--purple)}
+
+/* GREEN-BOX */
+.green-box{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.green-box b{color:var(--green)}
+
+/* TEAL-BOX */
+.teal-box{
+  background:var(--teal-bg);
+  border-left:3px solid var(--teal);
+  padding:10px 14px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  margin:12px 0;
+  font-size:.92em;
+  color:var(--text2);
+}
+.teal-box b{color:var(--teal)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.gram-table{width:100%;border-collapse:collapse;font-size:.92em;background:var(--card)}
+.gram-table th{
+  background:var(--accent-light);
+  color:var(--accent);
+  font-family:'DM Sans',sans-serif;
+  font-size:.72em;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:8px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--accent-mid);
+}
+.gram-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.gram-table tr:nth-child(even) td{background:rgba(196,190,173,0.12)}
+.gram-table tr:last-child td{border-bottom:none}
+.ok-cell{color:var(--green);font-weight:500}
+.err-cell{color:var(--red);font-weight:500}
+.warn-cell{color:var(--accent);font-weight:500}
+.tbl-pron{font-weight:600;color:var(--text);background:rgba(196,190,173,0.18)}
+
+/* CHIPS */
+.chip-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:14px 0 10px;
+  padding-bottom:4px;
+}
+.chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:5px 11px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.83em;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{background:var(--accent-light)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-panel{display:none}
+.chip-panel.active{display:block;animation:fadeIn .25s}
+
+/* TRAPS */
+.trap-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  margin:10px 0;
+  box-shadow:var(--shadow-sm);
+}
+.trap-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trap-name{font-weight:600;color:var(--text);font-size:.96em}
+.trap-vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.trap-wrong{
+  background:var(--red-bg);
+  border-left:3px solid var(--red);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-wrong::before{content:'✗ ';color:var(--red);font-weight:700}
+.trap-right{
+  background:var(--green-bg);
+  border-left:3px solid var(--green);
+  padding:7px 10px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9em;
+}
+.trap-right::before{content:'✓ ';color:var(--green);font-weight:700}
+.trap-expl{font-size:.88em;color:var(--text2);font-style:italic;margin-top:6px}
+@media (max-width:520px){.trap-vs{grid-template-columns:1fr}}
+
+/* MINI-TABLE */
+.mini-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.88em;
+  background:var(--card);
+  margin:10px 0;
+}
+.mini-table td{
+  padding:5px 9px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.mini-table td:first-child{color:var(--text3);font-weight:500;width:38%}
+.mini-table td:last-child{color:var(--text);font-weight:600}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table .hl-form{color:var(--accent);font-weight:700}
+
+/* TAG/LABEL */
+.tag{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:.72em;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-right:6px;
+  border:1px solid;
+}
+.tag-form{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.tag-inf{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.tag-acc{background:var(--purple-bg);color:var(--purple);border-color:var(--purple)}
+.tag-bur{background:var(--teal-bg);color:var(--teal);border-color:var(--teal)}
+.tag-gio{background:var(--green-bg);color:var(--green);border-color:var(--green)}
+
+/* UTILS */
+.hl{color:var(--accent);font-weight:600}
+.dim{color:var(--text3)}
+
+/* PUNCT MARK (visual emphasis on punctuation marks) */
+.pmark{
+  display:inline-block;
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  border-radius:6px;
+  padding:1px 8px;
+  font-weight:700;
+  font-family:'Playfair Display',serif;
+  font-size:1.05em;
+  margin:0 2px;
+}
+
+/* ANALYSIS LIST */
+.analysis-list{
+  font-size:.86em;
+  color:var(--text2);
+  margin-top:6px;
+  padding-left:0;
+  list-style:none;
+}
+.analysis-list li{
+  margin:2px 0;
+  padding-left:12px;
+  position:relative;
+}
+.analysis-list li::before{
+  content:'·';
+  position:absolute;
+  left:2px;
+  color:var(--accent);
+  font-weight:700;
+}
+.analysis-list b{color:var(--accent)}
+
+/* INFO STRUCT DIAGRAM */
+.struct-diag{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 12px;
+  margin:10px 0;
+  font-family:'DM Sans',sans-serif;
+  font-size:.9em;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+.struct-tag{
+  padding:3px 9px;
+  border-radius:999px;
+  font-size:.78em;
+  font-weight:600;
+  border:1px solid;
+}
+.struct-verb{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+.struct-nom{background:var(--accent-light);color:var(--accent);border-color:var(--accent-mid)}
+.struct-arrow{color:var(--text3);font-weight:700}
+.struct-text{font-style:italic;color:var(--text2)}
+
+/* RESPONSIVE */
+@media (max-width:520px){
+  .site-header{padding:14px 14px 12px}
+  h1{font-size:1.5em}
+  .main-layout{padding:14px}
+  .gram-card-body{padding:14px}
+  .stat-pill{font-size:.72em}
+  .header-top{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="inner">
+    <div class="header-top">
+      <div>
+        <div class="header-title-wrap">
+          <h1>La Punteggiatura</h1>
+          <span class="header-tag">Grammatica</span>
+        </div>
+        <div class="subtitle">Uso avanzato dei segni di interpunzione · C1 · per ispanofoni</div>
+        <div class="stat-bar">
+          <span class="stat-pill">9 sezioni</span>
+          <span class="stat-pill">virgola</span>
+          <span class="stat-pill">punto e virgola</span>
+          <span class="stat-pill">due punti</span>
+          <span class="stat-pill">virgolette</span>
+          <span class="stat-pill">trattini</span>
+          <span class="stat-pill">parentesi</span>
+          <span class="stat-pill">contrasto IT/ES</span>
+          <span class="stat-pill">testo modello</span>
+        </div>
+      </div>
+      <div class="font-ctrl">
+        <span>A-</span>
+        <input type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+        <span>A+</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION NAV -->
+<nav class="section-nav" id="sec-nav">
+  <div class="inner">
+    <button class="snav-btn active" onclick="showSection('s-concetto',this)">1. Concetto</button>
+    <button class="snav-btn" onclick="showSection('s-virgola',this)">2. Virgola</button>
+    <button class="snav-btn" onclick="showSection('s-pevdp',this)">3. Punto e virgola / Due punti</button>
+    <button class="snav-btn" onclick="showSection('s-punto',this)">4. Punto / Sospensione / ! ?</button>
+    <button class="snav-btn" onclick="showSection('s-virgolette',this)">5. Virgolette</button>
+    <button class="snav-btn" onclick="showSection('s-trattini',this)">6. Trattini / Parentesi</button>
+    <button class="snav-btn" onclick="showSection('s-diff-es',this)">7. Differenze IT/ES</button>
+    <button class="snav-btn" onclick="showSection('s-trappole',this)">8. Trappole</button>
+    <button class="snav-btn" onclick="showSection('s-modello',this)">9. Testo modello</button>
+  </div>
+</nav>
+
+<main class="main-layout">
+
+<!-- SEZIONE 1 · CONCETTO -->
+<section id="s-concetto" class="sec-block active">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">1. Che cos'è la punteggiatura</h2>
+      <p class="sec-subtitle">Il sistema dei segni che organizzano il discorso scritto</p>
+
+      <div class="def-box">
+        La <b>punteggiatura</b> (o <em>interpunzione</em>) es el conjunto de signos gráficos que organizan el discurso escrito, marcando pausas, jerarquías sintácticas, entonación y matices semánticos. En italiano formal C1, no se trata de "pausas para respirar" sino de un <span class="hl">sistema lógico-sintáctico</span>: cada signo cumple una función precisa que el lector culto reconoce inmediatamente. Dominar la punteggiatura es un sello del registro académico, periodístico y literario.
+      </div>
+
+      <h3>Por qué importa para el hispanohablante</h3>
+      <p>Italiano y español comparten el inventario de signos, pero divergen en <span class="hl">dos aspectos críticos</span>: (1) el italiano <b>no usa apertura</b> en exclamación e interrogación (sin <em>¡</em> ni <em>¿</em>); (2) las convenciones tipográficas para las <b>virgolette</b> (« » preferidas en italiano formal) y para el uso del <b>punto e virgola</b> (mucho más frecuente que en español) tienen reglas propias. Más sutil aún: el italiano es <span class="hl">más estricto</span> que el español al prohibir la coma entre sujeto y verbo, o entre verbo y objeto directo.</p>
+
+      <h3>El inventario completo</h3>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Segno</th><th>Nome italiano</th><th>Funzione principale</th></tr></thead>
+          <tbody>
+            <tr><td class="tbl-pron">,</td><td>virgola</td><td>pausa breve / separazione di elementi</td></tr>
+            <tr><td class="tbl-pron">;</td><td>punto e virgola</td><td>pausa media / proposizioni coordinate</td></tr>
+            <tr><td class="tbl-pron">:</td><td>due punti</td><td>introduzione / spiegazione / discorso diretto</td></tr>
+            <tr><td class="tbl-pron">.</td><td>punto fermo</td><td>fine periodo / pausa piena</td></tr>
+            <tr><td class="tbl-pron">…</td><td>puntini di sospensione</td><td>sospensione / omissione</td></tr>
+            <tr><td class="tbl-pron">?</td><td>punto interrogativo</td><td>fine di domanda diretta</td></tr>
+            <tr><td class="tbl-pron">!</td><td>punto esclamativo</td><td>fine di esclamazione</td></tr>
+            <tr><td class="tbl-pron">« »</td><td>virgolette basse (caporali)</td><td>citazione diretta (preferito in italiano formale)</td></tr>
+            <tr><td class="tbl-pron">" "</td><td>virgolette alte</td><td>citazione (uso digitale, alternativo)</td></tr>
+            <tr><td class="tbl-pron">' '</td><td>virgolette singole / apici</td><td>citazione interna / uso metalinguistico</td></tr>
+            <tr><td class="tbl-pron">-</td><td>trattino breve</td><td>parole composte / divisione di linea</td></tr>
+            <tr><td class="tbl-pron">—</td><td>trattino lungo (lineetta)</td><td>inciso forte / interruzione</td></tr>
+            <tr><td class="tbl-pron">( )</td><td>parentesi tonde</td><td>informazione accessoria</td></tr>
+            <tr><td class="tbl-pron">[ ]</td><td>parentesi quadre</td><td>aggiunta editoriale in citazione</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <span class="ico">🎯</span>
+        <div><b>Para el hispanohablante:</b> el salto C1 en punteggiatura no consiste en aprender signos nuevos, sino en (1) interiorizar las <span class="hl">restricciones sintácticas</span> que el italiano respeta más rigurosamente que el español, (2) usar el <em>punto e virgola</em> con la frecuencia del periodismo y ensayo italiano, y (3) eliminar de raíz los <em>¡</em> y <em>¿</em> de apertura, que son <span class="hl">errores tipográficos inmediatos</span> en cualquier texto.</div>
+      </div>
+
+      <h3>Las tres dimensiones de cada signo</h3>
+      <ul>
+        <li><b>Funzione sintattica:</b> ¿qué relación marca entre elementos? (coordinación, subordinación, inciso…)</li>
+        <li><b>Forza della pausa:</b> ¿es breve, media o piena? El sistema va de la virgola (más débil) al punto fermo (más fuerte).</li>
+        <li><b>Registro:</b> algunos signos (punto e virgola, trattino lungo, caporali) son típicamente formales; otros (puntini, esclamativo) son más expresivos.</li>
+      </ul>
+
+      <h3>La gerarchia delle pause</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-verb">VIRGOLA</span>
+        <span class="struct-arrow">&lt;</span>
+        <span class="struct-tag struct-verb">PUNTO E VIRGOLA</span>
+        <span class="struct-arrow">&lt;</span>
+        <span class="struct-tag struct-verb">DUE PUNTI</span>
+        <span class="struct-arrow">&lt;</span>
+        <span class="struct-tag struct-nom">PUNTO FERMO</span>
+      </div>
+      <p class="dim">La forza della pausa cresce da sinistra a destra. Conoscere questa gerarchia permette di scegliere il segno giusto in base al grado di separazione che si vuole marcare.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SEZIONE 2 · VIRGOLA -->
+<section id="s-virgola" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">2. La virgola <span class="pmark">,</span></h2>
+      <p class="sec-subtitle">El signo más versátil y, paradójicamente, el más maltratado</p>
+
+      <div class="def-box">
+        La <b>virgola</b> marca la pausa más débil del sistema. Su uso correcto exige un razonamiento <span class="hl">sintáctico</span>, no fonético: no se pone "donde se respira", sino donde la estructura lo requiere. El italiano C1 distingue cuidadosamente entre usos <em>obligatorios</em>, usos <em>opcionales</em> de estilo, y usos <em>terminantemente prohibidos</em>.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="showChip('cv-elenchi',this)">Elenchi</button>
+        <button class="chip" onclick="showChip('cv-subord',this)">Subordinate</button>
+        <button class="chip" onclick="showChip('cv-incisi',this)">Incisi</button>
+        <button class="chip" onclick="showChip('cv-conn',this)">Connettivi</button>
+        <button class="chip" onclick="showChip('cv-disloc',this)">Dislocazione</button>
+        <button class="chip" onclick="showChip('cv-vietati',this)">Usi vietati</button>
+      </div>
+
+      <!-- ELENCHI -->
+      <div id="cv-elenchi" class="chip-panel active">
+        <h3>Separare gli elementi di un'enumerazione</h3>
+        <p><span class="tag tag-form">obbligatorio</span> La virgola separa gli elementi di una lista. <span class="hl">Regola fondamentale:</span> in italiano (come in spagnolo) <b>non si mette virgola davanti all'ultimo elemento</b> introdotto da <em>e</em>, <em>o</em>, <em>né</em> (a differenza dell'inglese, che usa la "Oxford comma").</p>
+
+        <div class="example-block">
+          <div class="ex-it">Ho comprato pane<em>,</em> latte<em>,</em> uova e formaggio.</div>
+          <div class="ex-es">Compré pan, leche, huevos y queso.</div>
+          <div class="ex-note">Nessuna virgola prima di "e formaggio".</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">La conferenza ha affrontato temi politici<em>,</em> economici<em>,</em> sociali e culturali.</div>
+          <div class="ex-es">La conferencia abordó temas políticos, económicos, sociales y culturales.</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Non ha detto né "sì"<em>,</em> né "no"<em>,</em> né "forse".</div>
+          <div class="ex-es">No dijo ni "sí", ni "no", ni "quizás".</div>
+          <div class="ex-note">Con <em>né</em> ripetuto si mette la virgola tra ogni elemento.</div>
+        </div>
+
+        <div class="note-box"><b>Eccezione stilistica:</b> nelle liste lunghe o complesse, alcuni autori italiani mettono la virgola davanti a <em>e</em> per evitare ambiguità, sul modello inglese. È un uso minoritario, ma accettato in prosa molto curata: <em>Sono venuti Marco, mio cugino, e Luca</em> (≠ <em>Sono venuti Marco, mio cugino e Luca</em>, dove "mio cugino" potrebbe essere apposizione di Marco).</div>
+      </div>
+
+      <!-- SUBORDINATE -->
+      <div id="cv-subord" class="chip-panel">
+        <h3>Separare proposizioni subordinate anteposte</h3>
+        <p><span class="tag tag-form">obbligatorio se estese</span> Quando una proposizione subordinata di una certa estensione <span class="hl">precede</span> la principale, la virgola le separa. Se la subordinata è breve, la virgola è facoltativa; se è lunga o composita, è praticamente obbligatoria.</p>
+
+        <div class="example-block">
+          <div class="ex-it">Quando arrivò il messaggero con la notizia tanto attesa<em>,</em> tutti tacquero.</div>
+          <div class="ex-es">Cuando llegó el mensajero con la noticia tan esperada, todos callaron.</div>
+          <div class="ex-note">Subordinata temporale lunga: virgola obbligatoria.</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Se piove non usciamo. <span class="dim">/</span> Se piove<em>,</em> non usciamo.</div>
+          <div class="ex-es">Si llueve no salimos. / Si llueve, no salimos.</div>
+          <div class="ex-note">Subordinata breve: virgola facoltativa.</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Sebbene avesse studiato a lungo e con grande impegno<em>,</em> non riuscì a superare l'esame.</div>
+          <div class="ex-es">Aunque había estudiado mucho y con gran empeño, no logró aprobar el examen.</div>
+        </div>
+
+        <div class="warn-box"><span class="ico">⚠️</span><div>Quando la subordinata <span class="hl">segue</span> la principale, la virgola di solito <b>non si mette</b>: <em>Tutti tacquero quando arrivò il messaggero</em> (no <em>*Tutti tacquero, quando…</em>). Si mette solo se l'autore vuole marcare un'enfasi o un commento aggiunto.</div></div>
+      </div>
+
+      <!-- INCISI -->
+      <div id="cv-incisi" class="chip-panel">
+        <h3>Delimitare incisi (informazione parentetica)</h3>
+        <p><span class="tag tag-form">obbligatorio</span> Un <em>inciso</em> es una información secundaria que se intercala en la oración. Se delimita con <b>dos virgolas</b> (apertura y cierre del inciso). Olvidar la segunda virgola es uno de los errores más frecuentes.</p>
+
+        <div class="example-block">
+          <div class="ex-it">Marco<em>,</em> che abita a Roma<em>,</em> è arrivato ieri.</div>
+          <div class="ex-es">Marco, que vive en Roma, llegó ayer.</div>
+          <div class="ex-note">Relativa <b>non restrittiva</b>: aporta información accessoria.</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">La professoressa Rossi<em>,</em> esperta di linguistica romanza<em>,</em> ha tenuto una conferenza memorabile.</div>
+          <div class="ex-es">La profesora Rossi, experta en lingüística románica, dio una conferencia memorable.</div>
+          <div class="ex-note">Apposizione esplicativa.</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">L'esame<em>,</em> a quanto pare<em>,</em> sarà più difficile del previsto.</div>
+          <div class="ex-es">El examen, según parece, será más difícil de lo previsto.</div>
+          <div class="ex-note">Inciso modale ("a quanto pare", "per così dire", "in fin dei conti"…).</div>
+        </div>
+
+        <div class="warn-box"><span class="ico">⚠️</span><div><b>Relativa restrittiva vs. non restrittiva:</b> la differenza è cruciale.<br>
+          • <em>Gli studenti che hanno superato l'esame possono iscriversi.</em> (restrittiva, sin virgolas: solo quelli che hanno superato)<br>
+          • <em>Gli studenti, che hanno superato l'esame, possono iscriversi.</em> (non restrittiva, con virgolas: tutti gli studenti, e per inciso hanno superato).<br>
+          Le due frasi hanno significato diverso!</div></div>
+      </div>
+
+      <!-- CONNETTIVI -->
+      <div id="cv-conn" class="chip-panel">
+        <h3>Dopo connettivi a inizio frase o paragrafo</h3>
+        <p><span class="tag tag-form">obbligatorio</span> Quando un connettivo testuale apre la frase, è seguito da virgola. È una convenzione molto rigorosa nella prosa formale e accademica italiana.</p>
+
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Connettivo</th><th>Valore</th><th>Esempio</th></tr></thead>
+            <tbody>
+              <tr><td class="tbl-pron">Tuttavia,</td><td>opposizione</td><td><em>Tuttavia, non condivido la sua tesi.</em></td></tr>
+              <tr><td class="tbl-pron">Inoltre,</td><td>aggiunta</td><td><em>Inoltre, dobbiamo considerare i costi.</em></td></tr>
+              <tr><td class="tbl-pron">Per contro,</td><td>contrasto</td><td><em>Per contro, i benefici sono evidenti.</em></td></tr>
+              <tr><td class="tbl-pron">Pertanto,</td><td>conseguenza</td><td><em>Pertanto, occorre intervenire subito.</em></td></tr>
+              <tr><td class="tbl-pron">In effetti,</td><td>conferma</td><td><em>In effetti, i dati lo confermano.</em></td></tr>
+              <tr><td class="tbl-pron">D'altra parte,</td><td>contrappunto</td><td><em>D'altra parte, non tutti sono d'accordo.</em></td></tr>
+              <tr><td class="tbl-pron">In conclusione,</td><td>chiusura</td><td><em>In conclusione, la riforma è necessaria.</em></td></tr>
+              <tr><td class="tbl-pron">Cionondimeno,</td><td>concessione</td><td><em>Cionondimeno, la decisione è stata presa.</em></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it"><em>Tuttavia,</em> la situazione resta complessa. <em>Inoltre,</em> i tempi stringono.</div>
+          <div class="ex-es">Sin embargo, la situación sigue siendo compleja. Además, el tiempo apremia.</div>
+        </div>
+      </div>
+
+      <!-- DISLOCAZIONE -->
+      <div id="cv-disloc" class="chip-panel">
+        <h3>Marcare la dislocazione a sinistra</h3>
+        <p><span class="tag tag-inf">marcato</span> La <em>dislocazione a sinistra</em> è una struttura tipica dell'italiano in cui un elemento (l'oggetto, un complemento) viene anteposto al verbo per essere tematizzato, e ripreso da un pronome clitico. La virgola può separare l'elemento dislocato dal resto.</p>
+
+        <div class="example-block">
+          <div class="ex-it">Il libro<em>,</em> l'ho letto ieri.</div>
+          <div class="ex-es">El libro, lo leí ayer.</div>
+          <div class="ex-note">Tema dislocato + ripresa pronominale (<em>l'</em>).</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">A Maria<em>,</em> le ho già parlato della questione.</div>
+          <div class="ex-es">A María, ya le hablé del asunto.</div>
+        </div>
+
+        <div class="example-block">
+          <div class="ex-it">Di soldi<em>,</em> non ne ho più.</div>
+          <div class="ex-es">De dinero, ya no me queda.</div>
+        </div>
+
+        <div class="note-box"><b>Differenza con il complemento oggetto normale:</b> in <em>Ho letto il libro</em> non c'è ripresa pronominale; in <em>Il libro, l'ho letto</em> c'è. La virgola accompagna la struttura dislocata e la rende tipograficamente riconoscibile. (Vedi anche la scheda <em>grammatica_dislocazione.html</em>.)</div>
+      </div>
+
+      <!-- USI VIETATI -->
+      <div id="cv-vietati" class="chip-panel">
+        <h3>Usi vietati della virgola</h3>
+        <p><span class="tag tag-form">errori frequenti</span> Sono gli errori più tipici dell'ispanofono in fase di apprendimento. L'italiano è più rigoroso dello spagnolo nel proibire la virgola in certe posizioni sintattiche.</p>
+
+        <h4>MAI tra soggetto e verbo</h4>
+        <div class="trap-card">
+          <div class="trap-card-header"><span class="trap-name">Soggetto + virgola + verbo</span></div>
+          <div class="trap-vs">
+            <div class="trap-wrong">Marco, studia all'università di Bologna.</div>
+            <div class="trap-right">Marco studia all'università di Bologna.</div>
+          </div>
+          <div class="trap-expl">Il soggetto è legato al verbo: nessuna pausa li può separare. Eccezione: se tra il soggetto e il verbo si inserisce un <em>inciso</em>, allora le virgole delimitano l'inciso (non separano soggetto e verbo): <em>Marco, che è mio cugino, studia a Bologna</em>.</div>
+        </div>
+
+        <h4>MAI tra verbo e complemento oggetto diretto</h4>
+        <div class="trap-card">
+          <div class="trap-card-header"><span class="trap-name">Verbo + virgola + oggetto</span></div>
+          <div class="trap-vs">
+            <div class="trap-wrong">Ho letto, il libro che mi hai prestato.</div>
+            <div class="trap-right">Ho letto il libro che mi hai prestato.</div>
+          </div>
+          <div class="trap-expl">Il complemento oggetto è strettamente legato al verbo. Nessuna virgola li può separare. Stesso principio per il complemento di termine e per gli altri complementi diretti.</div>
+        </div>
+
+        <h4>MAI prima del che relativo restrittivo</h4>
+        <div class="trap-card">
+          <div class="trap-card-header"><span class="trap-name">Relativa restrittiva con virgola</span></div>
+          <div class="trap-vs">
+            <div class="trap-wrong">Gli studenti, che hanno superato l'esame possono iscriversi al corso.</div>
+            <div class="trap-right">Gli studenti che hanno superato l'esame possono iscriversi al corso.</div>
+          </div>
+          <div class="trap-expl">La relativa <span class="hl">restrittiva</span> (che identifica/seleziona un sottoinsieme) NON si separa con virgola. Solo la relativa <span class="hl">non restrittiva</span> (esplicativa, aggiuntiva) viene racchiusa tra virgole. La differenza cambia il senso della frase.</div>
+        </div>
+
+        <h4>MAI tra congiunzione e clausola breve</h4>
+        <div class="trap-card">
+          <div class="trap-card-header"><span class="trap-name">Congiunzione + virgola</span></div>
+          <div class="trap-vs">
+            <div class="trap-wrong">Penso che, sia una buona idea.</div>
+            <div class="trap-right">Penso che sia una buona idea.</div>
+          </div>
+          <div class="trap-expl">Dopo <em>che, perché, se, quando, sebbene</em>… non si mette virgola, a meno che non si apra un inciso subito dopo (<em>Penso che, in fin dei conti, sia una buona idea</em>).</div>
+        </div>
+
+        <div class="warn-box"><span class="ico">🎯</span><div><b>Regola d'oro:</b> la virgola non si mette "dove si fa una pausa parlando", ma <span class="hl">dove la struttura sintattica lo permette o lo richiede</span>. Se separa due elementi che la sintassi tiene insieme (soggetto-verbo, verbo-oggetto, antecedente-relativa restrittiva), è un errore — anche se l'orecchio suggerisce una pausa.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEZIONE 3 · PUNTO E VIRGOLA / DUE PUNTI -->
+<section id="s-pevdp" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">3. Il punto e virgola <span class="pmark">;</span> e i due punti <span class="pmark">:</span></h2>
+      <p class="sec-subtitle">I segni del registro formale e dell'argomentazione strutturata</p>
+
+      <div class="def-box">
+        Estos dos signos son la <span class="hl">marca distintiva del italiano scritto formale</span>. El <b>punto y coma</b> coordina ideas estrechamente vinculadas; los <b>dos puntos</b> introducen, explican o concluyen. Su uso correcto eleva inmediatamente el registro de un texto y es exigido en cualquier prueba C1, ensayo académico o artículo periodístico.
+      </div>
+
+      <h3>3.1 Il punto e virgola (;)</h3>
+
+      <p><span class="tag tag-form">formale</span> <span class="tag tag-bur">accademico</span> El <b>punto y coma</b> es una pausa <span class="hl">media</span>: más fuerte que la virgola, más débil que el punto. Tiene tres usos principales en italiano formal.</p>
+
+      <h4>a) Separare proposizioni coordinate semanticamente vicine</h4>
+      <p>Cuando dos oraciones independientes están <b>estrechamente relacionadas</b> en su contenido —tanto que un punto las separaría demasiado—, pero son lo suficientemente extensas para que una coma resulte insuficiente, se usa el punto y coma.</p>
+
+      <div class="example-block">
+        <div class="ex-it">La situazione economica è migliorata negli ultimi mesi<em>;</em> permangono tuttavia gravi squilibri nel mercato del lavoro.</div>
+        <div class="ex-es">La situación económica ha mejorado en los últimos meses; persisten, sin embargo, graves desequilibrios en el mercado laboral.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">I dati mostrano una crescita costante<em>;</em> i prossimi mesi saranno decisivi per consolidare il trend.</div>
+        <div class="ex-es">Los datos muestran un crecimiento constante; los próximos meses serán decisivos para consolidar la tendencia.</div>
+      </div>
+
+      <h4>b) Nelle enumerazioni strutturate con elementi complessi</h4>
+      <p>Cuando los elementos de una lista ya contienen <span class="hl">comas internas</span>, el punto y coma se usa para separar los elementos principales y evitar ambigüedad.</p>
+
+      <div class="example-block">
+        <div class="ex-it">Il programma prevede: una conferenza inaugurale, tenuta dal rettore<em>;</em> una sessione di lavori in plenaria, articolata in tre interventi<em>;</em> una tavola rotonda finale, con esperti internazionali<em>;</em> e un rinfresco nel chiostro.</div>
+        <div class="ex-es">El programa prevé: una conferencia inaugural, impartida por el rector; una sesión de trabajos en plenaria, articulada en tres intervenciones; una mesa redonda final, con expertos internacionales; y un cóctel en el claustro.</div>
+        <div class="ex-note">Senza il punto e virgola, le virgole interne creerebbero confusione.</div>
+      </div>
+
+      <h4>c) Separare argomenti paralleli nel saggio</h4>
+      <p>Para articular <span class="hl">razonamientos contrastivos o paralelos</span>, especialmente con conectores como <em>da un lato…dall'altro</em>, <em>non solo…ma anche</em>, <em>per un verso…per l'altro</em>.</p>
+
+      <div class="example-block">
+        <div class="ex-it">Da un lato, l'economia è cresciuta del 2,3%<em>;</em> dall'altro, la disuguaglianza sociale è aumentata in misura preoccupante.</div>
+        <div class="ex-es">Por un lado, la economía creció un 2,3%; por otro, la desigualdad social aumentó de manera preocupante.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">I sostenitori della riforma ne lodano la modernità<em>;</em> i critici, invece, ne denunciano l'improvvisazione.</div>
+        <div class="ex-es">Los partidarios de la reforma elogian su modernidad; los críticos, en cambio, denuncian su improvisación.</div>
+      </div>
+
+      <div class="warn-box"><span class="ico">🎯</span><div><b>Per l'ispanofono:</b> il punto e virgola è molto più frequente in italiano formale che in spagnolo. La prosa giornalistica e saggistica italiana ne fa un uso abbondante per <span class="hl">strutturare il ragionamento</span>. Imparare a usarlo è un passo fondamentale per scrivere in registro C1.</div></div>
+
+      <h3>3.2 I due punti (:)</h3>
+
+      <p><span class="tag tag-form">formale</span> <span class="tag tag-inf">neutro</span> I <b>due punti</b> anunciano qualcosa che segue: una lista, una spiegazione, una citazione, una conseguenza logica. La loro funzione è sempre <span class="hl">cataforica</span> (puntano in avanti).</p>
+
+      <h4>a) Introdurre un'enumerazione</h4>
+      <div class="example-block">
+        <div class="ex-it">I colori della bandiera italiana sono tre<em>:</em> verde, bianco e rosso.</div>
+        <div class="ex-es">Los colores de la bandera italiana son tres: verde, blanco y rojo.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">La cerimonia prevede quattro momenti<em>:</em> l'apertura, la lettura del verbale, la votazione e la chiusura.</div>
+        <div class="ex-es">La ceremonia prevé cuatro momentos: la apertura, la lectura del acta, la votación y el cierre.</div>
+      </div>
+
+      <h4>b) Introdurre una spiegazione o un chiarimento</h4>
+      <p>I due punti possono "aprire" un'argomentazione: ciò che segue spiega, illustra o precisa ciò che precede.</p>
+
+      <div class="example-block">
+        <div class="ex-it">Non poteva venire alla festa<em>:</em> aveva un impegno improrogabile in ufficio.</div>
+        <div class="ex-es">No podía venir a la fiesta: tenía un compromiso impostergable en la oficina.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">La sua reazione fu inaspettata<em>:</em> scoppiò a ridere senza alcuna spiegazione.</div>
+        <div class="ex-es">Su reacción fue inesperada: se echó a reír sin ninguna explicación.</div>
+      </div>
+
+      <h4>c) Introdurre il discorso diretto</h4>
+      <div class="example-block">
+        <div class="ex-it">Marco mi disse<em>:</em> «Non posso più sopportare questa situazione».</div>
+        <div class="ex-es">Marco me dijo: «No puedo seguir soportando esta situación».</div>
+        <div class="ex-note">Dopo i verba dicendi: <em>dire, affermare, sostenere, dichiarare, esclamare</em>.</div>
+      </div>
+
+      <h4>d) Enfatizzare una conclusione logica</h4>
+      <p>Uso <span class="hl">retorico</span> caratteristico della prosa filosofica e saggistica: i due punti annunciano una sentenza, una massima o una conclusione di forte impatto.</p>
+
+      <div class="example-block">
+        <div class="ex-it">Non si può cambiare il passato<em>:</em> bisogna guardare avanti.</div>
+        <div class="ex-es">No se puede cambiar el pasado: hay que mirar hacia delante.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">L'arte non imita la vita<em>:</em> la rivela.</div>
+        <div class="ex-es">El arte no imita la vida: la revela.</div>
+      </div>
+
+      <h4>e) In titoli e intestazioni</h4>
+      <div class="example-block">
+        <div class="ex-it"><em>Manzoni: la lingua della modernità</em></div>
+        <div class="ex-es">Manzoni: el idioma de la modernidad</div>
+        <div class="ex-note">Tipico nei titoli di libri, articoli, conferenze.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it"><em>Capitolo 3: La formazione dello Stato unitario</em></div>
+        <div class="ex-es">Capítulo 3: La formación del Estado unitario</div>
+      </div>
+
+      <div class="note-box"><b>Maiuscola o minuscola dopo i due punti?</b> In italiano, dopo i due punti si usa <span class="hl">minuscola</span>, tranne in tre casi: (1) quando seguono un discorso diretto («…»), (2) in titoli e intestazioni, (3) all'inizio di una nuova frase autonoma (uso raro). Si scrive: <em>I dati sono chiari: la crescita è in atto.</em> (minuscola), non <em>*I dati sono chiari: La crescita…</em>.</div>
+
+      <div class="warn-box"><span class="ico">⚠️</span><div><b>Non abusare dei due punti:</b> più di un paio per paragrafo crea uno stile sentenzioso e stancante. Alternare con punto fermo e punto e virgola per ottenere un ritmo variato.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SEZIONE 4 · PUNTO / SOSPENSIONE / ! ? -->
+<section id="s-punto" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">4. Punto fermo, puntini di sospensione, esclamativo e interrogativo</h2>
+      <p class="sec-subtitle">I segni di chiusura del periodo</p>
+
+      <div class="def-box">
+        Los signos de cierre marcan el <span class="hl">final del periodo sintáctico</span>. El <b>punto fermo</b> es el cierre neutro; los <b>puntini di sospensione</b> dejan algo en suspenso; el <b>esclamativo</b> e <b>interrogativo</b> añaden modalidad enunciativa.
+      </div>
+
+      <h3>4.1 Il punto fermo (.)</h3>
+      <p><span class="tag tag-inf">neutro</span> Marca la <span class="hl">pausa piena</span> tra periodi indipendenti. Es el final natural de una idea completa.</p>
+
+      <div class="example-block">
+        <div class="ex-it">Il treno è partito in orario<em>.</em> I passeggeri sono arrivati a destinazione senza problemi<em>.</em></div>
+        <div class="ex-es">El tren salió a la hora. Los pasajeros llegaron a destino sin problemas.</div>
+      </div>
+
+      <h4>Evitare i periodi-mostro (sin punto fermo)</h4>
+      <p>Uno degli errori più gravi nello scritto formale è l'<em>encadenamiento</em>: frasi lunghissime collegate da virgole o congiunzioni senza punto fermo. Crea un effetto di confusione e segnala registro orale.</p>
+
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Concatenazione senza punto fermo</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">Ieri sono andato al cinema con Maria e abbiamo visto un film bellissimo poi siamo andati a cena e abbiamo parlato a lungo del nostro futuro e dei progetti che vorremmo realizzare.</div>
+          <div class="trap-right">Ieri sono andato al cinema con Maria e abbiamo visto un film bellissimo. Poi siamo andati a cena e abbiamo parlato a lungo del nostro futuro e dei progetti che vorremmo realizzare.</div>
+        </div>
+        <div class="trap-expl">Una frase di tre o quattro idee complete richiede almeno un punto fermo. Regola pratica: se il periodo supera le 30-35 parole o contiene più di due verbi principali coordinati, conviene spezzarlo.</div>
+      </div>
+
+      <h4>Punto fermo e a capo</h4>
+      <p>Dopo il punto fermo si va <span class="hl">a capo</span> se si chiude un paragrafo; si continua nella stessa riga se si chiude solo un periodo all'interno del paragrafo.</p>
+
+      <h3>4.2 I puntini di sospensione (…)</h3>
+      <p><span class="tag tag-inf">espressivo</span> <span class="tag tag-acc">letterario</span> I <b>puntini di sospensione</b> indicano sospensione, esitazione, discorso interrotto, omissione.</p>
+
+      <h4>a) Sospensione del pensiero</h4>
+      <div class="example-block">
+        <div class="ex-it">Non so cosa dire<em>…</em> mi mancano le parole.</div>
+        <div class="ex-es">No sé qué decir… me faltan las palabras.</div>
+      </div>
+
+      <h4>b) Esitazione, pausa enfatica</h4>
+      <div class="example-block">
+        <div class="ex-it">Allora<em>…</em> vediamo come affrontare la questione.</div>
+        <div class="ex-es">Entonces… veamos cómo abordar la cuestión.</div>
+      </div>
+
+      <h4>c) Discorso interrotto</h4>
+      <div class="example-block">
+        <div class="ex-it">«Se solo avessi saputo<em>…</em>» mormorò.</div>
+        <div class="ex-es">«Si solo hubiera sabido…» murmuró.</div>
+      </div>
+
+      <h4>d) Omissione in citazione</h4>
+      <p>Per indicare che si è omessa una parte di un testo citato, si usano i puntini, spesso tra parentesi quadre <b>[…]</b>.</p>
+
+      <div class="example-block">
+        <div class="ex-it">Dante scrive: «Nel mezzo del cammin di nostra vita <em>[…]</em> mi ritrovai per una selva oscura».</div>
+        <div class="ex-es">Dante escribe: «En medio del camino de nuestra vida […] me hallé en una selva oscura».</div>
+      </div>
+
+      <div class="warn-box"><span class="ico">⚠️</span><div><b>Regole tipografiche rigide:</b><br>
+        • SEMPRE <b>tre puntini</b>, mai due, mai quattro. Non si scrive <em>*..</em> né <em>*....</em>.<br>
+        • NON si combinano col punto fermo: si scrive <em>parole…</em>, non <em>*parole….</em>.<br>
+        • SI combinano col punto interrogativo o esclamativo: <em>davvero…?</em> / <em>basta…!</em><br>
+        • In molti tipografici, i puntini sono <span class="hl">attaccati</span> alla parola precedente (senza spazio), poi spazio prima della parola successiva.</div></div>
+
+      <h3>4.3 Il punto esclamativo (!) e il punto interrogativo (?)</h3>
+
+      <p><span class="tag tag-inf">modale</span> Marcano la modalità della frase: esclamativa (sorpresa, emozione, ordine enfatico) o interrogativa diretta.</p>
+
+      <div class="example-block">
+        <div class="ex-it">Che bella giornata<em>!</em></div>
+        <div class="ex-es">¡Qué día tan bonito!</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">A che ora arrivi<em>?</em></div>
+        <div class="ex-es">¿A qué hora llegas?</div>
+      </div>
+
+      <div class="warn-box"><span class="ico">🎯</span><div><b>Differenza fondamentale con lo spagnolo:</b> in italiano <span class="hl">NON si apre</span> la frase con <em>¡</em> né con <em>¿</em>. Si usano solo i segni di chiusura, alla fine della frase. Scrivere <em>¡Che bello!</em> o <em>¿Cosa fai?</em> è un errore tipografico immediato.</div></div>
+
+      <h4>Combinazioni e usi avanzati</h4>
+      <div class="example-block">
+        <div class="ex-it">Davvero<em>?!</em> Non ci posso credere.</div>
+        <div class="ex-es">¿En serio?! No me lo puedo creer.</div>
+        <div class="ex-note">Combinazione di sorpresa e interrogazione. Uso espressivo, evitare nel registro formale.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Mi chiese se sarei venuto<em>.</em></div>
+        <div class="ex-es">Me preguntó si vendría.</div>
+        <div class="ex-note">Interrogativa <span class="hl">indiretta</span>: NON si usa il punto interrogativo. Solo le dirette lo richiedono.</div>
+      </div>
+
+      <div class="note-box"><b>Registro formale:</b> il punto esclamativo deve essere usato con grande parsimonia nei testi accademici, giuridici, giornalistici. Più di uno o due per pagina suggerisce uno stile poco controllato. Mai due esclamativi di seguito (<em>*!!</em>) nello scritto formale.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SEZIONE 5 · VIRGOLETTE -->
+<section id="s-virgolette" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">5. Le virgolette <span class="pmark">« »</span> <span class="pmark">" "</span> <span class="pmark">' '</span></h2>
+      <p class="sec-subtitle">Citare, marcare, ironizzare</p>
+
+      <div class="def-box">
+        L'italiano dispone di <span class="hl">tre tipi di virgolette</span>, ciascuno con uso codificato: le <b>basse</b> o <em>caporali</em> (« »), le <b>alte</b> (" ") e le <b>singole</b> o <em>apici</em> (' '). La scelta non è arbitraria: segnala registro tipografico e tipo di citazione.
+      </div>
+
+      <h3>5.1 Le virgolette basse o «caporali» (« »)</h3>
+      <p><span class="tag tag-form">tipografia colta</span> Sono le virgolette <span class="hl">preferite nella tipografia italiana di qualità</span>: editoria, stampa, saggistica. Si usano per:</p>
+
+      <ul>
+        <li>Le <b>citazioni dirette</b> di parole pronunciate o scritte da altri.</li>
+        <li>I <b>titoli</b> di articoli, capitoli, canzoni (i titoli di libri vanno in corsivo).</li>
+        <li>Il <b>discorso diretto</b> nei dialoghi narrativi.</li>
+      </ul>
+
+      <div class="example-block">
+        <div class="ex-it">Il ministro ha dichiarato<em>:</em> «La riforma sarà approvata entro l'anno».</div>
+        <div class="ex-es">El ministro declaró: «La reforma será aprobada antes de fin de año».</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Nell'articolo «Il futuro dell'Europa», l'autore propone una nuova visione politica.</div>
+        <div class="ex-es">En el artículo «El futuro de Europa», el autor propone una nueva visión política.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">«Domani parto per Roma» annunciò Marco. «Tornerò tra una settimana».</div>
+        <div class="ex-es">«Mañana parto hacia Roma» anunció Marco. «Volveré dentro de una semana».</div>
+      </div>
+
+      <h3>5.2 Le virgolette alte o "doppie" (" ")</h3>
+      <p><span class="tag tag-inf">digitale</span> <span class="tag tag-bur">tecnico</span> Sono le virgolette più diffuse nei testi digitali, dove i caporali sono meno accessibili sulla tastiera. Si usano per:</p>
+
+      <ul>
+        <li>Citazioni in contesti meno formali o digitali.</li>
+        <li>Citazioni <span class="hl">all'interno</span> di altre citazioni segnalate con caporali.</li>
+        <li>Termini in senso ironico o metaforico.</li>
+      </ul>
+
+      <div class="example-block">
+        <div class="ex-it">Marco disse: «Il professore ha definito il libro "un capolavoro assoluto"».</div>
+        <div class="ex-es">Marco dijo: «El profesor calificó el libro de "obra maestra absoluta"».</div>
+        <div class="ex-note">Citazione dentro citazione: caporali esterni, virgolette alte interne.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Il suo cosiddetto "amico" non si è presentato alla riunione.</div>
+        <div class="ex-es">Su llamado "amigo" no se presentó a la reunión.</div>
+        <div class="ex-note">Uso ironico: le virgolette mettono in dubbio il termine.</div>
+      </div>
+
+      <h3>5.3 Le virgolette singole o «apici» (' ')</h3>
+      <p><span class="tag tag-acc">specialistico</span> Si usano per:</p>
+
+      <ul>
+        <li>Citazioni <span class="hl">al terzo livello</span> (citazione dentro citazione dentro citazione).</li>
+        <li>Indicare il <b>significato</b> di una parola: <em>casa</em> significa 'abitazione'.</li>
+        <li>Termini tecnici o gergali in contesti specialistici.</li>
+      </ul>
+
+      <div class="example-block">
+        <div class="ex-it">La parola <em>libertà</em> deriva dal latino <em>libertas</em>, cioè 'condizione dell'essere libero'.</div>
+        <div class="ex-es">La palabra <em>libertà</em> deriva del latín <em>libertas</em>, esto es, 'condición de ser libre'.</div>
+        <div class="ex-note">Apici per dare il significato.</div>
+      </div>
+
+      <h3>5.4 Uso metalinguistico</h3>
+      <p>Quando si parla di una parola <span class="hl">in quanto parola</span> (non in quanto referente del mondo), si racchiude tra virgolette (caporali o alte) per marcarla.</p>
+
+      <div class="example-block">
+        <div class="ex-it">Il termine «sostenibile» è spesso abusato nel discorso pubblico contemporaneo.</div>
+        <div class="ex-es">El término «sostenible» es a menudo abusado en el discurso público contemporáneo.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">La differenza tra «implicare» e «inferire» è fondamentale in logica.</div>
+        <div class="ex-es">La diferencia entre «implicar» e «inferir» es fundamental en lógica.</div>
+      </div>
+
+      <div class="note-box"><b>Alternativa al corsivo:</b> il <em>corsivo</em> è un'altra opzione per il metalinguistico, soprattutto in testi accademici. La convenzione varia per casa editrice. Comunque, NON si mescolano corsivo e virgolette per la stessa funzione nello stesso testo.</div>
+
+      <h3>5.5 Gerarchia tipografica delle virgolette</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-nom">1° livello</span>
+        <span class="struct-text">« »</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-tag struct-verb">2° livello</span>
+        <span class="struct-text">" "</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-tag struct-nom">3° livello</span>
+        <span class="struct-text">' '</span>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Maria disse: «Mio padre mi ha sempre ripetuto: "Non fidarti delle 'verità assolute'"».</div>
+        <div class="ex-es">María dijo: «Mi padre siempre me repetía: "No te fíes de las 'verdades absolutas'"».</div>
+        <div class="ex-note">Citazione a tre livelli annidati.</div>
+      </div>
+
+      <div class="warn-box"><span class="ico">🎯</span><div><b>Per l'ispanofono:</b> lo spagnolo usa principalmente le virgolette alte (" ") e tollera anche i caporali (« »). L'italiano <span class="hl">preferisce nettamente i caporali</span> nella prosa formale di qualità (giornali nazionali, saggi, narrativa pubblicata). Scrivere in italiano usando solo virgolette alte è accettabile ma marca un registro meno curato.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SEZIONE 6 · TRATTINI / PARENTESI -->
+<section id="s-trattini" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">6. Trattini e parentesi</h2>
+      <p class="sec-subtitle">Segnalare incisi, aggiunte, livelli di informazione</p>
+
+      <div class="def-box">
+        I <b>trattini</b> e le <b>parentesi</b> sono segni di <span class="hl">delimitazione laterale</span>: aprono e chiudono una porzione di testo che si stacca dal flusso principale. La differenza tra di loro è di <em>forza</em> e di <em>registro</em>: dalle parentesi (più discrete) al trattino lungo (più enfatico).
+      </div>
+
+      <h3>6.1 Trattino breve (-)</h3>
+      <p><span class="tag tag-inf">neutro</span> Detto anche <em>trait d'union</em>. Si usa per:</p>
+
+      <h4>a) Parole composte e prefissi</h4>
+      <div class="example-block">
+        <div class="ex-it">Una crisi <em>socio-economica</em> di vasta portata.</div>
+        <div class="ex-es">Una crisis socioeconómica de gran alcance.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Un <em>ex-presidente</em>, una conferenza <em>italo-francese</em>, un'analisi <em>politico-culturale</em>.</div>
+        <div class="ex-es">Un ex presidente, una conferencia italofrancesa, un análisis político-cultural.</div>
+      </div>
+
+      <h4>b) Divisione di parola a fine riga</h4>
+      <div class="example-block">
+        <div class="ex-it">…la situazione attua-<br>le richiede misure straordinarie.</div>
+        <div class="ex-note">Quando la parola non entra alla fine della riga, si spezza con trattino breve secondo regole di sillabazione.</div>
+      </div>
+
+      <h4>c) Intervalli e relazioni</h4>
+      <div class="example-block">
+        <div class="ex-it">Il convegno si terrà dal 15 al 20 marzo (15<em>-</em>20 marzo).</div>
+        <div class="ex-es">El congreso se celebrará del 15 al 20 de marzo (15-20 de marzo).</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">La relazione <em>insegnante-studente</em> è cambiata negli ultimi decenni.</div>
+        <div class="ex-es">La relación profesor-alumno ha cambiado en las últimas décadas.</div>
+      </div>
+
+      <h3>6.2 Trattino lungo (— / lineetta)</h3>
+      <p><span class="tag tag-acc">letterario</span> <span class="tag tag-form">formale</span> Detto anche <em>lineetta</em> o <em>em dash</em>. Marca un <span class="hl">inciso forte</span>, più enfatico delle virgole e meno discreto delle parentesi. Si usa in coppia per delimitare un inciso, o singolarmente per introdurre un'interruzione o una conclusione brusca.</p>
+
+      <h4>a) Inciso forte (in coppia)</h4>
+      <div class="example-block">
+        <div class="ex-it">La soluzione <em>—</em> se mai esiste <em>—</em> sarà complessa e richiederà tempo.</div>
+        <div class="ex-es">La solución —si es que existe— será compleja y requerirá tiempo.</div>
+        <div class="ex-note">Inciso più marcato di "La soluzione, se mai esiste, sarà complessa".</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Mai <em>—</em> e sottolineo mai <em>—</em> si dovrebbe mentire a un amico.</div>
+        <div class="ex-es">Nunca —y subrayo nunca— habría que mentir a un amigo.</div>
+        <div class="ex-note">Inciso enfatico per insistere su una sfumatura.</div>
+      </div>
+
+      <h4>b) Conclusione brusca (singolo)</h4>
+      <div class="example-block">
+        <div class="ex-it">Tutti pensavano che la riforma fosse impossibile <em>—</em> e invece passò.</div>
+        <div class="ex-es">Todos pensaban que la reforma era imposible —y, sin embargo, se aprobó.</div>
+      </div>
+
+      <h4>c) Dialogo narrativo (alternativo)</h4>
+      <p>In narrativa italiana, il trattino lungo può aprire le battute di dialogo, in alternativa alle virgolette caporali.</p>
+
+      <div class="example-block">
+        <div class="ex-it"><em>—</em> Sei pronto a partire? chiese Marco.<br><em>—</em> Sì, da un pezzo. rispose Luca.</div>
+        <div class="ex-es">— ¿Estás listo para partir? preguntó Marco.<br>— Sí, hace tiempo. respondió Luca.</div>
+      </div>
+
+      <div class="warn-box"><span class="ico">⚠️</span><div><b>Trattino breve vs. trattino lungo:</b> son segni <span class="hl">tipograficamente diversi</span>. Il trattino breve (-) si attacca alle parole (<em>socio-economico</em>); il trattino lungo (—) ha spazi ai due lati (<em>parola — inciso — parola</em>). Su tastiera italiana si ottiene con combinazioni di tasti (Alt+0151 in Windows, Opt+Shift+Trattino in Mac).</div></div>
+
+      <h3>6.3 Parentesi tonde ( )</h3>
+      <p><span class="tag tag-inf">neutro</span> Le <b>parentesi tonde</b> racchiudono informazione <span class="hl">accessoria</span>, di basso rilievo: chiarimenti, esempi, riferimenti, aggiunte secondarie. La frase deve restare grammaticalmente coerente anche eliminando il contenuto tra parentesi.</p>
+
+      <div class="example-block">
+        <div class="ex-it">Il film (uscito nel 1960) ottenne un grande successo internazionale.</div>
+        <div class="ex-es">La película (estrenada en 1960) obtuvo un gran éxito internacional.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Manzoni (1785-1873) è considerato il padre del romanzo italiano moderno.</div>
+        <div class="ex-es">Manzoni (1785-1873) es considerado el padre de la novela italiana moderna.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">La teoria della relatività (Einstein, 1915) ha rivoluzionato la fisica.</div>
+        <div class="ex-es">La teoría de la relatividad (Einstein, 1915) revolucionó la física.</div>
+        <div class="ex-note">Riferimento bibliografico in stile sintetico.</div>
+      </div>
+
+      <div class="note-box"><b>Punteggiatura interna alle parentesi:</b> se il contenuto tra parentesi è una frase completa autonoma, il punto fermo va <span class="hl">dentro</span>. Se è solo un complemento, il punto fermo va <span class="hl">fuori</span>.<br>
+        • <em>Il film fu premiato. (Riceveremo i dati ufficiali domani.)</em> ← frase autonoma, punto interno.<br>
+        • <em>Il film fu premiato a Cannes (1960).</em> ← complemento, punto esterno.</div>
+
+      <h3>6.4 Parentesi quadre [ ]</h3>
+      <p><span class="tag tag-acc">editoriale</span> Le <b>parentesi quadre</b> si usano principalmente per <span class="hl">interventi editoriali</span> all'interno di una citazione altrui: aggiunte, chiarimenti, omissioni segnalate.</p>
+
+      <h4>a) Aggiunta esplicativa in citazione</h4>
+      <div class="example-block">
+        <div class="ex-it">Manzoni scriveva: «Egli [Renzo] si trovò solo in un campo deserto».</div>
+        <div class="ex-es">Manzoni escribía: «Él [Renzo] se encontró solo en un campo desierto».</div>
+        <div class="ex-note">[Renzo] è un'aggiunta dell'editore per chiarire l'antecedente del pronome.</div>
+      </div>
+
+      <h4>b) Omissione segnalata: […]</h4>
+      <div class="example-block">
+        <div class="ex-it">«Nel mezzo del cammin di nostra vita <em>[…]</em> mi ritrovai per una selva oscura, ché la diritta via era smarrita».</div>
+        <div class="ex-es">«En medio del camino de nuestra vida […] me hallé en una selva oscura, porque el camino recto había perdido».</div>
+        <div class="ex-note">I tre puntini tra quadre indicano che si è omessa una porzione di testo.</div>
+      </div>
+
+      <h4>c) [sic] per segnalare un errore nell'originale</h4>
+      <div class="example-block">
+        <div class="ex-it">Lo studente scrisse: «Andò al cinema con suo padri <em>[sic]</em>».</div>
+        <div class="ex-es">El estudiante escribió: «Fue al cine con sus padri [sic]».</div>
+        <div class="ex-note">[sic] (latino "così") indica che l'errore è dell'originale, non di chi cita.</div>
+      </div>
+
+      <h3>6.5 Gerarchia trattino-parentesi</h3>
+      <div class="struct-diag">
+        <span class="struct-tag struct-verb">VIRGOLE</span>
+        <span class="struct-text">discrete</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-tag struct-nom">PARENTESI</span>
+        <span class="struct-text">accessorie</span>
+        <span class="struct-arrow">→</span>
+        <span class="struct-tag struct-verb">TRATTINI LUNGHI</span>
+        <span class="struct-text">enfatici</span>
+      </div>
+      <p class="dim">Lo stesso inciso può essere segnalato in tre modi, con forza crescente: <em>Marco, mio cugino, è arrivato</em> / <em>Marco (mio cugino) è arrivato</em> / <em>Marco — mio cugino — è arrivato</em>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SEZIONE 7 · DIFFERENZE IT/ES -->
+<section id="s-diff-es" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">7. Differenze sistematiche tra italiano e spagnolo</h2>
+      <p class="sec-subtitle">Le divergenze chiave che l'ispanofono deve interiorizzare</p>
+
+      <div class="def-box">
+        Italiano e spagnolo condividono l'inventario dei segni, ma divergono in punti precisi della <span class="hl">convenzione tipografica</span> e dell'<span class="hl">applicazione sintattica</span>. Questa tabella raccoglie le differenze sistematiche più importanti per l'ispanofono che scrive in italiano a livello C1.
+      </div>
+
+      <h3>7.1 Tabella sistematica delle differenze</h3>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Aspetto</th><th>Italiano</th><th>Spagnolo</th><th>Esempio</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Apertura dell'esclamazione</td>
+              <td class="ok-cell">Solo ! finale</td>
+              <td class="warn-cell">¡…!</td>
+              <td><em>Che bello!</em> vs. <em>¡Qué bonito!</em></td>
+            </tr>
+            <tr>
+              <td>Apertura dell'interrogazione</td>
+              <td class="ok-cell">Solo ? finale</td>
+              <td class="warn-cell">¿…?</td>
+              <td><em>Dove vai?</em> vs. <em>¿Adónde vas?</em></td>
+            </tr>
+            <tr>
+              <td>Virgolette preferite (formale)</td>
+              <td class="ok-cell">« » (caporali)</td>
+              <td class="warn-cell">" " (alte) o « » (occasionali)</td>
+              <td><em>«Sì»</em> vs. <em>"Sí"</em></td>
+            </tr>
+            <tr>
+              <td>Virgola tra soggetto e verbo</td>
+              <td class="err-cell">SEMPRE errore</td>
+              <td class="warn-cell">A volte tollerata (con soggetti lunghi)</td>
+              <td><em>*Marco, studia</em> ≠ <em>Marco estudia</em></td>
+            </tr>
+            <tr>
+              <td>Virgola tra verbo e oggetto diretto</td>
+              <td class="err-cell">SEMPRE errore</td>
+              <td class="warn-cell">A volte tollerata</td>
+              <td><em>*Ho letto, il libro</em></td>
+            </tr>
+            <tr>
+              <td>Punto e virgola nella prosa formale</td>
+              <td class="ok-cell">Molto frequente</td>
+              <td class="warn-cell">Meno frequente, percepito come più "letterario"</td>
+              <td>Saggi italiani ne abbondano</td>
+            </tr>
+            <tr>
+              <td>Trattino lungo (—) come inciso</td>
+              <td class="ok-cell">Frequente</td>
+              <td class="warn-cell">Frequente, simile</td>
+              <td><em>La verità — sempre — emerge.</em></td>
+            </tr>
+            <tr>
+              <td>Trattino lungo per dialoghi</td>
+              <td class="warn-cell">Alternativo ai caporali</td>
+              <td class="ok-cell">Standard nelle narrazioni</td>
+              <td><em>— Sei pronto?</em></td>
+            </tr>
+            <tr>
+              <td>Maiuscola dopo i due punti</td>
+              <td class="ok-cell">Minuscola (di norma)</td>
+              <td class="ok-cell">Minuscola (di norma)</td>
+              <td><em>Tre colori: rosso, bianco, verde.</em></td>
+            </tr>
+            <tr>
+              <td>Numerazione decimale</td>
+              <td class="ok-cell">Virgola (3,14)</td>
+              <td class="ok-cell">Virgola (3,14)</td>
+              <td><em>π ≈ 3,14</em></td>
+            </tr>
+            <tr>
+              <td>Separatore di migliaia</td>
+              <td class="ok-cell">Punto (1.000)</td>
+              <td class="ok-cell">Punto o spazio (1.000 / 1 000)</td>
+              <td><em>Mille = 1.000</em></td>
+            </tr>
+            <tr>
+              <td>Discorso indiretto (apertura)</td>
+              <td class="ok-cell">: «…»</td>
+              <td class="ok-cell">: "…"</td>
+              <td><em>Disse: «Vengo»</em></td>
+            </tr>
+            <tr>
+              <td>Doppia interrogazione</td>
+              <td class="warn-cell">?! (espressiva, rara)</td>
+              <td class="warn-cell">¿¡…!?</td>
+              <td><em>Davvero?!</em></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>7.2 Le tre divergenze più letali per l'ispanofono</h3>
+
+      <h4>1. ¡ e ¿ non esistono in italiano</h4>
+      <p>È <span class="hl">l'errore tipografico più immediato</span>. Anche su tastiera italiana il segno di apertura non viene proposto come parte del sistema. Scrivere <em>¡Che bello!</em> tradisce immediatamente l'ispanofono in qualsiasi testo italiano.</p>
+
+      <div class="example-block">
+        <div class="ex-it">Che giornata splendida<em>!</em> Hai visto<em>?</em></div>
+        <div class="ex-es">¡Qué día tan espléndido! ¿Has visto?</div>
+      </div>
+
+      <h4>2. Virgola tra soggetto e verbo: sempre vietata</h4>
+      <p>Lo spagnolo, specie con soggetti lunghi o segmentati, tollera occasionalmente la virgola tra soggetto e verbo. <span class="hl">L'italiano no, mai</span>. Anche con soggetti lunghissimi: nessuna virgola.</p>
+
+      <div class="trap-card">
+        <div class="trap-card-header"><span class="trap-name">Soggetto lungo + verbo</span></div>
+        <div class="trap-vs">
+          <div class="trap-wrong">La decisione presa ieri sera dal consiglio di amministrazione della società, ha sorpreso tutti i dipendenti.</div>
+          <div class="trap-right">La decisione presa ieri sera dal consiglio di amministrazione della società ha sorpreso tutti i dipendenti.</div>
+        </div>
+        <div class="trap-expl">Anche con un soggetto di 15 parole, la virgola tra soggetto e verbo resta vietata. La soluzione, se la frase è troppo lunga, è <span class="hl">riformularla</span> spezzandola o riorganizzandola.</div>
+      </div>
+
+      <h4>3. Punto e virgola: più frequente di quanto si pensi</h4>
+      <p>Nello scritto formale italiano (giornalismo, saggistica, accademia), il punto e virgola è uno strumento <span class="hl">vivo e frequente</span>. L'ispanofono che scrive in italiano tende a evitarlo, e questo abbassa il registro del testo.</p>
+
+      <div class="example-block">
+        <div class="ex-it">L'economia italiana mostra segnali contrastanti<em>;</em> da un lato la produzione cresce, dall'altro i consumi ristagnano.</div>
+        <div class="ex-es">La economía italiana muestra señales contrastantes; por un lado la producción crece, por otro el consumo se estanca.</div>
+        <div class="ex-note">Sostituire il punto e virgola con un punto fermo sarebbe corretto ma renderebbe più frammentario il discorso.</div>
+      </div>
+
+      <div class="warn-box"><span class="ico">🎯</span><div><b>Strategia per l'ispanofono:</b> rileggere il proprio testo italiano cercando attivamente (1) eventuali <em>¡</em> o <em>¿</em> dimenticati da cancellare; (2) virgole sospette tra soggetto e verbo o tra verbo e oggetto; (3) opportunità di sostituire un punto fermo o una virgola con un punto e virgola per migliorare il flusso.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SEZIONE 8 · TRAPPOLE -->
+<section id="s-trappole" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">8. Le trappole più frequenti per l'ispanofono</h2>
+      <p class="sec-subtitle">Errori sistematici, con confronto giusto/sbagliato e spiegazione</p>
+
+      <div class="def-box">
+        Questa sezione raccoglie i <span class="hl">15 errori di punteggiatura più frequenti</span> commessi da chi scrive in italiano partendo dallo spagnolo. Per ciascuno: forma errata, forma corretta e spiegazione del meccanismo dell'errore.
+      </div>
+
+      <div id="traps-container"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SEZIONE 9 · TESTO MODELLO -->
+<section id="s-modello" class="sec-block">
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <h2 class="sec-title">9. Testo modello con punteggiatura annotata</h2>
+      <p class="sec-subtitle">Analisi funzionale di ogni segno in un testo C1</p>
+
+      <div class="def-box">
+        Il testo seguente è un brano saggistico tipico del registro formale italiano. Ogni segno di punteggiatura è seguito da una nota analitica che indica la sua funzione precisa. È il modo migliore per <span class="hl">interiorizzare il sistema</span>: vedere ogni signo "al lavoro" nel suo contesto.
+      </div>
+
+      <h3>Testo integrale</h3>
+
+      <div class="example-block">
+        <div class="ex-it" style="line-height:1.8">
+          La questione dell'identità europea<em>,</em> tema ricorrente del dibattito contemporaneo<em>,</em> resta a tutt'oggi irrisolta<em>.</em> Da un lato<em>,</em> i sostenitori di un'integrazione politica più profonda invocano la necessità di una <em>«</em>cittadinanza condivisa<em>»;</em> dall'altro<em>,</em> i fautori delle sovranità nazionali ne denunciano i rischi<em>.</em> Il paradosso è evidente<em>:</em> l'Europa nasce come progetto di pace e prosperità<em>,</em> ma fatica a definire ciò che la unisce al di là di interessi economici contingenti<em>.</em><br><br>
+          Alcuni intellettuali <em>—</em> tra cui Habermas e Derrida <em>—</em> hanno cercato di proporre una risposta<em>.</em> Secondo loro<em>,</em> l'identità europea non andrebbe cercata in un fondamento storico univoco <em>(</em>cosa peraltro impossibile<em>),</em> bensì in un <em>«</em>patriottismo costituzionale<em>»</em><em>:</em> un'adesione condivisa ai valori del costituzionalismo democratico<em>.</em> La tesi è suggestiva<em>;</em> tuttavia<em>,</em> non manca di critici<em>,</em> che la accusano di astrattezza<em>.</em><br><br>
+          E allora<em>?</em> Forse la risposta più onesta è quella di Eco<em>:</em> <em>«</em>L'Europa è una vocazione, non un fatto<em>»</em><em>.</em> Una vocazione che<em>,</em> giorno dopo giorno<em>,</em> si costruisce o si abbandona<em>…</em>
+        </div>
+      </div>
+
+      <h3>Analisi punto per punto</h3>
+
+      <div class="example-block">
+        <div class="ex-it">La questione dell'identità europea<em>,</em> tema ricorrente del dibattito contemporaneo<em>,</em> resta a tutt'oggi irrisolta<em>.</em></div>
+        <ul class="analysis-list">
+          <li><b>virgola 1:</b> apertura di un inciso appositivo ("tema ricorrente…")</li>
+          <li><b>virgola 2:</b> chiusura dello stesso inciso. Le due virgole agiscono in coppia.</li>
+          <li><b>punto fermo:</b> chiusura del primo periodo. Pausa piena.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Da un lato<em>,</em> i sostenitori di un'integrazione politica più profonda invocano la necessità di una <em>«</em>cittadinanza condivisa<em>»;</em> dall'altro<em>,</em> i fautori delle sovranità nazionali ne denunciano i rischi<em>.</em></div>
+        <ul class="analysis-list">
+          <li><b>virgola dopo "Da un lato":</b> connettivo testuale a inizio frase, sempre seguito da virgola.</li>
+          <li><b>«…»:</b> virgolette caporali per termine tecnico/citato.</li>
+          <li><b>punto e virgola:</b> separa due proposizioni coordinate <em>parallele</em> (da un lato…dall'altro). Tipico uso argomentativo.</li>
+          <li><b>virgola dopo "dall'altro":</b> connettivo, virgola obbligatoria.</li>
+          <li><b>punto fermo:</b> chiusura del periodo.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Il paradosso è evidente<em>:</em> l'Europa nasce come progetto di pace e prosperità<em>,</em> ma fatica a definire ciò che la unisce al di là di interessi economici contingenti<em>.</em></div>
+        <ul class="analysis-list">
+          <li><b>due punti:</b> introducono la spiegazione di "Il paradosso è evidente". Funzione cataforica.</li>
+          <li><b>virgola prima di "ma":</b> separa due proposizioni coordinate avversative. Con <em>ma</em> la virgola è quasi sempre richiesta.</li>
+          <li><b>punto fermo:</b> chiusura del periodo.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Alcuni intellettuali <em>—</em> tra cui Habermas e Derrida <em>—</em> hanno cercato di proporre una risposta<em>.</em></div>
+        <ul class="analysis-list">
+          <li><b>trattino lungo 1:</b> apertura di un inciso enfatico. Più forte delle virgole.</li>
+          <li><b>trattino lungo 2:</b> chiusura dell'inciso. I due trattini lunghi lavorano in coppia.</li>
+          <li><b>punto fermo:</b> chiusura del periodo.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Secondo loro<em>,</em> l'identità europea non andrebbe cercata in un fondamento storico univoco <em>(</em>cosa peraltro impossibile<em>),</em> bensì in un <em>«</em>patriottismo costituzionale<em>»:</em> un'adesione condivisa ai valori del costituzionalismo democratico<em>.</em></div>
+        <ul class="analysis-list">
+          <li><b>virgola dopo "Secondo loro":</b> complemento iniziale, virgola che separa dal soggetto della principale.</li>
+          <li><b>parentesi tonde:</b> aggiunta accessoria di basso rilievo. Si potrebbe togliere senza alterare la sintassi.</li>
+          <li><b>virgola dopo la parentesi chiusa:</b> separa la subordinata avversativa "bensì in un…".</li>
+          <li><b>«…»:</b> caporali per termine concettuale citato (formula di Habermas).</li>
+          <li><b>due punti:</b> introducono la spiegazione del termine "patriottismo costituzionale".</li>
+          <li><b>punto fermo:</b> chiusura del periodo.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">La tesi è suggestiva<em>;</em> tuttavia<em>,</em> non manca di critici<em>,</em> che la accusano di astrattezza<em>.</em></div>
+        <ul class="analysis-list">
+          <li><b>punto e virgola:</b> separa due affermazioni coordinate con un legame logico stretto (concessione → controbilancio).</li>
+          <li><b>virgola dopo "tuttavia":</b> connettivo avversativo, virgola obbligatoria.</li>
+          <li><b>virgola prima di "che":</b> introduce una relativa <span class="hl">non restrittiva</span> (aggiuntiva, esplicativa). Senza virgola sarebbe restrittiva (e cambierebbe il senso).</li>
+          <li><b>punto fermo:</b> chiusura.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">E allora<em>?</em> Forse la risposta più onesta è quella di Eco<em>:</em> <em>«</em>L'Europa è una vocazione, non un fatto<em>».</em></div>
+        <ul class="analysis-list">
+          <li><b>punto interrogativo:</b> chiude un'interrogazione retorica diretta. Notare l'assenza di apertura con ¿ (a differenza dello spagnolo).</li>
+          <li><b>due punti:</b> introducono la citazione di Eco. Tipico uso prima di un discorso/citazione.</li>
+          <li><b>«…»:</b> caporali per la citazione diretta.</li>
+          <li><b>virgola interna "vocazione, non un fatto":</b> separa due elementi contrastivi (giustapposizione antitetica).</li>
+          <li><b>punto fermo:</b> chiusura. Notare: il punto va <span class="hl">fuori</span> dalle virgolette di chiusura (convenzione italiana frequente).</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="ex-it">Una vocazione che<em>,</em> giorno dopo giorno<em>,</em> si costruisce o si abbandona<em>…</em></div>
+        <ul class="analysis-list">
+          <li><b>virgola 1 e 2:</b> delimitano l'inciso temporale "giorno dopo giorno". Si potrebbe scrivere senza virgole, ma il ritmo sarebbe meno marcato.</li>
+          <li><b>puntini di sospensione:</b> chiusura sospesa del brano, lascia in sospeso una riflessione. Tre puntini, mai due o quattro.</li>
+        </ul>
+        <p class="ex-note">Notare che dopo i puntini di sospensione NON si mette punto fermo aggiuntivo: <em>abbandona…</em>, non <em>*abbandona….</em></p>
+      </div>
+
+      <div class="green-box">
+        <b>Pratica chiave:</b> prendi un articolo di un quotidiano italiano di qualità (<em>Corriere della Sera</em>, <em>la Repubblica</em>, <em>Il Sole 24 Ore</em>) e fai lo stesso esercizio: identifica ogni segno di punteggiatura e prova a spiegarne la funzione. Ti accorgerai che la prosa italiana formale usa con grande frequenza <span class="hl">punto e virgola</span>, <span class="hl">due punti</span> e <span class="hl">incisi con trattino lungo</span>, oltre alle virgole. Imitare questo ritmo è il segreto per scrivere con stile C1 autenticamente italiano.
+      </div>
+
+      <h3>Riepilogo finale: la checklist C1</h3>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead><tr><th>Controllo</th><th>Sì / No</th></tr></thead>
+          <tbody>
+            <tr><td>Ho eliminato eventuali <em>¡</em> e <em>¿</em> di apertura?</td><td class="ok-cell">✓</td></tr>
+            <tr><td>Non ho messo virgole tra soggetto e verbo?</td><td class="ok-cell">✓</td></tr>
+            <tr><td>Non ho messo virgole tra verbo e oggetto diretto?</td><td class="ok-cell">✓</td></tr>
+            <tr><td>I miei incisi hanno SEMPRE virgola di apertura E di chiusura?</td><td class="ok-cell">✓</td></tr>
+            <tr><td>Distinguo correttamente relative restrittive (senza virgola) da non restrittive (con virgola)?</td><td class="ok-cell">✓</td></tr>
+            <tr><td>Uso il punto e virgola almeno una o due volte per pagina nel registro formale?</td><td class="ok-cell">✓</td></tr>
+            <tr><td>Dopo connettivi iniziali (<em>Tuttavia, Inoltre,…</em>) metto la virgola?</td><td class="ok-cell">✓</td></tr>
+            <tr><td>Uso i caporali « » per le citazioni dirette in registro formale?</td><td class="ok-cell">✓</td></tr>
+            <tr><td>I miei puntini di sospensione sono sempre TRE (mai due, mai quattro)?</td><td class="ok-cell">✓</td></tr>
+            <tr><td>Non combino puntini di sospensione con punto fermo?</td><td class="ok-cell">✓</td></tr>
+            <tr><td>I miei periodi non superano le 30-35 parole senza punto fermo?</td><td class="ok-cell">✓</td></tr>
+            <tr><td>Uso il punto esclamativo con parsimonia (max 1-2 per pagina nel formale)?</td><td class="ok-cell">✓</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const TRAPS = [
+  {
+    name:'Apertura con ¡ o ¿ (calco dello spagnolo)',
+    wrong:'¿Hai letto il libro? ¡È meraviglioso!',
+    right:'Hai letto il libro? È meraviglioso!',
+    expl:'In italiano <span class="hl">NON si aprono mai</span> le frasi esclamative o interrogative con ¡ o ¿. Si usano solo i segni di chiusura: ! e ?. È l\'errore tipografico più immediato dell\'ispanofono. Vale per qualsiasi tipo di testo: messaggi, email, saggi, narrativa.'
+  },
+  {
+    name:'Virgola tra soggetto e verbo',
+    wrong:'Il direttore della società, ha annunciato le nuove misure.',
+    right:'Il direttore della società ha annunciato le nuove misure.',
+    expl:'Anche con soggetti lunghi, la virgola tra soggetto e verbo è SEMPRE un errore in italiano. Se la frase risulta troppo lunga, occorre <b>riformulare</b>, non aggiungere una virgola. Si può inserire un <em>inciso</em> (delimitato da DUE virgole) ma mai una virgola singola.'
+  },
+  {
+    name:'Virgola tra verbo e complemento oggetto',
+    wrong:'Ho preparato con grande cura, una cena speciale per i miei amici.',
+    right:'Ho preparato con grande cura una cena speciale per i miei amici.',
+    expl:'Verbo e oggetto diretto sono strettamente legati. Anche con materiale interposto (come "con grande cura"), nessuna virgola può separare il verbo dal suo oggetto. Se serve evidenziare un elemento, si può ricorrere alla <em>dislocazione</em>: <em>Una cena speciale, l\'ho preparata per i miei amici</em>.'
+  },
+  {
+    name:'Virgola davanti a relativa restrittiva',
+    wrong:'Le persone, che hanno acquistato il biglietto in anticipo, hanno avuto uno sconto.',
+    right:'Le persone che hanno acquistato il biglietto in anticipo hanno avuto uno sconto.',
+    expl:'La relativa restrittiva (che identifica un sottoinsieme: <em>solo quelle persone</em>) NON si separa con virgola. Le virgole si usano solo per la relativa <span class="hl">non restrittiva</span> (aggiuntiva, esplicativa). La differenza cambia il significato: <em>Gli studenti che hanno superato l\'esame…</em> = solo alcuni; <em>Gli studenti, che hanno superato l\'esame, …</em> = tutti.'
+  },
+  {
+    name:'Mancanza della seconda virgola dell\'inciso',
+    wrong:'Marco, che vive a Roma è arrivato ieri sera.',
+    right:'Marco, che vive a Roma, è arrivato ieri sera.',
+    expl:'Un inciso richiede SEMPRE due virgole: una di apertura e una di chiusura. Dimenticare la seconda è un errore frequentissimo. La regola mnemonica: <em>se metti una virgola per aprire un inciso, controlla SUBITO di chiuderlo</em>.'
+  },
+  {
+    name:'Punto e virgola sottoutilizzato',
+    wrong:'L\'economia cresce. I consumi ristagnano. Le esportazioni aumentano. Le importazioni calano. Il quadro è complesso.',
+    right:'L\'economia cresce; i consumi ristagnano. Le esportazioni aumentano; le importazioni calano. Il quadro è complesso.',
+    expl:'Frasi che esprimono idee strettamente legate (opposizione, parallelo, conseguenza) sono meglio rese con punto e virgola che con punto fermo. La prosa italiana formale ne fa uso frequente. La versione "errata" non è grammaticalmente sbagliata, ma marca un registro più basso, meno articolato.'
+  },
+  {
+    name:'Maiuscola dopo i due punti',
+    wrong:'La conclusione è chiara: La riforma deve essere approvata.',
+    right:'La conclusione è chiara: la riforma deve essere approvata.',
+    expl:'In italiano, dopo i due punti si usa la <span class="hl">minuscola</span>, tranne in tre casi: (1) discorso diretto («…»), (2) titoli/intestazioni, (3) inizio di una nuova frase autonoma (uso raro). Lo spagnolo segue la stessa regola, ma l\'inglese mette maiuscola: attenzione a non importare l\'uso anglosassone.'
+  },
+  {
+    name:'Quattro o due puntini di sospensione',
+    wrong:'Non so cosa fare....  /  Mi sento confuso..',
+    right:'Non so cosa fare…  /  Mi sento confuso…',
+    expl:'I puntini di sospensione sono SEMPRE tre, mai due, mai quattro, mai cinque. La regola tipografica è rigorosa. Inoltre, non si combinano con il punto fermo: <em>parole…</em>, non <em>*parole….</em>. Si combinano invece con ! e ?: <em>davvero…?</em>'
+  },
+  {
+    name:'Virgola davanti a "e" finale di enumerazione',
+    wrong:'Ho comprato pane, latte, uova, e formaggio.',
+    right:'Ho comprato pane, latte, uova e formaggio.',
+    expl:'In italiano (come in spagnolo), nessuna virgola davanti all\'ultimo elemento introdotto da <em>e</em>, <em>o</em>. La virgola di Oxford esiste in inglese (<em>red, white, and blue</em>) ma non in italiano standard. Eccezione rara: quando si rischia ambiguità in una lista lunga, alcuni autori la usano.'
+  },
+  {
+    name:'Trattino breve invece di trattino lungo per inciso',
+    wrong:'La verità - se mai esiste - sarà complessa.',
+    right:'La verità — se mai esiste — sarà complessa.',
+    expl:'Per gli incisi enfatici si usa il <b>trattino lungo</b> (—), non il trattino breve (-). Sono segni tipograficamente diversi: il breve si attacca alle parole (<em>socio-economico</em>); il lungo ha spazi e separa interi sintagmi. In email/chat è accettato il trattino breve come surrogato, ma in testi formali NO.'
+  },
+  {
+    name:'Uso di " " al posto di « » in saggistica formale',
+    wrong:'Il filosofo afferma: "La libertà è una conquista quotidiana".',
+    right:'Il filosofo afferma: «La libertà è una conquista quotidiana».',
+    expl:'Nella tipografia italiana formale (editoria, giornalismo nazionale di qualità, saggistica accademica), si preferiscono le virgolette basse o <em>caporali</em> (« »). Le virgolette alte (" ") sono accettate in testi digitali e informali, o per citazioni di secondo livello. In un saggio C1 vale la pena imparare a digitare i caporali (Mac: Opt+\\ / Opt+Shift+\\; Windows: Alt+0171 / Alt+0187).'
+  },
+  {
+    name:'Punto interrogativo nelle interrogative indirette',
+    wrong:'Mi chiedo se verrà alla festa?',
+    right:'Mi chiedo se verrà alla festa.',
+    expl:'Le <span class="hl">interrogative indirette</span> NON portano punto interrogativo. Solo le interrogative <em>dirette</em> lo richiedono. Errore identico in spagnolo, ma più tollerato nell\'oralità ispanofona. In italiano scritto formale è un errore evidente.'
+  },
+  {
+    name:'Più esclamativi/interrogativi consecutivi nel formale',
+    wrong:'È incredibile!!! Davvero non lo sapevi???',
+    right:'È incredibile! Davvero non lo sapevi?',
+    expl:'L\'uso di più segni esclamativi o interrogativi consecutivi (!!!, ???, ?!?!) appartiene al registro <span class="hl">orale informale</span> (chat, social, messaggi). In un testo formale, accademico, giornalistico è da evitare assolutamente. Un solo segno è sufficiente. Combinazioni come ?! sono ammesse occasionalmente per esprimere sorpresa.'
+  },
+  {
+    name:'Virgola dopo una congiunzione subordinante',
+    wrong:'Penso che, la situazione sia complessa.',
+    right:'Penso che la situazione sia complessa.',
+    expl:'Dopo congiunzioni subordinanti (<em>che, perché, se, quando, sebbene, benché, qualora</em>) non si mette virgola, a meno che non si apra immediatamente un inciso: <em>Penso che, in fin dei conti, la situazione sia complessa</em>. La virgola "automatica" dopo <em>che</em> è uno dei tic dell\'ispanofono.'
+  },
+  {
+    name:'Periodi-mostro senza punto fermo',
+    wrong:'Ieri sono andato in città e ho incontrato Marco che mi ha detto di Luca che sta male da settimane perché aveva avuto un incidente che non gli ha lasciato pace e ora non sa cosa fare.',
+    right:'Ieri sono andato in città e ho incontrato Marco. Mi ha detto di Luca, che sta male da settimane. Aveva avuto un incidente che non gli ha lasciato pace; ora non sa cosa fare.',
+    expl:'Concatenare molte proposizioni senza punti fermi crea un effetto orale, confuso, pesante. Regola pratica: un periodo non dovrebbe superare le 30-35 parole o contenere più di due o tre verbi principali coordinati. Spezzare con punto fermo (o punto e virgola) è quasi sempre una scelta migliore.'
+  }
+];
+
+function renderTraps(){
+  const c = document.getElementById('traps-container');
+  let html = '';
+  TRAPS.forEach(t=>{
+    html += `<div class="trap-card">
+      <div class="trap-card-header"><span class="trap-name">${t.name}</span></div>
+      <div class="trap-vs">
+        <div class="trap-wrong">${t.wrong}</div>
+        <div class="trap-right">${t.right}</div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function showSection(id, btn){
+  document.querySelectorAll('.sec-block').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.snav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function showChip(id, btn){
+  const parent = btn.parentElement.parentElement;
+  parent.querySelectorAll('.chip-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  parent.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function setFontSize(v){
+  document.documentElement.style.setProperty('--fs', v+'px');
+}
+
+renderTraps();
+</script>
+
+</body>
+</html>
