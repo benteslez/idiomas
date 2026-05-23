@@ -32917,11 +32917,17 @@ function initImportExport() {
       if (s < 0 || e < 0) { alert("No se pudo localizar DATA."); return; }
       var out = src.slice(0, s) + "var DATA = " + dj + ";\n" + src.slice(e);
       // Embed progreso (knownIds + cardEdits) en el script #embeddedState
+      // Evitamos literales "</scr"+"ipt>" en el código fuente para no cerrar este propio <script> al parsear.
       var embedJson = JSON.stringify({ known: knownIds, edits: cardEdits }).replace(/</g, "\\u003c");
-      out = out.replace(
-        /<script type="application\/json" id="embeddedState">[\s\S]*?<\/script>/,
-        '<script type="application/json" id="embeddedState">' + embedJson + '</script>'
-      );
+      var embedOpen  = '<scr' + 'ipt type="application/json" id="embeddedState">';
+      var embedClose = '</scr' + 'ipt>';
+      var embStart = out.indexOf(embedOpen);
+      if (embStart >= 0) {
+        var embEnd = out.indexOf(embedClose, embStart);
+        if (embEnd >= 0) {
+          out = out.slice(0, embStart + embedOpen.length) + embedJson + out.slice(embEnd);
+        }
+      }
       var a   = document.createElement("a");
       a.href     = URL.createObjectURL(new Blob([out], {type:"text/html;charset=utf-8"}));
       a.download = "vocabulario_delf_b1.html";
