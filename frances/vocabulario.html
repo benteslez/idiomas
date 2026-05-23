@@ -193,6 +193,29 @@ body {
   gap: 16px; padding: 20px 24px;
   max-width: 1400px; margin: 0 auto;
 }
+.initial-banner {
+  max-width: 1400px;
+  margin: 20px auto 0;
+  padding: 12px 18px;
+  background: var(--warn-bg);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap;
+  box-shadow: var(--shadow-sm);
+}
+.initial-banner-txt {
+  font-size: 0.92rem; color: var(--text2); font-weight: 500;
+}
+.initial-banner-btn {
+  background: var(--accent); color: #fff; border: none;
+  border-radius: 100px; padding: 6px 16px;
+  font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  font-family: inherit;
+  transition: filter .15s;
+}
+.initial-banner-btn:hover { filter: brightness(1.1); }
 
 /* ── FLIP CARD ──
    Strategy: card-wrapper has explicit height set by JS (= front face height).
@@ -1435,10 +1458,10 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   <div class="hdr-lbl">Powered by @benteslez</div>
   <h1>Vocabulaire</h1>
   <div class="stats-row hdr-pills">
-    <div class="stat-pill pill">Total <strong id="statTotal">1383</strong></div>
-    <div class="stat-pill pill">★ Top B1 <strong id="statTop">981</strong></div>
+    <div class="stat-pill pill">Total <strong id="statTotal">1466</strong></div>
+    <div class="stat-pill pill">★ Top B1 <strong id="statTop">1033</strong></div>
     <div class="stat-pill pill">✓ Ya lo sé <strong id="statKnown">13</strong></div>
-    <div class="stat-pill pill">Mostrando <strong id="statShowing">1383</strong></div>
+    <div class="stat-pill pill">Mostrando <strong id="statShowing">1466</strong></div>
   </div>
   <button class="btn-game" id="btnOpenGame">🃏 Modo Juego</button>
 </header>
@@ -1449,7 +1472,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
     <button class="btn-topic" data-tema="Conectores" id="btnTemaTop1" style="">Conectores</button>
     <button class="btn-topic" data-tema="Salud" id="btnTemaTop2" style="">Salud</button>
     <button class="btn-topic" data-tema="Trabajo" id="btnTemaTop3" style="">Trabajo</button>
-    <select id="temaSelect" class="tema-select"><option value="">— Todos los temas —</option><option value="Alimentación">Alimentación (102)</option><option value="Argumentacion">Argumentacion (35)</option><option value="Conectores">Conectores (187)</option><option value="Cultura y ocio">Cultura y ocio (82)</option><option value="Educación">Educación (86)</option><option value="Emergencias">Emergencias (13)</option><option value="Emociones/Reacciones DELF">Emociones/Reacciones DELF (50)</option><option value="Expresión oral DELF">Expresión oral DELF (55)</option><option value="Falsos amigos">Falsos amigos (40)</option><option value="Interacción debate DELF">Interacción debate DELF (50)</option><option value="Medio ambiente">Medio ambiente (80)</option><option value="Salud">Salud (172)</option><option value="Sociedad">Sociedad (80)</option><option value="Tecnologia">Tecnologia (80)</option><option value="Trabajo">Trabajo (105)</option><option value="Transporte">Transporte (80)</option><option value="Verbos">Verbos (6)</option><option value="Viajes">Viajes (80)</option></select>
+    <select id="temaSelect" class="tema-select"><option value="">— Todos los temas —</option><option value="Alimentación">Alimentación (102)</option><option value="Argumentacion">Argumentacion (35)</option><option value="Causalidad">Causalidad (1)</option><option value="Ciudad">Ciudad (1)</option><option value="Comercio">Comercio (5)</option><option value="Comparación">Comparación (5)</option><option value="Conectores">Conectores (187)</option><option value="Conversación">Conversación (10)</option><option value="Cultura">Cultura (8)</option><option value="Cultura y ocio">Cultura y ocio (82)</option><option value="Economía">Economía (7)</option><option value="Educación">Educación (89)</option><option value="Emergencias">Emergencias (13)</option><option value="Emociones/Reacciones DELF">Emociones/Reacciones DELF (50)</option><option value="Expresión oral">Expresión oral (61)</option><option value="Falsos amigos">Falsos amigos (43)</option><option value="Gramática">Gramática (5)</option><option value="Interacción debate DELF">Interacción debate DELF (50)</option><option value="Matices">Matices (6)</option><option value="Medio ambiente">Medio ambiente (80)</option><option value="Opinión">Opinión (8)</option><option value="Política">Política (4)</option><option value="Salud">Salud (173)</option><option value="Seguridad">Seguridad (4)</option><option value="Sociedad">Sociedad (83)</option><option value="Tecnologia">Tecnologia (80)</option><option value="Tiempo">Tiempo (3)</option><option value="Trabajo">Trabajo (105)</option><option value="Transporte">Transporte (80)</option><option value="Verbos">Verbos (6)</option><option value="Viajes">Viajes (80)</option></select>
     <span class="sep"></span>
     <span class="label-sm">Nivel:</span>
     <select id="nivelSelect" class="tema-select">
@@ -1544,6 +1567,10 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 </div>
 
 <main>
+  <div class="initial-banner" id="initialBanner" hidden>
+    <span class="initial-banner-txt">&#127922; Selección aleatoria de 3 tarjetas de temas distintos — busca o filtra para ver todas.</span>
+    <button type="button" class="initial-banner-btn" id="btnShowAll">Ver todas</button>
+  </div>
   <div class="grid" id="grid" style="font-size: 17.6px;"></div>
 </main>
 
@@ -24106,7 +24133,7 @@ var DATA = [
     "id": 1152,
     "w": "Je ne suis pas en mesure de trancher",
     "t": "No estoy en condiciones de decidir",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Sur cette question, je ne suis pas en mesure de trancher sans plus d'informations.",
@@ -24127,7 +24154,7 @@ var DATA = [
     "id": 1153,
     "w": "J'ai du mal à me prononcer",
     "t": "Me cuesta pronunciarme",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "J'ai du mal à me prononcer sur un sujet aussi complexe.",
@@ -24148,7 +24175,7 @@ var DATA = [
     "id": 1154,
     "w": "Je reste partagé(e) sur la question",
     "t": "Sigo dividido/a sobre la cuestión",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Honnêtement, je reste partagé sur la question du télétravail.",
@@ -24169,7 +24196,7 @@ var DATA = [
     "id": 1155,
     "w": "Il est difficile de se positionner",
     "t": "Es difícil posicionarse",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il est difficile de se positionner sans avoir tous les éléments.",
@@ -24190,7 +24217,7 @@ var DATA = [
     "id": 1156,
     "w": "Je n'arrive pas à me faire une opinion",
     "t": "No consigo formarme una opinión",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je n'arrive pas à me faire une opinion tranchée sur ce débat.",
@@ -24211,7 +24238,7 @@ var DATA = [
     "id": 1157,
     "w": "Il faut agir sans tarder",
     "t": "Hay que actuar sin demora",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Face au réchauffement climatique, il faut agir sans tarder.",
@@ -24232,7 +24259,7 @@ var DATA = [
     "id": 1158,
     "w": "Il y a urgence à",
     "t": "Es urgente / urge",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il y a urgence à repenser notre modèle de consommation.",
@@ -24253,7 +24280,7 @@ var DATA = [
     "id": 1159,
     "w": "Le temps presse",
     "t": "El tiempo apremia",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Le temps presse, on ne peut plus se permettre d'attendre.",
@@ -24274,7 +24301,7 @@ var DATA = [
     "id": 1160,
     "w": "Il est grand temps de",
     "t": "Ya es hora de",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il est grand temps de prendre des mesures concrètes.",
@@ -24295,7 +24322,7 @@ var DATA = [
     "id": 1161,
     "w": "On ne peut plus se permettre d'attendre",
     "t": "Ya no podemos permitirnos esperar",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "On ne peut plus se permettre d'attendre que la situation empire.",
@@ -24316,7 +24343,7 @@ var DATA = [
     "id": 1162,
     "w": "Cela demande du temps",
     "t": "Eso requiere tiempo",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Changer les mentalités, cela demande du temps.",
@@ -24337,7 +24364,7 @@ var DATA = [
     "id": 1163,
     "w": "À long terme",
     "t": "A largo plazo",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "À long terme, cette politique portera ses fruits.",
@@ -24358,7 +24385,7 @@ var DATA = [
     "id": 1164,
     "w": "À court terme",
     "t": "A corto plazo",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "À court terme, les résultats ne seront pas visibles.",
@@ -24379,7 +24406,7 @@ var DATA = [
     "id": 1165,
     "w": "Cela prendra du temps avant que + subj",
     "t": "Pasará tiempo antes de que",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela prendra du temps avant que les choses changent réellement.",
@@ -24400,7 +24427,7 @@ var DATA = [
     "id": 1166,
     "w": "D'ici quelques années",
     "t": "De aquí a unos años",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "D'ici quelques années, cette technologie sera généralisée.",
@@ -24421,7 +24448,7 @@ var DATA = [
     "id": 1167,
     "w": "On risque de",
     "t": "Corremos el riesgo de",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "On risque de passer à côté de l'essentiel.",
@@ -24442,7 +24469,7 @@ var DATA = [
     "id": 1168,
     "w": "Cela risque d'avoir des conséquences graves",
     "t": "Eso puede tener consecuencias graves",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela risque d'avoir des conséquences graves pour les générations futures.",
@@ -24463,7 +24490,7 @@ var DATA = [
     "id": 1169,
     "w": "Au risque de + inf",
     "t": "A riesgo de",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Au risque de me répéter, je pense que c'est une priorité absolue.",
@@ -24484,7 +24511,7 @@ var DATA = [
     "id": 1170,
     "w": "Il y a fort à parier que",
     "t": "Es muy probable que",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il y a fort à parier que la situation va s'aggraver.",
@@ -24505,7 +24532,7 @@ var DATA = [
     "id": 1171,
     "w": "Mettre en péril",
     "t": "Poner en peligro",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cette décision met en péril l'équilibre de tout le système.",
@@ -24526,7 +24553,7 @@ var DATA = [
     "id": 1172,
     "w": "Je partage entièrement votre point de vue",
     "t": "Comparto plenamente su punto de vista",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je partage entièrement votre point de vue sur cette question.",
@@ -24547,7 +24574,7 @@ var DATA = [
     "id": 1173,
     "w": "Je suis tout à fait d'accord avec",
     "t": "Estoy totalmente de acuerdo con",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis tout à fait d'accord avec l'idée que l'éducation est la clé.",
@@ -24568,7 +24595,7 @@ var DATA = [
     "id": 1174,
     "w": "Je rejoins votre analyse",
     "t": "Coincido con su análisis",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je rejoins votre analyse sur ce point précis.",
@@ -24589,7 +24616,7 @@ var DATA = [
     "id": 1175,
     "w": "Je ne suis pas convaincu(e) par",
     "t": "No me convence",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je ne suis pas convaincu par cet argument.",
@@ -24610,7 +24637,7 @@ var DATA = [
     "id": 1176,
     "w": "Je me permets de nuancer",
     "t": "Me permito matizar",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je me permets de nuancer vos propos sur ce point.",
@@ -24631,7 +24658,7 @@ var DATA = [
     "id": 1177,
     "w": "C'est un point sur lequel je ne vous suis pas",
     "t": "En ese punto no le sigo",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "C'est un point sur lequel je ne vous suis pas du tout.",
@@ -24652,7 +24679,7 @@ var DATA = [
     "id": 1178,
     "w": "Loin de moi l'idée de",
     "t": "Lejos de mí la idea de",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Loin de moi l'idée de critiquer, mais cette mesure me semble inefficace.",
@@ -24673,7 +24700,7 @@ var DATA = [
     "id": 1179,
     "w": "En ce qui me concerne",
     "t": "En lo que a mí respecta",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "En ce qui me concerne, je privilégie toujours le dialogue.",
@@ -24694,7 +24721,7 @@ var DATA = [
     "id": 1180,
     "w": "À mon sens",
     "t": "A mi parecer",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "À mon sens, c'est la meilleure solution envisageable.",
@@ -24715,7 +24742,7 @@ var DATA = [
     "id": 1181,
     "w": "Pour ma part",
     "t": "Por mi parte",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Pour ma part, je reste optimiste malgré tout.",
@@ -24736,7 +24763,7 @@ var DATA = [
     "id": 1182,
     "w": "Il me semble que",
     "t": "Me parece que",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il me semble que cette approche est trop simpliste.",
@@ -24757,7 +24784,7 @@ var DATA = [
     "id": 1183,
     "w": "Je tiens à souligner que",
     "t": "Quiero subrayar que",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je tiens à souligner que ce phénomène n'est pas nouveau.",
@@ -24778,7 +24805,7 @@ var DATA = [
     "id": 1184,
     "w": "Force est de constater que",
     "t": "Hay que reconocer que",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Force est de constater que les inégalités se creusent.",
@@ -24799,7 +24826,7 @@ var DATA = [
     "id": 1185,
     "w": "Il convient de rappeler que",
     "t": "Conviene recordar que",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il convient de rappeler que ce débat existe depuis longtemps.",
@@ -24820,7 +24847,7 @@ var DATA = [
     "id": 1186,
     "w": "Cela soulève la question de",
     "t": "Eso plantea la cuestión de",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela soulève la question de la responsabilité collective.",
@@ -24841,7 +24868,7 @@ var DATA = [
     "id": 1187,
     "w": "Cela revient à dire que",
     "t": "Eso equivale a decir que",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela revient à dire que personne n'est responsable.",
@@ -24862,7 +24889,7 @@ var DATA = [
     "id": 1188,
     "w": "D'une part… d'autre part",
     "t": "Por un lado… por otro",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "D'une part, cela favorise l'économie ; d'autre part, cela nuit à l'environnement.",
@@ -24883,7 +24910,7 @@ var DATA = [
     "id": 1189,
     "w": "Non seulement… mais aussi / mais encore",
     "t": "No solo… sino también",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Non seulement c'est coûteux, mais en plus c'est inefficace.",
@@ -24904,7 +24931,7 @@ var DATA = [
     "id": 1190,
     "w": "En revanche",
     "t": "En cambio",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Les villes se modernisent ; en revanche, les campagnes sont délaissées.",
@@ -24925,7 +24952,7 @@ var DATA = [
     "id": 1191,
     "w": "Cela étant dit",
     "t": "Dicho esto",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela étant dit, il faut nuancer ce constat.",
@@ -24946,7 +24973,7 @@ var DATA = [
     "id": 1192,
     "w": "Quoi qu'il en soit",
     "t": "Sea como sea",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Quoi qu'il en soit, une décision s'impose rapidement.",
@@ -24967,7 +24994,7 @@ var DATA = [
     "id": 1193,
     "w": "En fin de compte",
     "t": "A fin de cuentas",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "En fin de compte, tout dépend de la volonté politique.",
@@ -24988,7 +25015,7 @@ var DATA = [
     "id": 1194,
     "w": "Tout bien réfléchi",
     "t": "Bien pensado",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Tout bien réfléchi, je pense que la première option est la meilleure.",
@@ -25009,7 +25036,7 @@ var DATA = [
     "id": 1195,
     "w": "Prendre du recul",
     "t": "Tomar distancia / perspectiva",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il faut savoir prendre du recul avant de juger.",
@@ -25030,7 +25057,7 @@ var DATA = [
     "id": 1196,
     "w": "Remettre en question",
     "t": "Cuestionar / replantear",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cette étude remet en question nos certitudes.",
@@ -25051,7 +25078,7 @@ var DATA = [
     "id": 1197,
     "w": "Tirer la sonnette d'alarme",
     "t": "Dar la voz de alarma",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Les scientifiques tirent la sonnette d'alarme depuis des années.",
@@ -25072,7 +25099,7 @@ var DATA = [
     "id": 1198,
     "w": "Faire face à",
     "t": "Hacer frente a",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Nous devons faire face à des défis sans précédent.",
@@ -25093,7 +25120,7 @@ var DATA = [
     "id": 1199,
     "w": "Avoir le sentiment que",
     "t": "Tener la sensación de que",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "J'ai le sentiment que la société évolue trop vite.",
@@ -25114,7 +25141,7 @@ var DATA = [
     "id": 1200,
     "w": "Cela me tient à cœur",
     "t": "Es algo que me importa mucho",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "C'est un sujet qui me tient particulièrement à cœur.",
@@ -25135,7 +25162,7 @@ var DATA = [
     "id": 1201,
     "w": "Passer à côté de l'essentiel",
     "t": "Pasar por alto lo esencial",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "En se focalisant sur les détails, on passe à côté de l'essentiel.",
@@ -25156,7 +25183,7 @@ var DATA = [
     "id": 1202,
     "w": "Avoir du mal à + inf",
     "t": "Costar / tener dificultades para",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "J'ai du mal à comprendre cette logique.",
@@ -25177,7 +25204,7 @@ var DATA = [
     "id": 1203,
     "w": "Mettre l'accent sur",
     "t": "Poner el énfasis en",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il faudrait mettre l'accent sur la prévention plutôt que sur la répression.",
@@ -25198,7 +25225,7 @@ var DATA = [
     "id": 1204,
     "w": "Aller dans le bon sens",
     "t": "Ir en la dirección correcta",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cette réforme va dans le bon sens, même si elle reste insuffisante.",
@@ -25219,7 +25246,7 @@ var DATA = [
     "id": 1205,
     "w": "Au fond",
     "t": "En el fondo",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Au fond, nous voulons tous la même chose.",
@@ -25240,7 +25267,7 @@ var DATA = [
     "id": 1206,
     "w": "À vrai dire",
     "t": "A decir verdad",
-    "tema": "Expresión oral DELF",
+    "tema": "Expresión oral",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "À vrai dire, je n'avais pas envisagé cette possibilité.",
@@ -29120,6 +29147,1749 @@ var DATA = [
     "reg": null,
     "constr": null,
     "nivel": "B1"
+  },
+  {
+    "id": 1391,
+    "w": "la grande distribution",
+    "t": "la gran distribución (supermercados)",
+    "tema": "Comercio",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Le secteur de la grande distribution connaît une petite révolution.",
+    "ex_es": "El sector de la gran distribución vive una pequeña revolución.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B2"
+  },
+  {
+    "id": 1392,
+    "w": "le supermarché coopératif",
+    "t": "el supermercado cooperativo",
+    "tema": "Comercio",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "La Louve est le premier supermarché coopératif et participatif de Paris.",
+    "ex_es": "La Louve es el primer supermercado cooperativo y participativo de París.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1393,
+    "w": "être actionnaire",
+    "t": "ser accionista",
+    "tema": "Comercio",
+    "cat": "Verbo",
+    "gen": null,
+    "ex_fr": "On a le droit de faire ses courses si on est actionnaire de la coopérative.",
+    "ex_es": "Se tiene derecho a hacer la compra si se es accionista de la cooperativa.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B2"
+  },
+  {
+    "id": 1394,
+    "w": "la mise en rayon",
+    "t": "la reposición de mercancía en estantería",
+    "tema": "Comercio",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Il faut travailler à la caisse ou à la mise en rayon trois heures par mois.",
+    "ex_es": "Hay que trabajar en caja o en la reposición de estanterías tres horas al mes.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "C1"
+  },
+  {
+    "id": 1395,
+    "w": "faire ses courses",
+    "t": "hacer la compra",
+    "tema": "Comercio",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "On a le droit de faire ses courses si on est actionnaire.",
+    "ex_es": "Tienes derecho a hacer la compra si eres accionista.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1396,
+    "w": "réduire les frais",
+    "t": "reducir los gastos/costes",
+    "tema": "Economía",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "C'est ça qui permet de réduire les frais et de proposer des produits moins chers.",
+    "ex_es": "Eso es lo que permite reducir los gastos y ofrecer productos más baratos.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1397,
+    "w": "le loyer",
+    "t": "el alquiler",
+    "tema": "Economía",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Je dois faire beaucoup d'heures pour pouvoir payer mon loyer.",
+    "ex_es": "Tengo que hacer muchas horas para poder pagar el alquiler.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1398,
+    "w": "gaspiller",
+    "t": "malgastar / derrochar",
+    "tema": "Economía",
+    "cat": "Verbo",
+    "gen": null,
+    "ex_fr": "Avec ce qu'on gagne, on doit tout gaspiller maintenant.",
+    "ex_es": "Con lo que ganamos, ahora tenemos que gastarlo todo.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1399,
+    "w": "les impôts",
+    "t": "los impuestos",
+    "tema": "Economía",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Un citoyen qui paye tous ses impôts ne peut plus marcher dans la rue.",
+    "ex_es": "Un ciudadano que paga todos sus impuestos ya no puede caminar por la calle tranquilo.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1400,
+    "w": "les salaires",
+    "t": "los sueldos / salarios",
+    "tema": "Economía",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Les salaires en Argentine ne sont pas très élevés.",
+    "ex_es": "Los salarios en Argentina no son muy altos.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1401,
+    "w": "c'est devenu très cher",
+    "t": "se ha vuelto muy caro",
+    "tema": "Economía",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "C'est devenu très cher de vivre ici maintenant.",
+    "ex_es": "Se ha vuelto muy caro vivir aquí ahora.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1402,
+    "w": "augmenter",
+    "t": "subir / aumentar",
+    "tema": "Economía",
+    "cat": "Verbo",
+    "gen": null,
+    "ex_fr": "La viande, c'est la chose qui a augmenté le plus en Argentine.",
+    "ex_es": "La carne es lo que más ha subido en Argentina.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1403,
+    "w": "prendre un prêt",
+    "t": "pedir / solicitar un préstamo",
+    "tema": "Educación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Beaucoup d'Américains prennent des prêts pour étudier.",
+    "ex_es": "Muchos americanos piden préstamos para estudiar.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1404,
+    "w": "les frais de scolarité",
+    "t": "las tasas académicas / matrícula",
+    "tema": "Educación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Les frais de scolarité aux États-Unis sont incroyablement élevés.",
+    "ex_es": "Las tasas académicas en Estados Unidos son increíblemente altas.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B2"
+  },
+  {
+    "id": 1405,
+    "w": "une université publique",
+    "t": "una universidad pública",
+    "tema": "Educación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "En France, les universités publiques sont beaucoup moins chères.",
+    "ex_es": "En Francia, las universidades públicas son mucho más baratas.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1406,
+    "w": "les pickpockets",
+    "t": "los carteristas",
+    "tema": "Seguridad",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "À Barcelone, c'est terrible dans les métros à cause des pickpockets.",
+    "ex_es": "En Barcelona, en el metro es terrible por los carteristas.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1407,
+    "w": "être agressé(e)",
+    "t": "ser agredido/a",
+    "tema": "Seguridad",
+    "cat": "Verbo",
+    "gen": null,
+    "ex_fr": "On risque d'être agressé si on utilise son téléphone dans la rue.",
+    "ex_es": "Se corre el riesgo de ser agredido si usas el móvil en la calle.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1408,
+    "w": "faire attention",
+    "t": "tener cuidado",
+    "tema": "Seguridad",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Il faut faire attention maintenant où on marche et où on va.",
+    "ex_es": "Hay que tener cuidado ahora con dónde se camina y adónde se va.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1409,
+    "w": "changer de rue",
+    "t": "cambiar de calle",
+    "tema": "Seguridad",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Quand je vois quelqu'un de dangereux, je change de rue.",
+    "ex_es": "Cuando veo a alguien peligroso, cambio de calle.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1410,
+    "w": "les embouteillages",
+    "t": "los atascos / embotellamientos",
+    "tema": "Ciudad",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "À Bogotá, on doit passer une heure à cause des embouteillages pour faire deux kilomètres.",
+    "ex_es": "En Bogotá, hay que pasar una hora atascado para recorrer dos kilómetros.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1411,
+    "w": "sans-abri",
+    "t": "sin techo / persona sin hogar",
+    "tema": "Sociedad",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Il y a beaucoup de sans-abri dans les rues maintenant.",
+    "ex_es": "Ahora hay muchas personas sin techo en las calles.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1412,
+    "w": "se droguer",
+    "t": "drogarse",
+    "tema": "Sociedad",
+    "cat": "Verbo",
+    "gen": null,
+    "ex_fr": "Il y a beaucoup de jeunes qui se droguent dans les rues d'Argentine.",
+    "ex_es": "Hay muchos jóvenes que se drogan en las calles de Argentina.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1413,
+    "w": "jeté(e) par terre",
+    "t": "tirado/a por el suelo",
+    "tema": "Sociedad",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Je passe et je vois quelqu'un jeté par terre, drogué.",
+    "ex_es": "Paso y veo a alguien tirado por el suelo, drogado.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1414,
+    "w": "une manifestation",
+    "t": "una manifestación / protesta",
+    "tema": "Política",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Les Français sont régulièrement en colère et mécontents dans des manifestations.",
+    "ex_es": "Los franceses están regularmente enfadados y descontentos en manifestaciones.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1415,
+    "w": "être mécontent(e)",
+    "t": "estar descontento/a",
+    "tema": "Política",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Les Français sont souvent mécontents de ce que fait le gouvernement.",
+    "ex_es": "Los franceses están a menudo descontentos con lo que hace el gobierno.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1416,
+    "w": "l'individualisme",
+    "t": "el individualismo",
+    "tema": "Cultura",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "En France, en particulier dans les grandes villes, il y a un fort individualisme.",
+    "ex_es": "En Francia, especialmente en las grandes ciudades, hay un fuerte individualismo.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B2"
+  },
+  {
+    "id": 1417,
+    "w": "la chaleur humaine",
+    "t": "la calidez humana",
+    "tema": "Cultura",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "En Italie, il y a plus de chaleur humaine que dans les grandes villes françaises.",
+    "ex_es": "En Italia hay más calidez humana que en las grandes ciudades francesas.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B2"
+  },
+  {
+    "id": 1418,
+    "w": "les relations interpersonnelles",
+    "t": "las relaciones interpersonales",
+    "tema": "Cultura",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "En Italie, les relations interpersonnelles sont plus importantes qu'en France.",
+    "ex_es": "En Italia, las relaciones interpersonales son más importantes que en Francia.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B2"
+  },
+  {
+    "id": 1419,
+    "w": "la maroquinerie",
+    "t": "la marroquinería / artículos de cuero",
+    "tema": "Cultura",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Marquise travaille dans le développement de produits de maroquinerie.",
+    "ex_es": "Marquise trabaja en el desarrollo de productos de marroquinería.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "C1"
+  },
+  {
+    "id": 1420,
+    "w": "le secteur public",
+    "t": "el sector público",
+    "tema": "Política",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "En France, le secteur public fonctionne mieux qu'en Italie.",
+    "ex_es": "En Francia, el sector público funciona mejor que en Italia.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1421,
+    "w": "la sécurité sociale",
+    "t": "la seguridad social",
+    "tema": "Política",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "En Espagne, la sécurité sociale permet d'aller chez le médecin gratuitement.",
+    "ex_es": "En España, la seguridad social permite ir al médico de forma gratuita.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1422,
+    "w": "ça va ?",
+    "t": "¿qué tal? / ¿cómo estás?",
+    "tema": "Conversación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Bonjour Martine ! Ça va bien ? Ça va bien, et toi ?",
+    "ex_es": "¡Buenos días Martine! ¿Qué tal? ¡Bien, ¿y tú?",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1423,
+    "w": "pas de soucis",
+    "t": "no hay problema / sin problema",
+    "tema": "Conversación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Pas de soucis, je vais vous envoyer tout par email.",
+    "ex_es": "No hay problema, te lo mando todo por correo.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1424,
+    "w": "ça ne fait rien",
+    "t": "no importa / da igual",
+    "tema": "Conversación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Ça ne fait rien, attendez, nous allons regarder autrement.",
+    "ex_es": "No importa, espere, vamos a buscar otra forma.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1425,
+    "w": "c'est dingue",
+    "t": "es una locura (coloquial)",
+    "tema": "Conversación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "C'est complètement dingue, je pense, de payer 80 000 dollars par mois pour l'université.",
+    "ex_es": "Es una locura total, creo, pagar 80.000 dólares al mes por la universidad.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1426,
+    "w": "c'est une folie",
+    "t": "es una barbaridad / una locura",
+    "tema": "Conversación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Payer 300 dollars chez le médecin sans assurance, c'est une folie.",
+    "ex_es": "Pagar 300 dólares en el médico sin seguro es una barbaridad.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1427,
+    "w": "à mes yeux",
+    "t": "a mis ojos / en mi opinión",
+    "tema": "Opinión",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "À mes yeux, la France est synonyme de démocratie et de droits de l'homme.",
+    "ex_es": "A mis ojos, Francia es sinónimo de democracia y derechos humanos.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1428,
+    "w": "selon moi",
+    "t": "según yo / en mi opinión",
+    "tema": "Opinión",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "La France est, selon moi, un pays riche d'histoire et de cultures.",
+    "ex_es": "Francia es, en mi opinión, un país rico en historia y culturas.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1429,
+    "w": "j'estime que",
+    "t": "considero que (formal)",
+    "tema": "Opinión",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "J'estime que les relations interpersonnelles sont plus importantes en Italie.",
+    "ex_es": "Considero que las relaciones interpersonales son más importantes en Italia.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B2"
+  },
+  {
+    "id": 1430,
+    "w": "je trouve que",
+    "t": "encuentro que / me parece que",
+    "tema": "Opinión",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Je trouve que les Français sont plus réservés que les Espagnols.",
+    "ex_es": "Me parece que los franceses son más reservados que los españoles.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1431,
+    "w": "je me suis rendu(e) compte que",
+    "t": "me di cuenta de que",
+    "tema": "Opinión",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Après, je me suis rendu compte que ce n'est pas bien d'habiter aux États-Unis.",
+    "ex_es": "Después me di cuenta de que no es bueno vivir en Estados Unidos.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B2"
+  },
+  {
+    "id": 1432,
+    "w": "je me suis aperçu(e) que",
+    "t": "me percaté de que / me di cuenta de que",
+    "tema": "Opinión",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Avant de venir en France, je pensais que c'était romantique. Et je me suis aperçue que c'était vrai.",
+    "ex_es": "Antes de llegar a Francia pensé que era romántico. Y me di cuenta de que era verdad.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B2"
+  },
+  {
+    "id": 1433,
+    "w": "il me paraît bizarre",
+    "t": "me parece raro",
+    "tema": "Opinión",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Il me paraît bizarre que vous ne puissiez pas recevoir des fichiers sur Preply.",
+    "ex_es": "Me parece raro que no puedas recibir archivos en Preply.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1434,
+    "w": "j'ai l'impression que",
+    "t": "tengo la impresión de que",
+    "tema": "Opinión",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "J'ai l'impression que c'est rare que tout le monde ait ce bouton.",
+    "ex_es": "Tengo la impresión de que es raro que todo el mundo tenga ese botón.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1435,
+    "w": "si je devais la comparer à",
+    "t": "si tuviera que compararla con",
+    "tema": "Comparación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Si je devais la comparer à l'Italie, je dirais qu'en France le secteur public fonctionne mieux.",
+    "ex_es": "Si tuviera que compararla con Italia, diría que en Francia el sector público funciona mejor.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B2"
+  },
+  {
+    "id": 1436,
+    "w": "par contre",
+    "t": "en cambio / sin embargo",
+    "tema": "Comparación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Par contre, en Italie, je trouve que les gens savent mieux profiter de la vie.",
+    "ex_es": "En cambio, en Italia, creo que la gente sabe disfrutar mejor de la vida.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1437,
+    "w": "tandis que",
+    "t": "mientras que (contraste)",
+    "tema": "Comparación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "En France, il y a un fort individualisme, tandis qu'en Italie la famille est plus importante.",
+    "ex_es": "En Francia hay un fuerte individualismo, mientras que en Italia la familia es más importante.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B2"
+  },
+  {
+    "id": 1438,
+    "w": "à côté de",
+    "t": "al lado de / comparado con",
+    "tema": "Comparación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Quarante mille dollars à côté de mille euros, la différence est énorme.",
+    "ex_es": "Cuarenta mil dólares comparado con mil euros, la diferencia es enorme.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1439,
+    "w": "ça n'a rien à voir avec",
+    "t": "no tiene nada que ver con",
+    "tema": "Comparación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "La culture américaine, ça n'a rien à voir avec l'Europe.",
+    "ex_es": "La cultura americana no tiene nada que ver con Europa.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1440,
+    "w": "depuis que",
+    "t": "desde que",
+    "tema": "Tiempo",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Depuis que je suis française, j'ai toujours noté que la famille est distante.",
+    "ex_es": "Desde que soy francesa, siempre he notado que la familia es distante.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1441,
+    "w": "ça fait beaucoup d'années que",
+    "t": "hace muchos años que",
+    "tema": "Tiempo",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Ça fait beaucoup d'années qu'il habite aux États-Unis, au moins quinze ans.",
+    "ex_es": "Hace muchos años que vive en Estados Unidos, al menos quince.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1442,
+    "w": "c'est pour ça que",
+    "t": "por eso / es por eso que",
+    "tema": "Causalidad",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "C'est pour ça que je dois vous envoyer les livres le plus tôt possible.",
+    "ex_es": "Por eso tengo que mandarte los libros lo antes posible.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1443,
+    "w": "au moins",
+    "t": "al menos / por lo menos",
+    "tema": "Matices",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Je vais essayer de vous envoyer au moins un thème parmi les trois.",
+    "ex_es": "Intentaré mandarte al menos un tema de los tres.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1444,
+    "w": "pas tellement",
+    "t": "no tanto / no demasiado",
+    "tema": "Matices",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Les Français ne sont pas tellement ouverts, ils sont un peu différents.",
+    "ex_es": "Los franceses no son tan abiertos, son un poco diferentes.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1445,
+    "w": "quelquefois",
+    "t": "a veces",
+    "tema": "Matices",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Quelquefois les Français sont très réservés, ça dépend.",
+    "ex_es": "A veces los franceses son muy reservados, depende.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1446,
+    "w": "n'importe quoi",
+    "t": "cualquier cosa / lo que sea",
+    "tema": "Matices",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Quand on parle, on parle de n'importe quoi.",
+    "ex_es": "Cuando hablamos, hablamos de cualquier cosa.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1447,
+    "w": "être en train de + inf.",
+    "t": "estar + gerundio (acción en curso)",
+    "tema": "Gramática",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Je suis en train de faire les cours à l'Alliance française.",
+    "ex_es": "Estoy haciendo los cursos en la Alianza Francesa.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1448,
+    "w": "aller + infinitif",
+    "t": "ir a + infinitivo (futuro próximo)",
+    "tema": "Gramática",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Je vais vous envoyer les photos par email.",
+    "ex_es": "Te voy a mandar las fotos por correo.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1449,
+    "w": "il faut que + subjonctif",
+    "t": "hay que / es necesario que + subjuntivo",
+    "tema": "Gramática",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Il faut que vous achetiez 10 parts à 10 euros.",
+    "ex_es": "Hay que comprar 10 participaciones a 10 euros.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1450,
+    "w": "pour que + subjonctif",
+    "t": "para que + subjuntivo",
+    "tema": "Gramática",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Je laisse des devoirs pour que les étudiants commencent à se préparer.",
+    "ex_es": "Pongo deberes para que los estudiantes empiecen a prepararse.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1451,
+    "w": "si + imparfait → conditionnel présent",
+    "t": "si + imperfecto → condicional (hipótesis)",
+    "tema": "Gramática",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Si on ne me payait pas bien, je ne serais pas venue.",
+    "ex_es": "Si no me pagaran bien, no habría venido.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B2"
+  },
+  {
+    "id": 1452,
+    "w": "distante",
+    "t": "distante / frío / poco afectuoso",
+    "tema": "Falsos amigos",
+    "cat": "Adjetivo",
+    "gen": null,
+    "ex_fr": "La famille française est souvent distante, il est difficile d'avoir un lien proche.",
+    "ex_es": "La familia francesa es a menudo distante, es difícil tener un vínculo cercano.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1453,
+    "w": "une manifestation (≠ evento)",
+    "t": "una manifestación / protesta (≠ evento cultural)",
+    "tema": "Falsos amigos",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Les Français font des manifestations quand ils ne sont pas d'accord avec le gouvernement.",
+    "ex_es": "Los franceses hacen manifestaciones cuando no están de acuerdo con el gobierno.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1454,
+    "w": "salut",
+    "t": "hola / adiós (informal, ambos sentidos)",
+    "tema": "Falsos amigos",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Salut, ça va ? / Bon, salut, à demain !",
+    "ex_es": "¡Hola, qué tal! / ¡Venga, hasta mañana!",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1455,
+    "w": "la production orale",
+    "t": "la expresión oral (en examen)",
+    "tema": "Expresión oral",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "La production orale est l'une des parties les plus difficiles du DELF.",
+    "ex_es": "La expresión oral es una de las partes más difíciles del DELF.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1456,
+    "w": "la production écrite",
+    "t": "la expresión escrita (en examen)",
+    "tema": "Expresión oral",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "La production écrite, c'est très difficile pour la faire bien.",
+    "ex_es": "La expresión escrita es muy difícil hacerla bien.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1457,
+    "w": "présenter un thème",
+    "t": "presentar un tema",
+    "tema": "Expresión oral",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Vous devez présenter un thème et parler entre 6 et 8 minutes.",
+    "ex_es": "Debes presentar un tema y hablar entre 6 y 8 minutos.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1458,
+    "w": "exposer un thème",
+    "t": "exponer un tema (oral)",
+    "tema": "Expresión oral",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Vous allez exposer ce thème et en parler entre 6 et 8 minutes.",
+    "ex_es": "Vas a exponer ese tema y hablar de él entre 6 y 8 minutos.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1459,
+    "w": "les fautes grammaticales",
+    "t": "los errores gramaticales",
+    "tema": "Expresión oral",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Je vais corriger toutes les fautes grammaticales dans votre texte.",
+    "ex_es": "Voy a corregir todos los errores gramaticales en tu texto.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1460,
+    "w": "avec ses propres mots",
+    "t": "con sus propias palabras",
+    "tema": "Expresión oral",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Vous allez écrire un texte avec vos propres mots.",
+    "ex_es": "Vas a escribir un texto con tus propias palabras.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1461,
+    "w": "le plus tôt possible",
+    "t": "lo antes posible / cuanto antes",
+    "tema": "Conversación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Il faut commencer à se préparer le plus tôt possible.",
+    "ex_es": "Hay que empezar a prepararse lo antes posible.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1462,
+    "w": "d'ici là",
+    "t": "mientras tanto / de aquí a entonces",
+    "tema": "Tiempo",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "D'ici là, je vais vous envoyer les livres par email.",
+    "ex_es": "Mientras tanto, te mandaré los libros por correo.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B2"
+  },
+  {
+    "id": 1463,
+    "w": "voilà, c'est comme ça",
+    "t": "así es / así son las cosas",
+    "tema": "Conversación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Si moi je n'appelle pas, personne ne répond. Voilà, c'est comme ça.",
+    "ex_es": "Si yo no llamo, nadie contesta. Así son las cosas.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1464,
+    "w": "en particulier",
+    "t": "en particular / especialmente",
+    "tema": "Matices",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "En France, en particulier dans les grandes villes, il y a un fort individualisme.",
+    "ex_es": "En Francia, en particular en las grandes ciudades, hay un fuerte individualismo.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1465,
+    "w": "de toute façon",
+    "t": "de todas formas / de todos modos",
+    "tema": "Matices",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "De toute façon, il faut travailler beaucoup pour passer l'examen.",
+    "ex_es": "De todas formas, hay que trabajar mucho para pasar el examen.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1466,
+    "w": "un ensemble de contradictions",
+    "t": "un conjunto de contradicciones",
+    "tema": "Cultura",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "La France est pour nous un merveilleux ensemble de contradictions.",
+    "ex_es": "Francia es para nosotros un maravilloso conjunto de contradicciones.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B2"
+  },
+  {
+    "id": 1467,
+    "w": "respirer la santé",
+    "t": "rezumar salud / tener muy buena salud",
+    "tema": "Salud",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "La France est un pays dont les habitants respirent la santé et pourtant ils fument.",
+    "ex_es": "Francia es un país cuyos habitantes rezuman salud y sin embargo fuman.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "C1"
+  },
+  {
+    "id": 1468,
+    "w": "se faire des amis",
+    "t": "hacer amigos / hacerse amigos",
+    "tema": "Cultura",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Les Espagnols se font beaucoup plus facilement des amis que les Français.",
+    "ex_es": "Los españoles hacen amigos mucho más fácilmente que los franceses.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1469,
+    "w": "quitter le domicile familial",
+    "t": "irse de casa (de los padres)",
+    "tema": "Cultura",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "En Italie, les gens quittent beaucoup plus tard le domicile familial.",
+    "ex_es": "En Italia, la gente se va de casa de los padres mucho más tarde.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1470,
+    "w": "avoir un lien proche",
+    "t": "tener un vínculo cercano",
+    "tema": "Cultura",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Il est difficile d'avoir un lien proche avec la famille en France.",
+    "ex_es": "Es difícil tener un vínculo cercano con la familia en Francia.",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": false,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B2"
+  },
+  {
+    "id": 1471,
+    "w": "enchantée / enchanté",
+    "t": "encantado/a (al conocer a alguien)",
+    "tema": "Conversación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Enchantée ! — Enchanté !",
+    "ex_es": "¡Encantada! — ¡Encantado!",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1472,
+    "w": "bon week-end",
+    "t": "buen fin de semana",
+    "tema": "Conversación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "Au revoir et bon week-end !",
+    "ex_es": "¡Adiós y buen fin de semana!",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": false,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
+  },
+  {
+    "id": 1473,
+    "w": "à la prochaine",
+    "t": "hasta la próxima",
+    "tema": "Conversación",
+    "cat": "Nombre",
+    "gen": null,
+    "ex_fr": "À la prochaine semaine, on se voit !",
+    "ex_es": "¡Hasta la semana que viene, nos vemos!",
+    "syn": null,
+    "warn": null,
+    "flags": {
+      "top": true,
+      "oral": true,
+      "custom": true
+    },
+    "fn": null,
+    "reg": null,
+    "constr": null,
+    "nivel": "B1"
   }
 ];
 
@@ -29160,15 +30930,32 @@ var FN_BG = {
 var state = {
   tema:"", cat:"", gen:"", top:false,
   known:false, unknown:false, oral:false, search:"", sort:"rel",
-  defaultView:"back", fn:"", nivel:""
+  defaultView:"back", fn:"", nivel:"",
+  initialView: true
 };
+var initialPreviewCache = null;
 var knownIds   = {};
 var flippedIds = {};
 
+function getEmbeddedState() {
+  try {
+    var el = document.getElementById("embeddedState");
+    if (!el) return {};
+    var s = JSON.parse(el.textContent || "{}");
+    return s || {};
+  } catch(e) { return {}; }
+}
+
 function loadStorage() {
   try {
+    var emb = getEmbeddedState();
     var k = localStorage.getItem("delf_known");
-    if (k) knownIds = JSON.parse(k);
+    if (k) {
+      knownIds = JSON.parse(k);
+    } else if (emb.known && typeof emb.known === "object") {
+      knownIds = emb.known;
+      try { localStorage.setItem("delf_known", JSON.stringify(knownIds)); } catch(_){}
+    }
     var fl = localStorage.getItem("delf_flipped");
     if (fl) flippedIds = JSON.parse(fl);
     var fs = localStorage.getItem("delf_fs");
@@ -29255,7 +31042,30 @@ function stripAccents(str) {
   return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
+function pickInitialPreview() {
+  if (initialPreviewCache) return initialPreviewCache;
+  var byTema = {};
+  DATA.forEach(function(d) {
+    if (!d.tema) return;
+    if (!byTema[d.tema]) byTema[d.tema] = [];
+    byTema[d.tema].push(d);
+  });
+  var temas = Object.keys(byTema);
+  for (var i = temas.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = temas[i]; temas[i] = temas[j]; temas[j] = tmp;
+  }
+  var picks = [];
+  for (var k = 0; k < temas.length && picks.length < 3; k++) {
+    var arr = byTema[temas[k]];
+    picks.push(arr[Math.floor(Math.random() * arr.length)]);
+  }
+  initialPreviewCache = picks;
+  return picks;
+}
+
 function filterData() {
+  if (state.initialView) return pickInitialPreview();
   var q = stripAccents(state.search.trim().toLowerCase());
   var arr = DATA.filter(function(d) {
     if (state.tema && d.tema !== state.tema) return false;
@@ -29419,6 +31229,8 @@ function buildCard(d) {
 function render() {
   var arr  = filterData();
   var grid = document.getElementById("grid");
+  var banner = document.getElementById("initialBanner");
+  if (banner) banner.hidden = !state.initialView;
   if (arr.length === 0) {
     grid.innerHTML = "<div class=\"empty-state\"><div class=\"icon\">&#128269;</div><div>No se encontraron resultados.</div></div>";
   } else {
@@ -29431,7 +31243,8 @@ function render() {
   });
 }
 
-function reRender() {
+function reRender(keepInitial) {
+  if (!keepInitial) state.initialView = false;
   render();
   var grid = document.getElementById("grid");
   grid.onclick = function(e) {
@@ -29545,6 +31358,9 @@ function setTema(t) {
 }
 
 function initFilters() {
+  // Banner inicial — botón Ver todas
+  var btnShowAll = document.getElementById("btnShowAll");
+  if (btnShowAll) btnShowAll.addEventListener("click", function(){ reRender(); });
   // Topic — botón Todos
   document.getElementById("btnTemaAll").addEventListener("click", function(){ setTema(""); });
   // Top 3 botones
@@ -29723,7 +31539,7 @@ loadStorage();
 updateStats();
 initFilters();
 buildTopicUI();
-reRender();
+reRender(true);
 
 /* ═══════════════════════════════════════════
    MODO JUEGO — lógica completa
@@ -30403,7 +32219,15 @@ var cardEdits = {};   // {id: {w, t, ex_fr, ex_es, syn, warn}}
 function loadCardEdits() {
   try {
     var s = localStorage.getItem("delf_card_edits");
-    if (s) cardEdits = JSON.parse(s);
+    if (s) {
+      cardEdits = JSON.parse(s);
+    } else {
+      var emb = (typeof getEmbeddedState === "function") ? getEmbeddedState() : {};
+      if (emb.edits && typeof emb.edits === "object") {
+        cardEdits = emb.edits;
+        try { localStorage.setItem("delf_card_edits", JSON.stringify(cardEdits)); } catch(_){}
+      }
+    }
   } catch(e) {}
 }
 
@@ -31092,6 +32916,12 @@ function initImportExport() {
       var e   = src.indexOf("\nvar TEMA_CLASS", s);
       if (s < 0 || e < 0) { alert("No se pudo localizar DATA."); return; }
       var out = src.slice(0, s) + "var DATA = " + dj + ";\n" + src.slice(e);
+      // Embed progreso (knownIds + cardEdits) en el script #embeddedState
+      var embedJson = JSON.stringify({ known: knownIds, edits: cardEdits }).replace(/</g, "\\u003c");
+      out = out.replace(
+        /<script type="application\/json" id="embeddedState">[\s\S]*?<\/script>/,
+        '<script type="application/json" id="embeddedState">' + embedJson + '</script>'
+      );
       var a   = document.createElement("a");
       a.href     = URL.createObjectURL(new Blob([out], {type:"text/html;charset=utf-8"}));
       a.download = "vocabulario_delf_b1.html";
@@ -31348,11 +33178,11 @@ if (document.readyState === "loading") {
 
     <!-- VISTA 2: previsualización -->
     <div id="importPreviewView" style="display: none;">
-      <p id="importPreviewSummary"><strong>84</strong> tarjetas listas para importar</p>
+      <p id="importPreviewSummary"><strong>83</strong> tarjetas listas para importar</p>
       <div class="import-preview-list" id="importPreviewList"></div>
     </div>
 
-    <div class="imodal-status ok" id="importStatus">✓ 84 tarjetas añadidas.<br><span style="font-size:0.92em;color:var(--text2);">Por tema: Alimentación (6), Conectores (12), Cultura y ocio (2), Emergencias (4), Salud (58), Trabajo (2)</span><br><strong>Exporta el HTML para guardarlas de forma permanente.</strong></div>
+    <div class="imodal-status ok" id="importStatus">✓ 83 tarjetas añadidas.<br><span style="font-size:0.92em;color:var(--text2);">Por tema: Causalidad (1), Ciudad (1), Comercio (5), Comparación (5), Conversación (10), Cultura (8), DELF (6), Economía (7), Educación (3), Falsos amigos (3), Gramática (5), Matices (6), Opinión (8), Política (4), Salud (1), Seguridad (4), Sociedad (3), Tiempo (3)</span><br><strong>Exporta el HTML para guardarlas de forma permanente.</strong></div>
     <div class="imodal-actions">
       <button class="imodal-btn-cancel" id="importCancel" style="display: none;">Cancelar</button>
       <button class="imodal-btn-cancel" id="importBackToPaste" style="display: none;">← Volver al JSON</button>
@@ -31455,5 +33285,7 @@ if (document.readyState === "loading") {
     </div>
   </div>
 </div>
+
+<script type="application/json" id="embeddedState">{"known":{},"edits":{}}</script>
 
 </body></html>
