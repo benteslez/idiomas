@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English B2 &middot; Flashcards</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f0ea;--bg2:#e8e4da;--card:#fff;
+  --border:rgba(40,30,15,.10);--border2:rgba(40,30,15,.17);
+  --text:#1a1712;--text2:#524939;--text3:#9a8a76;
+  --accent:#1a5c7a;--accent-b:rgba(26,92,122,.22);--accent-bg:rgba(26,92,122,.08);
+  --radius:14px;--rsm:8px;
+  --shadow:0 2px 14px rgba(20,15,5,.09);
+  --shadow-h:0 6px 24px rgba(20,15,5,.15);
+  --flip:.42s;--fs:1;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);padding:0 0 80px}
+
+/* HEADER */
+.hdr{background:var(--bg2);border-bottom:1px solid var(--border2);padding:18px 20px 22px;text-align:center}
+.hdr-back{max-width:1180px;margin:0 auto 14px;text-align:left}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border2);border-radius:100px;padding:6px 13px 6px 10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--text2);text-decoration:none;box-shadow:var(--shadow);transition:all .15s}
+.back-btn:hover{background:var(--accent-bg);border-color:var(--accent-b);color:var(--accent);transform:translateX(-2px)}
+.back-btn .arrow{font-size:15px;line-height:1}
+.hdr-lbl{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px}
+.hdr h1{font-family:'Playfair Display',serif;font-size:clamp(22px,5vw,40px);font-weight:700;line-height:1.15;margin-bottom:6px}
+.hdr-sub{font-size:13px;color:var(--text2);font-style:italic}
+.hdr-pills{display:flex;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap}
+.pill{background:var(--card);border:1px solid var(--border2);border-radius:100px;padding:4px 14px;font-size:12px;color:var(--text2)}
+.pill strong{color:var(--accent);font-weight:600}
+
+/* CONTROLS */
+.ctrl{position:sticky;top:0;z-index:100;background:rgba(242,240,234,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:10px 14px;overflow:hidden}
+.srow{display:flex;align-items:center;gap:8px;max-width:700px;margin:0 auto 8px;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);padding:8px 14px;box-shadow:var(--shadow)}
+.srow input{flex:1;background:none;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text)}
+.srow input::placeholder{color:var(--text3)}
+.clr-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:15px;padding:0;display:none}
+.clr-btn.vis{display:block}
+.add-btn{background:none;border:none;cursor:pointer;color:var(--accent);font-size:22px;padding:0;flex-shrink:0;line-height:1;font-weight:700}
+.font-row{display:flex;align-items:center;gap:8px;max-width:700px;margin:0 auto 8px}
+.font-row label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);font-weight:600;white-space:nowrap}
+.font-row input[type=range]{flex:1;accent-color:var(--accent)}
+.font-row .fval{font-size:11px;color:var(--text2);min-width:30px;text-align:right}
+.toolbar{display:flex;flex-direction:column;gap:6px;max-width:960px;margin:0 auto}
+.ctrl-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.ctrl-grp{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
+.ctrl-grp+.ctrl-grp{padding-left:8px;border-left:1px solid var(--border2)}
+@media(max-width:500px){.ctrl-grp+.ctrl-grp{padding-left:0;border-left:none;border-top:1px solid var(--border);padding-top:6px;width:100%}}
+.lbl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);font-weight:600;white-space:nowrap}
+.btn{padding:5px 12px;border-radius:100px;border:1px solid var(--border2);background:var(--card);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;box-shadow:var(--shadow);transition:all .15s}
+.btn:hover{background:var(--bg2)}
+.btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+#f-know{border-color:rgba(42,157,92,.4)}
+#f-know.active{background:#2a9d5c!important;color:#fff!important;border-color:#2a9d5c!important}
+#f-noknow{border-color:rgba(181,58,58,.4)}
+#f-noknow.active{background:#b53a3a!important;color:#fff!important;border-color:#b53a3a!important}
+.bscroll{overflow-x:auto;width:100%;-webkit-overflow-scrolling:touch}
+.bscroll::-webkit-scrollbar{height:3px}
+.bscroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.bbtns{display:flex;gap:6px;width:max-content;padding-bottom:2px}
+.bb{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:100px;border:1px solid var(--border2);background:var(--card);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;white-space:nowrap;transition:all .15s}
+.bb:hover{background:var(--bg2)}
+.bb.active{font-weight:600}
+.bb .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.bb .cb{font-size:10px;opacity:.6;background:rgba(0,0,0,.05);border-radius:100px;padding:1px 5px}
+.rbar{text-align:center;padding:12px 16px 0;font-size:13px;color:var(--text3)}
+.rbar strong{color:var(--accent)}
+
+/* GRID */
+.grid{max-width:1180px;margin:0 auto;padding:16px 14px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+@media(max-width:380px){.grid{grid-template-columns:1fr;padding:12px 10px 0}}
+
+/* FLIP CARD
+   Strategy: card-wrapper is position:relative + perspective.
+   card-inner is also position:relative (normal flow) with min-height.
+   Both faces are position:absolute and fill the wrapper via inset:0.
+   The min-height on card-inner keeps the wrapper from collapsing.
+*/
+.card-wrapper{
+  position:relative;
+  perspective:1000px;
+  cursor:pointer;
+  border-radius:var(--radius);
+  /* Ensures clicks only register on THIS element, not children that overflow */
+  isolation:isolate;
+}
+.card-inner{
+  position:relative;
+  width:100%;
+  min-height:160px;
+  transform-style:preserve-3d;
+  transition:transform var(--flip) cubic-bezier(.4,.2,.2,1);
+}
+.card-wrapper.flipped .card-inner{
+  transform:rotateY(180deg);
+}
+.card-face{
+  position:absolute;
+  inset:0;
+  border-radius:var(--radius);
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:22px 18px;
+  box-shadow:var(--shadow);
+}
+.card-wrapper:hover .card-face{box-shadow:var(--shadow-h)}
+.card-face-front{color:#fff}
+.card-face-back{
+  background:var(--card);
+  border:1px solid var(--border2);
+  transform:rotateY(180deg);
+  color:var(--text);
+}
+.card-wrapper.known .card-face-back{border-left:4px solid #2a9d5c;background:#f0f7f2}
+/* Spacer: sits in normal flow to give card-inner its height.
+   Invisible and non-interactive. Must mirror front face padding exactly. */
+.card-spacer{
+  display:block;
+  visibility:hidden;
+  pointer-events:none;
+  width:100%;
+  min-height:160px;
+  padding:22px 18px;
+  word-break:break-word;
+}
+
+/* FRONT content */
+.cf-pill{display:inline-block;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;background:var(--bg2);color:var(--text2);border:1px solid var(--border2);margin-bottom:12px}
+.cf-badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent-b);margin-bottom:10px}
+.cf-main{font-family:'Playfair Display',serif;font-size:calc(17px * var(--fs));font-weight:700;color:var(--text);line-height:1.3;word-break:break-word}
+.cf-sub{font-size:calc(12px * var(--fs));color:var(--text2);margin-top:6px;font-style:italic}
+.cf-hint{font-size:11px;color:var(--text3);margin-top:14px}
+
+/* BACK content */
+.cb-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;width:100%}
+.cb-actions{position:absolute;top:10px;right:10px;display:flex;gap:6px;align-items:center}
+.known-btn{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--border2);background:transparent;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;color:var(--text3)}
+.known-btn:hover{border-color:#2a9d5c;color:#2a9d5c}
+.known-btn.active{background:#2a9d5c;border-color:#2a9d5c;color:#fff}
+.del-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;padding:2px;transition:color .15s}
+.del-btn:hover{color:#b53a3a}
+.cb-label{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.cb-main{font-family:'Playfair Display',serif;font-size:calc(20px * var(--fs));font-weight:700;color:#fff;line-height:1.25;word-break:break-word}
+.cb-form{font-size:calc(12px * var(--fs));font-weight:700;color:#fff;background:rgba(255,255,255,.2);padding:3px 12px;border-radius:100px;display:inline-block;border:1px solid rgba(255,255,255,.35)}
+.cb-sub{font-size:calc(12px * var(--fs));color:rgba(255,255,255,.82);font-style:italic;line-height:1.4}
+.cb-hint{font-size:10px;color:rgba(255,255,255,.45);margin-top:4px}
+.custom-badge{font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;background:rgba(139,80,200,.1);color:#7a40c0;border:1px solid rgba(139,80,200,.3);border-radius:4px;padding:2px 5px;margin-left:4px;vertical-align:middle}
+
+/* ADD CARD OVERLAY */
+#addOverlay{display:none;position:fixed;inset:0;background:rgba(26,23,18,.55);backdrop-filter:blur(4px);z-index:5000;align-items:flex-start;justify-content:center;overflow-y:auto;padding:24px 12px}
+#addOverlay.active{display:flex}
+#addPanel{background:var(--card);border-radius:18px;width:100%;max-width:520px;box-shadow:0 20px 60px rgba(0,0,0,.22);padding:26px 26px 22px;margin:auto;position:relative}
+.ap-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:3px}
+.ap-sub{font-size:12px;color:var(--text3);margin-bottom:18px}
+.ap-field{margin-bottom:12px}
+.ap-field label{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);font-weight:600;margin-bottom:4px}
+.ap-field input,.ap-field select{width:100%;padding:8px 12px;border:1px solid var(--border2);border-radius:var(--rsm);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);background:var(--bg);outline:none}
+.ap-field input:focus,.ap-field select:focus{border-color:var(--accent-b)}
+.ap-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ap-actions{display:flex;gap:8px;margin-top:18px;justify-content:flex-end}
+.ap-cancel{padding:8px 18px;border-radius:100px;border:1px solid var(--border2);background:var(--bg);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer}
+.ap-save{padding:8px 22px;border-radius:100px;border:none;background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer}
+.ap-close{position:absolute;top:16px;right:18px;background:none;border:none;font-size:20px;color:var(--text3);cursor:pointer;line-height:1;padding:0}
+
+/* GAME OVERLAY */
+#gameOverlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:9000;flex-direction:column;align-items:center}
+#gameOverlay.active{display:flex}
+#gamePanel{width:100%;max-width:540px;height:100%;display:flex;flex-direction:column;overflow-y:auto}
+#gameSetup{padding:26px 22px;flex:1}
+.gs-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.gs-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700}
+.gs-sub{font-size:13px;color:var(--text2);margin-bottom:20px}
+.g-close{background:none;border:1px solid var(--border2);border-radius:50%;width:32px;height:32px;font-size:17px;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.g-close-sm{background:none;border:none;font-size:19px;color:var(--text3);cursor:pointer;padding:0;line-height:1}
+.gf-section{margin-bottom:16px}
+.gf-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);font-weight:600;margin-bottom:7px}
+.gf-row{display:flex;flex-wrap:wrap;gap:5px}
+.gf-btn{padding:5px 13px;border-radius:100px;border:1px solid var(--border2);background:var(--card);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .15s}
+.gf-btn:hover{background:var(--bg2)}
+.gf-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+.g-deck-ct{font-size:13px;color:var(--text2);margin:12px 0 16px;text-align:center}
+.g-deck-ct strong{color:var(--accent);font-weight:700}
+.g-start{width:100%;padding:13px;border:none;border-radius:var(--radius);background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;box-shadow:0 4px 18px rgba(26,92,122,.35)}
+.g-start:hover{background:#155070}
+.g-repaso{background:#7a4a0a!important;margin-top:8px}
+.g-back{width:100%;padding:10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;margin-top:8px}
+#gPlay{display:none;flex-direction:column;height:100%;width:100%}
+.gp-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 6px;gap:10px}
+.gp-counter{font-size:13px;color:var(--text2)}
+.gp-score{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:700}
+.gp-yes{color:#2a9d5c}.gp-no{color:#b53a3a}.gp-sep{color:var(--text3)}
+.gp-bar{height:3px;background:var(--border2);margin:0 18px}
+.gp-fill{height:3px;background:var(--accent);border-radius:2px;transition:width .4s}
+.gp-arena{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:stretch;padding:10px 14px 10px;gap:10px;min-height:0}
+.gp-stack{position:relative;width:100%;max-width:500px;flex:1;min-height:0}
+.gs-card{position:absolute;inset:0;cursor:grab;user-select:none;touch-action:pan-y}
+.gs-card:active{cursor:grabbing}
+.gs-peek1{transform:translateY(6px) scale(.97);z-index:1;pointer-events:none}
+.gs-peek2{transform:translateY(12px) scale(.94);z-index:0;pointer-events:none}
+.gs-top{z-index:2}
+.gs-wrap{width:100%;height:100%;perspective:900px}
+.gs-inner{width:100%;height:100%;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.4,0,.2,1);position:relative}
+.gs-wrap.flipped .gs-inner{transform:rotateY(180deg)}
+.gs-face{position:absolute;inset:0;border-radius:16px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px 24px;box-shadow:0 8px 28px rgba(0,0,0,.12)}
+.gs-front{background:var(--card);border:1px solid var(--border2)}
+.gs-back{transform:rotateY(180deg);color:#fff}
+.gs-lbl{position:absolute;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:0;pointer-events:none;padding:5px 11px;border-radius:7px;border:2px solid}
+.gs-lbl-yes{right:12px;color:#2a9d5c;border-color:#2a9d5c;background:rgba(42,157,92,.08)}
+.gs-lbl-no{left:12px;color:#b53a3a;border-color:#b53a3a;background:rgba(181,58,58,.08)}
+.gf-pill{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text2);padding:2px 9px;border-radius:100px;margin-bottom:12px;display:inline-block;background:var(--bg2);border:1px solid var(--border2)}
+.gf-badge{font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-bg);padding:3px 10px;border-radius:6px;margin-bottom:9px;display:inline-block;border:1px solid var(--accent-b)}
+.gf-main{font-family:'Playfair Display',serif;font-size:clamp(18px,5vw,28px);font-weight:700;color:var(--text);line-height:1.3;margin-bottom:7px}
+.gf-sub{font-size:13px;color:var(--text2);font-style:italic}
+.gf-hint{font-size:11px;color:var(--text3);margin-top:12px}
+.gb-label{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:8px}
+.gb-main{font-family:'Playfair Display',serif;font-size:clamp(18px,5vw,28px);font-weight:700;color:#fff;line-height:1.3;margin-bottom:6px}
+.gb-form{font-size:12px;font-weight:700;color:rgba(255,255,255,.9);background:rgba(255,255,255,.18);padding:3px 11px;border-radius:100px;display:inline-block;margin-bottom:6px}
+.gb-sub{font-size:13px;color:rgba(255,255,255,.82);font-style:italic;line-height:1.4}
+.gb-hint{font-size:10px;color:rgba(255,255,255,.4);margin-top:10px}
+.gx-right{animation:xR .35s ease forwards}
+.gx-left{animation:xL .35s ease forwards}
+@keyframes xR{to{transform:translateX(140%) rotate(25deg);opacity:0}}
+@keyframes xL{to{transform:translateX(-140%) rotate(-25deg);opacity:0}}
+.gp-arrows{display:flex;justify-content:space-between;width:100%;max-width:500px}
+.gp-arrow{font-size:12px;color:var(--text3);font-weight:500}
+.gp-actions{display:flex;align-items:center;justify-content:center;gap:18px}
+.gp-btn{width:50px;height:50px;border-radius:50%;border:1.5px solid var(--border2);background:var(--card);font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:all .18s}
+.gp-no-btn{color:#b53a3a;border-color:rgba(181,58,58,.35)}.gp-no-btn:hover{background:rgba(181,58,58,.1);transform:scale(1.08)}
+.gp-flip-btn{color:var(--text2);width:42px;height:42px;font-size:17px}.gp-flip-btn:hover{background:var(--bg2);transform:scale(1.08)}
+.gp-yes-btn{color:#2a9d5c;border-color:rgba(42,157,92,.35)}.gp-yes-btn:hover{background:rgba(42,157,92,.1);transform:scale(1.08)}
+#gEnd{display:none;flex-direction:column;width:100%;padding:26px 22px}
+.ge-stats{display:flex;align-items:center;gap:18px;margin:20px 0 14px}
+.ge-circle{width:86px;height:86px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ge-circle span{font-size:21px;font-weight:700;color:#fff}
+.ge-detail{display:flex;flex-direction:column;gap:5px;font-size:14px}
+.ge-yes{color:#2a9d5c;font-weight:600}.ge-no{color:#b53a3a;font-weight:600}.ge-tot{color:var(--text2)}
+.ge-msg{font-size:14px;color:var(--text2);line-height:1.5;margin-bottom:20px}
+.ge-actions{display:flex;flex-direction:column;gap:7px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-back">
+    <a class="back-btn" href="../index.html">
+      <span class="arrow">&lsaquo;</span>
+      <span>&Iacute;ndice general</span>
+    </a>
+  </div>
+  <div class="hdr-lbl">English B2 &middot; Study Tool</div>
+  <h1>Flashcards &amp; Game Mode</h1>
+  <div class="hdr-sub">Expressions &middot; G&amp;I &middot; Phrasal Verbs &middot; Verbs+Prep &middot; Word Formation</div>
+  <div class="hdr-pills">
+    <div class="pill">Total <strong id="hdrTotal">0</strong></div>
+    <div class="pill">Dominadas <strong id="hdrMastered">0</strong></div>
+  </div>
+</div>
+
+<div class="ctrl">
+  <div class="srow">
+    <span style="color:var(--text3)">&#128269;</span>
+    <input type="text" id="searchBox" placeholder="Buscar tarjeta&hellip;" autocomplete="off">
+    <button class="clr-btn" id="clrBtn">&#10005;</button>
+    <button class="add-btn" id="btnAddCard" title="A&ntilde;adir">&#65291;</button>
+  </div>
+  <div class="font-row">
+    <label>Tama&ntilde;o</label>
+    <input type="range" id="fontRange" min="0.75" max="1.4" step="0.05" value="1">
+    <span class="fval" id="fontVal">100%</span>
+  </div>
+  <div class="toolbar">
+    <div class="ctrl-row">
+      <div class="ctrl-grp">
+        <span class="lbl">Filtro</span>
+        <button class="btn active" id="f-all">Todas</button>
+        <button class="btn" id="f-know">&#10003; Dominadas</button>
+        <button class="btn" id="f-noknow">&#10007; Por repasar</button>
+      </div>
+      <div class="ctrl-grp">
+        <button class="btn" id="btnViewEng">&#127468;&#127463; Ingl&eacute;s</button>
+        <button class="btn active" id="btnViewEs">&#127466;&#127480; Espa&ntilde;ol</button>
+        <button class="btn" id="btnGame" style="background:var(--accent-bg);border-color:var(--accent-b);color:var(--accent)">&#127918; Modo Juego</button>
+        <button class="btn" id="btnExport" style="background:var(--accent-bg);border-color:var(--accent-b);color:var(--accent)">&#11015; Exportar HTML</button>
+      </div>
+    </div>
+    <div class="ctrl-row" style="flex-wrap:nowrap;align-items:center;width:100%;min-width:0">
+      <span class="lbl" style="flex-shrink:0">Cat.</span>
+      <div class="bscroll" style="flex:1;min-width:0"><div class="bbtns" id="catBtns"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="rbar"><strong id="rbarCount">0</strong> tarjetas mostradas</div>
+<div class="grid" id="grid"></div>
+
+<!-- ADD CARD -->
+<div id="addOverlay">
+  <div id="addPanel">
+    <button class="ap-close" id="apClose">&#10005;</button>
+    <div class="ap-title">&#10133; A&ntilde;adir tarjeta</div>
+    <div class="ap-sub">Elige categor&iacute;a y rellena los campos</div>
+    <div class="ap-field"><label>Categor&iacute;a</label>
+      <select id="apCat" onchange="apCatChange()">
+        <option value="expr">Expressions</option>
+        <option value="gi">Gerunds &amp; Infinitives</option>
+        <option value="pv">Phrasal Verbs</option>
+        <option value="vp">Verbs + Preposition</option>
+        <option value="wf">Word Formation</option>
+      </select>
+    </div>
+    <div id="apSimple">
+      <div class="ap-field"><label id="apFrontLbl">Ingl&eacute;s</label><input type="text" id="apFront"></div>
+      <div class="ap-field"><label id="apBackLbl">Espa&ntilde;ol</label><input type="text" id="apBack"></div>
+    </div>
+    <div id="apGI" style="display:none">
+      <div class="ap-field"><label>Verbo base</label><input type="text" id="apGIVerb"></div>
+      <div class="ap-field"><label>Forma</label>
+        <select id="apGIForm"><option value="gerund">Gerund (-ing)</option><option value="infinitive">Infinitive (to+verb)</option></select>
+      </div>
+      <div class="ap-field"><label>Ejemplo</label><input type="text" id="apGIEx"></div>
+    </div>
+    <div id="apWF" style="display:none">
+      <div class="ap-row">
+        <div class="ap-field"><label>Palabra base</label><input type="text" id="apWFBase"></div>
+        <div class="ap-field"><label>Tipo</label>
+          <select id="apWFType">
+            <option value="N">N &mdash; noun</option><option value="adj">adj</option>
+            <option value="adv">adv</option><option value="-adj">-adj</option>
+            <option value="-N">-N</option><option value="-V">-V</option>
+            <option value="-adv">-adv</option><option value="V">V &mdash; verb</option>
+          </select>
+        </div>
+      </div>
+      <div class="ap-field"><label>Forma derivada</label><input type="text" id="apWFDerived"></div>
+    </div>
+    <div class="ap-actions">
+      <button class="ap-cancel" id="apCancel">Cancelar</button>
+      <button class="ap-save" id="apSave">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- GAME -->
+<div id="gameOverlay">
+  <div id="gamePanel">
+    <div id="gameSetup">
+      <div class="gs-header">
+        <div class="gs-title">&#127918; Modo Juego</div>
+        <button class="g-close" id="gClose1">&#10005;</button>
+      </div>
+      <div class="gs-sub">Toca para ver &middot; Desliza para puntuar</div>
+      <div class="gf-section">
+        <div class="gf-label">Categor&iacute;a</div>
+        <div class="gf-row">
+          <button class="gf-btn active" data-gcat="">Todas</button>
+          <button class="gf-btn" data-gcat="expr">Expressions</button>
+          <button class="gf-btn" data-gcat="gi">G &amp; I</button>
+          <button class="gf-btn" data-gcat="pv">Phrasal Verbs</button>
+          <button class="gf-btn" data-gcat="vp">Verbs+Prep</button>
+          <button class="gf-btn" data-gcat="wf">Word Form.</button>
+        </div>
+      </div>
+      <div class="gf-section">
+        <div class="gf-label">Opciones</div>
+        <div class="gf-row">
+          <button class="gf-btn" id="gOptNodom">&#10007; No dominadas</button>
+          <button class="gf-btn active" id="gOptShuffle">&#128256; Barajar</button>
+        </div>
+      </div>
+      <div class="gf-section">
+        <div class="gf-label">Cara inicial</div>
+        <div class="gf-row">
+          <button class="gf-btn" id="gOptFaceEng">&#127468;&#127463; Ingl&eacute;s</button>
+          <button class="gf-btn active" id="gOptFaceEs">&#127466;&#127480; Espa&ntilde;ol</button>
+        </div>
+      </div>
+      <div class="g-deck-ct">Mazo: <strong id="gDeckCt">&mdash;</strong></div>
+      <button class="g-start" id="gBtnStart">Empezar</button>
+    </div>
+    <div id="gPlay" style="display:none;flex-direction:column;height:100%">
+      <div class="gp-header">
+        <button class="g-close-sm" id="gClose2">&#10005;</button>
+        <div id="gCounter" class="gp-counter">Tarjeta <strong>1</strong> de <strong>1</strong></div>
+        <div class="gp-score"><span class="gp-yes" id="gSYes">0</span><span class="gp-sep">&middot;</span><span class="gp-no" id="gSNo">0</span></div>
+      </div>
+      <div class="gp-bar"><div class="gp-fill" id="gFill"></div></div>
+      <div class="gp-arena">
+        <div class="gp-stack" id="gStack"></div>
+        <div class="gp-arrows"><div class="gp-arrow">&larr; Repasar</div><div class="gp-arrow">Ya lo s&eacute; &rarr;</div></div>
+        <div class="gp-actions">
+          <button class="gp-btn gp-no-btn" id="gBtnNo">&#10007;</button>
+          <button class="gp-btn gp-flip-btn" id="gBtnFlip">&#8635;</button>
+          <button class="gp-btn gp-yes-btn" id="gBtnYes">&#10003;</button>
+        </div>
+      </div>
+    </div>
+    <div id="gEnd" style="display:none;flex-direction:column;width:100%">
+      <div class="gs-header" style="padding:26px 22px 0">
+        <div class="gs-title">Resultado</div>
+        <button class="g-close" id="gClose3">&#10005;</button>
+      </div>
+      <div style="padding:0 22px 26px">
+        <div class="ge-stats">
+          <div class="ge-circle" id="gCircle"><span id="gPct">0%</span></div>
+          <div class="ge-detail">
+            <span class="ge-yes">&#10003; <strong id="gEndYes">0</strong> dominadas</span>
+            <span class="ge-no">&#10007; <strong id="gEndNo">0</strong> a repasar</span>
+            <span class="ge-tot">de <strong id="gEndTot">0</strong> tarjetas</span>
+          </div>
+        </div>
+        <div class="ge-msg" id="gMsg"></div>
+        <div class="ge-actions">
+          <button class="g-start" id="gBtnRestart">Repetir todo</button>
+          <button class="g-start g-repaso" id="gBtnRepeat" style="display:none">Repetir falladas</button>
+          <button class="g-back" id="gBtnMenu">Volver al men&uacute;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var CAT={
+  expr:{label:'Expressions',color:'#1a6b4a'},
+  gi:  {label:'G & I',      color:'#3d2a72'},
+  pv:  {label:'Phrasal Verbs',color:'#6b3a1a'},
+  vp:  {label:'Verbs+Prep', color:'#1a4a7a'},
+  wf:  {label:'Word Form.', color:'#7a1a3a'}
+};
+var WFT={'N':'noun','adj':'adj.','-adj':'neg.adj.','-N':'neg.N','-V':'neg.V','-adv':'neg.adv.','adv':'adv.','V':'verb'};
+var CARDS=[];
+
+/* ── BLOCK 1: EXPRESSIONS ── */
+[
+{id:'e1', front:'Up to date',                      back:'Actualizado'},
+{id:'e2', front:"It's up to you",                  back:'Es tu decisión'},
+{id:'e3', front:'A wide range of',                 back:'Una gran gama de'},
+{id:'e4', front:'A great deal of',                 back:'Una gran cantidad de'},
+{id:'e5', front:'There is no point in doing sth',  back:'No tiene sentido hacer algo'},
+{id:'e6', front:'Make up your mind!',              back:'¡Decide!'},
+{id:'e7', front:'To take into account',            back:'Tener en cuenta'},
+{id:'e8', front:'To bear sth in mind',             back:'Tener en mente'},
+{id:'e9', front:'To feel like doing sth',          back:'Apetecer hacer algo (feel)'},
+{id:'e10',front:'To fancy doing sth',              back:'Apetecer hacer algo (fancy)'},
+{id:'e11',front:'To take no notice of',            back:'Ignorar'},
+{id:'e12',front:'Not mean to do something',        back:'Hacer algo sin querer'},
+{id:'e13',front:'To get rid of sth',               back:'Deshacerse de algo'},
+{id:'e14',front:'To have nothing to do with',      back:'No tener nada que ver'},
+{id:'e15',front:'No longer',                       back:'Ya no / Nunca más'},
+{id:'e16',front:'To be bound to',                  back:'Estar predispuesto a que pase'},
+{id:'e17',front:'To be about to',                  back:'Estar a punto de'},
+{id:'e18',front:'To do something on purpose',      back:'Hacer algo a propósito'},
+{id:'e19',front:"It's no use doing sth",           back:'No sirve de nada hacer algo'},
+{id:'e20',front:'To be willing to do sth',         back:'Estar preparado y con ganas'},
+{id:'e21',front:'To be on the point of doing sth', back:'Estar a punto de hacer algo (inmediato)'},
+{id:'e22',front:'Should have known better',        back:'Debí haberlo sabido mejor'}
+].forEach(function(c){c.cat='expr';CARDS.push(c);});
+
+
+/* ── BLOCK 2: GERUNDS & INFINITIVES ── */
+[
+{id:'g1', verb:'enjoy',       form:'gerund',    example:'I enjoyed living in France.'},
+{id:'g2', verb:'fancy',       form:'gerund',    example:'I fancy seeing a film tonight.'},
+{id:'g3', verb:'discuss',     form:'gerund',    example:'We discussed going on holiday together.'},
+{id:'g4', verb:'dislike',     form:'gerund',    example:'I dislike waiting for buses.'},
+{id:'g5', verb:'finish',      form:'gerund',    example:"We've finished preparing for the meeting."},
+{id:'g6', verb:'mind',        form:'gerund',    example:"I don't mind coming early."},
+{id:'g7', verb:'suggest',     form:'gerund',    example:'He suggested staying at the Grand Hotel.'},
+{id:'g8', verb:'recommend',   form:'gerund',    example:'They recommended meeting earlier.'},
+{id:'g9', verb:'keep',        form:'gerund',    example:'He kept working, although he felt ill.'},
+{id:'g10',verb:'avoid',       form:'gerund',    example:'She avoided talking to her boss.'},
+{id:'g11',verb:'miss',        form:'gerund',    example:'She misses living near the beach.'},
+{id:'g12',verb:'appreciate',  form:'gerund',    example:'I appreciated her helping me.'},
+{id:'g13',verb:'delay',       form:'gerund',    example:'He delayed doing his taxes.'},
+{id:'g14',verb:'postpone',    form:'gerund',    example:'He postponed returning to Paris.'},
+{id:'g15',verb:'practise',    form:'gerund',    example:'She practised singing the song.'},
+{id:'g16',verb:'consider',    form:'gerund',    example:'She considered moving to New York.'},
+{id:'g17',verb:"can't stand", form:'gerund',    example:"He can't stand her smoking in the office."},
+{id:'g18',verb:"can't help",  form:'gerund',    example:"He can't help talking so loudly."},
+{id:'g19',verb:'risk',        form:'gerund',    example:'He risked being caught.'},
+{id:'g20',verb:'admit',       form:'gerund',    example:'He admitted cheating on the test.'},
+{id:'g21',verb:'deny',        form:'gerund',    example:'He denied committing the crime.'},
+{id:'g22',verb:'mention',     form:'gerund',    example:'He mentioned going to that college.'},
+{id:'g23',verb:'imagine',     form:'gerund',    example:'He imagines working there one day.'},
+{id:'g24',verb:'tolerate',    form:'gerund',    example:'I tolerated her talking.'},
+{id:'g25',verb:'understand',  form:'gerund',    example:'I understand his quitting.'},
+{id:'g26',verb:'involve',     form:'gerund',    example:'The job involves travelling to Japan once a month.'},
+{id:'g27',verb:'complete',    form:'gerund',    example:'He completed renovating the house.'},
+{id:'g28',verb:'report',      form:'gerund',    example:'He reported her stealing the money.'},
+{id:'g29',verb:'anticipate',  form:'gerund',    example:'I anticipated arriving late.'},
+{id:'g30',verb:'recall',      form:'gerund',    example:'Tom recalled using his credit card at the store.'},
+{id:'g31',verb:'agree',       form:'infinitive',example:'She agreed to give a presentation at the meeting.'},
+{id:'g32',verb:'ask',         form:'infinitive',example:'I asked to leave early.'},
+{id:'g33',verb:'decide',      form:'infinitive',example:'We decided to go out for dinner.'},
+{id:'g34',verb:'help',        form:'infinitive',example:'He helped to clean the oven.'},
+{id:'g35',verb:'plan',        form:'infinitive',example:'She plans to buy a new flat next year.'},
+{id:'g36',verb:'hope',        form:'infinitive',example:'I hope to pass the exam.'},
+{id:'g37',verb:'learn',       form:'infinitive',example:'They are learning to sing.'},
+{id:'g38',verb:'want',        form:'infinitive',example:'I want to come to the party.'},
+{id:'g39',verb:'would like',  form:'infinitive',example:'I would like to see her tonight.'},
+{id:'g40',verb:'promise',     form:'infinitive',example:'We promised not to be late.'},
+{id:'g41',verb:'can afford',  form:'infinitive',example:"We can't afford to go on holiday."},
+{id:'g42',verb:'manage',      form:'infinitive',example:'He managed to open the door without the key.'},
+{id:'g43',verb:'prepare',     form:'infinitive',example:'They prepared to take the test.'},
+{id:'g44',verb:'demand',      form:'infinitive',example:'He demanded to speak to Mr. Harris.'},
+{id:'g45',verb:'choose',      form:'infinitive',example:'I chose to help.'},
+{id:'g46',verb:'offer',       form:'infinitive',example:'Frank offered to drive us to the supermarket.'},
+{id:'g47',verb:'wait',        form:'infinitive',example:'She waited to buy a movie ticket.'},
+{id:'g48',verb:'would hate',  form:'infinitive',example:"I'd hate to be late."},
+{id:'g49',verb:'would love',  form:'infinitive',example:"I'd love to come."},
+{id:'g50',verb:'seem',        form:'infinitive',example:'Nancy seemed to be disappointed.'},
+{id:'g51',verb:'expect',      form:'infinitive',example:'They expect to arrive early.'},
+{id:'g52',verb:'intend',      form:'infinitive',example:'We intend to visit you next spring.'},
+{id:'g53',verb:'pretend',     form:'infinitive',example:'The child pretended to be a monster.'},
+{id:'g54',verb:'refuse',      form:'infinitive',example:'The guard refused to let them enter the building.'},
+{id:'g55',verb:'tend',        form:'infinitive',example:'He tends to be a little shy.'},
+{id:'g56',verb:'would prefer',form:'infinitive',example:"I'd prefer to do it."},
+{id:'g57',verb:'deserve',     form:'infinitive',example:'He deserves to go to jail.'},
+{id:'g58',verb:'appear',      form:'infinitive',example:'His health appeared to be better.'},
+{id:'g59',verb:'arrange',     form:'infinitive',example:'Naomi arranged to stay with her cousin in Miami.'},
+{id:'g60',verb:'claim',       form:'infinitive',example:'She claimed to be a princess.'}
+].forEach(function(c){c.cat='gi';CARDS.push(c);});
+
+
+/* ── BLOCK 3: PHRASAL VERBS (165) ── */
+[
+{id:'pv1',  front:'to ask (someone) out',      back:'Pedirle salir a alguien'},
+{id:'pv2',  front:'to be off',                  back:'Largarse'},
+{id:'pv3',  front:'to beat (somebody) up',      back:'Dar una paliza a alguien'},
+{id:'pv4',  front:'to blow up',                 back:'Explotar'},
+{id:'pv5',  front:'to blow out',                back:'Apagar, soplar'},
+{id:'pv6',  front:'to break down',              back:'Averiarse'},
+{id:'pv7',  front:'to break up',                back:'Separarse'},
+{id:'pv8',  front:'to bring up (children)',     back:'Criar(se)'},
+{id:'pv9',  front:'to bring up (a topic)',      back:'Sacar un tema'},
+{id:'pv10', front:'bring it on!',               back:'¡Venga! ¡Vamos!'},
+{id:'pv11', front:'to bump into (somebody)',    back:'Encontrarse con alguien'},
+{id:'pv12', front:'to bump into (something)',   back:'Chocarse con algo'},
+{id:'pv13', front:'to butt in',                 back:'Interrumpir, quitar la palabra'},
+{id:'pv14', front:'to call off',                back:'Cancelar, suspender'},
+{id:'pv15', front:'to care about (sb/sth)',     back:'Preocuparse por algo, importarle algo'},
+{id:'pv16', front:'to carry on',                back:'Seguir, continuar'},
+{id:'pv17', front:'to carry out',               back:'Llevar a cabo (una investigación)'},
+{id:'pv18', front:'to catch up',                back:'Ponerse al día'},
+{id:'pv19', front:'to catch up with',           back:'Alcanzar, pillar a alguien'},
+{id:'pv20', front:'to cheat on (somebody)',     back:'Ser infiel, engañar'},
+{id:'pv21', front:'to cheer (somebody) up',     back:'Animar a alguien'},
+{id:'pv22', front:'to chop up',                 back:'Picar, trocear'},
+{id:'pv23', front:'to close down',              back:'Cerrar permanentemente'},
+{id:'pv24', front:'to come across',             back:'Toparse con algo, descubrir'},
+{id:'pv25', front:'to come down to (topic)',    back:'Reducirse a'},
+{id:'pv26', front:'to come down with',          back:'Enfermarse'},
+{id:'pv27', front:'to come in',                 back:'Entrar, pasar'},
+{id:'pv28', front:'to come over',               back:'Venirse, pasarse'},
+{id:'pv29', front:'to count on',                back:'Contar con, fiarse de'},
+{id:'pv30', front:'to cut down on',             back:'Reducir el consumo de algo'},
+{id:'pv31', front:'to doze off',                back:'Quedarse frito'},
+{id:'pv32', front:'to dress up',                back:'Vestirse elegante, disfrazarse'},
+{id:'pv33', front:'to drop in',                 back:'Pasarse sin concretar hora'},
+{id:'pv34', front:'to drop (sb/sthg) off',      back:'Dejar a alguien o algo'},
+{id:'pv35', front:'to drop out',                back:'Abandonar, dejar algo a medias'},
+{id:'pv36', front:'to eat up',                  back:'Terminarse la comida'},
+{id:'pv37', front:'to eat out',                 back:'Salir a comer fuera'},
+{id:'pv38', front:'to end up (doing sth)',      back:'Acabar haciendo algo que no esperabas'},
+{id:'pv39', front:'to fall behind',             back:'Retrasarse'},
+{id:'pv40', front:'to fall out with',           back:'Enfadarse, reñir'},
+{id:'pv41', front:'to fall over',               back:'Caerse al suelo'},
+{id:'pv42', front:'to fall off',                back:'Caerse algo de un sitio'},
+{id:'pv43', front:'to fill in',                 back:'Rellenar, completar'},
+{id:'pv44', front:'to fill in for (sb)',        back:'Sustituir a alguien'},
+{id:'pv45', front:'to fill up',                 back:'Rellenar'},
+{id:'pv46', front:'to find out',                back:'Descubrir, averiguar'},
+{id:'pv47', front:'to freak out',               back:'Asustarse, entrar en pánico'},
+{id:'pv48', front:'to get away from',           back:'Escapar de, alejarse'},
+{id:'pv49', front:'to get away with (sth)',     back:'Salirse con la suya, sin castigo'},
+{id:'pv50', front:'to get (sb) down',           back:'Desanimar, deprimir'},
+{id:'pv51', front:'to get in',                  back:'Entrar o subir a un transporte privado'},
+{id:'pv52', front:'to get out',                 back:'Salir o bajar de un transporte privado'},
+{id:'pv53', front:'to get on',                  back:'Entrar o subir a un transporte público'},
+{id:'pv54', front:'to get off',                 back:'Salir o bajar de un transporte público'},
+{id:'pv55', front:'to get (well) on with',      back:'Llevarse bien con alguien'},
+{id:'pv56', front:'to get over',                back:'Superar, recuperarse'},
+{id:'pv57', front:'to give in',                 back:'Rendirse, ceder'},
+{id:'pv58', front:'to give up',                 back:'Dejar, abandonar'},
+{id:'pv59', front:'to grow up',                 back:'Hacerse mayor, madurar'},
+{id:'pv60', front:'to go away',                 back:'Irse / irse de viaje'},
+{id:'pv61', front:'to go off (meal)',            back:'Estropearse, caducar'},
+{id:'pv62', front:'to go off (bomb/alarm)',      back:'Explotar / sonar'},
+{id:'pv63', front:'to go off (like)',            back:'Dejar de gustar'},
+{id:'pv64', front:'to go through (place)',      back:'Cruzar, pasar'},
+{id:'pv65', front:'to go through (bad)',        back:'Sufrir, pasarlo mal'},
+{id:'pv66', front:'to go through (study)',      back:'Revisar'},
+{id:'pv67', front:'to hang on',                 back:'Esperar / Aguantar'},
+{id:'pv68', front:'to hang up (the phone)',     back:'Colgar el teléfono'},
+{id:'pv69', front:'to head back',               back:'Regresar a casa'},
+{id:'pv70', front:'to heat up',                 back:'Calentar'},
+{id:'pv71', front:'to hold on',                 back:'Aguantar, resistir / agarrarse'},
+{id:'pv72', front:'to hurry up',                back:'Darse prisa'},
+{id:'pv73', front:'to keep on',                 back:'Seguir, continuar'},
+{id:'pv74', front:'to keep up with',            back:'Estar al tanto de'},
+{id:'pv75', front:'to kick out',                back:'Expulsar, echar'},
+{id:'pv76', front:'to knock (someone) out',     back:'Dejar inconsciente / dejar pasmado'},
+{id:'pv77', front:'to knock over',              back:'Arrollar, atropellar, tirar'},
+{id:'pv78', front:'to let (somebody) down',     back:'Decepcionar'},
+{id:'pv79', front:'to let (somebody) off',      back:'Dejar absuelto'},
+{id:'pv80', front:'to lighten up',              back:'Relajarse, despreocuparse'},
+{id:'pv81', front:'to look after',              back:'Cuidar'},
+{id:'pv82', front:'to look into',               back:'Investigar, buscar, evaluar'},
+{id:'pv83', front:'to look (sthg) up',          back:'Buscar'},
+{id:'pv84', front:'to look forward to',         back:'Tener muchas ganas'},
+{id:'pv85', front:'to make (sth) up',           back:'Inventarse algo'},
+{id:'pv86', front:'to make up with (sb)',       back:'Hacer las paces'},
+{id:'pv87', front:'to pay back',                back:'Devolver dinero'},
+{id:'pv88', front:'to pick up (sb/sth)',        back:'Recoger'},
+{id:'pv89', front:'to pick up (phone)',         back:'Contestar el teléfono'},
+{id:'pv90', front:'to pick up (lesson)',        back:'Aprender algo muy fácilmente'},
+{id:'pv91', front:'to plug in',                 back:'Enchufar'},
+{id:'pv92', front:'to put on (clothes)',        back:'Ponerse'},
+{id:'pv93', front:'to put on (music)',          back:'Poner música'},
+{id:'pv94', front:'to put on (weight)',         back:'Subir de peso'},
+{id:'pv95', front:'to put (someone) off',       back:'Repugnar, quitar las ganas'},
+{id:'pv96', front:'to put off (sthg)',          back:'Posponer'},
+{id:'pv97', front:'to put up with',             back:'Tolerar, aguantar'},
+{id:'pv98', front:'to rip off (someone)',       back:'Timar, estafar'},
+{id:'pv99', front:'to run into',                back:'Tropezarse, encontrarse con alguien'},
+{id:'pv100',front:'to run out of',              back:'Quedarse sin'},
+{id:'pv101',front:'to run over',                back:'Atropellar'},
+{id:'pv102',front:'to sell out',                back:'Agotarse'},
+{id:'pv103',front:'to set off',                 back:'Salir de viaje'},
+{id:'pv104',front:'to show off',                back:'Presumir, fanfarronear'},
+{id:'pv105',front:'to shut up',                 back:'Callarse'},
+{id:'pv106',front:'to slow down',               back:'Reducir la velocidad'},
+{id:'pv107',front:'to sort out (problem)',      back:'Solucionar, resolver'},
+{id:'pv108',front:'to sort out (something)',    back:'Poner en orden, ordenar'},
+{id:'pv109',front:'to take off (clothes)',      back:'Quitarse una prenda de ropa'},
+{id:'pv110',front:'to take off (plane)',        back:'Despegar'},
+{id:'pv111',front:'to take after',              back:'Parecerse físicamente o en personalidad'},
+{id:'pv112',front:'to tell (someone) off',      back:'Regañar a alguien'},
+{id:'pv113',front:'to throw away',              back:'Tirar, botar'},
+{id:'pv114',front:'to turn down (an offer)',    back:'Rechazar'},
+{id:'pv115',front:'to turn down (music)',       back:'Bajar el volumen'},
+{id:'pv116',front:'to watch out',               back:'Estar atento, tener cuidado'},
+{id:'pv117',front:'to work out (gym)',          back:'Entrenar, hacer ejercicio'},
+{id:'pv118',front:'to work out (numbers)',      back:'Calcular'},
+{id:'pv119',front:'to work out (problem)',      back:'Resolver, solucionar'},
+{id:'pv120',front:'to do up',                   back:'Reformar, redecorar'},
+{id:'pv121',front:'to look up to',              back:'Admirar a alguien'},
+{id:'pv122',front:'to stand for',               back:'Significar, representar'},
+{id:'pv123',front:'to be over',                 back:'Acabarse (una relación)'},
+{id:'pv124',front:'to come into',               back:'Entrar (dinero), heredar'},
+{id:'pv125',front:'to go with',                 back:'"Pegar", quedar bien (la ropa)'},
+{id:'pv126',front:'to look down on',            back:'Mirar por encima del hombro'},
+{id:'pv127',front:'to make out',                back:'Comprender, interpretar'},
+{id:'pv128',front:'to bring out',               back:'Publicar, lanzar'},
+{id:'pv129',front:'to calm down',               back:'Calmarse, tranquilizarse'},
+{id:'pv130',front:'to get carried away',        back:'Dejarse llevar, perder el control'},
+{id:'pv131',front:'to come out',                back:'Estrenarse (film)'},
+{id:'pv132',front:'to come up',                 back:'Aparecer de repente en una conversación'},
+{id:'pv133',front:'to deal with',               back:'Tolerar la situación'},
+{id:'pv134',front:'to die out',                 back:'Extinguirse, desaparecer'},
+{id:'pv135',front:'to go down (prices)',        back:'Bajar precios'},
+{id:'pv136',front:'to pass out',                back:'Perder el conocimiento, desmayarse'},
+{id:'pv137',front:'to pass away',               back:'Morirse'},
+{id:'pv138',front:'to see off',                 back:'Ir a decir adiós, despedirse'},
+{id:'pv139',front:'to take over',               back:'Tener el control'},
+{id:'pv140',front:'to take up',                 back:'Empezar un nuevo hobby'},
+{id:'pv141',front:'to try on',                  back:'Probarse (ropa, calzado)'},
+{id:'pv142',front:'to try out',                 back:'Experimentar, probar'},
+{id:'pv143',front:'to get into',                back:'Entrar de lleno'},
+{id:'pv144',front:'to get together',            back:'Unirse para estar juntos'},
+{id:'pv145',front:'to give away',               back:'Revelar un secreto'},
+{id:'pv146',front:'to go up',                   back:'Incrementar, subir'},
+{id:'pv147',front:'to go out with',             back:'Salir con alguien (en una relación)'},
+{id:'pv148',front:'to go over',                 back:'Volver a revisar'},
+{id:'pv149',front:'to hand in',                 back:'Entregar, dar'},
+{id:'pv150',front:'to pick on',                 back:'Picar a alguien, bullying'},
+{id:'pv151',front:'to put up (tent)',           back:'Montar una tienda'},
+{id:'pv152',front:'to put (sb) up',             back:'Alojar a alguien'},
+{id:'pv153',front:'to run away',                back:'Escaparse (de casa)'},
+{id:'pv154',front:'to save up',                 back:'Ahorrar'},
+{id:'pv155',front:'to set up',                  back:'Empezar un negocio'},
+{id:'pv156',front:'to settle down',             back:'Establecerse, asentar cabeza'},
+{id:'pv157',front:'to show up',                 back:'Aparecer, llegar, presentarse'},
+{id:'pv158',front:'to turn up',                 back:'Aparecer, llegar, presentarse'},
+{id:'pv159',front:'to tidy up',                 back:'Recoger, ordenar'},
+{id:'pv160',front:'to turn out',                back:'Resultar'},
+{id:'pv161',front:'to throw up',                back:'Vomitar'},
+{id:'pv162',front:'to wrap up',                 back:'Envolver'},
+{id:'pv163',front:'to go off',                  back:'Caducarse'},
+{id:'pv164',front:'to put out',                 back:'Extinguir, apagar'},
+{id:'pv165',front:'to fall out',                back:'Caída / salirse de un lugar'}
+].forEach(function(c){c.cat='pv';CARDS.push(c);});
+
+
+/* ── BLOCK 4: VERBS + PREPOSITION (59) ── */
+[
+{id:'vp1', front:'succeed',              back:'in'},
+{id:'vp2', front:'managed',              back:'to'},
+{id:'vp3', front:'capable',              back:'of'},
+{id:'vp4', front:'responsible',          back:'for'},
+{id:'vp5', front:'depend',               back:'on'},
+{id:'vp6', front:'insist',               back:'on'},
+{id:'vp7', front:'be good',              back:'at'},
+{id:'vp8', front:'interest',             back:'in'},
+{id:'vp9', front:'envious',              back:'of'},
+{id:'vp10',front:'rescue (sb)',          back:'from'},
+{id:'vp11',front:'recover',             back:'from'},
+{id:'vp12',front:'provide',             back:'with'},
+{id:'vp13',front:'approve',             back:'of'},
+{id:'vp14',front:'stare',               back:'at'},
+{id:'vp15',front:'laugh',               back:'at'},
+{id:'vp16',front:'fed up',              back:'with'},
+{id:'vp17',front:'boast',               back:'about'},
+{id:'vp18',front:'spend (sth)',          back:'on'},
+{id:'vp19',front:'choose',              back:'from / between'},
+{id:'vp20',front:'blame',               back:'on'},
+{id:'vp21',front:'punish',              back:'for'},
+{id:'vp22',front:'accuse (sb)',          back:'of'},
+{id:'vp23',front:'found guilty',        back:'of'},
+{id:'vp24',front:'be addicted',         back:'to'},
+{id:'vp25',front:'look forward',        back:'to'},
+{id:'vp26',front:'object',              back:'to'},
+{id:'vp27',front:'be famous',           back:'for'},
+{id:'vp28',front:'fond',                back:'of'},
+{id:'vp29',front:'get married',         back:'to'},
+{id:'vp30',front:'dream',               back:'about'},
+{id:'vp31',front:'rely',                back:'on'},
+{id:'vp32',front:'belong',              back:'to'},
+{id:'vp33',front:'forgive (sb)',         back:'for'},
+{id:'vp34',front:'invite',              back:'to'},
+{id:'vp35',front:'be aware',            back:'of'},
+{id:'vp36',front:'warn (sb)',            back:'about'},
+{id:'vp37',front:'keen',                back:'on'},
+{id:'vp38',front:'complain',            back:'about'},
+{id:'vp39',front:'allergic',            back:'to'},
+{id:'vp40',front:'proud',               back:'of'},
+{id:'vp41',front:'afraid',              back:'of'},
+{id:'vp42',front:'suspicious',          back:'of'},
+{id:'vp43',front:'worried',             back:'about'},
+{id:'vp44',front:'arrest (sb)',          back:'for'},
+{id:'vp45',front:'concentrate',         back:'on'},
+{id:'vp46',front:'consist',             back:'of'},
+{id:'vp47',front:'prevent',             back:'from'},
+{id:'vp48',front:'believe',             back:'in'},
+{id:'vp49',front:'lack',                back:'of'},
+{id:'vp50',front:'jealous',             back:'of'},
+{id:'vp51',front:'apply',               back:'for / to'},
+{id:'vp52',front:'bad influence',       back:'on (sb)'},
+{id:'vp53',front:'congratulate (sb)',    back:'on'},
+{id:'vp54',front:'be regarded',         back:'as'},
+{id:'vp55',front:'supply',              back:'with'},
+{id:'vp56',front:'result',              back:'in'},
+{id:'vp57',front:'appeal',              back:'to'},
+{id:'vp58',front:'give an insight',     back:'into'},
+{id:'vp59',front:'as a result',         back:'of'}
+].forEach(function(c){c.cat='vp';CARDS.push(c);});
+
+
+/* ── BLOCK 5: WORD FORMATION ── */
+[
+{id:'wf1',  base:'pride',      wftype:'N',    derived:'proud'},
+{id:'wf2',  base:'to laugh',   wftype:'N',    derived:'laughter'},
+{id:'wf3',  base:'to advise',  wftype:'N',    derived:'advice'},
+{id:'wf4',  base:'to practise',wftype:'N',    derived:'practice'},
+{id:'wf5',  base:'rely',       wftype:'adj',  derived:'reliable'},
+{id:'wf6',  base:'rely',       wftype:'-adj', derived:'unreliable'},
+{id:'wf7',  base:'delight',    wftype:'adj',  derived:'delightful'},
+{id:'wf8',  base:'choose',     wftype:'N',    derived:'choice'},
+{id:'wf9',  base:'Europe',     wftype:'adj',  derived:'european'},
+{id:'wf10', base:'storm',      wftype:'adj',  derived:'stormy'},
+{id:'wf11', base:'popular',    wftype:'N',    derived:'popularity'},
+{id:'wf12', base:'enjoy',      wftype:'adj',  derived:'enjoyable'},
+{id:'wf13', base:'threaten',   wftype:'N',    derived:'threat'},
+{id:'wf14', base:'common',     wftype:'adv',  derived:'commonly'},
+{id:'wf15', base:'remark',     wftype:'adj',  derived:'remarkable'},
+{id:'wf16', base:'suspect',    wftype:'adj',  derived:'suspicious'},
+{id:'wf17', base:'suspect',    wftype:'N',    derived:'suspicion'},
+{id:'wf18', base:'approve',    wftype:'N',    derived:'approval'},
+{id:'wf19', base:'improve',    wftype:'N',    derived:'improvement'},
+{id:'wf20', base:'day',        wftype:'adv',  derived:'daily'},
+{id:'wf21', base:'solve',      wftype:'N',    derived:'solution'},
+{id:'wf22', base:'similar',    wftype:'N',    derived:'similarity'},
+{id:'wf23', base:'company',    wftype:'V',    derived:'accompany'},
+{id:'wf24', base:'excite',     wftype:'adj',  derived:'exciting / excited'},
+{id:'wf25', base:'attract',    wftype:'N',    derived:'attraction'},
+{id:'wf26', base:'consume',    wftype:'N',    derived:'consumption / consumer'},
+{id:'wf27', base:'explain',    wftype:'N',    derived:'explanation'},
+{id:'wf28', base:'thorough',   wftype:'adv',  derived:'thoroughly'},
+{id:'wf29', base:'born',       wftype:'N',    derived:'birth'},
+{id:'wf30', base:'coincide',   wftype:'N',    derived:'coincidence'},
+{id:'wf31', base:'brave',      wftype:'N',    derived:'bravery'},
+{id:'wf32', base:'extinct',    wftype:'N',    derived:'extinction'},
+{id:'wf33', base:'imagine',    wftype:'N',    derived:'imagination'},
+{id:'wf34', base:'die',        wftype:'N',    derived:'death'},
+{id:'wf35', base:'suit',       wftype:'-adj', derived:'unsuitable'},
+{id:'wf36', base:'judge',      wftype:'N',    derived:'judgement'},
+{id:'wf37', base:'weak',       wftype:'N',    derived:'weakness'},
+{id:'wf38', base:'decide',     wftype:'N',    derived:'decision'},
+{id:'wf39', base:'open',       wftype:'N',    derived:'opening'},
+{id:'wf40', base:'pain',       wftype:'adj',  derived:'painful / painless'},
+{id:'wf41', base:'disaster',   wftype:'adj',  derived:'disastrous'},
+{id:'wf42', base:'propose',    wftype:'N',    derived:'proposal'},
+{id:'wf43', base:'introduce',  wftype:'N',    derived:'introduction'},
+{id:'wf44', base:'surround',   wftype:'N',    derived:'surroundings'},
+{id:'wf45', base:'approve',    wftype:'-V',   derived:'disapprove'},
+{id:'wf46', base:'invent',     wftype:'N',    derived:'invention / inventor'},
+{id:'wf47', base:'like',       wftype:'N',    derived:'likelihood'},
+{id:'wf48', base:'complain',   wftype:'N',    derived:'complaint'},
+{id:'wf49', base:'confident',  wftype:'N',    derived:'confidence'},
+{id:'wf50', base:'able',       wftype:'N',    derived:'ability'},
+{id:'wf51', base:'meet',       wftype:'N',    derived:'meeting'},
+{id:'wf52', base:'admire',     wftype:'N',    derived:'admiration'},
+{id:'wf53', base:'begin',      wftype:'N',    derived:'beginning'},
+{id:'wf54', base:'important',  wftype:'N',    derived:'importance'},
+{id:'wf55', base:'protect',    wftype:'N',    derived:'protection'},
+{id:'wf56', base:'advertise',  wftype:'N',    derived:'advertisement'},
+{id:'wf57', base:'protect',    wftype:'adj',  derived:'protective'},
+{id:'wf58', base:'child',      wftype:'N',    derived:'childhood'},
+{id:'wf59', base:'active',     wftype:'N',    derived:'activity'},
+{id:'wf60', base:'warn',       wftype:'N',    derived:'warning'},
+{id:'wf61', base:'celebrate',  wftype:'N',    derived:'celebration'},
+{id:'wf62', base:'advertise',  wftype:'adj',  derived:'advertising'},
+{id:'wf63', base:'qualify',    wftype:'N',    derived:'qualification'},
+{id:'wf64', base:'common',     wftype:'-adj', derived:'uncommon'},
+{id:'wf65', base:'admit',      wftype:'N',    derived:'admission'},
+{id:'wf66', base:'care',       wftype:'adj',  derived:'careful / careless'},
+{id:'wf67', base:'apply',      wftype:'N',    derived:'application'},
+{id:'wf68', base:'settle',     wftype:'N',    derived:'settlement'},
+{id:'wf69', base:'surprise',   wftype:'adv',  derived:'surprisingly'},
+{id:'wf70', base:'prove',      wftype:'N',    derived:'proof'},
+{id:'wf71', base:'behave',     wftype:'N',    derived:'behaviour'},
+{id:'wf72', base:'remind',     wftype:'N',    derived:'reminder'},
+{id:'wf73', base:'advantage',  wftype:'-N',   derived:'disadvantage'},
+{id:'wf74', base:'suit',       wftype:'N',    derived:'suitability'},
+{id:'wf75', base:'occupy',     wftype:'N',    derived:'occupation'},
+{id:'wf76', base:'even',       wftype:'adv',  derived:'evenly'},
+{id:'wf77', base:'even',       wftype:'-adj', derived:'uneven'},
+{id:'wf78', base:'angry',      wftype:'adv',  derived:'angrily'},
+{id:'wf79', base:'number',     wftype:'adj',  derived:'numerous'},
+{id:'wf80', base:'easy',       wftype:'adv',  derived:'easily'},
+{id:'wf81', base:'industry',   wftype:'adj',  derived:'industrial'},
+{id:'wf82', base:'imagine',    wftype:'adj',  derived:'imaginative'},
+{id:'wf83', base:'ill',        wftype:'N',    derived:'illness'},
+{id:'wf84', base:'expand',     wftype:'N',    derived:'expansion'},
+{id:'wf85', base:'ambition',   wftype:'adj',  derived:'ambitious'},
+{id:'wf86', base:'short',      wftype:'N',    derived:'shortage'},
+{id:'wf87', base:'religion',   wftype:'adj',  derived:'religious'},
+{id:'wf88', base:'luxury',     wftype:'adj',  derived:'luxurious'},
+{id:'wf89', base:'succeed',    wftype:'-adj', derived:'unsuccessful'},
+{id:'wf90', base:'succeed',    wftype:'N',    derived:'success'},
+{id:'wf91', base:'succeed',    wftype:'adj',  derived:'successful'},
+{id:'wf92', base:'child',      wftype:'adj',  derived:'childish'},
+{id:'wf93', base:'usual',      wftype:'-adj', derived:'unusual'},
+{id:'wf94', base:'enjoy',      wftype:'N',    derived:'enjoyment'},
+{id:'wf95', base:'freeze',     wftype:'adj',  derived:'frozen / freezing'},
+{id:'wf96', base:'assist',     wftype:'N',    derived:'assistance'},
+{id:'wf97', base:'perform',    wftype:'N',    derived:'performance'},
+{id:'wf98', base:'equip',      wftype:'N',    derived:'equipment'},
+{id:'wf99', base:'cancel',     wftype:'N',    derived:'cancellation'},
+{id:'wf100',base:'adapt',      wftype:'adj',  derived:'adaptable'},
+{id:'wf101',base:'lone',       wftype:'N',    derived:'loneliness'},
+{id:'wf102',base:'wealth',     wftype:'adj',  derived:'wealthy'},
+{id:'wf103',base:'hope',       wftype:'adj',  derived:'hopeful / hopeless'},
+{id:'wf104',base:'friend',     wftype:'N',    derived:'friendship'},
+{id:'wf105',base:'threat',     wftype:'V',    derived:'threaten'},
+{id:'wf106',base:'discover',   wftype:'N',    derived:'discovery'},
+{id:'wf107',base:'produce',    wftype:'N',    derived:'production'},
+{id:'wf108',base:'recognise',  wftype:'adj',  derived:'recognisable'},
+{id:'wf109',base:'possible',   wftype:'N',    derived:'possibility'},
+{id:'wf110',base:'know',       wftype:'N',    derived:'knowledge'},
+{id:'wf111',base:'hot',        wftype:'N',    derived:'heat'},
+{id:'wf112',base:'poison',     wftype:'adj',  derived:'poisonous'},
+{id:'wf113',base:'exist',      wftype:'N',    derived:'existence'},
+{id:'wf114',base:'reason',     wftype:'adj',  derived:'reasonable'},
+{id:'wf115',base:'suggest',    wftype:'N',    derived:'suggestion'},
+{id:'wf116',base:'legal',      wftype:'-adj', derived:'illegal'},
+{id:'wf117',base:'construct',  wftype:'N',    derived:'construction'},
+{id:'wf118',base:'economy',    wftype:'adj',  derived:'economic / economical'},
+{id:'wf119',base:'qualify',    wftype:'adj',  derived:'qualified'},
+{id:'wf120',base:'qualify',    wftype:'-adj', derived:'unqualified'},
+{id:'wf121',base:'intend',     wftype:'N',    derived:'intention'},
+{id:'wf122',base:'appear',     wftype:'-V',   derived:'disappear'},
+{id:'wf123',base:'able',       wftype:'-N',   derived:'inability'},
+{id:'wf124',base:'like',       wftype:'-adv', derived:'unlikely'},
+{id:'wf125',base:'conclude',   wftype:'N',    derived:'conclusion'},
+{id:'wf126',base:'stress',     wftype:'adj',  derived:'stressful'},
+{id:'wf127',base:'guide',      wftype:'N',    derived:'guidance'},
+{id:'wf128',base:'tour',       wftype:'N',    derived:'tourist'},
+{id:'wf129',base:'achieve',    wftype:'N',    derived:'achievement'},
+{id:'wf130',base:'employ',     wftype:'N',    derived:'employment / employer / employee'},
+{id:'wf131',base:'employ',     wftype:'-adj', derived:'unemployed'},
+{id:'wf132',base:'maintain',   wftype:'N',    derived:'maintenance'},
+{id:'wf133',base:'distant',    wftype:'N',    derived:'distance'},
+{id:'wf134',base:'grow',       wftype:'N',    derived:'growth'},
+{id:'wf135',base:'strong',     wftype:'N',    derived:'strength'},
+{id:'wf136',base:'strong',     wftype:'V',    derived:'strengthen'},
+{id:'wf137',base:'long',       wftype:'N',    derived:'length'},
+{id:'wf138',base:'long',       wftype:'V',    derived:'lengthen'},
+{id:'wf139',base:'high',       wftype:'N',    derived:'height'},
+{id:'wf140',base:'high',       wftype:'V',    derived:'heighten'},
+{id:'wf141',base:'recommend',  wftype:'N',    derived:'recommendation'},
+{id:'wf142',base:'energy',     wftype:'adj',  derived:'energetic'},
+{id:'wf143',base:'young',      wftype:'N',    derived:'youth / youngster'},
+{id:'wf144',base:'wide',       wftype:'N',    derived:'width'},
+{id:'wf145',base:'promote',    wftype:'N',    derived:'promotion'},
+{id:'wf146',base:'sell',       wftype:'N',    derived:'sale'},
+{id:'wf147',base:'evident',    wftype:'N',    derived:'evidence'},
+{id:'wf148',base:'attend',     wftype:'N',    derived:'attention / attendance'},
+{id:'wf149',base:'person',     wftype:'N',    derived:'personality'},
+{id:'wf150',base:'logic',      wftype:'adj',  derived:'logical'},
+{id:'wf151',base:'logic',      wftype:'adv',  derived:'logically'},
+{id:'wf152',base:'believe',    wftype:'-N',   derived:'disbelief'},
+{id:'wf153',base:'depend',     wftype:'adj',  derived:'dependable'},
+{id:'wf154',base:'descend',    wftype:'N',    derived:'descendent'},
+{id:'wf155',base:'refer',      wftype:'N',    derived:'reference'},
+{id:'wf156',base:'injure',     wftype:'N',    derived:'injury'},
+{id:'wf157',base:'construct',  wftype:'adj',  derived:'constructive'},
+{id:'wf158',base:'vary',       wftype:'adj',  derived:'various'},
+{id:'wf159',base:'fool',       wftype:'adj',  derived:'foolish'},
+{id:'wf160',base:'visible',    wftype:'N',    derived:'visibility'},
+{id:'wf161',base:'beauty',     wftype:'adv',  derived:'beautifully'},
+{id:'wf162',base:'finance',    wftype:'adj',  derived:'financial'},
+{id:'wf163',base:'compete',    wftype:'N',    derived:'competition'},
+{id:'wf164',base:'permit',     wftype:'N',    derived:'permission'},
+{id:'wf165',base:'scene',      wftype:'N',    derived:'scenery'},
+{id:'wf166',base:'communicate',wftype:'N',    derived:'communication'},
+{id:'wf167',base:'agree',      wftype:'N',    derived:'agreement'},
+{id:'wf168',base:'profession', wftype:'adj',  derived:'professional'},
+{id:'wf169',base:'fair',       wftype:'N',    derived:'fairness'},
+{id:'wf170',base:'effect',     wftype:'adj',  derived:'effective'},
+{id:'wf171',base:'innocent',   wftype:'N',    derived:'innocence'},
+{id:'wf172',base:'attract',    wftype:'adj',  derived:'attractive'},
+{id:'wf173',base:'secure',     wftype:'N',    derived:'security'},
+{id:'wf174',base:'neighbour',  wftype:'N',    derived:'neighbourhood'},
+{id:'wf175',base:'fashion',    wftype:'-adj', derived:'unfashionable'},
+{id:'wf176',base:'fashion',    wftype:'adj',  derived:'fashionable'},
+{id:'wf177',base:'sponsor',    wftype:'N',    derived:'sponsorship'},
+{id:'wf178',base:'danger',     wftype:'adj',  derived:'dangerous'},
+{id:'wf179',base:'major',      wftype:'N',    derived:'majority'},
+{id:'wf180',base:'investigate',wftype:'N',    derived:'investigation'},
+{id:'wf181',base:'spectacle',  wftype:'adj',  derived:'spectacular'},
+{id:'wf182',base:'courage',    wftype:'V',    derived:'encourage'},
+{id:'wf183',base:'type',       wftype:'adj',  derived:'typical'},
+{id:'wf184',base:'general',    wftype:'adv',  derived:'generally'},
+{id:'wf185',base:'benefit',    wftype:'adj',  derived:'beneficial'},
+{id:'wf186',base:'luck',       wftype:'adj',  derived:'lucky'},
+{id:'wf187',base:'luck',       wftype:'adv',  derived:'luckily'},
+{id:'wf188',base:'fail',       wftype:'N',    derived:'failure'},
+{id:'wf189',base:'oblige',     wftype:'N',    derived:'obligation'},
+{id:'wf190',base:'appear',     wftype:'N',    derived:'appearance'},
+{id:'wf191',base:'appear',     wftype:'-N',   derived:'disappearance'},
+{id:'wf192',base:'prefer',     wftype:'N',    derived:'preference'},
+{id:'wf193',base:'entertain',  wftype:'N',    derived:'entertainment'},
+{id:'wf194',base:'entertain',  wftype:'adj',  derived:'entertaining'},
+{id:'wf195',base:'fortunate',  wftype:'adv',  derived:'fortunately'},
+{id:'wf196',base:'fortunate',  wftype:'-adv', derived:'unfortunately'},
+{id:'wf197',base:'respect',    wftype:'adj',  derived:'respectable'},
+{id:'wf198',base:'instruct',   wftype:'N',    derived:'instruction / instructor'},
+{id:'wf199',base:'secure',     wftype:'-N',   derived:'insecurity'},
+{id:'wf200',base:'happy',      wftype:'N',    derived:'happiness'},
+{id:'wf201',base:'happy',      wftype:'-N',   derived:'unhappiness'},
+{id:'wf202',base:'happy',      wftype:'adv',  derived:'happily'},
+{id:'wf203',base:'peace',      wftype:'adv',  derived:'peacefully'},
+{id:'wf204',base:'peace',      wftype:'adj',  derived:'peaceful'},
+{id:'wf205',base:'mix',        wftype:'N',    derived:'mixture'},
+{id:'wf206',base:'foreign',    wftype:'N',    derived:'foreigner'},
+{id:'wf207',base:'deep',       wftype:'N',    derived:'depth'},
+{id:'wf208',base:'invite',     wftype:'N',    derived:'invitation'},
+{id:'wf209',base:'lose',       wftype:'N',    derived:'loss'},
+{id:'wf210',base:'power',      wftype:'adj',  derived:'powerful / powerless'},
+{id:'wf211',base:'expense',    wftype:'adj',  derived:'expensive'},
+{id:'wf212',base:'expense',    wftype:'-adj', derived:'inexpensive'},
+{id:'wf213',base:'educate',    wftype:'adj',  derived:'educational'},
+{id:'wf214',base:'fog',        wftype:'adj',  derived:'foggy'},
+{id:'wf215',base:'depart',     wftype:'N',    derived:'departure'},
+{id:'wf216',base:'impress',    wftype:'adj',  derived:'impressive'},
+{id:'wf217',base:'impress',    wftype:'N',    derived:'impression'},
+{id:'wf218',base:'law',        wftype:'N',    derived:'lawyer'},
+{id:'wf219',base:'science',    wftype:'adj',  derived:'scientific'},
+{id:'wf220',base:'science',    wftype:'N',    derived:'scientist'},
+{id:'wf221',base:'romance',    wftype:'adj',  derived:'romantic'},
+{id:'wf222',base:'true',       wftype:'adv',  derived:'truly'},
+{id:'wf223',base:'true',       wftype:'N',    derived:'truth'},
+{id:'wf224',base:'satisfy',    wftype:'N',    derived:'satisfaction'},
+{id:'wf225',base:'satisfy',    wftype:'adj',  derived:'satisfying'},
+{id:'wf226',base:'tradition',  wftype:'adj',  derived:'traditional'},
+{id:'wf227',base:'tradition',  wftype:'adv',  derived:'traditionally'},
+{id:'wf228',base:'special',    wftype:'N',    derived:'speciality'},
+{id:'wf229',base:'please',     wftype:'N',    derived:'pleasure'},
+{id:'wf230',base:'see',        wftype:'N',    derived:'sight'},
+{id:'wf231',base:'mystery',    wftype:'adj',  derived:'mysterious'},
+{id:'wf232',base:'dark',       wftype:'N',    derived:'darkness'},
+{id:'wf233',base:'noise',      wftype:'adj',  derived:'noisy'},
+{id:'wf234',base:'crowd',      wftype:'adj',  derived:'crowded'},
+{id:'wf235',base:'amuse',      wftype:'N',    derived:'amusement'},
+{id:'wf236',base:'consider',   wftype:'adj',  derived:'considerable'},
+{id:'wf237',base:'confidence', wftype:'adj',  derived:'confident'},
+{id:'wf238',base:'increase',   wftype:'adv',  derived:'increasingly'},
+{id:'wf239',base:'culture',    wftype:'adj',  derived:'cultural'},
+{id:'wf240',base:'visit',      wftype:'N',    derived:'visitor'},
+{id:'wf241',base:'breath',     wftype:'V',    derived:'breathe'},
+{id:'wf242',base:'glory',      wftype:'adj',  derived:'glorious'},
+{id:'wf243',base:'arrive',     wftype:'N',    derived:'arrival'},
+{id:'wf244',base:'generous',   wftype:'N',    derived:'generosity'},
+{id:'wf245',base:'engage',     wftype:'N',    derived:'engagement'},
+{id:'wf246',base:'jealous',    wftype:'N',    derived:'jealousy'},
+{id:'wf247',base:'wonder',     wftype:'adj',  derived:'wonderful'},
+{id:'wf248',base:'stable',     wftype:'N',    derived:'stability'},
+{id:'wf249',base:'use',        wftype:'adj',  derived:'useful / useless'},
+{id:'wf250',base:'believe',    wftype:'N',    derived:'belief'},
+{id:'wf251',base:'comfort',    wftype:'adj',  derived:'comfortable'},
+{id:'wf252',base:'comfort',    wftype:'adv',  derived:'comfortably'},
+{id:'wf253',base:'comfort',    wftype:'-adv', derived:'uncomfortably'},
+{id:'wf254',base:'describe',   wftype:'N',    derived:'description'},
+{id:'wf255',base:'prepare',    wftype:'N',    derived:'preparation'},
+{id:'wf256',base:'recognise',  wftype:'N',    derived:'recognition'},
+{id:'wf257',base:'difficult',  wftype:'N',    derived:'difficulty'},
+{id:'wf258',base:'survive',    wftype:'N',    derived:'survivor / survival'},
+{id:'wf259',base:'vary',       wftype:'N',    derived:'variety'},
+{id:'wf260',base:'end',        wftype:'adj',  derived:'endless'},
+{id:'wf261',base:'stress',     wftype:'adj',  derived:'stressful'},
+{id:'wf262',base:'wide',       wftype:'V',    derived:'widen'},
+{id:'wf263',base:'broad',      wftype:'V',    derived:'broaden'},
+{id:'wf264',base:'less',       wftype:'V',    derived:'lessen'},
+{id:'wf265',base:'person',     wftype:'adv',  derived:'personally'},
+{id:'wf266',base:'original',   wftype:'adv',  derived:'originally'},
+{id:'wf267',base:'coast',      wftype:'adj',  derived:'coastal'},
+{id:'wf268',base:'angry',      wftype:'N',    derived:'anger'},
+{id:'wf269',base:'expect',     wftype:'-adj', derived:'unexpected'},
+{id:'wf270',base:'lone',       wftype:'adj',  derived:'lonely'},
+{id:'wf271',base:'enthusiasm', wftype:'adj',  derived:'enthusiastic'},
+{id:'wf272',base:'nerve',      wftype:'adj',  derived:'nervous'},
+{id:'wf273',base:'use',        wftype:'-adj', derived:'useless'},
+{id:'wf274',base:'comfort',    wftype:'-adv', derived:'uncomfortably'},
+{id:'wf275',base:'hope',       wftype:'-adj', derived:'hopeless'}
+].forEach(function(c){c.cat='wf';CARDS.push(c);});
+
+/* ══ STATE ══ */
+var CKEY='eng_b2_custom', MKEY='eng_b2_mastered';
+var custom=[], mastered=new Set(), flipped={}, showEspGrid=true;
+var state={q:'',cat:'',know:''};
+(function(){
+  try{var s=localStorage.getItem(CKEY);if(s)custom=JSON.parse(s);}catch(e){}
+  custom.forEach(function(c){CARDS.push(c);});
+  try{var m=localStorage.getItem(MKEY);if(m)mastered=new Set(JSON.parse(m));}catch(e){}
+})();
+function savM(){try{localStorage.setItem(MKEY,JSON.stringify([...mastered]));}catch(e){}}
+function savC(){try{localStorage.setItem(CKEY,JSON.stringify(custom));}catch(e){}}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+/* ══ CONTENT BUILDERS ══ */
+function frontContent(c){
+  var cm=CAT[c.cat];
+  var pill='<span class="cf-pill">'+esc(cm.label)+'</span>';
+  var cust=c.custom?'<span class="custom-badge">custom</span>':'';
+  if(c.cat==='wf')  return pill+cust+'<div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Forma derivada</div><div class="cf-main">'+esc(c.derived)+'</div><div class="cf-hint">↻ pulsa para volver</div>';
+  if(c.cat==='gi'){var fl=c.form==='gerund'?'Gerund (-ing)':'Infinitive (to+…)';return pill+cust+'<div class="cf-form-gi" style="font-size:calc(13px*var(--fs));font-weight:700;color:var(--accent);background:var(--accent-bg);padding:3px 12px;border-radius:100px;display:inline-block;border:1px solid var(--accent-b);margin-bottom:8px">'+fl+'</div><div class="cf-main">'+esc(c.example)+'</div><div class="cf-hint">↻ pulsa para volver</div>';}
+  if(c.cat==='vp')  return pill+cust+'<div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">Preposición</div><div class="cf-main">'+esc(c.back)+'</div><div class="cf-hint">↻ pulsa para volver</div>';
+  return pill+cust+'<div class="cf-main">'+esc(c.front)+'</div><div class="cf-hint">↻ pulsa para volver</div>';
+}
+function backContent(c){
+  if(c.cat==='wf')  return '<span class="cb-badge-wf" style="display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.35);margin-bottom:10px">'+esc(c.wftype)+' — '+(WFT[c.wftype]||c.wftype)+'</span><div class="cb-main">'+esc(c.base)+'</div><div class="cb-hint">↻ pulsa para ver la forma</div>';
+  if(c.cat==='gi')  return '<div class="cb-main">'+esc(c.verb)+'</div><div class="cb-sub">¿Gerund o Infinitive?</div><div class="cb-hint">↻ pulsa para ver la respuesta</div>';
+  if(c.cat==='vp')  return '<div class="cb-main">'+esc(c.front)+'</div><div class="cb-sub">¿Qué preposición?</div><div class="cb-hint">↻ pulsa para ver</div>';
+  return '<div class="cb-label">Traducción</div><div class="cb-main">'+esc(c.back)+'</div><div class="cb-hint">↻ pulsa para volver</div>';
+}
+
+/* ══ BUILD CARD HTML ══ */
+function cardHTML(c){
+  var cm=CAT[c.cat];
+  var isMastered=mastered.has(c.id);
+  /* showEspGrid=true → español face (front/color) shown first = NOT flipped
+     showEspGrid=false → inglés face (back/white) shown first = flipped       */
+  var isFlipped = showEspGrid ? !!flipped[c.id] : !flipped[c.id];
+  var wCls='card-wrapper'+(isMastered?' known':'')+(isFlipped?' flipped':'');
+  var fc=frontContent(c), bc=backContent(c);
+  /* spacer: mirrors front content invisibly in normal flow → sets card-inner height */
+  var spacer='<span class="card-spacer">'+fc+'</span>';
+  /* front (color) = pregunta en ESPAÑOL; back (blanco) = respuesta en INGLÉS */
+  var front='<div class="card-face card-face-front" style="background:'+cm.color+'">'+bc+'</div>';
+  var back='<div class="card-face card-face-back">'
+    +'<div class="cb-actions">'
+    +(c.custom?'<button class="del-btn" data-id="'+esc(c.id)+'">&#128465;</button>':'')
+    +'<button class="known-btn'+(isMastered?' active':'')+'" data-id="'+esc(c.id)+'">&#10003;</button>'
+    +'</div>'
+    +'<div class="cb-wrap">'+fc+'</div>'
+    +'</div>';
+  return '<div class="'+wCls+'" data-id="'+esc(c.id)+'">'
+    +'<div class="card-inner">'+spacer+front+back+'</div>'
+    +'</div>';
+}
+
+/* ══ FILTER ══ */
+function filterCards(){
+  var q=state.q.toLowerCase();
+  return CARDS.filter(function(c){
+    if(state.cat&&c.cat!==state.cat)return false;
+    if(state.know==='known'&&!mastered.has(c.id))return false;
+    if(state.know==='unknown'&&mastered.has(c.id))return false;
+    if(!q)return true;
+    return((c.front||c.verb||c.base||'')+(c.back||c.example||c.derived||'')).toLowerCase().includes(q);
+  });
+}
+
+/* ══ RENDER ══ */
+function render(){
+  var f=filterCards();
+  var g=document.getElementById('grid');
+  g.innerHTML=f.map(cardHTML).join('');
+  document.getElementById('rbarCount').textContent=f.length;
+  document.getElementById('hdrTotal').textContent=CARDS.length;
+  document.getElementById('hdrMastered').textContent=mastered.size;
+  g.querySelectorAll('.card-wrapper').forEach(function(w){
+    w.addEventListener('click',function(e){
+      if(e.target.closest('.known-btn')||e.target.closest('.del-btn'))return;
+      var id=w.dataset.id;
+      flipped[id]=!flipped[id];
+      var isFlipped = showEspGrid ? !!flipped[id] : !flipped[id];
+      w.classList.toggle('flipped', isFlipped);
+    });
+    var kb=w.querySelector('.known-btn');
+    if(kb)kb.addEventListener('click',function(e){
+      e.stopPropagation();
+      var id=kb.dataset.id;
+      if(mastered.has(id)){mastered.delete(id);w.classList.remove('known');kb.classList.remove('active');}
+      else{mastered.add(id);w.classList.add('known');kb.classList.add('active');}
+      savM();document.getElementById('hdrMastered').textContent=mastered.size;
+    });
+    var db=w.querySelector('.del-btn');
+    if(db)db.addEventListener('click',function(e){
+      e.stopPropagation();
+      var id=db.dataset.id;
+      if(!confirm('\u00bfEliminar esta tarjeta?'))return;
+      custom=custom.filter(function(c){return c.id!==id;});
+      var i=CARDS.findIndex(function(c){return c.id===id;});
+      if(i!==-1)CARDS.splice(i,1);
+      mastered.delete(id);delete flipped[id];
+      savC();savM();buildCatBtns();render();gUpdateCt();
+    });
+  });
+}
+
+/* ══ CAT BUTTONS ══ */
+function buildCatBtns(){
+  var cats=['','expr','gi','pv','vp','wf'];
+  var labels={'':'Todas',expr:'Expressions',gi:'G & I',pv:'Phrasal Verbs',vp:'Verbs+Prep',wf:'Word Form.'};
+  var colors={expr:'#1a6b4a',gi:'#3d2a72',pv:'#6b3a1a',vp:'#1a4a7a',wf:'#7a1a3a'};
+  document.getElementById('catBtns').innerHTML=cats.map(function(cat){
+    var n=cat?CARDS.filter(function(c){return c.cat===cat;}).length:CARDS.length;
+    var act=state.cat===cat;
+    var dot=cat?'<span class="dot" style="background:'+colors[cat]+'"></span>':'';
+    var st=act&&cat?'background:'+colors[cat]+';color:#fff;border-color:'+colors[cat]:'';
+    return '<button class="bb'+(act?' active':'')+'" data-cat="'+cat+'" style="'+st+'">'+dot+labels[cat]+'<span class="cb">'+n+'</span></button>';
+  }).join('');
+  document.querySelectorAll('.bb').forEach(function(b){
+    b.addEventListener('click',function(){state.cat=b.dataset.cat;buildCatBtns();render();gUpdateCt();});
+  });
+}
+
+/* ══ CONTROLS ══ */
+document.getElementById('searchBox').addEventListener('input',function(){
+  state.q=this.value;document.getElementById('clrBtn').classList.toggle('vis',!!this.value);render();
+});
+document.getElementById('clrBtn').addEventListener('click',function(){
+  document.getElementById('searchBox').value='';state.q='';this.classList.remove('vis');render();
+});
+document.getElementById('fontRange').addEventListener('input',function(){
+  document.documentElement.style.setProperty('--fs',this.value);
+  document.getElementById('fontVal').textContent=Math.round(this.value*100)+'%';
+});
+['f-all','f-know','f-noknow'].forEach(function(id){
+  document.getElementById(id).addEventListener('click',function(){
+    ['f-all','f-know','f-noknow'].forEach(function(x){document.getElementById(x).classList.remove('active');});
+    this.classList.add('active');
+    state.know=id==='f-know'?'known':id==='f-noknow'?'unknown':'';render();
+  });
+});
+
+/* ══ ADD CARD ══ */
+function apCatChange(){
+  var cat=document.getElementById('apCat').value;
+  document.getElementById('apSimple').style.display=(cat==='wf'||cat==='gi')?'none':'block';
+  document.getElementById('apWF').style.display=cat==='wf'?'block':'none';
+  document.getElementById('apGI').style.display=cat==='gi'?'block':'none';
+  var fl=document.getElementById('apFrontLbl'),bl=document.getElementById('apBackLbl');
+  if(cat==='pv'){fl.textContent='Phrasal verb';bl.textContent='Significado';}
+  else if(cat==='vp'){fl.textContent='Verbo';bl.textContent='Preposición';}
+  else{fl.textContent='Inglés';bl.textContent='Español';}
+}
+function openAdd(){
+  document.getElementById('apCat').value='expr';apCatChange();
+  ['apFront','apBack','apGIVerb','apGIEx','apWFBase','apWFDerived'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('addOverlay').classList.add('active');document.body.style.overflow='hidden';
+}
+function closeAdd(){document.getElementById('addOverlay').classList.remove('active');document.body.style.overflow='';}
+document.getElementById('btnAddCard').addEventListener('click',openAdd);
+document.getElementById('apClose').addEventListener('click',closeAdd);
+document.getElementById('apCancel').addEventListener('click',closeAdd);
+document.getElementById('addOverlay').addEventListener('click',function(e){if(e.target===this)closeAdd();});
+document.getElementById('apSave').addEventListener('click',function(){
+  var cat=document.getElementById('apCat').value;
+  var mx=CARDS.reduce(function(m,c){return Math.max(m,parseInt(c.id.replace(/\D/g,''),10)||0);},0);
+  var card={id:cat+'_c'+(mx+1),cat:cat,custom:true};
+  if(cat==='wf'){
+    var b=document.getElementById('apWFBase').value.trim(),d=document.getElementById('apWFDerived').value.trim();
+    if(!b||!d){alert('Rellena base y forma derivada.');return;}
+    card.base=b;card.derived=d;card.wftype=document.getElementById('apWFType').value;
+  } else if(cat==='gi'){
+    var v=document.getElementById('apGIVerb').value.trim(),ex=document.getElementById('apGIEx').value.trim();
+    if(!v||!ex){alert('Rellena verbo y ejemplo.');return;}
+    card.verb=v;card.example=ex;card.form=document.getElementById('apGIForm').value;
+  } else {
+    var f=document.getElementById('apFront').value.trim(),bk=document.getElementById('apBack').value.trim();
+    if(!f||!bk){alert('Rellena ambos campos.');return;}
+    card.front=f;card.back=bk;
+  }
+  CARDS.push(card);custom.push(card);savC();closeAdd();buildCatBtns();render();gUpdateCt();
+});
+
+/* ══ EXPORT ══ */
+document.getElementById('btnViewEng').addEventListener('click',function(){
+  showEspGrid=false; flipped={};
+  document.getElementById('btnViewEng').classList.add('active');
+  document.getElementById('btnViewEs').classList.remove('active');
+  render();
+});
+document.getElementById('btnViewEs').addEventListener('click',function(){
+  showEspGrid=true; flipped={};
+  document.getElementById('btnViewEs').classList.add('active');
+  document.getElementById('btnViewEng').classList.remove('active');
+  render();
+});
+document.getElementById('btnExport').addEventListener('click',function(){
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([document.documentElement.outerHTML],{type:'text/html;charset=utf-8'}));
+  var d=new Date();
+  a.download='english_b2_'+d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+'.html';
+  a.click();URL.revokeObjectURL(a.href);
+});
+
+/* ══ GAME ENGINE ══ */
+var G={cat:'',nodom:false,shuffle:true,showEsp:true,deck:[],cur:0,yes:0,no:0,noList:[],run:false,flip:false};
+var GD={w:null,pd:null,pm:null,pu:null};
+function gShuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function gDeck(useNo){
+  var d=CARDS.filter(function(c){
+    if(G.cat&&c.cat!==G.cat)return false;
+    if(G.nodom&&mastered.has(c.id))return false;
+    return true;
+  });
+  if(useNo)d=d.filter(function(c){return G.noList.indexOf(c.id)!==-1;});
+  return G.shuffle?gShuffle(d):d;
+}
+function gUpdateCt(){document.getElementById('gDeckCt').textContent=gDeck(false).length+' tarjetas';}
+function gFront(c){
+  var cm=CAT[c.cat];
+  var pill='<span class="gf-pill">'+esc(cm.label)+'</span>';
+  if(c.cat==='wf')  return pill+'<div class="gb-label" style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Forma derivada</div><div class="gf-main">'+esc(c.derived)+'</div><div class="gf-hint">↻ toca para volver</div>';
+  if(c.cat==='gi'){var fl=c.form==='gerund'?'Gerund (-ing)':'Infinitive (to+…)';return pill+'<div class="gb-form">'+fl+'</div><div class="gf-main" style="font-size:clamp(15px,4vw,20px)">'+esc(c.example)+'</div><div class="gf-hint">↻ toca para volver</div>';}
+  if(c.cat==='vp')  return pill+'<div class="gb-label" style="color:var(--text3);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px">Preposición</div><div class="gf-main">'+esc(c.back)+'</div><div class="gf-hint">↻ toca para volver</div>';
+  return pill+'<div class="gf-main">'+esc(c.front)+'</div><div class="gf-hint">↻ toca para ver</div>';
+}
+function gBack(c){
+  var cm=CAT[c.cat];
+  if(c.cat==='wf')  return '<span class="gb-form" style="font-size:12px;font-weight:700;color:rgba(255,255,255,.9);background:rgba(255,255,255,.18);padding:3px 11px;border-radius:100px;display:inline-block;margin-bottom:8px">'+esc(c.wftype)+' — '+(WFT[c.wftype]||c.wftype)+'</span><div class="gb-main">'+esc(c.base)+'</div><div class="gb-hint">↻ toca para ver la forma</div>';
+  if(c.cat==='gi')  return '<div class="gb-main">'+esc(c.verb)+'</div><div class="gb-sub">¿Gerund o Infinitive?</div><div class="gb-hint">↻ toca para ver la respuesta</div>';
+  if(c.cat==='vp')  return '<div class="gb-main">'+esc(c.front)+'</div><div class="gb-sub">¿Qué preposición?</div><div class="gb-hint">↻ toca para ver</div>';
+  return '<div class="gb-label">Traducción</div><div class="gb-main">'+esc(c.back)+'</div><div class="gb-hint">↻ toca para volver</div>';
+}
+function gBuildCard(c,isTop,peek){
+  var cm=CAT[c.cat];
+  var el=document.createElement('div');
+  el.className='gs-card'+(isTop?' gs-top':' gs-peek'+peek);
+  el.setAttribute('data-gid',c.id);
+  /* If showEsp=true, wrap starts flipped so the back (color/español) is visible first */
+  var wrapCls='gs-wrap'+(G.showEsp?' flipped':'');
+  el.innerHTML='<div class="'+wrapCls+'" id="gw-'+c.id+'"><div class="gs-inner">'
+    +'<div class="gs-face gs-front"><div class="gs-lbl gs-lbl-no">REPASAR</div><div class="gs-lbl gs-lbl-yes">YA LO SÉ</div>'+gFront(c)+'</div>'
+    +'<div class="gs-face gs-back" style="background:'+cm.color+'">'+gBack(c)+'</div>'
+    +'</div></div>';
+  return el;
+}
+function gFlip(){
+  if(!G.run||G.cur>=G.deck.length)return;
+  G.flip=!G.flip;
+  var gw=document.getElementById('gw-'+G.deck[G.cur].id);
+  if(gw)gw.classList.toggle('flipped', G.showEsp ? !G.flip : G.flip);
+}
+function gUpdateUI(){
+  var tot=G.deck.length,cur=Math.min(G.cur+1,tot);
+  document.getElementById('gCounter').innerHTML='Tarjeta <strong>'+cur+'</strong> de <strong>'+tot+'</strong>';
+  document.getElementById('gSYes').textContent=G.yes;
+  document.getElementById('gSNo').textContent=G.no;
+  document.getElementById('gFill').style.width=(tot>0?G.cur/tot*100:0)+'%';
+}
+function gCleanDrag(){
+  if(GD.w){GD.w.removeEventListener('pointerdown',GD.pd);GD.w.removeEventListener('pointermove',GD.pm);GD.w.removeEventListener('pointerup',GD.pu);GD.w.removeEventListener('pointercancel',GD.pu);}
+  GD.w=GD.pd=GD.pm=GD.pu=null;
+}
+function gRender(){
+  gCleanDrag();
+  var s=document.getElementById('gStack');s.innerHTML='';
+  var rem=G.deck.length-G.cur;
+  if(rem<=0){gShowEnd();return;}
+  for(var i=Math.min(3,rem)-1;i>=0;i--)s.appendChild(gBuildCard(G.deck[G.cur+i],i===0,i));
+  gUpdateUI();
+  requestAnimationFrame(function(){requestAnimationFrame(function(){G.flip=false;gAttachDrag();});});
+}
+function gDismiss(dir){
+  if(!G.run||G.cur>=G.deck.length)return;
+  var entry=G.deck[G.cur];
+  var w=document.querySelector('.gs-card.gs-top');if(!w)return;
+  gCleanDrag();w.style.transition='';w.style.transform='';
+  requestAnimationFrame(function(){w.classList.add(dir==='yes'?'gx-right':'gx-left');});
+  if(dir==='yes')G.yes++;
+  else{G.no++;if(G.noList.indexOf(entry.id)===-1)G.noList.push(entry.id);}
+  G.cur++;setTimeout(function(){gRender();},350);
+}
+function gAttachDrag(){
+  var w=document.querySelector('.gs-card.gs-top');if(!w)return;
+  var THR=Math.min(window.innerWidth*0.26,85);
+  var sx=0,sy=0,cx=0,act=false,drg=false;
+  function onDown(e){if(act)return;act=true;drg=false;cx=0;sx=e.clientX;sy=e.clientY;try{w.setPointerCapture(e.pointerId);}catch(x){}}
+  function onMove(e){
+    if(!act)return;
+    var dx=e.clientX-sx,dy=e.clientY-sy;
+    if(!drg){if(Math.abs(dx)<6&&Math.abs(dy)<6)return;if(Math.abs(dy)>Math.abs(dx)){act=false;try{w.releasePointerCapture(e.pointerId);}catch(x){}return;}drg=true;var inn=w.querySelector('.gs-inner');if(inn)inn.style.transition='none';}
+    e.preventDefault();cx=dx;w.style.transform='translateX('+dx+'px) rotate('+(dx*0.055)+'deg)';
+    var lY=w.querySelector('.gs-lbl-yes'),lN=w.querySelector('.gs-lbl-no');
+    if(dx>20){if(lY)lY.style.opacity=Math.min((dx-20)/55,1);if(lN)lN.style.opacity=0;}
+    else if(dx<-20){if(lN)lN.style.opacity=Math.min((-dx-20)/55,1);if(lY)lY.style.opacity=0;}
+    else{if(lY)lY.style.opacity=0;if(lN)lN.style.opacity=0;}
+  }
+  function onUp(e){
+    if(!act)return;act=false;try{w.releasePointerCapture(e.pointerId);}catch(x){}
+    if(!drg){gFlip();return;}drg=false;
+    var inn=w.querySelector('.gs-inner');if(inn)inn.style.transition='';
+    var lY=w.querySelector('.gs-lbl-yes'),lN=w.querySelector('.gs-lbl-no');
+    if(lY)lY.style.opacity=0;if(lN)lN.style.opacity=0;
+    if(cx>THR)gDismiss('yes');else if(cx<-THR)gDismiss('no');
+    else{w.style.transition='transform .3s cubic-bezier(.25,.9,.4,1)';w.style.transform='';setTimeout(function(){w.style.transition='';},320);}
+  }
+  w.addEventListener('pointerdown',onDown);w.addEventListener('pointermove',onMove);w.addEventListener('pointerup',onUp);w.addEventListener('pointercancel',onUp);
+  GD.w=w;GD.pd=onDown;GD.pm=onMove;GD.pu=onUp;
+}
+function gShowEnd(){
+  document.getElementById('gPlay').style.display='none';document.getElementById('gEnd').style.display='flex';
+  var tot=G.deck.length,pct=tot>0?Math.round(G.yes/tot*100):0;
+  document.getElementById('gEndYes').textContent=G.yes;document.getElementById('gEndNo').textContent=G.no;
+  document.getElementById('gEndTot').textContent=tot;document.getElementById('gPct').textContent=pct+'%';
+  document.getElementById('gFill').style.width='100%';
+  document.getElementById('gCircle').style.background=pct>=80?'#2a9d5c':pct>=50?'#7c5cc4':'#b53a3a';
+  document.getElementById('gMsg').textContent=pct===100?'¡Perfecto! Dominas todas las tarjetas.':pct>=80?'¡Muy bien! Repasa las que te han quedado.':pct>=50?'Buen intento. Vuelve a repasar las falladas.':'Sigue practicando, lo conseguirás.';
+  document.getElementById('gBtnRepeat').style.display=G.noList.length>0?'block':'none';
+}
+function gStart(useNo){
+  G.cur=0;G.yes=0;G.no=0;if(!useNo)G.noList=[];G.deck=gDeck(useNo);G.run=true;
+  document.getElementById('gameSetup').style.display='none';document.getElementById('gEnd').style.display='none';document.getElementById('gPlay').style.display='flex';
+  gRender();
+}
+function gOpen(){
+  document.getElementById('gameOverlay').classList.add('active');document.body.style.overflow='hidden';gUpdateCt();
+  document.getElementById('gameSetup').style.display='block';document.getElementById('gPlay').style.display='none';document.getElementById('gEnd').style.display='none';
+}
+function gClose(){gCleanDrag();document.getElementById('gameOverlay').classList.remove('active');document.body.style.overflow='';G.run=false;}
+document.getElementById('btnGame').addEventListener('click',gOpen);
+['gClose1','gClose2','gClose3'].forEach(function(id){document.getElementById(id).addEventListener('click',gClose);});
+document.querySelectorAll('[data-gcat]').forEach(function(b){
+  b.addEventListener('click',function(){document.querySelectorAll('[data-gcat]').forEach(function(x){x.classList.remove('active');});b.classList.add('active');G.cat=b.dataset.gcat;gUpdateCt();});
+});
+document.getElementById('gOptNodom').addEventListener('click',function(){G.nodom=!G.nodom;this.classList.toggle('active',G.nodom);gUpdateCt();});
+document.getElementById('gOptShuffle').addEventListener('click',function(){G.shuffle=!G.shuffle;this.classList.toggle('active',G.shuffle);});
+document.getElementById('gOptFaceEng').addEventListener('click',function(){
+  G.showEsp=false;
+  this.classList.add('active');
+  document.getElementById('gOptFaceEs').classList.remove('active');
+});
+document.getElementById('gOptFaceEs').addEventListener('click',function(){
+  G.showEsp=true;
+  this.classList.add('active');
+  document.getElementById('gOptFaceEng').classList.remove('active');
+});
+document.getElementById('gBtnStart').addEventListener('click',function(){gStart(false);});
+document.getElementById('gBtnRestart').addEventListener('click',function(){gStart(false);});
+document.getElementById('gBtnRepeat').addEventListener('click',function(){gStart(true);});
+document.getElementById('gBtnMenu').addEventListener('click',function(){G.run=false;document.getElementById('gEnd').style.display='none';document.getElementById('gPlay').style.display='none';document.getElementById('gameSetup').style.display='block';gUpdateCt();});
+document.getElementById('gBtnNo').addEventListener('click',function(){if(G.run)gDismiss('no');});
+document.getElementById('gBtnFlip').addEventListener('click',function(){if(G.run)gFlip();});
+document.getElementById('gBtnYes').addEventListener('click',function(){if(G.run)gDismiss('yes');});
+document.addEventListener('keydown',function(e){
+  if(!document.getElementById('gameOverlay').classList.contains('active')||!G.run)return;
+  if(e.key==='ArrowRight'){e.preventDefault();gDismiss('yes');}
+  if(e.key==='ArrowLeft'){e.preventDefault();gDismiss('no');}
+  if(e.key===' '){e.preventDefault();gFlip();}
+});
+
+buildCatBtns();render();gUpdateCt();
+</script>
+</body>
+</html>

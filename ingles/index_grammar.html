@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Grammar · Cambridge B2–C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#ede9df; --card:#faf7f1; --border:#c4bead;
+  --text:#1a1814; --text2:#44413a; --text3:#706c64;
+  --accent:#0d2b5e; --accent-light:#dce3f0; --accent-mid:#4a6ba8;
+  --shadow:0 2px 14px rgba(0,0,0,.10),0 1px 4px rgba(0,0,0,.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,.07);
+  --radius:14px; --radius-sm:8px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --blue:#163494; --blue-bg:#e6ebf8;
+  --purple:#6a1a8a; --purple-bg:#f2e6f8;
+  --wine:#8b1a4a; --wine-bg:#f8e6ee;
+  --teal:#0e6060; --teal-bg:#e0f2f2;
+  --orange:#8b4a0a; --orange-bg:#f8ede0;
+  /* dark card colors (used when a topic is created) */
+  --dk-blue:#1a2f6e; --dk-green:#06402b; --dk-purple:#4a1460;
+  --dk-wine:#6e1438; --dk-teal:#0a4242; --dk-orange:#8b5e00;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* HEADER */
+.site-header{background:var(--card);border-bottom:2px solid var(--border);padding:28px 20px 22px;}
+.header-inner{max-width:900px;margin:0 auto;}
+.header-top{display:flex;align-items:baseline;gap:12px;margin-bottom:4px;flex-wrap:wrap;}
+.site-header h1{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,5vw,2.2rem);font-weight:700;color:var(--text);}
+.header-tag{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border:1px solid var(--accent-mid);border-radius:20px;padding:3px 11px;}
+.header-sub{font-size:.78rem;color:var(--text3);font-weight:500;margin-bottom:18px;}
+.header-sub strong{color:var(--accent);}
+
+/* STATS ROW */
+.stats-row{display:flex;flex-wrap:wrap;gap:8px;}
+.stat-badge{background:var(--bg);border:1.5px solid var(--border);border-radius:20px;padding:5px 13px;font-size:.76rem;font-weight:600;color:var(--text2);display:flex;align-items:center;gap:5px;}
+.stat-badge .dot{width:7px;height:7px;border-radius:50%;}
+
+/* SEARCH */
+.search-wrap{max-width:900px;margin:0 auto;padding:18px 20px 0;}
+.search-box{display:flex;align-items:center;gap:10px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:10px 16px;box-shadow:var(--shadow-sm);}
+.search-icon{color:var(--text3);font-size:1rem;flex-shrink:0;}
+.search-input{flex:1;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:.92rem;color:var(--text);outline:none;}
+.search-input::placeholder{color:var(--text3);}
+
+/* FILTER TABS */
+.filter-wrap{max-width:900px;margin:0 auto;padding:14px 20px 0;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;}
+.filter-tabs{display:flex;gap:7px;flex-wrap:wrap;}
+.ftab{border:1.5px solid var(--border);border-radius:20px;padding:6px 15px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;white-space:nowrap;}
+.ftab:hover{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+.ftab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+/* CREATED TOGGLE */
+.created-toggle{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:6px 14px;font-size:.78rem;font-weight:600;color:var(--text2);cursor:pointer;transition:all .15s;user-select:none;box-shadow:var(--shadow-sm);}
+.created-toggle:hover{border-color:var(--accent);color:var(--accent);}
+.created-toggle.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.created-toggle .check{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border:1.5px solid currentColor;border-radius:3px;font-size:.7rem;line-height:1;}
+.created-toggle.active .check{background:#fff;color:var(--accent);}
+.created-toggle .count{opacity:.7;font-weight:500;}
+
+/* GRID */
+.main{max-width:960px;margin:0 auto;padding:18px 20px 48px;}
+.section-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin:22px 0 12px;padding-left:2px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;align-items:stretch;}
+
+/* CARD */
+.topic-card{position:relative;border:1.5px solid transparent;border-radius:var(--radius);box-shadow:0 3px 16px rgba(0,0,0,.25),0 1px 4px rgba(0,0,0,.14);cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;text-decoration:none;display:flex;overflow:hidden;isolation:isolate;}
+.topic-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.28);box-shadow:0 10px 30px rgba(0,0,0,.36),0 2px 8px rgba(0,0,0,.18);}
+.topic-card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.09) 0%,rgba(255,255,255,.02) 45%,rgba(0,0,0,.14) 100%);pointer-events:none;border-radius:inherit;z-index:0;}
+.card-accent{display:none;}
+.card-body{position:relative;z-index:1;padding:22px 22px 60px;flex:1;display:flex;flex-direction:column;min-height:0;}
+.card-top{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.card-num{font-size:.7rem;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.55);}
+.card-level{font-size:.65rem;font-weight:700;letter-spacing:.04em;border-radius:10px;padding:3px 9px;border:1px solid;}
+.card-level.tier1{background:rgba(40,170,130,.22);border-color:rgba(90,210,170,.5);color:#a8efd1;}
+.card-level.tier2{background:rgba(70,130,240,.22);border-color:rgba(120,170,250,.5);color:#bcd5ff;}
+.card-level.tier3{background:rgba(150,100,235,.22);border-color:rgba(185,145,250,.5);color:#d6c0ff;}
+.card-title{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;letter-spacing:1px;color:#fff;margin-bottom:10px;line-height:1.3;}
+.card-desc{font-size:.84rem;color:rgba(255,255,255,.8);line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.card-tags{display:none;}
+.card-tag{display:none;}
+.card-action{position:absolute;bottom:14px;right:14px;z-index:2;display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:600;letter-spacing:.03em;color:rgba(255,255,255,.96);background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.24);border-radius:20px;padding:5px 11px 5px 12px;transition:all .15s ease;backdrop-filter:blur(2px);}
+.topic-card:hover .card-action{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.42);}
+.card-action .arrow{font-size:.95rem;line-height:1;transition:transform .15s ease;}
+.topic-card:hover .card-action .arrow{transform:translateX(2px);}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:48px 20px;color:var(--text3);}
+.empty-icon{font-size:2rem;margin-bottom:10px;}
+.empty-state p{font-weight:500;font-size:.9rem;}
+
+/* HIDDEN */
+.hidden{display:none!important;}
+
+/* BACK BUTTON */
+.back-btn{position:fixed;top:18px;left:18px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:7px 14px 7px 11px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all .15s;}
+.back-btn:hover{background:var(--accent-light);border-color:var(--accent);color:var(--accent);transform:translateX(-2px);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+@media (max-width:600px){.back-btn{top:12px;left:12px;padding:6px 12px 6px 9px;font-size:.74rem;}}
+
+/* PLACEHOLDER CARDS — fondo blanco, texto negro */
+.topic-card.placeholder {
+  background: #ffffff !important;
+  border: 2px dashed #bbb !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,.08) !important;
+}
+.topic-card.placeholder .card-num { color: #999 !important; }
+.topic-card.placeholder .card-title { color: #1a1814 !important; }
+.topic-card.placeholder .card-desc { color: #555 !important; }
+.topic-card.placeholder .card-level.tier1 { background:#e4f2e8 !important; border-color:#9fcdaa !important; color:#1a6028 !important; }
+.topic-card.placeholder .card-level.tier2 { background:#e6ebf8 !important; border-color:#a3b5e0 !important; color:#163494 !important; }
+.topic-card.placeholder .card-level.tier3 { background:#f2e6f8 !important; border-color:#c9a3d8 !important; color:#6a1a8a !important; }
+.topic-card.placeholder .card-action {
+  background: #f0ede8 !important;
+  border: 1px solid #bbb !important;
+  color: #333 !important;
+}
+.topic-card.placeholder::before { background: none !important; }
+.topic-card.placeholder:hover { border-color: #888 !important; }
+.topic-card.placeholder::after{
+  content:"En preparación";
+  position:absolute;top:12px;right:14px;z-index:2;
+  font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:#999;background:#f5f3ee;border:1px solid #ddd;border-radius:10px;padding:2px 7px;
+}
+</style>
+</head>
+<body>
+
+<a class="back-btn" href="index.html" title="Volver al índice de inglés">
+  <span class="arrow">←</span><span>Índice</span>
+</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>🇬🇧 English Grammar</h1>
+      <span class="header-tag">Cambridge B2–C1</span>
+    </div>
+    <p class="header-sub">Índice de bloques · <strong>44 temas</strong> · Referencia + ejercicios con IA</p>
+    <div class="stats-row">
+      <div class="stat-badge"><span class="dot" style="background:var(--teal)"></span>Verbs &amp; Tenses</div>
+      <div class="stat-badge"><span class="dot" style="background:var(--green)"></span>Syntax</div>
+      <div class="stat-badge"><span class="dot" style="background:var(--wine)"></span>Discourse</div>
+      <div class="stat-badge"><span class="dot" style="background:var(--orange)"></span>Lexico-grammar</div>
+      <div class="stat-badge"><span class="dot" style="background:var(--purple)"></span>Writing</div>
+    </div>
+  </div>
+</header>
+
+<div class="search-wrap">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" type="text" placeholder="Buscar tema… (ej: conditionals, modals, inversion, essay…)" oninput="filterCards(this.value)" id="search-input">
+  </div>
+</div>
+
+<div class="filter-wrap">
+  <div class="filter-tabs">
+    <button class="ftab active" onclick="setFilter('all',this)">Todos</button>
+    <button class="ftab" onclick="setFilter('verbos',this)">Verbs &amp; Tenses</button>
+    <button class="ftab" onclick="setFilter('sintaxis',this)">Syntax</button>
+    <button class="ftab" onclick="setFilter('discurso',this)">Discourse</button>
+    <button class="ftab" onclick="setFilter('lexico',this)">Lexico-grammar</button>
+    <button class="ftab" onclick="setFilter('produccion',this)">Writing</button>
+  </div>
+  <button class="created-toggle" id="created-toggle" onclick="toggleCreatedOnly()">
+    <span class="check" id="created-check"></span>
+    <span>Solo creados</span>
+    <span class="count" id="created-count"></span>
+  </button>
+</div>
+
+<main class="main" id="main">
+  <div class="grid" id="grid"></div>
+  <div class="empty-state hidden" id="empty">
+    <div class="empty-icon">🔎</div>
+    <p>Ningún tema coincide con tu búsqueda.</p>
+  </div>
+</main>
+
+<script>
+/* COLORES POR CATEGORÍA (se aplican automáticamente cuando placeholder:false) */
+const CAT_COLORS = {
+  verbos:    "#0a4242", // teal
+  sintaxis:  "#06402b", // dark green
+  discurso:  "#6e1438", // wine
+  lexico:    "#8b5e00", // gold/orange
+  produccion:"#4a1460"  // purple
+};
+
+const TOPICS = [
+  // ===== SECTION 1–4 · VERBS & TENSES =====
+  {
+    num:"01", file:"grammar_present.html",
+    title:"Present Simple vs Continuous",
+    desc:"Estados vs acciones, narrative present, stylistic uses (always + -ing for criticism). State verbs que no admiten progresivo (know, believe, own).",
+    tags:["present simple","present continuous","state verbs","always -ing","narrative"],
+    cat:"verbos", level:"B1–B2", placeholder:true
+  },
+  {
+    num:"02", file:"grammar_past_tenses.html",
+    title:"Past Simple, Continuous &amp; Habits",
+    desc:"Contraste past simple/continuous. Used to vs would (no con verbos de estado). Be used to vs get used to. Past habits en narrativa.",
+    tags:["past simple","past continuous","used to","would","be used to"],
+    cat:"verbos", level:"B1–B2", placeholder:true
+  },
+  {
+    num:"03", file:"grammar_present_perfect.html",
+    title:"Present Perfect Simple &amp; Continuous",
+    desc:"Experiencia, resultado, duración. Contraste con past simple (UK vs US). Stative verbs en perfect continuous. Marcadores: since, for, yet, already, just.",
+    tags:["present perfect","perfect continuous","since for","just yet already"],
+    cat:"verbos", level:"B1–B2", placeholder:true
+  },
+  {
+    num:"04", file:"grammar_past_perfect.html",
+    title:"Past Perfect Simple &amp; Continuous",
+    desc:"Anterioridad en el pasado. Duración previa a un punto en el pasado. Combinación con reported speech. By the time / before / after.",
+    tags:["past perfect","perfect continuous","anteriority","by the time"],
+    cat:"verbos", level:"B2", placeholder:true
+  },
+  {
+    num:"05", file:"grammar_future.html",
+    title:"Future Forms — Complete System",
+    desc:"Will / going to / present continuous / present simple / future continuous / future perfect. Predicción, intención, plan, programación. Be about to, be on the verge of.",
+    tags:["future","will","going to","future perfect","future continuous"],
+    cat:"verbos", level:"B1–B2", placeholder:true
+  },
+  {
+    num:"06", file:"grammar_modals.html",
+    title:"Modal Verbs — Core Uses",
+    desc:"Must, should, may, might, can, could, ought to, had better. Obligación, permiso, habilidad, consejo, posibilidad. Semi-modals: need to, have to, be supposed to.",
+    tags:["modals","must","should","may might","can could","semi-modals"],
+    cat:"verbos", level:"B1–B2", placeholder:true
+  },
+  {
+    num:"07", file:"grammar_modals_deduction.html",
+    title:"Modals of Deduction &amp; Perfect Modals",
+    desc:"Must be / can't be / might be (presente). Must have done / can't have done / should have done (pasado). Reproches, deducción retrospectiva, arrepentimiento.",
+    tags:["deduction","perfect modals","must have","should have","might have"],
+    cat:"verbos", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"08", file:"grammar_conditionals.html",
+    title:"Conditionals (0–1–2–3 &amp; Mixed)",
+    desc:"Tipo 0 (general), 1 (real futuro), 2 (irreal presente), 3 (irreal pasado), mixto (3+2: hipótesis pasada con consecuencia presente). Unless, provided that, as long as.",
+    tags:["conditionals","mixed","unless","provided that","wish"],
+    cat:"verbos", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"09", file:"grammar_wish.html",
+    title:"Wish, If Only, It's Time, I'd Rather",
+    desc:"Wish + past (presente irreal), wish + past perfect (pasado), wish + would (queja/futuro). If only para énfasis. It's (high/about) time + past. I'd rather you did.",
+    tags:["wish","if only","it's time","I'd rather","hypothetical past"],
+    cat:"verbos", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"10", file:"grammar_passive.html",
+    title:"Passive Voice — All Tenses",
+    desc:"Passive en todos los tiempos. Causative have/get something done. Passive con reporting verbs (it is said that, he is believed to). Have someone do something.",
+    tags:["passive","causative","have something done","reporting verbs"],
+    cat:"verbos", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"11", file:"grammar_reported_speech.html",
+    title:"Reported Speech",
+    desc:"Backshift de tiempos, pronombres y referencias temporales (today→that day). Reporting verbs + patrón (suggest doing, accuse of, persuade to). Preguntas indirectas.",
+    tags:["reported speech","backshift","reporting verbs","indirect questions"],
+    cat:"verbos", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"12", file:"grammar_gerunds_infinitives.html",
+    title:"Gerunds vs Infinitives",
+    desc:"Verbos + -ing (enjoy, avoid, mind), + to (decide, refuse), + both con cambio de sentido (remember, stop, regret, try, mean). Preposiciones siempre + -ing.",
+    tags:["gerund","infinitive","stop doing","stop to","remember","regret"],
+    cat:"verbos", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"13", file:"grammar_phrasal_verbs_grammar.html",
+    title:"Phrasal Verbs — Grammar &amp; Patterns",
+    desc:"Separables vs inseparables. Transitivos vs intransitivos. Phrasal verbs con tres partes (put up with, look forward to). Posición del objeto/pronombre.",
+    tags:["phrasal verbs","separable","inseparable","three-part","object position"],
+    cat:"verbos", level:"B2–C1", placeholder:true
+  },
+
+  // ===== SECTION 5 + 7 · SYNTAX =====
+  {
+    num:"14", file:"grammar_articles.html",
+    title:"Articles — A/An, The, Zero",
+    desc:"Específico vs genérico. Zero article (abstract nouns, meals, sports). The con instituciones, geografía, superlativos. A/an con profesiones.",
+    tags:["articles","zero article","definite","indefinite","generic"],
+    cat:"sintaxis", level:"B1–B2", placeholder:true
+  },
+  {
+    num:"15", file:"grammar_quantifiers.html",
+    title:"Quantifiers &amp; Determiners",
+    desc:"Much/many, few/little (con/sin a), several, plenty of, a great deal of. Each vs every. All/whole. Both, either, neither. Some/any en preguntas y peticiones.",
+    tags:["quantifiers","few little","each every","both either","some any"],
+    cat:"sintaxis", level:"B1–B2", placeholder:true
+  },
+  {
+    num:"16", file:"grammar_relative_clauses.html",
+    title:"Relative Clauses — Defining &amp; Non-Defining",
+    desc:"Who/which/that/whose/where/when. Defining (sin comas, that posible) vs non-defining (con comas, that imposible). Preposición + which/whom en registro formal.",
+    tags:["relative clauses","defining","non-defining","whose","whom"],
+    cat:"sintaxis", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"17", file:"grammar_participle_clauses.html",
+    title:"Reduced Relatives &amp; Participle Clauses",
+    desc:"Cláusulas reducidas con -ing (the man waiting) y -ed (the book written). Participle clauses (Having finished…, Seeing that…). Registro formal/escrito.",
+    tags:["reduced relatives","participle clauses","having done","seeing that"],
+    cat:"sintaxis", level:"C1", placeholder:true
+  },
+  {
+    num:"18", file:"grammar_inversion.html",
+    title:"Inversion — Negative Adverbials",
+    desc:"Never have I, Hardly had I, Not only…but also, Little did he know, No sooner…than, Under no circumstances, Only then. Inversion con condicionales (Had I known).",
+    tags:["inversion","never","hardly","no sooner","had I known","only then"],
+    cat:"sintaxis", level:"C1", placeholder:true
+  },
+  {
+    num:"19", file:"grammar_cleft_sentences.html",
+    title:"Cleft Sentences — Emphasis Structures",
+    desc:"It-cleft (It was John who…). Wh-cleft (What I need is…). All-cleft (All I want is…). Focalización contrastiva. Función pragmática en escritura.",
+    tags:["cleft","it-cleft","what-cleft","emphasis","focus"],
+    cat:"sintaxis", level:"C1", placeholder:true
+  },
+  {
+    num:"20", file:"grammar_comparatives.html",
+    title:"Comparatives &amp; Superlatives — Advanced",
+    desc:"As…as, not as…as, the more…the more, by far the best, nowhere near as, just as. Comparativos dobles. Less vs fewer. Modifiers (much, far, slightly, a bit).",
+    tags:["comparatives","superlatives","the more the more","by far","fewer"],
+    cat:"sintaxis", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"21", file:"grammar_question_tags.html",
+    title:"Question Tags &amp; Indirect Questions",
+    desc:"Question tags (it's nice, isn't it?). Tag con imperativos y let's. Echo questions. Preguntas indirectas (Do you know where she lives? — sin inversión).",
+    tags:["question tags","indirect questions","echo questions","embedded"],
+    cat:"sintaxis", level:"B1–B2", placeholder:true
+  },
+  {
+    num:"22", file:"grammar_subject_verb_agreement.html",
+    title:"Subject-Verb Agreement",
+    desc:"Sustantivos colectivos (the team is/are). Either…or, neither…nor (concordancia con el sujeto más cercano). None of, each of. Sustantivos no contables en plural aparente.",
+    tags:["agreement","collective nouns","either or","none of","each of"],
+    cat:"sintaxis", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"23", file:"grammar_word_order.html",
+    title:"Word Order &amp; Emphasis",
+    desc:"Orden de adjetivos (opinion-size-age-shape-colour-origin-material). Adverbios (frequency, manner, place, time). Fronting para énfasis (Down the street came…).",
+    tags:["word order","adjective order","adverbs","fronting","emphasis"],
+    cat:"sintaxis", level:"B2–C1", placeholder:true
+  },
+
+  // ===== SECTION 8 + part 7 · DISCOURSE =====
+  {
+    num:"24", file:"grammar_linkers.html",
+    title:"Linkers &amp; Connectors — Formal/Informal",
+    desc:"Contraste (however, nevertheless, on the other hand, whereas). Adición (moreover, furthermore, in addition). Causa-efecto (therefore, consequently, thus). Resultado (as a result).",
+    tags:["linkers","however","moreover","therefore","whereas","nevertheless"],
+    cat:"discurso", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"25", file:"grammar_discourse_markers.html",
+    title:"Discourse Markers — Spoken English",
+    desc:"Well, anyway, actually, by the way, mind you, I mean, you know, sort of. Función pragmática: turn-taking, hedging, topic shift, repair, fillers.",
+    tags:["discourse markers","well","anyway","actually","by the way","hedging"],
+    cat:"discurso", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"26", file:"grammar_cohesion.html",
+    title:"Cohesion: Reference, Substitution, Ellipsis",
+    desc:"Referencia con pronombres y demostrativos. Sustitución con one/ones, do so, so/not. Elipsis tras conjunciones. Anáforas y catáforas léxicas.",
+    tags:["cohesion","reference","substitution","ellipsis","one ones","do so"],
+    cat:"discurso", level:"C1", placeholder:true
+  },
+  {
+    num:"27", file:"grammar_hedging.html",
+    title:"Hedging &amp; Academic Tone",
+    desc:"Hedging con modales (may, might, could), adverbios (perhaps, possibly, arguably) y verbos (suggest, indicate, appear, tend to). Cautela y matización académica.",
+    tags:["hedging","academic","modals","appear to","tend to","arguably"],
+    cat:"discurso", level:"C1", placeholder:true
+  },
+  {
+    num:"28", file:"grammar_register.html",
+    title:"Register: Formal vs Informal vs Neutral",
+    desc:"Léxico (purchase/buy, require/need, assist/help). Contracciones. Phrasal verbs (informal) vs verbos latinos (formal). Passive y nominalización formal.",
+    tags:["register","formal","informal","contractions","nominalization"],
+    cat:"discurso", level:"B2–C1", placeholder:true
+  },
+
+  // ===== SECTION 6 + 9 · LEXICO-GRAMMAR =====
+  {
+    num:"29", file:"grammar_prepositions.html",
+    title:"Prepositions — Advanced Uses",
+    desc:"In/on/at tiempo y lugar. By, with, of, for, from, about. Diferencias sutiles (at the corner vs on the corner, in time vs on time). Prepositions of movement.",
+    tags:["prepositions","in on at","by with","time place","movement"],
+    cat:"lexico", level:"B1–B2", placeholder:true
+  },
+  {
+    num:"30", file:"grammar_dependent_prepositions.html",
+    title:"Dependent Prepositions — Verb/Adj/Noun + Prep",
+    desc:"Verbos + prep (depend on, insist on, succeed in, accuse of). Adjetivos + prep (interested in, afraid of, capable of). Sustantivos + prep (reason for, effect on).",
+    tags:["dependent prepositions","depend on","interested in","reason for"],
+    cat:"lexico", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"31", file:"grammar_collocations.html",
+    title:"Collocations",
+    desc:"Verbo + nombre (make a decision, take a risk, do business, pay attention). Adjetivo + nombre (heavy rain, strong tea, deeply concerned). Make vs Do.",
+    tags:["collocations","make do","take","heavy rain","strong tea"],
+    cat:"lexico", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"32", file:"grammar_phrasal_verbs_lexis.html",
+    title:"Phrasal Verbs — Lexis &amp; Meaning",
+    desc:"Phrasal verbs frecuentes por temas (relaciones, trabajo, viajes). Phrasal verbs idiomáticos (put up with, come up with, look forward to). Equivalente latino formal.",
+    tags:["phrasal verbs","idiomatic","put up with","come up with","look forward"],
+    cat:"lexico", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"33", file:"grammar_word_formation.html",
+    title:"Word Formation — Affixes",
+    desc:"Sufijos nominales (-tion, -ment, -ity, -ness, -er). Sufijos adjetivales (-able, -less, -ful, -ous, -ive). Prefijos (un-, in-, dis-, mis-, over-, under-, re-).",
+    tags:["word formation","suffixes","prefixes","-tion","-able","un-"],
+    cat:"lexico", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"34", file:"grammar_compound_nouns.html",
+    title:"Compound Nouns &amp; Adjectives",
+    desc:"Compound nouns (traffic jam, ice cream, washing machine). Compound adjectives con guión (well-known, hard-working, good-looking). Stress patterns.",
+    tags:["compound nouns","compound adjectives","hyphenated","well-known"],
+    cat:"lexico", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"35", file:"grammar_idioms.html",
+    title:"Idioms &amp; Fixed Expressions",
+    desc:"Idioms con partes del cuerpo, animales, colores, comida. Binomials (now and then, pros and cons). Similes (as cool as a cucumber). Registro de uso.",
+    tags:["idioms","binomials","similes","fixed expressions","figurative"],
+    cat:"lexico", level:"C1", placeholder:true
+  },
+  {
+    num:"36", file:"grammar_false_friends.html",
+    title:"False Friends with Spanish",
+    desc:"Actually (en realidad, no actualmente), library (biblioteca), sensible (sensato), eventually (finalmente), assist (ayudar). Cognados engañosos del C1.",
+    tags:["false friends","actually","library","sensible","eventually","embarrassed"],
+    cat:"lexico", level:"B1–C1", placeholder:true
+  },
+
+  // ===== SECTION 10 · WRITING / PRODUCTION =====
+  {
+    num:"37", file:"grammar_essay.html",
+    title:"Essay — Argumentative Writing",
+    desc:"Estructura: introducción → cuerpo (argumento + contraargumento) → conclusión. Tesis, evidencia, refutación. Lenguaje formal, hedging, linkers académicos. Cambridge B2/C1.",
+    tags:["essay","argumentative","thesis","linkers","academic","Cambridge"],
+    cat:"produccion", level:"B2–C1", placeholder:false
+  },
+  {
+    num:"38", file:"grammar_formal_letter.html",
+    title:"Formal Letter &amp; Email",
+    desc:"Apertura (Dear Sir/Madam, Dear Mr Smith), propósito, desarrollo, cierre (Yours faithfully/sincerely). Email semi-formal. Solicitud, queja, agradecimiento, recomendación.",
+    tags:["formal letter","email","Yours faithfully","complaint","application"],
+    cat:"produccion", level:"B2", placeholder:true
+  },
+  {
+    num:"39", file:"grammar_report.html",
+    title:"Report Writing",
+    desc:"Estructura con headings: Introduction, Findings, Conclusion, Recommendations. Lenguaje objetivo, passive voice, datos cuantificados. Cambridge B2/C1.",
+    tags:["report","headings","findings","recommendations","passive"],
+    cat:"produccion", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"40", file:"grammar_article.html",
+    title:"Article Writing",
+    desc:"Título atractivo, hook inicial, párrafos con subtítulos, lenguaje semi-formal y descriptivo, recursos retóricos (preguntas retóricas, ejemplos), conclusión memorable.",
+    tags:["article","hook","subheadings","rhetorical","engaging"],
+    cat:"produccion", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"41", file:"grammar_review.html",
+    title:"Review Writing",
+    desc:"Reseña de libro, película, restaurante. Descripción + opinión + recomendación. Adjetivos evaluativos, comparaciones, lenguaje persuasivo. Cambridge B2/C1.",
+    tags:["review","book","film","restaurant","recommendation","evaluative"],
+    cat:"produccion", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"42", file:"grammar_proposal.html",
+    title:"Proposal Writing",
+    desc:"Propuesta formal con secciones: Introduction, Current situation, Suggestions, Benefits, Conclusion. Modales de sugerencia (could, would, might). Cambridge C1.",
+    tags:["proposal","suggestions","benefits","modals","Cambridge C1"],
+    cat:"produccion", level:"C1", placeholder:true
+  },
+  {
+    num:"43", file:"grammar_punctuation.html",
+    title:"Punctuation — Advanced",
+    desc:"Coma (Oxford comma), punto y coma, dos puntos, guion, paréntesis, comillas. Apóstrofo (genitivo, contracciones). Diferencias con la puntuación española.",
+    tags:["punctuation","comma","semicolon","Oxford comma","apostrophe"],
+    cat:"produccion", level:"B2–C1", placeholder:true
+  },
+  {
+    num:"44", file:"grammar_paragraph.html",
+    title:"Paragraph Structure &amp; Cohesion",
+    desc:"Topic sentence, supporting sentences, concluding sentence. Cohesión interna (referencia, sustitución, conectores) y cohesión externa entre párrafos.",
+    tags:["paragraph","topic sentence","cohesion","supporting","concluding"],
+    cat:"produccion", level:"B2–C1", placeholder:true
+  },
+];
+
+const CAT_LABELS = {
+  verbos:"Verbs & Tenses",
+  sintaxis:"Syntax",
+  discurso:"Discourse",
+  lexico:"Lexico-grammar",
+  produccion:"Writing & Production"
+};
+
+let activeFilter = "all";
+let searchVal = "";
+let showCreatedOnly = false;
+
+function getLevelTier(level){
+  if(level.includes("C1")) return "tier3";
+  if(level.includes("B2")) return "tier2";
+  return "tier1";
+}
+
+function buildCards(items){
+  const grid = document.getElementById("grid");
+  const empty = document.getElementById("empty");
+  if(!items.length){
+    grid.innerHTML="";
+    empty.classList.remove("hidden");
+    return;
+  }
+  empty.classList.add("hidden");
+
+  // Group by category
+  const cats = ["verbos","sintaxis","discurso","lexico","produccion"];
+  let html = "";
+  cats.forEach(cat => {
+    const filtered = items.filter(t => t.cat === cat);
+    if(!filtered.length) return;
+    if(activeFilter === "all"){
+      html += `<div class="section-label" style="grid-column:1/-1">${CAT_LABELS[cat]}</div>`;
+    }
+    filtered.forEach(t => {
+      const tier = getLevelTier(t.level);
+      const placeholderClass = t.placeholder ? " placeholder" : "";
+      const bg = t.placeholder ? "" : `style="background:${CAT_COLORS[t.cat]};"`;
+      html += `
+        <a class="topic-card${placeholderClass}" href="${t.file}" target="_blank" data-cat="${t.cat}" data-search="${t.title.toLowerCase()} ${t.desc.toLowerCase()} ${t.tags.join(" ").toLowerCase()}" ${bg}>
+          <div class="card-body">
+            <div class="card-top">
+              <span class="card-num">${t.num}</span>
+              <span class="card-level ${tier}">${t.level}</span>
+            </div>
+            <div class="card-title">${t.title}</div>
+            <div class="card-desc">${t.desc}</div>
+            <div class="card-tags">
+              ${t.tags.map(tag => `<span class="card-tag">${tag}</span>`).join("")}
+            </div>
+            <span class="card-action">Ver más <span class="arrow">→</span></span>
+          </div>
+        </a>`;
+    });
+  });
+  grid.innerHTML = html;
+}
+
+function applyFilters(){
+  let items = TOPICS;
+  if(activeFilter !== "all") items = items.filter(t => t.cat === activeFilter);
+  if(showCreatedOnly) items = items.filter(t => !t.placeholder);
+  if(searchVal.trim()){
+    const q = searchVal.trim().toLowerCase();
+    items = items.filter(t =>
+      t.title.toLowerCase().includes(q) ||
+      t.desc.toLowerCase().includes(q) ||
+      t.tags.some(tag => tag.toLowerCase().includes(q))
+    );
+  }
+  buildCards(items);
+}
+
+function setFilter(cat, btn){
+  activeFilter = cat;
+  document.querySelectorAll(".ftab").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  applyFilters();
+}
+
+function filterCards(val){
+  searchVal = val;
+  applyFilters();
+}
+
+function toggleCreatedOnly(){
+  showCreatedOnly = !showCreatedOnly;
+  const btn = document.getElementById("created-toggle");
+  const check = document.getElementById("created-check");
+  if(showCreatedOnly){
+    btn.classList.add("active");
+    check.textContent = "✓";
+  } else {
+    btn.classList.remove("active");
+    check.textContent = "";
+  }
+  applyFilters();
+}
+
+/* Inicializa contador "Solo creados" */
+function initCreatedCount(){
+  const created = TOPICS.filter(t => !t.placeholder).length;
+  const total = TOPICS.length;
+  document.getElementById("created-count").textContent = `(${created}/${total})`;
+}
+
+// Init
+initCreatedCount();
+applyFilters();
+</script>
+</body>
+</html>

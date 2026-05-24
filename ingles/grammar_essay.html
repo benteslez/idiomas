@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Essay · Argumentative Writing · Cambridge B2–C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ede9df; --card:#faf7f1; --border:#c4bead;
+  --text:#1a1814; --text2:#44413a; --text3:#706c64;
+  --accent:#4a1460; --accent-light:#ede0f5; --accent-mid:#9460b8;
+  --shadow:0 2px 14px rgba(0,0,0,.10),0 1px 4px rgba(0,0,0,.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,.07);
+  --radius:14px; --radius-sm:8px;
+  /* Section colors */
+  --c-intro:#4a1460;     --c-intro-bg:#f1e4f8;
+  --c-add:#0e6060;       --c-add-bg:#e0f2f2;
+  --c-contrast:#8b1a4a;  --c-contrast-bg:#f8e6ee;
+  --c-example:#8b5e00;   --c-example-bg:#f8ede0;
+  --c-opinion:#163494;   --c-opinion-bg:#e6ebf8;
+  --c-cause:#06402b;     --c-cause-bg:#e4f2e8;
+  --c-result:#6e1438;    --c-result-bg:#f8e0e8;
+  --c-cond:#1a5a8b;      --c-cond-bg:#e0eaf2;
+  --c-reform:#7a3a0a;    --c-reform-bg:#f5e4d4;
+  --c-intens:#a01828;    --c-intens-bg:#fae0e3;
+  --c-concl:#4a1460;     --c-concl-bg:#ede0f5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* HEADER */
+.site-header{background:var(--card);border-bottom:2px solid var(--border);padding:28px 20px 22px;}
+.header-inner{max-width:1000px;margin:0 auto;}
+.header-top{display:flex;align-items:baseline;gap:12px;margin-bottom:6px;flex-wrap:wrap;}
+.site-header h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:700;color:var(--text);}
+.header-tag{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border:1px solid var(--accent-mid);border-radius:20px;padding:3px 11px;}
+.header-sub{font-size:.85rem;color:var(--text3);font-weight:500;margin-top:2px;}
+.header-sub strong{color:var(--accent);}
+
+/* BACK BUTTON */
+.back-btn{position:fixed;top:18px;left:18px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:7px 14px 7px 11px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all .15s;}
+.back-btn:hover{background:var(--accent-light);border-color:var(--accent);color:var(--accent);transform:translateX(-2px);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+@media (max-width:600px){.back-btn{top:12px;left:12px;padding:6px 12px 6px 9px;font-size:.74rem;}}
+
+/* TABS */
+.tabs-wrap{position:sticky;top:0;z-index:50;background:rgba(237,233,223,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:14px 20px;}
+.tabs{max-width:1000px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;}
+.tab{border:1.5px solid var(--border);border-radius:22px;padding:9px 18px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;background:var(--card);color:var(--text2);transition:all .15s;display:inline-flex;align-items:center;gap:7px;box-shadow:var(--shadow-sm);}
+.tab:hover{border-color:var(--accent);color:var(--accent);}
+.tab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.tab .ico{font-size:1rem;line-height:1;}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:32px 20px 64px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* SECTION (collapsible) */
+.section{margin-bottom:12px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.section-header{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;user-select:none;transition:background .15s;background:var(--card);}
+.section-header:hover{background:var(--accent-light);}
+.section:not(.collapsed) .section-header{border-bottom:1.5px solid var(--border);}
+.section-icon{width:36px;height:36px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:1.15rem;color:#fff;flex-shrink:0;}
+.section-title{font-family:'Playfair Display',serif;font-size:1.18rem;font-weight:700;color:var(--text);line-height:1.2;}
+.section-desc{font-size:.76rem;color:var(--text3);margin-top:2px;}
+.section-header > div:not(.section-icon){flex:1;}
+.section-header::after{
+  content:"▾";
+  font-size:1rem;
+  color:var(--text3);
+  transition:transform .25s ease;
+  margin-left:8px;
+  flex-shrink:0;
+  font-weight:700;
+}
+.section.collapsed .section-header::after{transform:rotate(-90deg);}
+.section.collapsed .section-header:hover::after{color:var(--accent);}
+.section-count{font-size:.7rem;font-weight:600;color:var(--text3);background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:2px 9px;margin-left:auto;flex-shrink:0;}
+.section-header:hover .section-count{border-color:var(--accent-mid);color:var(--accent);}
+.section > .grid{padding:0 18px 18px;}
+.section.collapsed > *:not(.section-header){display:none!important;}
+
+/* TOOLBAR (expand/collapse all) */
+.toolbar{display:flex;justify-content:flex-end;gap:8px;margin-bottom:14px;}
+.tool-btn{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:.76rem;font-weight:600;color:var(--text2);cursor:pointer;transition:all .15s;box-shadow:var(--shadow-sm);display:inline-flex;align-items:center;gap:6px;}
+.tool-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
+.tool-btn .ico{font-size:.85rem;line-height:1;}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
+
+/* ITEM CARD */
+.item{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px 14px;box-shadow:var(--shadow-sm);transition:transform .15s, box-shadow .15s, border-color .15s;}
+.item:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--accent-mid);}
+.item-head{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.item-term{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--text);letter-spacing:.2px;}
+.item-trans{font-size:.74rem;color:var(--text3);font-style:italic;}
+.item-note{font-size:.78rem;color:var(--text2);line-height:1.5;margin-bottom:8px;}
+.item-examples{display:flex;flex-direction:column;gap:4px;}
+.ex{font-size:.82rem;color:var(--text2);line-height:1.45;padding:4px 0 4px 12px;border-left:2px solid;position:relative;}
+.ex em{font-weight:600;color:var(--text);font-style:normal;background:rgba(0,0,0,.04);padding:0 3px;border-radius:3px;}
+
+/* TIP / WARN */
+.callout{background:var(--accent-light);border-left:3px solid var(--accent);border-radius:var(--radius-sm);padding:12px 14px;margin:0 0 22px;font-size:.85rem;color:var(--text2);line-height:1.55;}
+.callout strong{color:var(--accent);}
+.callout .ico{font-size:1rem;margin-right:5px;}
+
+/* STRUCTURE BLOCK (Tab 3) */
+.struct{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow-sm);}
+.struct-formula{display:inline-block;background:linear-gradient(135deg,#1d3461 0%,#2a4a85 100%);color:#fff;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;padding:8px 16px;border-radius:100px;margin-bottom:12px;letter-spacing:.2px;box-shadow:0 2px 6px rgba(29,52,97,.25);border:1px solid rgba(255,255,255,.12);}
+.struct-formula b{color:#ffd96b;font-weight:700;}
+.struct h4{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--accent);margin-bottom:4px;}
+.struct p.subtitle{font-size:.78rem;color:var(--text3);margin-bottom:10px;}
+.struct ul{list-style:none;padding:0;margin:8px 0 0;}
+.struct ul li{font-size:.85rem;color:var(--text2);line-height:1.55;padding:5px 0 5px 16px;position:relative;}
+.struct ul li::before{content:"→";position:absolute;left:0;color:var(--accent);font-weight:700;}
+.struct ul li em{font-weight:600;color:var(--text);font-style:normal;background:rgba(0,0,0,.04);padding:0 3px;border-radius:3px;}
+
+/* INTRO BLOCK */
+.intro{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px;box-shadow:var(--shadow-sm);}
+.intro h3{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--accent);margin-bottom:8px;}
+.intro p{font-size:.88rem;color:var(--text2);line-height:1.6;}
+</style>
+</head>
+<body>
+
+<a class="back-btn" href="index_grammar.html" title="Volver al índice de gramática">
+  <span class="arrow">←</span><span>Gramática</span>
+</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>✍️ Essay · Argumentative Writing</h1>
+      <span class="header-tag">Cambridge B2–C1</span>
+    </div>
+    <p class="header-sub">
+      Toolkit completo para el <strong>essay</strong> de Cambridge · <strong>Conectores</strong> · <strong>Adverbios</strong> · <strong>Estructuras gramaticales</strong>
+    </p>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('connectors', this)">
+      <span class="ico">🔗</span><span>Conectores</span>
+    </button>
+    <button class="tab" onclick="showTab('adverbs', this)">
+      <span class="ico">🎯</span><span>Adverbios</span>
+    </button>
+    <button class="tab" onclick="showTab('structures', this)">
+      <span class="ico">⚙️</span><span>Estructuras gramaticales</span>
+    </button>
+  </div>
+</div>
+
+<main class="main">
+
+<div class="toolbar">
+  <button class="tool-btn" onclick="expandAll()"><span class="ico">▾</span>Expandir todos</button>
+  <button class="tool-btn" onclick="collapseAll()"><span class="ico">▸</span>Colapsar todos</button>
+</div>
+
+<!-- ==================== TAB 1: CONECTORES ==================== -->
+<section class="tab-panel active" id="connectors">
+
+  <div class="intro">
+    <h3>Conectores para el essay argumentativo</h3>
+    <p>Un essay bien escrito alterna conectores básicos con variantes más sofisticadas. <strong>Evita el abuso de <em>firstly / secondly / finally</em></strong>: en Cambridge B2–C1 se valora la variedad léxica y el registro académico. Usa cada conector con un objetivo claro: introducir, añadir, contrastar, ejemplificar, opinar, razonar o concluir.</p>
+  </div>
+
+  <!-- INTRODUCIR -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-intro)">🚪</div>
+      <div>
+        <div class="section-title">Introducir ideas</div>
+        <div class="section-desc">Alternativas elegantes a <em>Firstly</em> / <em>Secondly</em></div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-intro)">
+        <div class="item-head"><span class="item-term">To begin with</span><span class="item-trans">para empezar</span></div>
+        <div class="item-note">Apertura neutra y elegante de un primer argumento.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-intro)"><em>To begin with,</em> there is overwhelming evidence that social media affects sleep patterns.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-intro)">
+        <div class="item-head"><span class="item-term">At first glance</span><span class="item-trans">a primera vista</span></div>
+        <div class="item-note">Útil para introducir una idea que <strong>luego matizarás</strong>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-intro)"><em>At first glance,</em> remote work seems ideal, but a closer look reveals serious drawbacks.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-intro)">
+        <div class="item-head"><span class="item-term">It is often argued that…</span><span class="item-trans">a menudo se argumenta que</span></div>
+        <div class="item-note">Voz pasiva impersonal: introduce una postura ajena sin comprometerte.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-intro)"><em>It is often argued that</em> stricter laws would reduce crime rates.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AÑADIR -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-add)">➕</div>
+      <div>
+        <div class="section-title">Añadir ideas</div>
+        <div class="section-desc">Para sumar un argumento al anterior</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-add)">
+        <div class="item-head"><span class="item-term">Furthermore</span><span class="item-trans">además</span></div>
+        <div class="item-note">Formal. Añade información que <strong>refuerza</strong> la anterior.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-add)"><em>Furthermore,</em> the policy has been shown to reduce unemployment significantly.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-add)">
+        <div class="item-head"><span class="item-term">Moreover</span><span class="item-trans">es más</span></div>
+        <div class="item-note">Sinónimo elegante de <em>furthermore</em>; típico del registro académico.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-add)"><em>Moreover,</em> recent studies confirm the long-term benefits of bilingual education.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-add)">
+        <div class="item-head"><span class="item-term">What is more</span><span class="item-trans">lo que es más</span></div>
+        <div class="item-note">Ligeramente menos formal; añade <strong>énfasis</strong>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-add)">The system is expensive. <em>What is more,</em> it does not even work properly.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-add)">
+        <div class="item-head"><span class="item-term">In addition</span><span class="item-trans">además, adicionalmente</span></div>
+        <div class="item-note">Conector neutro y versátil; también: <em>in addition to + nombre/gerundio</em>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-add)"><em>In addition,</em> the new measures aim to protect small businesses.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTRASTAR -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-contrast)">⚖️</div>
+      <div>
+        <div class="section-title">Contrastar</div>
+        <div class="section-desc">Introducir contraargumentos y oposiciones</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-contrast)">
+        <div class="item-head"><span class="item-term">However</span><span class="item-trans">sin embargo</span></div>
+        <div class="item-note">Conector de contraste más usado en escritura formal. Va seguido de coma.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-contrast)">Online learning offers flexibility. <em>However,</em> it lacks human interaction.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-contrast)">
+        <div class="item-head"><span class="item-term">Nevertheless</span><span class="item-trans">no obstante</span></div>
+        <div class="item-note">Más enfático que <em>however</em>. Sinónimo: <em>nonetheless</em>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-contrast)">The project was costly. <em>Nevertheless,</em> the results justified the investment.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-contrast)">
+        <div class="item-head"><span class="item-term">Although / Even though</span><span class="item-trans">aunque</span></div>
+        <div class="item-note">Conjunciones + oración completa. <em>Even though</em> es más enfático.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-contrast)"><em>Although</em> the law was passed, it has rarely been enforced.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-contrast)">
+        <div class="item-head"><span class="item-term">Despite / In spite of</span><span class="item-trans">a pesar de</span></div>
+        <div class="item-note">+ <strong>nombre o gerundio</strong>, nunca + oración.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-contrast)"><em>Despite</em> the warnings, many people ignored the regulations.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-contrast)">
+        <div class="item-head"><span class="item-term">While it is true that…</span><span class="item-trans">si bien es cierto que</span></div>
+        <div class="item-note">Concesión académica: <strong>reconoces</strong> el otro lado antes de refutarlo.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-contrast)"><em>While it is true that</em> technology can isolate us, it also connects distant families.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-contrast)">
+        <div class="item-head"><span class="item-term">Whereas</span><span class="item-trans">mientras que</span></div>
+        <div class="item-note">Compara dos elementos contrarios <strong>en la misma oración</strong>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-contrast)">Some prioritise career growth, <em>whereas</em> others value work-life balance.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EJEMPLOS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-example)">💡</div>
+      <div>
+        <div class="section-title">Dar ejemplos</div>
+        <div class="section-desc">Concretar argumentos con evidencia</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-example)">
+        <div class="item-head"><span class="item-term">For instance</span><span class="item-trans">por ejemplo</span></div>
+        <div class="item-note">Alternativa formal y elegante a <em>for example</em>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-example)">Many cities have adopted green policies. <em>For instance,</em> Copenhagen aims to be carbon-neutral by 2025.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-example)">
+        <div class="item-head"><span class="item-term">For example</span><span class="item-trans">por ejemplo</span></div>
+        <div class="item-note">Neutro y universal; el más versátil.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-example)">Some skills are essential. <em>For example,</em> critical thinking and communication are key.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-example)">
+        <div class="item-head"><span class="item-term">Such as</span><span class="item-trans">como, tales como</span></div>
+        <div class="item-note">Integra ejemplos dentro de la oración, sin pausa.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-example)">Renewable sources <em>such as</em> solar and wind energy are gaining ground.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-example)">
+        <div class="item-head"><span class="item-term">A clear example of this is…</span><span class="item-trans">un claro ejemplo es</span></div>
+        <div class="item-note">Sintagma completo: ideal para abrir párrafo de evidencia.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-example)"><em>A clear example of this is</em> the success of Scandinavian welfare systems.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-example)">
+        <div class="item-head"><span class="item-term">This can be seen in…</span><span class="item-trans">esto se ve en</span></div>
+        <div class="item-note">Frase pasiva impersonal, propia del registro académico.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-example)"><em>This can be seen in</em> the rising number of remote workers worldwide.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPINIÓN -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-opinion)">💬</div>
+      <div>
+        <div class="section-title">Expresar opinión (avanzada)</div>
+        <div class="section-desc">Más allá de <em>I think</em> / <em>In my opinion</em></div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-opinion)">
+        <div class="item-head"><span class="item-term">It could be argued that…</span><span class="item-trans">podría argumentarse que</span></div>
+        <div class="item-note">Cauteloso y académico; presenta una postura como debatible.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-opinion)"><em>It could be argued that</em> early education is the foundation of social mobility.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-opinion)">
+        <div class="item-head"><span class="item-term">From my perspective</span><span class="item-trans">desde mi punto de vista</span></div>
+        <div class="item-note">Personal pero formal.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-opinion)"><em>From my perspective,</em> investing in renewable energy is the only viable path.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-opinion)">
+        <div class="item-head"><span class="item-term">In my view</span><span class="item-trans">a mi parecer</span></div>
+        <div class="item-note">Más elegante que <em>in my opinion</em>; mismo significado.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-opinion)"><em>In my view,</em> the benefits clearly outweigh the disadvantages.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-opinion)">
+        <div class="item-head"><span class="item-term">Personally, I believe that…</span><span class="item-trans">personalmente, creo que</span></div>
+        <div class="item-note">Marca la opinión como propia, con cierto énfasis.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-opinion)"><em>Personally, I believe that</em> education should remain free and accessible.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-opinion)">
+        <div class="item-head"><span class="item-term">I am convinced that…</span><span class="item-trans">estoy convencido de que</span></div>
+        <div class="item-note"><strong>Alto grado de certeza</strong>: úsalo en la tesis o la conclusión.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-opinion)"><em>I am convinced that</em> these reforms will benefit future generations.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-opinion)">
+        <div class="item-head"><span class="item-term">There is a strong case for…</span><span class="item-trans">hay sólidos argumentos a favor de</span></div>
+        <div class="item-note">Forma impersonal y muy académica. + <strong>nombre/gerundio</strong>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-opinion)"><em>There is a strong case for</em> raising the minimum wage in this sector.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAUSA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-cause)">⚡</div>
+      <div>
+        <div class="section-title">Causa</div>
+        <div class="section-desc">Por qué algo ocurre</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-cause)">
+        <div class="item-head"><span class="item-term">Due to</span><span class="item-trans">debido a</span></div>
+        <div class="item-note">+ <strong>nombre o gerundio</strong>. No con oración completa.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-cause)">The event was cancelled <em>due to</em> bad weather.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-cause)">
+        <div class="item-head"><span class="item-term">Owing to</span><span class="item-trans">a causa de</span></div>
+        <div class="item-note">Sinónimo formal de <em>due to</em>. + nombre/gerundio.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-cause)"><em>Owing to</em> rising costs, many small firms have closed.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-cause)">
+        <div class="item-head"><span class="item-term">This is largely because</span><span class="item-trans">esto se debe en gran parte a que</span></div>
+        <div class="item-note">Conector explicativo + <strong>oración</strong>. Suaviza con <em>largely</em>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-cause)">Cities are becoming overcrowded. <em>This is largely because</em> rural opportunities are disappearing.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONSECUENCIA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-result)">🎯</div>
+      <div>
+        <div class="section-title">Consecuencia</div>
+        <div class="section-desc">Lo que se deriva de lo anterior</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-result)">
+        <div class="item-head"><span class="item-term">Therefore</span><span class="item-trans">por lo tanto</span></div>
+        <div class="item-note">El conector causal más estándar en escritura formal.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-result)">The data is incomplete; <em>therefore,</em> the conclusions remain tentative.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-result)">
+        <div class="item-head"><span class="item-term">As a result</span><span class="item-trans">como resultado</span></div>
+        <div class="item-note">Resultado directo de una causa concreta.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-result)">The currency lost value. <em>As a result,</em> imports became unaffordable.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-result)">
+        <div class="item-head"><span class="item-term">Consequently</span><span class="item-trans">en consecuencia</span></div>
+        <div class="item-note">Más formal y enfático que <em>therefore</em>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-result)">Funding was withdrawn. <em>Consequently,</em> the project was abandoned.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-result)">
+        <div class="item-head"><span class="item-term">For this reason</span><span class="item-trans">por esta razón</span></div>
+        <div class="item-note">Apunta a una causa previa específica.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-result)">The system is outdated. <em>For this reason,</em> a full reform is necessary.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONDICIÓN -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-cond)">🔀</div>
+      <div>
+        <div class="section-title">Condición</div>
+        <div class="section-desc">Hipótesis y requisitos</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-cond)">
+        <div class="item-head"><span class="item-term">If</span><span class="item-trans">si</span></div>
+        <div class="item-note">Condicional neutro. Combínalo con tipos 1, 2, 3.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-cond)"><em>If</em> governments invested more in schools, literacy would improve.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-cond)">
+        <div class="item-head"><span class="item-term">Unless</span><span class="item-trans">a menos que</span></div>
+        <div class="item-note">= <em>if…not</em>. Negativo implícito.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-cond)"><em>Unless</em> action is taken, the situation will worsen.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-cond)">
+        <div class="item-head"><span class="item-term">As long as</span><span class="item-trans">siempre que, mientras</span></div>
+        <div class="item-note">Condición necesaria. Sinónimo: <em>so long as</em>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-cond)">Progress is possible <em>as long as</em> citizens remain engaged.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-cond)">
+        <div class="item-head"><span class="item-term">Whether</span><span class="item-trans">si (o no), tanto si</span></div>
+        <div class="item-note">Introduce dos posibilidades. A menudo: <em>whether…or</em>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-cond)"><em>Whether</em> we like it or not, climate change affects us all.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-cond)">
+        <div class="item-head"><span class="item-term">Provided that</span><span class="item-trans">siempre que, a condición de que</span></div>
+        <div class="item-note">Muy formal. Sinónimo: <em>providing that</em>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-cond)">The plan will work, <em>provided that</em> all parties cooperate.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFORMULACIÓN -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-reform)">🔄</div>
+      <div>
+        <div class="section-title">Reformulación</div>
+        <div class="section-desc">Aclarar o precisar lo dicho</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-reform)">
+        <div class="item-head"><span class="item-term">In other words</span><span class="item-trans">en otras palabras</span></div>
+        <div class="item-note">Reformula una idea de forma más sencilla o clara.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-reform)">The proposal lacks empirical support. <em>In other words,</em> there is no real evidence behind it.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-reform)">
+        <div class="item-head"><span class="item-term">More specifically</span><span class="item-trans">más concretamente</span></div>
+        <div class="item-note">Pasa de lo general a lo concreto: añade <strong>precisión</strong>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-reform)">The reform targets vulnerable groups. <em>More specifically,</em> it focuses on single-parent families.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTENSIFICACIÓN -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-intens)">🔥</div>
+      <div>
+        <div class="section-title">Intensificación</div>
+        <div class="section-desc">Reforzar una afirmación</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-intens)">
+        <div class="item-head"><span class="item-term">Indeed</span><span class="item-trans">de hecho, ciertamente</span></div>
+        <div class="item-note">Confirma y refuerza la idea anterior con énfasis formal.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-intens)">The strategy is risky; <em>indeed,</em> several experts have warned against it.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-intens)">
+        <div class="item-head"><span class="item-term">In fact</span><span class="item-trans">de hecho, en realidad</span></div>
+        <div class="item-note">Introduce un dato real que <strong>reafirma o contradice</strong> lo previo.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-intens)">The policy seems controversial. <em>In fact,</em> it enjoys broad public support.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-intens)">
+        <div class="item-head"><span class="item-term">Moreover / What is more</span><span class="item-trans">además, es más</span></div>
+        <div class="item-note">También funcionan como intensificadores cuando refuerzan el argumento previo.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-intens)">The plan is unfair. <em>What is more,</em> it is economically unviable.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCLUIR -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-concl)">🏁</div>
+      <div>
+        <div class="section-title">Concluir</div>
+        <div class="section-desc">Cierre del ensayo con propósito</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-concl)">
+        <div class="item-head"><span class="item-term">To sum up</span><span class="item-trans">en resumen</span></div>
+        <div class="item-note">Cierre práctico y claro. Sinónimo: <em>in summary</em>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-concl)"><em>To sum up,</em> both approaches have merit, but balance is essential.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-concl)">
+        <div class="item-head"><span class="item-term">All things considered</span><span class="item-trans">considerándolo todo</span></div>
+        <div class="item-note">Conclusión ponderada, tras valorar pros y contras.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-concl)"><em>All things considered,</em> the benefits clearly outweigh the disadvantages.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-concl)">
+        <div class="item-head"><span class="item-term">Taking everything into account</span><span class="item-trans">teniéndolo todo en cuenta</span></div>
+        <div class="item-note">Variante elegante de <em>all things considered</em>; ideal para C1.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-concl)"><em>Taking everything into account,</em> a balanced policy seems the most sensible solution.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-concl)">
+        <div class="item-head"><span class="item-term">Ultimately</span><span class="item-trans">en última instancia</span></div>
+        <div class="item-note">Marca <strong>el fondo del asunto</strong>: lo verdaderamente importante.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-concl)"><em>Ultimately,</em> the decision rests with the citizens themselves.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-concl)">
+        <div class="item-head"><span class="item-term">On balance</span><span class="item-trans">en conjunto, ponderándolo</span></div>
+        <div class="item-note">Muy típico del essay Cambridge: cierre equilibrado.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-concl)"><em>On balance,</em> the advantages of remote work outweigh its drawbacks.</div></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================== TAB 2: ADVERBIOS ==================== -->
+<section class="tab-panel" id="adverbs">
+
+  <div class="intro">
+    <h3>Adverbios para el essay</h3>
+    <p>El uso preciso de adverbios eleva el registro y demuestra control léxico. Sirven para <strong>enfatizar</strong>, <strong>matizar</strong>, marcar <strong>frecuencia</strong>, expresar <strong>certeza</strong> o <strong>duda</strong>. Combínalos con verbos modales y estructuras hipotéticas para conseguir un tono académico.</p>
+  </div>
+
+  <!-- ÉNFASIS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-intens)">🔥</div>
+      <div>
+        <div class="section-title">Enfatizar ideas</div>
+        <div class="section-desc">Adverbios de grado e intensidad</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-intens)">
+        <div class="item-head"><span class="item-term">Highly</span><span class="item-trans">altamente</span></div>
+        <div class="item-note">Con adjetivos abstractos: <em>highly relevant, highly controversial, highly likely</em>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-intens)">This is a <em>highly</em> controversial topic in modern politics.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-intens)">
+        <div class="item-head"><span class="item-term">Extremely</span><span class="item-trans">extremadamente</span></div>
+        <div class="item-note">Grado máximo. Combina con adjetivos graduables (<em>important, rare</em>).</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-intens)">The findings are <em>extremely</em> significant for future research.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-intens)">
+        <div class="item-head"><span class="item-term">Particularly</span><span class="item-trans">particularmente</span></div>
+        <div class="item-note">Destaca un caso entre otros similares.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-intens)">This issue is <em>particularly</em> relevant for young adults.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-intens)">
+        <div class="item-head"><span class="item-term">Remarkably</span><span class="item-trans">notablemente</span></div>
+        <div class="item-note">Llama la atención sobre algo sorprendente.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-intens)">The number of users has grown <em>remarkably</em> in just five years.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-intens)">
+        <div class="item-head"><span class="item-term">Significantly</span><span class="item-trans">significativamente</span></div>
+        <div class="item-note">Estadísticamente relevante o de impacto considerable.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-intens)">Emissions have dropped <em>significantly</em> since 2015.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-intens)">
+        <div class="item-head"><span class="item-term">Considerably</span><span class="item-trans">considerablemente</span></div>
+        <div class="item-note">Cuantitativo. Sinónimo: <em>substantially</em>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-intens)">Costs have risen <em>considerably</em> over the past decade.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATIZAR -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-reform)">🪶</div>
+      <div>
+        <div class="section-title">Matizar (hedging)</div>
+        <div class="section-desc">Suavizar afirmaciones · típico del registro académico</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-reform)">
+        <div class="item-head"><span class="item-term">Apparently</span><span class="item-trans">aparentemente</span></div>
+        <div class="item-note">Lo que parece ser cierto sin confirmación total.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-reform)"><em>Apparently,</em> the new system works better in small businesses.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-reform)">
+        <div class="item-head"><span class="item-term">Arguably</span><span class="item-trans">podría argumentarse que</span></div>
+        <div class="item-note"><strong>Clave en C1</strong>: introduce una afirmación fuerte de forma cauta.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-reform)">Shakespeare is <em>arguably</em> the greatest writer in the English language.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-reform)">
+        <div class="item-head"><span class="item-term">Presumably</span><span class="item-trans">supuestamente, presumiblemente</span></div>
+        <div class="item-note">Deducción razonable basada en evidencia.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-reform)">The minister, <em>presumably</em> aware of the criticism, refused to comment.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-reform)">
+        <div class="item-head"><span class="item-term">To some extent</span><span class="item-trans">hasta cierto punto</span></div>
+        <div class="item-note">Acepta parcialmente una idea sin comprometerse totalmente.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-reform)"><em>To some extent,</em> social media has improved global communication.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-reform)">
+        <div class="item-head"><span class="item-term">Partially</span><span class="item-trans">parcialmente</span></div>
+        <div class="item-note">Algo es verdad solo en parte.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-reform)">The reform has been <em>partially</em> successful in rural areas.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-reform)">
+        <div class="item-head"><span class="item-term">Relatively</span><span class="item-trans">relativamente</span></div>
+        <div class="item-note">En comparación con algo implícito.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-reform)">The procedure is <em>relatively</em> simple and inexpensive.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRECUENCIA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-add)">📊</div>
+      <div>
+        <div class="section-title">Frecuencia</div>
+        <div class="section-desc">Cuán a menudo ocurre algo</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-add)">
+        <div class="item-head"><span class="item-term">Widely</span><span class="item-trans">ampliamente</span></div>
+        <div class="item-note">Extensión geográfica o social. Frecuente con <em>known, used, believed, accepted</em>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-add)">This theory is <em>widely</em> accepted in the scientific community.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-add)">
+        <div class="item-head"><span class="item-term">Rarely</span><span class="item-trans">raramente</span></div>
+        <div class="item-note">Negativo. Puede provocar <strong>inversión</strong> al inicio.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-add)"><em>Rarely</em> have we faced such a complex challenge.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-add)">
+        <div class="item-head"><span class="item-term">Constantly</span><span class="item-trans">constantemente</span></div>
+        <div class="item-note">Acción continua, a veces con matiz crítico.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-add)">The technology sector is <em>constantly</em> evolving.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-add)">
+        <div class="item-head"><span class="item-term">Frequently</span><span class="item-trans">frecuentemente</span></div>
+        <div class="item-note">Sinónimo formal de <em>often</em>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-add)">Students <em>frequently</em> complain about the workload.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-add)">
+        <div class="item-head"><span class="item-term">Commonly</span><span class="item-trans">comúnmente</span></div>
+        <div class="item-note">De forma habitual o típica.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-add)">This term is <em>commonly</em> used in academic writing.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-add)">
+        <div class="item-head"><span class="item-term">Increasingly</span><span class="item-trans">cada vez más</span></div>
+        <div class="item-note"><strong>Muy útil en essays</strong>: marca tendencias en aumento.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-add)">Companies are <em>increasingly</em> adopting flexible work policies.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CERTEZA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-opinion)">✅</div>
+      <div>
+        <div class="section-title">Certeza</div>
+        <div class="section-desc">Afirmar con seguridad</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-opinion)">
+        <div class="item-head"><span class="item-term">Undoubtedly</span><span class="item-trans">sin duda</span></div>
+        <div class="item-note">Grado máximo de certeza, registro alto.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-opinion)">Climate change is <em>undoubtedly</em> the defining challenge of our age.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-opinion)">
+        <div class="item-head"><span class="item-term">Certainly</span><span class="item-trans">ciertamente</span></div>
+        <div class="item-note">Refuerza una afirmación; menos enfático que <em>undoubtedly</em>.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-opinion)">The plan will <em>certainly</em> generate controversy.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-opinion)">
+        <div class="item-head"><span class="item-term">Clearly</span><span class="item-trans">claramente</span></div>
+        <div class="item-note">Marca una conclusión evidente. Ideal en argumentación.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-opinion)">The results <em>clearly</em> indicate a need for reform.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DUDA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-cond)">❓</div>
+      <div>
+        <div class="section-title">Duda</div>
+        <div class="section-desc">Probabilidad y conjetura</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="border-left:4px solid var(--c-cond)">
+        <div class="item-head"><span class="item-term">Probably</span><span class="item-trans">probablemente</span></div>
+        <div class="item-note">Probabilidad alta (~80%).</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-cond)">The economy will <em>probably</em> recover next year.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-cond)">
+        <div class="item-head"><span class="item-term">Possibly</span><span class="item-trans">posiblemente</span></div>
+        <div class="item-note">Posibilidad menor (~50%).</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-cond)">The policy <em>possibly</em> needs further revision.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-cond)">
+        <div class="item-head"><span class="item-term">Presumably</span><span class="item-trans">presumiblemente</span></div>
+        <div class="item-note">Deducción lógica a partir de evidencia disponible.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-cond)">The author, <em>presumably</em> influenced by his upbringing, focuses on rural themes.</div></div>
+      </div>
+      <div class="item" style="border-left:4px solid var(--c-cond)">
+        <div class="item-head"><span class="item-term">Apparently</span><span class="item-trans">aparentemente</span></div>
+        <div class="item-note">Lo que se observa o se ha dicho, sin garantía.</div>
+        <div class="item-examples"><div class="ex" style="border-left-color:var(--c-cond)"><em>Apparently,</em> the original proposal was rejected by the committee.</div></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================== TAB 3: ESTRUCTURAS GRAMATICALES ==================== -->
+<section class="tab-panel" id="structures">
+
+  <div class="intro">
+    <h3>Estructuras gramaticales para el essay</h3>
+    <p>Las estructuras avanzadas son el sello del C1: <strong>concesivas, relativas, condicionales, pasivas, comparativas, inversiones</strong> y oraciones de <strong>participio</strong>. Úsalas con intención — una sola inversión bien colocada vale más que diez frases simples.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">💡</span><strong>Consejo Cambridge:</strong> los examinadores valoran <em>range of structures</em>. Intenta incluir <strong>al menos una pasiva, una concesiva, una condicional y una de participio</strong> en cada essay.
+  </div>
+
+  <!-- CONCESIVAS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-contrast)">⚖️</div>
+      <div>
+        <div class="section-title">Concesivas</div>
+        <div class="section-desc">Conceder una idea antes de matizarla o refutarla</div>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr));">
+      <div class="struct">
+        <h4>Although / Even though + oración</h4>
+        <p class="subtitle">Conjunción + sujeto + verbo. <em>Even though</em> es más enfático.</p>
+        <div class="struct-formula"><b>Although</b> + S + V, <b>main clause</b></div>
+        <ul>
+          <li><em>Although</em> the policy was unpopular, it proved effective.</li>
+          <li><em>Even though</em> she lacked experience, she was promoted.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>While it is true that…</h4>
+        <p class="subtitle">Concesión académica: reconoces el otro lado.</p>
+        <div class="struct-formula"><b>While it is true that</b> + S + V, …</div>
+        <ul>
+          <li><em>While it is true that</em> the cost is high, the long-term benefits justify it.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>Despite / In spite of + nombre/gerundio</h4>
+        <p class="subtitle"><strong>¡Atención!</strong> Nunca con oración completa.</p>
+        <div class="struct-formula"><b>Despite</b> + noun / -ing, …</div>
+        <ul>
+          <li><em>Despite</em> the warnings, no action was taken.</li>
+          <li><em>In spite of</em> being exhausted, he completed the task.</li>
+          <li><em>Despite the fact that</em> + oración (única forma de usarlo con S+V).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- RELATIVAS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-cause)">🔗</div>
+      <div>
+        <div class="section-title">Relativas</div>
+        <div class="section-desc">Pronombres relativos avanzados</div>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr));">
+      <div class="struct">
+        <h4>which</h4>
+        <p class="subtitle">Cosas, ideas o cláusulas completas (non-defining).</p>
+        <ul>
+          <li>The reform, <em>which</em> was passed last year, has divided public opinion.</li>
+          <li>He arrived late, <em>which</em> annoyed everyone. (refiere a toda la cláusula)</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>whose</h4>
+        <p class="subtitle">Posesivo. Para personas, cosas o instituciones.</p>
+        <ul>
+          <li>Students <em>whose</em> grades fall below the threshold must retake the exam.</li>
+          <li>A company <em>whose</em> values align with sustainability is more attractive.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>whereby</h4>
+        <p class="subtitle">= "mediante el cual / por el que". Formal y muy académico.</p>
+        <ul>
+          <li>A system <em>whereby</em> citizens can vote online is being developed.</li>
+          <li>The procedure <em>whereby</em> applicants are selected is transparent.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>in which</h4>
+        <p class="subtitle">Preposición + relativo, registro formal. Sustituye a <em>where</em> en contextos abstractos.</p>
+        <ul>
+          <li>The era <em>in which</em> we live demands constant adaptation.</li>
+          <li>There are many cases <em>in which</em> this rule does not apply.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONDICIONALES -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-cond)">🔀</div>
+      <div>
+        <div class="section-title">Condicionales</div>
+        <div class="section-desc">Hipótesis y consecuencias</div>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr));">
+      <div class="struct">
+        <h4>First Conditional</h4>
+        <p class="subtitle">Real / probable en el futuro.</p>
+        <div class="struct-formula"><b>If</b> + present, <b>will</b> + infinitive</div>
+        <ul>
+          <li><em>If</em> people recycle more, the planet <em>will benefit</em>.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>Second Conditional</h4>
+        <p class="subtitle">Hipotético en presente o futuro (irreal).</p>
+        <div class="struct-formula"><b>If</b> + past, <b>would</b> + infinitive</div>
+        <ul>
+          <li><em>If</em> governments <em>invested</em> more, education <em>would improve</em>.</li>
+          <li>Variante formal: <em>If people <strong>were to</strong> change their habits…</em></li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>Third Conditional</h4>
+        <p class="subtitle">Hipotético en el pasado (irreal).</p>
+        <div class="struct-formula"><b>If</b> + past perfect, <b>would have</b> + past participle</div>
+        <ul>
+          <li><em>If</em> they <em>had acted</em> sooner, the crisis <em>would have been</em> avoided.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>If people were to…</h4>
+        <p class="subtitle">Variante <strong>formal</strong> del second conditional, frecuente en essays.</p>
+        <div class="struct-formula"><b>If</b> + S + <b>were to</b> + infinitive, <b>would</b>…</div>
+        <ul>
+          <li><em>If governments were to</em> ban single-use plastics, pollution would decrease.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>Provided that / As long as</h4>
+        <p class="subtitle">Condición necesaria. Muy formal el primero.</p>
+        <ul>
+          <li>The plan will succeed, <em>provided that</em> all parties cooperate.</li>
+          <li>You may attend <em>as long as</em> you register in advance.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASIVAS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-result)">🔄</div>
+      <div>
+        <div class="section-title">Pasivas</div>
+        <div class="section-desc">Voz pasiva impersonal · típica del registro académico</div>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr));">
+      <div class="struct">
+        <h4>is considered</h4>
+        <p class="subtitle">Presentar una opinión como aceptada sin atribuirla a nadie.</p>
+        <ul>
+          <li>This novel <em>is considered</em> a masterpiece of modern literature.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>is believed (to)</h4>
+        <p class="subtitle">Construcción impersonal con infinitivo: muy académica.</p>
+        <div class="struct-formula">It <b>is believed that</b> + S + V<br>S <b>is believed to</b> + inf.</div>
+        <ul>
+          <li><em>It is believed that</em> the changes will take effect next year.</li>
+          <li>The artefact <em>is believed to</em> date back to 500 BC.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>has been criticised</h4>
+        <p class="subtitle">Pasiva en present perfect: indica acción reciente o continuada.</p>
+        <ul>
+          <li>The policy <em>has been criticised</em> by environmental groups.</li>
+          <li>His approach <em>has been widely questioned</em> in academic circles.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>Otras pasivas útiles</h4>
+        <p class="subtitle">Repertorio académico para variar.</p>
+        <ul>
+          <li><em>is argued / claimed / suggested / reported / acknowledged</em></li>
+          <li>It <em>is widely accepted</em> that vaccines save lives.</li>
+          <li>This issue <em>has been overlooked</em> for too long.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARATIVAS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-example)">📏</div>
+      <div>
+        <div class="section-title">Comparativas</div>
+        <div class="section-desc">Comparaciones avanzadas y proporcionales</div>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr));">
+      <div class="struct">
+        <h4>Far more / less… than</h4>
+        <p class="subtitle">Comparativo intensificado.</p>
+        <ul>
+          <li>This solution is <em>far more</em> sustainable <em>than</em> the previous one.</li>
+          <li>Critics are <em>far less</em> common <em>than</em> supporters.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>By far the most / the least</h4>
+        <p class="subtitle">Superlativo enfático.</p>
+        <ul>
+          <li>This is <em>by far the most</em> important reform of the decade.</li>
+          <li>It was <em>by far the least</em> effective campaign in history.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>nowhere near as… as</h4>
+        <p class="subtitle">"Ni de lejos tan… como". Comparativo negativo intensificado.</p>
+        <ul>
+          <li>The new system is <em>nowhere near as</em> efficient <em>as</em> expected.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>The more… the more…</h4>
+        <p class="subtitle">Comparativos proporcionales (correlación).</p>
+        <div class="struct-formula"><b>The more</b> + S + V, <b>the more</b> + S + V</div>
+        <ul>
+          <li><em>The more</em> we invest in education, <em>the more</em> we benefit as a society.</li>
+          <li><em>The less</em> we waste, <em>the fewer</em> resources we exhaust.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>rather than</h4>
+        <p class="subtitle">"En vez de". + nombre, gerundio o infinitivo (paralelo).</p>
+        <ul>
+          <li>We should focus on prevention <em>rather than</em> cure.</li>
+          <li>Many prefer to walk <em>rather than</em> drive short distances.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- INVERSIONES -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-intens)">🔁</div>
+      <div>
+        <div class="section-title">Inversiones</div>
+        <div class="section-desc">Estructura enfática típica de C1</div>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr));">
+      <div class="struct">
+        <h4>Not only… but also…</h4>
+        <p class="subtitle">Con inversión obligatoria tras <em>not only</em> al inicio.</p>
+        <div class="struct-formula"><b>Not only</b> + aux + S + V, <b>but</b> S <b>also</b> + V</div>
+        <ul>
+          <li><em>Not only</em> does the policy <em>reduce</em> emissions, <em>but</em> it <em>also</em> creates jobs.</li>
+          <li><em>Not only</em> is this idea innovative, <em>but</em> it is <em>also</em> economically viable.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>Otras inversiones útiles</h4>
+        <p class="subtitle">Adverbios negativos al inicio fuerzan inversión.</p>
+        <ul>
+          <li><em>Rarely</em> have we faced such a complex challenge.</li>
+          <li><em>Hardly</em> had they arrived <em>when</em> the meeting began.</li>
+          <li><em>Under no circumstances</em> should this be ignored.</li>
+          <li><em>Only by</em> working together <em>can we</em> succeed.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARTICIPIO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-intro)">📐</div>
+      <div>
+        <div class="section-title">Oraciones de participio</div>
+        <div class="section-desc">Cláusulas reducidas para condensar información</div>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr));">
+      <div class="struct">
+        <h4>Having + past participle</h4>
+        <p class="subtitle">Acción previa a la principal. Misma sujeto en ambas cláusulas.</p>
+        <div class="struct-formula"><b>Having</b> + past participle, <b>S + V</b></div>
+        <ul>
+          <li><em>Having considered</em> all the options, the board approved the plan.</li>
+          <li><em>Having lived</em> abroad for years, she speaks five languages fluently.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>-ing / -ed participles</h4>
+        <p class="subtitle">Forma compacta para causa, tiempo o resultado.</p>
+        <ul>
+          <li><em>Faced with</em> declining sales, the company restructured.</li>
+          <li><em>Knowing</em> the risks, they still proceeded.</li>
+          <li><em>Encouraged by</em> the results, the team continued.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATIZAR (sección final) -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-reform)">🪶</div>
+      <div>
+        <div class="section-title">Matizar (estructuras)</div>
+        <div class="section-desc">Suavizar afirmaciones sin perder argumento</div>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr));">
+      <div class="struct">
+        <h4>It could be argued that…</h4>
+        <p class="subtitle">Marca una opinión como discutible. Muy académico.</p>
+        <ul>
+          <li><em>It could be argued that</em> economic growth has come at an environmental cost.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>Tend to + infinitive</h4>
+        <p class="subtitle">Tendencia general, no afirmación absoluta.</p>
+        <ul>
+          <li>Young people <em>tend to</em> adopt new technologies more quickly.</li>
+          <li>Critics <em>tend to</em> overlook the long-term benefits.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>Appear / Seem to + infinitive</h4>
+        <p class="subtitle">Algo parece ser cierto, sin afirmarlo categóricamente.</p>
+        <ul>
+          <li>The data <em>appears to</em> support this hypothesis.</li>
+          <li>The two phenomena <em>seem to</em> be closely related.</li>
+        </ul>
+      </div>
+      <div class="struct">
+        <h4>May / Might + infinitive</h4>
+        <p class="subtitle">Posibilidad moderada. <em>Might</em> = ligeramente menos probable.</p>
+        <ul>
+          <li>The reform <em>may</em> have unintended consequences.</li>
+          <li>This approach <em>might</em> not be suitable for every context.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function toggleSection(header){
+  header.parentElement.classList.toggle('collapsed');
+}
+
+function getActiveSections(){
+  return document.querySelectorAll('.tab-panel.active .section');
+}
+
+function expandAll(){
+  getActiveSections().forEach(s => s.classList.remove('collapsed'));
+}
+
+function collapseAll(){
+  getActiveSections().forEach(s => s.classList.add('collapsed'));
+}
+
+/* Inyectar contador de items en cada section-header */
+document.querySelectorAll('.section').forEach(sec => {
+  const grid = sec.querySelector('.grid');
+  if(!grid) return;
+  const count = grid.children.length;
+  const badge = document.createElement('span');
+  badge.className = 'section-count';
+  badge.textContent = count;
+  sec.querySelector('.section-header').appendChild(badge);
+});
+</script>
+
+</body>
+</html>
