@@ -35,6 +35,7 @@
   --c-fal: #8b2d6b;
   --c-con: #2d5c8b;
   --c-arg: #3d6b2d;
+  --c-delf: #3a2d9b;
 
   --c-nom: #5c7a3e;
   --c-ver: #3a5c9b;
@@ -141,6 +142,7 @@ body {
 .btn-topic[data-tema="Falsos amigos"].active  { background: var(--c-fal); }
 .btn-topic[data-tema="Conectores"].active     { background: var(--c-con); }
 .btn-topic[data-tema="Argumentacion"].active  { background: var(--c-arg); }
+.btn-topic[data-tema="DELF"].active           { background: var(--c-delf); }
 
 .btn-filter {
   border: 1px solid var(--border); border-radius: 20px;
@@ -307,6 +309,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 .badge-gen-mf { background: #d4d4d4; color: #3c3c3c; }
 .badge-top    { background: #fff8e6; color: var(--accent); border: 1px solid #e8d5a0; }
 .badge-oral   { background: #e8f4fd; color: #1a5c8b; border: 1px solid #a8d4f0; }
+.badge-escrito { background: #f4ecd8; color: #5c4a1f; border: 1px solid #d9c89a; }
 .badge-cat-N   { background: var(--c-nom); }
 .badge-cat-V   { background: var(--c-ver); }
 .badge-cat-Adj { background: var(--c-adj); }
@@ -316,6 +319,10 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 .badge-nivel-B2 { background: #2d4ac4; }
 .badge-nivel-C1 { background: #8b3a1a; }
 .badge-nivel-C2 { background: #6b1a4a; }
+.badge-subtema {
+  background: #f4ecd8; color: #5c4a1f;
+  border: 1px solid #d9c89a;
+}
 .badge-tema-MA { background: var(--c-env); }
 .badge-tema-T  { background: var(--c-tec); }
 .badge-tema-TR { background: var(--c-tra); }
@@ -329,6 +336,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 .badge-tema-FAL { background: var(--c-fal); }
 .badge-tema-CON { background: var(--c-con); }
 .badge-tema-ARG { background: var(--c-arg); }
+.badge-tema-DELF { background: var(--c-delf); }
 
 .known-btn {
   flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
@@ -585,6 +593,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 .btn-gf-tema[data-gtema="Falsos amigos"].active  { background: var(--c-fal); }
 .btn-gf-tema[data-gtema="Conectores"].active     { background: var(--c-con); }
 .btn-gf-tema[data-gtema="Argumentacion"].active  { background: var(--c-arg); }
+.btn-gf-tema[data-gtema="DELF"].active           { background: var(--c-delf); }
 
 .btn-gf-shuffle { border-color: #a0845c; color: #6b4c1e; }
 .btn-gf-shuffle.active { background: #5a3a10; color: #fdf6e3; border-color: #5a3a10; }
@@ -1063,6 +1072,60 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 }
 .btn-fn-all.active { opacity: 1; }
 
+/* Subfiltro subtema — visible solo cuando el tema activo tiene subtemas */
+#subtemaFilterRow {
+  display: none;
+}
+#subtemaFilterRow.visible {
+  display: flex;
+}
+.btn-subtema {
+  flex-shrink: 0; border-radius: 20px;
+  padding: 4px 11px; font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem; font-weight: 600; cursor: pointer;
+  white-space: nowrap;
+  background: #f4ecd8; color: #5c4a1f;
+  border: 1px solid #d9c89a;
+  transition: all 0.15s; opacity: 0.65;
+}
+.btn-subtema:hover { opacity: 0.9; }
+.btn-subtema.active {
+  opacity: 1;
+  background: #c9a96a; color: #fff; border-color: #a78546;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
+}
+.btn-subtema-all {
+  background: var(--text2); color: #fff;
+  border-color: var(--text2); opacity: 0.7;
+}
+.btn-subtema-all.active {
+  opacity: 1; background: var(--text2); color: #fff;
+  border-color: var(--text2);
+}
+
+/* Subfiltro registro (Formal/Informal) — visible solo cuando tema=DELF */
+#regFilterRow {
+  display: none;
+}
+#regFilterRow.visible {
+  display: flex;
+}
+.btn-reg {
+  flex-shrink: 0; border-radius: 20px;
+  padding: 4px 13px; font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem; font-weight: 600; cursor: pointer;
+  white-space: nowrap;
+  background: var(--bg); color: var(--text2);
+  border: 1px solid var(--border);
+  transition: all 0.15s;
+}
+.btn-reg:hover { opacity: 0.85; }
+.btn-reg.active {
+  background: var(--c-delf); color: #fff; border-color: var(--c-delf);
+}
+.btn-reg[data-reg="Formal"].active { background: #2d4ac4; border-color: #2d4ac4; }
+.btn-reg[data-reg="Informal"].active { background: #c46b2d; border-color: #c46b2d; }
+
 /* ── FALSOS AMIGOS: reverso enriquecido ── */
 .back-warn {
   font-size: 0.78em;
@@ -1472,7 +1535,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
     <button class="btn-topic" data-tema="Conectores" id="btnTemaTop1" style="">Conectores</button>
     <button class="btn-topic" data-tema="Salud" id="btnTemaTop2" style="">Salud</button>
     <button class="btn-topic" data-tema="Trabajo" id="btnTemaTop3" style="">Trabajo</button>
-    <select id="temaSelect" class="tema-select"><option value="">— Todos los temas —</option><option value="Alimentación">Alimentación (102)</option><option value="Argumentacion">Argumentacion (35)</option><option value="Causalidad">Causalidad (1)</option><option value="Ciudad">Ciudad (1)</option><option value="Comercio">Comercio (5)</option><option value="Comparación">Comparación (5)</option><option value="Conectores">Conectores (187)</option><option value="Conversación">Conversación (10)</option><option value="Cultura">Cultura (8)</option><option value="Cultura y ocio">Cultura y ocio (82)</option><option value="Economía">Economía (7)</option><option value="Educación">Educación (89)</option><option value="Emergencias">Emergencias (13)</option><option value="Emociones/Reacciones DELF">Emociones/Reacciones DELF (50)</option><option value="Expresión oral">Expresión oral (61)</option><option value="Falsos amigos">Falsos amigos (43)</option><option value="Gramática">Gramática (5)</option><option value="Interacción debate DELF">Interacción debate DELF (50)</option><option value="Matices">Matices (6)</option><option value="Medio ambiente">Medio ambiente (80)</option><option value="Opinión">Opinión (8)</option><option value="Política">Política (4)</option><option value="Salud">Salud (173)</option><option value="Seguridad">Seguridad (4)</option><option value="Sociedad">Sociedad (83)</option><option value="Tecnologia">Tecnologia (80)</option><option value="Tiempo">Tiempo (3)</option><option value="Trabajo">Trabajo (105)</option><option value="Transporte">Transporte (80)</option><option value="Verbos">Verbos (6)</option><option value="Viajes">Viajes (80)</option></select>
+    <select id="temaSelect" class="tema-select"><option value="">— Todos los temas —</option><option value="Alimentación">Alimentación (102)</option><option value="Ciudad">Ciudad (1)</option><option value="Comercio">Comercio (5)</option><option value="Conectores">Conectores (187)</option><option value="Conversación">Conversación (10)</option><option value="Cultura">Cultura (8)</option><option value="Cultura y ocio">Cultura y ocio (82)</option><option value="DELF">DELF (216)</option><option value="Economía">Economía (7)</option><option value="Educación">Educación (89)</option><option value="Emergencias">Emergencias (13)</option><option value="Falsos amigos">Falsos amigos (43)</option><option value="Gramática">Gramática (5)</option><option value="Medio ambiente">Medio ambiente (80)</option><option value="Política">Política (4)</option><option value="Salud">Salud (173)</option><option value="Seguridad">Seguridad (4)</option><option value="Sociedad">Sociedad (83)</option><option value="Tecnologia">Tecnologia (80)</option><option value="Tiempo">Tiempo (3)</option><option value="Trabajo">Trabajo (105)</option><option value="Transporte">Transporte (80)</option><option value="Verbos">Verbos (6)</option><option value="Viajes">Viajes (80)</option></select>
     <span class="sep"></span>
     <span class="label-sm">Nivel:</span>
     <select id="nivelSelect" class="tema-select">
@@ -1502,6 +1565,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
     <button class="btn-filter" id="btnKnown">✓ Ya lo sé</button>
     <button class="btn-filter" id="btnUnknown">✕ No lo sé</button>
     <button class="btn-filter" id="btnOral">🗣 Oral</button>
+    <button class="btn-filter" id="btnEscrito">✍ Escrito</button>
   </div>
   <!-- Subfiltro fn — visible solo cuando tema=Conectores -->
   <div class="controls-row" id="fnFilterRow">
@@ -1523,6 +1587,20 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
       <button class="btn-fn" data-fn="Enumeración" style="background:#4a2a0a;">Enumeración</button>
       <button class="btn-fn" data-fn="Comparación" style="background:#0a2a5a;">Comparación</button>
     </div>
+  </div>
+  <!-- Subfiltro subtema — visible solo cuando el tema activo tiene tarjetas con subtema -->
+  <div class="controls-row" id="subtemaFilterRow">
+    <span class="label-sm">🏷 Subtema:</span>
+    <div class="topic-scroll" id="subtemaScroll">
+      <button class="btn-subtema btn-subtema-all active" data-subtema="">Todos</button>
+    </div>
+  </div>
+  <!-- Subfiltro registro (Formal/Informal) — visible solo cuando tema=DELF -->
+  <div class="controls-row" id="regFilterRow">
+    <span class="label-sm">📝 Registro:</span>
+    <button class="btn-reg active" data-reg="">Todos</button>
+    <button class="btn-reg" data-reg="Formal">Formal</button>
+    <button class="btn-reg" data-reg="Informal">Informal</button>
   </div>
   <div class="controls-row">
     <div class="search-wrap">
@@ -5997,10 +6075,10 @@ var DATA = [
     "ex_fr": "L'orientation scolaire aide les élèves à choisir leur avenir.",
     "ex_es": "La orientación académica ayuda a los alumnos a elegir su futuro.",
     "syn": null,
+    "warn": null,
     "flags": {
       "top": true
     },
-    "warn": null,
     "fn": null,
     "reg": null,
     "constr": null,
@@ -18614,7 +18692,8 @@ var DATA = [
     "id": 881,
     "w": "estimer que",
     "t": "estimar que, considerar que (+ indicativo)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Verbo",
     "gen": null,
     "ex_fr": "J'estime que cette politique est injuste et inefficace.",
@@ -18623,10 +18702,11 @@ var DATA = [
     "warn": "+ indicativo. Expresa opinión personal con cierta autoridad. Registro neutro-formal. Más distanciado que 'je pense que'.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -18634,7 +18714,8 @@ var DATA = [
     "id": 882,
     "w": "considérer que",
     "t": "considerar que (+ indicativo)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Verbo",
     "gen": null,
     "ex_fr": "De nombreux experts considèrent que le réchauffement climatique est la principale menace.",
@@ -18643,10 +18724,11 @@ var DATA = [
     "warn": "+ indicativo. Muy frecuente en textos argumentativos. Puede referirse a la propia opinión o a la de otros.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -18654,7 +18736,8 @@ var DATA = [
     "id": 883,
     "w": "soutenir que",
     "t": "sostener que, defender que (+ indicativo)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Verbo",
     "gen": null,
     "ex_fr": "Certains économistes soutiennent que la croissance économique est indispensable.",
@@ -18663,10 +18746,11 @@ var DATA = [
     "warn": "+ indicativo. Implica defensa activa de una posición. Registro formal. Útil para presentar posiciones ajenas que se citan.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "C1"
   },
@@ -18674,7 +18758,8 @@ var DATA = [
     "id": 884,
     "w": "admettre que",
     "t": "admitir que, reconocer que (+ indicativo / + subjonctif según sentido)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Verbo",
     "gen": null,
     "ex_fr": "J'admets que cette solution n'est pas parfaite, mais c'est la meilleure disponible.",
@@ -18683,10 +18768,11 @@ var DATA = [
     "warn": "+ indicativo generalmente. Muy útil en argumentación: concede un punto antes de refutarlo. Estructura clásica de DELF.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -18694,7 +18780,8 @@ var DATA = [
     "id": 885,
     "w": "reconnaître que",
     "t": "reconocer que (+ indicativo)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Verbo",
     "gen": null,
     "ex_fr": "Il faut reconnaître que des progrès ont été accomplis, même s'ils restent insuffisants.",
@@ -18703,10 +18790,11 @@ var DATA = [
     "warn": "+ indicativo. Introduce una concesión honesta antes de matizar. Muy valorado por los examinadores de DELF.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -18714,7 +18802,8 @@ var DATA = [
     "id": 886,
     "w": "nier que",
     "t": "negar que (+ subjonctif)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Verbo",
     "gen": null,
     "ex_fr": "On ne peut nier que le changement climatique représente une menace réelle.",
@@ -18723,10 +18812,11 @@ var DATA = [
     "warn": "⚠️ + SUBJONCTIF. 'Nier que' + subjonctif es la norma (niega algo, por lo que hay incertidumbre). 'Je ne nie pas que' aussi + subjonctif.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -18734,7 +18824,8 @@ var DATA = [
     "id": 887,
     "w": "douter que",
     "t": "dudar que (+ subjonctif)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Verbo",
     "gen": null,
     "ex_fr": "Je doute que cette mesure soit suffisante pour résoudre le problème.",
@@ -18743,10 +18834,11 @@ var DATA = [
     "warn": "⚠️ + SUBJONCTIF siempre. 'Ne pas douter que' + indicativo (cuando se afirma sin duda). Diferencia importante.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -18754,7 +18846,8 @@ var DATA = [
     "id": 888,
     "w": "croire que",
     "t": "creer que (+ indicatif; en negativa + subjonctif)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Verbo",
     "gen": null,
     "ex_fr": "Je crois que nous pouvons trouver une solution. / Je ne crois pas qu'il soit possible.",
@@ -18763,10 +18856,11 @@ var DATA = [
     "warn": "⚠️ 'Croire que' + indicatif (afirmativo). 'Ne pas croire que' + subjonctif (negativo). Regla de oro del DELF.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B1"
   },
@@ -18774,7 +18868,8 @@ var DATA = [
     "id": 889,
     "w": "penser que",
     "t": "pensar que (+ indicatif; en negativa + subjonctif)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Verbo",
     "gen": null,
     "ex_fr": "Je pense que c'est une bonne idée. / Je ne pense pas que ce soit suffisant.",
@@ -18783,10 +18878,11 @@ var DATA = [
     "warn": "⚠️ Igual que 'croire que': afirmativo + indicatif; negativo + subjonctif. Error muy frecuente y penalizado en DELF.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B1"
   },
@@ -18794,7 +18890,8 @@ var DATA = [
     "id": 890,
     "w": "il est évident que",
     "t": "es evidente que (+ indicatif)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Il est évident que la situation économique doit être améliorée.",
@@ -18803,10 +18900,11 @@ var DATA = [
     "warn": "+ indicatif. Presenta algo como hecho indiscutible. Cuidado: si se niega o se pone en duda, + subjonctif.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B1"
   },
@@ -18814,7 +18912,8 @@ var DATA = [
     "id": 891,
     "w": "il est possible que",
     "t": "es posible que (+ subjonctif)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Il est possible que la situation s'améliore dans les prochains mois.",
@@ -18823,10 +18922,11 @@ var DATA = [
     "warn": "⚠️ + SUBJONCTIF siempre. La posibilidad implica incertidumbre. Contraste con 'il est probable que' + indicatif.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B1"
   },
@@ -18834,7 +18934,8 @@ var DATA = [
     "id": 892,
     "w": "il est probable que",
     "t": "es probable que (+ indicatif)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Il est probable que les prix de l'énergie vont continuer à augmenter.",
@@ -18843,10 +18944,11 @@ var DATA = [
     "warn": "⚠️ + INDICATIF (alta probabilidad). Contraste clave: 'il est possible que' + subjonctif (mera posibilidad). Error frecuente.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B1"
   },
@@ -18854,7 +18956,8 @@ var DATA = [
     "id": 893,
     "w": "il faut que",
     "t": "hay que, es necesario que (+ subjonctif)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Il faut que chacun fasse des efforts pour réduire sa consommation.",
@@ -18863,10 +18966,11 @@ var DATA = [
     "warn": "⚠️ + SUBJONCTIF siempre. Muy frecuente en DELF oral y escrito. 'Il faut' + infinitif (sin sujeto específico) también es correcto.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B1"
   },
@@ -18874,7 +18978,8 @@ var DATA = [
     "id": 894,
     "w": "il me semble que",
     "t": "me parece que (+ indicatif)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Il me semble que nous n'avons pas assez discuté de ce problème.",
@@ -18883,10 +18988,11 @@ var DATA = [
     "warn": "+ indicatif generalmente. Más matizado y humilde que 'je pense que'. Muy natural en oral y escrito.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B1"
   },
@@ -18894,7 +19000,8 @@ var DATA = [
     "id": 895,
     "w": "selon moi / à mon sens",
     "t": "según yo, en mi opinión (registro formal)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Selon moi, il est urgent de réformer le système de santé.",
@@ -18903,10 +19010,11 @@ var DATA = [
     "warn": "'Selon moi' y 'à mon sens' son más formales que 'à mon avis'. + indicatif. Útiles para introducir una opinión personal en escrito.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -18914,7 +19022,8 @@ var DATA = [
     "id": 896,
     "w": "défendre l'idée que",
     "t": "defender la idea de que",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Je défends l'idée que l'éducation doit être gratuite pour tous.",
@@ -18923,10 +19032,11 @@ var DATA = [
     "warn": "+ indicatif. Expresa una posición firme y argumentada. Muy valorado en la production écrite del DELF.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -18934,7 +19044,8 @@ var DATA = [
     "id": 897,
     "w": "être convaincu que",
     "t": "estar convencido de que (+ indicatif)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Je suis convaincu que cette politique portera ses fruits à long terme.",
@@ -18943,10 +19054,11 @@ var DATA = [
     "warn": "+ indicatif. Expresa convicción personal fuerte. Registro neutro-formal.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -18954,7 +19066,8 @@ var DATA = [
     "id": 898,
     "w": "prouver que / démontrer que",
     "t": "probar que / demostrar que (+ indicatif)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Verbo",
     "gen": null,
     "ex_fr": "Les études scientifiques prouvent que le tabac est nocif pour la santé.",
@@ -18963,10 +19076,11 @@ var DATA = [
     "warn": "+ indicatif. Introduce evidencia objetiva. Muy útil para respaldar argumentos con datos en DELF.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -18974,7 +19088,8 @@ var DATA = [
     "id": 899,
     "w": "nuancer",
     "t": "matizar",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Verbo",
     "gen": null,
     "ex_fr": "Il convient de nuancer ce jugement : la situation est plus complexe qu'il n'y paraît.",
@@ -18983,10 +19098,11 @@ var DATA = [
     "warn": "Verbo clave en argumentación sofisticada. Los examinadores valoran enormemente la capacidad de 'nuancer'. Registro formal.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "C1"
   },
@@ -18994,7 +19110,8 @@ var DATA = [
     "id": 900,
     "w": "mettre en évidence",
     "t": "poner de manifiesto, evidenciar",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Cette étude met en évidence les inégalités persistantes dans notre société.",
@@ -19003,10 +19120,11 @@ var DATA = [
     "warn": "Registro formal. Introduce una conclusión o dato relevante. + indicatif.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -19014,7 +19132,8 @@ var DATA = [
     "id": 901,
     "w": "s'interroger sur",
     "t": "preguntarse sobre, cuestionarse",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Verbo",
     "gen": null,
     "ex_fr": "Il convient de s'interroger sur les conséquences de cette politique à long terme.",
@@ -19023,10 +19142,11 @@ var DATA = [
     "warn": "Registro formal. Introduce una reflexión crítica. Muy valorado en DELF para mostrar pensamiento crítico.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -19034,7 +19154,8 @@ var DATA = [
     "id": 902,
     "w": "aborder un sujet",
     "t": "abordar un tema",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Avant d'aborder ce sujet complexe, il est utile de définir les termes clés.",
@@ -19043,10 +19164,11 @@ var DATA = [
     "warn": "Registro neutro-formal. Útil para introducir un nuevo aspecto del argumento.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -19054,7 +19176,8 @@ var DATA = [
     "id": 903,
     "w": "en d'autres termes",
     "t": "en otros términos, en otras palabras",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "L'entreprise a perdu 30 % de ses clients. En d'autres termes, sa situation est critique.",
@@ -19063,10 +19186,11 @@ var DATA = [
     "warn": "Introduce una reformulación más clara o contundente. Registro formal.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -19074,7 +19198,8 @@ var DATA = [
     "id": 904,
     "w": "à titre d'exemple",
     "t": "a modo de ejemplo, por ejemplo (formal)",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "À titre d'exemple, la France a réduit ses émissions de CO2 de 20 % en dix ans.",
@@ -19083,10 +19208,11 @@ var DATA = [
     "warn": "Más formal que 'par exemple'. Introduce un dato concreto que ilustra el argumento. Muy valorado en DELF escrito.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "C1"
   },
@@ -19094,7 +19220,8 @@ var DATA = [
     "id": 905,
     "w": "il convient de rappeler que",
     "t": "conviene recordar que",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Il convient de rappeler que les droits de l'homme sont universels et inaliénables.",
@@ -19103,10 +19230,11 @@ var DATA = [
     "warn": "Registro muy formal. Reintroduce un principio o dato fundamental. + indicatif. Excelente para abrir o cerrar argumentos.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "C1"
   },
@@ -19114,7 +19242,8 @@ var DATA = [
     "id": 906,
     "w": "en fin de compte",
     "t": "al fin y al cabo, en definitiva",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "En fin de compte, c'est le citoyen qui paie pour les décisions politiques.",
@@ -19123,10 +19252,11 @@ var DATA = [
     "warn": "Introduce una conclusión que sintetiza el razonamiento. Registro neutro. Útil en conclusiones de DELF.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -19134,7 +19264,8 @@ var DATA = [
     "id": 907,
     "w": "contrairement à",
     "t": "contrariamente a, al contrario de",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Contrairement aux idées reçues, les jeunes lisent beaucoup.",
@@ -19143,10 +19274,11 @@ var DATA = [
     "warn": "Introduce un contraste con una idea previa o prejuicio. + nombre/groupe nominal. Muy útil para rebatir argumentos.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -19154,7 +19286,8 @@ var DATA = [
     "id": 908,
     "w": "les idées reçues",
     "t": "las ideas preconcebidas, los tópicos, los prejuicios",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": "f",
     "ex_fr": "Il faut dépasser les idées reçues et s'appuyer sur des données objectives.",
@@ -19163,10 +19296,11 @@ var DATA = [
     "warn": "Muy frecuente en textos argumentativos y en los documentos del DELF. Expresa crítica al pensamiento simplista.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -19174,7 +19308,8 @@ var DATA = [
     "id": 909,
     "w": "dans quelle mesure",
     "t": "en qué medida",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Dans quelle mesure les réseaux sociaux influencent-ils nos opinions politiques ?",
@@ -19183,10 +19318,11 @@ var DATA = [
     "warn": "Fórmula clásica para plantear una problématique en DELF. Introduce matiz y complejidad. Muy valorada por los examinadores.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -19194,7 +19330,8 @@ var DATA = [
     "id": 910,
     "w": "partager l'avis de",
     "t": "compartir la opinión de, estar de acuerdo con",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Je partage entièrement l'avis de ceux qui pensent que l'éducation est prioritaire.",
@@ -19203,10 +19340,11 @@ var DATA = [
     "warn": "+ indicatif. Expresa acuerdo con una posición citada. Registro neutro-formal.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -19214,7 +19352,8 @@ var DATA = [
     "id": 911,
     "w": "réfuter",
     "t": "refutar, rebatir",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Verbo",
     "gen": null,
     "ex_fr": "Il est facile de réfuter cet argument en s'appuyant sur les données scientifiques.",
@@ -19223,10 +19362,11 @@ var DATA = [
     "warn": "Registro formal. Implica demostrar que un argumento es falso o débil. Muy sofisticado en DELF.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "C1"
   },
@@ -19234,7 +19374,8 @@ var DATA = [
     "id": 912,
     "w": "étayer son argument",
     "t": "fundamentar su argumento, apoyar con pruebas",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Pour convaincre, il faut étayer ses arguments avec des exemples concrets.",
@@ -19243,10 +19384,11 @@ var DATA = [
     "warn": "Registro formal. Los examinadores valoran que los candidatos 'étayent' sus posiciones con ejemplos. Clave en DELF.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "C1"
   },
@@ -19254,7 +19396,8 @@ var DATA = [
     "id": 913,
     "w": "prendre position",
     "t": "posicionarse, tomar partido",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Dans un débat, il est important de prendre position clairement.",
@@ -19263,10 +19406,11 @@ var DATA = [
     "warn": "Registro neutro-formal. El DELF oral (monologue suivi) requiere que el candidato 'prenne position'. Habilidad clave.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -19274,7 +19418,8 @@ var DATA = [
     "id": 914,
     "w": "il y a lieu de penser que",
     "t": "hay razón para pensar que, cabe pensar que",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "Il y a lieu de penser que cette réforme aura des conséquences importantes.",
@@ -19283,10 +19428,11 @@ var DATA = [
     "warn": "Registro muy formal. Introduce una hipótesis razonada. + indicatif. Muy sofisticado en DELF escrito.",
     "flags": {
       "top": false,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "C1"
   },
@@ -19294,7 +19440,8 @@ var DATA = [
     "id": 915,
     "w": "en définitive",
     "t": "en definitiva, en resumen",
-    "tema": "Argumentacion",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Expresion",
     "gen": null,
     "ex_fr": "En définitive, c'est la volonté politique qui manque pour résoudre ces problèmes.",
@@ -19303,10 +19450,11 @@ var DATA = [
     "warn": "Introduce la conclusión final. Registro formal. Alternativa elegante a 'pour conclure'. Muy valorado en DELF.",
     "flags": {
       "top": true,
-      "oral": false
+      "oral": true,
+      "escrito": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24133,7 +24281,8 @@ var DATA = [
     "id": 1152,
     "w": "Je ne suis pas en mesure de trancher",
     "t": "No estoy en condiciones de decidir",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Sur cette question, je ne suis pas en mesure de trancher sans plus d'informations.",
@@ -24143,10 +24292,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24154,7 +24304,8 @@ var DATA = [
     "id": 1153,
     "w": "J'ai du mal à me prononcer",
     "t": "Me cuesta pronunciarme",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "J'ai du mal à me prononcer sur un sujet aussi complexe.",
@@ -24164,10 +24315,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24175,7 +24327,8 @@ var DATA = [
     "id": 1154,
     "w": "Je reste partagé(e) sur la question",
     "t": "Sigo dividido/a sobre la cuestión",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Honnêtement, je reste partagé sur la question du télétravail.",
@@ -24185,10 +24338,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24196,7 +24350,8 @@ var DATA = [
     "id": 1155,
     "w": "Il est difficile de se positionner",
     "t": "Es difícil posicionarse",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il est difficile de se positionner sans avoir tous les éléments.",
@@ -24206,10 +24361,11 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24217,7 +24373,8 @@ var DATA = [
     "id": 1156,
     "w": "Je n'arrive pas à me faire une opinion",
     "t": "No consigo formarme una opinión",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je n'arrive pas à me faire une opinion tranchée sur ce débat.",
@@ -24227,6 +24384,7 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24238,7 +24396,8 @@ var DATA = [
     "id": 1157,
     "w": "Il faut agir sans tarder",
     "t": "Hay que actuar sin demora",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Tiempo/Urgencia",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Face au réchauffement climatique, il faut agir sans tarder.",
@@ -24248,6 +24407,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24259,7 +24419,8 @@ var DATA = [
     "id": 1158,
     "w": "Il y a urgence à",
     "t": "Es urgente / urge",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Tiempo/Urgencia",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il y a urgence à repenser notre modèle de consommation.",
@@ -24269,6 +24430,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24280,7 +24442,8 @@ var DATA = [
     "id": 1159,
     "w": "Le temps presse",
     "t": "El tiempo apremia",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Tiempo/Urgencia",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Le temps presse, on ne peut plus se permettre d'attendre.",
@@ -24290,6 +24453,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24301,7 +24465,8 @@ var DATA = [
     "id": 1160,
     "w": "Il est grand temps de",
     "t": "Ya es hora de",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Tiempo/Urgencia",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il est grand temps de prendre des mesures concrètes.",
@@ -24311,6 +24476,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24322,7 +24488,8 @@ var DATA = [
     "id": 1161,
     "w": "On ne peut plus se permettre d'attendre",
     "t": "Ya no podemos permitirnos esperar",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Tiempo/Urgencia",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "On ne peut plus se permettre d'attendre que la situation empire.",
@@ -24332,6 +24499,7 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24343,7 +24511,8 @@ var DATA = [
     "id": 1162,
     "w": "Cela demande du temps",
     "t": "Eso requiere tiempo",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Tiempo/Urgencia",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Changer les mentalités, cela demande du temps.",
@@ -24353,6 +24522,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24364,7 +24534,8 @@ var DATA = [
     "id": 1163,
     "w": "À long terme",
     "t": "A largo plazo",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Tiempo/Urgencia",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "À long terme, cette politique portera ses fruits.",
@@ -24374,10 +24545,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24385,7 +24557,8 @@ var DATA = [
     "id": 1164,
     "w": "À court terme",
     "t": "A corto plazo",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Tiempo/Urgencia",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "À court terme, les résultats ne seront pas visibles.",
@@ -24395,10 +24568,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24406,7 +24580,8 @@ var DATA = [
     "id": 1165,
     "w": "Cela prendra du temps avant que + subj",
     "t": "Pasará tiempo antes de que",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Tiempo/Urgencia",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela prendra du temps avant que les choses changent réellement.",
@@ -24416,6 +24591,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24427,7 +24603,8 @@ var DATA = [
     "id": 1166,
     "w": "D'ici quelques années",
     "t": "De aquí a unos años",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Tiempo/Urgencia",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "D'ici quelques années, cette technologie sera généralisée.",
@@ -24437,6 +24614,7 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24448,7 +24626,8 @@ var DATA = [
     "id": 1167,
     "w": "On risque de",
     "t": "Corremos el riesgo de",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Causalidad",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "On risque de passer à côté de l'essentiel.",
@@ -24458,6 +24637,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24469,7 +24649,8 @@ var DATA = [
     "id": 1168,
     "w": "Cela risque d'avoir des conséquences graves",
     "t": "Eso puede tener consecuencias graves",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Causalidad",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela risque d'avoir des conséquences graves pour les générations futures.",
@@ -24479,6 +24660,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24490,7 +24672,8 @@ var DATA = [
     "id": 1169,
     "w": "Au risque de + inf",
     "t": "A riesgo de",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Causalidad",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Au risque de me répéter, je pense que c'est une priorité absolue.",
@@ -24500,6 +24683,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24511,7 +24695,8 @@ var DATA = [
     "id": 1170,
     "w": "Il y a fort à parier que",
     "t": "Es muy probable que",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il y a fort à parier que la situation va s'aggraver.",
@@ -24521,10 +24706,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24532,7 +24718,8 @@ var DATA = [
     "id": 1171,
     "w": "Mettre en péril",
     "t": "Poner en peligro",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Causalidad",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cette décision met en péril l'équilibre de tout le système.",
@@ -24542,6 +24729,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24553,7 +24741,8 @@ var DATA = [
     "id": 1172,
     "w": "Je partage entièrement votre point de vue",
     "t": "Comparto plenamente su punto de vista",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je partage entièrement votre point de vue sur cette question.",
@@ -24563,10 +24752,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24574,7 +24764,8 @@ var DATA = [
     "id": 1173,
     "w": "Je suis tout à fait d'accord avec",
     "t": "Estoy totalmente de acuerdo con",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis tout à fait d'accord avec l'idée que l'éducation est la clé.",
@@ -24584,10 +24775,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24595,7 +24787,8 @@ var DATA = [
     "id": 1174,
     "w": "Je rejoins votre analyse",
     "t": "Coincido con su análisis",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je rejoins votre analyse sur ce point précis.",
@@ -24605,10 +24798,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24616,7 +24810,8 @@ var DATA = [
     "id": 1175,
     "w": "Je ne suis pas convaincu(e) par",
     "t": "No me convence",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je ne suis pas convaincu par cet argument.",
@@ -24626,10 +24821,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24637,7 +24833,8 @@ var DATA = [
     "id": 1176,
     "w": "Je me permets de nuancer",
     "t": "Me permito matizar",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je me permets de nuancer vos propos sur ce point.",
@@ -24647,10 +24844,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24658,7 +24856,8 @@ var DATA = [
     "id": 1177,
     "w": "C'est un point sur lequel je ne vous suis pas",
     "t": "En ese punto no le sigo",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "C'est un point sur lequel je ne vous suis pas du tout.",
@@ -24668,10 +24867,11 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24679,7 +24879,8 @@ var DATA = [
     "id": 1178,
     "w": "Loin de moi l'idée de",
     "t": "Lejos de mí la idea de",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Loin de moi l'idée de critiquer, mais cette mesure me semble inefficace.",
@@ -24689,10 +24890,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24700,7 +24902,8 @@ var DATA = [
     "id": 1179,
     "w": "En ce qui me concerne",
     "t": "En lo que a mí respecta",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "En ce qui me concerne, je privilégie toujours le dialogue.",
@@ -24710,6 +24913,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24721,7 +24925,8 @@ var DATA = [
     "id": 1180,
     "w": "À mon sens",
     "t": "A mi parecer",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "À mon sens, c'est la meilleure solution envisageable.",
@@ -24731,10 +24936,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24742,7 +24948,8 @@ var DATA = [
     "id": 1181,
     "w": "Pour ma part",
     "t": "Por mi parte",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Pour ma part, je reste optimiste malgré tout.",
@@ -24752,10 +24959,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24763,7 +24971,8 @@ var DATA = [
     "id": 1182,
     "w": "Il me semble que",
     "t": "Me parece que",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il me semble que cette approche est trop simpliste.",
@@ -24773,6 +24982,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24784,7 +24994,8 @@ var DATA = [
     "id": 1183,
     "w": "Je tiens à souligner que",
     "t": "Quiero subrayar que",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je tiens à souligner que ce phénomène n'est pas nouveau.",
@@ -24794,10 +25005,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24805,7 +25017,8 @@ var DATA = [
     "id": 1184,
     "w": "Force est de constater que",
     "t": "Hay que reconocer que",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Force est de constater que les inégalités se creusent.",
@@ -24815,10 +25028,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24826,7 +25040,8 @@ var DATA = [
     "id": 1185,
     "w": "Il convient de rappeler que",
     "t": "Conviene recordar que",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il convient de rappeler que ce débat existe depuis longtemps.",
@@ -24836,10 +25051,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24847,7 +25063,8 @@ var DATA = [
     "id": 1186,
     "w": "Cela soulève la question de",
     "t": "Eso plantea la cuestión de",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela soulève la question de la responsabilité collective.",
@@ -24857,10 +25074,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24868,7 +25086,8 @@ var DATA = [
     "id": 1187,
     "w": "Cela revient à dire que",
     "t": "Eso equivale a decir que",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela revient à dire que personne n'est responsable.",
@@ -24878,10 +25097,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24889,7 +25109,8 @@ var DATA = [
     "id": 1188,
     "w": "D'une part… d'autre part",
     "t": "Por un lado… por otro",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "D'une part, cela favorise l'économie ; d'autre part, cela nuit à l'environnement.",
@@ -24899,10 +25120,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24910,7 +25132,8 @@ var DATA = [
     "id": 1189,
     "w": "Non seulement… mais aussi / mais encore",
     "t": "No solo… sino también",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Non seulement c'est coûteux, mais en plus c'est inefficace.",
@@ -24920,10 +25143,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24931,7 +25155,8 @@ var DATA = [
     "id": 1190,
     "w": "En revanche",
     "t": "En cambio",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Les villes se modernisent ; en revanche, les campagnes sont délaissées.",
@@ -24941,10 +25166,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24952,7 +25178,8 @@ var DATA = [
     "id": 1191,
     "w": "Cela étant dit",
     "t": "Dicho esto",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela étant dit, il faut nuancer ce constat.",
@@ -24962,10 +25189,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -24973,7 +25201,8 @@ var DATA = [
     "id": 1192,
     "w": "Quoi qu'il en soit",
     "t": "Sea como sea",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Quoi qu'il en soit, une décision s'impose rapidement.",
@@ -24983,6 +25212,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -24994,7 +25224,8 @@ var DATA = [
     "id": 1193,
     "w": "En fin de compte",
     "t": "A fin de cuentas",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "En fin de compte, tout dépend de la volonté politique.",
@@ -25004,6 +25235,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25015,7 +25247,8 @@ var DATA = [
     "id": 1194,
     "w": "Tout bien réfléchi",
     "t": "Bien pensado",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Tout bien réfléchi, je pense que la première option est la meilleure.",
@@ -25025,10 +25258,11 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -25036,7 +25270,8 @@ var DATA = [
     "id": 1195,
     "w": "Prendre du recul",
     "t": "Tomar distancia / perspectiva",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il faut savoir prendre du recul avant de juger.",
@@ -25046,6 +25281,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25057,7 +25293,8 @@ var DATA = [
     "id": 1196,
     "w": "Remettre en question",
     "t": "Cuestionar / replantear",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cette étude remet en question nos certitudes.",
@@ -25067,6 +25304,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25078,7 +25316,8 @@ var DATA = [
     "id": 1197,
     "w": "Tirer la sonnette d'alarme",
     "t": "Dar la voz de alarma",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Causalidad",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Les scientifiques tirent la sonnette d'alarme depuis des années.",
@@ -25088,10 +25327,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -25099,7 +25339,8 @@ var DATA = [
     "id": 1198,
     "w": "Faire face à",
     "t": "Hacer frente a",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Nous devons faire face à des défis sans précédent.",
@@ -25109,6 +25350,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25120,7 +25362,8 @@ var DATA = [
     "id": 1199,
     "w": "Avoir le sentiment que",
     "t": "Tener la sensación de que",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "J'ai le sentiment que la société évolue trop vite.",
@@ -25130,6 +25373,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25141,7 +25385,8 @@ var DATA = [
     "id": 1200,
     "w": "Cela me tient à cœur",
     "t": "Es algo que me importa mucho",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "C'est un sujet qui me tient particulièrement à cœur.",
@@ -25151,6 +25396,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25162,7 +25408,8 @@ var DATA = [
     "id": 1201,
     "w": "Passer à côté de l'essentiel",
     "t": "Pasar por alto lo esencial",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "En se focalisant sur les détails, on passe à côté de l'essentiel.",
@@ -25172,6 +25419,7 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25183,7 +25431,8 @@ var DATA = [
     "id": 1202,
     "w": "Avoir du mal à + inf",
     "t": "Costar / tener dificultades para",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "J'ai du mal à comprendre cette logique.",
@@ -25193,6 +25442,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
@@ -25204,7 +25454,8 @@ var DATA = [
     "id": 1203,
     "w": "Mettre l'accent sur",
     "t": "Poner el énfasis en",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Argumentación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il faudrait mettre l'accent sur la prévention plutôt que sur la répression.",
@@ -25214,10 +25465,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -25225,7 +25477,8 @@ var DATA = [
     "id": 1204,
     "w": "Aller dans le bon sens",
     "t": "Ir en la dirección correcta",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cette réforme va dans le bon sens, même si elle reste insuffisante.",
@@ -25235,10 +25488,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Informal",
     "constr": null,
     "nivel": "B2"
   },
@@ -25246,7 +25500,8 @@ var DATA = [
     "id": 1205,
     "w": "Au fond",
     "t": "En el fondo",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Au fond, nous voulons tous la même chose.",
@@ -25256,10 +25511,11 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Informal",
     "constr": null,
     "nivel": "B2"
   },
@@ -25267,7 +25523,8 @@ var DATA = [
     "id": 1206,
     "w": "À vrai dire",
     "t": "A decir verdad",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "À vrai dire, je n'avais pas envisagé cette possibilité.",
@@ -25277,10 +25534,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Informal",
     "constr": null,
     "nivel": "B2"
   },
@@ -25288,7 +25546,8 @@ var DATA = [
     "id": 1207,
     "w": "Je suis ravi(e) de",
     "t": "Estoy encantado/a de",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis ravie d'aborder ce sujet qui me passionne.",
@@ -25298,6 +25557,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25309,7 +25569,8 @@ var DATA = [
     "id": 1208,
     "w": "Cela me réjouit de voir que",
     "t": "Me alegra ver que",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela me réjouit de voir que les jeunes s'engagent davantage.",
@@ -25319,6 +25580,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25330,7 +25592,8 @@ var DATA = [
     "id": 1209,
     "w": "Je trouve cela formidable",
     "t": "Me parece estupendo",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je trouve cela formidable que l'on puisse en débattre librement.",
@@ -25340,6 +25603,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25351,7 +25615,8 @@ var DATA = [
     "id": 1210,
     "w": "Cela me fait chaud au cœur",
     "t": "Me reconforta / me llega al corazón",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Voir cette solidarité, cela me fait chaud au cœur.",
@@ -25361,6 +25626,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25372,7 +25638,8 @@ var DATA = [
     "id": 1211,
     "w": "Je suis enthousiasmé(e) par",
     "t": "Me entusiasma",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis enthousiasmée par les progrès de la médecine.",
@@ -25382,6 +25649,7 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25393,7 +25661,8 @@ var DATA = [
     "id": 1212,
     "w": "Cela me laisse perplexe",
     "t": "Me deja perplejo/a",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cette décision me laisse perplexe, je n'en comprends pas la logique.",
@@ -25403,6 +25672,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25414,7 +25684,8 @@ var DATA = [
     "id": 1213,
     "w": "Je suis sidéré(e) par",
     "t": "Estoy atónito/a por",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis sidéré par l'ampleur du phénomène.",
@@ -25424,6 +25695,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25435,7 +25707,8 @@ var DATA = [
     "id": 1214,
     "w": "Cela me dépasse",
     "t": "Eso me supera / no lo entiendo",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Franchement, ce genre de comportement me dépasse.",
@@ -25445,6 +25718,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25456,7 +25730,8 @@ var DATA = [
     "id": 1215,
     "w": "Je n'en reviens pas",
     "t": "No me lo puedo creer",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Quand j'ai lu les chiffres, je n'en revenais pas.",
@@ -25466,6 +25741,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25477,7 +25753,8 @@ var DATA = [
     "id": 1216,
     "w": "Cela m'a marqué(e)",
     "t": "Eso me impactó / dejó huella",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Ce documentaire m'a profondément marqué.",
@@ -25487,6 +25764,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25498,7 +25776,8 @@ var DATA = [
     "id": 1217,
     "w": "Je suis préoccupé(e) par",
     "t": "Me preocupa",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis particulièrement préoccupée par la situation des jeunes.",
@@ -25508,6 +25787,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25519,7 +25799,8 @@ var DATA = [
     "id": 1218,
     "w": "Cela me dérange que + subj",
     "t": "Me molesta que",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela me dérange que l'on banalise ce genre de discours.",
@@ -25529,6 +25810,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25540,7 +25822,8 @@ var DATA = [
     "id": 1219,
     "w": "Cela m'agace",
     "t": "Me irrita",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela m'agace d'entendre toujours les mêmes clichés.",
@@ -25550,6 +25833,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25561,7 +25845,8 @@ var DATA = [
     "id": 1220,
     "w": "Cela m'exaspère",
     "t": "Me exaspera",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cette mauvaise foi m'exaspère au plus haut point.",
@@ -25571,6 +25856,7 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25582,7 +25868,8 @@ var DATA = [
     "id": 1221,
     "w": "Je suis révolté(e) par",
     "t": "Me indigna",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis révolté par ces inégalités criantes.",
@@ -25592,6 +25879,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25603,7 +25891,8 @@ var DATA = [
     "id": 1222,
     "w": "Cela me met en colère",
     "t": "Me enfada",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cette injustice me met vraiment en colère.",
@@ -25613,6 +25902,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25624,7 +25914,8 @@ var DATA = [
     "id": 1223,
     "w": "Cela me fait de la peine",
     "t": "Me da pena",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela me fait de la peine de voir des familles dans cette situation.",
@@ -25634,6 +25925,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25645,7 +25937,8 @@ var DATA = [
     "id": 1224,
     "w": "Je suis touché(e) par",
     "t": "Me conmueve",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis très touchée par ces témoignages.",
@@ -25655,6 +25948,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25666,7 +25960,8 @@ var DATA = [
     "id": 1225,
     "w": "Cela me bouleverse",
     "t": "Me conmociona",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Ce genre de drame me bouleverse profondément.",
@@ -25676,6 +25971,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25687,7 +25983,8 @@ var DATA = [
     "id": 1226,
     "w": "Cela me fend le cœur",
     "t": "Se me parte el corazón",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Voir ces enfants seuls, cela me fend le cœur.",
@@ -25697,6 +25994,7 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25708,7 +26006,8 @@ var DATA = [
     "id": 1227,
     "w": "Je suis déçu(e) par",
     "t": "Me decepciona",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis déçue par le manque de réaction des autorités.",
@@ -25718,6 +26017,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25729,7 +26029,8 @@ var DATA = [
     "id": 1228,
     "w": "Cela me déçoit que + subj",
     "t": "Me decepciona que",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela me déçoit que rien n'ait changé depuis dix ans.",
@@ -25739,6 +26040,7 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25750,7 +26052,8 @@ var DATA = [
     "id": 1229,
     "w": "Je suis inquiet/inquiète à l'idée que + subj",
     "t": "Me inquieta la idea de que",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis inquiet à l'idée que cela puisse se reproduire.",
@@ -25760,6 +26063,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25771,7 +26075,8 @@ var DATA = [
     "id": 1230,
     "w": "Cela m'angoisse",
     "t": "Me angustia",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "L'avenir de la planète, cela m'angoisse vraiment.",
@@ -25781,6 +26086,7 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25792,7 +26098,8 @@ var DATA = [
     "id": 1231,
     "w": "Je redoute que + subj",
     "t": "Me temo que / temo que",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je redoute que la situation ne s'aggrave encore.",
@@ -25802,6 +26109,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25813,7 +26121,8 @@ var DATA = [
     "id": 1232,
     "w": "Cela m'effraie de penser que",
     "t": "Me asusta pensar que",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela m'effraie de penser que beaucoup l'ignorent encore.",
@@ -25823,6 +26132,7 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25834,7 +26144,8 @@ var DATA = [
     "id": 1233,
     "w": "Je suis lassé(e) de",
     "t": "Estoy harto/a de",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis lassé d'entendre les mêmes promesses non tenues.",
@@ -25844,6 +26155,7 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25855,7 +26167,8 @@ var DATA = [
     "id": 1234,
     "w": "J'en ai assez de",
     "t": "Estoy harto/a de",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "J'en ai assez de cette hypocrisie ambiante.",
@@ -25865,6 +26178,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25876,7 +26190,8 @@ var DATA = [
     "id": 1235,
     "w": "Cela me rassure de savoir que",
     "t": "Me tranquiliza saber que",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela me rassure de savoir que des solutions existent.",
@@ -25886,6 +26201,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25897,7 +26213,8 @@ var DATA = [
     "id": 1236,
     "w": "Je suis soulagé(e) que + subj",
     "t": "Me alivia que",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis soulagée que des mesures aient enfin été prises.",
@@ -25907,6 +26224,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25918,7 +26236,8 @@ var DATA = [
     "id": 1237,
     "w": "Je suis surpris(e) de constater que",
     "t": "Me sorprende constatar que",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis surpris de constater à quel point les mentalités évoluent.",
@@ -25928,6 +26247,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25939,7 +26259,8 @@ var DATA = [
     "id": 1238,
     "w": "Cela m'étonne que + subj",
     "t": "Me extraña que",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela m'étonne que personne n'en parle dans les médias.",
@@ -25949,6 +26270,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25960,7 +26282,8 @@ var DATA = [
     "id": 1239,
     "w": "Cela ne m'étonne guère",
     "t": "No me extraña apenas",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela ne m'étonne guère, vu le contexte actuel.",
@@ -25970,6 +26293,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -25981,7 +26305,8 @@ var DATA = [
     "id": 1240,
     "w": "Je suis admiratif/admirative devant",
     "t": "Admiro / siento admiración por",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis admirative devant le courage de ces personnes.",
@@ -25991,6 +26316,7 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26002,7 +26328,8 @@ var DATA = [
     "id": 1241,
     "w": "Je suis fier/fière de",
     "t": "Estoy orgulloso/a de",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis fier de voir mon pays évoluer dans ce sens.",
@@ -26012,6 +26339,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26023,7 +26351,8 @@ var DATA = [
     "id": 1242,
     "w": "Je suis sceptique quant à",
     "t": "Soy escéptico/a respecto a",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je reste sceptique quant à l'efficacité de cette mesure.",
@@ -26033,6 +26362,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26044,7 +26374,8 @@ var DATA = [
     "id": 1243,
     "w": "Cela me semble préoccupant",
     "t": "Me parece preocupante",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cette tendance me semble particulièrement préoccupante.",
@@ -26054,6 +26385,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26065,7 +26397,8 @@ var DATA = [
     "id": 1244,
     "w": "Cela me paraît regrettable",
     "t": "Me parece lamentable",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il me paraît regrettable que ce débat n'ait pas eu lieu plus tôt.",
@@ -26075,6 +26408,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26086,7 +26420,8 @@ var DATA = [
     "id": 1245,
     "w": "Quel dommage que + subj",
     "t": "Qué pena que",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Quel dommage que l'on n'ait pas réagi plus tôt !",
@@ -26096,6 +26431,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26107,7 +26443,8 @@ var DATA = [
     "id": 1246,
     "w": "Je trouve cela inacceptable",
     "t": "Me parece inaceptable",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je trouve cela inacceptable dans une société moderne.",
@@ -26117,6 +26454,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26128,7 +26466,8 @@ var DATA = [
     "id": 1247,
     "w": "Je trouve cela révoltant",
     "t": "Me parece indignante",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je trouve cela tout simplement révoltant.",
@@ -26138,6 +26477,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26149,7 +26489,8 @@ var DATA = [
     "id": 1248,
     "w": "Cela me semble injuste",
     "t": "Me parece injusto",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cette situation me semble profondément injuste.",
@@ -26159,6 +26500,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26170,7 +26512,8 @@ var DATA = [
     "id": 1249,
     "w": "Je suis curieux/curieuse de voir",
     "t": "Tengo curiosidad por ver",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je suis curieuse de voir comment cela va évoluer.",
@@ -26180,6 +26523,7 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26191,7 +26535,8 @@ var DATA = [
     "id": 1250,
     "w": "Cela m'interpelle",
     "t": "Eso me interpela / me hace reflexionar",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Ce type de témoignage m'interpelle vraiment.",
@@ -26201,6 +26546,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26212,7 +26558,8 @@ var DATA = [
     "id": 1251,
     "w": "Cela me fait réfléchir à",
     "t": "Me hace reflexionar sobre",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela me fait réfléchir à notre rapport au travail.",
@@ -26222,6 +26569,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26233,7 +26581,8 @@ var DATA = [
     "id": 1252,
     "w": "Je me sens concerné(e) par",
     "t": "Me siento implicado/a por",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je me sens directement concerné par cette problématique.",
@@ -26243,6 +26592,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26254,7 +26604,8 @@ var DATA = [
     "id": 1253,
     "w": "Cela ne me laisse pas indifférent(e)",
     "t": "No me deja indiferente",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Ce sujet ne me laisse pas indifférente, loin de là.",
@@ -26264,6 +26615,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26275,7 +26627,8 @@ var DATA = [
     "id": 1254,
     "w": "J'ai été frappé(e) par",
     "t": "Me llamó la atención",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "J'ai été frappé par la lucidité de son analyse.",
@@ -26285,6 +26638,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26296,7 +26650,8 @@ var DATA = [
     "id": 1255,
     "w": "Cela me semble révélateur de",
     "t": "Me parece revelador de",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Ce phénomène me semble révélateur d'un malaise plus profond.",
@@ -26306,6 +26661,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26317,7 +26673,8 @@ var DATA = [
     "id": 1256,
     "w": "Honnêtement",
     "t": "Honestamente / Sinceramente",
-    "tema": "Emociones/Reacciones DELF",
+    "tema": "DELF",
+    "subtema": "Emociones/Reacciones",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Honnêtement, je ne m'attendais pas à un tel résultat.",
@@ -26327,6 +26684,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -26338,7 +26696,8 @@ var DATA = [
     "id": 1257,
     "w": "Si je puis me permettre",
     "t": "Si me permite",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Si je puis me permettre, j'aimerais revenir sur un point précédent.",
@@ -26348,10 +26707,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26359,7 +26719,8 @@ var DATA = [
     "id": 1258,
     "w": "Permettez-moi d'ajouter que",
     "t": "Permítame añadir que",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Permettez-moi d'ajouter que ce phénomène n'est pas isolé.",
@@ -26369,10 +26730,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26380,7 +26742,8 @@ var DATA = [
     "id": 1259,
     "w": "J'aimerais revenir sur",
     "t": "Me gustaría retomar",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "J'aimerais revenir sur ce que vous venez de dire.",
@@ -26390,10 +26753,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26401,7 +26765,8 @@ var DATA = [
     "id": 1260,
     "w": "Vous soulevez un point intéressant",
     "t": "Plantea un punto interesante",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Vous soulevez un point intéressant, j'aimerais y répondre.",
@@ -26411,10 +26776,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26422,7 +26788,8 @@ var DATA = [
     "id": 1261,
     "w": "C'est précisément ce que j'allais dire",
     "t": "Es precisamente lo que iba a decir",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "C'est précisément ce que j'allais dire à propos de ce sujet.",
@@ -26432,10 +26799,11 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26443,7 +26811,8 @@ var DATA = [
     "id": 1262,
     "w": "Je comprends votre point de vue, cependant",
     "t": "Entiendo su punto de vista, sin embargo",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je comprends votre point de vue, cependant je ne le partage pas entièrement.",
@@ -26453,10 +26822,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26464,7 +26834,8 @@ var DATA = [
     "id": 1263,
     "w": "J'entends bien votre argument, mais",
     "t": "Comprendo su argumento, pero",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "J'entends bien votre argument, mais il me semble incomplet.",
@@ -26474,10 +26845,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26485,7 +26857,8 @@ var DATA = [
     "id": 1264,
     "w": "Vous avez raison de souligner que",
     "t": "Tiene razón al subrayar que",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Vous avez raison de souligner que ce problème est complexe.",
@@ -26495,10 +26868,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26506,7 +26880,8 @@ var DATA = [
     "id": 1265,
     "w": "Je vous rejoins sur ce point",
     "t": "Coincido con usted en ese punto",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je vous rejoins sur ce point, mais je nuancerais sur le reste.",
@@ -26516,10 +26891,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26527,7 +26903,8 @@ var DATA = [
     "id": 1266,
     "w": "Je me permets de vous contredire",
     "t": "Me permito contradecirle",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je me permets de vous contredire sur ce point précis.",
@@ -26537,10 +26914,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26548,7 +26926,8 @@ var DATA = [
     "id": 1267,
     "w": "Je ne suis pas tout à fait de cet avis",
     "t": "No soy del todo de esa opinión",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je ne suis pas tout à fait de cet avis, et voici pourquoi.",
@@ -26558,10 +26937,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26569,7 +26949,8 @@ var DATA = [
     "id": 1268,
     "w": "Permettez-moi de nuancer vos propos",
     "t": "Permítame matizar sus palabras",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Permettez-moi de nuancer vos propos, la réalité est plus complexe.",
@@ -26579,10 +26960,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26590,7 +26972,8 @@ var DATA = [
     "id": 1269,
     "w": "Si je comprends bien votre question",
     "t": "Si entiendo bien su pregunta",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Si je comprends bien votre question, vous me demandez si…",
@@ -26600,10 +26983,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26611,7 +26995,8 @@ var DATA = [
     "id": 1270,
     "w": "Pourriez-vous préciser votre pensée ?",
     "t": "¿Podría precisar su idea?",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Pourriez-vous préciser votre pensée sur ce point ?",
@@ -26621,10 +27006,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26632,7 +27018,8 @@ var DATA = [
     "id": 1271,
     "w": "Qu'entendez-vous exactement par… ?",
     "t": "¿Qué entiende exactamente por…?",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Qu'entendez-vous exactement par « société de consommation » ?",
@@ -26642,10 +27029,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26653,7 +27041,8 @@ var DATA = [
     "id": 1272,
     "w": "Si je puis reformuler",
     "t": "Si puedo reformular",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Si je puis reformuler, vous suggérez que la solution viendrait de l'État ?",
@@ -26663,10 +27052,11 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26674,7 +27064,8 @@ var DATA = [
     "id": 1273,
     "w": "Je ne suis pas sûr(e) d'avoir bien saisi",
     "t": "No estoy seguro/a de haberlo entendido bien",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je ne suis pas sûre d'avoir bien saisi votre question, pourriez-vous la reformuler ?",
@@ -26684,10 +27075,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26695,7 +27087,8 @@ var DATA = [
     "id": 1274,
     "w": "C'est une excellente question",
     "t": "Es una excelente pregunta",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "C'est une excellente question, à laquelle il n'est pas simple de répondre.",
@@ -26705,10 +27098,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26716,7 +27110,8 @@ var DATA = [
     "id": 1275,
     "w": "Pour répondre à votre question",
     "t": "Para responder a su pregunta",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Pour répondre à votre question, je dirais que cela dépend du contexte.",
@@ -26726,10 +27121,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26737,7 +27133,8 @@ var DATA = [
     "id": 1276,
     "w": "Je vais y venir",
     "t": "Voy a ello / Ya llego a eso",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je vais y venir, mais permettez-moi d'abord d'établir le contexte.",
@@ -26747,10 +27144,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26758,7 +27156,8 @@ var DATA = [
     "id": 1277,
     "w": "J'y reviendrai dans un instant",
     "t": "Volveré sobre ello en un momento",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "J'y reviendrai dans un instant, après avoir terminé cette idée.",
@@ -26768,10 +27167,11 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26779,7 +27179,8 @@ var DATA = [
     "id": 1278,
     "w": "Laissez-moi terminer ma pensée",
     "t": "Déjeme terminar mi idea",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Laissez-moi terminer ma pensée, j'y arrive justement.",
@@ -26789,10 +27190,11 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26800,7 +27202,8 @@ var DATA = [
     "id": 1279,
     "w": "Je tiens à préciser que",
     "t": "Quiero precisar que",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je tiens à préciser que ce n'est pas ce que j'ai voulu dire.",
@@ -26810,10 +27213,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26821,7 +27225,8 @@ var DATA = [
     "id": 1280,
     "w": "Ce n'est pas tout à fait ce que je voulais dire",
     "t": "No es exactamente lo que quería decir",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Ce n'est pas tout à fait ce que je voulais dire, laissez-moi reformuler.",
@@ -26831,10 +27236,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26842,7 +27248,8 @@ var DATA = [
     "id": 1281,
     "w": "Pour être plus clair(e)",
     "t": "Para ser más claro/a",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Pour être plus claire, je dirais que la priorité reste l'éducation.",
@@ -26852,10 +27259,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26863,7 +27271,8 @@ var DATA = [
     "id": 1282,
     "w": "Autrement dit",
     "t": "Dicho de otro modo",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Autrement dit, il s'agit avant tout d'une question de volonté politique.",
@@ -26873,10 +27282,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26884,7 +27294,8 @@ var DATA = [
     "id": 1283,
     "w": "En d'autres termes",
     "t": "En otros términos",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "En d'autres termes, le problème dépasse largement le cadre national.",
@@ -26894,10 +27305,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26905,7 +27317,8 @@ var DATA = [
     "id": 1284,
     "w": "Prenons un exemple concret",
     "t": "Tomemos un ejemplo concreto",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Prenons un exemple concret pour illustrer mon propos.",
@@ -26915,10 +27328,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26926,7 +27340,8 @@ var DATA = [
     "id": 1285,
     "w": "Pour illustrer mon propos",
     "t": "Para ilustrar lo que digo",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Pour illustrer mon propos, pensons à la situation des grandes villes.",
@@ -26936,10 +27351,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26947,7 +27363,8 @@ var DATA = [
     "id": 1286,
     "w": "Si vous me le permettez, j'irais même plus loin",
     "t": "Si me permite, iría incluso más lejos",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Si vous me le permettez, j'irais même plus loin dans le raisonnement.",
@@ -26957,10 +27374,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26968,7 +27386,8 @@ var DATA = [
     "id": 1287,
     "w": "C'est exactement là où je voulais en venir",
     "t": "Es justo a donde quería llegar",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "C'est exactement là où je voulais en venir avec mon argument précédent.",
@@ -26978,10 +27397,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -26989,7 +27409,8 @@ var DATA = [
     "id": 1288,
     "w": "Cela étant dit",
     "t": "Dicho esto",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Cela étant dit, il ne faut pas tomber dans la généralisation.",
@@ -26999,10 +27420,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27010,7 +27432,8 @@ var DATA = [
     "id": 1289,
     "w": "Tout à fait",
     "t": "Exactamente / Así es",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Tout à fait, c'est précisément le cœur du problème.",
@@ -27020,10 +27443,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27031,7 +27455,8 @@ var DATA = [
     "id": 1290,
     "w": "Effectivement",
     "t": "Efectivamente",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Effectivement, les chiffres confirment cette tendance.",
@@ -27041,10 +27466,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27052,7 +27478,8 @@ var DATA = [
     "id": 1291,
     "w": "Absolument pas",
     "t": "En absoluto",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Absolument pas, je tiens à le préciser fermement.",
@@ -27062,10 +27489,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27073,7 +27501,8 @@ var DATA = [
     "id": 1292,
     "w": "Je dirais plutôt que",
     "t": "Más bien diría que",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je dirais plutôt que le problème est culturel avant d'être économique.",
@@ -27083,10 +27512,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27094,7 +27524,8 @@ var DATA = [
     "id": 1293,
     "w": "Loin de moi l'idée de vous contredire, mais",
     "t": "Lejos de mí contradecirle, pero",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Loin de moi l'idée de vous contredire, mais les faits sont nuancés.",
@@ -27104,10 +27535,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27115,7 +27547,8 @@ var DATA = [
     "id": 1294,
     "w": "Disons que",
     "t": "Digamos que",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Disons que la réalité se situe quelque part entre les deux.",
@@ -27125,10 +27558,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27136,7 +27570,8 @@ var DATA = [
     "id": 1295,
     "w": "En quelque sorte",
     "t": "En cierto modo",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "En quelque sorte, c'est un cercle vicieux qu'il faut briser.",
@@ -27146,10 +27581,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27157,7 +27593,8 @@ var DATA = [
     "id": 1296,
     "w": "Comment dire…",
     "t": "Cómo decirlo…",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Comment dire… c'est une question à laquelle je n'ai pas de réponse définitive.",
@@ -27167,10 +27604,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27178,7 +27616,8 @@ var DATA = [
     "id": 1297,
     "w": "Si vous voulez",
     "t": "Si quiere / Por así decirlo",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "C'est, si vous voulez, une forme de paradoxe moderne.",
@@ -27188,10 +27627,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27199,7 +27639,8 @@ var DATA = [
     "id": 1298,
     "w": "Pour aller dans votre sens",
     "t": "En la línea de lo que dice",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Pour aller dans votre sens, j'ajouterais que c'est aussi un problème générationnel.",
@@ -27209,10 +27650,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27220,7 +27662,8 @@ var DATA = [
     "id": 1299,
     "w": "À l'inverse de ce que l'on pourrait penser",
     "t": "Al contrario de lo que se podría pensar",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "À l'inverse de ce que l'on pourrait penser, les jeunes lisent encore beaucoup.",
@@ -27230,10 +27673,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27241,7 +27685,8 @@ var DATA = [
     "id": 1300,
     "w": "Pour conclure sur ce point",
     "t": "Para concluir sobre este punto",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Pour conclure sur ce point, je dirais qu'il n'y a pas de solution unique.",
@@ -27251,10 +27696,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27262,7 +27708,8 @@ var DATA = [
     "id": 1301,
     "w": "En guise de conclusion",
     "t": "A modo de conclusión",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "En guise de conclusion, je rappellerais l'importance du dialogue.",
@@ -27272,10 +27719,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27283,7 +27731,8 @@ var DATA = [
     "id": 1302,
     "w": "Si je devais résumer ma position",
     "t": "Si tuviera que resumir mi postura",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Si je devais résumer ma position, je dirais que la nuance est essentielle.",
@@ -27293,10 +27742,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27304,7 +27754,8 @@ var DATA = [
     "id": 1303,
     "w": "Je vous remercie pour cette question",
     "t": "Le agradezco esta pregunta",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je vous remercie pour cette question, elle me permet de préciser ma pensée.",
@@ -27314,10 +27765,11 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27325,7 +27777,8 @@ var DATA = [
     "id": 1304,
     "w": "Excusez-moi, je reprends",
     "t": "Disculpe, retomo",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Excusez-moi, je reprends mon raisonnement là où je l'avais laissé.",
@@ -27335,10 +27788,11 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27346,7 +27800,8 @@ var DATA = [
     "id": 1305,
     "w": "Je n'avais pas envisagé cet aspect",
     "t": "No había contemplado ese aspecto",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je n'avais pas envisagé cet aspect, c'est un point pertinent.",
@@ -27356,10 +27811,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -27367,7 +27823,8 @@ var DATA = [
     "id": 1306,
     "w": "Cela mérite réflexion",
     "t": "Eso merece reflexión",
-    "tema": "Interacción debate DELF",
+    "tema": "DELF",
+    "subtema": "Debate",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Votre remarque mérite réflexion, je l'admets volontiers.",
@@ -27377,10 +27834,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -29908,7 +30366,8 @@ var DATA = [
     "id": 1427,
     "w": "à mes yeux",
     "t": "a mis ojos / en mi opinión",
-    "tema": "Opinión",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "À mes yeux, la France est synonyme de démocratie et de droits de l'homme.",
@@ -29918,6 +30377,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -29929,7 +30389,8 @@ var DATA = [
     "id": 1428,
     "w": "selon moi",
     "t": "según yo / en mi opinión",
-    "tema": "Opinión",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "La France est, selon moi, un pays riche d'histoire et de cultures.",
@@ -29939,10 +30400,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B1"
   },
@@ -29950,7 +30412,8 @@ var DATA = [
     "id": 1429,
     "w": "j'estime que",
     "t": "considero que (formal)",
-    "tema": "Opinión",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "J'estime que les relations interpersonnelles sont plus importantes en Italie.",
@@ -29959,11 +30422,12 @@ var DATA = [
     "warn": null,
     "flags": {
       "top": true,
-      "oral": false,
+      "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -29971,7 +30435,8 @@ var DATA = [
     "id": 1430,
     "w": "je trouve que",
     "t": "encuentro que / me parece que",
-    "tema": "Opinión",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je trouve que les Français sont plus réservés que les Espagnols.",
@@ -29981,6 +30446,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -29992,7 +30458,8 @@ var DATA = [
     "id": 1431,
     "w": "je me suis rendu(e) compte que",
     "t": "me di cuenta de que",
-    "tema": "Opinión",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Après, je me suis rendu compte que ce n'est pas bien d'habiter aux États-Unis.",
@@ -30002,6 +30469,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
@@ -30013,7 +30481,8 @@ var DATA = [
     "id": 1432,
     "w": "je me suis aperçu(e) que",
     "t": "me percaté de que / me di cuenta de que",
-    "tema": "Opinión",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Avant de venir en France, je pensais que c'était romantique. Et je me suis aperçue que c'était vrai.",
@@ -30022,7 +30491,8 @@ var DATA = [
     "warn": null,
     "flags": {
       "top": true,
-      "oral": false,
+      "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
@@ -30034,7 +30504,8 @@ var DATA = [
     "id": 1433,
     "w": "il me paraît bizarre",
     "t": "me parece raro",
-    "tema": "Opinión",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Il me paraît bizarre que vous ne puissiez pas recevoir des fichiers sur Preply.",
@@ -30044,10 +30515,11 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Informal",
     "constr": null,
     "nivel": "B1"
   },
@@ -30055,7 +30527,8 @@ var DATA = [
     "id": 1434,
     "w": "j'ai l'impression que",
     "t": "tengo la impresión de que",
-    "tema": "Opinión",
+    "tema": "DELF",
+    "subtema": "Opinión",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "J'ai l'impression que c'est rare que tout le monde ait ce bouton.",
@@ -30065,6 +30538,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -30076,7 +30550,8 @@ var DATA = [
     "id": 1435,
     "w": "si je devais la comparer à",
     "t": "si tuviera que compararla con",
-    "tema": "Comparación",
+    "tema": "DELF",
+    "subtema": "Comparación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Si je devais la comparer à l'Italie, je dirais qu'en France le secteur public fonctionne mieux.",
@@ -30086,6 +30561,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -30097,7 +30573,8 @@ var DATA = [
     "id": 1436,
     "w": "par contre",
     "t": "en cambio / sin embargo",
-    "tema": "Comparación",
+    "tema": "DELF",
+    "subtema": "Comparación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Par contre, en Italie, je trouve que les gens savent mieux profiter de la vie.",
@@ -30107,10 +30584,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Informal",
     "constr": null,
     "nivel": "B1"
   },
@@ -30118,7 +30596,8 @@ var DATA = [
     "id": 1437,
     "w": "tandis que",
     "t": "mientras que (contraste)",
-    "tema": "Comparación",
+    "tema": "DELF",
+    "subtema": "Comparación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "En France, il y a un fort individualisme, tandis qu'en Italie la famille est plus importante.",
@@ -30127,11 +30606,12 @@ var DATA = [
     "warn": null,
     "flags": {
       "top": true,
-      "oral": false,
+      "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B2"
   },
@@ -30139,7 +30619,8 @@ var DATA = [
     "id": 1438,
     "w": "à côté de",
     "t": "al lado de / comparado con",
-    "tema": "Comparación",
+    "tema": "DELF",
+    "subtema": "Comparación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Quarante mille dollars à côté de mille euros, la différence est énorme.",
@@ -30149,6 +30630,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -30160,7 +30642,8 @@ var DATA = [
     "id": 1439,
     "w": "ça n'a rien à voir avec",
     "t": "no tiene nada que ver con",
-    "tema": "Comparación",
+    "tema": "DELF",
+    "subtema": "Comparación",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "La culture américaine, ça n'a rien à voir avec l'Europe.",
@@ -30170,10 +30653,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Informal",
     "constr": null,
     "nivel": "B1"
   },
@@ -30223,7 +30707,8 @@ var DATA = [
     "id": 1442,
     "w": "c'est pour ça que",
     "t": "por eso / es por eso que",
-    "tema": "Causalidad",
+    "tema": "DELF",
+    "subtema": "Causalidad",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "C'est pour ça que je dois vous envoyer les livres le plus tôt possible.",
@@ -30233,10 +30718,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Informal",
     "constr": null,
     "nivel": "B1"
   },
@@ -30244,7 +30730,8 @@ var DATA = [
     "id": 1443,
     "w": "au moins",
     "t": "al menos / por lo menos",
-    "tema": "Matices",
+    "tema": "DELF",
+    "subtema": "Matices",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je vais essayer de vous envoyer au moins un thème parmi les trois.",
@@ -30254,6 +30741,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
@@ -30265,7 +30753,8 @@ var DATA = [
     "id": 1444,
     "w": "pas tellement",
     "t": "no tanto / no demasiado",
-    "tema": "Matices",
+    "tema": "DELF",
+    "subtema": "Matices",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Les Français ne sont pas tellement ouverts, ils sont un peu différents.",
@@ -30275,10 +30764,11 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Informal",
     "constr": null,
     "nivel": "B1"
   },
@@ -30286,7 +30776,8 @@ var DATA = [
     "id": 1445,
     "w": "quelquefois",
     "t": "a veces",
-    "tema": "Matices",
+    "tema": "DELF",
+    "subtema": "Matices",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Quelquefois les Français sont très réservés, ça dépend.",
@@ -30296,6 +30787,7 @@ var DATA = [
     "flags": {
       "top": false,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
@@ -30307,7 +30799,8 @@ var DATA = [
     "id": 1446,
     "w": "n'importe quoi",
     "t": "cualquier cosa / lo que sea",
-    "tema": "Matices",
+    "tema": "DELF",
+    "subtema": "Matices",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Quand on parle, on parle de n'importe quoi.",
@@ -30317,10 +30810,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Informal",
     "constr": null,
     "nivel": "B1"
   },
@@ -30496,7 +30990,8 @@ var DATA = [
     "id": 1455,
     "w": "la production orale",
     "t": "la expresión oral (en examen)",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Examen",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "La production orale est l'une des parties les plus difficiles du DELF.",
@@ -30506,6 +31001,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -30517,7 +31013,8 @@ var DATA = [
     "id": 1456,
     "w": "la production écrite",
     "t": "la expresión escrita (en examen)",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Examen",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "La production écrite, c'est très difficile pour la faire bien.",
@@ -30526,7 +31023,8 @@ var DATA = [
     "warn": null,
     "flags": {
       "top": true,
-      "oral": false,
+      "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -30538,7 +31036,8 @@ var DATA = [
     "id": 1457,
     "w": "présenter un thème",
     "t": "presentar un tema",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Examen",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Vous devez présenter un thème et parler entre 6 et 8 minutes.",
@@ -30548,6 +31047,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -30559,7 +31059,8 @@ var DATA = [
     "id": 1458,
     "w": "exposer un thème",
     "t": "exponer un tema (oral)",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Examen",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Vous allez exposer ce thème et en parler entre 6 et 8 minutes.",
@@ -30569,10 +31070,11 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
-    "reg": null,
+    "reg": "Formal",
     "constr": null,
     "nivel": "B1"
   },
@@ -30580,7 +31082,8 @@ var DATA = [
     "id": 1459,
     "w": "les fautes grammaticales",
     "t": "los errores gramaticales",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Examen",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Je vais corriger toutes les fautes grammaticales dans votre texte.",
@@ -30589,7 +31092,8 @@ var DATA = [
     "warn": null,
     "flags": {
       "top": false,
-      "oral": false,
+      "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -30601,7 +31105,8 @@ var DATA = [
     "id": 1460,
     "w": "avec ses propres mots",
     "t": "con sus propias palabras",
-    "tema": "Expresión oral",
+    "tema": "DELF",
+    "subtema": "Examen",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "Vous allez écrire un texte avec vos propres mots.",
@@ -30610,7 +31115,8 @@ var DATA = [
     "warn": null,
     "flags": {
       "top": true,
-      "oral": false,
+      "oral": true,
+      "escrito": true,
       "custom": true
     },
     "fn": null,
@@ -30685,7 +31191,8 @@ var DATA = [
     "id": 1464,
     "w": "en particulier",
     "t": "en particular / especialmente",
-    "tema": "Matices",
+    "tema": "DELF",
+    "subtema": "Matices",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "En France, en particulier dans les grandes villes, il y a un fort individualisme.",
@@ -30694,7 +31201,8 @@ var DATA = [
     "warn": null,
     "flags": {
       "top": false,
-      "oral": false,
+      "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
@@ -30706,7 +31214,8 @@ var DATA = [
     "id": 1465,
     "w": "de toute façon",
     "t": "de todas formas / de todos modos",
-    "tema": "Matices",
+    "tema": "DELF",
+    "subtema": "Matices",
     "cat": "Nombre",
     "gen": null,
     "ex_fr": "De toute façon, il faut travailler beaucoup pour passer l'examen.",
@@ -30716,6 +31225,7 @@ var DATA = [
     "flags": {
       "top": true,
       "oral": true,
+      "escrito": false,
       "custom": true
     },
     "fn": null,
@@ -30896,12 +31406,12 @@ var DATA = [
 var TEMA_CLASS = {
   "Medio ambiente":"MA","Tecnologia":"T","Trabajo":"TR",
   "Educación":"E","Salud":"S","Viajes":"V",
-  "Sociedad":"SOC","Cultura y ocio":"CUL","Alimentación":"ALI","Transporte":"TRA","Falsos amigos":"FAL","Conectores":"CON","Argumentacion":"ARG"
+  "Sociedad":"SOC","Cultura y ocio":"CUL","Alimentación":"ALI","Transporte":"TRA","Falsos amigos":"FAL","Conectores":"CON","Argumentacion":"ARG","DELF":"DELF"
 };
 var BACK_COLOR = {
   "Medio ambiente":"#1a4d22","Tecnologia":"#1a2d7a","Trabajo":"#7a3d1a",
   "Educación":"#5a1a7a","Salud":"#7a1a2d","Viajes":"#1a5d7a",
-  "Sociedad":"#4a3510","Cultura y ocio":"#7a4d10","Alimentación":"#5a1010","Transporte":"#0f3d4a","Falsos amigos":"#5c1040","Conectores":"#1a3558","Argumentacion":"#203d10","Falsos amigos":"#5c1040","Conectores":"#1a3558","Argumentacion":"#203d10"
+  "Sociedad":"#4a3510","Cultura y ocio":"#7a4d10","Alimentación":"#5a1010","Transporte":"#0f3d4a","Falsos amigos":"#5c1040","Conectores":"#1a3558","Argumentacion":"#203d10","Falsos amigos":"#5c1040","Conectores":"#1a3558","Argumentacion":"#203d10","DELF":"#1a1a4d"
 };
 var CAT_CLASS = {
   "Nombre":"N","Verbo":"V","Adjetivo":"Adj","Adverbio":"Adv","Expresion":"Exp"
@@ -30929,8 +31439,8 @@ var FN_BG = {
 
 var state = {
   tema:"", cat:"", gen:"", top:false,
-  known:false, unknown:false, oral:false, search:"", sort:"rel",
-  defaultView:"back", fn:"", nivel:"",
+  known:false, unknown:false, oral:false, escrito:false, search:"", sort:"rel",
+  defaultView:"back", fn:"", nivel:"", subtema:"", reg:"",
   initialView: true
 };
 var initialPreviewCache = null;
@@ -31075,10 +31585,17 @@ function filterData() {
     if (state.known   && !knownIds[d.id])    return false;
     if (state.unknown &&  knownIds[d.id])    return false;
     if (state.oral    && !d.flags.oral)       return false;
+    if (state.escrito && !d.flags.escrito)    return false;
     if (state.fn && d.fn !== state.fn)         return false;
+    if (state.subtema && d.subtema !== state.subtema) return false;
+    if (state.reg) {
+      if (state.reg === "Informal") {
+        if (d.reg !== "Informal" && d.reg !== "Familiar") return false;
+      } else if (d.reg !== state.reg) return false;
+    }
     if (state.nivel && d.nivel !== state.nivel) return false;
     if (q) {
-      var s = stripAccents((d.w+" "+d.t+" "+d.ex_fr+" "+d.ex_es+" "+(d.warn||"")+" "+(d.tema||"")+" "+(d.syn||"")).toLowerCase());
+      var s = stripAccents((d.w+" "+d.t+" "+d.ex_fr+" "+d.ex_es+" "+(d.warn||"")+" "+(d.tema||"")+" "+(d.syn||"")+" "+(d.subtema||"")).toLowerCase());
       if (s.indexOf(q)===-1) return false;
     }
     return true;
@@ -31124,6 +31641,7 @@ function frontInnerHtml(d, q, isKnown) {
   var customBadge = (d.flags && d.flags.custom) ? "<span class=\"badge badge-custom\" title=\"Tarjeta añadida (no del temario base)\">&#10022; Custom</span>" : "";
   var topBadge  = d.flags.top  ? "<span class=\"badge badge-top\">&#9733; Top B1</span>" : "";
   var oralBadge = d.flags.oral ? "<span class=\"badge badge-oral\">&#128483; Oral</span>" : "";
+  var escritoBadge = d.flags.escrito ? "<span class=\"badge badge-escrito\">&#9997; Escrito</span>" : "";
   var synHtml  = d.syn  ? "<div class=\"synonyms\">"  + escHtml(d.syn) + "</div>" : "";
   var warnHtml = d.warn ? "<div class=\"card-warn\">" + highlight(escHtml(d.warn),q) + "</div>" : "";
   // Conectores extras: fn badge + reg + constr
@@ -31153,9 +31671,10 @@ function frontInnerHtml(d, q, isKnown) {
         "<div class=\"card-word" + wordKnownClass + "\">" + word + "</div>" +
         "<div class=\"badges-row\">" +
           "<span class=\"badge badge-tema badge-tema-" + tc + "\">" + escHtml(d.tema) + "</span>" +
+          (d.subtema ? "<span class=\"badge badge-subtema\">" + escHtml(d.subtema) + "</span>" : "") +
           "<span class=\"badge badge-cat badge-cat-" + cc + "\">" + escHtml(CAT_LABEL[d.cat]||d.cat) + "</span>" +
           (d.nivel ? "<span class=\"badge badge-nivel badge-nivel-" + d.nivel + "\">" + d.nivel + "</span>" : "") +
-          genBadge + customBadge + customBadge + topBadge + oralBadge +
+          genBadge + customBadge + customBadge + topBadge + oralBadge + escritoBadge +
         "</div>" +
       "</div>" +
       "<button class=\"known-btn" + btnActive + "\" aria-label=\"" + btnLabel + "\" data-knownid=\"" + d.id + "\">" +
@@ -31281,10 +31800,15 @@ function setDefaultView(v) {
   reRender();
 }
 
+// Temas que aparecen siempre en el desplegable, aunque no tengan tarjetas todavía.
+var PINNED_TEMAS = ["DELF"];
+
 function buildTopicUI() {
   // Calcula top 3 temas por número de tarjetas
   var counts = {};
   DATA.forEach(function(d){ if (d.tema) counts[d.tema] = (counts[d.tema]||0) + 1; });
+  // Asegurar presencia de temas fijados, aunque tengan 0 tarjetas
+  PINNED_TEMAS.forEach(function(t){ if (counts[t] == null) counts[t] = 0; });
   var sorted = Object.keys(counts).sort(function(a,b){ return counts[b]-counts[a]; });
   var top3 = sorted.slice(0,3);
 
@@ -31354,7 +31878,63 @@ function setTema(t) {
       }
     }
   }
+  // Actualizar fila de subtema (dinámica)
+  rebuildSubtemaRow();
+  // Actualizar fila de registro (solo visible en DELF)
+  var regRow = document.getElementById("regFilterRow");
+  if (regRow) {
+    if (t === "DELF") {
+      regRow.classList.add("visible");
+    } else {
+      regRow.classList.remove("visible");
+      state.reg = "";
+      var regBtns = regRow.querySelectorAll(".btn-reg");
+      regBtns.forEach(function(b){ b.classList.remove("active"); });
+      var allReg = regRow.querySelector(".btn-reg[data-reg='']");
+      if (allReg) allReg.classList.add("active");
+    }
+  }
   reRender();
+}
+
+// Construye dinámicamente los botones de subtema a partir de las tarjetas
+// del tema activo. Visible solo si hay al menos un subtema para ese tema.
+function rebuildSubtemaRow() {
+  var row    = document.getElementById("subtemaFilterRow");
+  var scroll = document.getElementById("subtemaScroll");
+  if (!row || !scroll) return;
+
+  if (!state.tema) {
+    row.classList.remove("visible");
+    state.subtema = "";
+    return;
+  }
+
+  var subtemas = {};
+  DATA.forEach(function(d) {
+    if (d.tema === state.tema && d.subtema) subtemas[d.subtema] = true;
+  });
+  var list = Object.keys(subtemas).sort(function(a,b){ return a.localeCompare(b,"fr"); });
+
+  if (list.length === 0) {
+    row.classList.remove("visible");
+    state.subtema = "";
+    return;
+  }
+
+  // Si el subtema activo ya no existe en el nuevo tema, resetéalo.
+  if (state.subtema && list.indexOf(state.subtema) === -1) state.subtema = "";
+
+  var html = "<button class=\"btn-subtema btn-subtema-all" +
+    (state.subtema === "" ? " active" : "") +
+    "\" data-subtema=\"\">Todos</button>";
+  list.forEach(function(s) {
+    var active = (state.subtema === s) ? " active" : "";
+    html += "<button class=\"btn-subtema" + active + "\" data-subtema=\"" +
+      escHtml(s) + "\">" + escHtml(s) + "</button>";
+  });
+  scroll.innerHTML = html;
+  row.classList.add("visible");
 }
 
 function initFilters() {
@@ -31421,6 +32001,23 @@ function initFilters() {
     this.classList.toggle("active", state.oral);
     reRender();
   });
+  document.getElementById("btnEscrito").addEventListener("click", function() {
+    state.escrito = !state.escrito;
+    this.classList.toggle("active", state.escrito);
+    reRender();
+  });
+  // Reg subfiltro (Formal/Informal) — solo activo en DELF
+  var regRow = document.getElementById("regFilterRow");
+  if (regRow) {
+    regRow.addEventListener("click", function(e) {
+      var btn = e.target.closest(".btn-reg");
+      if (!btn) return;
+      regRow.querySelectorAll(".btn-reg").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      state.reg = btn.getAttribute("data-reg") || "";
+      reRender();
+    });
+  }
   // View mode
   document.getElementById("btnViewFront").addEventListener("click", function() { setDefaultView("front"); });
   document.getElementById("btnViewBack").addEventListener("click",  function() { setDefaultView("back");  });
@@ -31468,14 +32065,27 @@ function initFilters() {
     document.getElementById("btnKnown").classList.remove("active");
     document.getElementById("btnUnknown").classList.remove("active");
     document.getElementById("btnOral").classList.remove("active");
+    document.getElementById("btnEscrito").classList.remove("active");
     state.oral = false;
+    state.escrito = false;
     state.fn = "";
+    state.subtema = "";
+    state.reg = "";
     state.nivel = "";
+    var regRow2 = document.getElementById("regFilterRow");
+    if (regRow2) {
+      regRow2.classList.remove("visible");
+      regRow2.querySelectorAll(".btn-reg").forEach(function(b){ b.classList.remove("active"); });
+      var allRegBtn = regRow2.querySelector(".btn-reg[data-reg='']");
+      if (allRegBtn) allRegBtn.classList.add("active");
+    }
     var nSel = document.getElementById("nivelSelect");
     if (nSel) { nSel.value = ""; nSel.classList.remove("has-active"); }
     document.getElementById("fnScroll").querySelectorAll(".btn-fn").forEach(function(b){ b.classList.remove("active"); });
     document.getElementById("fnScroll").querySelector(".btn-fn-all").classList.add("active");
     document.getElementById("fnFilterRow").classList.remove("visible");
+    var stRow = document.getElementById("subtemaFilterRow");
+    if (stRow) stRow.classList.remove("visible");
     reRender();
   });
   // Collapse/expand controls
@@ -31496,6 +32106,19 @@ function initFilters() {
     state.fn = btn.getAttribute("data-fn");
     reRender();
   });
+
+  // Subtema subfiltro (dinámico)
+  var subtemaScroll = document.getElementById("subtemaScroll");
+  if (subtemaScroll) {
+    subtemaScroll.addEventListener("click", function(e) {
+      var btn = e.target.closest(".btn-subtema");
+      if (!btn) return;
+      subtemaScroll.querySelectorAll(".btn-subtema").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      state.subtema = btn.getAttribute("data-subtema") || "";
+      reRender();
+    });
+  }
 
   // Mostrar/ocultar fila fn según tema seleccionado
   function updateFnRow() {
@@ -31567,11 +32190,11 @@ var gameState = {
 var BACK_COLOR_G = {
   "Medio ambiente":"#1a4d22","Tecnologia":"#1a2d7a","Trabajo":"#7a3d1a",
   "Educación":"#5a1a7a","Salud":"#7a1a2d","Viajes":"#1a5d7a",
-  "Sociedad":"#4a3510","Cultura y ocio":"#7a4d10","Alimentación":"#5a1010","Transporte":"#0f3d4a","Falsos amigos":"#5c1040","Conectores":"#1a3558","Argumentacion":"#203d10","Falsos amigos":"#5c1040","Conectores":"#1a3558","Argumentacion":"#203d10"
+  "Sociedad":"#4a3510","Cultura y ocio":"#7a4d10","Alimentación":"#5a1010","Transporte":"#0f3d4a","Falsos amigos":"#5c1040","Conectores":"#1a3558","Argumentacion":"#203d10","Falsos amigos":"#5c1040","Conectores":"#1a3558","Argumentacion":"#203d10","DELF":"#1a1a4d"
 };
 var TEMA_CLASS_G = {
   "Medio ambiente":"MA","Tecnologia":"T","Trabajo":"TR",
-  "Educación":"E","Salud":"S","Viajes":"V"
+  "Educación":"E","Salud":"S","Viajes":"V","DELF":"DELF"
 };
 var CAT_CLASS_G = {
   "Nombre":"N","Verbo":"V","Adjetivo":"Adj","Adverbio":"Adv","Expresion":"Exp"
@@ -31736,6 +32359,7 @@ function buildSwipeCard(d, isTop, peekIdx) {
   var customBadge = (d.flags && d.flags.custom) ? "<span class=\"badge badge-custom\" title=\"Tarjeta añadida (no del temario base)\">&#10022; Custom</span>" : "";
   var topBadge  = d.flags.top  ? "<span class=\"badge badge-top\">&#9733; Top B1</span>" : "";
   var oralBadge = d.flags.oral ? "<span class=\"badge badge-oral\">&#128483; Oral</span>" : "";
+  var escritoBadge = d.flags.escrito ? "<span class=\"badge badge-escrito\">&#9997; Escrito</span>" : "";
 
   var warnHtml = d.warn
     ? "<div class=\"card-warn\" style=\"margin:0 0 0 0;border-radius:6px;\">" + gEscHtml(d.warn) + "</div>"
@@ -31749,7 +32373,7 @@ function buildSwipeCard(d, isTop, peekIdx) {
           "<div class=\"swipe-badges\">" +
             "<span class=\"badge badge-tema badge-tema-" + tc + "\">" + gEscHtml(d.tema) + "</span>" +
             "<span class=\"badge badge-cat badge-cat-" + cc + "\">" + gEscHtml(CAT_LABEL_G[d.cat] || d.cat) + "</span>" +
-            genBadge + customBadge + customBadge + topBadge + oralBadge +
+            genBadge + customBadge + customBadge + topBadge + oralBadge + escritoBadge +
           "</div>" +
         "</div>" +
         "<div class=\"swipe-example-fr\">" + gEscHtml(d.ex_fr) + "</div>" +
@@ -32559,12 +33183,16 @@ function initImportExport() {
       ex_es: (raw.ex_es && raw.ex_es.trim()) ? raw.ex_es.trim() : "",
       syn:   (raw.syn   && raw.syn.trim())   ? raw.syn.trim()   : null,
       warn:  (raw.warn  && raw.warn.trim())  ? raw.warn.trim()  : null,
-      flags: { top: !!(raw.flags && raw.flags.top), oral: !!(raw.flags && raw.flags.oral), custom: true },
+      subtema: (raw.subtema && raw.subtema.trim()) ? raw.subtema.trim() : null,
+      flags: { top: !!(raw.flags && raw.flags.top), oral: !!(raw.flags && raw.flags.oral), escrito: !!(raw.flags && raw.flags.escrito), custom: true },
       fn: raw.fn || null, reg: raw.reg || null, constr: raw.constr || null,
       nivel: (raw.nivel && VALID_NIVELES.indexOf(raw.nivel) !== -1) ? raw.nivel : "B1"
     };
   }
-  function refreshApp() { updateStats(); reRender(); buildTopicUI(); }
+  function refreshApp() {
+    updateStats(); reRender(); buildTopicUI();
+    if (typeof rebuildSubtemaRow === "function") rebuildSubtemaRow();
+  }
 
   function populateTemaSelect() {
     var sel = document.getElementById("acTemaSelect");
@@ -33170,13 +33798,13 @@ if (document.readyState === "loading") {
 
     <!-- VISTA 1: pegar JSON -->
     <div id="importPasteView" style="">
-      <p>Pega un array JSON con una o más tarjetas. Campos obligatorios: <code>w</code> (francés) y <code>t</code> (español). El resto son opcionales y se rellenarán con valores por defecto. El campo <code>nivel</code> acepta <code>B1</code>, <code>B2</code>, <code>C1</code> o <code>C2</code> (por defecto <code>B1</code>).</p>
+      <p>Pega un array JSON con una o más tarjetas. Campos obligatorios: <code>w</code> (francés) y <code>t</code> (español). El resto son opcionales y se rellenarán con valores por defecto. El campo <code>nivel</code> acepta <code>B1</code>, <code>B2</code>, <code>C1</code> o <code>C2</code> (por defecto <code>B1</code>). El campo <code>cat</code> acepta <code>Nombre</code>, <code>Verbo</code>, <code>Adjetivo</code>, <code>Adverbio</code> o <code>Expresion</code>. Usa <code>warn</code> para advertencias o "trampas" (calcos, falsos amigos, errores típicos), <code>syn</code> para sinónimos y <code>subtema</code> para subcategorizar dentro de un mismo tema (p. ej. dentro de <code>DELF</code>: "Citar fuentes", "Introducir un argumento"…). Al filtrar por un tema con subtemas aparece una barra extra para filtrar por ellos.</p>
       <div class="imodal-example">
         <div class="imodal-example-header">
-          <div class="imodal-example-label">Ejemplo mínimo</div>
+          <div class="imodal-example-label">Ejemplo completo (todos los campos)</div>
           <button type="button" class="btn-copy-example" id="btnCopyExample" title="Copiar al portapapeles">📋 Copiar</button>
         </div>
-        <pre id="importExamplePre">[{"w":"la forêt","t":"el bosque","tema":"Naturaleza","cat":"Nombre","nivel":"B1","ex_fr":"La forêt couvre 30% du territoire.","ex_es":"El bosque cubre el 30% del territorio.","flags":{"top":true,"oral":false}}]</pre>
+        <pre id="importExamplePre">[{"w":"Il convient de rappeler que…","t":"Conviene recordar que…","tema":"DELF","subtema":"Citar fuentes","cat":"Expresion","nivel":"B2","ex_fr":"Il convient de rappeler que cette loi a été adoptée en 2005.","ex_es":"Conviene recordar que esta ley fue adoptada en 2005.","warn":"Registro formal/escrito. Va al inicio de oración o tras punto y coma. + indicativo.","syn":"il y a lieu de rappeler que","flags":{"top":false,"oral":false}}]</pre>
       </div>
       <div class="imodal-ta-label">JSON</div>
       <textarea id="importTA" placeholder="Pega aquí el JSON..."></textarea>

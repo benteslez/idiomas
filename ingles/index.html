@@ -258,7 +258,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);pad
   </div>
   <div class="hdr-lbl">English B2 &middot; Study Tool</div>
   <h1>Flashcards &amp; Game Mode</h1>
-  <div class="hdr-sub">Expressions &middot; G&amp;I &middot; Phrasal Verbs &middot; Verbs+Prep &middot; Word Formation</div>
+  <div class="hdr-sub">Expressions &middot; G&amp;I &middot; Phrasal Verbs &middot; Verbs+Prep &middot; Word Formation &middot; Essay</div>
   <div class="hdr-pills">
     <div class="pill">Total <strong id="hdrTotal">0</strong></div>
     <div class="pill">Dominadas <strong id="hdrMastered">0</strong></div>
@@ -315,6 +315,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);pad
         <option value="pv">Phrasal Verbs</option>
         <option value="vp">Verbs + Preposition</option>
         <option value="wf">Word Formation</option>
+        <option value="essay">Essay (conectores, adverbios, estructuras)</option>
       </select>
     </div>
     <div id="apSimple">
@@ -367,6 +368,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);pad
           <button class="gf-btn" data-gcat="pv">Phrasal Verbs</button>
           <button class="gf-btn" data-gcat="vp">Verbs+Prep</button>
           <button class="gf-btn" data-gcat="wf">Word Form.</button>
+          <button class="gf-btn" data-gcat="essay">Essay</button>
         </div>
       </div>
       <div class="gf-section">
@@ -434,7 +436,8 @@ var CAT={
   gi:  {label:'G & I',      color:'#3d2a72'},
   pv:  {label:'Phrasal Verbs',color:'#6b3a1a'},
   vp:  {label:'Verbs+Prep', color:'#1a4a7a'},
-  wf:  {label:'Word Form.', color:'#7a1a3a'}
+  wf:  {label:'Word Form.', color:'#7a1a3a'},
+  essay:{label:'Essay',     color:'#1a6b6b'}
 };
 var WFT={'N':'noun','adj':'adj.','-adj':'neg.adj.','-N':'neg.N','-V':'neg.V','-adv':'neg.adv.','adv':'adv.','V':'verb'};
 var CARDS=[];
@@ -1044,6 +1047,151 @@ var CARDS=[];
 {id:'wf275',base:'hope',       wftype:'-adj', derived:'hopeless'}
 ].forEach(function(c){c.cat='wf';CARDS.push(c);});
 
+
+/* ── BLOCK 6: ESSAY (Conectores, Adverbios y Estructuras) ── */
+[
+/* INTRODUCIR IDEAS (evitar abusar de Firstly / Secondly) */
+{id:'es1', front:'To begin with',                  back:'Para empezar — introducir ideas'},
+{id:'es2', front:'At first glance',                back:'A primera vista — introducir ideas'},
+{id:'es3', front:'It is often argued that…',       back:'Se argumenta a menudo que… — introducir ideas'},
+
+/* AÑADIR IDEAS */
+{id:'es4', front:'Furthermore',                    back:'Además (formal) — añadir ideas'},
+{id:'es5', front:'Moreover',                       back:'Es más / Además — añadir ideas'},
+{id:'es6', front:'What is more',                   back:'Lo que es más — añadir ideas'},
+{id:'es7', front:'In addition',                    back:'Además — añadir ideas'},
+
+/* CONTRASTAR */
+{id:'es8', front:'However',                        back:'Sin embargo — contrastar'},
+{id:'es9', front:'Nevertheless',                   back:'No obstante — contrastar'},
+{id:'es10',front:'Although',                       back:'Aunque — contrastar'},
+{id:'es11',front:'Despite / In spite of',          back:'A pesar de (+ N / -ing) — contrastar'},
+{id:'es12',front:'While it is true that…',         back:'Aunque es cierto que… — contrastar'},
+{id:'es13',front:'Whereas',                        back:'Mientras que — contrastar'},
+
+/* DAR EJEMPLOS */
+{id:'es14',front:'For instance',                   back:'Por ejemplo — dar ejemplos'},
+{id:'es15',front:'For example',                    back:'Por ejemplo — dar ejemplos'},
+{id:'es16',front:'Such as',                        back:'Tales como — dar ejemplos'},
+{id:'es17',front:'A clear example of this is…',    back:'Un claro ejemplo de esto es… — dar ejemplos'},
+{id:'es18',front:'This can be seen in…',           back:'Esto se puede ver en… — dar ejemplos'},
+
+/* OPINIÓN AVANZADA */
+{id:'es19',front:'It could be argued that…',       back:'Se podría argumentar que… — opinión'},
+{id:'es20',front:'From my perspective',            back:'Desde mi perspectiva — opinión'},
+{id:'es21',front:'In my view',                     back:'En mi opinión — opinión'},
+{id:'es22',front:'Personally, I believe that…',    back:'Personalmente, creo que… — opinión'},
+{id:'es23',front:'I am convinced that…',           back:'Estoy convencido de que… — opinión'},
+{id:'es24',front:'There is a strong case for…',    back:'Hay buenos argumentos a favor de… — opinión'},
+
+/* CAUSA */
+{id:'es25',front:'due to',                         back:'Debido a — causa'},
+{id:'es26',front:'owing to',                       back:'Debido a (formal) — causa'},
+{id:'es27',front:'This is largely because',        back:'Esto se debe en gran medida a que — causa'},
+
+/* CONSECUENCIA */
+{id:'es28',front:'Therefore',                      back:'Por lo tanto — consecuencia'},
+{id:'es29',front:'as a result',                    back:'Como resultado — consecuencia'},
+{id:'es30',front:'Consequently',                   back:'En consecuencia — consecuencia'},
+{id:'es31',front:'For this reason',                back:'Por esta razón — consecuencia'},
+
+/* CONDICIÓN */
+{id:'es32',front:'If',                             back:'Si — condición'},
+{id:'es33',front:'Unless',                         back:'A menos que — condición'},
+{id:'es34',front:'As long as',                     back:'Siempre que — condición'},
+{id:'es35',front:'Whether',                        back:'Si (acerca de / sea o no) — condición'},
+{id:'es36',front:'Provided that',                  back:'Siempre que (formal) — condición'},
+
+/* REFORMULACIÓN */
+{id:'es37',front:'In other words',                 back:'En otras palabras — reformulación'},
+{id:'es38',front:'More specifically',              back:'Más concretamente — reformulación'},
+
+/* INTENSIFICACIÓN */
+{id:'es39',front:'Indeed',                         back:'De hecho / Realmente — intensificación'},
+{id:'es40',front:'In fact',                        back:'De hecho — intensificación'},
+
+/* CONCLUIR */
+{id:'es41',front:'To sum up',                      back:'En resumen — concluir'},
+{id:'es42',front:'All things considered',          back:'Considerándolo todo — concluir'},
+{id:'es43',front:'Taking everything into account', back:'Teniendo todo en cuenta — concluir'},
+{id:'es44',front:'Ultimately',                     back:'En definitiva / Al final — concluir'},
+{id:'es45',front:'On balance',                     back:'En conjunto / Tras valorarlo todo — concluir'},
+
+/* ADVERBIOS — ENFATIZAR */
+{id:'es46',front:'Highly',                         back:'Muy / Altamente — adv. énfasis'},
+{id:'es47',front:'Extremely',                      back:'Extremadamente — adv. énfasis'},
+{id:'es48',front:'Particularly',                   back:'Particularmente — adv. énfasis'},
+{id:'es49',front:'Remarkably',                     back:'Notablemente — adv. énfasis'},
+{id:'es50',front:'Significantly',                  back:'Significativamente — adv. énfasis'},
+{id:'es51',front:'Considerably',                   back:'Considerablemente — adv. énfasis'},
+
+/* ADVERBIOS — MATIZAR */
+{id:'es52',front:'Apparently',                     back:'Aparentemente — adv. matiz'},
+{id:'es53',front:'Arguably',                       back:'Se podría decir que — adv. matiz'},
+{id:'es54',front:'Presumably',                     back:'Presumiblemente — adv. matiz'},
+{id:'es55',front:'To some extent',                 back:'En cierta medida — matiz'},
+{id:'es56',front:'Partially',                      back:'Parcialmente — adv. matiz'},
+{id:'es57',front:'Relatively',                     back:'Relativamente — adv. matiz'},
+
+/* ADVERBIOS — FRECUENCIA */
+{id:'es58',front:'Widely',                         back:'Ampliamente — adv. frecuencia'},
+{id:'es59',front:'Rarely',                         back:'Raramente — adv. frecuencia'},
+{id:'es60',front:'Constantly',                     back:'Constantemente — adv. frecuencia'},
+{id:'es61',front:'Frequently',                     back:'Frecuentemente — adv. frecuencia'},
+{id:'es62',front:'Commonly',                       back:'Comúnmente — adv. frecuencia'},
+{id:'es63',front:'Increasingly',                   back:'Cada vez más — adv. frecuencia'},
+
+/* ADVERBIOS — CERTEZA */
+{id:'es64',front:'Undoubtedly',                    back:'Sin duda — adv. certeza'},
+{id:'es65',front:'Certainly',                      back:'Ciertamente — adv. certeza'},
+{id:'es66',front:'Clearly',                        back:'Claramente — adv. certeza'},
+
+/* ADVERBIOS — DUDA */
+{id:'es67',front:'Probably',                       back:'Probablemente — adv. duda'},
+{id:'es68',front:'Possibly',                       back:'Posiblemente — adv. duda'},
+
+/* ESTRUCTURAS — CONCESIVAS */
+{id:'es69',front:'Although + oración',             back:'Estructura concesiva ("aunque + oración")'},
+{id:'es70',front:'Even though + oración',          back:'Concesiva enfática ("aunque, a pesar de que")'},
+{id:'es71',front:'Despite / In spite of + N/-ing', back:'Concesiva ("a pesar de" + nombre/gerundio)'},
+
+/* ESTRUCTURAS — RELATIVAS */
+{id:'es72',front:'which',                          back:'Relativa (cosas / oración completa)'},
+{id:'es73',front:'whose',                          back:'Relativa de posesión ("cuyo/a")'},
+{id:'es74',front:'whereby',                        back:'Relativa formal ("por la cual / mediante")'},
+{id:'es75',front:'in which',                       back:'Relativa ("en la cual / en el que")'},
+
+/* ESTRUCTURAS — CONDICIONALES */
+{id:'es76',front:'If + present, will',             back:'1st conditional (real / futuro probable)'},
+{id:'es77',front:'If + past, would',               back:'2nd conditional (irreal / hipotético)'},
+{id:'es78',front:'If people were to…',             back:'Condicional formal ("si la gente fuera a…")'},
+{id:'es79',front:'Provided that / As long as',     back:'Condicional formal ("siempre que")'},
+
+/* ESTRUCTURAS — PASIVAS */
+{id:'es80',front:'is considered / is believed',    back:'Pasiva impersonal ("se considera / se cree")'},
+{id:'es81',front:'has been criticised',            back:'Pasiva en present perfect ("ha sido criticado")'},
+
+/* ESTRUCTURAS — COMPARATIVAS */
+{id:'es82',front:'Far more/less… than',            back:'Comparativa intensiva ("mucho más/menos… que")'},
+{id:'es83',front:'By far the most / the least',    back:'Superlativa intensiva ("con diferencia el más/menos")'},
+{id:'es84',front:'nowhere near as… as',            back:'Comparativa negativa ("ni de lejos tan… como")'},
+{id:'es85',front:'The more… the more…',            back:'Comparativa progresiva ("cuanto más… más…")'},
+{id:'es86',front:'The less… the fewer…',           back:'Comparativa progresiva ("cuanto menos… menos…")'},
+{id:'es87',front:'rather than',                    back:'"En vez de / en lugar de"'},
+
+/* ESTRUCTURAS — INVERSIÓN */
+{id:'es88',front:'Not only… but also…',            back:'Inversión ("no solo… sino también…")'},
+
+/* ESTRUCTURAS — PARTICIPIO */
+{id:'es89',front:'Having + participio',            back:'Oración de participio ("habiendo + participio")'},
+
+/* ESTRUCTURAS — MATIZAR */
+{id:'es90',front:'Tend to',                        back:'"Tiende a" — matizar afirmaciones'},
+{id:'es91',front:'Appear to / Seem to',            back:'"Parece (que)" — matizar afirmaciones'},
+{id:'es92',front:'May / might',                    back:'"Puede / podría" — matizar (modales)'}
+].forEach(function(c){c.cat='essay';CARDS.push(c);});
+
+
 /* ══ STATE ══ */
 var CKEY='eng_b2_custom', MKEY='eng_b2_mastered';
 var custom=[], mastered=new Set(), flipped={}, showEspGrid=true;
@@ -1151,9 +1299,9 @@ function render(){
 
 /* ══ CAT BUTTONS ══ */
 function buildCatBtns(){
-  var cats=['','expr','gi','pv','vp','wf'];
-  var labels={'':'Todas',expr:'Expressions',gi:'G & I',pv:'Phrasal Verbs',vp:'Verbs+Prep',wf:'Word Form.'};
-  var colors={expr:'#1a6b4a',gi:'#3d2a72',pv:'#6b3a1a',vp:'#1a4a7a',wf:'#7a1a3a'};
+  var cats=['','expr','gi','pv','vp','wf','essay'];
+  var labels={'':'Todas',expr:'Expressions',gi:'G & I',pv:'Phrasal Verbs',vp:'Verbs+Prep',wf:'Word Form.',essay:'Essay'};
+  var colors={expr:'#1a6b4a',gi:'#3d2a72',pv:'#6b3a1a',vp:'#1a4a7a',wf:'#7a1a3a',essay:'#1a6b6b'};
   document.getElementById('catBtns').innerHTML=cats.map(function(cat){
     var n=cat?CARDS.filter(function(c){return c.cat===cat;}).length:CARDS.length;
     var act=state.cat===cat;
@@ -1194,6 +1342,7 @@ function apCatChange(){
   var fl=document.getElementById('apFrontLbl'),bl=document.getElementById('apBackLbl');
   if(cat==='pv'){fl.textContent='Phrasal verb';bl.textContent='Significado';}
   else if(cat==='vp'){fl.textContent='Verbo';bl.textContent='Preposición';}
+  else if(cat==='essay'){fl.textContent='Conector / estructura (inglés)';bl.textContent='Significado o función (español)';}
   else{fl.textContent='Inglés';bl.textContent='Español';}
 }
 function openAdd(){
