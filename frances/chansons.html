@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chansons · Análisis de letras francesas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Page identity: Chansons → wine / burgundy (French chanson) */
+  --primary:#9d174d; --primary-soft:#fdf2f8; --primary-mid:#e11d48; --primary-strong:#500724;
+  --primary-glow:rgba(157,23,77,.14);
+  /* Legacy aliases */
+  --accent:var(--primary); --accent-light:var(--primary-soft); --accent-mid:var(--primary-mid);
+  /* Neutrals */
+  --bg:#f7f7f5; --bg-elevated:#fbfbfa; --card:#ffffff;
+  --border:#ececec; --border-strong:#dfdfdf;
+  --text:#18181b; --text2:#52525b; --text3:#71717a;
+  /* Paper (song cards) */
+  --paper:#fefef9; --paper-border:#e7e5d6;
+  /* Shadows */
+  --shadow-xs:0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:0 2px 8px rgba(15,23,42,.04),0 1px 2px rgba(15,23,42,.03);
+  --shadow:0 4px 16px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+  --shadow-primary:0 6px 20px var(--primary-glow);
+  /* Geometry */
+  --radius:18px; --radius-md:14px; --radius-sm:10px; --radius-xs:6px; --radius-pill:999px;
+  /* Motion */
+  --ease:cubic-bezier(0.4,0,0.2,1); --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --t-fast:120ms; --t-base:200ms;
+  /* Highlight categories — same palette across every song */
+  --c-idiom:#b91c1c;     --c-idiom-bg:#fee2e2;
+  --c-native:#0f766e;    --c-native-bg:#ccfbf1;
+  --c-coll:#b45309;      --c-coll-bg:#fef3c7;
+  --c-struct:#1d4ed8;    --c-struct-bg:#dbeafe;
+}
+[data-theme="dark"]{
+  --primary:#f9a8d4; --primary-soft:rgba(249,168,212,.10); --primary-mid:#f472b6; --primary-strong:#fbcfe8;
+  --primary-glow:rgba(249,168,212,.18);
+  --bg:#0a0a0b; --bg-elevated:#131316; --card:#18181b;
+  --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --paper:#1e1e24; --paper-border:#3a3a42;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.2);
+  --shadow:0 4px 16px rgba(0,0,0,.30),0 1px 3px rgba(0,0,0,.20);
+  --shadow-primary:0 6px 24px var(--primary-glow);
+  --c-idiom:#fca5a5;     --c-idiom-bg:rgba(248,113,113,.16);
+  --c-native:#5eead4;    --c-native-bg:rgba(94,234,212,.14);
+  --c-coll:#fcd34d;      --c-coll-bg:rgba(252,211,77,.14);
+  --c-struct:#93c5fd;    --c-struct-bg:rgba(96,165,250,.16);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+*:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-xs);}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
+
+/* HEADER */
+.site-header{background:linear-gradient(180deg,var(--bg-elevated),var(--bg));padding:32px 20px 22px;position:relative;}
+.site-header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-strong) 20%,var(--border-strong) 80%,transparent);}
+.header-inner{max-width:1000px;margin:0 auto;}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.site-header h1{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:600;letter-spacing:-0.02em;color:var(--text);line-height:1.1;}
+.header-tag{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);background:var(--primary-soft);border-radius:var(--radius-pill);padding:4px 11px;}
+.header-sub{font-size:.88rem;color:var(--text3);font-weight:400;margin-top:4px;line-height:1.55;}
+.header-sub strong{color:var(--primary);font-weight:600;}
+
+/* HEADER ACTIONS BAR */
+.header-actions{max-width:1000px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:8px 14px 8px 11px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.back-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateX(-2px);box-shadow:var(--shadow);}
+.back-btn:active{transform:translateX(-2px) scale(.97);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+
+/* THEME TOGGLE */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.theme-toggle:hover{color:var(--primary);border-color:var(--primary-mid);transform:translateY(-1px);box-shadow:var(--shadow);}
+.theme-toggle .icon-sun{display:none;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:32px 20px 64px;}
+
+/* INTRO + LEGEND */
+.intro{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:22px;box-shadow:var(--shadow-xs);}
+.intro h3{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--primary);margin-bottom:10px;}
+.intro p{font-size:.92rem;color:var(--text2);line-height:1.65;margin-bottom:14px;}
+.intro p:last-child{margin-bottom:0;}
+.intro p strong{color:var(--primary);font-weight:600;}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.legend-chip{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;font-weight:500;padding:6px 12px;border-radius:var(--radius-pill);border:1px solid color-mix(in srgb, var(--lc, var(--primary)) 30%, transparent);background:var(--lc-bg, var(--primary-soft));color:var(--lc, var(--primary));}
+.legend-chip .dot{width:8px;height:8px;border-radius:50%;background:var(--lc, var(--primary));}
+.legend-chip.idiom  {--lc:var(--c-idiom);  --lc-bg:var(--c-idiom-bg);}
+.legend-chip.native {--lc:var(--c-native); --lc-bg:var(--c-native-bg);}
+.legend-chip.coll   {--lc:var(--c-coll);   --lc-bg:var(--c-coll-bg);}
+.legend-chip.struct {--lc:var(--c-struct); --lc-bg:var(--c-struct-bg);}
+
+/* TOOLBAR */
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.tool-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:7px 15px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:6px;}
+.tool-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateY(-1px);box-shadow:var(--shadow-xs);}
+.tool-btn .ico{font-size:.85rem;line-height:1;}
+
+/* SEARCH */
+.search{position:relative;flex:1;min-width:200px;max-width:340px;}
+.search input{width:100%;font-family:inherit;font-size:.85rem;font-weight:500;color:var(--text);background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:8px 34px 8px 38px;outline:none;transition:all var(--t-base) var(--ease);}
+.search input::placeholder{color:var(--text3);font-weight:400;}
+.search input:focus{border-color:var(--primary-mid);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 14%,transparent);}
+.search .ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:.95rem;color:var(--text3);pointer-events:none;line-height:1;}
+.search .clear{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:transparent;border:none;color:var(--text3);font-size:1.05rem;line-height:1;cursor:pointer;width:22px;height:22px;border-radius:50%;display:none;align-items:center;justify-content:center;transition:all var(--t-fast) var(--ease);}
+.search .clear:hover{background:var(--bg-elevated);color:var(--primary);}
+.search.has-value .clear{display:inline-flex;}
+
+/* NO RESULTS */
+.no-results{display:none;text-align:center;padding:40px 20px;color:var(--text3);font-size:.95rem;}
+.no-results.show{display:block;}
+.no-results strong{color:var(--text2);font-weight:600;}
+
+/* FONT SIZE SLIDER */
+.fs-control{display:inline-flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:6px 14px;}
+.fs-label{font-family:inherit;font-weight:600;color:var(--text3);line-height:1;user-select:none;}
+.fs-label.small{font-size:.78rem;}
+.fs-label.large{font-size:1.1rem;}
+.fs-slider{-webkit-appearance:none;appearance:none;width:100px;height:4px;background:var(--border-strong);border-radius:2px;outline:none;cursor:pointer;accent-color:var(--primary);}
+.fs-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);transition:transform var(--t-fast) var(--ease);}
+.fs-slider::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.fs-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);}
+.fs-value{font-size:.72rem;font-weight:600;color:var(--text3);min-width:32px;text-align:right;}
+
+/* SPOTIFY EMBED */
+.spotify{margin-bottom:16px;}
+.spotify iframe{display:block;width:100%;border-radius:12px;border:0;}
+
+/* SONG CARDS (papers) */
+.songs{display:flex;flex-direction:column;gap:18px;}
+.song.hidden{display:none;}
+.song{background:var(--paper);border:1px solid var(--paper-border);border-radius:var(--radius);padding:22px 26px 24px;box-shadow:var(--shadow-sm);position:relative;transition:box-shadow var(--t-base) var(--ease);}
+.song:hover{box-shadow:var(--shadow);}
+.song::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),transparent);border-radius:var(--radius) var(--radius) 0 0;}
+
+.song-header{display:flex;align-items:flex-start;gap:14px;cursor:pointer;user-select:none;}
+.song-header > div:first-child{flex:1;min-width:0;}
+.song-title{font-family:'Fraunces',Georgia,serif;font-size:1.15rem;font-weight:600;color:var(--primary);margin-bottom:4px;letter-spacing:-0.01em;transition:color var(--t-base) var(--ease);}
+.song-meta{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;}
+.song-toggle{font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease),color var(--t-base) var(--ease);flex-shrink:0;font-weight:700;line-height:1.4;margin-top:2px;}
+.song-header:hover .song-title,.song-header:hover .song-toggle{color:var(--primary-mid);}
+.song.collapsed .song-toggle{transform:rotate(-90deg);}
+.song.collapsed .song-body{display:none;}
+.song:not(.collapsed) .song-body{margin-top:18px;}
+
+/* SONG TOGGLE BUTTONS — the two independent controls */
+.song-controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px dashed var(--paper-border);}
+.song-ctrl{display:inline-flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:8px 16px;font-family:inherit;font-size:.82rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all var(--t-base) var(--ease);position:relative;}
+.song-ctrl:hover{border-color:var(--ctrl-c,var(--primary-mid));color:var(--ctrl-c,var(--primary));transform:translateY(-1px);box-shadow:var(--shadow-xs);}
+.song-ctrl.active{background:var(--ctrl-c,var(--primary));color:#fff;border-color:var(--ctrl-c,var(--primary));font-weight:600;box-shadow:0 4px 14px color-mix(in srgb,var(--ctrl-c,var(--primary)) 25%,transparent);}
+[data-theme="dark"] .song-ctrl.active{color:#0a0a0b;}
+.song-ctrl .ico{font-size:.95rem;line-height:1;}
+.song-ctrl[data-target="translation"]{--ctrl-c:var(--primary);}
+.song-ctrl[data-target="highlights"]{--ctrl-c:#0f766e;}
+[data-theme="dark"] .song-ctrl[data-target="highlights"]{--ctrl-c:#5eead4;}
+.song-ctrl .status{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;opacity:.7;padding-left:4px;border-left:1px solid currentColor;margin-left:2px;}
+
+/* LYRICS — display */
+.lyrics{font-family:'Inter',sans-serif;font-size:1rem;line-height:1.7;color:var(--text);}
+.line{margin-bottom:6px;}
+.line.gap{margin-top:14px;}
+.lyric{font-weight:700;color:var(--text);letter-spacing:-0.005em;}
+.es{display:none;font-weight:400;font-style:italic;color:var(--text3);font-size:.88em;margin-top:1px;margin-bottom:6px;padding-left:14px;border-left:2px solid var(--primary-soft);}
+.lyrics[data-translation="on"] .es{display:block;animation:fadeIn 240ms var(--ease-out);}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-2px);}to{opacity:1;transform:translateY(0);}}
+
+/* HIGHLIGHTS — inline expressions */
+.expr{position:relative;font-weight:700;transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease),padding var(--t-base) var(--ease),transform var(--t-fast) var(--ease);padding:0;border-radius:var(--radius-xs);}
+.lyrics[data-highlights="on"] .expr{padding:1px 6px;cursor:pointer;}
+.lyrics[data-highlights="on"] .expr:hover{transform:translateY(-1px);filter:brightness(1.08);}
+.lyrics[data-highlights="on"] .expr:active{transform:translateY(0);}
+.lyrics[data-highlights="on"] .expr.idiom  {background:var(--c-idiom-bg);  color:var(--c-idiom);  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c-idiom) 25%,transparent);}
+.lyrics[data-highlights="on"] .expr.native {background:var(--c-native-bg); color:var(--c-native); box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c-native) 25%,transparent);}
+.lyrics[data-highlights="on"] .expr.coll   {background:var(--c-coll-bg);   color:var(--c-coll);   box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c-coll) 25%,transparent);}
+.lyrics[data-highlights="on"] .expr.struct {background:var(--c-struct-bg); color:var(--c-struct); box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c-struct) 25%,transparent);}
+/* Stronger ring on the expression whose note is open */
+.lyrics[data-highlights="on"] .line.notes-open .expr.idiom  {box-shadow:inset 0 0 0 2px var(--c-idiom);}
+.lyrics[data-highlights="on"] .line.notes-open .expr.native {box-shadow:inset 0 0 0 2px var(--c-native);}
+.lyrics[data-highlights="on"] .line.notes-open .expr.coll   {box-shadow:inset 0 0 0 2px var(--c-coll);}
+.lyrics[data-highlights="on"] .line.notes-open .expr.struct {box-shadow:inset 0 0 0 2px var(--c-struct);}
+
+/* NOTES PANEL — hidden by default; shown only when the user opens the line */
+.notes{display:none;margin-top:6px;margin-bottom:10px;padding:10px 12px 10px 14px;background:var(--card);border:1px solid var(--paper-border);border-left:3px solid var(--primary);border-radius:var(--radius-sm);font-size:.82rem;line-height:1.5;color:var(--text2);}
+.lyrics[data-highlights="on"] .line.notes-open .notes{display:block;animation:fadeIn 240ms var(--ease-out);}
+.notes ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:7px;}
+.notes li{position:relative;padding-left:16px;line-height:1.55;}
+.notes li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--n-c,var(--primary));}
+.notes li.idiom  {--n-c:var(--c-idiom);}
+.notes li.native {--n-c:var(--c-native);}
+.notes li.coll   {--n-c:var(--c-coll);}
+.notes li.struct {--n-c:var(--c-struct);}
+.notes .tag{display:inline-block;font-family:'JetBrains Mono','Manrope',sans-serif;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:1px 6px;border-radius:var(--radius-xs);margin-right:4px;background:color-mix(in srgb,var(--n-c,var(--primary)) 14%,transparent);color:var(--n-c,var(--primary));border:1px solid color-mix(in srgb,var(--n-c,var(--primary)) 25%,transparent);}
+.notes .term{color:var(--text);font-weight:600;}
+
+@media (max-width: 600px){
+  .song{padding:20px 18px;}
+  .lyrics{font-size:.95rem;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-actions">
+    <a class="back-btn" href="index.html" title="Volver al índice">
+      <span class="arrow">←</span><span>Inicio</span>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>🎵 Chansons · Análisis de letras</h1>
+      <span class="header-tag">Français</span>
+    </div>
+    <p class="header-sub">
+      Letra, <strong>traducción al español</strong> y <strong>expresiones de uso nativo</strong> destacadas — dos botones por canción, combinables.
+    </p>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="intro">
+    <h3>Cómo usar esta página</h3>
+    <p>Cada canción tiene <strong>dos botones independientes</strong>: pulsa <strong>Traducción</strong> para ver el español bajo cada verso, y <strong>Expresiones</strong> para resaltar giros idiomáticos, coloquialismos y estructuras nativas. Los puedes activar a la vez, solo uno, o ninguno.</p>
+    <p>Cuando activas <strong>Expresiones</strong>, debajo de cada verso aparece también una breve nota con la explicación de cada giro destacado. La paleta de colores es la misma en todas las canciones:</p>
+    <div class="legend">
+      <span class="legend-chip idiom"><span class="dot"></span>Expresión idiomática</span>
+      <span class="legend-chip native"><span class="dot"></span>Giro nativo habitual</span>
+      <span class="legend-chip coll"><span class="dot"></span>Coloquialismo / elisión</span>
+      <span class="legend-chip struct"><span class="dot"></span>Estructura útil</span>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="search" id="search">
+      <span class="ico">🔍</span>
+      <input type="search" id="search-input" placeholder="Buscar canción, artista, verso… (ignora acentos)" oninput="filterSongs(this.value)" autocomplete="off">
+      <button class="clear" onclick="clearSearch()" aria-label="Borrar búsqueda" title="Borrar">×</button>
+    </div>
+    <div class="fs-control" title="Tamaño del texto">
+      <span class="fs-label small">A</span>
+      <input type="range" class="fs-slider" id="fs-slider" min="85" max="140" step="5" value="100" oninput="updateFontSize(this.value)">
+      <span class="fs-label large">A</span>
+      <span class="fs-value" id="fs-value">100%</span>
+    </div>
+    <div class="toolbar-actions">
+      <button class="tool-btn" onclick="expandAll()"><span class="ico">▾</span>Expandir todas</button>
+      <button class="tool-btn" onclick="collapseAll()"><span class="ico">▸</span>Colapsar todas</button>
+    </div>
+  </div>
+
+  <div class="songs">
+
+    <!-- ===================================================== -->
+    <!-- SONG 1 — La Zarra · Évidemment (2023) -->
+    <!-- ===================================================== -->
+    <article class="song">
+      <div class="song-header" onclick="toggleSong(this)">
+        <div>
+          <div class="song-title">La Zarra — Évidemment</div>
+          <div class="song-meta">2023 · Eurovisión · Chanson française</div>
+        </div>
+        <span class="song-toggle">▾</span>
+      </div>
+
+      <div class="song-body">
+
+        <div class="spotify">
+          <iframe data-testid="embed-iframe" src="https://open.spotify.com/embed/track/18ZX6YaDSOopXPRvfIh8DM?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="La Zarra — Évidemment (Spotify)"></iframe>
+        </div>
+
+        <div class="song-controls">
+          <button class="song-ctrl" data-target="translation" onclick="toggleCtrl(this)">
+            <span class="ico">🇪🇸</span><span>Traducción</span>
+          </button>
+          <button class="song-ctrl" data-target="highlights" onclick="toggleCtrl(this)">
+            <span class="ico">✨</span><span>Expresiones</span>
+          </button>
+        </div>
+
+        <div class="lyrics" data-translation="off" data-highlights="off">
+
+          <div class="line">
+            <p class="lyric">Mon cœur, mes mains, mes yeux, <span class="expr native">mes reins</span></p>
+            <p class="es">Mi corazón, mis manos, mis ojos, mis riñones (mi cuerpo entero)</p>
+            <div class="notes"><ul>
+              <li class="native"><span class="tag">Nativo</span><span class="term">mes reins</span> — literalmente "los riñones", pero en lenguaje nativo se usa como sinónimo del cuerpo entero / lo más íntimo de uno.</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric"><span class="expr struct">Plus rien ne</span> m'appartient</p>
+            <p class="es">Ya nada me pertenece</p>
+            <div class="notes"><ul>
+              <li class="struct"><span class="tag">Estructura</span><span class="term">Plus rien ne…</span> — negación absoluta, equivalente a "ya nada…". Se construye con <em>ne</em> + verbo (sin <em>pas</em>).</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric"><span class="expr coll">J'me</span> <span class="expr native">fais du mal</span> pour <span class="expr native">faire du bien</span></p>
+            <p class="es">Me hago daño para hacer el bien</p>
+            <div class="notes"><ul>
+              <li class="coll"><span class="tag">Oral</span><span class="term">J'me</span> — elisión coloquial de <em>je me</em>, muy típica al hablar y en canciones.</li>
+              <li class="native"><span class="tag">Nativo</span><span class="term">se faire du mal / se faire du bien</span> — pareja de expresiones cotidianas: "hacerse daño / sentar bien".</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric">J'oublie <span class="expr struct">comme si</span> <span class="expr coll">c'n'était</span> rien</p>
+            <p class="es">Olvido como si no fuera nada</p>
+            <div class="notes"><ul>
+              <li class="struct"><span class="tag">Estructura</span><span class="term">comme si + imparfait</span> — "como si + subjuntivo de imperfecto en español"; expresa hipótesis irreal.</li>
+              <li class="coll"><span class="tag">Oral</span><span class="term">c'n'était</span> — elisión oral de <em>ce n'était</em>, propia del registro coloquial cantado.</li>
+            </ul></div>
+          </div>
+
+          <div class="line gap">
+            <p class="lyric">Dans mon <span class="expr idiom">jardin d'enfer</span> poussent des fleurs</p>
+            <p class="es">En mi jardín del infierno crecen flores</p>
+            <div class="notes"><ul>
+              <li class="idiom"><span class="tag">Idiomática</span><span class="term">jardin d'enfer</span> — oxímoron poético habitual en chanson: paraíso doloroso, lugar donde lo bello nace del sufrimiento.</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric">Que j'arrose de mes rêves, de mes pleurs</p>
+            <p class="es">Que riego con mis sueños, con mis lágrimas</p>
+          </div>
+
+          <div class="line gap">
+            <p class="lyric"><span class="expr idiom">On a beau</span> être <span class="expr idiom">sur le toit du monde</span></p>
+            <p class="es">Por más que estemos en la cima del mundo</p>
+            <div class="notes"><ul>
+              <li class="idiom"><span class="tag">Idiomática</span><span class="term">avoir beau + infinitivo</span> — "por más que…": expresa esfuerzo inútil. Estructura muy típica del francés, sin equivalente literal.</li>
+              <li class="idiom"><span class="tag">Idiomática</span><span class="term">être sur le toit du monde</span> — "estar en la cima del mundo", en su mejor momento.</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric">On ne peut <span class="expr idiom">toucher le ciel du doigt</span></p>
+            <p class="es">No podemos rozar el cielo con la mano</p>
+            <div class="notes"><ul>
+              <li class="idiom"><span class="tag">Idiomática</span><span class="term">toucher le ciel du doigt</span> — "tocar el cielo con un dedo": estar a punto de alcanzar algo inalcanzable.</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric"><span class="expr native">Évidemment</span></p>
+            <p class="es">Evidentemente</p>
+            <div class="notes"><ul>
+              <li class="native"><span class="tag">Nativo</span><span class="term">Évidemment</span> — adverbio muy frecuente en oral, suele marcar ironía o resignación ("claro, cómo no").</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric">Toutes ces belles promesses que j'entends</p>
+            <p class="es">Todas esas bellas promesas que escucho</p>
+          </div>
+
+          <div class="line">
+            <p class="lyric"><span class="expr coll">C'n'est</span> que <span class="expr idiom">du vent</span></p>
+            <p class="es">No es más que viento (palabras vacías)</p>
+            <div class="notes"><ul>
+              <li class="coll"><span class="tag">Oral</span><span class="term">c'n'est</span> — elisión de <em>ce n'est</em>.</li>
+              <li class="idiom"><span class="tag">Idiomática</span><span class="term">ce n'est que du vent</span> — "no son más que palabras al viento, promesas vacías".</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric"><span class="expr native">Évidemment</span></p>
+            <p class="es">Evidentemente</p>
+          </div>
+
+          <div class="line gap">
+            <p class="lyric"><span class="expr struct">Car</span> <span class="expr idiom">après l'beau temps vient la pluie</span></p>
+            <p class="es">Porque tras el buen tiempo viene la lluvia</p>
+            <div class="notes"><ul>
+              <li class="struct"><span class="tag">Estructura</span><span class="term">car</span> — conjunción causal de registro algo cuidado, equivalente a "porque/pues".</li>
+              <li class="idiom"><span class="tag">Idiomática</span><span class="term">après la pluie, le beau temps</span> — refrán francés ("después de la tormenta llega la calma"); aquí está invertido para subrayar el pesimismo.</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric"><span class="expr coll">C'est c'qu'on</span> oublie</p>
+            <p class="es">Eso es lo que olvidamos</p>
+            <div class="notes"><ul>
+              <li class="coll"><span class="tag">Oral</span><span class="term">c'qu'on</span> — elisión de <em>ce qu'on</em>, muy típica en canción y en lenguaje hablado.</li>
+            </ul></div>
+          </div>
+
+          <div class="line gap">
+            <p class="lyric">C'est toujours <span class="expr idiom">trop beau pour être vrai</span>, mais</p>
+            <p class="es">Siempre es demasiado bonito para ser cierto, pero</p>
+            <div class="notes"><ul>
+              <li class="idiom"><span class="tag">Idiomática</span><span class="term">trop beau pour être vrai</span> — "demasiado bueno para ser cierto"; expresión hecha también en español.</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric"><span class="expr coll">C'n'est</span> jamais trop laid pour être faux</p>
+            <p class="es">Nunca es demasiado feo para ser falso</p>
+            <div class="notes"><ul>
+              <li class="coll"><span class="tag">Oral</span>Juego inverso con la expresión anterior: lo malo, en cambio, casi siempre es real.</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric"><span class="expr native">Évidemment</span></p>
+            <p class="es">Evidentemente</p>
+          </div>
+
+          <div class="line">
+            <p class="lyric">Elle <span class="expr struct">ne sera plus jamais</span> la même</p>
+            <p class="es">Ya nunca volverá a ser la misma</p>
+            <div class="notes"><ul>
+              <li class="struct"><span class="tag">Estructura</span><span class="term">ne … plus jamais</span> — negación enfática triple: "nunca más, jamás". Tres marcas refuerzan el "ya nunca".</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric">Cette fille <span class="expr native">d'avant</span></p>
+            <p class="es">Aquella chica de antes</p>
+            <div class="notes"><ul>
+              <li class="native"><span class="tag">Nativo</span><span class="term">d'avant</span> — fórmula corta y muy natural para "de antes / anterior" (la versión previa de alguien o algo).</li>
+            </ul></div>
+          </div>
+
+          <div class="line gap">
+            <p class="lyric">Je vends demain, <span class="expr coll">j'rachète</span> hier</p>
+            <p class="es">Vendo el mañana, recompro el ayer</p>
+            <div class="notes"><ul>
+              <li class="coll"><span class="tag">Oral</span><span class="term">j'rachète</span> — elisión de <em>je rachète</em>; el prefijo <em>re-</em> indica "volver a comprar".</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric"><span class="expr idiom">Le temps est assassin</span></p>
+            <p class="es">El tiempo es un asesino</p>
+            <div class="notes"><ul>
+              <li class="idiom"><span class="tag">Idiomática</span><span class="term">Le temps est assassin</span> — verso emblemático del francés (popularizado por la canción <em>Mistral gagnant</em> de Renaud); recoge la idea de que el tiempo lo destruye todo.</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric">Je cherche l'amour, <span class="expr coll">je n'trouve</span> rien</p>
+            <p class="es">Busco el amor, no encuentro nada</p>
+            <div class="notes"><ul>
+              <li class="coll"><span class="tag">Oral</span><span class="term">je n'trouve</span> — elisión: el <em>e</em> de <em>ne</em> se cae al cantar.</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric">Comme dans mon <span class="expr native">sac à main</span></p>
+            <p class="es">Como en mi bolso de mano</p>
+            <div class="notes"><ul>
+              <li class="native"><span class="tag">Nativo</span><span class="term">sac à main</span> — palabra cotidiana para "bolso/cartera de mano". La comparación humorística es un guiño muy chanson.</li>
+            </ul></div>
+          </div>
+
+          <div class="line gap">
+            <p class="lyric">Dans ma tête, <span class="expr coll">c'n'est</span> <span class="expr native">pas tant</span> évident</p>
+            <p class="es">En mi cabeza, no es tan evidente</p>
+            <div class="notes"><ul>
+              <li class="native"><span class="tag">Nativo</span><span class="term">pas tant</span> — atenuador habitual: "no tanto / no tan…".</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric">Je cherche la vérité <span class="expr struct">tout en l'évitant</span></p>
+            <p class="es">Busco la verdad mientras la evito</p>
+            <div class="notes"><ul>
+              <li class="struct"><span class="tag">Estructura</span><span class="term">tout en + gerundio</span> — construcción típica francesa para acciones simultáneas con matiz contradictorio ("a la vez que…").</li>
+            </ul></div>
+          </div>
+
+          <div class="line gap">
+            <p class="lyric"><span class="expr struct">Car</span> moi, je chante</p>
+            <p class="es">Porque yo, canto</p>
+          </div>
+
+          <div class="line">
+            <p class="lyric">Ma vie, <span class="expr struct">la vôtre</span> et un peu de romance</p>
+            <p class="es">Mi vida, la vuestra y un poco de romance</p>
+            <div class="notes"><ul>
+              <li class="struct"><span class="tag">Estructura</span><span class="term">la vôtre</span> — pronombre posesivo tónico (femenino singular de <em>vous</em>): "la vuestra / la suya (de ustedes)".</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric">Je suis nue devant vous</p>
+            <p class="es">Estoy desnuda ante vosotros</p>
+          </div>
+
+          <div class="line">
+            <p class="lyric"><span class="expr native">Donnez-moi donc</span> une chance</p>
+            <p class="es">Concededme, pues, una oportunidad</p>
+            <div class="notes"><ul>
+              <li class="native"><span class="tag">Nativo</span><span class="term">donc</span> tras imperativo — partícula enfática muy nativa: refuerza la petición ("¡venga, dame…!", "pues dame…").</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric"><span class="expr idiom">De vous à moi</span>, de moi à vous</p>
+            <p class="es">De vosotros a mí, de mí a vosotros</p>
+            <div class="notes"><ul>
+              <li class="idiom"><span class="tag">Idiomática</span><span class="term">de vous à moi</span> — expresión hecha equivalente a "entre tú y yo / aquí, en confianza".</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric"><span class="expr struct">Ai-je réussi à</span> chanter</p>
+            <p class="es">¿He logrado cantar?</p>
+            <div class="notes"><ul>
+              <li class="struct"><span class="tag">Estructura</span><span class="term">réussir à + infinitivo</span> — "lograr hacer algo". La inversión <em>ai-je</em> es la pregunta de registro cuidado.</li>
+            </ul></div>
+          </div>
+
+          <div class="line">
+            <p class="lyric">À chanter la Grande France ?</p>
+            <p class="es">¿Cantar a la Gran Francia?</p>
+          </div>
+
+        </div>
+      </div>
+    </article>
+
+    <div class="no-results" id="no-results">
+      Ninguna canción coincide con <strong id="no-results-q"></strong>.
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+/* THEME */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("theme",t);}catch(e){}}
+function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme")||"light";applyTheme(cur==="dark"?"light":"dark");}
+(function initTheme(){let saved=null;try{saved=localStorage.getItem("theme");}catch(e){}if(saved==="dark"||saved==="light"){applyTheme(saved);return;}const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;applyTheme(prefersDark?"dark":"light");})();
+
+/* SONG CARDS — collapse/expand */
+function toggleSong(header){
+  header.parentElement.classList.toggle('collapsed');
+}
+function expandAll(){
+  document.querySelectorAll('.song').forEach(s => s.classList.remove('collapsed'));
+}
+function collapseAll(){
+  document.querySelectorAll('.song').forEach(s => s.classList.add('collapsed'));
+}
+
+/* TWO INDEPENDENT TOGGLE BUTTONS PER SONG */
+function toggleCtrl(btn){
+  const target = btn.dataset.target;   // "translation" | "highlights"
+  const lyrics = btn.closest('.song').querySelector('.lyrics');
+  const isOn = lyrics.dataset[target] === 'on';
+  lyrics.dataset[target] = isOn ? 'off' : 'on';
+  btn.classList.toggle('active', !isOn);
+  /* Turning highlights off also collapses any open notes */
+  if (target === 'highlights' && isOn){
+    lyrics.querySelectorAll('.line.notes-open').forEach(l => l.classList.remove('notes-open'));
+  }
+}
+
+/* CLICK ON A HIGHLIGHTED EXPRESSION → toggle the notes for its line */
+document.querySelectorAll('.lyrics').forEach(lyrics => {
+  lyrics.addEventListener('click', e => {
+    if (lyrics.dataset.highlights !== 'on') return;
+    const expr = e.target.closest('.expr');
+    if (!expr || !lyrics.contains(expr)) return;
+    const line = expr.closest('.line');
+    if (!line || !line.querySelector('.notes')) return;
+    line.classList.toggle('notes-open');
+  });
+});
+
+/* SEARCH — ignores accents, case, punctuation */
+function normalize(s){
+  return (s || '')
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/œ/g, 'oe').replace(/æ/g, 'ae').replace(/ß/g, 'ss')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+/* Precompute searchable index per song */
+const SONG_INDEX = Array.from(document.querySelectorAll('.song')).map(song => {
+  const title = song.querySelector('.song-title')?.textContent || '';
+  const meta = song.querySelector('.song-meta')?.textContent || '';
+  const lyrics = song.querySelector('.lyrics')?.textContent || '';
+  return { song, haystack: normalize(title + ' ' + meta + ' ' + lyrics) };
+});
+function filterSongs(q){
+  const wrap = document.getElementById('search');
+  wrap.classList.toggle('has-value', !!q);
+  const needle = normalize(q);
+  let visible = 0;
+  SONG_INDEX.forEach(({ song, haystack }) => {
+    const match = !needle || haystack.includes(needle);
+    song.classList.toggle('hidden', !match);
+    if (match) visible++;
+  });
+  const noRes = document.getElementById('no-results');
+  noRes.classList.toggle('show', visible === 0 && !!needle);
+  document.getElementById('no-results-q').textContent = '"' + q + '"';
+}
+function clearSearch(){
+  const input = document.getElementById('search-input');
+  input.value = '';
+  filterSongs('');
+  input.focus();
+}
+</script>
+
+</body>
+</html>
