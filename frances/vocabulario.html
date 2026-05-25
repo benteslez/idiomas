@@ -201,10 +201,11 @@ body > *{position:relative;z-index:1;}
 /* ── GRID ── */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 16px; padding: 20px 24px;
-  max-width: 1400px; margin: 0 auto;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px; padding: 16px 14px 0;
+  max-width: 1180px; margin: 0 auto;
 }
+@media (max-width: 380px) { .grid { grid-template-columns: 1fr; padding: 12px 10px 0; } }
 .initial-banner {
   max-width: 1400px;
   margin: 14px auto 0;
@@ -224,6 +225,9 @@ body > *{position:relative;z-index:1;}
   transition: all .15s;
 }
 .initial-banner-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.initial-banner-dice { padding: 4px 9px; font-size: 1rem; line-height: 1; }
+.initial-banner-dice.spin { animation: diceSpin .5s ease; }
+@keyframes diceSpin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
 
 /* ── FLIP CARD ──
    Strategy: card-wrapper has explicit height set by JS (= front face height).
@@ -289,14 +293,15 @@ body > *{position:relative;z-index:1;}
 
 /* ── FRONT content ── */
 .card-head {
-  padding: 22px 20px 10px 22px;
-  display: flex; align-items: flex-start; gap: 10px;
+  padding: 26px 24px 10px 26px;
+  display: flex; align-items: flex-start; gap: 8px;
 }
 .card-word-block { flex: 1; min-width: 0; }
 .card-word {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.22em; font-weight: 600;
-  color: var(--text); line-height: 1.2; word-break: break-word;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: 1.08em; font-weight: 700;
+  letter-spacing: -0.005em;
+  color: var(--text); line-height: 1.25; word-break: break-word;
 }
 .card-word.known-word {
   text-decoration: underline;
@@ -304,7 +309,7 @@ body > *{position:relative;z-index:1;}
   text-underline-offset: 3px;
 }
 mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
-.badges-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+.badges-row { display: none; }
 .badge {
   border-radius: 10px; padding: 2px 9px;
   font-size: 0.68em; font-weight: 600;
@@ -345,9 +350,9 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 .badge-tema-DELF { background: var(--c-delf); }
 
 .known-btn {
-  flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
-  border: 2px solid var(--border); background: transparent;
-  cursor: pointer; font-size: 1rem;
+  flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: transparent;
+  cursor: pointer; font-size: 0.85rem;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.15s; color: var(--text3);
   position: relative; z-index: 3;
@@ -356,52 +361,56 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 .known-btn.active { background: #2d7a3a; border-color: #2d7a3a; color: #fff; }
 
 .card-body {
-  padding: 0 20px 14px 22px; flex: 1;
+  padding: 0 26px 22px 26px; flex: 1;
   display: flex; flex-direction: column; gap: 8px;
 }
-.translation { font-weight: 600; font-size: 0.96em; color: var(--text); }
-.example-fr  { font-style: italic; font-size: 0.87em; color: var(--text2); line-height: 1.45; }
-.example-es  { font-size: 0.82em; color: var(--text3); line-height: 1.4; }
-.synonyms    { font-size: 0.8em; color: var(--accent); }
+.translation { font-weight: 600; font-size: 0.86em; color: var(--text); }
+.example-fr  { font-style: italic; font-size: 0.78em; color: var(--text2); line-height: 1.45; padding-top: 8px; border-top: 1px solid var(--border); margin-top: 4px; }
+.example-es  { font-size: 0.74em; color: var(--text3); line-height: 1.4; }
+.synonyms    { font-size: 0.74em; color: var(--accent); }
 .synonyms::before { content: "\2248  "; }
 .card-warn {
-  margin: 0 20px 14px 22px;
+  margin: 0 26px 18px 26px;
   background: var(--warn-bg); border-left: 3px solid var(--warn-border);
-  border-radius: 0 6px 6px 0; padding: 7px 10px;
-  font-size: 0.78em; color: #5c4200; line-height: 1.4;
+  border-radius: 0 6px 6px 0; padding: 6px 9px;
+  font-size: 0.72em; color: #5c4200; line-height: 1.4;
 }
 .flip-hint-front {
-  text-align: right; padding: 0 12px 8px;
-  font-size: 0.67em; color: var(--text3); opacity: 0.6;
+  text-align: right; padding: 0 12px 6px;
+  font-size: 0.62em; color: var(--text3); opacity: 0.6;
   user-select: none; pointer-events: none;
 }
+/* Smaller badges to match the simpler English style */
+.badge { font-size: 0.6em; padding: 2px 7px; border-radius: 8px; }
+mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 
 /* ── BACK content ── */
 .card-back-inner {
   flex: 1; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  padding: 28px 24px; text-align: center; gap: 12px;
+  padding: 30px 26px; text-align: center; gap: 10px;
 }
 .back-label {
-  font-size: 0.65em; font-weight: 600;
+  font-size: 0.6em; font-weight: 600;
   letter-spacing: 0.16em; text-transform: uppercase;
   color: rgba(255,255,255,0.55);
 }
 .back-translation {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.55em; font-weight: 700;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: 1.25em; font-weight: 700;
+  letter-spacing: -0.005em;
   color: #ffffff; line-height: 1.25; word-break: break-word;
 }
 .back-tema-label {
-  font-size: 0.68em; font-weight: 500;
+  font-size: 0.62em; font-weight: 500;
   letter-spacing: 0.08em;
   color: rgba(255,255,255,0.55);
   text-transform: uppercase;
   border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 20px; padding: 3px 10px;
+  border-radius: 20px; padding: 2px 9px;
 }
 .back-flip-hint {
-  font-size: 0.68em; color: rgba(255,255,255,0.4);
+  font-size: 0.62em; color: rgba(255,255,255,0.4);
   margin-top: 4px;
 }
 
@@ -1883,6 +1892,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 <main>
   <div class="initial-banner" id="initialBanner" hidden="">
     <span class="initial-banner-txt">Mostrando 3 tarjetas aleatorias</span>
+    <button type="button" class="initial-banner-btn initial-banner-dice" id="btnReroll" title="Otras 3 tarjetas">&#127922;</button>
     <button type="button" class="initial-banner-btn" id="btnShowAll">Ver todas</button>
   </div>
   <div class="grid" id="grid" style="font-size: 17.6px;"></div>
@@ -34891,6 +34901,18 @@ function initFilters() {
   // Banner inicial — botón Ver todas
   var btnShowAll = document.getElementById("btnShowAll");
   if (btnShowAll) btnShowAll.addEventListener("click", function(){ reRender(); });
+  // Banner inicial — dado para recargar 3 tarjetas distintas
+  var btnReroll = document.getElementById("btnReroll");
+  if (btnReroll) btnReroll.addEventListener("click", function(){
+    initialPreviewCache = null;
+    state.initialView = true;
+    flippedIds = {};
+    try { saveFlipped(); } catch(e){}
+    btnReroll.classList.remove("spin");
+    void btnReroll.offsetWidth;
+    btnReroll.classList.add("spin");
+    render();
+  });
   // Topic — botón Todos
   document.getElementById("btnTemaAll").addEventListener("click", function(){ setTema(""); });
   // Top 3 botones
