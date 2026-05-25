@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammaire · Les Temps du Futur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ede9df;
+  --card: #faf7f1;
+  --border: #c4bead;
+  --text: #1a1814;
+  --text2: #44413a;
+  --text3: #706c64;
+  --accent: #7a5a0a;
+  --accent-light: #f0e0c0;
+  --accent-mid: #b89050;
+  --warn-bg: #fdf0cc;
+  --shadow: 0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm: 0 1px 6px rgba(0,0,0,0.08);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --green: #1a6028;
+  --green-bg: #e4f2e8;
+  --red: #a81e2e;
+  --red-bg: #fce6e8;
+  --blue: #163494;
+  --blue-bg: #e6ebf8;
+  --purple: #6a1a8a;
+  --purple-bg: #f2e6f8;
+  /* tense colours */
+  --fp-color: #1a6028;   /* futur proche  — green */
+  --fp-bg:    #e4f2e8;
+  --fs-color: #163494;   /* futur simple  — blue  */
+  --fs-bg:    #e6ebf8;
+  --fa-color: #6a1a8a;   /* futur antérieur — purple */
+  --fa-bg:    #f2e6f8;
+  --fs: 15px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: var(--fs); }
+
+/* ── HEADER ── */
+.site-header { background: var(--card); border-bottom: 2px solid var(--border); padding: 20px 20px 14px; }
+.header-top { display: flex; align-items: baseline; gap: 10px; margin-bottom: 3px; flex-wrap: wrap; }
+.site-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.3rem,5vw,2rem); font-weight: 700; color: var(--text); }
+.header-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent-mid); border-radius: 20px; padding: 3px 10px; }
+.subtitle { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
+.stats-row { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+.stat-pill { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 4px 11px; font-size: 0.76rem; font-weight: 500; color: var(--text2); }
+.stat-pill.fp  { border-color: var(--fp-color);  color: var(--fp-color);  background: var(--fp-bg); }
+.stat-pill.fs  { border-color: var(--fs-color);  color: var(--fs-color);  background: var(--fs-bg); }
+.stat-pill.fa  { border-color: var(--fa-color);  color: var(--fa-color);  background: var(--fa-bg); }
+.fs-wrap { display: flex; align-items: center; gap: 7px; margin-left: auto; }
+.fs-slider { width: 76px; accent-color: var(--accent); cursor: pointer; }
+.fs-sz { color: var(--text3); font-weight: 700; }
+
+/* ── NAV ── */
+.mode-toggle { display: flex; border-bottom: 2px solid var(--border); background: var(--card); }
+.mode-btn { flex: 1; padding: 12px 8px; font-family: 'DM Sans', sans-serif; font-size: 0.84rem; font-weight: 600; color: var(--text3); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.15s; margin-bottom: -2px; }
+.mode-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.section-nav { position: sticky; top: 0; z-index: 200; background: var(--card); border-bottom: 2px solid var(--border); box-shadow: var(--shadow-sm); }
+.section-nav-inner { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.section-nav-inner::-webkit-scrollbar { display: none; }
+.snav-btn { flex-shrink: 0; padding: 11px 16px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; color: var(--text3); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.snav-btn:hover { color: var(--text2); }
+.snav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── LAYOUT ── */
+.main-layout { max-width: 860px; margin: 0 auto; padding: 16px 16px 40px; }
+.panel { display: none; } .panel.active { display: block; }
+.sec-block { display: none; } .sec-block.active { display: block; }
+.gram-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden; }
+.gram-card-body { padding: 18px; }
+
+/* ── BOXES ── */
+.def-box { background: var(--warn-bg); border-left: 4px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 15px; margin-bottom: 14px; line-height: 1.65; color: var(--text); }
+.def-box strong { color: var(--accent); font-weight: 700; }
+.warn-box { background: #fff4e0; border: 1px solid #c8900a; border-radius: var(--radius-sm); padding: 10px 13px; margin: 10px 0; font-size: 0.9em; display: flex; gap: 8px; align-items: flex-start; }
+.warn-icon { flex-shrink: 0; margin-top: 1px; }
+.warn-text { color: var(--text2); line-height: 1.55; }
+.warn-text strong { color: #7a4400; font-weight: 700; }
+.note-box { background: var(--purple-bg); border-left: 4px solid var(--purple); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 10px 0; font-size: 0.9em; color: var(--text2); line-height: 1.55; }
+.note-box strong { color: var(--purple); font-weight: 700; }
+
+/* ── EXAMPLE BLOCKS — coloured by tense ── */
+.example-block { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 8px 0; }
+.example-block.fp  { background: var(--fp-bg);  border-left: 4px solid var(--fp-color); }
+.example-block.fs  { background: var(--fs-bg);  border-left: 4px solid var(--fs-color); }
+.example-block.fa  { background: var(--fa-bg);  border-left: 4px solid var(--fa-color); }
+.example-block.mix { background: #f0f0f8;        border-left: 4px solid #606080; }
+.example-block.neu { background: var(--blue-bg); border-left: 4px solid var(--blue); }
+.ex-fr { font-weight: 600; margin-bottom: 3px; color: var(--text); }
+.efp  { color: var(--fp-color); font-weight: 700; font-style: normal; }
+.efs  { color: var(--fs-color); font-weight: 700; font-style: normal; }
+.efa  { color: var(--fa-color); font-weight: 700; font-style: normal; }
+.ex-fr em { color: var(--blue); font-style: normal; font-weight: 700; }
+.ex-es { color: var(--text2); font-size: 0.88em; font-style: italic; }
+.ex-note { font-size: 0.78em; color: var(--text3); margin-top: 3px; font-weight: 500; }
+
+/* ── LEGEND ── */
+.legend-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.legend-pill { font-size: 0.74em; font-weight: 700; border-radius: 20px; padding: 3px 10px; border: 1.5px solid; white-space: nowrap; }
+.legend-pill.fp { background: var(--fp-bg); color: var(--fp-color); border-color: var(--fp-color); }
+.legend-pill.fs { background: var(--fs-bg); color: var(--fs-color); border-color: var(--fs-color); }
+.legend-pill.fa { background: var(--fa-bg); color: var(--fa-color); border-color: var(--fa-color); }
+
+/* ── TABLES ── */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.gram-table { width: 100%; border-collapse: collapse; min-width: 300px; }
+.gram-table th { background: var(--bg); border-bottom: 2px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; text-align: left; font-size: 0.72em; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+.gram-table td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; vertical-align: top; color: var(--text); }
+.gram-table tr:last-child td { border-bottom: none; }
+.gram-table tr:nth-child(even) td { background: #f4f0e6; }
+.gram-table td:last-child, .gram-table th:last-child { border-right: none; }
+.hl-fp { color: var(--fp-color); font-weight: 700; }
+.hl-fs { color: var(--fs-color); font-weight: 700; }
+.hl-fa { color: var(--fa-color); font-weight: 700; }
+.hl    { color: var(--accent);   font-weight: 700; }
+.dim   { color: var(--text3); }
+.ok-cell  { color: var(--green); font-weight: 700; }
+.err-cell { color: var(--red);   font-weight: 600; }
+
+/* ── CHIPS ── */
+.chip-bar { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.chip { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; white-space: nowrap; }
+.chip:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+.chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.chip.fp.active { background: var(--fp-color); border-color: var(--fp-color); }
+.chip.fs.active { background: var(--fs-color); border-color: var(--fs-color); }
+.chip.fa.active { background: var(--fa-color); border-color: var(--fa-color); }
+.chip-panel { display: none; } .chip-panel.active { display: block; }
+
+/* ── TRAP CARDS ── */
+.trap-cards { display: flex; flex-direction: column; gap: 10px; }
+.trap-card { border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.trap-card-header { padding: 11px 14px; background: var(--bg); }
+.trap-name { font-weight: 700; font-size: 0.9em; color: var(--text); margin-bottom: 7px; }
+.trap-vs { display: flex; gap: 8px; flex-wrap: wrap; }
+.trap-wrong { background: var(--red-bg);  border: 1.5px solid #d09098; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--red);   font-weight: 500; }
+.trap-right { background: var(--green-bg); border: 1.5px solid #80b890; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--green); font-weight: 500; }
+.trap-expl { padding: 10px 14px 12px; font-size: 0.86em; color: var(--text2); line-height: 1.6; border-top: 1px solid var(--border); background: var(--card); }
+.trap-expl strong { color: var(--text); font-weight: 700; }
+
+/* ── SEC LABEL ── */
+.sec-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin: 14px 0 7px; }
+
+/* ── EXERCISES ── */
+.exercise-controls { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.exercise-controls h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+.ctrl-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 7px; display: block; }
+.ex-options { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.ex-opt-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.ex-opt-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+.row-btns { display: flex; gap: 7px; margin-bottom: 14px; flex-wrap: wrap; }
+.pill-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.pill-btn:hover:not(.active) { background: var(--border); }
+.pill-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+.pill-btn.diff.active.A2 { background: var(--green); border-color: var(--green); color: #fff; }
+.pill-btn.diff.active.B1 { background: var(--blue);  border-color: var(--blue);  color: #fff; }
+.pill-btn.diff.active.B2 { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-generate { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; border: none; border-radius: 10px; padding: 13px; font-family: 'DM Sans', sans-serif; font-size: 0.92em; font-weight: 700; cursor: pointer; background: var(--accent); color: white; transition: all 0.18s; margin-top: 4px; }
+.btn-generate:hover:not(:disabled) { filter: brightness(1.1); box-shadow: 0 4px 14px rgba(122,90,10,0.32); }
+.btn-generate:disabled { opacity: 0.5; cursor: not-allowed; }
+.spinner { display: none; animation: spin 0.8s linear infinite; }
+.btn-generate.loading .spinner { display: inline; }
+.btn-generate.loading .btn-icon { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.progress-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 14px; display: none; }
+.progress-wrap.visible { display: block; }
+.progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.progress-label { font-size: 0.78em; color: var(--text3); font-weight: 600; }
+.progress-frac  { font-size: 0.92em; font-weight: 700; color: var(--accent); }
+.progress-track { height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-fill  { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.35s ease; }
+.progress-score { display: flex; gap: 14px; margin-top: 9px; font-size: 0.8em; flex-wrap: wrap; align-items: center; }
+.score-item { display: flex; align-items: center; gap: 5px; font-weight: 500; color: var(--text2); }
+.score-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.score-dot.g { background: var(--green); } .score-dot.r { background: var(--red); }
+.btn-retry { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 13px; font-family: 'DM Sans', sans-serif; font-size: 0.78em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; margin-left: auto; }
+.btn-retry:hover { background: var(--border); }
+
+.final-score-bar { display: none; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
+.final-score-bar.visible { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.final-num   { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+.final-label { font-size: 0.74em; color: var(--text3); }
+.final-track { flex: 1; min-width: 80px; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.final-fill  { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+.final-msg   { font-size: 0.84em; color: var(--text2); width: 100%; font-weight: 500; }
+
+.exercise-area { display: none; } .exercise-area.visible { display: block; }
+.exercise-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 12px; overflow: hidden; }
+.exercise-card-header { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--border); }
+.ex-num { font-weight: 700; color: var(--accent); font-size: 0.88em; }
+.ex-type-badge { font-size: 0.68em; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-mid); border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge { font-size: 0.68em; font-weight: 700; border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge.A2 { background: var(--green-bg); color: var(--green); border: 1px solid #80b890; }
+.ex-diff-badge.B1 { background: var(--blue-bg);  color: var(--blue);  border: 1px solid #90a8e0; }
+.ex-diff-badge.B2 { background: var(--warn-bg);  color: var(--accent); border: 1px solid var(--accent-mid); }
+.ex-status { margin-left: auto; }
+.exercise-body { padding: 16px 18px; }
+.exercise-prompt { line-height: 1.7; margin-bottom: 12px; color: var(--text); }
+.exercise-prompt em { color: var(--accent); font-style: italic; font-weight: 600; }
+.fill-input { border: none; border-bottom: 2px solid var(--accent-mid); background: var(--accent-light); padding: 2px 8px; border-radius: 4px 4px 0 0; font-family: 'DM Sans', sans-serif; font-size: 1em; color: var(--text); min-width: 120px; outline: none; transition: border-color 0.15s; }
+.fill-input:focus { border-bottom-color: var(--accent); }
+.fill-input.ok  { background: var(--green-bg); border-bottom-color: var(--green); }
+.fill-input.err { background: var(--red-bg);   border-bottom-color: var(--red); }
+.choices-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 10px; }
+.choice-btn { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.88em; font-weight: 500; cursor: pointer; text-align: left; background: var(--bg); color: var(--text); transition: all 0.15s; }
+.choice-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-light); }
+.choice-btn.ok  { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 700; }
+.choice-btn.err { background: var(--red-bg);   border-color: var(--red);   color: var(--red); }
+.choice-btn:disabled { cursor: default; }
+.transform-input { width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.9em; background: var(--bg); color: var(--text); outline: none; margin-bottom: 8px; transition: border-color 0.15s; }
+.transform-input:focus { border-color: var(--accent); }
+.transform-input.ok  { background: var(--green-bg); border-color: var(--green); }
+.transform-input.err { background: var(--red-bg);   border-color: var(--red); }
+.btn-check { border: 1.5px solid var(--accent); border-radius: 20px; padding: 7px 18px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 700; cursor: pointer; background: transparent; color: var(--accent); transition: all 0.15s; }
+.btn-check:hover:not(:disabled) { background: var(--accent); color: white; }
+.btn-check:disabled { opacity: 0.35; cursor: default; }
+.ex-feedback { display: none; border-radius: var(--radius-sm); padding: 11px 14px; line-height: 1.55; margin-top: 10px; font-size: 0.9em; }
+.ex-feedback.visible { display: block; }
+.ex-feedback.ok  { background: var(--green-bg); border: 1.5px solid #80b890; color: #0e4818; }
+.ex-feedback.err { background: var(--red-bg);   border: 1.5px solid #c08090; color: #700018; }
+.fb-rule-link { display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 0.84em; font-weight: 700; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+
+.skeleton-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 12px; }
+.skel { background: linear-gradient(90deg,var(--border) 25%,#e6e0d4 50%,var(--border) 75%); background-size: 200% 100%; animation: skel 1.4s infinite; border-radius: 4px; height: 13px; margin-bottom: 9px; }
+@keyframes skel { to { background-position: -200% 0; } }
+.state-msg { text-align: center; padding: 40px 20px; color: var(--text3); }
+.state-icon { font-size: 2rem; margin-bottom: 10px; }
+.state-msg p { max-width: 260px; margin: 0 auto; line-height: 1.6; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-top">
+    <h1>Les Temps du Futur</h1>
+    <span class="header-tag">Grammaire</span>
+  </div>
+  <div class="subtitle">Gramática francesa · DELF B1–B2</div>
+  <div class="stats-row">
+    <div class="stat-pill fp">Futur proche</div>
+    <div class="stat-pill fs">Futur simple</div>
+    <div class="stat-pill fa">Futur antérieur</div>
+    <div class="stat-pill" id="score-pill" style="display:none">Resultado: <span id="score-pill-val">—</span></div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referencia</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active"   onclick="showSection('s-intro',this)">1. Visión general</button>
+    <button class="snav-btn"          onclick="showSection('s-fp',this)">2. Futur proche</button>
+    <button class="snav-btn"          onclick="showSection('s-fs',this)">3. Futur simple</button>
+    <button class="snav-btn"          onclick="showSection('s-fa',this)">4. Futur antérieur</button>
+    <button class="snav-btn"          onclick="showSection('s-contraste',this)">5. FP vs. FS</button>
+    <button class="snav-btn"          onclick="showSection('s-fa2',this)">6. FA en contexto</button>
+    <button class="snav-btn"          onclick="showSection('s-trampas',this)">7. Trampas</button>
+  </div>
+</div>
+
+<div class="main-layout">
+
+<!-- ══════════ REFERENCIA ══════════ -->
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. VISIÓN GENERAL -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los tres tiempos de futuro del DELF B1–B2 tienen usos distintos. La elección no depende solo del momento en que ocurre la acción, sino de la <strong>perspectiva del hablante</strong> y de si una acción es anterior a otra futura.
+      </div>
+      <div class="legend-row">
+        <span class="legend-pill fp">Futur proche — intención inmediata / certeza</span>
+        <span class="legend-pill fs">Futur simple — previsión / hipótesis / promesa</span>
+        <span class="legend-pill fa">Futur antérieur — anterioridad respecto a otro futuro</span>
+      </div>
+
+      <div class="sec-label">Comparativa rápida</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tiempo</th><th>Formación</th><th>Uso principal</th><th>Equivalente español</th></tr></thead>
+        <tbody>
+          <tr><td><strong class="hl-fp">Futur proche</strong></td><td>aller (présent) + inf.</td><td>Intención, inmediatez, certeza personal</td><td>voy a + inf.</td></tr>
+          <tr><td><strong class="hl-fs">Futur simple</strong></td><td>inf. + terminaciones</td><td>Previsión, promesa, condición, hipótesis</td><td>-ré / -rás…</td></tr>
+          <tr><td><strong class="hl-fa">Futur antérieur</strong></td><td>avoir/être (FS) + p.p.</td><td>Acción terminada antes de otro futuro</td><td>habré + participio</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Cronología relativa</div>
+      <div class="example-block mix">
+        <div class="ex-fr">Quand tu <span class="efa">auras fini</span> (FA), appelle-moi — on <span class="efs">ira</span> (FS) au restaurant.</div>
+        <div class="ex-es">Cuando hayas terminado, llámame — iremos al restaurante.</div>
+        <div class="ex-note">FA = acción completada en el futuro · FS = acción posterior</div>
+      </div>
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Regla clave:</strong> en francés, las proposiciones temporales con <em>quand, lorsque, dès que, aussitôt que</em> llevan <strong>futur simple o futur antérieur</strong>, nunca présent (≠ español).</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. FUTUR PROCHE -->
+  <div class="sec-block" id="s-fp">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>futur proche</strong> expresa una acción <strong>inminente, planeada o muy probable</strong> desde la perspectiva del hablante. Se forma con <strong>aller en présent + infinitif</strong>.
+      </div>
+
+      <div class="sec-label">Formación</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Pronombre</th><th>ALLER (présent)</th><th>+ Infinitif</th><th>Resultado</th></tr></thead>
+        <tbody>
+          <tr><td><strong>je</strong></td><td>vais</td><td>partir</td><td class="hl-fp">je vais partir</td></tr>
+          <tr><td><strong>tu</strong></td><td>vas</td><td>manger</td><td class="hl-fp">tu vas manger</td></tr>
+          <tr><td><strong>il/elle</strong></td><td>va</td><td>finir</td><td class="hl-fp">il va finir</td></tr>
+          <tr><td><strong>nous</strong></td><td>allons</td><td>sortir</td><td class="hl-fp">nous allons sortir</td></tr>
+          <tr><td><strong>vous</strong></td><td>allez</td><td>voir</td><td class="hl-fp">vous allez voir</td></tr>
+          <tr><td><strong>ils/elles</strong></td><td>vont</td><td>prendre</td><td class="hl-fp">ils vont prendre</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text">Forma negativa: <em>ne</em> y <em>pas</em> rodean a <strong>aller</strong>, no al infinitivo: <strong>Je ne vais pas partir</strong> ✓ (no: <em>je vais ne pas partir</em> ✗).</div>
+      </div>
+
+      <div class="sec-label">Usos — elige el contexto</div>
+      <div class="chip-bar">
+        <button class="chip fp active" onclick="selectChip('fpuso',0)">Inmediatez / intención</button>
+        <button class="chip fp" onclick="selectChip('fpuso',1)">Futuro próximo en pasado</button>
+        <button class="chip fp" onclick="selectChip('fpuso',2)">Certeza / probabilidad alta</button>
+      </div>
+      <div id="fpuso-panels">
+        <div class="chip-panel active" id="fpuso-p-0">
+          <div class="def-box">Acción que va a ocurrir muy pronto o que el hablante tiene intención clara de hacer.</div>
+          <div class="example-block fp"><div class="ex-fr">Attends, je <span class="efp">vais chercher</span> mon manteau.</div><div class="ex-es">Espera, voy a buscar mi abrigo.</div></div>
+          <div class="example-block fp"><div class="ex-fr">Nous <span class="efp">allons déménager</span> le mois prochain.</div><div class="ex-es">Vamos a mudarnos el mes que viene.</div></div>
+          <div class="example-block fp"><div class="ex-fr">Il <span class="efp">va pleuvoir</span>, regarde les nuages.</div><div class="ex-es">Va a llover, mira las nubes.</div></div>
+          <div class="example-block fp"><div class="ex-fr">Tu <span class="efp">vas tomber</span> si tu ne fais pas attention !</div><div class="ex-es">¡Te vas a caer si no tienes cuidado!</div></div>
+          <div class="example-block fp"><div class="ex-fr">On <span class="efp">va manger</span> ensemble ce soir ?</div><div class="ex-es">¿Vamos a cenar juntos esta noche?</div></div>
+        </div>
+        <div class="chip-panel" id="fpuso-p-1">
+          <div class="def-box">Cuando el verbo principal está en pasado, <em>aller</em> también va en pasado (imparfait) para expresar una intención o acción a punto de ocurrir en ese momento pasado.</div>
+          <div class="example-block fp"><div class="ex-fr">Il <span style="color:var(--fp-color);font-weight:700">allait partir</span> quand le téléphone a sonné.</div><div class="ex-es">Estaba a punto de irse cuando sonó el teléfono.</div></div>
+          <div class="example-block fp"><div class="ex-fr">Elle <span style="color:var(--fp-color);font-weight:700">allait répondre</span> mais elle a changé d'avis.</div><div class="ex-es">Iba a responder pero cambió de opinión.</div></div>
+          <div class="example-block fp"><div class="ex-fr">Nous <span style="color:var(--fp-color);font-weight:700">allions commencer</span> la réunion quand il est arrivé.</div><div class="ex-es">Íbamos a empezar la reunión cuando llegó.</div></div>
+          <div class="example-block fp"><div class="ex-fr">Je <span style="color:var(--fp-color);font-weight:700">allais lui dire</span> la vérité, mais je n'ai pas osé.</div><div class="ex-es">Iba a decirle la verdad, pero no me atreví.</div></div>
+          <div class="example-block fp"><div class="ex-fr">Ils <span style="color:var(--fp-color);font-weight:700">allaient signer</span> le contrat quand tout a échoué.</div><div class="ex-es">Iban a firmar el contrato cuando todo fracasó.</div></div>
+        </div>
+        <div class="chip-panel" id="fpuso-p-2">
+          <div class="def-box">El futur proche expresa que el hablante considera algo <strong>muy probable o casi seguro</strong>, a diferencia del futur simple que puede ser más neutro o hipotético.</div>
+          <div class="example-block fp"><div class="ex-fr">Ça <span class="efp">va coûter</span> cher, je vous le dis.</div><div class="ex-es">Va a costar caro, os lo digo.</div></div>
+          <div class="example-block fp"><div class="ex-fr">Elle <span class="efp">va réussir</span>, j'en suis sûr.</div><div class="ex-es">Va a conseguirlo, estoy seguro.</div></div>
+          <div class="example-block fp"><div class="ex-fr">Attention, tu <span class="efp">vas te blesser</span> !</div><div class="ex-es">¡Cuidado, te vas a hacer daño!</div></div>
+          <div class="example-block fp"><div class="ex-fr">Ce projet <span class="efp">va changer</span> beaucoup de choses.</div><div class="ex-es">Este proyecto va a cambiar muchas cosas.</div></div>
+          <div class="example-block fp"><div class="ex-fr">Je pense qu'il <span class="efp">va accepter</span> l'offre.</div><div class="ex-es">Creo que va a aceptar la oferta.</div></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3. FUTUR SIMPLE -->
+  <div class="sec-block" id="s-fs">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>futur simple</strong> se usa para previsiones, promesas, hipótesis y enunciados formales. Se forma añadiendo las terminaciones directamente al <strong>infinitivo</strong> (o a la raíz irregular): <strong>-ai · -as · -a · -ons · -ez · -ont</strong>.
+      </div>
+
+      <div class="sec-label">Formación regular</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Pronombre</th><th>PARLER</th><th>FINIR</th><th>ATTENDRE</th><th>Terminación</th></tr></thead>
+        <tbody>
+          <tr><td><strong>je</strong></td><td class="hl-fs">parlerai</td><td class="hl-fs">finirai</td><td class="hl-fs">attendrai</td><td class="hl-fs">-ai</td></tr>
+          <tr><td><strong>tu</strong></td><td class="hl-fs">parleras</td><td class="hl-fs">finiras</td><td class="hl-fs">attendras</td><td class="hl-fs">-as</td></tr>
+          <tr><td><strong>il/elle</strong></td><td class="hl-fs">parlera</td><td class="hl-fs">finira</td><td class="hl-fs">attendra</td><td class="hl-fs">-a</td></tr>
+          <tr><td><strong>nous</strong></td><td class="hl-fs">parlerons</td><td class="hl-fs">finirons</td><td class="hl-fs">attendrons</td><td class="hl-fs">-ons</td></tr>
+          <tr><td><strong>vous</strong></td><td class="hl-fs">parlerez</td><td class="hl-fs">finirez</td><td class="hl-fs">attendrez</td><td class="hl-fs">-ez</td></tr>
+          <tr><td><strong>ils/elles</strong></td><td class="hl-fs">parleront</td><td class="hl-fs">finiront</td><td class="hl-fs">attendront</td><td class="hl-fs">-ont</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note-box"><strong>Atención -re:</strong> los verbos en <em>-re</em> pierden la <em>-e</em> final antes de añadir las terminaciones: <em>prendre → prendr-</em>, <em>attendre → attendr-</em>.</div>
+
+      <div class="sec-label">Raíces irregulares frecuentes</div>
+      <div class="chip-bar">
+        <button class="chip fs active" onclick="selectChip('fsirr',0)">Grupo 1</button>
+        <button class="chip fs" onclick="selectChip('fsirr',1)">Grupo 2</button>
+        <button class="chip fs" onclick="selectChip('fsirr',2)">Grupo 3</button>
+      </div>
+      <div id="fsirr-panels">
+        <div class="chip-panel active" id="fsirr-p-0">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Infinitivo</th><th>Raíz FS</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td>être</td><td class="hl-fs">ser-</td><td class="hl-fs">je serai</td></tr>
+              <tr><td>avoir</td><td class="hl-fs">aur-</td><td class="hl-fs">j'aurai</td></tr>
+              <tr><td>aller</td><td class="hl-fs">ir-</td><td class="hl-fs">j'irai</td></tr>
+              <tr><td>faire</td><td class="hl-fs">fer-</td><td class="hl-fs">je ferai</td></tr>
+              <tr><td>venir</td><td class="hl-fs">viendr-</td><td class="hl-fs">je viendrai</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="chip-panel" id="fsirr-p-1">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Infinitivo</th><th>Raíz FS</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td>pouvoir</td><td class="hl-fs">pourr-</td><td class="hl-fs">je pourrai</td></tr>
+              <tr><td>vouloir</td><td class="hl-fs">voudr-</td><td class="hl-fs">je voudrai</td></tr>
+              <tr><td>savoir</td><td class="hl-fs">saur-</td><td class="hl-fs">je saurai</td></tr>
+              <tr><td>voir</td><td class="hl-fs">verr-</td><td class="hl-fs">je verrai</td></tr>
+              <tr><td>devoir</td><td class="hl-fs">devr-</td><td class="hl-fs">je devrai</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="chip-panel" id="fsirr-p-2">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Infinitivo</th><th>Raíz FS</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td>recevoir</td><td class="hl-fs">recevr-</td><td class="hl-fs">je recevrai</td></tr>
+              <tr><td>courir</td><td class="hl-fs">courr-</td><td class="hl-fs">je courrai</td></tr>
+              <tr><td>mourir</td><td class="hl-fs">mourr-</td><td class="hl-fs">je mourrai</td></tr>
+              <tr><td>tenir</td><td class="hl-fs">tiendr-</td><td class="hl-fs">je tiendrai</td></tr>
+              <tr><td>envoyer</td><td class="hl-fs">enverr-</td><td class="hl-fs">j'enverrai</td></tr>
+              <tr><td>falloir</td><td class="hl-fs">faudr-</td><td class="hl-fs">il faudra</td></tr>
+              <tr><td>pleuvoir</td><td class="hl-fs">pleuvr-</td><td class="hl-fs">il pleuvra</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Usos — elige el contexto</div>
+      <div class="chip-bar">
+        <button class="chip fs active" onclick="selectChip('fsuso',0)">Previsión / evento futuro</button>
+        <button class="chip fs" onclick="selectChip('fsuso',1)">Promesa / compromiso</button>
+        <button class="chip fs" onclick="selectChip('fsuso',2)">Hipótesis (si + présent)</button>
+        <button class="chip fs" onclick="selectChip('fsuso',3)">Proposiciones temporales</button>
+        <button class="chip fs" onclick="selectChip('fsuso',4)">Orden / instrucción formal</button>
+      </div>
+      <div id="fsuso-panels">
+        <div class="chip-panel active" id="fsuso-p-0">
+          <div class="def-box">Hecho o acción que se prevé ocurrirá. Más neutro y formal que el futur proche.</div>
+          <div class="example-block fs"><div class="ex-fr">La réunion <span class="efs">aura</span> lieu vendredi à 10h.</div><div class="ex-es">La reunión tendrá lugar el viernes a las 10h.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Dans dix ans, la ville <span class="efs">aura</span> doublé de taille.</div><div class="ex-es">En diez años, la ciudad habrá doblado su tamaño.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Il <span class="efs">fera</span> beau tout le week-end.</div><div class="ex-es">Hará buen tiempo todo el fin de semana.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Les résultats <span class="efs">seront</span> publiés demain.</div><div class="ex-es">Los resultados se publicarán mañana.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Elle <span class="efs">aura</span> 30 ans en mars.</div><div class="ex-es">Cumplirá 30 años en marzo.</div></div>
+        </div>
+        <div class="chip-panel" id="fsuso-p-1">
+          <div class="def-box">El futur simple expresa compromisos, promesas y garantías. Muy frecuente en cartas formales y en discurso.</div>
+          <div class="example-block fs"><div class="ex-fr">Je te <span class="efs">rappellerai</span> dès que j'aurai des nouvelles.</div><div class="ex-es">Te llamaré en cuanto tenga noticias.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Nous vous <span class="efs">enverrons</span> la confirmation par e-mail.</div><div class="ex-es">Les enviaremos la confirmación por correo.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Je ne le <span class="efs">ferai</span> plus, c'est promis.</div><div class="ex-es">No lo haré más, lo prometo.</div></div>
+          <div class="example-block fs"><div class="ex-fr">On <span class="efs">se retrouvera</span>, j'en suis certain.</div><div class="ex-es">Nos volveremos a ver, estoy seguro.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Votre colis <span class="efs">arrivera</span> sous 48 heures.</div><div class="ex-es">Su paquete llegará en 48 horas.</div></div>
+        </div>
+        <div class="chip-panel" id="fsuso-p-2">
+          <div class="def-box">En frases condicionales con <strong>si + présent</strong>, la proposición principal va en futur simple. <strong>Nunca futur simple después de si condicional.</strong></div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Proposición si (présent)</th><th>Principal (futur simple)</th></tr></thead>
+            <tbody>
+              <tr><td>Si tu <strong>viens</strong>…</td><td>…je <span class="hl-fs">ferai</span> la fête.</td></tr>
+              <tr><td>S'il <strong>fait</strong> beau…</td><td>…nous <span class="hl-fs">irons</span> à la plage.</td></tr>
+              <tr><td>Si elle <strong>accepte</strong>…</td><td>…on <span class="hl-fs">pourra</span> commencer.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block fs"><div class="ex-fr">Si tu <span style="font-weight:700">travailles</span> dur, tu <span class="efs">réussiras</span>.</div><div class="ex-es">Si trabajas duro, tendrás éxito.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Si vous <span style="font-weight:700">avez</span> des questions, je <span class="efs">serai</span> là.</div><div class="ex-es">Si tienen preguntas, estaré aquí.</div></div>
+          <div class="example-block fs"><div class="ex-fr">S'il ne <span style="font-weight:700">vient</span> pas, on <span class="efs">partira</span> sans lui.</div><div class="ex-es">Si no viene, nos iremos sin él.</div></div>
+        </div>
+        <div class="chip-panel" id="fsuso-p-3">
+          <div class="def-box">Con <strong>quand, lorsque, dès que, aussitôt que, tant que, jusqu'à ce que</strong> + futur (≠ español que usa presente o subjuntivo).</div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text">En español: "cuando <em>llegues</em>" → subjuntivo. En francés: "quand tu <strong class="hl-fs">arriveras</strong>" → <strong>futur simple</strong>. Es uno de los errores más frecuentes.</div>
+          </div>
+          <div class="example-block fs"><div class="ex-fr">Quand tu <span class="efs">arriveras</span>, appelle-moi.</div><div class="ex-es">Cuando llegues, llámame.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Dès qu'il <span class="efs">sera</span> prêt, on partira.</div><div class="ex-es">En cuanto esté listo, nos iremos.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Lorsqu'elle <span class="efs">aura</span> 18 ans, elle pourra voter.</div><div class="ex-es">Cuando tenga 18 años, podrá votar.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Tant qu'il <span class="efs">fera</span> froid, restez à l'intérieur.</div><div class="ex-es">Mientras haga frío, quédense dentro.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Aussitôt qu'on <span class="efs">saura</span> les résultats, on vous préviendra.</div><div class="ex-es">En cuanto sepamos los resultados, os avisaremos.</div></div>
+        </div>
+        <div class="chip-panel" id="fsuso-p-4">
+          <div class="def-box">El futur simple puede usarse como orden o instrucción en un tono formal o solemne. Común en instrucciones escritas, recetas, reglamentos.</div>
+          <div class="example-block fs"><div class="ex-fr">Vous <span class="efs">remplirez</span> ce formulaire et le rendrez au guichet.</div><div class="ex-es">Rellene este formulario y entréguela en la ventanilla.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Tu <span class="efs">prendras</span> ce médicament trois fois par jour.</div><div class="ex-es">Tomarás este medicamento tres veces al día.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Les candidats <span class="efs">enverront</span> leur dossier avant le 30 avril.</div><div class="ex-es">Los candidatos enviarán su expediente antes del 30 de abril.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Vous ne <span class="efs">parlerez</span> pas pendant l'examen.</div><div class="ex-es">No hablarán durante el examen.</div></div>
+          <div class="example-block fs"><div class="ex-fr">On <span class="efs">ajoutera</span> le sel en fin de cuisson.</div><div class="ex-es">Se añadirá la sal al final de la cocción.</div></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. FUTUR ANTÉRIEUR -->
+  <div class="sec-block" id="s-fa">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>futur antérieur</strong> expresa una acción que <strong>estará completada antes de otro momento futuro</strong>. Se forma con <strong>avoir o être en futur simple + participio pasado</strong>.
+      </div>
+
+      <div class="sec-label">Formación — elige el auxiliar</div>
+      <div class="chip-bar">
+        <button class="chip fa active" onclick="selectChip('faaux',0)">avoir (FS) + p.p.</button>
+        <button class="chip fa" onclick="selectChip('faaux',1)">être (FS) + p.p.</button>
+        <button class="chip fa" onclick="selectChip('faaux',2)">Pronominales</button>
+      </div>
+      <div id="faaux-panels">
+        <div class="chip-panel active" id="faaux-p-0">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Pronombre</th><th>PARLER</th><th>FAIRE</th><th>PRENDRE</th></tr></thead>
+            <tbody>
+              <tr><td><strong>j'</strong></td><td class="hl-fa">aurai parlé</td><td class="hl-fa">aurai fait</td><td class="hl-fa">aurai pris</td></tr>
+              <tr><td><strong>tu</strong></td><td class="hl-fa">auras parlé</td><td class="hl-fa">auras fait</td><td class="hl-fa">auras pris</td></tr>
+              <tr><td><strong>il/elle</strong></td><td class="hl-fa">aura parlé</td><td class="hl-fa">aura fait</td><td class="hl-fa">aura pris</td></tr>
+              <tr><td><strong>nous</strong></td><td class="hl-fa">aurons parlé</td><td class="hl-fa">aurons fait</td><td class="hl-fa">aurons pris</td></tr>
+              <tr><td><strong>vous</strong></td><td class="hl-fa">aurez parlé</td><td class="hl-fa">aurez fait</td><td class="hl-fa">aurez pris</td></tr>
+              <tr><td><strong>ils/elles</strong></td><td class="hl-fa">auront parlé</td><td class="hl-fa">auront fait</td><td class="hl-fa">auront pris</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="chip-panel" id="faaux-p-1">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Pronombre</th><th>ALLER</th><th>PARTIR</th></tr></thead>
+            <tbody>
+              <tr><td><strong>je (m.)</strong></td><td class="hl-fa">serai allé</td><td class="hl-fa">serai parti</td></tr>
+              <tr><td><strong>je (f.)</strong></td><td class="hl-fa">serai allée</td><td class="hl-fa">serai partie</td></tr>
+              <tr><td><strong>il/elle</strong></td><td class="hl-fa">sera allé/allée</td><td class="hl-fa">sera parti/partie</td></tr>
+              <tr><td><strong>nous</strong></td><td class="hl-fa">serons allé(e)s</td><td class="hl-fa">serons parti(e)s</td></tr>
+              <tr><td><strong>vous</strong></td><td class="hl-fa">serez allé(e)(s)</td><td class="hl-fa">serez parti(e)(s)</td></tr>
+              <tr><td><strong>ils/elles</strong></td><td class="hl-fa">seront allés/allées</td><td class="hl-fa">seront partis/parties</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="chip-panel" id="faaux-p-2">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Pronombre</th><th>SE LEVER</th></tr></thead>
+            <tbody>
+              <tr><td><strong>je (m.)</strong></td><td class="hl-fa">me serai levé</td></tr>
+              <tr><td><strong>je (f.)</strong></td><td class="hl-fa">me serai levée</td></tr>
+              <tr><td><strong>il</strong></td><td class="hl-fa">se sera levé</td></tr>
+              <tr><td><strong>elle</strong></td><td class="hl-fa">se sera levée</td></tr>
+              <tr><td><strong>nous</strong></td><td class="hl-fa">nous serons levé(e)s</td></tr>
+              <tr><td><strong>ils/elles</strong></td><td class="hl-fa">se seront levé(e)s</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 5. FP vs. FS -->
+  <div class="sec-block" id="s-contraste">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Futur proche y futur simple no son siempre intercambiables. La elección depende de la <strong>inmediatez, la certeza subjetiva y el registro</strong>.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="selectChip('contraste',0)">Criterios de elección</button>
+        <button class="chip" onclick="selectChip('contraste',1)">Registro formal vs. informal</button>
+        <button class="chip" onclick="selectChip('contraste',2)">Señales léxicas</button>
+        <button class="chip" onclick="selectChip('contraste',3)">Pares mínimos</button>
+      </div>
+      <div id="contraste-panels">
+        <div class="chip-panel active" id="contraste-p-0">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th></th><th class="hl-fp">Futur proche</th><th class="hl-fs">Futur simple</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Horizonte</strong></td><td>Inmediato / próximo</td><td>Más lejano o indeterminado</td></tr>
+              <tr><td><strong>Certeza</strong></td><td>Alta (intención firme)</td><td>Variable (previsión, hipótesis)</td></tr>
+              <tr><td><strong>Perspectiva</strong></td><td>Subjetiva del hablante</td><td>Más objetiva / declarativa</td></tr>
+              <tr><td><strong>Registro</strong></td><td>Oral, informal</td><td>Escrito, formal, neutro</td></tr>
+              <tr><td><strong>Condiciones</strong></td><td>No se usa con <em>si</em> ni <em>quand</em></td><td>Obligatorio con <em>quand, dès que, si</em>…</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="chip-panel" id="contraste-p-1">
+          <div class="def-box">En contextos formales (cartas, noticias, documentos oficiales) predomina el futur simple. En conversación cotidiana, el futur proche es más frecuente.</div>
+          <div class="example-block fp"><div class="ex-fr">On <span class="efp">va se marier</span> l'année prochaine ! (conversación)</div><div class="ex-es">¡Nos vamos a casar el año que viene!</div></div>
+          <div class="example-block fs"><div class="ex-fr">La cérémonie <span class="efs">aura</span> lieu le 12 juin. (invitación formal)</div><div class="ex-es">La ceremonia tendrá lugar el 12 de junio.</div></div>
+          <div class="example-block fp"><div class="ex-fr">Je vais rentrer tard ce soir. (oral)</div><div class="ex-es">Voy a llegar tarde esta noche.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Le directeur <span class="efs">présentera</span> les résultats lors de la réunion. (formal)</div><div class="ex-es">El director presentará los resultados en la reunión.</div></div>
+          <div class="example-block fs"><div class="ex-fr">Dans 50 ans, les voitures <span class="efs">seront</span> entièrement électriques. (predicción lejana)</div><div class="ex-es">En 50 años, los coches serán totalmente eléctricos.</div></div>
+        </div>
+        <div class="chip-panel" id="contraste-p-2">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Señal → Futur proche</th><th>Señal → Futur simple</th></tr></thead>
+            <tbody>
+              <tr><td>tout de suite, maintenant</td><td>demain, la semaine prochaine</td></tr>
+              <tr><td>bientôt, dans un instant</td><td>dans dix ans, un jour, à l'avenir</td></tr>
+              <tr><td>ce soir, ce week-end (oral)</td><td>si + présent → main. FS</td></tr>
+              <tr><td>attention ! (advertencia)</td><td>quand / dès que / lorsque</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="chip-panel" id="contraste-p-3">
+          <div class="def-box">Las mismas frases con FP y FS tienen matices distintos.</div>
+          <div class="example-block fp"><div class="ex-fr">Je <span class="efp">vais appeler</span> le médecin.</div><div class="ex-es">Voy a llamar al médico. (ahora mismo, decisión tomada)</div></div>
+          <div class="example-block fs"><div class="ex-fr">J'<span class="efs">appellerai</span> le médecin.</div><div class="ex-es">Llamaré al médico. (promesa, más distante o formal)</div></div>
+          <div class="example-block fp"><div class="ex-fr">Il <span class="efp">va neiger</span> ce soir.</div><div class="ex-es">Va a nevar esta noche. (certeza del hablante, pronóstico inmediato)</div></div>
+          <div class="example-block fs"><div class="ex-fr">Il <span class="efs">neigera</span> demain dans les Alpes.</div><div class="ex-es">Nevará mañana en los Alpes. (boletín meteorológico, objetivo)</div></div>
+          <div class="example-block fp"><div class="ex-fr">Tu <span class="efp">vas comprendre</span>.</div><div class="ex-es">Vas a entender. (lo verás ahora mismo)</div></div>
+          <div class="example-block fs"><div class="ex-fr">Tu <span class="efs">comprendras</span> un jour.</div><div class="ex-es">Entenderás algún día. (predicción más amplia)</div></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. FA EN CONTEXTO -->
+  <div class="sec-block" id="s-fa2">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>futur antérieur</strong> sitúa una acción como <strong>completada antes de otro momento futuro</strong>. Aparece siempre en relación con otro tiempo futuro y es especialmente frecuente con <em>quand, dès que, aussitôt que, une fois que</em>.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip fa active" onclick="selectChip('fa2',0)">Con quand / dès que</button>
+        <button class="chip fa" onclick="selectChip('fa2',1)">Plazo cumplido</button>
+        <button class="chip fa" onclick="selectChip('fa2',2)">Hipótesis sobre el pasado</button>
+        <button class="chip fa" onclick="selectChip('fa2',3)">FA + FS: la secuencia completa</button>
+      </div>
+      <div id="fa2-panels">
+        <div class="chip-panel active" id="fa2-p-0">
+          <div class="def-box">Cuando dos acciones futuras ocurren en secuencia, la que termina primero va en <strong>futur antérieur</strong> y la posterior en <strong>futur simple</strong>.</div>
+          <div class="example-block fa"><div class="ex-fr">Quand tu <span class="efa">auras fini</span> tes devoirs, tu pourras regarder la télé.</div><div class="ex-es">Cuando hayas terminado los deberes, podrás ver la tele.</div></div>
+          <div class="example-block fa"><div class="ex-fr">Dès qu'il <span class="efa">sera arrivé</span>, prévenez-moi.</div><div class="ex-es">En cuanto haya llegado, avíseme.</div></div>
+          <div class="example-block fa"><div class="ex-fr">Aussitôt qu'elle <span class="efa">aura pris</span> sa décision, elle nous appellera.</div><div class="ex-es">En cuanto haya tomado su decisión, nos llamará.</div></div>
+          <div class="example-block fa"><div class="ex-fr">Une fois qu'on <span class="efa">aura signé</span> le contrat, le projet pourra commencer.</div><div class="ex-es">Una vez que hayamos firmado el contrato, el proyecto podrá empezar.</div></div>
+          <div class="example-block fa"><div class="ex-fr">Lorsque vous <span class="efa">aurez lu</span> ce document, répondez s'il vous plaît.</div><div class="ex-es">Cuando haya leído este documento, responda por favor.</div></div>
+        </div>
+        <div class="chip-panel" id="fa2-p-1">
+          <div class="def-box">El FA indica que algo estará terminado en un momento futuro concreto.</div>
+          <div class="example-block fa"><div class="ex-fr">Dans deux heures, j'<span class="efa">aurai terminé</span> ce rapport.</div><div class="ex-es">En dos horas, habré terminado este informe.</div></div>
+          <div class="example-block fa"><div class="ex-fr">D'ici la fin de l'année, ils <span class="efa">auront rembours</span>é tout leur crédit.</div><div class="ex-es">Para finales de año, habrán devuelto todo su crédito.</div></div>
+          <div class="example-block fa"><div class="ex-fr">Demain à cette heure-ci, nous <span class="efa">serons arrivés</span> à Paris.</div><div class="ex-es">Mañana a esta hora, habremos llegado a París.</div></div>
+          <div class="example-block fa"><div class="ex-fr">Tu <span class="efa">auras tout oublié</span> dans une semaine.</div><div class="ex-es">Lo habrás olvidado todo en una semana.</div></div>
+          <div class="example-block fa"><div class="ex-fr">Dans dix ans, elle <span class="efa">aura eu</span> le temps de changer d'avis.</div><div class="ex-es">En diez años, habrá tenido tiempo de cambiar de opinión.</div></div>
+        </div>
+        <div class="chip-panel" id="fa2-p-2">
+          <div class="def-box">El FA puede expresar una suposición o hipótesis sobre algo que probablemente ya habrá ocurrido cuando lo estemos evaluando.</div>
+          <div class="example-block fa"><div class="ex-fr">Il n'est pas là ? Il <span class="efa">aura raté</span> son train.</div><div class="ex-es">¿No está? Habrá perdido su tren. (suposición)</div></div>
+          <div class="example-block fa"><div class="ex-fr">Elle ne répond pas, elle <span class="efa">sera sortie</span>.</div><div class="ex-es">No responde, habrá salido.</div></div>
+          <div class="example-block fa"><div class="ex-fr">Ils <span class="efa">auront oublié</span> de confirmer la réservation.</div><div class="ex-es">Se habrán olvidado de confirmar la reserva.</div></div>
+          <div class="example-block fa"><div class="ex-fr">Tu <span class="efa">auras mal compris</span> le message.</div><div class="ex-es">Habrás entendido mal el mensaje.</div></div>
+          <div class="example-block fa"><div class="ex-fr">Elle <span class="efa">n'aura pas pu</span> venir — elle travaillait jusqu'à tard.</div><div class="ex-es">No habrá podido venir — trabajaba hasta tarde.</div></div>
+        </div>
+        <div class="chip-panel" id="fa2-p-3">
+          <div class="def-box">En una misma frase pueden aparecer los tres futuros según la secuencia de acciones.</div>
+          <div class="example-block mix">
+            <div class="ex-fr">Je <span class="efp">vais finir</span> ce chapitre, et dès que je l'<span class="efa">aurai relu</span>, je te l'<span class="efs">enverrai</span>.</div>
+            <div class="ex-es">Voy a terminar este capítulo, y en cuanto lo haya releído, te lo enviaré.</div>
+            <div class="ex-note">FP = intención inmediata · FA = acción intermedia completada · FS = acción final</div>
+          </div>
+          <div class="example-block mix">
+            <div class="ex-fr">Quand il <span class="efa">aura obtenu</span> son diplôme, il <span class="efs">cherchera</span> un emploi — en attendant, il <span class="efp">va continuer</span> à étudier.</div>
+            <div class="ex-es">Cuando haya obtenido su diploma, buscará trabajo — mientras tanto, va a seguir estudiando.</div>
+          </div>
+          <div class="example-block mix">
+            <div class="ex-fr">Si tu <span style="font-weight:700">passes</span> l'examen, on <span class="efp">va fêter</span> ça, et si tu l'<span class="efa">auras préparé</span> sérieusement, tu <span class="efs">réussiras</span> sûrement.</div>
+            <div class="ex-es">Si apruebas el examen, lo vamos a celebrar, y si lo has preparado en serio, seguro que tendrás éxito.</div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 7 errores más frecuentes de hispanohablantes en los tiempos de futuro del DELF B1–B2.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+</div><!-- /main-layout -->
+
+<script>
+/* ══ DATA ══ */
+const TRAPS = [
+  {name:'quand + présent (error por español)',
+   wrong:'Quand tu arrives, appelle-moi.',
+   right:'Quand tu arriveras, appelle-moi.',
+   expl:'En francés, <em>quand, lorsque, dès que, aussitôt que</em> + futur simple (o FA), <strong>nunca présent</strong>. En español se usa subjuntivo o présent, de ahí la interferencia.'},
+  {name:'si condicional + futur simple',
+   wrong:"Si tu viendras, on sortira.",
+   right:"Si tu viens, on sortira.",
+   expl:'Después de <strong>si condicional</strong> nunca se usa futur simple ni conditionnel. Siempre présent (hipótesis probable) o imparfait (hipótesis improbable/irreal).'},
+  {name:'Futur proche en contexto formal escrito',
+   wrong:'La cérémonie va avoir lieu le 12 juin. (carta formal)',
+   right:'La cérémonie aura lieu le 12 juin.',
+   expl:'En registros escritos formales (cartas, documentos, noticias), el <strong>futur simple</strong> es la norma. El futur proche suena coloquial y oral.'},
+  {name:'Futur antérieur confundido con futur simple',
+   wrong:'Quand tu finiras tes devoirs, tu pourras sortir.',
+   right:'Quand tu auras fini tes devoirs, tu pourras sortir.',
+   expl:'Si la acción con <em>quand</em> debe estar <strong>completada</strong> antes de la acción principal, hay que usar <strong>futur antérieur</strong>, no futur simple.'},
+  {name:'Concordancia del participio en FA con être',
+   wrong:'Quand elle sera parti, ferme la porte.',
+   right:'Quand elle sera partie, ferme la porte.',
+   expl:'En el futur antérieur con <strong>être</strong>, el participio concuerda en género y número con el sujeto, igual que en passé composé.'},
+  {name:'Futur proche negativo: posición del ne…pas',
+   wrong:"Je vais ne pas venir.",
+   right:"Je ne vais pas venir.",
+   expl:'En el futur proche, <em>ne…pas</em> rodea al auxiliar <strong>aller</strong>, no al infinitivo. Mismo principio que con los tiempos compuestos.'},
+  {name:'Confundir FA con passé composé en suposición',
+   wrong:"Il n'est pas là ? Il a raté son train.",
+   right:"Il n'est pas là ? Il aura raté son train.",
+   expl:'Para expresar una <strong>suposición sobre el pasado reciente</strong> desde el presente, el francés usa el <strong>futur antérieur</strong>, no el passé composé.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+/* ══ CHIP SELECT (robust: finds bar by onclick content) ══ */
+function selectChip(ns, idx) {
+  document.querySelectorAll('.chip-bar').forEach(bar => {
+    const first = bar.querySelector('.chip');
+    if (first && first.getAttribute('onclick') && first.getAttribute('onclick').includes("'" + ns + "'")) {
+      bar.querySelectorAll('.chip').forEach((c,i) => c.classList.toggle('active', i===idx));
+    }
+  });
+  const panelsEl = document.getElementById(ns + '-panels');
+  if (panelsEl) {
+    panelsEl.querySelectorAll(':scope > .chip-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+  }
+}
+
+/* ══ SECTION NAV ══ */
+function showSection(id, btn) {
+  document.querySelectorAll('.sec-block').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.snav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function switchMode(mode, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + mode).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('section-nav').style.display = mode==='ref' ? '' : 'none';
+}
+
+function setFontSize(v) { document.documentElement.style.setProperty('--fs', v+'px'); }
+
+/* ══ EXERCISE STATE ══ */
+let exType='fill', exDiff='B1', exQty=5, exFoco='mix';
+let exTotal=0, exAnswered=0, exCorrect=0, exWrong=0;
+
+document.querySelectorAll('.ex-opt-btn:not(.foco)').forEach(b => b.addEventListener('click', function(){
+  document.querySelectorAll('.ex-opt-btn:not(.foco)').forEach(x => x.classList.remove('active'));
+  this.classList.add('active'); exType = this.dataset.type;
+}));
+document.querySelectorAll('.ex-opt-btn.foco').forEach(b => b.addEventListener('click', function(){
+  document.querySelectorAll('.ex-opt-btn.foco').forEach(x => x.classList.remove('active'));
+  this.classList.add('active'); exFoco = this.dataset.foco;
+}));
+
+function setDiff(d) {
+  exDiff = d;
+  document.querySelectorAll('#diff-btns .pill-btn').forEach(b => {
+    b.classList.remove('active','A2','B1','B2');
+    if (b.textContent.trim()===d) b.classList.add('active',d);
+  });
+}
+function setQty(q) {
+  exQty = q;
+  document.querySelectorAll('#qty-btns .pill-btn').forEach(b =>
+    b.classList.toggle('active', parseInt(b.textContent.trim())===q)
+  );
+}
+
+/* ══ GENERATE ══ */
+const FOCO_DESC = {
+  mix:   'los tres tiempos (futur proche, futur simple y futur antérieur), mezclando libremente',
+  fp:    'exclusivamente el futur proche: aller en présent + infinitif, incluyendo forma negativa',
+  fs:    'exclusivamente el futur simple: formas regulares e irregulares, incluyendo verbos con raíz irregular',
+  fa:    'exclusivamente el futur antérieur: avoir/être en futur simple + participio, concordancias',
+  fp_fs: 'la distinción futur proche vs. futur simple: el alumno debe elegir el más adecuado según contexto e intención',
+  cond:  'proposiciones con quand/lorsque/dès que (→ FS o FA) y si condicional (→ FS en principal, présent en si)',
+};
+const TYPE_DESC = {
+  fill:      'completar huecos: el alumno escribe la forma correcta del verbo',
+  choice:    'elección múltiple: 4 opciones (formas verbales o tiempos), solo una correcta',
+  transform: 'transformación: reformular la frase usando el tiempo pedido',
+  mix:       'mixto: combina fill, choice y transform de forma variada',
+};
+
+const RULE_LABELS = {
+  's-intro':'Visión general','s-fp':'Futur proche','s-fs':'Futur simple',
+  's-fa':'Futur antérieur','s-contraste':'FP vs. FS','s-fa2':'FA en contexto','s-trampas':'Trampas'
+};
+
+function renderExercises(exs) {
+  const area = document.getElementById('exercise-area');
+  const labels = {fill:'Completar', choice:'Elección múltiple', transform:'Transformación'};
+  area.innerHTML = exs.map((ex,i) =>
+    `<div class="exercise-card" id="ex-card-${i}" data-expl="${esc(ex.explanation)}" data-rule="${ex.rule_ref||''}">
+      <div class="exercise-card-header">
+        <span class="ex-num">${i+1}</span>
+        <span class="ex-type-badge">${labels[ex.type]||ex.type}</span>
+        <span class="ex-diff-badge ${ex.diff}">${ex.diff}</span>
+        <span class="ex-status" id="ex-st-${i}"></span>
+      </div>
+      <div class="exercise-body">
+        ${buildBody(ex,i)}
+        <div class="ex-feedback" id="ex-fb-${i}"></div>
+      </div>
+    </div>`).join('');
+  exs.forEach((ex,i) => {
+    const chk = document.getElementById('chk-'+i);
+    if (chk) chk.addEventListener('click', ()=>checkAnswer(ex,i));
+    const inp = document.getElementById('inp-'+i);
+    if (inp) inp.addEventListener('keydown', e => { if(e.key==='Enter') checkAnswer(ex,i); });
+  });
+}
+
+function buildBody(ex,i) {
+  if (ex.type==='fill')
+    return `<div class="exercise-prompt">${ex.prompt_parts[0]}<input class="fill-input" id="inp-${i}" type="text" placeholder="${ex.blank_hint||'…'}" autocomplete="off" spellcheck="false">${ex.prompt_parts[1]||''}</div><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  if (ex.type==='choice')
+    return `<div class="exercise-prompt">${ex.prompt}</div><div class="choices-grid">${ex.options.map((o,j)=>`<button class="choice-btn" id="ch-${i}-${j}" onclick="selectChoice(${i},${j},${ex.correct_index})">${o}</button>`).join('')}</div>`;
+  if (ex.type==='transform')
+    return `<div class="exercise-prompt">${ex.instruction}<br><em>${ex.original}</em></div><input class="transform-input" id="inp-${i}" type="text" placeholder="Tu respuesta…" autocomplete="off" spellcheck="false"><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  return '';
+}
+
+function checkAnswer(ex,i) {
+  const inp = document.getElementById('inp-'+i);
+  if (!inp||inp.disabled) return;
+  const ok = inp.value.trim().toLowerCase() === ex.answer.trim().toLowerCase();
+  inp.classList.add(ok?'ok':'err'); inp.disabled=true;
+  const chk = document.getElementById('chk-'+i); if(chk) chk.disabled=true;
+  showFeedback(i, ok, ex.answer, ex.explanation, ex.rule_ref);
+  recordAnswer(ok);
+}
+
+function selectChoice(idx, chosen, correct) {
+  const c0 = document.getElementById(`ch-${idx}-0`);
+  if (!c0||c0.disabled) return;
+  for(let j=0;j<4;j++){
+    const b=document.getElementById(`ch-${idx}-${j}`);
+    if(!b) continue; b.disabled=true;
+    if(j===correct)b.classList.add('ok'); else if(j===chosen)b.classList.add('err');
+  }
+  const card=document.getElementById('ex-card-'+idx);
+  showFeedback(idx, chosen===correct, null, card.dataset.expl, card.dataset.rule);
+  recordAnswer(chosen===correct);
+}
+
+function showFeedback(i, ok, ans, expl, ruleRef) {
+  document.getElementById('ex-st-'+i).textContent = ok?'✅':'❌';
+  const fb=document.getElementById('ex-fb-'+i);
+  fb.className='ex-feedback visible '+(ok?'ok':'err');
+  const link = RULE_LABELS[ruleRef]
+    ? `<span class="fb-rule-link" onclick="goToRule('${ruleRef}')">📖 Ver: ${RULE_LABELS[ruleRef]}</span>` : '';
+  let html = ok ? `<strong>✓ Correcto</strong>` : `<strong>✗ Incorrecto</strong>${ans?` — Respuesta: <strong>${ans}</strong>`:''}`;
+  if(expl) html += `<br><span style="font-size:0.88em;opacity:0.92;margin-top:3px;display:block">${expl}</span>`;
+  html += link; fb.innerHTML=html;
+}
+
+function goToRule(ref) {
+  switchMode('ref', document.querySelector('.mode-btn'));
+  setTimeout(()=>{
+    showSection(ref, document.querySelector(`.snav-btn[onclick*="${ref}"]`));
+    document.getElementById(ref).scrollIntoView({behavior:'smooth',block:'start'});
+  }, 80);
+}
+
+function recordAnswer(ok) { exAnswered++; if(ok)exCorrect++; else exWrong++; updateProgress(); }
+
+function updateProgress() {
+  const pct = exTotal>0?(exAnswered/exTotal)*100:0;
+  document.getElementById('progress-frac').textContent=`${exAnswered} / ${exTotal}`;
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('score-correct').textContent=`${exCorrect} correcta${exCorrect!==1?'s':''}`;
+  document.getElementById('score-wrong').textContent=`${exWrong} error${exWrong!==1?'es':''}`;
+  if(exAnswered>=exTotal&&exTotal>0) showFinalScore();
+}
+
+function showFinalScore() {
+  const pct = Math.round((exCorrect/exTotal)*100);
+  document.getElementById('final-score-bar').classList.add('visible');
+  document.getElementById('final-num').textContent=`${exCorrect} / ${exTotal}`;
+  const fill=document.getElementById('final-fill');
+  fill.style.width=pct+'%';
+  fill.style.background=pct>=80?'var(--green)':pct>=50?'var(--accent)':'var(--red)';
+  const msgs={100:'¡Parfait! Dominas los tiempos del futuro. 🎉',80:'Très bien! Repasa los errores marcados.',50:'Bien, pero refuerza los bloques señalados.',0:'Vuelve a Referencia antes de repetir.'};
+  document.getElementById('final-msg').textContent=msgs[pct===100?100:pct>=80?80:pct>=50?50:0];
+  document.getElementById('score-pill').style.display='';
+  document.getElementById('score-pill-val').textContent=`${exCorrect}/${exTotal}`;
+}
+
+function resetExercises() {
+  document.getElementById('exercise-area').innerHTML=`<div class="state-msg"><div class="state-icon">✏️</div><p>Elige tipo, foco, nivel y cantidad, y pulsa <strong>Generar ejercicios</strong>.</p></div>`;
+  document.getElementById('progress-wrap').classList.remove('visible');
+  document.getElementById('final-score-bar').classList.remove('visible');
+  document.getElementById('score-pill').style.display='none';
+  exAnswered=0;exCorrect=0;exWrong=0;
+}
+
+function esc(s) { return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+/* ══ INIT ══ */
+renderTraps();
+</script>
+</body>
+</html>

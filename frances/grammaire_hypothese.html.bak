@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammaire · L'Hypothèse et la Condition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#ede9df;--card:#faf7f1;--border:#c4bead;
+  --text:#1a1814;--text2:#44413a;--text3:#706c64;
+  --accent:#7a5a0a;--accent-light:#f0e0c0;--accent-mid:#b89050;
+  --warn-bg:#fdf0cc;
+  --shadow:0 2px 14px rgba(0,0,0,.11),0 1px 4px rgba(0,0,0,.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,.08);
+  --radius:14px;--radius-sm:8px;
+  --green:#1a6028;--green-bg:#e4f2e8;
+  --red:#a81e2e;--red-bg:#fce6e8;
+  --blue:#163494;--blue-bg:#e6ebf8;
+  --purple:#6a1a8a;--purple-bg:#f2e6f8;
+  --t1-color:#163494;--t1-bg:#e6ebf8;
+  --t2-color:#1a6028;--t2-bg:#e4f2e8;
+  --t3-color:#6a1a8a;--t3-bg:#f2e6f8;
+  --au-color:#8b1a4a;--au-bg:#f8e6ee;
+  --fs:15px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:var(--fs);}
+.site-header{background:var(--card);border-bottom:2px solid var(--border);padding:20px 20px 14px;}
+.header-top{display:flex;align-items:baseline;gap:10px;margin-bottom:3px;flex-wrap:wrap;}
+.site-header h1{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,5vw,1.9rem);font-weight:700;}
+.header-tag{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border:1px solid var(--accent-mid);border-radius:20px;padding:3px 10px;}
+.subtitle{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.stats-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
+.stat-pill{border-radius:20px;padding:4px 11px;font-size:.76rem;font-weight:600;border:1px solid;}
+.stat-pill.t1{background:var(--t1-bg);color:var(--t1-color);border-color:var(--t1-color);}
+.stat-pill.t2{background:var(--t2-bg);color:var(--t2-color);border-color:var(--t2-color);}
+.stat-pill.t3{background:var(--t3-bg);color:var(--t3-color);border-color:var(--t3-color);}
+.stat-pill.au{background:var(--au-bg);color:var(--au-color);border-color:var(--au-color);}
+.stat-pill.neu{background:var(--bg);color:var(--text2);border-color:var(--border);font-weight:500;}
+.fs-wrap{display:flex;align-items:center;gap:7px;margin-left:auto;}
+.fs-slider{width:76px;accent-color:var(--accent);cursor:pointer;}
+.fs-sz{color:var(--text3);font-weight:700;}
+.mode-toggle{display:flex;border-bottom:2px solid var(--border);background:var(--card);}
+.mode-btn{flex:1;padding:12px 8px;font-family:'DM Sans',sans-serif;font-size:.84rem;font-weight:600;color:var(--text3);background:transparent;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .15s;margin-bottom:-2px;}
+.mode-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+.section-nav{position:sticky;top:0;z-index:200;background:var(--card);border-bottom:2px solid var(--border);box-shadow:var(--shadow-sm);}
+.section-nav-inner{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.section-nav-inner::-webkit-scrollbar{display:none;}
+.snav-btn{flex-shrink:0;padding:11px 16px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;color:var(--text3);background:transparent;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.snav-btn:hover{color:var(--text2);}
+.snav-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+.main-layout{max-width:860px;margin:0 auto;padding:16px 16px 40px;}
+.panel{display:none;}.panel.active{display:block;}
+.sec-block{display:none;}.sec-block.active{display:block;}
+.gram-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;}
+.gram-card-body{padding:18px;}
+.def-box{background:var(--warn-bg);border-left:4px solid var(--accent);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:12px 15px;margin-bottom:14px;line-height:1.65;}
+.def-box strong{color:var(--accent);font-weight:700;}
+.warn-box{background:#fff4e0;border:1px solid #c8900a;border-radius:var(--radius-sm);padding:10px 13px;margin:10px 0;font-size:.9em;display:flex;gap:8px;align-items:flex-start;}
+.warn-icon{flex-shrink:0;margin-top:1px;}
+.warn-text{color:var(--text2);line-height:1.55;}
+.warn-text strong{color:#7a4400;font-weight:700;}
+.note-box{background:var(--purple-bg);border-left:4px solid var(--purple);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 14px;margin:10px 0;font-size:.9em;color:var(--text2);line-height:1.55;}
+.note-box strong{color:var(--purple);font-weight:700;}
+.green-box{background:var(--green-bg);border-left:4px solid var(--green);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 14px;margin:10px 0;font-size:.9em;color:var(--text2);line-height:1.55;}
+.green-box strong{color:var(--green);font-weight:700;}
+.example-block{border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 14px;margin:8px 0;}
+.example-block.t1{background:var(--t1-bg);border-left:4px solid var(--t1-color);}
+.example-block.t2{background:var(--t2-bg);border-left:4px solid var(--t2-color);}
+.example-block.t3{background:var(--t3-bg);border-left:4px solid var(--t3-color);}
+.example-block.au{background:var(--au-bg);border-left:4px solid var(--au-color);}
+.example-block.neu{background:var(--blue-bg);border-left:4px solid var(--blue);}
+.ex-fr{font-weight:600;margin-bottom:3px;color:var(--text);}
+.et1{color:var(--t1-color);font-weight:700;}
+.et2{color:var(--t2-color);font-weight:700;}
+.et3{color:var(--t3-color);font-weight:700;}
+.eau{color:var(--au-color);font-weight:700;}
+.ex-es{color:var(--text2);font-size:.88em;font-style:italic;}
+.ex-note{font-size:.78em;color:var(--text3);margin-top:3px;font-weight:500;}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:14px;border-radius:var(--radius-sm);border:1px solid var(--border);}
+.gram-table{width:100%;border-collapse:collapse;min-width:280px;}
+.gram-table th{background:var(--bg);border-bottom:2px solid var(--border);border-right:1px solid var(--border);padding:8px 11px;text-align:left;font-size:.72em;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);}
+.gram-table td{border-bottom:1px solid var(--border);border-right:1px solid var(--border);padding:8px 11px;vertical-align:top;}
+.gram-table tr:last-child td{border-bottom:none;}
+.gram-table tr:nth-child(even) td{background:#f4f0e6;}
+.gram-table td:last-child,.gram-table th:last-child{border-right:none;}
+.hl-t1{color:var(--t1-color);font-weight:700;}
+.hl-t2{color:var(--t2-color);font-weight:700;}
+.hl-t3{color:var(--t3-color);font-weight:700;}
+.hl-au{color:var(--au-color);font-weight:700;}
+.hl{color:var(--accent);font-weight:700;}
+.dim{color:var(--text3);font-size:.88em;}
+.ok-cell{color:var(--green);font-weight:700;}
+.err-cell{color:var(--red);font-weight:600;font-style:italic;}
+.chip-bar{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+.chip{border:1.5px solid var(--border);border-radius:20px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:.82em;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;white-space:nowrap;}
+.chip:hover{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.chip.t1.active{background:var(--t1-color);border-color:var(--t1-color);}
+.chip.t2.active{background:var(--t2-color);border-color:var(--t2-color);}
+.chip.t3.active{background:var(--t3-color);border-color:var(--t3-color);}
+.chip.au.active{background:var(--au-color);border-color:var(--au-color);}
+.chip-panel{display:none;}.chip-panel.active{display:block;}
+.sec-label{font-size:.7em;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:14px 0 7px;}
+.trap-cards{display:flex;flex-direction:column;gap:10px;}
+.trap-card{border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;}
+.trap-card-header{padding:11px 14px;background:var(--bg);}
+.trap-name{font-weight:700;font-size:.9em;color:var(--text);margin-bottom:7px;}
+.trap-vs{display:flex;gap:8px;flex-wrap:wrap;}
+.trap-wrong{background:var(--red-bg);border:1.5px solid #d09098;border-radius:6px;padding:4px 10px;font-size:.82em;color:var(--red);font-weight:500;}
+.trap-right{background:var(--green-bg);border:1.5px solid #80b890;border-radius:6px;padding:4px 10px;font-size:.82em;color:var(--green);font-weight:500;}
+.trap-expl{padding:10px 14px 12px;font-size:.86em;color:var(--text2);line-height:1.6;border-top:1px solid var(--border);background:var(--card);}
+.trap-expl strong{color:var(--text);font-weight:700;}
+.exercise-controls{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:var(--shadow-sm);}
+.exercise-controls h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;margin-bottom:14px;}
+.ctrl-label{font-size:.7em;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:7px;display:block;}
+.ex-options{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+.ex-opt-btn{border:1.5px solid var(--border);border-radius:20px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:.84em;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;}
+.ex-opt-btn.active{background:var(--accent);color:white;border-color:var(--accent);}
+.row-btns{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;}
+.pill-btn{border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'DM Sans',sans-serif;font-size:.82em;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;}
+.pill-btn:hover:not(.active){background:var(--border);}
+.pill-btn.active{background:var(--text);color:var(--bg);border-color:var(--text);}
+.pill-btn.diff.active.A2{background:var(--green);border-color:var(--green);color:#fff;}
+.pill-btn.diff.active.B1{background:var(--blue);border-color:var(--blue);color:#fff;}
+.pill-btn.diff.active.B2{background:var(--accent);border-color:var(--accent);color:#fff;}
+.btn-generate{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:none;border-radius:10px;padding:13px;font-family:'DM Sans',sans-serif;font-size:.92em;font-weight:700;cursor:pointer;background:var(--accent);color:white;transition:all .18s;margin-top:4px;}
+.btn-generate:hover:not(:disabled){filter:brightness(1.1);box-shadow:0 4px 14px rgba(122,90,10,.32);}
+.btn-generate:disabled{opacity:.5;cursor:not-allowed;}
+.spinner{display:none;animation:spin .8s linear infinite;}
+.btn-generate.loading .spinner{display:inline;}
+.btn-generate.loading .btn-icon{display:none;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.progress-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:14px;display:none;}
+.progress-wrap.visible{display:block;}
+.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.progress-label{font-size:.78em;color:var(--text3);font-weight:600;}
+.progress-frac{font-size:.92em;font-weight:700;color:var(--accent);}
+.progress-track{height:7px;background:var(--border);border-radius:4px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--accent);border-radius:4px;transition:width .35s ease;}
+.progress-score{display:flex;gap:14px;margin-top:9px;font-size:.8em;flex-wrap:wrap;align-items:center;}
+.score-item{display:flex;align-items:center;gap:5px;font-weight:500;color:var(--text2);}
+.score-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.score-dot.g{background:var(--green);}.score-dot.r{background:var(--red);}
+.btn-retry{border:1.5px solid var(--border);border-radius:20px;padding:5px 13px;font-family:'DM Sans',sans-serif;font-size:.78em;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;margin-left:auto;}
+.btn-retry:hover{background:var(--border);}
+.final-score-bar{display:none;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.final-score-bar.visible{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.final-num{font-size:1.5rem;font-weight:700;color:var(--accent);}
+.final-label{font-size:.74em;color:var(--text3);}
+.final-track{flex:1;min-width:80px;height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
+.final-fill{height:100%;border-radius:4px;transition:width .5s ease;}
+.final-msg{font-size:.84em;color:var(--text2);width:100%;font-weight:500;}
+.exercise-area{display:none;}.exercise-area.visible{display:block;}
+.exercise-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden;}
+.exercise-card-header{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--border);}
+.ex-num{font-weight:700;color:var(--accent);font-size:.88em;}
+.ex-type-badge{font-size:.68em;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-mid);border-radius:12px;padding:2px 8px;}
+.ex-diff-badge{font-size:.68em;font-weight:700;border-radius:12px;padding:2px 8px;}
+.ex-diff-badge.A2{background:var(--green-bg);color:var(--green);border:1px solid #80b890;}
+.ex-diff-badge.B1{background:var(--blue-bg);color:var(--blue);border:1px solid #90a8e0;}
+.ex-diff-badge.B2{background:var(--warn-bg);color:var(--accent);border:1px solid var(--accent-mid);}
+.ex-status{margin-left:auto;}
+.exercise-body{padding:16px 18px;}
+.exercise-prompt{line-height:1.7;margin-bottom:12px;color:var(--text);}
+.exercise-prompt em{color:var(--accent);font-style:italic;font-weight:600;}
+.fill-input{border:none;border-bottom:2px solid var(--accent-mid);background:var(--accent-light);padding:2px 8px;border-radius:4px 4px 0 0;font-family:'DM Sans',sans-serif;font-size:1em;color:var(--text);min-width:160px;outline:none;transition:border-color .15s;}
+.fill-input:focus{border-bottom-color:var(--accent);}
+.fill-input.ok{background:var(--green-bg);border-bottom-color:var(--green);}
+.fill-input.err{background:var(--red-bg);border-bottom-color:var(--red);}
+.choices-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px;}
+.choice-btn{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:.88em;font-weight:500;cursor:pointer;text-align:left;background:var(--bg);color:var(--text);transition:all .15s;}
+.choice-btn:hover:not(:disabled){border-color:var(--accent);background:var(--accent-light);}
+.choice-btn.ok{background:var(--green-bg);border-color:var(--green);color:var(--green);font-weight:700;}
+.choice-btn.err{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.choice-btn:disabled{cursor:default;}
+.transform-input{width:100%;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:.9em;background:var(--bg);color:var(--text);outline:none;margin-bottom:8px;transition:border-color .15s;}
+.transform-input:focus{border-color:var(--accent);}
+.transform-input.ok{background:var(--green-bg);border-color:var(--green);}
+.transform-input.err{background:var(--red-bg);border-color:var(--red);}
+.btn-check{border:1.5px solid var(--accent);border-radius:20px;padding:7px 18px;font-family:'DM Sans',sans-serif;font-size:.84em;font-weight:700;cursor:pointer;background:transparent;color:var(--accent);transition:all .15s;}
+.btn-check:hover:not(:disabled){background:var(--accent);color:white;}
+.btn-check:disabled{opacity:.35;cursor:default;}
+.ex-feedback{display:none;border-radius:var(--radius-sm);padding:11px 14px;line-height:1.55;margin-top:10px;font-size:.9em;}
+.ex-feedback.visible{display:block;}
+.ex-feedback.ok{background:var(--green-bg);border:1.5px solid #80b890;color:#0e4818;}
+.ex-feedback.err{background:var(--red-bg);border:1.5px solid #c08090;color:#700018;}
+.fb-rule-link{display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:.84em;font-weight:700;color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:2px;}
+.skeleton-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:12px;}
+.skel{background:linear-gradient(90deg,var(--border) 25%,#e6e0d4 50%,var(--border) 75%);background-size:200% 100%;animation:skel 1.4s infinite;border-radius:4px;height:13px;margin-bottom:9px;}
+@keyframes skel{to{background-position:-200% 0;}}
+.state-msg{text-align:center;padding:40px 20px;color:var(--text3);}
+.state-icon{font-size:2rem;margin-bottom:10px;}
+.state-msg p{max-width:260px;margin:0 auto;line-height:1.6;font-weight:500;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-top">
+    <h1>L'Hypothèse et la Condition</h1>
+    <span class="header-tag">Grammaire</span>
+  </div>
+  <div class="subtitle">Gramática francesa · DELF B1</div>
+  <div class="stats-row">
+    <div class="stat-pill t1">Type 1 — réelle</div>
+    <div class="stat-pill t2">Type 2 — irréelle présent</div>
+    <div class="stat-pill t3">Type 3 — irréelle passé</div>
+    <div class="stat-pill au">Autres connecteurs</div>
+    <div class="stat-pill neu" id="score-pill" style="display:none">Resultado: <span id="score-pill-val">—</span></div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+    </div>
+  </div>
+</header>
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referencia</button>
+</div>
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Panorama</button>
+    <button class="snav-btn"        onclick="showSection('s-type1',this)">2. Type 1 — réelle</button>
+    <button class="snav-btn"        onclick="showSection('s-type2',this)">3. Type 2 — irréelle présent</button>
+    <button class="snav-btn"        onclick="showSection('s-type3',this)">4. Type 3 — irréelle passé</button>
+    <button class="snav-btn"        onclick="showSection('s-autres',this)">5. Autres connecteurs</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">6. Trampas</button>
+  </div>
+</div>
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El sistema condicional francés funciona mediante la combinación de tiempos en la proposición con <strong>si</strong> y en la proposición principal. Hay tres tipos según el grado de probabilidad o realidad de la hipótesis. La regla más importante: <strong>jamás futur ni conditionnel después de si condicional</strong>.
+      </div>
+
+      <div class="sec-label">Los tres tipos — tabla de referencia</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tipo</th><th>Hipótesis (si…)</th><th>Resultado (principale)</th><th>Sentido</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong class="hl-t1">Type 1</strong></td>
+            <td>si + <strong class="hl-t1">présent</strong></td>
+            <td><strong class="hl-t1">futur simple</strong> / impératif / présent</td>
+            <td>Real, probable</td>
+          </tr>
+          <tr>
+            <td><strong class="hl-t2">Type 2</strong></td>
+            <td>si + <strong class="hl-t2">imparfait</strong></td>
+            <td><strong class="hl-t2">conditionnel présent</strong></td>
+            <td>Irreal en el presente</td>
+          </tr>
+          <tr>
+            <td><strong class="hl-t3">Type 3</strong></td>
+            <td>si + <strong class="hl-t3">plus-que-parfait</strong></td>
+            <td><strong class="hl-t3">conditionnel passé</strong></td>
+            <td>Irreal en el pasado</td>
+          </tr>
+          <tr>
+            <td><strong class="hl-au">Mixte</strong></td>
+            <td>si + <strong class="hl-au">plus-que-parfait</strong></td>
+            <td><strong class="hl-au">conditionnel présent</strong></td>
+            <td>Pasado irreal → resultado presente</td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Regla de oro — jamás violar</div>
+      <div class="warn-box"><span class="warn-icon">🚫</span>
+        <div class="warn-text">
+          <strong>Después de si condicional: NUNCA futur, NUNCA conditionnel.</strong><br>
+          <em>Si tu viendras</em> ✗ — <em>Si tu viendrais</em> ✗ — <em>Si tu viens</em> ✓ (type 1)<br>
+          <em>Si tu viendras</em> ✗ — <em>Si tu viendrais</em> ✗ — <em>Si tu venais</em> ✓ (type 2)
+        </div>
+      </div>
+
+      <div class="sec-label">Ejemplos rápidos de los tres tipos</div>
+      <div class="example-block t1">
+        <div class="ex-fr"><span class="et1">Si</span> tu <span class="et1">viens</span> demain, on <span class="et1">ira</span> au cinéma.</div>
+        <div class="ex-es">Si vienes mañana, iremos al cine. <em>(real, probable)</em></div>
+      </div>
+      <div class="example-block t2">
+        <div class="ex-fr"><span class="et2">Si</span> j'<span class="et2">avais</span> de l'argent, j'<span class="et2">achèterais</span> une maison.</div>
+        <div class="ex-es">Si tuviera dinero, compraría una casa. <em>(irreal presente)</em></div>
+      </div>
+      <div class="example-block t3">
+        <div class="ex-fr"><span class="et3">Si</span> tu <span class="et3">avais étudié</span> plus, tu <span class="et3">aurais réussi</span>.</div>
+        <div class="ex-es">Si hubieras estudiado más, habrías aprobado. <em>(irreal pasado)</em></div>
+      </div>
+      <div class="example-block au">
+        <div class="ex-fr"><span class="eau">Si</span> j'<span class="eau">avais étudié</span> le droit, je <span class="eau">serais</span> avocat maintenant.</div>
+        <div class="ex-es">Si hubiera estudiado derecho, ahora sería abogado. <em>(mixte)</em></div>
+      </div>
+    </div></div>
+  </div>
+  <div class="sec-block" id="s-type1">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>type 1</strong> expresa una hipótesis <strong>real o probable</strong>: la condición es posible y el resultado es su consecuencia lógica. La proposición en <em>si</em> lleva el <strong>présent de l'indicatif</strong>. La principale puede llevar futur simple, impératif o présent según el matiz.
+      </div>
+
+      <div class="green-box">
+        <strong>Fórmula:</strong> Si + présent → futur simple / impératif / présent (hábito)
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip t1 active" onclick="selectChip('t1',0)">Si + présent → futur simple</button>
+        <button class="chip t1"        onclick="selectChip('t1',1)">Si + présent → impératif</button>
+        <button class="chip t1"        onclick="selectChip('t1',2)">Si + présent → présent (hábito)</button>
+        <button class="chip t1"        onclick="selectChip('t1',3)">Inversión — principale antes</button>
+      </div>
+      <div id="t1-panels">
+
+        <div class="chip-panel active" id="t1-p-0">
+          <div class="def-box">La consecuencia futura de una condición presente probable. Es el uso más frecuente del type 1.</div>
+          <div class="example-block t1">
+            <div class="ex-fr"><span class="et1">Si</span> tu <span class="et1">travailles</span> dur, tu <span class="et1">réussiras</span> ton examen.</div>
+            <div class="ex-es">Si trabajas duro, aprobarás tu examen.</div>
+          </div>
+          <div class="example-block t1">
+            <div class="ex-fr"><span class="et1">Si</span> il <span class="et1">fait</span> beau demain, on <span class="et1">ira</span> à la plage.</div>
+            <div class="ex-es">Si hace buen tiempo mañana, iremos a la playa.</div>
+          </div>
+          <div class="example-block t1">
+            <div class="ex-fr"><span class="et1">Si</span> vous <span class="et1">avez</span> des questions, je vous <span class="et1">répondrai</span> avec plaisir.</div>
+            <div class="ex-es">Si tienen preguntas, les responderé con mucho gusto.</div>
+          </div>
+          <div class="example-block t1">
+            <div class="ex-fr"><span class="et1">Si</span> les résultats <span class="et1">sont</span> positifs, le projet <span class="et1">sera</span> lancé en janvier.</div>
+            <div class="ex-es">Si los resultados son positivos, el proyecto se lanzará en enero.</div>
+          </div>
+          <div class="example-block t1">
+            <div class="ex-fr"><span class="et1">Si</span> tu <span class="et1">ne pars</span> pas maintenant, tu <span class="et1">rateras</span> ton train.</div>
+            <div class="ex-es">Si no sales ahora, perderás el tren.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="t1-p-1">
+          <div class="def-box">Cuando la principale da una orden o consejo, se usa el <strong>impératif</strong> en lugar del futur.</div>
+          <div class="example-block t1">
+            <div class="ex-fr"><span class="et1">Si</span> tu <span class="et1">as</span> faim, <span class="et1">mange</span> quelque chose.</div>
+            <div class="ex-es">Si tienes hambre, come algo.</div>
+          </div>
+          <div class="example-block t1">
+            <div class="ex-fr"><span class="et1">Si</span> vous <span class="et1">êtes</span> fatigués, <span class="et1">reposez</span>-vous.</div>
+            <div class="ex-es">Si están cansados, descansen.</div>
+          </div>
+          <div class="example-block t1">
+            <div class="ex-fr"><span class="et1">Si</span> tu <span class="et1">ne comprends</span> pas, <span class="et1">demande</span> de l'aide.</div>
+            <div class="ex-es">Si no entiendes, pide ayuda.</div>
+          </div>
+          <div class="example-block t1">
+            <div class="ex-fr"><span class="et1">Si</span> vous <span class="et1">voyez</span> quelque chose de suspect, <span class="et1">signalez</span>-le immédiatement.</div>
+            <div class="ex-es">Si ven algo sospechoso, repórtenlo inmediatamente.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="t1-p-2">
+          <div class="def-box">Para expresar una relación habitual o una verdad general, ambas proposiciones van en <strong>présent</strong>.</div>
+          <div class="example-block t1">
+            <div class="ex-fr"><span class="et1">Si</span> on <span class="et1">chauffe</span> l'eau à 100°C, elle <span class="et1">bout</span>.</div>
+            <div class="ex-es">Si se calienta el agua a 100°C, hierve. <em>(verdad científica)</em></div>
+          </div>
+          <div class="example-block t1">
+            <div class="ex-fr"><span class="et1">Si</span> je <span class="et1">bois</span> du café le soir, je <span class="et1">dors</span> mal.</div>
+            <div class="ex-es">Si bebo café por la noche, duermo mal. <em>(hábito personal)</em></div>
+          </div>
+          <div class="example-block t1">
+            <div class="ex-fr"><span class="et1">Si</span> les enfants <span class="et1">ne mangent</span> pas bien, ils <span class="et1">tombent</span> malades plus souvent.</div>
+            <div class="ex-es">Si los niños no comen bien, se ponen enfermos más a menudo.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="t1-p-3">
+          <div class="def-box">La proposición con <em>si</em> puede ir después de la principale. El sentido no cambia, solo el énfasis.</div>
+          <div class="example-block t1">
+            <div class="ex-fr">On <span class="et1">ira</span> à la plage <span class="et1">si</span> il <span class="et1">fait</span> beau.</div>
+            <div class="ex-es">Iremos a la playa si hace buen tiempo.</div>
+          </div>
+          <div class="example-block t1">
+            <div class="ex-fr">Tu <span class="et1">réussiras</span> <span class="et1">si</span> tu <span class="et1">persévères</span>.</div>
+            <div class="ex-es">Tendrás éxito si perseveras.</div>
+          </div>
+          <div class="example-block t1">
+            <div class="ex-fr">Je te <span class="et1">préviendrai</span> <span class="et1">si</span> je <span class="et1">peux</span> venir.</div>
+            <div class="ex-es">Te avisaré si puedo venir.</div>
+          </div>
+          <div class="note-box"><strong>Coma:</strong> cuando la proposición en <em>si</em> va al inicio, se separa con coma. Cuando va al final, no lleva coma habitualmente.</div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+  <div class="sec-block" id="s-type2">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>type 2</strong> expresa una hipótesis <strong>irreal o improbable en el presente o futuro</strong>: la condición no se cumple actualmente o es muy poco probable. La proposición en <em>si</em> lleva el <strong>imparfait</strong>; la principale lleva el <strong>conditionnel présent</strong>.
+      </div>
+
+      <div class="green-box">
+        <strong>Fórmula:</strong> Si + imparfait → conditionnel présent<br>
+        <em>Si j'avais le temps, je viendrais.</em> (No tengo tiempo = irrealidad presente)
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip t2 active" onclick="selectChip('t2',0)">Exemples et contextes</button>
+        <button class="chip t2"        onclick="selectChip('t2',1)">Imparfait — conjugaison dans si</button>
+        <button class="chip t2"        onclick="selectChip('t2',2)">Conditionnel présent — conjugaison</button>
+        <button class="chip t2"        onclick="selectChip('t2',3)">Type 1 vs. Type 2 — distinción</button>
+      </div>
+      <div id="t2-panels">
+
+        <div class="chip-panel active" id="t2-p-0">
+          <div class="example-block t2">
+            <div class="ex-fr"><span class="et2">Si</span> j'<span class="et2">avais</span> plus d'argent, je <span class="et2">voyagerais</span> davantage.</div>
+            <div class="ex-es">Si tuviera más dinero, viajaría más.</div>
+            <div class="ex-note">No tengo suficiente dinero → irreal presente</div>
+          </div>
+          <div class="example-block t2">
+            <div class="ex-fr"><span class="et2">Si</span> elle <span class="et2">habitait</span> plus près, on se <span class="et2">verrait</span> plus souvent.</div>
+            <div class="ex-es">Si viviera más cerca, nos veríamos más a menudo.</div>
+          </div>
+          <div class="example-block t2">
+            <div class="ex-fr"><span class="et2">Si</span> j'<span class="et2">étais</span> toi, je <span class="et2">refuserais</span> cette offre.</div>
+            <div class="ex-es">Si yo fuera tú, rechazaría esa oferta.</div>
+            <div class="ex-note">Fórmula de consejo muy frecuente en oral</div>
+          </div>
+          <div class="example-block t2">
+            <div class="ex-fr"><span class="et2">Si</span> nous <span class="et2">pouvions</span>, nous <span class="et2">partirions</span> en vacances demain.</div>
+            <div class="ex-es">Si pudiéramos, nos iríamos de vacaciones mañana.</div>
+          </div>
+          <div class="example-block t2">
+            <div class="ex-fr"><span class="et2">Si</span> le gouvernement <span class="et2">prenait</span> cette mesure, la situation <span class="et2">s'améliorerait</span>.</div>
+            <div class="ex-es">Si el gobierno tomara esta medida, la situación mejoraría.</div>
+          </div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><em>Si j'aurais</em> ✗ — <em>Si je viendrais</em> ✗. Jamás conditionnel ni futur en la proposición con <em>si</em>. El imparfait del indicativo en francés corresponde al subjuntivo imperfecto del español (<em>si tuviera</em> → <em>si j'avais</em>).</div></div>
+        </div>
+
+        <div class="chip-panel" id="t2-p-1">
+          <div class="def-box">El imparfait en la subordonnée del type 2 se forma de manera regular. Los verbos irregulares más frecuentes:</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Infinitif</th><th>Imparfait (je)</th><th>Imparfait (il/elle)</th></tr></thead>
+            <tbody>
+              <tr><td>être</td><td class="hl-t2">j'étais</td><td>il était</td></tr>
+              <tr><td>avoir</td><td class="hl-t2">j'avais</td><td>il avait</td></tr>
+              <tr><td>pouvoir</td><td class="hl-t2">je pouvais</td><td>il pouvait</td></tr>
+              <tr><td>vouloir</td><td class="hl-t2">je voulais</td><td>il voulait</td></tr>
+              <tr><td>savoir</td><td class="hl-t2">je savais</td><td>il savait</td></tr>
+              <tr><td>faire</td><td class="hl-t2">je faisais</td><td>il faisait</td></tr>
+              <tr><td>aller</td><td class="hl-t2">j'allais</td><td>il allait</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block t2">
+            <div class="ex-fr"><span class="et2">Si</span> tu <span class="et2">étais</span> là, tout <span class="et2">irait</span> mieux.</div>
+            <div class="ex-es">Si estuvieras aquí, todo iría mejor.</div>
+          </div>
+          <div class="example-block t2">
+            <div class="ex-fr"><span class="et2">Si</span> on <span class="et2">pouvait</span> choisir, on <span class="et2">prendrait</span> cette option.</div>
+            <div class="ex-es">Si pudiéramos elegir, tomaríamos esta opción.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="t2-p-2">
+          <div class="def-box">El conditionnel présent en la principale: base del futur simple + terminaciones <em>-ais, -ais, -ait, -ions, -iez, -aient</em>.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Infinitif</th><th>Conditionnel (je)</th><th>Conditionnel (ils)</th></tr></thead>
+            <tbody>
+              <tr><td>parler</td><td class="hl-t2">je parlerais</td><td>ils parleraient</td></tr>
+              <tr><td>être</td><td class="hl-t2">je serais</td><td>ils seraient</td></tr>
+              <tr><td>avoir</td><td class="hl-t2">j'aurais</td><td>ils auraient</td></tr>
+              <tr><td>aller</td><td class="hl-t2">j'irais</td><td>ils iraient</td></tr>
+              <tr><td>pouvoir</td><td class="hl-t2">je pourrais</td><td>ils pourraient</td></tr>
+              <tr><td>vouloir</td><td class="hl-t2">je voudrais</td><td>ils voudraient</td></tr>
+              <tr><td>faire</td><td class="hl-t2">je ferais</td><td>ils feraient</td></tr>
+              <tr><td>venir</td><td class="hl-t2">je viendrais</td><td>ils viendraient</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="chip-panel" id="t2-p-3">
+          <div class="def-box">La diferencia entre type 1 y type 2 no es gramatical sino de <strong>probabilidad y actitud del hablante</strong>.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th></th><th class="hl-t1">Type 1</th><th class="hl-t2">Type 2</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Probabilidad</strong></td><td>Posible, probable</td><td>Improbable, irreal</td></tr>
+              <tr><td><strong>Actitud</strong></td><td>El hablante cree que puede ocurrir</td><td>El hablante sabe/cree que no ocurrirá</td></tr>
+              <tr><td><strong>Si…</strong></td><td>présent</td><td>imparfait</td></tr>
+              <tr><td><strong>Principale</strong></td><td>futur</td><td>conditionnel présent</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block t1">
+            <div class="ex-fr"><span class="et1">Si</span> tu <span class="et1">viens</span> demain, on <span class="et1">ira</span> au parc.</div>
+            <div class="ex-es">Si vienes mañana, iremos al parque. <em>(probable — espero que vengas)</em></div>
+          </div>
+          <div class="example-block t2">
+            <div class="ex-fr"><span class="et2">Si</span> tu <span class="et2">venais</span> demain, on <span class="et2">irait</span> au parc.</div>
+            <div class="ex-es">Si vinieras mañana, iríamos al parque. <em>(improbable — no creo que vengas)</em></div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+  <div class="sec-block" id="s-type3">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>type 3</strong> expresa una hipótesis <strong>irreal en el pasado</strong>: la condición no se cumplió y el resultado no ocurrió. La proposición en <em>si</em> lleva el <strong>plus-que-parfait</strong>; la principale lleva el <strong>conditionnel passé</strong>. También existe la <strong>phrase mixte</strong>, que combina una condición pasada con un resultado presente.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip t3 active" onclick="selectChip('t3',0)">Type 3 — exemples</button>
+        <button class="chip t3"        onclick="selectChip('t3',1)">PQP — formation (si…)</button>
+        <button class="chip t3"        onclick="selectChip('t3',2)">Conditionnel passé — formation</button>
+        <button class="chip t3"        onclick="selectChip('t3',3)">Phrase mixte (PQP → cond. présent)</button>
+      </div>
+      <div id="t3-panels">
+
+        <div class="chip-panel active" id="t3-p-0">
+          <div class="green-box">
+            <strong>Fórmula:</strong> Si + plus-que-parfait → conditionnel passé<br>
+            <em>Si tu avais étudié, tu aurais réussi.</em> (No estudiaste → no aprobaste)
+          </div>
+          <div class="example-block t3">
+            <div class="ex-fr"><span class="et3">Si</span> tu <span class="et3">avais étudié</span> davantage, tu <span class="et3">aurais réussi</span> l'examen.</div>
+            <div class="ex-es">Si hubieras estudiado más, habrías aprobado el examen.</div>
+            <div class="ex-note">No estudiaste → no aprobaste (irreal pasado)</div>
+          </div>
+          <div class="example-block t3">
+            <div class="ex-fr"><span class="et3">Si</span> elle <span class="et3">était partie</span> plus tôt, elle <span class="et3">aurait évité</span> les embouteillages.</div>
+            <div class="ex-es">Si hubiera salido antes, habría evitado los atascos.</div>
+          </div>
+          <div class="example-block t3">
+            <div class="ex-fr"><span class="et3">Si</span> nous <span class="et3">avions su</span>, nous <span class="et3">serions venus</span> plus tôt.</div>
+            <div class="ex-es">Si lo hubiéramos sabido, habríamos venido antes.</div>
+            <div class="ex-note">serions venus — être au conditionnel passé ✓</div>
+          </div>
+          <div class="example-block t3">
+            <div class="ex-fr"><span class="et3">Si</span> tu <span class="et3">m'avais prévenu</span>, j'<span class="et3">aurais pu</span> t'aider.</div>
+            <div class="ex-es">Si me hubieras avisado, podría haberte ayudado.</div>
+          </div>
+          <div class="example-block t3">
+            <div class="ex-fr"><span class="et3">Si</span> ce projet <span class="et3">avait été</span> mieux préparé, il <span class="et3">n'aurait pas échoué</span>.</div>
+            <div class="ex-es">Si ese proyecto hubiera estado mejor preparado, no habría fracasado.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="t3-p-1">
+          <div class="def-box">El <strong>plus-que-parfait</strong> se forma con avoir/être en imparfait + participio pasado. Es el tiempo de la subordonnée en <em>si</em> del type 3.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Infinitif</th><th>Auxiliaire imparfait</th><th>Plus-que-parfait (je)</th></tr></thead>
+            <tbody>
+              <tr><td>parler</td><td>j'avais</td><td class="hl-t3">j'avais parlé</td></tr>
+              <tr><td>finir</td><td>j'avais</td><td class="hl-t3">j'avais fini</td></tr>
+              <tr><td>partir</td><td>j'étais</td><td class="hl-t3">j'étais parti(e)</td></tr>
+              <tr><td>venir</td><td>j'étais</td><td class="hl-t3">j'étais venu(e)</td></tr>
+              <tr><td>savoir</td><td>j'avais</td><td class="hl-t3">j'avais su</td></tr>
+              <tr><td>faire</td><td>j'avais</td><td class="hl-t3">j'avais fait</td></tr>
+              <tr><td>prendre</td><td>j'avais</td><td class="hl-t3">j'avais pris</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block t3">
+            <div class="ex-fr"><span class="et3">Si</span> j'<span class="et3">avais pris</span> le train de 8h…</div>
+            <div class="ex-es">Si hubiera cogido el tren de las 8h…</div>
+          </div>
+          <div class="example-block t3">
+            <div class="ex-fr"><span class="et3">Si</span> elle <span class="et3">était restée</span> plus longtemps…</div>
+            <div class="ex-es">Si se hubiera quedado más tiempo…</div>
+            <div class="ex-note">rester avec être → était restée (accord fém.)</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="t3-p-2">
+          <div class="def-box">El <strong>conditionnel passé</strong> se forma con avoir/être en conditionnel présent + participio pasado. El acuerdo del participio sigue las reglas normales con être.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Infinitif</th><th>Auxiliaire cond.</th><th>Cond. passé (je)</th></tr></thead>
+            <tbody>
+              <tr><td>parler</td><td>j'aurais</td><td class="hl-t3">j'aurais parlé</td></tr>
+              <tr><td>partir</td><td>je serais</td><td class="hl-t3">je serais parti(e)</td></tr>
+              <tr><td>venir</td><td>je serais</td><td class="hl-t3">je serais venu(e)</td></tr>
+              <tr><td>pouvoir</td><td>j'aurais</td><td class="hl-t3">j'aurais pu</td></tr>
+              <tr><td>avoir</td><td>j'aurais</td><td class="hl-t3">j'aurais eu</td></tr>
+              <tr><td>être</td><td>j'aurais</td><td class="hl-t3">j'aurais été</td></tr>
+              <tr><td>faire</td><td>j'aurais</td><td class="hl-t3">j'aurais fait</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block t3">
+            <div class="ex-fr">…elle <span class="et3">serait arrivée</span> à temps.</div>
+            <div class="ex-es">…habría llegado a tiempo. <em>(fém. → arrivée)</em></div>
+          </div>
+          <div class="example-block t3">
+            <div class="ex-fr">…nous <span class="et3">aurions pu</span> trouver une solution.</div>
+            <div class="ex-es">…habríamos podido encontrar una solución.</div>
+          </div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text">Con être: acuerdo del p.p. con el sujeto. <em>Elle serait <strong>partie</strong></em> ✓ — <em>elle serait <strong>parti</strong></em> ✗.</div></div>
+        </div>
+
+        <div class="chip-panel" id="t3-p-3">
+          <div class="def-box">La <strong>phrase mixte</strong> combina una hipótesis irreal <strong>pasada</strong> (si + PQP) con un resultado <strong>presente</strong> (conditionnel présent). Expresa la consecuencia presente de algo que no ocurrió en el pasado.</div>
+          <div class="green-box">
+            <strong>Fórmula:</strong> Si + plus-que-parfait → conditionnel <strong>présent</strong><br>
+            <em>Si j'avais étudié le droit, je serais avocat maintenant.</em>
+          </div>
+          <div class="example-block au">
+            <div class="ex-fr"><span class="eau">Si</span> j'<span class="eau">avais étudié</span> le droit, je <span class="eau">serais</span> avocat maintenant.</div>
+            <div class="ex-es">Si hubiera estudiado derecho, ahora sería abogado.</div>
+            <div class="ex-note">No estudié derecho (pasado) → no soy abogado ahora (presente)</div>
+          </div>
+          <div class="example-block au">
+            <div class="ex-fr"><span class="eau">Si</span> elle <span class="eau">avait accepté</span> ce poste, elle <span class="eau">travaillerait</span> à Paris maintenant.</div>
+            <div class="ex-es">Si hubiera aceptado ese puesto, ahora estaría trabajando en París.</div>
+          </div>
+          <div class="example-block au">
+            <div class="ex-fr"><span class="eau">Si</span> nous <span class="eau">avions investi</span> à l'époque, nous <span class="eau">serions</span> riches aujourd'hui.</div>
+            <div class="ex-es">Si hubiéramos invertido en aquel momento, hoy seríamos ricos.</div>
+          </div>
+          <div class="example-block au">
+            <div class="ex-fr"><span class="eau">Si</span> tu <span class="eau">n'avais pas abandonné</span>, tu <span class="eau">pourrais</span> réessayer maintenant.</div>
+            <div class="ex-es">Si no hubieras abandonado, ahora podrías intentarlo de nuevo.</div>
+          </div>
+          <div class="note-box"><strong>Distinción type 3 / mixte:</strong> type 3 = hipótesis pasada + resultado <em>también pasado</em> (conditionnel <em>passé</em>). Mixte = hipótesis pasada + resultado <em>presente</em> (conditionnel <em>présent</em>). La clave es si el resultado ocurre ahora o en el pasado.</div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+  <div class="sec-block" id="s-autres">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Además de <em>si</em>, el francés dispone de otros conectores para expresar la condición. La diferencia fundamental con <em>si</em>: la mayoría rigen el <strong>subjonctif</strong>, no el indicatif. Son frecuentes en producción escrita B1–B2 y demuestran variedad de registro.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip au active" onclick="selectChip('aut',0)">À condition que / pourvu que (+subj.)</button>
+        <button class="chip au"        onclick="selectChip('aut',1)">À moins que / sauf si</button>
+        <button class="chip au"        onclick="selectChip('aut',2)">En cas de / au cas où</button>
+        <button class="chip au"        onclick="selectChip('aut',3)">Si seulement / tableau récapitulatif</button>
+      </div>
+      <div id="aut-panels">
+
+        <div class="chip-panel active" id="aut-p-0">
+          <div class="def-box"><strong>À condition que</strong> (con la condición de que) y <strong>pourvu que</strong> (con tal de que) expresan una condición necesaria para que ocurra el resultado. Ambos rigen el <strong>subjonctif</strong>.</div>
+          <div class="example-block au">
+            <div class="ex-fr">Je viendrai <span class="eau">à condition que</span> tu <span class="eau">m'invites</span> formellement.</div>
+            <div class="ex-es">Vendré con la condición de que me invites formalmente.</div>
+            <div class="ex-note">inviter → subjonctif: tu invites ✓</div>
+          </div>
+          <div class="example-block au">
+            <div class="ex-fr">On peut réussir <span class="eau">à condition de</span> travailler sérieusement.</div>
+            <div class="ex-es">Se puede tener éxito a condición de trabajar seriamente.</div>
+            <div class="ex-note">à condition de + infinitif (mismo sujeto)</div>
+          </div>
+          <div class="example-block au">
+            <div class="ex-fr">Je lui prêterai ma voiture <span class="eau">pourvu qu'</span>il la <span class="eau">ramène</span> avant ce soir.</div>
+            <div class="ex-es">Le prestaré el coche con tal de que lo devuelva antes de esta noche.</div>
+          </div>
+          <div class="example-block au">
+            <div class="ex-fr">Tout ira bien <span class="eau">pourvu que</span> vous <span class="eau">respectiez</span> les règles.</div>
+            <div class="ex-es">Todo irá bien con tal de que respetéis las normas.</div>
+          </div>
+          <div class="example-block au">
+            <div class="ex-fr">Il accepte ce travail <span class="eau">à condition qu'</span>on lui <span class="eau">offre</span> un salaire correct.</div>
+            <div class="ex-es">Acepta este trabajo a condición de que le ofrezcan un salario correcto.</div>
+          </div>
+          <div class="note-box"><strong>À condition de + infinitif:</strong> cuando los dos sujetos son idénticos, se puede usar <em>à condition de + infinitif</em> en lugar de <em>à condition que + subjonctif</em>: <em>à condition de travailler</em> = <em>à condition qu'on travaille</em>.</div>
+        </div>
+
+        <div class="chip-panel" id="aut-p-1">
+          <div class="def-box"><strong>À moins que</strong> (a menos que, a no ser que) rige el <strong>subjonctif</strong> y a veces lleva <em>ne</em> explétif. <strong>Sauf si</strong> (salvo que, excepto si) rige el <strong>indicatif</strong>.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th></th><th class="hl-au">À moins que</th><th class="hl-au">Sauf si</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Modo</strong></td><td>subjonctif</td><td>indicatif</td></tr>
+              <tr><td><strong>Ne explétif</strong></td><td>opcional (<em>à moins qu'il ne vienne</em>)</td><td>no aplica</td></tr>
+              <tr><td><strong>Ejemplo</strong></td><td><em>À moins qu'il <strong>pleuve</strong>, on sort.</em></td><td><em>On sort, <strong>sauf s'il</strong> pleut.</em></td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block au">
+            <div class="ex-fr">On part demain, <span class="eau">à moins qu'</span>il <span class="eau">y ait</span> une grève des transports.</div>
+            <div class="ex-es">Salimos mañana, a menos que haya una huelga de transportes.</div>
+          </div>
+          <div class="example-block au">
+            <div class="ex-fr">Je serai là à 8h, <span class="eau">à moins que</span> mon train ne <span class="eau">soit</span> retardé.</div>
+            <div class="ex-es">Estaré ahí a las 8h, a menos que mi tren tenga retraso.</div>
+            <div class="ex-note">ne explétif — sin valor negativo</div>
+          </div>
+          <div class="example-block au">
+            <div class="ex-fr">Je viendrai, <span class="eau">sauf si</span> j'ai trop de travail.</div>
+            <div class="ex-es">Vendré, salvo que tenga demasiado trabajo.</div>
+            <div class="ex-note">sauf si + indicatif (j'ai, présent) ✓</div>
+          </div>
+          <div class="example-block au">
+            <div class="ex-fr">La réunion est maintenue, <span class="eau">sauf si</span> le directeur est absent.</div>
+            <div class="ex-es">La reunión se mantiene, salvo que el director esté ausente.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="aut-p-2">
+          <div class="def-box"><strong>En cas de</strong> + nom (en caso de). <strong>Au cas où</strong> + conditionnel (por si acaso). Dos estructuras frecuentes con funcionamiento muy distinto.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th></th><th class="hl-au">En cas de</th><th class="hl-au">Au cas où</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Construcción</strong></td><td>en cas de + <strong>nom</strong></td><td>au cas où + <strong>conditionnel</strong></td></tr>
+              <tr><td><strong>Ejemplo</strong></td><td><em>En cas de <strong>pluie</strong>…</em></td><td><em>Au cas où il <strong>pleuvrait</strong>…</em></td></tr>
+              <tr><td><strong>Sentido</strong></td><td>si ocurre X (formal/escrito)</td><td>por si acaso ocurre X (precaución)</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block au">
+            <div class="ex-fr"><span class="eau">En cas de</span> problème, contactez le service client.</div>
+            <div class="ex-es">En caso de problema, contacte con el servicio de atención al cliente.</div>
+          </div>
+          <div class="example-block au">
+            <div class="ex-fr"><span class="eau">En cas d'</span>urgence, composez le 15.</div>
+            <div class="ex-es">En caso de urgencia, marque el 15.</div>
+          </div>
+          <div class="example-block au">
+            <div class="ex-fr">Prends un parapluie <span class="eau">au cas où</span> il <span class="eau">pleuvrait</span>.</div>
+            <div class="ex-es">Lleva un paraguas por si llueve.</div>
+            <div class="ex-note">au cas où + conditionnel (pleuvrait) ✓</div>
+          </div>
+          <div class="example-block au">
+            <div class="ex-fr">Note son numéro <span class="eau">au cas où</span> tu en <span class="eau">aurais</span> besoin.</div>
+            <div class="ex-es">Apunta su número por si lo necesitaras.</div>
+          </div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><em>Au cas où il pleut</em> ✗ — <em>au cas où il <strong>pleuvrait</strong></em> ✓. <em>Au cas où</em> siempre lleva conditionnel, nunca indicatif. <em>En cas de</em> siempre lleva nom, nunca verbe conjugado.</div></div>
+        </div>
+
+        <div class="chip-panel" id="aut-p-3">
+          <div class="def-box"><strong>Si seulement</strong> expresa un deseo o lamento sobre algo que no ocurre/ocurrió. No es una condicional completa sino una exclamación.</div>
+          <div class="example-block au">
+            <div class="ex-fr"><span class="eau">Si seulement</span> j'<span class="eau">avais</span> plus de temps !</div>
+            <div class="ex-es">¡Si tan solo tuviera más tiempo! / ¡Ojalá tuviera más tiempo!</div>
+            <div class="ex-note">si seulement + imparfait = deseo sobre el presente</div>
+          </div>
+          <div class="example-block au">
+            <div class="ex-fr"><span class="eau">Si seulement</span> tu <span class="eau">m'avais dit</span> la vérité !</div>
+            <div class="ex-es">¡Si tan solo me hubieras dicho la verdad!</div>
+            <div class="ex-note">si seulement + PQP = lamento sobre el pasado</div>
+          </div>
+
+          <div class="sec-label">Tableau récapitulatif — tous les connecteurs</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Connecteur</th><th>Mode</th><th>Signification</th></tr></thead>
+            <tbody>
+              <tr><td><strong class="hl-t1">si (type 1)</strong></td><td>présent indicatif</td><td>condición probable</td></tr>
+              <tr><td><strong class="hl-t2">si (type 2)</strong></td><td>imparfait indicatif</td><td>hipótesis irreal presente</td></tr>
+              <tr><td><strong class="hl-t3">si (type 3)</strong></td><td>plus-que-parfait</td><td>hipótesis irreal pasada</td></tr>
+              <tr><td><strong class="hl-au">à condition que</strong></td><td>subjonctif</td><td>condición necesaria</td></tr>
+              <tr><td><strong class="hl-au">pourvu que</strong></td><td>subjonctif</td><td>con tal de que</td></tr>
+              <tr><td><strong class="hl-au">à moins que</strong></td><td>subjonctif</td><td>a menos que</td></tr>
+              <tr><td><strong class="hl-au">sauf si</strong></td><td>indicatif</td><td>salvo que</td></tr>
+              <tr><td><strong class="hl-au">en cas de</strong></td><td>nom</td><td>en caso de</td></tr>
+              <tr><td><strong class="hl-au">au cas où</strong></td><td>conditionnel</td><td>por si acaso</td></tr>
+              <tr><td><strong class="hl-au">si seulement</strong></td><td>imparfait / PQP</td><td>ojalá / si tan solo</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+</div>
+<div class="panel" id="panel-ex">
+  <div class="exercise-controls">
+    <h3>Generar ejercicios</h3>
+    <span class="ctrl-label">Tipo</span>
+    <div class="ex-options">
+      <button class="ex-opt-btn active" data-type="fill">Completar huecos</button>
+      <button class="ex-opt-btn" data-type="choice">Elección múltiple</button>
+      <button class="ex-opt-btn" data-type="transform">Transformación</button>
+      <button class="ex-opt-btn" data-type="mix">Mixto</button>
+    </div>
+    <span class="ctrl-label">Foco</span>
+    <div class="ex-options" id="foco-btns">
+      <button class="ex-opt-btn foco active" data-foco="mix">General (todo)</button>
+      <button class="ex-opt-btn foco" data-foco="type1">Type 1 — si + présent → futur/impératif</button>
+      <button class="ex-opt-btn foco" data-foco="type2">Type 2 — si + imparfait → conditionnel présent</button>
+      <button class="ex-opt-btn foco" data-foco="type3">Type 3 — si + PQP → conditionnel passé</button>
+      <button class="ex-opt-btn foco" data-foco="mixte">Phrase mixte (type 2+3 combinés)</button>
+      <button class="ex-opt-btn foco" data-foco="autres">Autres connecteurs (à condition que / pourvu que…)</button>
+    </div>
+    <span class="ctrl-label">Nivel</span>
+    <div class="row-btns" id="diff-btns">
+      <button class="pill-btn diff A2" onclick="setDiff('A2')">A2</button>
+      <button class="pill-btn diff B1 active" onclick="setDiff('B1')">B1</button>
+      <button class="pill-btn diff B2" onclick="setDiff('B2')">B2</button>
+    </div>
+    <span class="ctrl-label">Cantidad</span>
+    <div class="row-btns" id="qty-btns">
+      <button class="pill-btn qty" onclick="setQty(3)">3</button>
+      <button class="pill-btn qty active" onclick="setQty(5)">5</button>
+      <button class="pill-btn qty" onclick="setQty(8)">8</button>
+    </div>
+    <button class="btn-generate" id="btn-gen" onclick="generateExercises()">
+      <span class="btn-icon">✨</span>
+      <span class="spinner">⟳</span>
+      Generar ejercicios
+    </button>
+  </div>
+  <div class="progress-wrap" id="progress-wrap">
+    <div class="progress-top">
+      <span class="progress-label">Progreso</span>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="progress-frac" id="progress-frac">0 / 0</span>
+        <button class="btn-retry" onclick="resetExercises()">↺ Nuevo</button>
+      </div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="progress-score">
+      <div class="score-item"><div class="score-dot g"></div><span id="score-correct">0 correctas</span></div>
+      <div class="score-item"><div class="score-dot r"></div><span id="score-wrong">0 errores</span></div>
+    </div>
+  </div>
+  <div class="final-score-bar" id="final-score-bar">
+    <div><div class="final-num" id="final-num">—</div><div class="final-label">resultado final</div></div>
+    <div class="final-track"><div class="final-fill" id="final-fill" style="width:0%"></div></div>
+    <div class="final-msg" id="final-msg"></div>
+  </div>
+  <div class="exercise-area" id="exercise-area">
+    <div class="state-msg"><div class="state-icon">✏️</div>
+      <p>Elige tipo, foco, nivel y cantidad, y pulsa <strong>Generar ejercicios</strong>.</p>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const TRAPS = [
+  {name:"Usar futur dans la subordonnée en si",
+   wrong:"Si tu viendras demain, on ira au cinéma. / S'il aura le temps, il appellera.",
+   right:"Si tu viens demain, on ira au cinéma. / S'il a le temps, il appellera.",
+   expl:"<strong>Jamás se usa el futur después de si condicional.</strong> La proposición en <em>si</em> lleva siempre un tiempo del indicativo: présent (type 1), imparfait (type 2) o plus-que-parfait (type 3). <em>Si + futur</em> es el error más frecuente y más grave de hispanohablantes — en español 'si vendrás' no existe, pero la interferencia aparece igual."},
+  {name:"Usar conditionnel dans la subordonnée en si",
+   wrong:"Si tu viendrais, je serais content. / S'il pourrait, il le ferait.",
+   right:"Si tu venais, je serais content. / S'il pouvait, il le ferait.",
+   expl:"<strong>Jamás se usa el conditionnel después de si condicional.</strong> Es el segundo error más frecuente. La subordonnée en <em>si</em> nunca lleva conditionnel — ese tiempo va en la proposition principale. <em>Si tu venais</em> (imparfait) → <em>je serais content</em> (conditionnel)."},
+  {name:"Confundir type 1 y type 2: présent vs. imparfait après si",
+   wrong:"Si j'aurais de l'argent, j'achèterais une voiture. (doble error: conditionnel après si)",
+   right:"Si j'avais de l'argent, j'achèterais une voiture. (type 2 — hypothèse irréelle présent)",
+   expl:"Para una hipótesis irreal en el presente (tipo 2): <strong>si + imparfait → conditionnel présent</strong>. <em>Si j'avais</em> (no <em>si j'aurais</em>). La confusión viene de traducir literalmente el español 'si tuviera → tendría', donde el subjuntivo en español corresponde al imparfait del indicativo en francés."},
+  {name:"Confundir type 2 y type 3: imparfait vs. PQP",
+   wrong:"Si j'avais su, je serai venu. / Si j'avais eu le temps, je venais.",
+   right:"Si j'avais su, je serais venu. (type 3) / Si j'avais eu le temps, je serais venu.",
+   expl:"Type 3 (hipótesis irreal en el pasado): <strong>si + plus-que-parfait → conditionnel passé</strong>. <em>Si j'avais su</em> (PQP) → <em>je serais venu</em> (conditionnel passé: être/avoir au conditionnel + p.p.). Error frecuente: usar conditionnel présent en la principal del type 3."},
+  {name:"À condition que / pourvu que: olvidar el subjonctif",
+   wrong:"À condition que tu viens. / Pourvu qu'il fait beau.",
+   right:"À condition que tu viennes. / Pourvu qu'il fasse beau.",
+   expl:"Los conectores condicionales <strong>à condition que, pourvu que, pour peu que, à moins que</strong> rigen siempre el <strong>subjonctif</strong>. Es la diferencia fundamental con <em>si</em>, que rige el indicativo. Confundir indicativo y subjonctif tras estos conectores es error sistemático."},
+  {name:"Si seulement: confundir con si de condición",
+   wrong:"Si seulement il vient. / Si seulement elle a le temps.",
+   right:"Si seulement il venait ! / Si seulement elle avait eu le temps !",
+   expl:"<strong>Si seulement</strong> (ojalá, si tan solo) expresa un deseo sobre el presente o pasado — lleva <strong>imparfait</strong> para el presente y <strong>PQP</strong> para el pasado. No es una frase condicional completa, sino una exclamación de deseo: <em>Si seulement j'avais su !</em> (¡Si lo hubiera sabido!)"},
+  {name:"Phrase mixte: mezclar los tiempos incorrectamente",
+   wrong:"Si tu avais travaillé plus, tu serais réussi maintenant. (réussi sin être)",
+   right:"Si tu avais travaillé plus, tu aurais réussi. / Si tu avais travaillé plus, tu serais plus compétent maintenant.",
+   expl:"La <strong>phrase mixte</strong> combina una hipótesis pasada (si + PQP) con un resultado presente o futuro (conditionnel présent): <em>Si j'avais étudié le droit, je serais avocat maintenant</em>. Es correcta y frecuente, pero hay que asegurarse de que el tiempo de la principale exprese bien el matiz presente o pasado deseado."},
+  {name:"En cas de / au cas où: construcción incorrecta",
+   wrong:"Au cas où il pleut, prends un parapluie. / En cas où il y a un problème.",
+   right:"Au cas où il pleuvrait, prends un parapluie. / En cas de pluie, prends un parapluie.",
+   expl:"<strong>Au cas où</strong> rige el <strong>conditionnel</strong> (no el indicatif): <em>au cas où il <strong>pleuvrait</strong></em>. <strong>En cas de</strong> va seguido de un <strong>nom</strong> (sin verbe): <em>en cas de pluie</em>, <em>en cas de problème</em>. Confundir estas dos estructuras es error frecuente."},
+];
+
+function renderTraps(){
+  document.getElementById("trap-cards").innerHTML=TRAPS.map(t=>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join("");
+}
+
+function selectChip(ns,idx){
+  document.querySelectorAll(".chip-bar").forEach(bar=>{
+    const first=bar.querySelector(".chip");
+    if(first&&first.getAttribute("onclick")&&first.getAttribute("onclick").includes("'"+ns+"'"))
+      bar.querySelectorAll(".chip").forEach((c,i)=>c.classList.toggle("active",i===idx));
+  });
+  const el=document.getElementById(ns+"-panels");
+  if(el) el.querySelectorAll(":scope > .chip-panel").forEach((p,i)=>p.classList.toggle("active",i===idx));
+}
+function showSection(id,btn){
+  document.querySelectorAll(".sec-block").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll(".snav-btn").forEach(b=>b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  btn.classList.add("active");
+}
+function switchMode(mode,btn){
+  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll(".mode-btn").forEach(b=>b.classList.remove("active"));
+  document.getElementById("panel-"+mode).classList.add("active");
+  btn.classList.add("active");
+  document.getElementById("section-nav").style.display=mode==="ref"?"":"none";
+}
+function setFontSize(v){document.documentElement.style.setProperty("--fs",v+"px");}
+
+let exType="fill",exDiff="B1",exQty=5,exFoco="mix";
+let exTotal=0,exAnswered=0,exCorrect=0,exWrong=0;
+
+document.querySelectorAll(".ex-opt-btn:not(.foco)").forEach(b=>b.addEventListener("click",function(){
+  document.querySelectorAll(".ex-opt-btn:not(.foco)").forEach(x=>x.classList.remove("active"));
+  this.classList.add("active");exType=this.dataset.type;
+}));
+document.querySelectorAll(".ex-opt-btn.foco").forEach(b=>b.addEventListener("click",function(){
+  document.querySelectorAll(".ex-opt-btn.foco").forEach(x=>x.classList.remove("active"));
+  this.classList.add("active");exFoco=this.dataset.foco;
+}));
+function setDiff(d){
+  exDiff=d;
+  document.querySelectorAll("#diff-btns .pill-btn").forEach(b=>{
+    b.classList.remove("active","A2","B1","B2");
+    if(b.textContent.trim()===d) b.classList.add("active",d);
+  });
+}
+function setQty(q){
+  exQty=q;
+  document.querySelectorAll("#qty-btns .pill-btn").forEach(b=>
+    b.classList.toggle("active",parseInt(b.textContent.trim())===q));
+}
+
+const FOCO_DESC={
+  mix:     "todo el sistema de la hipótesis y condición: type 1 (si+présent → futur/impératif/présent), type 2 (si+imparfait → conditionnel présent), type 3 (si+PQP → conditionnel passé), phrases mixtes (PQP → conditionnel présent), autres connecteurs (à condition que/pourvu que+subj, à moins que+subj, en cas de+nom, au cas où+conditionnel, sauf si+indicatif)",
+  type1:   "type 1 — hypothèse réelle ou probable: si + présent de l'indicatif → futur simple / impératif / présent (habitude). Identifier le bon temps dans la principale selon le contexte (futur pour résultat futur, impératif pour conseil/ordre, présent pour habitude générale)",
+  type2:   "type 2 — hypothèse irréelle au présent: si + imparfait → conditionnel présent. JAMAIS futur ni conditionnel après si. Conjugar correctamente el imparfait dans la subordonnée y el conditionnel présent dans la principale",
+  type3:   "type 3 — hypothèse irréelle dans le passé: si + plus-que-parfait → conditionnel passé (avoir/être au conditionnel + p.p.). Acuerdo del p.p. con être. Distinguir del type 2. Conjugar PQP correctamente",
+  mixte:   "phrases mixtes: combinar hipótesis pasada (si + PQP) con resultado presente (conditionnel présent) — Si j'avais étudié le droit, je serais avocat maintenant. Identificar cuándo el resultado es presente vs. pasado",
+  autres:  "autres connecteurs de condition: à condition que + subjonctif, pourvu que + subjonctif, à moins que + subjonctif, pour peu que + subjonctif; en cas de + nom; au cas où + conditionnel; sauf si + indicatif; selon que + indicatif",
+};
+const TYPE_DESC={
+  fill:      "completar huecos: el alumno conjuga el verbo en el tiempo correcto (présent/imparfait/PQP/futur/conditionnel/subjonctif) según el tipo de hipótesis",
+  choice:    "elección múltiple: 4 formas verbales, solo una correcta según el tipo de condicional y el contexto",
+  transform: "transformación: reformular la frase usando el tipo de hipótesis indicado, con ambos verbos en los tiempos correctos",
+  mix:       "mixto: combina fill, choice y transform",
+};
+
+const RULE_LABELS={
+  "s-intro":"Panorama","s-type1":"Type 1 — réelle","s-type2":"Type 2 — irréelle présent",
+  "s-type3":"Type 3 — irréelle passé","s-autres":"Autres connecteurs","s-trampas":"Trampas"
+};
+
+function renderExercises(exs){
+  const area=document.getElementById("exercise-area");
+  const labels={fill:"Completar",choice:"Elección múltiple",transform:"Transformación"};
+  area.innerHTML=exs.map((ex,i)=>
+    `<div class="exercise-card" id="ex-card-${i}" data-expl="${esc(ex.explanation)}" data-rule="${ex.rule_ref||""}">
+      <div class="exercise-card-header">
+        <span class="ex-num">${i+1}</span>
+        <span class="ex-type-badge">${labels[ex.type]||ex.type}</span>
+        <span class="ex-diff-badge ${ex.diff}">${ex.diff}</span>
+        <span class="ex-status" id="ex-st-${i}"></span>
+      </div>
+      <div class="exercise-body">
+        ${buildBody(ex,i)}
+        <div class="ex-feedback" id="ex-fb-${i}"></div>
+      </div>
+    </div>`).join("");
+  exs.forEach((ex,i)=>{
+    const chk=document.getElementById("chk-"+i);
+    if(chk) chk.addEventListener("click",()=>checkAnswer(ex,i));
+    const inp=document.getElementById("inp-"+i);
+    if(inp) inp.addEventListener("keydown",e=>{if(e.key==="Enter") checkAnswer(ex,i);});
+  });
+}
+function buildBody(ex,i){
+  if(ex.type==="fill"){
+    const parts=ex.prompt_parts||["",""];
+    return `<div class="exercise-prompt">${parts[0]}<input class="fill-input" id="inp-${i}" type="text" placeholder="${ex.blank_hint||"…"}" autocomplete="off" spellcheck="false">${parts.slice(1).join("")}</div><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  }
+  if(ex.type==="choice")
+    return `<div class="exercise-prompt">${ex.prompt}</div><div class="choices-grid">${ex.options.map((o,j)=>`<button class="choice-btn" id="ch-${i}-${j}" onclick="selectChoice(${i},${j},${ex.correct_index})">${o}</button>`).join("")}</div>`;
+  if(ex.type==="transform")
+    return `<div class="exercise-prompt">${ex.instruction}<br><em>${ex.original}</em></div><input class="transform-input" id="inp-${i}" type="text" placeholder="Frase condicional completa…" autocomplete="off" spellcheck="false"><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  return "";
+}
+function checkAnswer(ex,i){
+  const inp=document.getElementById("inp-"+i);
+  if(!inp||inp.disabled) return;
+  const ok=inp.value.trim().toLowerCase()===ex.answer.trim().toLowerCase();
+  inp.classList.add(ok?"ok":"err");inp.disabled=true;
+  const chk=document.getElementById("chk-"+i);if(chk) chk.disabled=true;
+  showFeedback(i,ok,ex.answer,ex.explanation,ex.rule_ref);
+  recordAnswer(ok);
+}
+function selectChoice(idx,chosen,correct){
+  const c0=document.getElementById(`ch-${idx}-0`);
+  if(!c0||c0.disabled) return;
+  for(let j=0;j<4;j++){
+    const b=document.getElementById(`ch-${idx}-${j}`);
+    if(!b) continue;b.disabled=true;
+    if(j===correct) b.classList.add("ok");else if(j===chosen) b.classList.add("err");
+  }
+  const card=document.getElementById("ex-card-"+idx);
+  showFeedback(idx,chosen===correct,null,card.dataset.expl,card.dataset.rule);
+  recordAnswer(chosen===correct);
+}
+function showFeedback(i,ok,ans,expl,ruleRef){
+  document.getElementById("ex-st-"+i).textContent=ok?"✅":"❌";
+  const fb=document.getElementById("ex-fb-"+i);
+  fb.className="ex-feedback visible "+(ok?"ok":"err");
+  const link=RULE_LABELS[ruleRef]?`<span class="fb-rule-link" onclick="goToRule('${ruleRef}')">📖 Ver: ${RULE_LABELS[ruleRef]}</span>`:"";
+  let html=ok?`<strong>✓ Correcto</strong>`:`<strong>✗ Incorrecto</strong>${ans?` — Respuesta: <strong>${ans}</strong>`:""}`;
+  if(expl) html+=`<br><span style="font-size:.88em;opacity:.92;margin-top:3px;display:block">${expl}</span>`;
+  html+=link;fb.innerHTML=html;
+}
+function goToRule(ref){
+  switchMode("ref",document.querySelector(".mode-btn"));
+  setTimeout(()=>{
+    showSection(ref,document.querySelector(`.snav-btn[onclick*="${ref}"]`));
+    document.getElementById(ref).scrollIntoView({behavior:"smooth",block:"start"});
+  },80);
+}
+function recordAnswer(ok){exAnswered++;if(ok)exCorrect++;else exWrong++;updateProgress();}
+function updateProgress(){
+  const pct=exTotal>0?(exAnswered/exTotal)*100:0;
+  document.getElementById("progress-frac").textContent=`${exAnswered} / ${exTotal}`;
+  document.getElementById("progress-fill").style.width=pct+"%";
+  document.getElementById("score-correct").textContent=`${exCorrect} correcta${exCorrect!==1?"s":""}`;
+  document.getElementById("score-wrong").textContent=`${exWrong} error${exWrong!==1?"es":""}`;
+  if(exAnswered>=exTotal&&exTotal>0) showFinalScore();
+}
+function showFinalScore(){
+  const pct=Math.round((exCorrect/exTotal)*100);
+  document.getElementById("final-score-bar").classList.add("visible");
+  document.getElementById("final-num").textContent=`${exCorrect} / ${exTotal}`;
+  const fill=document.getElementById("final-fill");
+  fill.style.width=pct+"%";
+  fill.style.background=pct>=80?"var(--green)":pct>=50?"var(--accent)":"var(--red)";
+  const msgs={100:"Parfait ! Dominas las condicionales. 🎉",80:"Très bien ! Repasa los errores.",50:"Bien, refuerza los bloques señalados.",0:"Vuelve a Referencia antes de repetir."};
+  document.getElementById("final-msg").textContent=msgs[pct===100?100:pct>=80?80:pct>=50?50:0];
+  document.getElementById("score-pill").style.display="";
+  document.getElementById("score-pill-val").textContent=`${exCorrect}/${exTotal}`;
+}
+function resetExercises(){
+  document.getElementById("exercise-area").innerHTML=`<div class="state-msg"><div class="state-icon">✏️</div><p>Elige tipo, foco, nivel y cantidad, y pulsa <strong>Generar ejercicios</strong>.</p></div>`;
+  document.getElementById("progress-wrap").classList.remove("visible");
+  document.getElementById("final-score-bar").classList.remove("visible");
+  document.getElementById("score-pill").style.display="none";
+  exAnswered=0;exCorrect=0;exWrong=0;
+}
+function esc(s){return(s||"").replace(/"/g,"&quot;").replace(/</g,"&lt;");}
+renderTraps();
+</script>
+</body>
+</html>

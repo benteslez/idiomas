@@ -6,24 +6,24 @@
 <title>Gramática portuguesa (PB) · CEFR A1–C1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#ede9df; --card:#faf7f1; --border:#c4bead;
+  --bg:#f3f1ec; --card:#fbfaf6; --border:#e2ddd0;
   --text:#1a1814; --text2:#44413a; --text3:#706c64;
   --accent:#7a5a0a; --accent-light:#f0e0c0; --accent-mid:#b89050;
   --shadow:0 2px 14px rgba(0,0,0,.10),0 1px 4px rgba(0,0,0,.06);
   --shadow-sm:0 1px 6px rgba(0,0,0,.07);
-  --radius:14px; --radius-sm:8px;
+  --radius:20px; --radius-sm:10px;
   --green:#1a6028; --green-bg:#e4f2e8;
   --blue:#163494; --blue-bg:#e6ebf8;
   --purple:#6a1a8a; --purple-bg:#f2e6f8;
   --wine:#8b1a4a; --wine-bg:#f8e6ee;
   --teal:#0e6060; --teal-bg:#e0f2f2;
   --orange:#8b4a0a; --orange-bg:#f8ede0;
-  /* dark card colors */
-  --dk-blue:#1a2f6e; --dk-green:#06402b; --dk-purple:#4a1460;
-  --dk-wine:#6e1438; --dk-teal:#0a4242; --dk-orange:#8b5e00;
+  /* dark card colors (más suaves) */
+  --dk-blue:#2a3a5e; --dk-green:#1f4634; --dk-purple:#3f2456;
+  --dk-wine:#5e2842; --dk-teal:#1c4258; --dk-orange:#6e521f;
   /* level tier accents */
   --tier-low-bg:rgba(45,180,110,.18);
   --tier-low-bd:rgba(110,231,160,.45);
@@ -36,39 +36,62 @@
   --tier-high-fg:#d3c0ff;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;position:relative;}
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.55;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .035 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+body > *{position:relative;z-index:1;}
 
 /* HEADER */
-.site-header{background:var(--card);border-bottom:2px solid var(--border);padding:28px 20px 22px;}
+.site-header{background:var(--card);border-bottom:1px solid var(--border);padding:32px 20px 26px;}
 .header-inner{max-width:1080px;margin:0 auto;}
 .header-top{display:flex;align-items:baseline;gap:12px;margin-bottom:4px;flex-wrap:wrap;}
-.site-header h1{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,5vw,2.2rem);font-weight:700;color:var(--text);}
-.header-tag{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border:1px solid var(--accent-mid);border-radius:20px;padding:3px 11px;}
-.header-sub{font-size:.78rem;color:var(--text3);font-weight:500;margin-bottom:18px;}
+.site-header h1{font-family:'Manrope',sans-serif;font-size:clamp(1.5rem,5vw,2.3rem);font-weight:800;letter-spacing:-.02em;color:var(--text);}
+.header-tag{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border-radius:20px;padding:3px 11px;}
+.header-sub{font-size:.78rem;color:var(--text3);font-weight:500;}
 .header-sub strong{color:var(--accent);}
 
-/* STATS ROW */
-.stats-row{display:flex;flex-wrap:wrap;gap:8px;}
-.stat-badge{background:var(--bg);border:1.5px solid var(--border);border-radius:20px;padding:5px 13px;font-size:.76rem;font-weight:600;color:var(--text2);display:flex;align-items:center;gap:5px;}
-.stat-badge .dot{width:7px;height:7px;border-radius:50%;}
+/* STICKY CONTROLS */
+.sticky-controls{
+  position:sticky; top:0; z-index:50;
+  background:rgba(243,241,236,.78);
+  backdrop-filter:blur(14px) saturate(180%);
+  -webkit-backdrop-filter:blur(14px) saturate(180%);
+  border-bottom:1px solid transparent;
+  transition:border-color .2s ease,background .2s ease;
+  padding-bottom:14px;
+}
+.sticky-controls.scrolled{
+  border-bottom-color:var(--border);
+  background:rgba(243,241,236,.88);
+}
 
 /* SEARCH */
 .search-wrap{max-width:1080px;margin:0 auto;padding:18px 20px 0;}
-.search-box{display:flex;align-items:center;gap:10px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:10px 16px;box-shadow:var(--shadow-sm);}
-.search-icon{color:var(--text3);font-size:1rem;flex-shrink:0;}
+.search-box{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:11px 14px 11px 16px;box-shadow:var(--shadow-sm);transition:border-color .2s,box-shadow .2s;}
+.search-box:focus-within{border-color:var(--accent-mid);box-shadow:var(--shadow-sm),0 0 0 3px rgba(184,144,80,.15);}
+.search-icon{color:var(--text3);display:flex;align-items:center;flex-shrink:0;}
+.search-icon svg{width:18px;height:18px;}
 .search-input{flex:1;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:.92rem;color:var(--text);outline:none;}
 .search-input::placeholder{color:var(--text3);}
+.kbd-hint{display:none;align-items:center;gap:3px;color:var(--text3);}
+.kbd-hint kbd{font-family:'DM Sans',sans-serif;font-size:.66rem;font-weight:600;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2px 5px;color:var(--text2);line-height:1;}
+.search-box:focus-within .kbd-hint{display:none;}
+@media (min-width:640px){.kbd-hint{display:flex;}}
 
 /* FILTER TABS */
 .filter-wrap{max-width:1080px;margin:0 auto;padding:14px 20px 0;}
-.filter-tabs{display:flex;gap:7px;flex-wrap:wrap;}
-.ftab{border:1.5px solid var(--border);border-radius:20px;padding:6px 15px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;white-space:nowrap;}
-.ftab:hover{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
-.ftab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.filter-tabs{display:flex;gap:6px;flex-wrap:wrap;}
+.ftab{border:1px solid transparent;border-radius:20px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;background:rgba(0,0,0,.04);color:var(--text2);transition:all .15s;white-space:nowrap;}
+.ftab:hover{background:rgba(0,0,0,.08);color:var(--text);}
+.ftab.active{background:var(--text);color:#fff;}
+.ftab .count{font-weight:500;opacity:.55;margin-left:5px;font-variant-numeric:tabular-nums;}
+.ftab.active .count{opacity:.75;}
 
 /* GRID */
 .main{max-width:1080px;margin:0 auto;padding:18px 20px 56px;}
-.section-label{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin:22px 0 12px;padding-left:2px;}
+.section-label{font-family:'Manrope',sans-serif;font-size:1.05rem;font-weight:700;letter-spacing:-.012em;color:var(--text);margin:28px 0 14px;padding-left:2px;}
 .grid{
   display:grid;
   grid-template-columns:repeat(3, minmax(0, 1fr));
@@ -81,36 +104,44 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 /* CARD */
 .topic-card{
   position:relative;
-  isolation:isolate;
-  border:1.5px solid rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
   border-radius:var(--radius);
-  box-shadow:0 3px 16px rgba(0,0,0,.22),0 1px 4px rgba(0,0,0,.14);
+  box-shadow:0 3px 16px rgba(0,0,0,.18),0 1px 4px rgba(0,0,0,.10);
   cursor:pointer;
-  transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  transition:all .25s ease;
   text-decoration:none;
   display:flex;
   flex-direction:column;
   overflow:hidden;
   min-height:100%;
+  animation:cardIn .5s cubic-bezier(.22,1,.36,1) backwards;
 }
-.topic-card::before{
+.topic-card::after{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(135deg, rgba(255,255,255,.09) 0%, rgba(255,255,255,.02) 38%, rgba(0,0,0,.18) 100%);
+  border-radius:inherit;
+  background:radial-gradient(circle at 30% 0%, rgba(255,255,255,.14) 0%, transparent 55%);
+  opacity:0;
+  transition:opacity .3s;
   pointer-events:none;
-  z-index:0;
+  z-index:1;
 }
 .topic-card:hover{
-  transform:translateY(-2px);
-  border-color:rgba(255,255,255,.30);
-  box-shadow:0 10px 30px rgba(0,0,0,.36),0 3px 10px rgba(0,0,0,.20);
+  transform:translateY(-3px);
+  border-color:rgba(255,255,255,.28);
+  box-shadow:
+    0 14px 38px rgba(0,0,0,.32),
+    0 4px 12px rgba(0,0,0,.18),
+    0 0 0 1px rgba(255,255,255,.06),
+    inset 0 1px 0 rgba(255,255,255,.10);
 }
+.topic-card:hover::after{opacity:1;}
 
 .card-body{
   position:relative;
-  z-index:1;
-  padding:22px 22px 14px;
+  z-index:2;
+  padding:22px 22px 24px;
   flex:1;
   display:flex;
   flex-direction:column;
@@ -132,12 +163,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .card-level.tier-high{background:var(--tier-high-bg);border-color:var(--tier-high-bd);color:var(--tier-high-fg);}
 
 .card-title{
-  font-family:'Playfair Display',serif;
-  font-size:1.04rem;
+  font-family:'Manrope',sans-serif;
+  font-size:1.05rem;
   font-weight:700;
-  letter-spacing:.5px;
+  letter-spacing:-.012em;
   color:#fff;
-  margin-bottom:10px;
+  margin-bottom:8px;
   line-height:1.3;
 }
 
@@ -145,72 +176,48 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   font-size:.84rem;
   color:rgba(255,255,255,.78);
   line-height:1.5;
-  display:-webkit-box;
-  -webkit-line-clamp:3;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  transition:-webkit-line-clamp .2s;
-}
-.topic-card:hover .card-desc{-webkit-line-clamp:8;}
-
-.card-tags{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px 8px;
-  margin-top:auto;
-  padding-top:14px;
-}
-.card-tag{
-  font-size:.68rem;
-  font-weight:600;
-  border-radius:10px;
-  padding:3px 9px;
-  background:rgba(255,255,255,.13);
-  border:1px solid rgba(255,255,255,.22);
-  color:rgba(255,255,255,.95);
 }
 
-/* Footer + CTA pill */
-.card-footer{
-  position:relative;
-  z-index:1;
-  display:flex;
-  justify-content:flex-end;
-  padding:0 22px 18px;
+/* Card arrow badge (hover) */
+.card-arrow{
+  position:absolute; top:18px; right:18px;
+  width:30px; height:30px;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.18);
+  color:#fff; border-radius:50%;
+  opacity:0; transform:translate(-4px,4px);
+  transition:opacity .2s,transform .2s,background .2s;
+  z-index:3; pointer-events:none;
 }
-.card-cta{
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
-  background:rgba(255,255,255,.13);
-  border:1px solid rgba(255,255,255,.25);
-  border-radius:20px;
-  padding:6px 12px 6px 14px;
-  font-family:'DM Sans',sans-serif;
-  font-size:.72rem;
-  font-weight:600;
-  letter-spacing:.02em;
-  color:#fff;
-  transition:background .15s, border-color .15s, transform .15s;
-}
-.card-cta .arrow{font-size:.95rem;line-height:1;transform:translateY(-1px);}
-.topic-card:hover .card-cta{
-  background:rgba(255,255,255,.26);
-  border-color:rgba(255,255,255,.55);
-  transform:translateX(2px);
-}
+.card-arrow svg{width:14px;height:14px;}
+.topic-card:hover .card-arrow{opacity:1;transform:translate(0,0);background:rgba(255,255,255,.22);}
+
+/* STAGGER */
+@keyframes cardIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.topic-card:nth-child(1){animation-delay:.02s;}
+.topic-card:nth-child(2){animation-delay:.05s;}
+.topic-card:nth-child(3){animation-delay:.08s;}
+.topic-card:nth-child(4){animation-delay:.11s;}
+.topic-card:nth-child(5){animation-delay:.14s;}
+.topic-card:nth-child(6){animation-delay:.17s;}
+.topic-card:nth-child(7){animation-delay:.20s;}
+.topic-card:nth-child(8){animation-delay:.23s;}
+.topic-card:nth-child(9){animation-delay:.26s;}
+.topic-card:nth-child(n+10){animation-delay:.29s;}
+@media (prefers-reduced-motion: reduce){.topic-card{animation:none;}}
 
 /* EMPTY */
-.empty-state{text-align:center;padding:48px 20px;color:var(--text3);}
-.empty-icon{font-size:2rem;margin-bottom:10px;}
+.empty-state{text-align:center;padding:56px 20px;color:var(--text3);}
+.empty-icon{display:flex;justify-content:center;margin-bottom:14px;opacity:.45;}
+.empty-icon svg{width:40px;height:40px;}
 .empty-state p{font-weight:500;font-size:.9rem;}
 
 /* HIDDEN */
 .hidden{display:none!important;}
 
 /* BACK BUTTON */
-.back-btn{position:fixed;top:18px;left:18px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:7px 14px 7px 11px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all .15s;}
+.back-btn{position:fixed;top:18px;left:18px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:7px 14px 7px 11px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all .15s;}
 .back-btn:hover{background:var(--accent-light);border-color:var(--accent);color:var(--accent);transform:translateX(-2px);}
 .back-btn .arrow{font-size:1rem;line-height:1;}
 @media (max-width:600px){.back-btn{top:12px;left:12px;padding:6px 12px 6px 9px;font-size:.74rem;}}
@@ -224,17 +231,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .topic-card.placeholder .card-num { color: #999 !important; }
 .topic-card.placeholder .card-title { color: #1a1814 !important; }
 .topic-card.placeholder .card-desc { color: #555 !important; }
-.topic-card.placeholder .card-tag {
-  background: #f0ede8 !important;
-  border: 1px solid #ccc !important;
-  color: #333 !important;
+.topic-card.placeholder .card-arrow {
+  color: #555 !important;
+  background: rgba(0,0,0,.05) !important;
+  border-color: rgba(0,0,0,.12) !important;
 }
-.topic-card.placeholder .card-cta {
-  background: #f0ede8 !important;
-  border: 1px solid #bbb !important;
-  color: #333 !important;
-}
-.topic-card.placeholder::before { background: none !important; }
+.topic-card.placeholder::after { background: none !important; }
 .topic-card.placeholder:hover { border-color: #888 !important; }
 </style>
 </head>
@@ -248,41 +250,41 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="header-inner">
     <div class="header-top">
       <h1>🇧🇷 Gramática portuguesa (PB)</h1>
-      <span class="header-tag">CEFR A1–C1</span>
+      <span class="header-tag">A1–C1</span>
     </div>
-    <p class="header-sub">Índice de bloques · <strong>55 temas</strong> · Referencia + ejercicios con IA · 🔴 = exclusivo del portugués</p>
-    <div class="stats-row">
-      <div class="stat-badge"><span class="dot" style="background:var(--teal)"></span>Verbos y tiempos</div>
-      <div class="stat-badge"><span class="dot" style="background:var(--green)"></span>Sintaxis</div>
-      <div class="stat-badge"><span class="dot" style="background:var(--wine)"></span>Discurso</div>
-      <div class="stat-badge"><span class="dot" style="background:var(--orange)"></span>Léxico gramatical</div>
-      <div class="stat-badge"><span class="dot" style="background:var(--purple)"></span>Producción</div>
-    </div>
+    <p class="header-sub"><strong id="topic-count">—</strong> temas</p>
   </div>
 </header>
 
-<div class="search-wrap">
-  <div class="search-box">
-    <span class="search-icon">🔍</span>
-    <input class="search-input" type="text" placeholder="Buscar tema… (ej: subjuntivo, pretérito, infinitivo pessoal…)" oninput="filterCards(this.value)" id="search-input">
+<div class="sticky-controls" id="sticky-controls">
+  <div class="search-wrap">
+    <div class="search-box">
+      <span class="search-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.65" y1="16.65" x2="20" y2="20"/></svg>
+      </span>
+      <input class="search-input" type="text" placeholder="Buscar tema… (ej: subjuntivo, pretérito, infinitivo pessoal…)" oninput="filterCards(this.value)" id="search-input">
+      <span class="kbd-hint" id="kbd-hint"><kbd>⌘</kbd><kbd>K</kbd></span>
+    </div>
   </div>
-</div>
 
-<div class="filter-wrap">
-  <div class="filter-tabs">
-    <button class="ftab active" onclick="setFilter('all',this)">Todos</button>
-    <button class="ftab" onclick="setFilter('verbos',this)">Verbos y tiempos</button>
-    <button class="ftab" onclick="setFilter('sintaxis',this)">Sintaxis</button>
-    <button class="ftab" onclick="setFilter('discurso',this)">Discurso</button>
-    <button class="ftab" onclick="setFilter('lexico',this)">Léxico gramatical</button>
-    <button class="ftab" onclick="setFilter('produccion',this)">Producción</button>
+  <div class="filter-wrap">
+    <div class="filter-tabs">
+      <button class="ftab active" data-cat="all" onclick="setFilter('all',this)">Todos <span class="count"></span></button>
+      <button class="ftab" data-cat="verbos" onclick="setFilter('verbos',this)">Verbos y tiempos <span class="count"></span></button>
+      <button class="ftab" data-cat="sintaxis" onclick="setFilter('sintaxis',this)">Sintaxis <span class="count"></span></button>
+      <button class="ftab" data-cat="discurso" onclick="setFilter('discurso',this)">Discurso <span class="count"></span></button>
+      <button class="ftab" data-cat="lexico" onclick="setFilter('lexico',this)">Léxico gramatical <span class="count"></span></button>
+      <button class="ftab" data-cat="produccion" onclick="setFilter('produccion',this)">Producción <span class="count"></span></button>
+    </div>
   </div>
 </div>
 
 <main class="main" id="main">
   <div class="grid" id="grid"></div>
   <div class="empty-state hidden" id="empty">
-    <div class="empty-icon">🔎</div>
+    <div class="empty-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.65" y1="16.65" x2="20" y2="20"/></svg>
+    </div>
     <p>Ningún tema coincide con tu búsqueda.</p>
   </div>
 </main>
@@ -749,11 +751,24 @@ const CAT_LABELS = {
   produccion:"Producción"
 };
 
+const CAT_BG = {
+  verbos:"var(--dk-teal)",
+  sintaxis:"var(--dk-green)",
+  discurso:"var(--dk-wine)",
+  lexico:"var(--dk-orange)",
+  produccion:"var(--dk-purple)"
+};
+
 // Map level range to tier accent (by upper bound)
 function getLevelTier(level){
   if(level.includes("C1")) return "tier-high";
   if(level.includes("B2")) return "tier-mid";
   return "tier-low";
+}
+
+// Helper: normalize for accent-free search
+function norm(s){
+  return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 }
 
 let activeFilter = "all";
@@ -780,8 +795,12 @@ function buildCards(items){
     filtered.forEach(t => {
       const tier = getLevelTier(t.level);
       const placeholderClass = t.placeholder ? " placeholder" : "";
+      const bg = CAT_BG[t.cat] || t.colorbg;
       html += `
-        <a class="topic-card${placeholderClass}" href="${t.file}" target="_blank" data-cat="${t.cat}" data-search="${t.title.toLowerCase()} ${t.desc.toLowerCase()} ${t.tags.join(" ").toLowerCase()}" style="background:${t.colorbg};">
+        <a class="topic-card${placeholderClass}" href="${t.file}" target="_blank" data-cat="${t.cat}" data-search="${norm(t.title)} ${norm(t.desc)} ${norm(t.tags.join(' '))}" style="background:${bg};">
+          <span class="card-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+          </span>
           <div class="card-body">
             <div class="card-top">
               <span class="card-num">${t.num}</span>
@@ -789,12 +808,6 @@ function buildCards(items){
             </div>
             <div class="card-title">${t.title}</div>
             <div class="card-desc">${t.desc}</div>
-            <div class="card-tags">
-              ${t.tags.map(tag => `<span class="card-tag">${tag}</span>`).join("")}
-            </div>
-          </div>
-          <div class="card-footer">
-            <span class="card-cta">Ver más <span class="arrow">→</span></span>
           </div>
         </a>`;
     });
@@ -806,11 +819,12 @@ function applyFilters(){
   let items = TOPICS;
   if(activeFilter !== "all") items = items.filter(t => t.cat === activeFilter);
   if(searchVal.trim()){
-    const q = searchVal.trim().toLowerCase();
+    const q = norm(searchVal.trim());
     items = items.filter(t =>
-      t.title.toLowerCase().includes(q) ||
-      t.desc.toLowerCase().includes(q) ||
-      t.tags.some(tag => tag.toLowerCase().includes(q))
+      norm(t.title).includes(q) ||
+      norm(t.desc).includes(q) ||
+      norm(t.level).includes(q) ||
+      t.tags.some(tag => norm(tag).includes(q))
     );
   }
   buildCards(items);
@@ -827,6 +841,51 @@ function filterCards(val){
   searchVal = val;
   applyFilters();
 }
+
+// Contador dinámico de temas
+document.getElementById("topic-count").textContent = TOPICS.length;
+
+// Counts en filter tabs
+function updateTabCounts(){
+  document.querySelectorAll(".ftab").forEach(btn => {
+    const cat = btn.dataset.cat;
+    const count = cat === "all" ? TOPICS.length : TOPICS.filter(t => t.cat === cat).length;
+    const span = btn.querySelector(".count");
+    if(span) span.textContent = `(${count})`;
+  });
+}
+updateTabCounts();
+
+// Hint Mac vs PC
+(function(){
+  const isMac = /Mac|iPhone|iPad/.test(navigator.platform);
+  if(!isMac){
+    const hint = document.getElementById("kbd-hint");
+    if(hint) hint.innerHTML = "<kbd>Ctrl</kbd><kbd>K</kbd>";
+  }
+})();
+
+// Atajos de teclado: / o Cmd/Ctrl+K para focus, Esc para limpiar
+document.addEventListener("keydown", (e) => {
+  const input = document.getElementById("search-input");
+  const isTyping = ["INPUT","TEXTAREA"].includes(document.activeElement.tagName);
+  if((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k"){
+    e.preventDefault(); input.focus(); input.select();
+  } else if(e.key === "/" && !isTyping){
+    e.preventDefault(); input.focus();
+  } else if(e.key === "Escape" && document.activeElement === input){
+    input.value = ""; searchVal = ""; applyFilters(); input.blur();
+  }
+});
+
+// Scroll-shadow en sticky
+(function(){
+  const controls = document.getElementById("sticky-controls");
+  if(!controls) return;
+  const onScroll = () => controls.classList.toggle("scrolled", window.scrollY > 4);
+  window.addEventListener("scroll", onScroll, {passive:true});
+  onScroll();
+})();
 
 applyFilters();
 </script>

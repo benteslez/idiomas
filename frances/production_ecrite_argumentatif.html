@@ -6,482 +6,109 @@
 <title>La Production Écrite · Texte Argumentatif</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_design.css">
 <style>
+/* La Production Écrite · Texte Argumentatif → Producción · dk-purple */
 :root {
-  --bg: #ede9df;
-  --card: #faf7f1;
-  --border: #c4bead;
-  --text: #1a1814;
-  --text2: #44413a;
-  --text3: #706c64;
-  --accent: #7a5a0a;
-  --accent-light: #f0e0c0;
-  --accent-mid: #b89050;
-  --warn-bg: #fdf0cc;
-  --shadow: 0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
-  --shadow-sm: 0 1px 6px rgba(0,0,0,0.08);
-  --radius: 14px;
-  --radius-sm: 8px;
-  --green: #1a6028;   --green-bg: #e4f2e8;
-  --red: #a81e2e;     --red-bg: #fce6e8;
-  --blue: #163494;    --blue-bg: #e6ebf8;
-  --purple: #6a1a8a;  --purple-bg: #f2e6f8;
-  --str-color: #1a5c2e;    --str-bg: #e4f2e8;
-  --form-color: #7a3a0a;   --form-bg: #f4ece2;
-  --strat-color: #163494;  --strat-bg: #e6ebf8;
-  --fs: 15px;
+  --primary: #3f2456;
+  --primary-soft: #efe9f4;
+  --primary-mid: #7a609a;
+  --primary-strong: #2a1340;
+  --primary-glow: rgba(63, 36, 86, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #b89adb;
+  --primary-soft: #20162e;
+  --primary-mid: #8a6cba;
+  --primary-strong: #dcc6ec;
+  --primary-glow: rgba(184, 154, 219, 0.18);
+}
+/* Topic-color aliases — str / form / strat */
+.stat-pill.str   { background: var(--green);  color: #fff; border-color: var(--green); }
+.stat-pill.form  { background: var(--warn);   color: #fff; border-color: var(--warn); }
+.stat-pill.strat { background: var(--blue);   color: #fff; border-color: var(--blue); }
+
+/* Legacy CSS-var aliases (used inline in body) */
+:root {
+  --str-color: var(--green);  --str-bg: var(--green-bg);
+  --form-color: var(--warn);  --form-bg: var(--warn-bg);
+  --strat-color: var(--blue); --strat-bg: var(--blue-bg);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+.example-block.str   { background: var(--green-bg); border-color: var(--green-border); }
+.example-block.form  { background: var(--warn-bg);  border-color: var(--warn-border); }
+.example-block.strat { background: var(--blue-bg);  border-color: var(--blue-border); }
 
-html, body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
-  font-size: var(--fs);
-  line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
-}
+.estr,   .hl-str   { color: var(--green); font-weight: 700; }
+.eform,  .hl-form  { color: var(--warn);  font-weight: 700; }
+.estrat, .hl-strat { color: var(--blue);  font-weight: 700; }
 
-h1, h2, h3, h4 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--text);
-}
+.chip.str.active   { background: var(--green); border-color: var(--green); }
+.chip.form.active  { background: var(--warn);  border-color: var(--warn); }
+.chip.strat.active { background: var(--blue);  border-color: var(--blue); }
 
-/* ====== HEADER ====== */
-.site-header {
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  padding: 24px 16px 18px;
-  box-shadow: var(--shadow-sm);
-}
-.site-header-inner {
-  max-width: 860px;
-  margin: 0 auto;
-}
-.header-top {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 6px;
-}
-.site-header h1 {
-  font-size: 1.85em;
-  letter-spacing: -0.01em;
-  flex: 1 1 auto;
-}
-.header-tag {
-  display: inline-block;
-  background: var(--accent-light);
-  color: var(--accent);
-  font-size: 0.72em;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 999px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-family: 'DM Sans', sans-serif;
-}
-.subtitle {
-  color: var(--text3);
-  font-size: 0.95em;
-  margin-bottom: 14px;
-}
-.stats-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.stat-pill {
-  font-size: 0.78em;
-  font-weight: 600;
-  padding: 5px 11px;
-  border-radius: 999px;
-  border: 1px solid;
-}
-.stat-pill.str { color: var(--str-color); border-color: var(--str-color); background: var(--str-bg); }
-.stat-pill.form { color: var(--form-color); border-color: var(--form-color); background: var(--form-bg); }
-.stat-pill.strat { color: var(--strat-color); border-color: var(--strat-color); background: var(--strat-bg); }
-
-.fs-wrap {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.8em;
-  color: var(--text3);
-  margin-top: 6px;
-}
-.fs-wrap input[type=range] {
-  flex: 1 1 auto;
-  max-width: 200px;
-  accent-color: var(--accent);
-}
-
-/* ====== SECTION NAV ====== */
-.section-nav {
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-}
-.section-nav-inner {
-  max-width: 860px;
-  margin: 0 auto;
-  display: flex;
-  gap: 6px;
-  padding: 10px 16px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.section-nav-inner::-webkit-scrollbar { display: none; }
-.snav-btn {
-  flex: 0 0 auto;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.82em;
-  font-weight: 600;
-  padding: 7px 13px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text2);
-  border-radius: 999px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-}
-.snav-btn:hover { border-color: var(--accent-mid); color: var(--text); }
-.snav-btn.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-}
-
-/* ====== MAIN LAYOUT ====== */
-.main-layout {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 16px 16px 40px;
-}
-
-.sec-block { display: none; }
-.sec-block.active { display: block; }
-
-.sec-block h2 {
-  font-size: 1.55em;
-  margin: 12px 0 14px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--accent-light);
-}
-
-.sec-label {
-  text-transform: uppercase;
-  font-size: 0.7em;
-  letter-spacing: 0.1em;
-  color: var(--text3);
-  font-weight: 700;
-  margin: 22px 0 10px;
-}
-
-/* ====== CARDS ====== */
-.gram-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  margin-bottom: 16px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-.gram-card-body { padding: 18px; }
-
-/* ====== INFO BOXES ====== */
-.def-box {
-  background: var(--warn-bg);
-  border-left: 4px solid var(--accent);
-  padding: 13px 15px;
-  border-radius: var(--radius-sm);
-  margin: 10px 0 14px;
-  font-size: 0.95em;
-  line-height: 1.55;
-  color: var(--text);
-}
-
-.warn-box {
-  background: var(--red-bg);
-  border-left: 4px solid var(--red);
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  margin: 14px 0;
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-}
-.warn-box::before {
-  content: "⚠";
-  font-size: 1.2em;
-  flex: 0 0 auto;
-  color: var(--red);
-  line-height: 1.3;
-}
-.warn-text {
-  font-size: 0.92em;
-  color: var(--text);
-  line-height: 1.5;
-}
-
-.note-box {
-  background: var(--purple-bg);
-  border-left: 4px solid var(--purple);
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  margin: 14px 0;
-  font-size: 0.92em;
-  color: var(--text);
-  line-height: 1.5;
-}
-
-/* ====== EXAMPLE BLOCKS ====== */
-.example-block {
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
+/* Unique components: formula-box and legend-pill (modernized with design tokens) */
+.formula-box {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
   margin: 10px 0;
-}
-.example-block.str { background: var(--str-bg); border-left: 4px solid var(--str-color); }
-.example-block.form { background: var(--form-bg); border-left: 4px solid var(--form-color); }
-.example-block.strat { background: var(--strat-bg); border-left: 4px solid var(--strat-color); }
-.example-block.neu { background: var(--blue-bg); border-left: 4px solid var(--blue); }
-.example-block.mix { background: var(--blue-bg); border-left: 4px solid var(--text); }
-
-.ex-fr {
-  font-size: 0.98em;
-  color: var(--text);
-  margin-bottom: 4px;
-  line-height: 1.55;
-}
-.ex-es {
-  font-size: 0.88em;
-  color: var(--text2);
-  font-style: italic;
-  line-height: 1.5;
-}
-.ex-note {
-  font-size: 0.78em;
-  color: var(--text3);
-  margin-top: 4px;
-}
-
-.estr { color: var(--str-color); font-weight: 700; }
-.eform { color: var(--form-color); font-weight: 700; }
-.estrat { color: var(--strat-color); font-weight: 700; }
-
-/* ====== CHIPS ====== */
-.chip-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin: 14px 0 12px;
-}
-.chip {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.82em;
-  font-weight: 600;
-  padding: 6px 12px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text2);
-  border-radius: 999px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-.chip:hover { border-color: var(--accent-mid); }
-.chip.str.active { background: var(--str-color); border-color: var(--str-color); color: #fff; }
-.chip.form.active { background: var(--form-color); border-color: var(--form-color); color: #fff; }
-.chip.strat.active { background: var(--strat-color); border-color: var(--strat-color); color: #fff; }
-.chip-panel { display: none; }
-.chip-panel.active { display: block; animation: fadeIn 0.2s ease; }
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ====== TABLES ====== */
-.table-wrap {
-  overflow-x: auto;
-  margin: 12px 0;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-}
-.gram-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--card);
-  font-size: 0.92em;
-  min-width: 480px;
-}
-.gram-table th, .gram-table td {
-  padding: 10px 12px;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-  vertical-align: top;
-}
-.gram-table th {
-  background: var(--bg);
-  font-weight: 700;
-  color: var(--text);
-  font-size: 0.85em;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.gram-table tr:last-child td { border-bottom: none; }
-.gram-table tr:hover td { background: rgba(0,0,0,0.015); }
-.gram-table .hl-str { background: var(--str-bg); color: var(--str-color); font-weight: 600; }
-.gram-table .hl-form { background: var(--form-bg); color: var(--form-color); font-weight: 600; }
-.gram-table .hl-strat { background: var(--strat-bg); color: var(--strat-color); font-weight: 600; }
-.gram-table .hl { background: var(--accent-light); color: var(--accent); font-weight: 600; }
-.gram-table .dim { color: var(--text3); }
-.gram-table .ok-cell { background: var(--green-bg); color: var(--green); font-weight: 600; }
-.gram-table .err-cell { background: var(--red-bg); color: var(--red); font-weight: 600; }
-
-/* ====== TRAP CARDS ====== */
-.trap-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 18px;
-  margin-bottom: 14px;
-  box-shadow: var(--shadow-sm);
-}
-.trap-card-header {
-  margin-bottom: 10px;
-}
-.trap-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.15em;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 10px;
-}
-.trap-vs {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
-  margin: 10px 0;
-}
-@media (min-width: 600px) {
-  .trap-vs { grid-template-columns: 1fr 1fr; }
-}
-.trap-wrong {
-  background: var(--red-bg);
-  border-left: 4px solid var(--red);
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  font-size: 0.92em;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.95em;
+  line-height: 1.7;
   color: var(--text);
 }
-.trap-wrong::before {
-  content: "✗ ";
-  color: var(--red);
-  font-weight: 700;
-}
-.trap-right {
-  background: var(--green-bg);
-  border-left: 4px solid var(--green);
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  font-size: 0.92em;
-  color: var(--text);
-}
-.trap-right::before {
-  content: "✓ ";
-  color: var(--green);
-  font-weight: 700;
-}
-.trap-expl {
-  font-size: 0.9em;
-  color: var(--text2);
-  margin-top: 10px;
-  line-height: 1.55;
-}
+.f-dim   { color: var(--text3); font-style: italic; }
+.f-str   { color: var(--green); font-weight: 600; }
+.f-form  { color: var(--warn);  font-weight: 600; }
+.f-strat { color: var(--blue);  font-weight: 600; }
+.f-opt   { color: var(--text2); font-style: italic; }
 
-/* ====== LEGEND ====== */
 .legend-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 14px 0 6px;
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 10px 0; align-items: center;
 }
 .legend-pill {
-  font-size: 0.82em;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 6px;
+  border-radius: var(--radius-pill); padding: 4px 12px;
+  font-size: 0.78em; font-weight: 600;
   border: 1px solid;
 }
-.legend-pill.str { color: var(--str-color); border-color: var(--str-color); background: var(--str-bg); }
-.legend-pill.form { color: var(--form-color); border-color: var(--form-color); background: var(--form-bg); }
-.legend-pill.strat { color: var(--strat-color); border-color: var(--strat-color); background: var(--strat-bg); }
-
-/* ====== FORMULA BOX ====== */
-.formula-box {
-  background: var(--bg);
-  border: 2px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 14px 18px;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 700;
-  font-size: 1.05em;
-  text-align: center;
-  margin: 12px 0;
-  letter-spacing: 0.01em;
-  color: var(--text);
-  line-height: 1.55;
-}
-.f-str { color: var(--str-color); }
-.f-form { color: var(--form-color); }
-.f-strat { color: var(--strat-color); }
-.f-dim { color: var(--text3); font-weight: 400; }
-.f-opt { color: var(--text3); font-style: italic; font-weight: 400; }
-
-/* ====== UTIL ====== */
-p { margin-bottom: 8px; }
-strong { font-weight: 700; }
-em { font-style: italic; }
-
-@media (max-width: 600px) {
-  .site-header h1 { font-size: 1.45em; }
-  .sec-block h2 { font-size: 1.3em; }
-  .gram-card-body { padding: 14px; }
-}
+.legend-pill.str   { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
+.legend-pill.form  { background: var(--warn-bg);  border-color: var(--warn-border);  color: var(--warn); }
+.legend-pill.strat { background: var(--blue-bg);  border-color: var(--blue-border);  color: var(--blue); }
 </style>
 </head>
 <body>
 
 <header class="site-header">
-  <div class="site-header-inner">
-    <div class="header-top">
-      <h1>La Production Écrite · Texte Argumentatif</h1>
-      <span class="header-tag">Production Écrite</span>
-    </div>
-    <div class="subtitle">Escritura francesa · B1–C1 · DELF/DALF</div>
-    <div class="stats-row">
-      <span class="stat-pill str">Structure du texte</span>
-      <span class="stat-pill form">Formules argumentatives</span>
-      <span class="stat-pill strat">Stratégies DELF</span>
-    </div>
+  <div class="header-top">
+    <a href="index_grammaire.html" class="back-btn" aria-label="Volver al índice" title="Volver al índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>La Production Écrite · Texte Argumentatif</h1>
+    <span class="header-tag">Production Écrite</span>
+  </div>
+  <div class="subtitle">Escritura francesa · B1–C1 · DELF/DALF</div>
+  <div class="stats-row">
+    <span class="stat-pill str">Structure du texte</span>
+    <span class="stat-pill form">Formules argumentatives</span>
+    <span class="stat-pill strat">Stratégies DELF</span>
     <div class="fs-wrap">
-      <span>Aa</span>
-      <input type="range" min="13" max="20" value="15" oninput="setFontSize(this.value)">
-      <span style="font-size:1.2em">Aa</span>
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="13" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
     </div>
   </div>
 </header>
 
-<nav class="section-nav">
+<nav class="section-nav" id="section-nav">
   <div class="section-nav-inner">
     <button class="snav-btn active" onclick="showSection('sec-1', this)">1 · Visión general</button>
     <button class="snav-btn" onclick="showSection('sec-2', this)">2 · Structure du texte</button>
@@ -493,6 +120,7 @@ em { font-style: italic; }
     <button class="snav-btn" onclick="showSection('sec-8', this)">8 · Stratégies DELF/DALF</button>
     <button class="snav-btn" onclick="showSection('sec-9', this)">9 · Trampas</button>
   </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
 </nav>
 
 <main class="main-layout">
@@ -1647,21 +1275,16 @@ em { font-style: italic; }
   <div id="traps-container"></div>
 </section>
 
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Volver arriba
+  </button>
+</footer>
 </main>
 
+<script src="_design.js"></script>
 <script>
-function setFontSize(v) {
-  document.documentElement.style.setProperty('--fs', v + 'px');
-}
-
-function showSection(id, btn) {
-  document.querySelectorAll('.sec-block').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.snav-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
-
 function selectChip(group, idx) {
   const chipBar = document.getElementById('chips-' + group);
   if (chipBar) {

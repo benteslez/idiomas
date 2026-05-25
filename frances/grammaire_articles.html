@@ -6,484 +6,67 @@
 <title>Les Articles et Déterminants — Gramática francesa A2–B2+</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_design.css">
 <style>
+/* Les Articles et Déterminants → Léxico gramatical · dk-orange */
 :root {
-  --bg: #ede9df;
-  --card: #faf7f1;
-  --border: #c4bead;
-  --text: #1a1814;
-  --text2: #44413a;
-  --text3: #706c64;
-  --accent: #7a5a0a;
-  --accent-light: #f0e0c0;
-  --accent-mid: #b89050;
-  --warn-bg: #fdf0cc;
-  --shadow: 0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
-  --shadow-sm: 0 1px 6px rgba(0,0,0,0.08);
-  --radius: 14px;
-  --radius-sm: 8px;
-  --green: #1a6028;   --green-bg: #e4f2e8;
-  --red: #a81e2e;     --red-bg: #fce6e8;
-  --blue: #163494;    --blue-bg: #e6ebf8;
-  --purple: #6a1a8a;  --purple-bg: #f2e6f8;
-  --def-color: #0a5a6a;
-  --def-bg: #e2f2f4;
-  --part-color: #8a3a1a;
-  --part-bg: #f4e8e2;
-  --contr-color: #6a1a8a;
-  --contr-bg: #f2e6f8;
-  --fs: 15px;
+  --primary: #6e521f;
+  --primary-soft: #f4ede0;
+  --primary-mid: #a88c5a;
+  --primary-strong: #4a3712;
+  --primary-glow: rgba(110, 82, 31, 0.14);
+  /* Legacy var aliases for inline references in body */
+  --def-color: var(--blue);    --def-bg: var(--blue-bg);
+  --part-color: var(--green);  --part-bg: var(--green-bg);
+  --contr-color: var(--purple);--contr-bg: var(--purple-bg);
 }
+[data-theme="dark"] {
+  --primary: #d4b87a;
+  --primary-soft: #2a221a;
+  --primary-mid: #a8915a;
+  --primary-strong: #ecd9b0;
+  --primary-glow: rgba(212, 184, 122, 0.18);
+}
+/* Topic-color aliases — 3 article types (def, part, contr) */
+.stat-pill.def   { background: var(--blue);   color: #fff; border-color: var(--blue); }
+.stat-pill.part  { background: var(--green);  color: #fff; border-color: var(--green); }
+.stat-pill.contr { background: var(--purple); color: #fff; border-color: var(--purple); }
 
-* { box-sizing: border-box; }
+.example-block.def   { background: var(--blue-bg);   border-color: var(--blue-border); }
+.example-block.part  { background: var(--green-bg);  border-color: var(--green-border); }
+.example-block.contr { background: var(--purple-bg); border-color: var(--purple-border); }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
-  font-size: var(--fs);
-  line-height: 1.55;
-}
+.edef,   .hl-def   { color: var(--blue);   font-weight: 700; }
+.epart,  .hl-part  { color: var(--green);  font-weight: 700; }
+.econtr, .hl-contr { color: var(--purple); font-weight: 700; }
 
-h1, h2, h3, h4 {
-  font-family: 'Playfair Display', Georgia, serif;
-  color: var(--text);
-  margin: 0 0 0.4em 0;
-  line-height: 1.2;
-}
+.chip.def.active   { background: var(--blue);   border-color: var(--blue);   color: #fff; }
+.chip.part.active  { background: var(--green);  border-color: var(--green);  color: #fff; }
+.chip.contr.active { background: var(--purple); border-color: var(--purple); color: #fff; }
 
-p { margin: 0.6em 0; }
-
-a { color: var(--accent); }
-
-/* ----------- HEADER ----------- */
-.site-header {
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  padding: 28px 24px 22px;
-  box-shadow: var(--shadow-sm);
-}
-.header-top {
-  max-width: 860px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-.header-top h1 {
-  font-size: 2.4em;
-  font-weight: 700;
-  font-style: italic;
-  letter-spacing: -0.5px;
-  margin: 0;
-  color: var(--text);
-}
-.header-tag {
-  display: inline-block;
-  padding: 4px 12px;
-  background: var(--accent-light);
-  color: var(--accent);
-  border-radius: 999px;
-  font-size: 0.78em;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-.subtitle {
-  max-width: 860px;
-  margin: 6px auto 0;
-  color: var(--text2);
-  font-size: 1.05em;
-  font-style: italic;
-}
-.stats-row {
-  max-width: 860px;
-  margin: 18px auto 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-}
-.stat-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 5px 12px;
-  background: var(--accent-light);
-  color: var(--accent);
-  border-radius: 999px;
-  font-size: 0.85em;
-  font-weight: 600;
-}
-.stat-pill.def {
-  background: var(--def-bg);
-  color: var(--def-color);
-}
-.stat-pill.part {
-  background: var(--part-bg);
-  color: var(--part-color);
-}
-.stat-pill.contr {
-  background: var(--contr-bg);
-  color: var(--contr-color);
-}
-.fs-wrap {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.85em;
-  color: var(--text3);
-}
-.fs-wrap input[type=range] {
-  width: 100px;
-  accent-color: var(--accent);
-}
-
-/* ----------- SECTION NAV ----------- */
-.section-nav {
-  position: sticky;
-  top: 0;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  z-index: 200;
-  box-shadow: var(--shadow-sm);
-}
-.section-nav-inner {
-  max-width: 860px;
-  margin: 0 auto;
-  display: flex;
-  gap: 4px;
-  overflow-x: auto;
-  padding: 8px 12px;
-  scrollbar-width: none;
-}
-.section-nav-inner::-webkit-scrollbar { display: none; }
-.snav-btn {
-  flex-shrink: 0;
-  background: transparent;
-  border: none;
-  padding: 8px 12px;
-  font-family: inherit;
-  font-size: 0.86em;
-  font-weight: 500;
-  color: var(--text3);
-  cursor: pointer;
-  border-radius: var(--radius-sm);
-  white-space: nowrap;
-  border-bottom: 2px solid transparent;
-  transition: all 0.15s ease;
-}
-.snav-btn:hover { color: var(--text2); background: var(--card); }
-.snav-btn.active {
-  color: var(--accent);
-  border-bottom: 2px solid var(--accent);
-  font-weight: 600;
-}
-
-/* ----------- MAIN LAYOUT ----------- */
-.main-layout {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 16px 16px 40px;
-}
-
-.sec-block { display: none; }
-.sec-block.active { display: block; }
-
-.sec-block > h2 {
-  font-size: 1.9em;
-  font-weight: 700;
-  font-style: italic;
-  margin: 0 0 22px 0;
-  color: var(--text);
-  letter-spacing: -0.3px;
-}
-
-.sec-label {
-  text-transform: uppercase;
-  font-size: 0.7em;
-  letter-spacing: 1.2px;
-  font-weight: 700;
-  color: var(--text3);
-  margin: 26px 0 10px;
-  font-family: 'DM Sans', sans-serif;
-}
-
-/* ----------- CARDS ----------- */
-.gram-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  margin-bottom: 22px;
-  overflow: hidden;
-}
-.gram-card-body {
-  padding: 18px;
-}
-
-.def-box {
-  background: var(--warn-bg);
-  border-left: 4px solid var(--accent);
-  padding: 14px 18px;
-  border-radius: var(--radius-sm);
-  margin: 12px 0 18px;
-  color: var(--text2);
-  font-size: 0.98em;
-  line-height: 1.6;
-}
-.def-box strong { color: var(--text); }
-
-.warn-box {
-  background: var(--red-bg);
-  border-left: 4px solid var(--red);
-  padding: 12px 16px;
-  border-radius: var(--radius-sm);
-  margin: 14px 0;
-  color: var(--text2);
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  font-size: 0.95em;
-}
-.warn-box::before {
-  content: "⚠️";
-  flex-shrink: 0;
-  font-size: 1.05em;
-  line-height: 1.4;
-}
-.warn-text { flex: 1; }
-
-.note-box {
-  background: var(--purple-bg);
-  border-left: 4px solid var(--purple);
-  padding: 12px 16px;
-  border-radius: var(--radius-sm);
-  margin: 14px 0;
-  color: var(--text2);
-  font-size: 0.94em;
-}
-.note-box strong { color: var(--text); }
-
-/* ----------- EXAMPLES ----------- */
-.example-block {
-  background: var(--blue-bg);
-  border-left: 4px solid var(--blue);
-  padding: 12px 16px;
-  border-radius: var(--radius-sm);
-  margin: 10px 0;
-}
-.example-block.def {
-  background: var(--def-bg);
-  border-left: 4px solid var(--def-color);
-}
-.example-block.part {
-  background: var(--part-bg);
-  border-left: 4px solid var(--part-color);
-}
-.example-block.contr {
-  background: var(--contr-bg);
-  border-left: 4px solid var(--contr-color);
-}
-.example-block.neu {
-  background: var(--blue-bg);
-  border-left: 4px solid var(--blue);
-}
-.example-block.mix {
-  background: var(--blue-bg);
-  border-left: 4px solid var(--text);
-}
-.ex-fr {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  color: var(--text);
-  font-size: 1.04em;
-}
-.ex-fr .edef   { color: var(--def-color);   font-weight: 700; }
-.ex-fr .epart  { color: var(--part-color);  font-weight: 700; }
-.ex-fr .econtr { color: var(--contr-color); font-weight: 700; }
-.ex-es {
-  color: var(--text2);
-  font-size: 0.88em;
-  font-style: italic;
-  margin-top: 4px;
-}
-.ex-note {
-  color: var(--text3);
-  font-size: 0.78em;
-  margin-top: 4px;
-  font-style: italic;
-}
-
-/* ----------- CHIPS ----------- */
-.chip-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 14px 0 14px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid var(--border);
-}
-.chip {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  color: var(--text2);
-  font-family: inherit;
-  font-size: 0.86em;
-  font-weight: 500;
-  padding: 6px 13px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-.chip:hover { background: var(--accent-light); color: var(--accent); }
-.chip.active {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-  font-weight: 600;
-}
-.chip.def.active {
-  background: var(--def-color);
-  border-color: var(--def-color);
-  color: #fff;
-}
-.chip.part.active {
-  background: var(--part-color);
-  border-color: var(--part-color);
-  color: #fff;
-}
-.chip.contr.active {
-  background: var(--contr-color);
-  border-color: var(--contr-color);
-  color: #fff;
-}
-.chip-panel { display: none; }
-.chip-panel.active { display: block; animation: fadeIn 0.2s ease; }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(2px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ----------- TABLES ----------- */
-.table-wrap {
-  overflow-x: auto;
-  margin: 14px 0;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-}
-.gram-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.93em;
-  background: var(--card);
-}
-.gram-table th, .gram-table td {
-  padding: 9px 12px;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-  vertical-align: top;
-}
-.gram-table th {
-  background: var(--accent-light);
-  color: var(--accent);
-  font-weight: 700;
-  font-size: 0.82em;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-}
-.gram-table tr:last-child td { border-bottom: none; }
-.gram-table .hl-def   { color: var(--def-color);   font-weight: 700; }
-.gram-table .hl-part  { color: var(--part-color);  font-weight: 700; }
-.gram-table .hl-contr { color: var(--contr-color); font-weight: 700; }
-.gram-table .hl       { color: var(--accent);      font-weight: 700; }
-.gram-table .dim      { color: var(--text3); }
-.gram-table .ok-cell  { background: var(--green-bg); color: var(--green); font-weight: 600; }
-.gram-table .err-cell { background: var(--red-bg);   color: var(--red);   font-weight: 600; text-decoration: line-through; }
-.gram-table em { font-style: italic; color: var(--text); }
-
-/* ----------- FORMULA BOX ----------- */
+/* Unique component: formula-box (article construction formulae) — modernized */
 .formula-box {
-  background: var(--bg);
-  border: 2px solid var(--border);
-  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
   padding: 14px 18px;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 700;
-  font-size: 1.05em;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: 1.02em;
   text-align: center;
   margin: 12px 0;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.005em;
   color: var(--text);
   line-height: 1.7;
 }
-.formula-box .f-def   { color: var(--def-color); }
-.formula-box .f-part  { color: var(--part-color); }
-.formula-box .f-contr { color: var(--contr-color); }
-.formula-box .f-dim   { color: var(--text3); font-weight: 400; }
-.formula-box .f-opt   { color: var(--text3); font-style: italic; font-weight: 400; }
+.formula-box .f-def   { color: var(--blue);   font-weight: 700; }
+.formula-box .f-part  { color: var(--green);  font-weight: 700; }
+.formula-box .f-contr { color: var(--purple); font-weight: 700; }
+.formula-box .f-dim   { color: var(--text3); font-weight: 400; font-family: 'Inter', sans-serif; font-size: 0.92em; }
+.formula-box .f-opt   { color: var(--text3); font-style: italic; font-weight: 400; font-family: 'Inter', sans-serif; }
 
-/* ----------- TRAPS ----------- */
-.trap-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
-  padding: 16px 18px;
-  margin-bottom: 14px;
-}
-.trap-card-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-}
-.trap-name {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-weight: 600;
-  color: var(--text);
-  font-size: 1.08em;
-}
-.trap-vs {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin: 8px 0 8px;
-}
-.trap-wrong, .trap-right {
-  padding: 7px 12px;
-  border-radius: var(--radius-sm);
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 0.96em;
-}
-.trap-wrong {
-  background: var(--red-bg);
-  border-left: 3px solid var(--red);
-  color: var(--red);
-}
-.trap-wrong::before { content: "✗ "; font-weight: 700; font-style: normal; }
-.trap-right {
-  background: var(--green-bg);
-  border-left: 3px solid var(--green);
-  color: var(--green);
-}
-.trap-right::before { content: "✓ "; font-weight: 700; font-style: normal; }
-.trap-expl {
-  margin-top: 8px;
-  color: var(--text2);
-  font-size: 0.92em;
-  line-height: 1.55;
-}
-
-/* ----------- LEGEND ----------- */
+/* Unique component: legend pills (article-type legend bar) — modernized */
 .legend-row {
   display: flex;
   flex-wrap: wrap;
@@ -497,29 +80,22 @@ a { color: var(--accent); }
   border-radius: 999px;
   font-size: 0.83em;
   font-weight: 600;
-  background: var(--accent-light);
-  color: var(--accent);
+  background: var(--primary-soft);
+  color: var(--primary);
+  border: 1px solid color-mix(in srgb, var(--primary) 22%, transparent);
 }
-.legend-pill.def   { background: var(--def-bg);   color: var(--def-color);   }
-.legend-pill.part  { background: var(--part-bg);  color: var(--part-color);  }
-.legend-pill.contr { background: var(--contr-bg); color: var(--contr-color); }
-
-/* ----------- RESPONSIVE ----------- */
-@media (max-width: 640px) {
-  .site-header { padding: 22px 16px 18px; }
-  .header-top h1 { font-size: 1.8em; }
-  .main-layout { padding: 16px 12px 60px; }
-  .gram-card-body { padding: 16px 14px; }
-  .sec-block > h2 { font-size: 1.5em; }
-  .fs-wrap { width: 100%; margin-left: 0; margin-top: 8px; }
-  .formula-box { font-size: 0.95em; padding: 12px 14px; }
-}
+.legend-pill.def   { background: var(--blue-bg);   color: var(--blue);   border-color: var(--blue-border); }
+.legend-pill.part  { background: var(--green-bg);  color: var(--green);  border-color: var(--green-border); }
+.legend-pill.contr { background: var(--purple-bg); color: var(--purple); border-color: var(--purple-border); }
 </style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="header-top">
+    <a href="index_grammaire.html" class="back-btn" aria-label="Volver al índice de gramática" title="Volver al índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
     <h1>Les Articles et Déterminants</h1>
     <span class="header-tag">Grammaire</span>
   </div>
@@ -529,14 +105,18 @@ a { color: var(--accent); }
     <span class="stat-pill part">Partitif</span>
     <span class="stat-pill contr">Contracté</span>
     <div class="fs-wrap">
-      <span>A</span>
-      <input type="range" min="13" max="20" value="15" oninput="setFontSize(this.value)">
-      <span style="font-size:1.15em">A</span>
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="13" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
     </div>
   </div>
 </header>
 
-<nav class="section-nav">
+<nav class="section-nav" id="section-nav">
   <div class="section-nav-inner">
     <button class="snav-btn active" onclick="showSection('sec1', this)">1. Visión general</button>
     <button class="snav-btn" onclick="showSection('sec2', this)">2. Article défini</button>
@@ -547,6 +127,7 @@ a { color: var(--accent); }
     <button class="snav-btn" onclick="showSection('sec7', this)">7. Cas particuliers</button>
     <button class="snav-btn" onclick="showSection('sec8', this)">8. Trampas</button>
   </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
 </nav>
 
 <main class="main-layout">
@@ -2308,21 +1889,17 @@ a { color: var(--accent); }
   </div>
 </section>
 
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Volver arriba
+  </button>
+</footer>
 </main>
 
+<script src="_design.js"></script>
 <script>
-function setFontSize(v) {
-  document.documentElement.style.setProperty('--fs', v + 'px');
-}
-
-function showSection(id, btn) {
-  document.querySelectorAll('.sec-block').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.snav-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
+/* Page-specific chip handler — chip-panels use data-group/data-idx instead of wrapper id */
 function selectChip(group, idx, btn) {
   const bar = btn.parentElement;
   bar.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
@@ -2411,7 +1988,6 @@ function renderTraps() {
     </div>
   `).join('');
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   renderTraps();
 });

@@ -4,22 +4,23 @@
 <title>Vocabulaire DELF B1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=DM+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=DM+Sans:wght@300;400;500;600&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f7f4ee;
-  --card: #fdfbf7;
-  --border: #ddd8ce;
-  --text: #2c2a26;
-  --text2: #6b6760;
-  --text3: #9b9690;
+  --bg: #f3f1ec;
+  --card: #fbfaf6;
+  --border: #e2ddd0;
+  --text: #1a1814;
+  --text2: #44413a;
+  --text3: #706c64;
   --accent: #8b6914;
   --warn-bg: #fdf6e3;
   --warn-border: #8b6914;
-  --shadow: 0 2px 12px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04);
-  --shadow-hover: 0 8px 28px rgba(0,0,0,0.14), 0 2px 6px rgba(0,0,0,0.07);
-  --shadow-sm: 0 1px 6px rgba(0,0,0,0.05);
-  --radius: 14px;
+  --shadow: 0 2px 14px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-hover: 0 14px 38px rgba(0,0,0,0.20), 0 4px 12px rgba(0,0,0,0.10);
+  --shadow-sm: 0 1px 6px rgba(0,0,0,0.07);
+  --radius: 20px;
+  --radius-sm: 10px;
   --flip-dur: 0.42s;
 
   --c-env: #2d7a3a;
@@ -52,7 +53,14 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
+  position: relative;
 }
+/* NOISE TEXTURE */
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.55;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .035 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+body > *{position:relative;z-index:1;}
 /* El slider escala SOLO el contenido de las tarjetas — font-size se aplica via JS */
 
 /* ── HEADER ── */
@@ -80,10 +88,10 @@ body {
   font-weight: 600; margin-bottom: 10px;
 }
 .site-header h1 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Manrope', sans-serif;
   font-size: clamp(1.7rem, 5vw, 2.6rem);
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   color: var(--text);
   margin-bottom: 18px;
   line-height: 1.15;
@@ -107,7 +115,9 @@ body {
 /* ── CONTROLS ── */
 .controls {
   position: sticky; top: 0; z-index: 100;
-  background: var(--card);
+  background: rgba(243,241,236,0.85);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
   border-bottom: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
   padding: 12px 24px;
@@ -197,27 +207,23 @@ body {
 }
 .initial-banner {
   max-width: 1400px;
-  margin: 20px auto 0;
-  padding: 12px 18px;
-  background: var(--warn-bg);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--accent);
-  border-radius: var(--radius);
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 14px; flex-wrap: wrap;
-  box-shadow: var(--shadow-sm);
+  margin: 14px auto 0;
+  padding: 4px 24px;
+  display: flex; align-items: center;
+  gap: 12px; flex-wrap: wrap;
 }
 .initial-banner-txt {
-  font-size: 0.92rem; color: var(--text2); font-weight: 500;
+  font-size: 0.82rem; color: var(--text3); font-weight: 500;
 }
 .initial-banner-btn {
-  background: var(--accent); color: #fff; border: none;
-  border-radius: 100px; padding: 6px 16px;
-  font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  background: transparent; color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 100px; padding: 4px 12px;
+  font-size: 0.76rem; font-weight: 600; cursor: pointer;
   font-family: inherit;
-  transition: filter .15s;
+  transition: all .15s;
 }
-.initial-banner-btn:hover { filter: brightness(1.1); }
+.initial-banner-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
 /* ── FLIP CARD ──
    Strategy: card-wrapper has explicit height set by JS (= front face height).
@@ -1512,6 +1518,236 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   border: 1px solid #d4c2e8;
   font-weight: 600;
 }
+
+/* ═══════════════════════════════════════════
+   MODERNIZACIÓN CARA FRONTAL
+   ═══════════════════════════════════════════ */
+
+.card-face-front {
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+/* HEAD — más aire */
+.card-head {
+  padding: 26px 28px 14px;
+  gap: 12px;
+}
+
+/* Palabra: tipografía moderna */
+.card-word {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.32em;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+}
+.card-word.known-word {
+  text-decoration-color: #4a9560;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1.5px;
+}
+
+/* Badges-row más apretado */
+.badges-row { gap: 4px; margin-top: 8px; }
+
+/* Reset → outline pill (monocromo) */
+.badge {
+  background: transparent;
+  color: var(--text2);
+  border: 1px solid var(--border);
+  font-size: 0.62em;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 100px;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+/* Dot color para tema y cat */
+.badge-tema::before,
+.badge-cat::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Tema dots */
+.badge-tema { background: transparent; color: var(--text2); border-color: var(--border); }
+.badge-tema-MA::before   { background: var(--c-env); }
+.badge-tema-T::before    { background: var(--c-tec); }
+.badge-tema-TR::before   { background: var(--c-tra); }
+.badge-tema-E::before    { background: var(--c-edu); }
+.badge-tema-S::before    { background: var(--c-sal); }
+.badge-tema-V::before    { background: var(--c-via); }
+.badge-tema-SOC::before  { background: var(--c-soc); }
+.badge-tema-CUL::before  { background: var(--c-cul); }
+.badge-tema-ALI::before  { background: var(--c-ali); }
+.badge-tema-FAL::before  { background: var(--c-fal); }
+.badge-tema-CON::before  { background: var(--c-con); }
+.badge-tema-ARG::before  { background: var(--c-arg); }
+.badge-tema-DELF::before { background: var(--c-delf); }
+
+/* Cat dots */
+.badge-cat { background: transparent; color: var(--text2); border-color: var(--border); }
+.badge-cat-N::before   { background: var(--c-nom); }
+.badge-cat-V::before   { background: var(--c-ver); }
+.badge-cat-Adj::before { background: var(--c-adj); }
+.badge-cat-Adv::before { background: var(--c-adv); }
+.badge-cat-Exp::before { background: var(--c-exp); }
+
+/* Nivel — outline neutro */
+.badge-nivel { background: transparent; color: var(--text2); border-color: var(--border); }
+
+/* Género — solo color del texto */
+.badge-gen-m  { background: transparent; color: #2a5a8a; border-color: rgba(70,130,200,.30); }
+.badge-gen-f  { background: transparent; color: #8a2a5a; border-color: rgba(200,80,140,.30); }
+.badge-gen-mf { background: transparent; color: var(--text3); border-color: var(--border); }
+
+/* Top, Oral, Escrito, Subtema — outline */
+.badge.top-badge { background: transparent; color: var(--accent); border: 1px solid rgba(139,105,20,.40); }
+.badge-oral      { background: transparent; color: var(--text2); border-color: var(--border); }
+.badge-escrito   { background: transparent; color: var(--text2); border-color: var(--border); }
+.badge-subtema   { background: transparent; color: var(--text3); border-color: var(--border); font-style: italic; }
+.badge-custom    { background: transparent; color: var(--text2); border-color: var(--border); }
+
+/* Known button — más sutil */
+.known-btn {
+  width: 28px;
+  height: 28px;
+  border-width: 1px;
+  font-size: 0.85rem;
+}
+
+/* Body — más respiro */
+.card-body {
+  padding: 0 28px 22px;
+  gap: 10px;
+}
+
+/* Translation: Manrope, peso 600 */
+.translation {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin-top: 2px;
+}
+
+/* Examples más respirados */
+.example-fr { font-size: 0.85em; line-height: 1.55; }
+.example-es { font-size: 0.80em; line-height: 1.5; }
+
+/* Warn: sin fondo amarillo, solo línea izq sutil */
+.card-warn,
+.fa-warn {
+  background: transparent;
+  border: none;
+  border-left: 2px solid rgba(139,105,20,0.40);
+  border-radius: 0;
+  padding: 4px 0 4px 12px;
+  margin: 6px 28px 18px;
+  font-size: 0.78em;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+/* Flip hint: mínimo */
+.flip-hint-front {
+  font-size: 0.6em;
+  opacity: 0.35;
+  padding: 0 28px 14px;
+}
+
+/* Known state: línea izquierda 2px verde, sin tinte de fondo */
+.card-wrapper.known .card-face-front {
+  border-left: 2px solid #4a9560;
+  background: var(--card);
+}
+
+/* ═══════════════════════════════════════════
+   CARA REVERSA — tipografía unificada Manrope
+   ═══════════════════════════════════════════ */
+.card-back-inner {
+  padding: 32px 28px;
+  gap: 14px;
+}
+.back-translation {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.7em;
+  font-weight: 700;
+  letter-spacing: -0.018em;
+  line-height: 1.2;
+}
+.back-label {
+  letter-spacing: 0.14em;
+}
+
+/* ═══════════════════════════════════════════
+   MODO JUEGO — mismo tratamiento que flashcards
+   ═══════════════════════════════════════════ */
+
+/* Cara frontal de la swipe-card — más aire lateral y vertical */
+.swipe-front-body {
+  padding: 28px 28px;
+  gap: 14px;
+}
+
+/* Palabra grande: Manrope */
+.swipe-word {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+}
+
+/* Badges centrados — heredan el outline-pill del bloque general */
+.swipe-badges { gap: 4px; }
+
+/* Ejemplo francés: borde superior más sutil */
+.swipe-example-fr {
+  border-top-color: var(--border);
+  padding-top: 12px;
+}
+
+/* Cara reversa de la swipe-card */
+.swipe-back {
+  padding: 32px 28px;
+  gap: 14px;
+}
+.swipe-back-label {
+  letter-spacing: 0.14em;
+}
+.swipe-back-translation {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.018em;
+  line-height: 1.2;
+}
+
+/* Etiquetas YES/NO al deslizar — Manrope, look más limpio */
+.swipe-label {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  border-width: 2px;
+  border-radius: 10px;
+}
+
+/* Game header / end / edit modal — tipografía unificada */
+.game-title,
+.edit-modal-title {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.game-end-title {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.018em;
+}
 </style>
 </head>
 <body>
@@ -1646,7 +1882,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 
 <main>
   <div class="initial-banner" id="initialBanner" hidden="">
-    <span class="initial-banner-txt">🎲 Selección aleatoria de 3 tarjetas de temas distintos — busca o filtra para ver todas.</span>
+    <span class="initial-banner-txt">Mostrando 3 tarjetas aleatorias</span>
     <button type="button" class="initial-banner-btn" id="btnShowAll">Ver todas</button>
   </div>
   <div class="grid" id="grid" style="font-size: 17.6px;"></div>

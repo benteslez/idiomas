@@ -6,197 +6,51 @@
 <title>Grammaire · Le Gérondif et le Participe Présent</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_design.css">
 <style>
+/* Le Gérondif et le Participe Présent → Sintaxis · dk-green */
 :root {
-  --bg:#ede9df; --card:#faf7f1; --border:#c4bead;
-  --text:#1a1814; --text2:#44413a; --text3:#706c64;
-  --accent:#7a5a0a; --accent-light:#f0e0c0; --accent-mid:#b89050;
-  --warn-bg:#fdf0cc;
-  --shadow:0 2px 14px rgba(0,0,0,.11),0 1px 4px rgba(0,0,0,.06);
-  --shadow-sm:0 1px 6px rgba(0,0,0,.08);
-  --radius:14px; --radius-sm:8px;
-  --green:#1a6028; --green-bg:#e4f2e8;
-  --red:#a81e2e;   --red-bg:#fce6e8;
-  --blue:#163494;  --blue-bg:#e6ebf8;
-  --purple:#6a1a8a; --purple-bg:#f2e6f8;
-  --ge-color:#163494; --ge-bg:#e6ebf8;
-  --pp-color:#1a6028; --pp-bg:#e4f2e8;
-  --us-color:#6a1a8a; --us-bg:#f2e6f8;
-  --di-color:#8b1a4a; --di-bg:#f8e6ee;
-  --fs:15px;
+  --primary: #1f4634;
+  --primary-soft: #e6f0eb;
+  --primary-mid: #5a8870;
+  --primary-strong: #102c1f;
+  --primary-glow: rgba(31, 70, 52, 0.14);
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:var(--fs);}
-.site-header{background:var(--card);border-bottom:2px solid var(--border);padding:20px 20px 14px;}
-.header-top{display:flex;align-items:baseline;gap:10px;margin-bottom:3px;flex-wrap:wrap;}
-.site-header h1{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,5vw,1.9rem);font-weight:700;}
-.header-tag{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border:1px solid var(--accent-mid);border-radius:20px;padding:3px 10px;}
-.subtitle{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
-.stats-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center;}
-.stat-pill{border-radius:20px;padding:4px 11px;font-size:.76rem;font-weight:600;border:1px solid;}
-.stat-pill.ge{background:var(--ge-bg);color:var(--ge-color);border-color:var(--ge-color);}
-.stat-pill.pp{background:var(--pp-bg);color:var(--pp-color);border-color:var(--pp-color);}
-.stat-pill.us{background:var(--us-bg);color:var(--us-color);border-color:var(--us-color);}
-.stat-pill.di{background:var(--di-bg);color:var(--di-color);border-color:var(--di-color);}
-.stat-pill.neu{background:var(--bg);color:var(--text2);border-color:var(--border);font-weight:500;}
-.fs-wrap{display:flex;align-items:center;gap:7px;margin-left:auto;}
-.fs-slider{width:76px;accent-color:var(--accent);cursor:pointer;}
-.fs-sz{color:var(--text3);font-weight:700;}
-.mode-toggle{display:flex;border-bottom:2px solid var(--border);background:var(--card);}
-.mode-btn{flex:1;padding:12px 8px;font-family:'DM Sans',sans-serif;font-size:.84rem;font-weight:600;color:var(--text3);background:transparent;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .15s;margin-bottom:-2px;}
-.mode-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
-.section-nav{position:sticky;top:0;z-index:200;background:var(--card);border-bottom:2px solid var(--border);box-shadow:var(--shadow-sm);}
-.section-nav-inner{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
-.section-nav-inner::-webkit-scrollbar{display:none;}
-.snav-btn{flex-shrink:0;padding:11px 16px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;color:var(--text3);background:transparent;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .15s;white-space:nowrap;}
-.snav-btn:hover{color:var(--text2);}
-.snav-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
-.main-layout{max-width:860px;margin:0 auto;padding:16px 16px 40px;}
-.panel{display:none;} .panel.active{display:block;}
-.sec-block{display:none;} .sec-block.active{display:block;}
-.gram-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;}
-.gram-card-body{padding:18px;}
-.def-box{background:var(--warn-bg);border-left:4px solid var(--accent);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:12px 15px;margin-bottom:14px;line-height:1.65;}
-.def-box strong{color:var(--accent);font-weight:700;}
-.warn-box{background:#fff4e0;border:1px solid #c8900a;border-radius:var(--radius-sm);padding:10px 13px;margin:10px 0;font-size:.9em;display:flex;gap:8px;align-items:flex-start;}
-.warn-icon{flex-shrink:0;margin-top:1px;}
-.warn-text{color:var(--text2);line-height:1.55;}
-.warn-text strong{color:#7a4400;font-weight:700;}
-.note-box{background:var(--purple-bg);border-left:4px solid var(--purple);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 14px;margin:10px 0;font-size:.9em;color:var(--text2);line-height:1.55;}
-.note-box strong{color:var(--purple);font-weight:700;}
-.green-box{background:var(--green-bg);border-left:4px solid var(--green);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 14px;margin:10px 0;font-size:.9em;color:var(--text2);line-height:1.55;}
-.green-box strong{color:var(--green);font-weight:700;}
-.example-block{border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 14px;margin:8px 0;}
-.example-block.ge{background:var(--ge-bg);border-left:4px solid var(--ge-color);}
-.example-block.pp{background:var(--pp-bg);border-left:4px solid var(--pp-color);}
-.example-block.di{background:var(--di-bg);border-left:4px solid var(--di-color);}
-.example-block.neu{background:var(--blue-bg);border-left:4px solid var(--blue);}
-.ex-fr{font-weight:600;margin-bottom:3px;color:var(--text);}
-.ege{color:var(--ge-color);font-weight:700;}
-.epp{color:var(--pp-color);font-weight:700;}
-.eus{color:var(--us-color);font-weight:700;}
-.edi{color:var(--di-color);font-weight:700;}
-.ex-es{color:var(--text2);font-size:.88em;font-style:italic;}
-.ex-note{font-size:.78em;color:var(--text3);margin-top:3px;font-weight:500;}
-.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:14px;border-radius:var(--radius-sm);border:1px solid var(--border);}
-.gram-table{width:100%;border-collapse:collapse;min-width:280px;}
-.gram-table th{background:var(--bg);border-bottom:2px solid var(--border);border-right:1px solid var(--border);padding:8px 11px;text-align:left;font-size:.72em;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);}
-.gram-table td{border-bottom:1px solid var(--border);border-right:1px solid var(--border);padding:8px 11px;vertical-align:top;}
-.gram-table tr:last-child td{border-bottom:none;}
-.gram-table tr:nth-child(even) td{background:#f4f0e6;}
-.gram-table td:last-child,.gram-table th:last-child{border-right:none;}
-.hl-ge{color:var(--ge-color);font-weight:700;}
-.hl-pp{color:var(--pp-color);font-weight:700;}
-.hl-di{color:var(--di-color);font-weight:700;}
-.hl{color:var(--accent);font-weight:700;}
-.dim{color:var(--text3);font-size:.88em;}
-.ok-cell{color:var(--green);font-weight:700;}
-.err-cell{color:var(--red);font-weight:600;font-style:italic;}
-.chip-bar{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
-.chip{border:1.5px solid var(--border);border-radius:20px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:.82em;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;white-space:nowrap;}
-.chip:hover{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
-.chip.active{background:var(--accent);color:#fff;border-color:var(--accent);}
-.chip.ge.active{background:var(--ge-color);border-color:var(--ge-color);}
-.chip.pp.active{background:var(--pp-color);border-color:var(--pp-color);}
-.chip.di.active{background:var(--di-color);border-color:var(--di-color);}
-.chip-panel{display:none;} .chip-panel.active{display:block;}
-.sec-label{font-size:.7em;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:14px 0 7px;}
-.trap-cards{display:flex;flex-direction:column;gap:10px;}
-.trap-card{border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;}
-.trap-card-header{padding:11px 14px;background:var(--bg);}
-.trap-name{font-weight:700;font-size:.9em;color:var(--text);margin-bottom:7px;}
-.trap-vs{display:flex;gap:8px;flex-wrap:wrap;}
-.trap-wrong{background:var(--red-bg);border:1.5px solid #d09098;border-radius:6px;padding:4px 10px;font-size:.82em;color:var(--red);font-weight:500;}
-.trap-right{background:var(--green-bg);border:1.5px solid #80b890;border-radius:6px;padding:4px 10px;font-size:.82em;color:var(--green);font-weight:500;}
-.trap-expl{padding:10px 14px 12px;font-size:.86em;color:var(--text2);line-height:1.6;border-top:1px solid var(--border);background:var(--card);}
-.trap-expl strong{color:var(--text);font-weight:700;}
-.exercise-controls{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:var(--shadow-sm);}
-.exercise-controls h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;margin-bottom:14px;}
-.ctrl-label{font-size:.7em;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:7px;display:block;}
-.ex-options{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
-.ex-opt-btn{border:1.5px solid var(--border);border-radius:20px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:.84em;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;}
-.ex-opt-btn.active{background:var(--accent);color:white;border-color:var(--accent);}
-.row-btns{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;}
-.pill-btn{border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-family:'DM Sans',sans-serif;font-size:.82em;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;}
-.pill-btn:hover:not(.active){background:var(--border);}
-.pill-btn.active{background:var(--text);color:var(--bg);border-color:var(--text);}
-.pill-btn.diff.active.A2{background:var(--green);border-color:var(--green);color:#fff;}
-.pill-btn.diff.active.B1{background:var(--blue);border-color:var(--blue);color:#fff;}
-.pill-btn.diff.active.B2{background:var(--accent);border-color:var(--accent);color:#fff;}
-.btn-generate{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:none;border-radius:10px;padding:13px;font-family:'DM Sans',sans-serif;font-size:.92em;font-weight:700;cursor:pointer;background:var(--accent);color:white;transition:all .18s;margin-top:4px;}
-.btn-generate:hover:not(:disabled){filter:brightness(1.1);box-shadow:0 4px 14px rgba(122,90,10,.32);}
-.btn-generate:disabled{opacity:.5;cursor:not-allowed;}
-.spinner{display:none;animation:spin .8s linear infinite;}
-.btn-generate.loading .spinner{display:inline;}
-.btn-generate.loading .btn-icon{display:none;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.progress-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:14px;display:none;}
-.progress-wrap.visible{display:block;}
-.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-.progress-label{font-size:.78em;color:var(--text3);font-weight:600;}
-.progress-frac{font-size:.92em;font-weight:700;color:var(--accent);}
-.progress-track{height:7px;background:var(--border);border-radius:4px;overflow:hidden;}
-.progress-fill{height:100%;background:var(--accent);border-radius:4px;transition:width .35s ease;}
-.progress-score{display:flex;gap:14px;margin-top:9px;font-size:.8em;flex-wrap:wrap;align-items:center;}
-.score-item{display:flex;align-items:center;gap:5px;font-weight:500;color:var(--text2);}
-.score-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.score-dot.g{background:var(--green);}.score-dot.r{background:var(--red);}
-.btn-retry{border:1.5px solid var(--border);border-radius:20px;padding:5px 13px;font-family:'DM Sans',sans-serif;font-size:.78em;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;margin-left:auto;}
-.btn-retry:hover{background:var(--border);}
-.final-score-bar{display:none;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
-.final-score-bar.visible{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
-.final-num{font-size:1.5rem;font-weight:700;color:var(--accent);}
-.final-label{font-size:.74em;color:var(--text3);}
-.final-track{flex:1;min-width:80px;height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
-.final-fill{height:100%;border-radius:4px;transition:width .5s ease;}
-.final-msg{font-size:.84em;color:var(--text2);width:100%;font-weight:500;}
-.exercise-area{display:none;}.exercise-area.visible{display:block;}
-.exercise-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden;}
-.exercise-card-header{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--border);}
-.ex-num{font-weight:700;color:var(--accent);font-size:.88em;}
-.ex-type-badge{font-size:.68em;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-mid);border-radius:12px;padding:2px 8px;}
-.ex-diff-badge{font-size:.68em;font-weight:700;border-radius:12px;padding:2px 8px;}
-.ex-diff-badge.A2{background:var(--green-bg);color:var(--green);border:1px solid #80b890;}
-.ex-diff-badge.B1{background:var(--blue-bg);color:var(--blue);border:1px solid #90a8e0;}
-.ex-diff-badge.B2{background:var(--warn-bg);color:var(--accent);border:1px solid var(--accent-mid);}
-.ex-status{margin-left:auto;}
-.exercise-body{padding:16px 18px;}
-.exercise-prompt{line-height:1.7;margin-bottom:12px;color:var(--text);}
-.exercise-prompt em{color:var(--accent);font-style:italic;font-weight:600;}
-.fill-input{border:none;border-bottom:2px solid var(--accent-mid);background:var(--accent-light);padding:2px 8px;border-radius:4px 4px 0 0;font-family:'DM Sans',sans-serif;font-size:1em;color:var(--text);min-width:160px;outline:none;transition:border-color .15s;}
-.fill-input:focus{border-bottom-color:var(--accent);}
-.fill-input.ok{background:var(--green-bg);border-bottom-color:var(--green);}
-.fill-input.err{background:var(--red-bg);border-bottom-color:var(--red);}
-.choices-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px;}
-.choice-btn{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:.88em;font-weight:500;cursor:pointer;text-align:left;background:var(--bg);color:var(--text);transition:all .15s;}
-.choice-btn:hover:not(:disabled){border-color:var(--accent);background:var(--accent-light);}
-.choice-btn.ok{background:var(--green-bg);border-color:var(--green);color:var(--green);font-weight:700;}
-.choice-btn.err{background:var(--red-bg);border-color:var(--red);color:var(--red);}
-.choice-btn:disabled{cursor:default;}
-.transform-input{width:100%;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:.9em;background:var(--bg);color:var(--text);outline:none;margin-bottom:8px;transition:border-color .15s;}
-.transform-input:focus{border-color:var(--accent);}
-.transform-input.ok{background:var(--green-bg);border-color:var(--green);}
-.transform-input.err{background:var(--red-bg);border-color:var(--red);}
-.btn-check{border:1.5px solid var(--accent);border-radius:20px;padding:7px 18px;font-family:'DM Sans',sans-serif;font-size:.84em;font-weight:700;cursor:pointer;background:transparent;color:var(--accent);transition:all .15s;}
-.btn-check:hover:not(:disabled){background:var(--accent);color:white;}
-.btn-check:disabled{opacity:.35;cursor:default;}
-.ex-feedback{display:none;border-radius:var(--radius-sm);padding:11px 14px;line-height:1.55;margin-top:10px;font-size:.9em;}
-.ex-feedback.visible{display:block;}
-.ex-feedback.ok{background:var(--green-bg);border:1.5px solid #80b890;color:#0e4818;}
-.ex-feedback.err{background:var(--red-bg);border:1.5px solid #c08090;color:#700018;}
-.fb-rule-link{display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:.84em;font-weight:700;color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:2px;}
-.skeleton-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:12px;}
-.skel{background:linear-gradient(90deg,var(--border) 25%,#e6e0d4 50%,var(--border) 75%);background-size:200% 100%;animation:skel 1.4s infinite;border-radius:4px;height:13px;margin-bottom:9px;}
-@keyframes skel{to{background-position:-200% 0;}}
-.state-msg{text-align:center;padding:40px 20px;color:var(--text3);}
-.state-icon{font-size:2rem;margin-bottom:10px;}
-.state-msg p{max-width:260px;margin:0 auto;line-height:1.6;font-weight:500;}
+[data-theme="dark"] {
+  --primary: #6fc497;
+  --primary-soft: #142a1f;
+  --primary-mid: #4a8a68;
+  --primary-strong: #b8e2cf;
+  --primary-glow: rgba(111, 196, 151, 0.18);
+}
+/* Topic-color aliases — ge=gérondif, pp=participe présent, di=distinction, us=usage */
+.stat-pill.ge  { background: var(--blue);   color: #fff; border-color: var(--blue); }
+.stat-pill.pp  { background: var(--green);  color: #fff; border-color: var(--green); }
+.stat-pill.di  { background: var(--purple); color: #fff; border-color: var(--purple); }
+.stat-pill.neu { background: var(--bg-elevated); color: var(--text2); border-color: var(--border-strong); font-weight: 500; }
+
+.example-block.ge  { background: var(--blue-bg);   border-color: var(--blue-border); }
+.example-block.pp  { background: var(--green-bg);  border-color: var(--green-border); }
+.example-block.di  { background: var(--purple-bg); border-color: var(--purple-border); }
+.example-block.neu { background: var(--bg-elevated); border-color: var(--border-strong); }
+
+.ege, .hl-ge { color: var(--blue);   font-weight: 700; }
+.epp, .hl-pp { color: var(--green);  font-weight: 700; }
+.eus         { color: var(--warn);   font-weight: 700; }
+.edi, .hl-di { color: var(--purple); font-weight: 700; }
+
+.chip.ge.active { background: var(--blue);   border-color: var(--blue);   color: #fff; }
+.chip.pp.active { background: var(--green);  border-color: var(--green);  color: #fff; }
+.chip.di.active { background: var(--purple); border-color: var(--purple); color: #fff; }
 </style>
 </head>
 <body>
 <header class="site-header">
   <div class="header-top">
+    <a href="index_grammaire.html" class="back-btn" aria-label="Volver al índice de gramática" title="Volver al índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
     <h1>Le Gérondif et le Participe Présent</h1>
     <span class="header-tag">Grammaire</span>
   </div>
@@ -210,6 +64,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <span class="fs-sz" style="font-size:.75rem">A</span>
       <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
       <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
     </div>
   </div>
 </header>
@@ -226,6 +84,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <button class="snav-btn"        onclick="showSection('s-distinction',this)">6. Gér. vs. Part. présent</button>
     <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Trampas</button>
   </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
 </div>
 <div class="main-layout">
 <div class="panel active" id="panel-ref">
@@ -885,8 +744,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
   </div>
 </div>
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Volver arriba
+  </button>
+</footer>
 </div>
 
+<script src="_design.js"></script>
 <script>
 const TRAPS = [
   {name:"Sujeto diferente entre gerundif y verbo principal",
@@ -936,186 +803,6 @@ function renderTraps() {
       <div class="trap-expl">${t.expl}</div>
     </div>`).join("");
 }
-
-function selectChip(ns, idx) {
-  document.querySelectorAll(".chip-bar").forEach(bar => {
-    const first = bar.querySelector(".chip");
-    if (first && first.getAttribute("onclick") && first.getAttribute("onclick").includes("'" + ns + "'")) {
-      bar.querySelectorAll(".chip").forEach((c, i) => c.classList.toggle("active", i === idx));
-    }
-  });
-  const el = document.getElementById(ns + "-panels");
-  if (el) el.querySelectorAll(":scope > .chip-panel").forEach((p, i) => p.classList.toggle("active", i === idx));
-}
-function showSection(id, btn) {
-  document.querySelectorAll(".sec-block").forEach(s => s.classList.remove("active"));
-  document.querySelectorAll(".snav-btn").forEach(b => b.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  btn.classList.add("active");
-}
-function switchMode(mode, btn) {
-  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-  document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
-  document.getElementById("panel-" + mode).classList.add("active");
-  btn.classList.add("active");
-  document.getElementById("section-nav").style.display = mode === "ref" ? "" : "none";
-}
-function setFontSize(v) { document.documentElement.style.setProperty("--fs", v + "px"); }
-
-let exType = "fill", exDiff = "B1", exQty = 5, exFoco = "mix";
-let exTotal = 0, exAnswered = 0, exCorrect = 0, exWrong = 0;
-
-document.querySelectorAll(".ex-opt-btn:not(.foco)").forEach(b => b.addEventListener("click", function() {
-  document.querySelectorAll(".ex-opt-btn:not(.foco)").forEach(x => x.classList.remove("active"));
-  this.classList.add("active"); exType = this.dataset.type;
-}));
-document.querySelectorAll(".ex-opt-btn.foco").forEach(b => b.addEventListener("click", function() {
-  document.querySelectorAll(".ex-opt-btn.foco").forEach(x => x.classList.remove("active"));
-  this.classList.add("active"); exFoco = this.dataset.foco;
-}));
-function setDiff(d) {
-  exDiff = d;
-  document.querySelectorAll("#diff-btns .pill-btn").forEach(b => {
-    b.classList.remove("active","A2","B1","B2");
-    if (b.textContent.trim() === d) b.classList.add("active", d);
-  });
-}
-function setQty(q) {
-  exQty = q;
-  document.querySelectorAll("#qty-btns .pill-btn").forEach(b =>
-    b.classList.toggle("active", parseInt(b.textContent.trim()) === q));
-}
-
-const FOCO_DESC = {
-  mix:        "todos los aspectos: formación del gérondif (base nous + -ant, irregulares étant/ayant/sachant), usos del gérondif (simultaneidad, modo, condición, causa), tout en + gérondif (oposición y simultaneidad), participe présent vs. adjectif verbal (acuerdo), distinción gérondif vs. participe présent",
-  formation:  "formación del gérondif: base = 1ª persona plural présent menos -ons + -ant (ex: nous parlons → parlant → en parlant); irregulares: être→étant, avoir→ayant, savoir→sachant; ortografía: -cer→-çant, -ger→-geant; negación: en ne [forme] pas",
-  emplois:    "usos del gérondif: simultaneidad (Il travaille en chantant), modo (Elle a réussi en travaillant dur), condición (En partant tôt, tu éviteras les embouteillages), cause (En étant fatigué — menos preciso); identificar el valor correcto según contexto",
-  tout:       "tout en + gérondif: simultaneidad insistida (Il écoute tout en prenant des notes) vs. oposición/concesión (Elle a réussi tout en ayant peu de temps); distinción de los dos valores según contexto",
-  pp:         "participe présent como adjectif verbal: acuerdo en género y número cuando califica un sustantivo (une femme souriante, des résultats surprenants); invariable como participe présent propositionnel (une femme souriant à la caméra)",
-  distinction:"distinción gérondif vs. participe présent: gérondif = en + -ant, siempre mismo sujeto que el verbo principal, función adverbial; participe présent = solo -ant, puede tener sujeto propio, función adjetival o proposicional",
-};
-const TYPE_DESC = {
-  fill:      "completar huecos: el alumno escribe el gérondif correcto (en + forme en -ant), el participe présent o elige entre las dos formas según el contexto",
-  choice:    "elección múltiple: 4 opciones (gérondif / participe présent / adjectif verbal / infinitif), solo una correcta según la función en la frase",
-  transform: "transformación: reformular la frase usando el gérondif o el participe présent indicado, con el valor semántico correcto (simultaneidad/modo/condición)",
-  mix:       "mixto: combina fill, choice y transform",
-};
-
-const RULE_LABELS = {
-  "s-intro":"Panorama","s-formation":"Formation","s-emplois":"Emplois du gérondif",
-  "s-tout":"Tout en + gérondif","s-pp":"Participe présent","s-distinction":"Gér. vs. Part. présent","s-trampas":"Trampas"
-};
-
-function renderExercises(exs) {
-  const area = document.getElementById("exercise-area");
-  const labels = {fill:"Completar", choice:"Elección múltiple", transform:"Transformación"};
-  area.innerHTML = exs.map((ex, i) =>
-    `<div class="exercise-card" id="ex-card-${i}" data-expl="${esc(ex.explanation)}" data-rule="${ex.rule_ref||""}">
-      <div class="exercise-card-header">
-        <span class="ex-num">${i+1}</span>
-        <span class="ex-type-badge">${labels[ex.type]||ex.type}</span>
-        <span class="ex-diff-badge ${ex.diff}">${ex.diff}</span>
-        <span class="ex-status" id="ex-st-${i}"></span>
-      </div>
-      <div class="exercise-body">
-        ${buildBody(ex, i)}
-        <div class="ex-feedback" id="ex-fb-${i}"></div>
-      </div>
-    </div>`).join("");
-  exs.forEach((ex, i) => {
-    const chk = document.getElementById("chk-"+i);
-    if (chk) chk.addEventListener("click", () => checkAnswer(ex, i));
-    const inp = document.getElementById("inp-"+i);
-    if (inp) inp.addEventListener("keydown", e => { if (e.key==="Enter") checkAnswer(ex, i); });
-  });
-}
-
-function buildBody(ex, i) {
-  if (ex.type === "fill") {
-    const parts = ex.prompt_parts || ["",""];
-    return `<div class="exercise-prompt">${parts[0]}<input class="fill-input" id="inp-${i}" type="text" placeholder="${ex.blank_hint||"…"}" autocomplete="off" spellcheck="false">${parts.slice(1).join("")}</div><button class="btn-check" id="chk-${i}">Comprobar</button>`;
-  }
-  if (ex.type === "choice")
-    return `<div class="exercise-prompt">${ex.prompt}</div><div class="choices-grid">${ex.options.map((o,j)=>`<button class="choice-btn" id="ch-${i}-${j}" onclick="selectChoice(${i},${j},${ex.correct_index})">${o}</button>`).join("")}</div>`;
-  if (ex.type === "transform")
-    return `<div class="exercise-prompt">${ex.instruction}<br><em>${ex.original}</em></div><input class="transform-input" id="inp-${i}" type="text" placeholder="Frase con gérondif…" autocomplete="off" spellcheck="false"><button class="btn-check" id="chk-${i}">Comprobar</button>`;
-  return "";
-}
-
-function checkAnswer(ex, i) {
-  const inp = document.getElementById("inp-"+i);
-  if (!inp || inp.disabled) return;
-  const ok = inp.value.trim().toLowerCase() === ex.answer.trim().toLowerCase();
-  inp.classList.add(ok?"ok":"err"); inp.disabled = true;
-  const chk = document.getElementById("chk-"+i); if (chk) chk.disabled = true;
-  showFeedback(i, ok, ex.answer, ex.explanation, ex.rule_ref);
-  recordAnswer(ok);
-}
-
-function selectChoice(idx, chosen, correct) {
-  const c0 = document.getElementById(`ch-${idx}-0`);
-  if (!c0 || c0.disabled) return;
-  for (let j=0;j<4;j++) {
-    const b = document.getElementById(`ch-${idx}-${j}`);
-    if (!b) continue; b.disabled=true;
-    if (j===correct) b.classList.add("ok"); else if(j===chosen) b.classList.add("err");
-  }
-  const card = document.getElementById("ex-card-"+idx);
-  showFeedback(idx, chosen===correct, null, card.dataset.expl, card.dataset.rule);
-  recordAnswer(chosen===correct);
-}
-
-function showFeedback(i, ok, ans, expl, ruleRef) {
-  document.getElementById("ex-st-"+i).textContent = ok?"✅":"❌";
-  const fb = document.getElementById("ex-fb-"+i);
-  fb.className = "ex-feedback visible "+(ok?"ok":"err");
-  const link = RULE_LABELS[ruleRef] ? `<span class="fb-rule-link" onclick="goToRule('${ruleRef}')">📖 Ver: ${RULE_LABELS[ruleRef]}</span>` : "";
-  let html = ok ? `<strong>✓ Correcto</strong>` : `<strong>✗ Incorrecto</strong>${ans?` — Respuesta: <strong>${ans}</strong>`:""}`;
-  if (expl) html += `<br><span style="font-size:.88em;opacity:.92;margin-top:3px;display:block">${expl}</span>`;
-  html += link; fb.innerHTML = html;
-}
-
-function goToRule(ref) {
-  switchMode("ref", document.querySelector(".mode-btn"));
-  setTimeout(() => {
-    showSection(ref, document.querySelector(`.snav-btn[onclick*="${ref}"]`));
-    document.getElementById(ref).scrollIntoView({behavior:"smooth", block:"start"});
-  }, 80);
-}
-
-function recordAnswer(ok) { exAnswered++; if(ok) exCorrect++; else exWrong++; updateProgress(); }
-
-function updateProgress() {
-  const pct = exTotal>0 ? (exAnswered/exTotal)*100 : 0;
-  document.getElementById("progress-frac").textContent = `${exAnswered} / ${exTotal}`;
-  document.getElementById("progress-fill").style.width = pct+"%";
-  document.getElementById("score-correct").textContent = `${exCorrect} correcta${exCorrect!==1?"s":""}`;
-  document.getElementById("score-wrong").textContent = `${exWrong} error${exWrong!==1?"es":""}`;
-  if (exAnswered>=exTotal && exTotal>0) showFinalScore();
-}
-
-function showFinalScore() {
-  const pct = Math.round((exCorrect/exTotal)*100);
-  document.getElementById("final-score-bar").classList.add("visible");
-  document.getElementById("final-num").textContent = `${exCorrect} / ${exTotal}`;
-  const fill = document.getElementById("final-fill");
-  fill.style.width = pct+"%";
-  fill.style.background = pct>=80?"var(--green)":pct>=50?"var(--accent)":"var(--red)";
-  const msgs = {100:"Parfait ! Dominas el gérondif. 🎉",80:"Très bien ! Repasa los errores.",50:"Bien, refuerza los bloques señalados.",0:"Vuelve a Referencia antes de repetir."};
-  document.getElementById("final-msg").textContent = msgs[pct===100?100:pct>=80?80:pct>=50?50:0];
-  document.getElementById("score-pill").style.display = "";
-  document.getElementById("score-pill-val").textContent = `${exCorrect}/${exTotal}`;
-}
-
-function resetExercises() {
-  document.getElementById("exercise-area").innerHTML = `<div class="state-msg"><div class="state-icon">✏️</div><p>Elige tipo, foco, nivel y cantidad, y pulsa <strong>Generar ejercicios</strong>.</p></div>`;
-  document.getElementById("progress-wrap").classList.remove("visible");
-  document.getElementById("final-score-bar").classList.remove("visible");
-  document.getElementById("score-pill").style.display = "none";
-  exAnswered = 0; exCorrect = 0; exWrong = 0;
-}
-
-function esc(s) { return (s||"").replace(/"/g,"&quot;").replace(/</g,"&lt;"); }
 
 renderTraps();
 </script>
