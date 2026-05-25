@@ -91,6 +91,86 @@
 .f-neg  { color: var(--warn); }
 .f-dim  { color: var(--text3); font-weight: 400; }
 .f-opt  { color: var(--text3); font-style: italic; font-weight: 400; }
+
+/* Dark def-box with white text (page-specific override) */
+.def-box {
+  background: var(--primary-strong);
+  color: #ffffff;
+  border-color: var(--primary-strong);
+}
+.def-box strong,
+.def-box em {
+  color: #ffffff;
+}
+
+/* Page-local: «Regla de oro» overview table */
+.reg-pill {
+  display: inline-block;
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid;
+  white-space: nowrap;
+}
+.reg-pill.reg-neutral {
+  background: var(--bg-elevated);
+  color: var(--text2);
+  border-color: var(--border-strong);
+}
+.reg-pill.reg-formal {
+  background: var(--primary-soft);
+  color: var(--primary);
+  border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+}
+.reg-pill.reg-variable {
+  background: var(--warn-bg);
+  color: var(--warn);
+  border-color: var(--warn-border);
+}
+.conn-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.96em;
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  color: var(--text);
+}
+.na-cell {
+  color: var(--text3);
+  font-size: 0.9em;
+  font-style: italic;
+}
+.na-cell::before {
+  content: "—";
+  display: inline-block;
+  margin-right: 8px;
+  font-style: normal;
+  opacity: 0.55;
+}
+
+/* Grammar-term chips (replace shouty UPPERCASE inside formulas) */
+.g-chip {
+  display: inline-block;
+  font-size: 0.78em;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  vertical-align: baseline;
+  position: relative;
+  top: -1px;
+}
+.g-chip.inf  { background: var(--green-bg);    color: var(--green); }
+.g-chip.subj { background: var(--primary-soft); color: var(--primary); }
+.g-chip.ind  { background: var(--warn-bg);     color: var(--warn); }
+.g-chip.nom  { background: var(--bg-elevated); color: var(--text2); }
+
+/* Row accent — colored left bar matching the registro */
+.gram-table tbody tr.r-neutro   td:first-child { box-shadow: inset 3px 0 0 var(--text3); }
+.gram-table tbody tr.r-formal   td:first-child { box-shadow: inset 3px 0 0 var(--primary); }
+.gram-table tbody tr.r-variable td:first-child { box-shadow: inset 3px 0 0 var(--warn); }
 </style>
 </head>
 <body>
@@ -155,13 +235,13 @@
           <tr><th>Conectivo</th><th>Mismo sujeto</th><th>Sujetos distintos</th><th>Registro</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>pour</strong></td><td class="hl-but">pour + INFINITIF ✓</td><td class="hl-subj">pour que + SUBJONCTIF ✓</td><td>neutro</td></tr>
-          <tr><td><strong>afin</strong></td><td class="hl-but">afin de + INFINITIF ✓</td><td class="hl-subj">afin que + SUBJONCTIF ✓</td><td>formal</td></tr>
-          <tr><td><strong>de façon</strong></td><td class="hl-but">de façon à + INFINITIF ✓</td><td class="hl-subj">de façon à ce que + SUBJONCTIF ✓</td><td>neutro</td></tr>
-          <tr><td><strong>de manière</strong></td><td class="hl-but">de manière à + INFINITIF ✓</td><td class="hl-subj">de manière à ce que + SUBJONCTIF ✓</td><td>formal</td></tr>
-          <tr><td><strong>dans le but de</strong></td><td class="hl-but">dans le but de + INFINITIF ✓</td><td class="dim">— (no admite <em>que</em> + subj.)</td><td>formal</td></tr>
-          <tr><td><strong>en vue de</strong></td><td class="hl-but">en vue de + INFINITIF / NOM ✓</td><td class="dim">— (no admite <em>que</em> + subj.)</td><td>formal</td></tr>
-          <tr><td><strong>de sorte que</strong></td><td class="dim">—</td><td class="hl-subj">de sorte que + SUBJONCTIF (but) / INDICATIF (résultat)</td><td>variable</td></tr>
+          <tr class="r-neutro"><td><span class="conn-name">pour</span></td><td class="hl-but">pour + <span class="g-chip inf">infinitif</span></td><td class="hl-subj">pour que + <span class="g-chip subj">subjonctif</span></td><td><span class="reg-pill reg-neutral">neutro</span></td></tr>
+          <tr class="r-neutro"><td><span class="conn-name">de façon</span></td><td class="hl-but">de façon à + <span class="g-chip inf">infinitif</span></td><td class="hl-subj">de façon à ce que + <span class="g-chip subj">subjonctif</span></td><td><span class="reg-pill reg-neutral">neutro</span></td></tr>
+          <tr class="r-formal"><td><span class="conn-name">afin</span></td><td class="hl-but">afin de + <span class="g-chip inf">infinitif</span></td><td class="hl-subj">afin que + <span class="g-chip subj">subjonctif</span></td><td><span class="reg-pill reg-formal">formal</span></td></tr>
+          <tr class="r-formal"><td><span class="conn-name">de manière</span></td><td class="hl-but">de manière à + <span class="g-chip inf">infinitif</span></td><td class="hl-subj">de manière à ce que + <span class="g-chip subj">subjonctif</span></td><td><span class="reg-pill reg-formal">formal</span></td></tr>
+          <tr class="r-formal"><td><span class="conn-name">dans le but de</span></td><td class="hl-but">dans le but de + <span class="g-chip inf">infinitif</span></td><td><span class="na-cell">no admite <em>que</em> + subj.</span></td><td><span class="reg-pill reg-formal">formal</span></td></tr>
+          <tr class="r-formal"><td><span class="conn-name">en vue de</span></td><td class="hl-but">en vue de + <span class="g-chip inf">infinitif</span> / <span class="g-chip nom">nom</span></td><td><span class="na-cell">no admite <em>que</em> + subj.</span></td><td><span class="reg-pill reg-formal">formal</span></td></tr>
+          <tr class="r-variable"><td><span class="conn-name">de sorte que</span></td><td><span class="na-cell">solo con sujetos distintos</span></td><td class="hl-subj">de sorte que + <span class="g-chip subj">subjonctif</span> <span class="dim">(but)</span> / <span class="g-chip ind">indicatif</span> <span class="dim">(résultat)</span></td><td><span class="reg-pill reg-variable">variable</span></td></tr>
         </tbody>
       </table>
     </div>
