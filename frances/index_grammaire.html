@@ -6,69 +6,125 @@
 <title>Grammaire française · DELF B1–B2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#ede9df; --card:#faf7f1; --border:#c4bead;
+  --bg:#f3f1ec; --card:#fbfaf6; --border:#e2ddd0;
   --text:#1a1814; --text2:#44413a; --text3:#706c64;
   --accent:#7a5a0a; --accent-light:#f0e0c0; --accent-mid:#b89050;
   --shadow:0 2px 14px rgba(0,0,0,.10),0 1px 4px rgba(0,0,0,.06);
   --shadow-sm:0 1px 6px rgba(0,0,0,.07);
-  --radius:14px; --radius-sm:8px;
+  --radius:20px; --radius-sm:10px;
   --green:#1a6028; --green-bg:#e4f2e8;
   --blue:#163494; --blue-bg:#e6ebf8;
   --purple:#6a1a8a; --purple-bg:#f2e6f8;
   --wine:#8b1a4a; --wine-bg:#f8e6ee;
   --teal:#0e6060; --teal-bg:#e0f2f2;
   --orange:#8b4a0a; --orange-bg:#f8ede0;
-  /* dark card colors */
-  --dk-blue:#1a2f6e; --dk-green:#06402b; --dk-purple:#4a1460;
-  --dk-wine:#6e1438; --dk-teal:#0a4242; --dk-orange:#8b5e00;
+  /* dark card colors — softer, less saturated */
+  --dk-blue:#2a3a5e; --dk-green:#1f4634; --dk-purple:#3f2456;
+  --dk-wine:#5e2842; --dk-teal:#1c4258; --dk-orange:#6e521f;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  position:relative;
+}
+/* Subtle noise texture for depth */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.55;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .035 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+body > *{position:relative;z-index:1;}
 
 /* HEADER */
-.site-header{background:var(--card);border-bottom:2px solid var(--border);padding:28px 20px 22px;}
+.site-header{background:var(--card);border-bottom:1px solid var(--border);padding:32px 20px 26px;}
 .header-inner{max-width:900px;margin:0 auto;}
-.header-top{display:flex;align-items:baseline;gap:12px;margin-bottom:4px;flex-wrap:wrap;}
-.site-header h1{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,5vw,2.2rem);font-weight:700;color:var(--text);}
-.header-tag{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border:1px solid var(--accent-mid);border-radius:20px;padding:3px 11px;}
-.header-sub{font-size:.78rem;color:var(--text3);font-weight:500;margin-bottom:18px;}
-.header-sub strong{color:var(--accent);}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap;}
+.site-header h1{font-family:'Manrope',-apple-system,BlinkMacSystemFont,sans-serif;font-size:clamp(1.5rem,5vw,2.3rem);font-weight:800;letter-spacing:-.02em;color:var(--text);}
+.header-tag{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border-radius:20px;padding:3px 11px;}
+.header-sub{font-size:.82rem;color:var(--text3);font-weight:500;}
+.header-sub strong{color:var(--accent);font-weight:700;}
 
-/* STATS ROW */
-.stats-row{display:flex;flex-wrap:wrap;gap:8px;}
-.stat-badge{background:var(--bg);border:1.5px solid var(--border);border-radius:20px;padding:5px 13px;font-size:.76rem;font-weight:600;color:var(--text2);display:flex;align-items:center;gap:5px;}
-.stat-badge .dot{width:7px;height:7px;border-radius:50%;}
+/* STICKY CONTROLS */
+.sticky-controls{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(243,241,236,.78);
+  backdrop-filter:blur(14px) saturate(180%);
+  -webkit-backdrop-filter:blur(14px) saturate(180%);
+  border-bottom:1px solid transparent;
+  transition:border-color .2s ease,background .2s ease;
+  padding-bottom:14px;
+}
+.sticky-controls.scrolled{
+  border-bottom-color:var(--border);
+  background:rgba(243,241,236,.88);
+}
 
 /* SEARCH */
-.search-wrap{max-width:900px;margin:0 auto;padding:18px 20px 0;}
-.search-box{display:flex;align-items:center;gap:10px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:10px 16px;box-shadow:var(--shadow-sm);}
-.search-icon{color:var(--text3);font-size:1rem;flex-shrink:0;}
+.search-wrap{max-width:900px;margin:0 auto;padding:20px 20px 0;}
+.search-box{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:11px 14px 11px 16px;box-shadow:var(--shadow-sm);transition:border-color .15s,box-shadow .15s;}
+.search-box:focus-within{border-color:var(--accent-mid);box-shadow:0 0 0 3px rgba(184,144,80,.15),var(--shadow-sm);}
+.search-icon{color:var(--text3);flex-shrink:0;display:flex;align-items:center;}
 .search-input{flex:1;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:.92rem;color:var(--text);outline:none;}
 .search-input::placeholder{color:var(--text3);}
+.kbd-hint{
+  display:none;
+  align-items:center;
+  gap:3px;
+  flex-shrink:0;
+  font-family:'DM Sans',sans-serif;
+  font-size:.7rem;
+  font-weight:600;
+  color:var(--text3);
+  background:rgba(0,0,0,.04);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:2px 7px;
+  letter-spacing:.02em;
+}
+.kbd-hint kbd{font:inherit;}
+@media (min-width:640px){.kbd-hint{display:inline-flex;}}
+.search-box:focus-within .kbd-hint{opacity:0;visibility:hidden;}
 
 /* FILTER TABS */
 .filter-wrap{max-width:900px;margin:0 auto;padding:14px 20px 0;}
-.filter-tabs{display:flex;gap:7px;flex-wrap:wrap;}
-.ftab{border:1.5px solid var(--border);border-radius:20px;padding:6px 15px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text2);transition:all .15s;white-space:nowrap;}
-.ftab:hover{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
-.ftab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.filter-tabs{display:flex;gap:6px;flex-wrap:wrap;}
+.ftab{border:1px solid transparent;border-radius:20px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;background:rgba(0,0,0,.04);color:var(--text2);transition:all .15s;white-space:nowrap;}
+.ftab:hover{background:var(--accent-light);color:var(--accent);}
+.ftab.active{background:var(--text);color:#fff;}
+.ftab .count{
+  font-weight:500;
+  opacity:.55;
+  margin-left:5px;
+  font-variant-numeric:tabular-nums;
+}
+.ftab.active .count{opacity:.75;}
 
 /* GRID */
 .main{max-width:900px;margin:0 auto;padding:18px 20px 48px;}
-.section-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin:24px 0 12px;padding-left:2px;}
+.section-label{font-family:'Manrope',-apple-system,sans-serif;font-size:1.05rem;font-weight:700;letter-spacing:-.012em;color:var(--text);margin:28px 0 14px;padding-left:2px;}
+.section-label:first-child{margin-top:8px;}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;align-items:stretch;}
 
 /* CARD */
 .topic-card{
   position:relative;
-  border:1.5px solid rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
   border-radius:var(--radius);
-  box-shadow:0 3px 16px rgba(0,0,0,.22),0 1px 4px rgba(0,0,0,.12);
+  box-shadow:0 3px 16px rgba(0,0,0,.18),0 1px 4px rgba(0,0,0,.10);
   cursor:pointer;
-  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+  transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
   text-decoration:none;
   display:flex;
   flex-direction:column;
@@ -79,21 +135,37 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(135deg, rgba(255,255,255,.07) 0%, rgba(255,255,255,0) 42%, rgba(0,0,0,.18) 100%);
+  background:linear-gradient(135deg, rgba(255,255,255,.09) 0%, rgba(255,255,255,0) 42%, rgba(0,0,0,.14) 100%);
   pointer-events:none;
   border-radius:inherit;
   z-index:0;
 }
-.topic-card:hover{
-  transform:translateY(-2px);
-  border-color:rgba(255,255,255,.24);
-  box-shadow:0 8px 30px rgba(0,0,0,.34),0 2px 8px rgba(0,0,0,.16);
+.topic-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 30% 0%, rgba(255,255,255,.14) 0%, rgba(255,255,255,0) 55%);
+  pointer-events:none;
+  border-radius:inherit;
+  z-index:0;
+  opacity:0;
+  transition:opacity .3s ease;
 }
+.topic-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(255,255,255,.28);
+  box-shadow:
+    0 14px 38px rgba(0,0,0,.32),
+    0 4px 12px rgba(0,0,0,.18),
+    0 0 0 1px rgba(255,255,255,.06),
+    inset 0 1px 0 rgba(255,255,255,.10);
+}
+.topic-card:hover::after{opacity:1;}
 .card-accent{display:none;}
 .card-body{
   position:relative;
   z-index:1;
-  padding:22px 22px 60px;
+  padding:22px 22px 24px;
   flex:1;
   display:flex;
   flex-direction:column;
@@ -126,10 +198,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 }
 
 .card-title{
-  font-family:'Playfair Display',serif;
-  font-size:1.02rem;
+  font-family:'Manrope',-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:1.05rem;
   font-weight:700;
-  letter-spacing:.012em;
+  letter-spacing:-.012em;
   color:#fff;
   margin-bottom:8px;
   line-height:1.3;
@@ -142,47 +214,67 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   -webkit-line-clamp:3;
   -webkit-box-orient:vertical;
   overflow:hidden;
-  margin-top:auto;
-  padding-top:4px;
 }
 
-/* CTA pill */
-.card-cta{
+/* Corner arrow — hover only */
+.card-arrow{
   position:absolute;
-  right:16px;
-  bottom:16px;
-  z-index:2;
-  display:inline-flex;
+  top:18px;
+  right:18px;
+  width:30px;
+  height:30px;
+  display:flex;
   align-items:center;
-  gap:5px;
-  font-family:'DM Sans',sans-serif;
-  font-size:.72rem;
-  font-weight:700;
-  letter-spacing:.03em;
-  background:rgba(255,255,255,.14);
-  border:1px solid rgba(255,255,255,.28);
+  justify-content:center;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.18);
   color:#fff;
-  border-radius:18px;
-  padding:5px 11px 5px 12px;
-  transition:background .15s,border-color .15s,transform .15s;
+  border-radius:50%;
+  opacity:0;
+  transform:translate(-4px,4px);
+  transition:opacity .2s ease,transform .2s ease,background .2s ease;
+  z-index:2;
+  pointer-events:none;
 }
-.card-cta .arrow{font-size:.95rem;line-height:1;}
-.topic-card:hover .card-cta{
-  background:rgba(255,255,255,.24);
-  border-color:rgba(255,255,255,.45);
-  transform:translateX(2px);
+.card-arrow svg{width:14px;height:14px;}
+.topic-card:hover .card-arrow{
+  opacity:1;
+  transform:translate(0,0);
+  background:rgba(255,255,255,.22);
 }
 
 /* EMPTY */
-.empty-state{text-align:center;padding:48px 20px;color:var(--text3);}
-.empty-icon{font-size:2rem;margin-bottom:10px;}
-.empty-state p{font-weight:500;font-size:.9rem;}
+.empty-state{text-align:center;padding:56px 20px;color:var(--text3);}
+.empty-icon{display:flex;justify-content:center;margin-bottom:14px;opacity:.45;}
+.empty-state p{font-weight:500;font-size:.92rem;}
+
+/* STAGGER FADE-IN */
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(8px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.topic-card{
+  animation:cardIn .5s cubic-bezier(.22,1,.36,1) backwards;
+}
+.topic-card:nth-child(1){animation-delay:.02s;}
+.topic-card:nth-child(2){animation-delay:.05s;}
+.topic-card:nth-child(3){animation-delay:.08s;}
+.topic-card:nth-child(4){animation-delay:.11s;}
+.topic-card:nth-child(5){animation-delay:.14s;}
+.topic-card:nth-child(6){animation-delay:.17s;}
+.topic-card:nth-child(7){animation-delay:.20s;}
+.topic-card:nth-child(8){animation-delay:.23s;}
+.topic-card:nth-child(9){animation-delay:.26s;}
+.topic-card:nth-child(n+10){animation-delay:.29s;}
+@media (prefers-reduced-motion: reduce){
+  .topic-card{animation:none;}
+}
 
 /* HIDDEN */
 .hidden{display:none!important;}
 
 /* BACK BUTTON */
-.back-btn{position:fixed;top:18px;left:18px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:7px 14px 7px 11px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all .15s;}
+.back-btn{position:fixed;top:18px;left:18px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:7px 14px 7px 11px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all .15s;}
 .back-btn:hover{background:var(--accent-light);border-color:var(--accent);color:var(--accent);transform:translateX(-2px);}
 .back-btn .arrow{font-size:1rem;line-height:1;}
 @media (max-width:600px){.back-btn{top:12px;left:12px;padding:6px 12px 6px 9px;font-size:.74rem;}}
@@ -219,41 +311,47 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="header-inner">
     <div class="header-top">
       <h1>Grammaire française</h1>
-      <span class="header-tag">DELF B1–B2</span>
+      <span class="header-tag">B1–B2</span>
     </div>
-    <p class="header-sub">Índice de bloques · <strong>29 temas</strong> · Referencia + ejercicios con IA</p>
-    <div class="stats-row">
-      <div class="stat-badge"><span class="dot" style="background:var(--teal)"></span>Verbos y tiempos</div>
-      <div class="stat-badge"><span class="dot" style="background:var(--green)"></span>Sintaxis</div>
-      <div class="stat-badge"><span class="dot" style="background:var(--purple)"></span>Discurso</div>
-      <div class="stat-badge"><span class="dot" style="background:var(--wine)"></span>Léxico gramatical</div>
-      <div class="stat-badge"><span class="dot" style="background:var(--purple)"></span>Producción</div>
-    </div>
+    <p class="header-sub"><strong id="topic-count">—</strong> bloques</p>
   </div>
 </header>
 
-<div class="search-wrap">
-  <div class="search-box">
-    <span class="search-icon">🔍</span>
-    <input class="search-input" type="text" placeholder="Buscar tema… (ej: subjonctif, passé, adverbes…)" oninput="filterCards(this.value)" id="search-input">
+<div class="sticky-controls" id="sticky-controls">
+  <div class="search-wrap">
+    <div class="search-box">
+      <span class="search-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="20" y1="20" x2="16.65" y2="16.65"></line>
+        </svg>
+      </span>
+      <input class="search-input" type="text" placeholder="Buscar tema… (ej: subjonctif, passé, adverbes…)" oninput="filterCards(this.value)" id="search-input">
+      <span class="kbd-hint" id="kbd-hint" aria-hidden="true"><kbd>⌘</kbd><kbd>K</kbd></span>
+    </div>
   </div>
-</div>
 
-<div class="filter-wrap">
-  <div class="filter-tabs">
-    <button class="ftab active" onclick="setFilter('all',this)">Todos</button>
-    <button class="ftab" onclick="setFilter('verbos',this)">Verbos y tiempos</button>
-    <button class="ftab" onclick="setFilter('sintaxis',this)">Sintaxis</button>
-    <button class="ftab" onclick="setFilter('discurso',this)">Discurso</button>
-    <button class="ftab" onclick="setFilter('lexico',this)">Léxico gramatical</button>
-    <button class="ftab" onclick="setFilter('produccion',this)">Producción</button>
+  <div class="filter-wrap">
+    <div class="filter-tabs">
+      <button class="ftab active" data-cat="all" onclick="setFilter('all',this)">Todos <span class="count"></span></button>
+      <button class="ftab" data-cat="verbos" onclick="setFilter('verbos',this)">Verbos y tiempos <span class="count"></span></button>
+      <button class="ftab" data-cat="sintaxis" onclick="setFilter('sintaxis',this)">Sintaxis <span class="count"></span></button>
+      <button class="ftab" data-cat="discurso" onclick="setFilter('discurso',this)">Discurso <span class="count"></span></button>
+      <button class="ftab" data-cat="lexico" onclick="setFilter('lexico',this)">Léxico gramatical <span class="count"></span></button>
+      <button class="ftab" data-cat="produccion" onclick="setFilter('produccion',this)">Producción <span class="count"></span></button>
+    </div>
   </div>
 </div>
 
 <main class="main" id="main">
   <div class="grid" id="grid"></div>
   <div class="empty-state hidden" id="empty">
-    <div class="empty-icon">🔎</div>
+    <div class="empty-icon">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="20" y1="20" x2="16.65" y2="16.65"></line>
+      </svg>
+    </div>
     <p>Ningún tema coincide con tu búsqueda.</p>
   </div>
 </main>
@@ -282,6 +380,14 @@ const TOPICS = [
     desc:"Passé composé, imparfait, plus-que-parfait. Diferencias de uso.",
     tags:["passé composé","imparfait","PQP"],
     cat:"verbos", level:"A2–B1",
+    color:"var(--dk-teal)", colorbg:"var(--dk-teal)"
+  },
+  {
+    num:"27", file:"grammaire_passe_simple.html",
+    title:"Le Passé Simple",
+    desc:"Reconocimiento pasivo para lectura. Terminaciones regulares e irregulares. Valor narrativo vs. passé composé.",
+    tags:["passé simple","reconnaissance","lecture","littéraire","narratif"],
+    cat:"verbos", level:"B1",
     color:"var(--dk-teal)", colorbg:"var(--dk-teal)"
   },
   {
@@ -469,14 +575,6 @@ const TOPICS = [
     color:"var(--dk-purple)", colorbg:"var(--dk-purple)"
   },
   {
-    num:"27", file:"grammaire_passe_simple.html",
-    title:"Le Passé Simple",
-    desc:"Reconocimiento pasivo para lectura. Terminaciones regulares e irregulares. Valor narrativo vs. passé composé.",
-    tags:["passé simple","reconnaissance","lecture","littéraire","narratif"],
-    cat:"verbos", level:"B1",
-    color:"var(--dk-teal)", colorbg:"var(--dk-teal)"
-  },
-  {
     num:"28", file:"grammaire_prepositions.html",
     title:"Les Prépositions",
     desc:"À, de, en, dans, par, pour, avec. Países y ciudades. Medios de transporte. Trampas para hispanohablantes.",
@@ -534,6 +632,9 @@ function buildCards(items){
       const placeholderClass = t.placeholder ? " placeholder" : "";
       html += `
         <a class="topic-card${placeholderClass}" href="${t.file}" target="_blank" data-cat="${t.cat}" data-search="${t.title.toLowerCase()} ${t.desc.toLowerCase()} ${t.tags.join(" ").toLowerCase()}" style="background:${t.colorbg};">
+          <span class="card-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+          </span>
           <div class="card-body">
             <div class="card-top">
               <span class="card-num">${t.num}</span>
@@ -542,22 +643,27 @@ function buildCards(items){
             <div class="card-title">${t.title}</div>
             <div class="card-desc">${t.desc}</div>
           </div>
-          <span class="card-cta">Ver más <span class="arrow">→</span></span>
         </a>`;
     });
   });
   grid.innerHTML = html;
 }
 
+// Strip diacritics for accent-insensitive search
+function norm(s){
+  return s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+}
+
 function applyFilters(){
   let items = TOPICS;
   if(activeFilter !== "all") items = items.filter(t => t.cat === activeFilter);
   if(searchVal.trim()){
-    const q = searchVal.trim().toLowerCase();
+    const q = norm(searchVal.trim());
     items = items.filter(t =>
-      t.title.toLowerCase().includes(q) ||
-      t.desc.toLowerCase().includes(q) ||
-      t.tags.some(tag => tag.toLowerCase().includes(q))
+      norm(t.title).includes(q) ||
+      norm(t.desc).includes(q) ||
+      norm(t.level).includes(q) ||
+      t.tags.some(tag => norm(tag).includes(q))
     );
   }
   buildCards(items);
@@ -574,6 +680,59 @@ function filterCards(val){
   searchVal = val;
   applyFilters();
 }
+
+// Set dynamic topic count
+document.getElementById("topic-count").textContent = TOPICS.length;
+
+// Filter tab counts
+function updateTabCounts(){
+  document.querySelectorAll(".ftab").forEach(btn => {
+    const cat = btn.dataset.cat;
+    const count = cat === "all" ? TOPICS.length : TOPICS.filter(t => t.cat === cat).length;
+    const span = btn.querySelector(".count");
+    if(span) span.textContent = `(${count})`;
+  });
+}
+updateTabCounts();
+
+// Keyboard hint: show Ctrl on non-Mac
+(function(){
+  const isMac = /Mac|iPhone|iPad/.test(navigator.platform);
+  if(!isMac){
+    const hint = document.getElementById("kbd-hint");
+    if(hint) hint.innerHTML = "<kbd>Ctrl</kbd><kbd>K</kbd>";
+  }
+})();
+
+// Keyboard shortcut: "/" or Cmd/Ctrl+K to focus search, Esc to clear
+document.addEventListener("keydown", (e) => {
+  const input = document.getElementById("search-input");
+  const isTyping = ["INPUT","TEXTAREA"].includes(document.activeElement.tagName);
+  if((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k"){
+    e.preventDefault();
+    input.focus();
+    input.select();
+  } else if(e.key === "/" && !isTyping){
+    e.preventDefault();
+    input.focus();
+  } else if(e.key === "Escape" && document.activeElement === input){
+    input.value = "";
+    searchVal = "";
+    applyFilters();
+    input.blur();
+  }
+});
+
+// Sticky controls: add border-bottom on scroll
+(function(){
+  const controls = document.getElementById("sticky-controls");
+  if(!controls) return;
+  const onScroll = () => {
+    controls.classList.toggle("scrolled", window.scrollY > 4);
+  };
+  window.addEventListener("scroll", onScroll, {passive:true});
+  onScroll();
+})();
 
 // Init
 applyFilters();
