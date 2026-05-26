@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produzione Scritta · PLIDA C1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Page identity: Produzione Scritta → deep teal */
+  --primary:#0f766e; --primary-soft:#ecfdf5; --primary-mid:#14b8a6; --primary-strong:#064e3b;
+  --primary-glow:rgba(15,118,110,.14);
+  /* Per-tab identity colors */
+  --tab-formal:#1d4ed8;     --tab-formal-soft:#eff6ff;     --tab-formal-mid:#3b82f6;
+  --tab-informal:#15803d;   --tab-informal-soft:#ecfdf5;   --tab-informal-mid:#22c55e;
+  --tab-essay:#b45309;      --tab-essay-soft:#fffbeb;      --tab-essay-mid:#f59e0b;
+  --accent:var(--primary); --accent-light:var(--primary-soft); --accent-mid:var(--primary-mid);
+  --bg:#f7f7f5; --bg-elevated:#fbfbfa; --card:#ffffff;
+  --border:#ececec; --border-strong:#dfdfdf;
+  --text:#18181b; --text2:#52525b; --text3:#71717a;
+  --paper:#fefef9; --paper-border:#e7e5d6;
+  --shadow-xs:0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:0 2px 8px rgba(15,23,42,.04),0 1px 2px rgba(15,23,42,.03);
+  --shadow:0 4px 16px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+  --shadow-primary:0 6px 20px var(--primary-glow);
+  --radius:18px; --radius-md:14px; --radius-sm:10px; --radius-xs:6px; --radius-pill:999px;
+  --ease:cubic-bezier(0.4,0,0.2,1); --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --t-fast:120ms; --t-base:200ms;
+  --c-greet:#7c3aed;     --c-greet-bg:#f5f3ff;
+  --c-conn:#0e7490;      --c-conn-bg:#ecfeff;
+  --c-key:#1d4ed8;       --c-key-bg:#eff6ff;
+  --c-close:#be185d;     --c-close-bg:#fdf2f8;
+  --c-model:#b45309;     --c-model-bg:#fffbeb;
+  --c-tip:#ca8a04;       --c-tip-bg:#fef9c3;
+  --c-struct:#4338ca;    --c-struct-bg:#e0e7ff;
+  --c-add:#0e7490;       --c-contrast:#be185d;
+  --c-cause:#15803d;     --c-purpose:#7c3aed;
+  --c-seq:#1d4ed8;       --c-time:#0369a1;
+  --c-emph:#b91c1c;      --c-summ:#7c3aed;
+}
+[data-theme="dark"]{
+  --primary:#5eead4; --primary-soft:#0a2a26; --primary-mid:#2dd4bf; --primary-strong:#99f6e4;
+  --primary-glow:rgba(94,234,212,.18);
+  --tab-formal:#60a5fa;     --tab-formal-soft:rgba(96,165,250,.12);   --tab-formal-mid:#3b82f6;
+  --tab-informal:#4ade80;   --tab-informal-soft:rgba(74,222,128,.12); --tab-informal-mid:#22c55e;
+  --tab-essay:#fbbf24;      --tab-essay-soft:rgba(251,191,36,.12);    --tab-essay-mid:#f59e0b;
+  --bg:#0a0a0b; --bg-elevated:#131316; --card:#18181b;
+  --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --paper:#1e1e24; --paper-border:#3a3a42;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.2);
+  --shadow:0 4px 16px rgba(0,0,0,.30),0 1px 3px rgba(0,0,0,.20);
+  --shadow-primary:0 6px 24px var(--primary-glow);
+  --c-greet:#a78bfa;     --c-greet-bg:rgba(167,139,250,.10);
+  --c-conn:#22d3ee;      --c-conn-bg:rgba(34,211,238,.10);
+  --c-key:#60a5fa;       --c-key-bg:rgba(96,165,250,.10);
+  --c-close:#f472b6;     --c-close-bg:rgba(244,114,182,.10);
+  --c-model:#fbbf24;     --c-model-bg:rgba(251,191,36,.10);
+  --c-tip:#facc15;       --c-tip-bg:rgba(250,204,21,.10);
+  --c-struct:#a5b4fc;    --c-struct-bg:rgba(165,180,252,.10);
+  --c-add:#22d3ee;       --c-contrast:#f472b6;
+  --c-cause:#4ade80;     --c-purpose:#a78bfa;
+  --c-seq:#60a5fa;       --c-time:#38bdf8;
+  --c-emph:#f87171;      --c-summ:#a78bfa;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+*:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-xs);}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
+
+.site-header{background:linear-gradient(180deg,var(--bg-elevated),var(--bg));padding:32px 20px 22px;position:relative;}
+.site-header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-strong) 20%,var(--border-strong) 80%,transparent);}
+.header-inner{max-width:1000px;margin:0 auto;}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.site-header h1{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:600;letter-spacing:-0.02em;color:var(--text);line-height:1.1;}
+.header-tag{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);background:var(--primary-soft);border-radius:var(--radius-pill);padding:4px 11px;}
+.header-sub{font-size:.88rem;color:var(--text3);font-weight:400;margin-top:4px;line-height:1.55;}
+.header-sub strong{color:var(--primary);font-weight:600;}
+
+.header-actions{max-width:1000px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:8px 14px 8px 11px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.back-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateX(-2px);box-shadow:var(--shadow);}
+.back-btn:active{transform:translateX(-2px) scale(.97);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.theme-toggle:hover{color:var(--primary);border-color:var(--primary-mid);transform:translateY(-1px);box-shadow:var(--shadow);}
+.theme-toggle .icon-sun{display:none;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+
+.tabs-wrap{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-elevated) 85%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--border);padding:14px 20px;}
+.tabs{max-width:1000px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;}
+.tab{border:1px solid var(--border);border-radius:var(--radius-pill);padding:9px 18px;font-family:inherit;font-size:.85rem;font-weight:500;cursor:pointer;background:var(--card);color:var(--text2);transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:7px;}
+.tab:hover{transform:translateY(-1px);box-shadow:var(--shadow-xs);border-color:var(--tab-c,var(--primary-mid));color:var(--tab-c,var(--primary));}
+.tab.active{background:var(--tab-c,var(--primary));color:#fff;border-color:var(--tab-c,var(--primary));font-weight:600;box-shadow:0 6px 20px color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+[data-theme="dark"] .tab.active{color:#0a0a0b;}
+.tab[data-tab="formal"]{--tab-c:var(--tab-formal);}
+.tab[data-tab="informal"]{--tab-c:var(--tab-informal);}
+.tab[data-tab="essay"]{--tab-c:var(--tab-essay);}
+.tab .ico{font-size:1rem;line-height:1;}
+
+.main{max-width:1000px;margin:0 auto;padding:32px 20px 64px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeSlideIn 360ms var(--ease-out);}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+.intro{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:28px;box-shadow:var(--shadow-xs);}
+.intro h3{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--tab-c,var(--primary));margin-bottom:10px;}
+.intro p{font-size:.92rem;color:var(--text2);line-height:1.65;}
+.intro p strong{color:var(--tab-c,var(--primary));font-weight:600;}
+
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.tool-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:7px 15px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:6px;}
+.tool-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateY(-1px);box-shadow:var(--shadow-xs);}
+.tool-btn .ico{font-size:.85rem;line-height:1;}
+
+.fs-control{display:inline-flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:6px 14px;}
+.fs-label{font-family:inherit;font-weight:600;color:var(--text3);line-height:1;user-select:none;}
+.fs-label.small{font-size:.78rem;}
+.fs-label.large{font-size:1.1rem;}
+.fs-slider{-webkit-appearance:none;appearance:none;width:100px;height:4px;background:var(--border-strong);border-radius:2px;outline:none;cursor:pointer;accent-color:var(--primary);}
+.fs-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);transition:transform var(--t-fast) var(--ease);}
+.fs-slider::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.fs-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);}
+.fs-value{font-size:.72rem;font-weight:600;color:var(--text3);min-width:32px;text-align:right;}
+
+.section{margin-bottom:14px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow var(--t-base) var(--ease);}
+.section:hover{box-shadow:var(--shadow);}
+.section-header{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;user-select:none;transition:background var(--t-base) var(--ease);background:transparent;}
+.section-header:hover{background:var(--bg-elevated);}
+.section:not(.collapsed) .section-header{border-bottom:1px solid var(--border);}
+.section-icon{width:38px;height:38px;border-radius:var(--radius-sm);display:inline-flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;background:transparent!important;border:2px solid var(--section-c,var(--primary));color:var(--section-c,var(--primary));}
+.section-title{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--text);line-height:1.2;}
+.section-desc{font-size:.78rem;color:var(--text3);margin-top:2px;line-height:1.45;}
+.section-header > div:not(.section-icon){flex:1;}
+.section-header::after{content:"▾";font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease);margin-left:8px;flex-shrink:0;font-weight:600;}
+.section.collapsed .section-header::after{transform:rotate(-90deg);}
+.section.collapsed .section-header:hover::after{color:var(--primary);}
+.section-count{font-size:.7rem;font-weight:600;color:var(--text3);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px 10px;margin-left:auto;flex-shrink:0;transition:all var(--t-base) var(--ease);}
+.section-header:hover .section-count{border-color:var(--primary-mid);color:var(--primary);}
+.section > .grid, .section > .stack, .section > .papers, .section > .tips-list, .section > .blueprint{padding:18px 20px 20px;}
+.section.collapsed > *:not(.section-header){display:none!important;}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.item{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 30%,transparent)!important;border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-xs);transition:transform var(--t-base) var(--ease),box-shadow var(--t-base) var(--ease),border-color var(--t-base) var(--ease);border-left:4px solid var(--section-c,var(--primary))!important;}
+.item:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--section-c,var(--primary-mid))!important;}
+.item-head{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.item-term{font-family:'Manrope','Inter',sans-serif;font-size:1.02rem;font-weight:700;letter-spacing:-0.005em;color:var(--section-c,var(--text));line-height:1.3;}
+.item-trans{font-size:.76rem;color:var(--text3);font-style:italic;}
+.item-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;}
+.item-list li{font-size:.88rem;color:var(--text2);line-height:1.5;padding:5px 0 5px 12px;border-left:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);}
+.item-list li strong{color:var(--text);font-weight:600;}
+
+.stack{display:flex;flex-direction:column;gap:8px;}
+.phrase{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-sm);padding:10px 14px;font-size:.92rem;color:var(--text2);line-height:1.5;transition:all var(--t-base) var(--ease);}
+.phrase:hover{transform:translateX(2px);border-color:var(--section-c,var(--primary));box-shadow:var(--shadow-xs);}
+.phrase strong{color:var(--text);font-weight:600;}
+.phrase .hint{font-size:.74rem;color:var(--text3);font-style:italic;margin-left:6px;}
+
+.papers{display:flex;flex-direction:column;gap:14px;}
+.paper{background:var(--paper);border:1px solid var(--paper-border);border-radius:var(--radius-md);padding:22px 26px;box-shadow:var(--shadow-sm);position:relative;transition:box-shadow var(--t-base) var(--ease);}
+.paper:hover{box-shadow:var(--shadow);}
+.paper::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--tab-c,var(--primary)),transparent);border-radius:var(--radius-md) var(--radius-md) 0 0;}
+.paper-header{display:flex;align-items:flex-start;gap:14px;cursor:pointer;user-select:none;}
+.paper-header > div:first-child{flex:1;min-width:0;}
+.paper-header .paper-meta{margin-bottom:0;}
+.paper-toggle{font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease),color var(--t-base) var(--ease);flex-shrink:0;font-weight:700;line-height:1.4;}
+.paper-header:hover .paper-toggle,.paper-header:hover .paper-title{color:var(--tab-c,var(--primary));}
+.paper.collapsed .paper-toggle{transform:rotate(-90deg);}
+.paper.collapsed .paper-body{display:none;}
+.paper:not(.collapsed) .paper-body{margin-top:18px;}
+.paper-title{font-family:'Fraunces',Georgia,serif;font-size:1.05rem;font-weight:600;color:var(--tab-c,var(--primary));margin-bottom:6px;letter-spacing:-0.01em;transition:color var(--t-base) var(--ease);}
+.paper-meta{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:18px;}
+.paper-body{font-family:'Inter',sans-serif;font-size:.94rem;line-height:1.8;color:var(--text);}
+.paper-body p{margin-bottom:12px;}
+.paper-body p:last-child{margin-bottom:0;}
+.paper-body em{font-style:italic;color:var(--text2);}
+
+.paper-body .k-open    {color:var(--c-greet);    font-weight:600;}
+.paper-body .k-add     {color:var(--c-add);      font-weight:600;}
+.paper-body .k-contrast{color:var(--c-contrast); font-weight:600;}
+.paper-body .k-cause   {color:var(--c-cause);    font-weight:600;}
+.paper-body .k-concess {color:var(--c-purpose);  font-weight:600;}
+.paper-body .k-purpose {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-seq     {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-time    {color:var(--c-time);     font-weight:600;}
+.paper-body .k-emph    {color:var(--c-emph);     font-weight:600;}
+.paper-body .k-summ    {color:var(--c-summ);     font-weight:600;}
+.paper-body .k-key     {color:var(--c-key);      font-weight:600;}
+.paper-body .k-close   {color:var(--c-close);    font-weight:600;}
+
+.blueprint{display:flex;flex-direction:column;gap:0;position:relative;}
+.step{display:flex;gap:14px;align-items:flex-start;position:relative;padding:6px 0 14px 0;}
+.step::before{content:"";position:absolute;left:18px;top:42px;bottom:-4px;width:2px;background:color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);}
+.step:last-of-type::before{display:none;}
+.step-num{width:38px;height:38px;border-radius:50%;background:var(--card);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--section-c,var(--primary));position:relative;z-index:1;}
+.step-body{flex:1;min-width:0;padding-top:6px;}
+.step-body h5{font-family:'Manrope',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-0.005em;}
+.step-body .step-meta{font-size:.72rem;color:var(--text3);font-style:italic;margin-bottom:6px;font-weight:500;}
+.step-body > p{font-size:.86rem;color:var(--text2);line-height:1.55;margin-bottom:9px;}
+.step-phrases{display:flex;flex-wrap:wrap;gap:5px;}
+.step-phrases span{font-size:.76rem;color:var(--section-c,var(--primary));background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);padding:4px 11px;border-radius:var(--radius-pill);font-weight:600;line-height:1.4;transition:all var(--t-base) var(--ease);}
+.step-phrases span:hover{background:color-mix(in srgb,var(--section-c,var(--primary)) 24%,transparent);border-color:var(--section-c,var(--primary));}
+.blueprint-footer{margin-top:6px;padding:12px 16px;background:color-mix(in srgb,var(--section-c,var(--primary)) 10%,transparent);border-radius:var(--radius-md);font-size:.86rem;color:var(--text2);display:flex;align-items:center;gap:10px;border:1px dashed color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);}
+.blueprint-footer strong{color:var(--section-c,var(--primary));font-weight:600;}
+.blueprint-footer .footer-ico{font-size:1rem;flex-shrink:0;}
+
+.tips-list{display:flex;flex-direction:column;gap:10px;}
+.tip{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-md);padding:14px 16px;display:flex;gap:14px;align-items:flex-start;transition:all var(--t-base) var(--ease);}
+.tip:hover{transform:translateX(2px);box-shadow:var(--shadow-xs);border-color:var(--section-c,var(--primary));}
+.tip.warn{--section-c:var(--c-emph);}
+.tip-icon{font-size:.9rem;flex-shrink:0;line-height:1;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);color:var(--section-c,var(--primary));font-weight:800;margin-top:1px;}
+.tip-body{flex:1;min-width:0;}
+.tip-body h5{font-family:'Manrope',sans-serif;font-size:.95rem;font-weight:700;color:var(--section-c,var(--primary));margin-bottom:4px;letter-spacing:-0.005em;line-height:1.3;}
+.tip-body p{font-size:.86rem;color:var(--text2);line-height:1.55;}
+.tip-body p em{color:var(--text);font-style:normal;background:var(--bg-elevated);padding:1px 5px;border-radius:var(--radius-xs);font-size:.92em;font-weight:500;}
+
+.label{display:inline-block;font-family:'JetBrains Mono','Manrope',sans-serif;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:var(--radius-xs);background:var(--tab-c-soft,var(--primary-soft));color:var(--tab-c,var(--primary));margin-right:6px;vertical-align:middle;border:1px solid color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+
+.callout{background:var(--tab-c-soft,var(--primary-soft));border-radius:var(--radius-md);padding:14px 16px;margin:0 0 24px;font-size:.88rem;color:var(--text2);line-height:1.6;border-left:3px solid var(--tab-c,var(--primary));}
+.callout strong{color:var(--tab-c,var(--primary));font-weight:600;}
+.callout .ico{font-size:1rem;margin-right:5px;}
+
+.tab-panel[data-tab="formal"]{--tab-c:var(--tab-formal);--tab-c-soft:var(--tab-formal-soft);}
+.tab-panel[data-tab="informal"]{--tab-c:var(--tab-informal);--tab-c-soft:var(--tab-informal-soft);}
+.tab-panel[data-tab="essay"]{--tab-c:var(--tab-essay);--tab-c-soft:var(--tab-essay-soft);}
+
+@media (max-width: 600px){
+  .paper{padding:20px 18px;}
+  .paper-body{font-size:.88rem;}
+  .grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-actions">
+    <a class="back-btn" href="index_grammatica.html" title="Tornare all'indice di grammatica">
+      <span class="arrow">←</span><span>Inicio</span>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>✍️ Produzione Scritta · Producción Escrita</h1>
+      <span class="header-tag">PLIDA C1</span>
+    </div>
+    <p class="header-sub">
+      Toolkit completo per la <strong>produzione scritta</strong> · <strong>Lettera formale</strong> · <strong>Lettera informale</strong> · <strong>Saggio argomentativo</strong>
+    </p>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" data-tab="formal" onclick="showTab('formal', this)">
+      <span class="ico">📧</span><span>Lettera Formale</span>
+    </button>
+    <button class="tab" data-tab="informal" onclick="showTab('informal', this)">
+      <span class="ico">💬</span><span>Lettera Informale</span>
+    </button>
+    <button class="tab" data-tab="essay" onclick="showTab('essay', this)">
+      <span class="ico">📝</span><span>Saggio</span>
+    </button>
+  </div>
+</div>
+
+<main class="main">
+
+<div class="toolbar">
+  <div class="fs-control" title="Tamaño del texto">
+    <span class="fs-label small">A</span>
+    <input type="range" class="fs-slider" id="fs-slider" min="85" max="140" step="5" value="100" oninput="updateFontSize(this.value)">
+    <span class="fs-label large">A</span>
+    <span class="fs-value" id="fs-value">100%</span>
+  </div>
+  <div class="toolbar-actions">
+    <button class="tool-btn" onclick="expandAll()"><span class="ico">▾</span>Expandir todos</button>
+    <button class="tool-btn" onclick="collapseAll()"><span class="ico">▸</span>Colapsar todos</button>
+  </div>
+</div>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 1: LETTERA FORMALE ====================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel active" id="formal" data-tab="formal">
+
+  <div class="intro">
+    <h3>Lettera Formale · Carta o Email Formal</h3>
+    <p>La <strong>lettera formale</strong> in PLIDA C1 si utilizza per <strong>reclami, candidature, richieste ufficiali, lettere di scuse e domande di informazioni</strong>. Mantieni un registro impersonale, ricorri al <em>Lei</em> di cortesia, evita contrazioni e forme colloquiali, e fai uso del congiuntivo nelle subordinate (<em>«La prego di voler considerare che…»</em>). Struttura il messaggio in paragrafi nitidi: apertura, motivo, sviluppo, richiesta e chiusura con formula di cortesia.</p>
+  </div>
+
+  <!-- A. SALUTI & FORMULE DI APERTURA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-greet)">👋</div>
+      <div>
+        <div class="section-title">A. Saluti &amp; formule di apertura</div>
+        <div class="section-desc">Saludos y apertura</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>Egregio Signore, / Egregia Signora,</strong> <span class="hint">cuando no conoces a la persona</span></div>
+      <div class="phrase"><strong>Gentile Dottore, / Gentile Dottoressa,</strong> <span class="hint">profesional con título</span></div>
+      <div class="phrase"><strong>Spettabile Direzione, / Spettabile Ufficio Risorse Umane,</strong> <span class="hint">dirigido a un ente</span></div>
+      <div class="phrase"><strong>Egregio Professor Rossi, / Gentile Avvocato Bianchi,</strong> <span class="hint">conoces el apellido y cargo</span></div>
+      <div class="phrase"><strong>A chi di competenza,</strong> <span class="hint">destinatario desconocido — equiv. inglés "To Whom It May Concern"</span></div>
+      <div class="phrase"><strong>Le scrivo</strong> al fine di / per richiedere / per segnalare / per inoltrare formale reclamo in merito a…</div>
+      <div class="phrase"><strong>Mi rivolgo a Lei</strong> in qualità di [cliente / studente / candidato] per…</div>
+      <div class="phrase"><strong>In riferimento a</strong> / Con riferimento a / In risposta a / Facendo seguito a Vs. comunicazione del…</div>
+      <div class="phrase"><strong>Mi pregio di rivolgermi a Voi</strong> per sottoporre alla Vostra cortese attenzione… <span class="hint">registro molto alto</span></div>
+    </div>
+  </div>
+
+  <!-- B. CONNETTIVI LOGICI -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">🔗</div>
+      <div>
+        <div class="section-title">B. Connettivi &amp; espressioni di collegamento</div>
+        <div class="section-desc">Conectores formales y frases de enlace</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-add)">
+        <div class="item-head"><span class="item-term">Aggiunta</span><span class="item-trans">adición</span></div>
+        <ul class="item-list">
+          <li>Inoltre,</li>
+          <li>In aggiunta,</li>
+          <li>Peraltro,</li>
+          <li>Per giunta,</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-contrast)">
+        <div class="item-head"><span class="item-term">Opposizione</span><span class="item-trans">contraste</span></div>
+        <ul class="item-list">
+          <li>Tuttavia,</li>
+          <li>Nondimeno,</li>
+          <li>Ciononostante,</li>
+          <li>Per converso, / Viceversa,</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">Causa / Conseguenza</span><span class="item-trans">causa y consecuencia</span></div>
+        <ul class="item-list">
+          <li>Pertanto,</li>
+          <li>Di conseguenza,</li>
+          <li>Per tale ragione,</li>
+          <li>Ciò ha comportato che + cong.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">Concessione</span><span class="item-trans">concesión</span></div>
+        <ul class="item-list">
+          <li>Benché / Sebbene + cong.</li>
+          <li>Nonostante + nome o cong.</li>
+          <li>Per quanto + cong.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-seq)">
+        <div class="item-head"><span class="item-term">Scopo</span><span class="item-trans">propósito</span></div>
+        <ul class="item-list">
+          <li>Al fine di + inf.</li>
+          <li>Allo scopo di + inf.</li>
+          <li>Affinché + cong.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-time)">
+        <div class="item-head"><span class="item-term">Sequenza</span><span class="item-trans">secuencia</span></div>
+        <ul class="item-list">
+          <li>In primo luogo,</li>
+          <li>In secondo luogo,</li>
+          <li>Infine, / Da ultimo,</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- C. ESPRESSIONI CHIAVE -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">⭐</div>
+      <div>
+        <div class="section-title">C. Espressioni chiave apprezzate dagli esaminatori</div>
+        <div class="section-desc">Frases clave valoradas por examinadores PLIDA C1</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>Le sarei profondamente grato/a se</strong> volesse + inf. <span class="hint">+ congiuntivo, registro alto</span></div>
+      <div class="phrase"><strong>La prego di voler considerare</strong> la mia richiesta con la dovuta attenzione.</div>
+      <div class="phrase"><strong>Mi preme sottolineare che</strong> + indicativo o congiuntivo.</div>
+      <div class="phrase"><strong>Vorrei richiamare la Sua attenzione</strong> sul fatto che…</div>
+      <div class="phrase"><strong>Mi trovo costretto/a a esprimere</strong> il mio più vivo disappunto in merito a…</div>
+      <div class="phrase"><strong>Le sarò grato/a per</strong> ogni chiarimento che vorrà fornirmi al riguardo.</div>
+      <div class="phrase"><strong>Confido in un Suo cortese</strong> e sollecito riscontro.</div>
+      <div class="phrase"><strong>Resto a Sua completa disposizione</strong> per qualsiasi ulteriore informazione si rendesse necessaria.</div>
+      <div class="phrase"><strong>Mi auguro che la presente</strong> trovi pronta e favorevole accoglienza.</div>
+      <div class="phrase"><strong>Sarebbe per me un gradito riscontro</strong> ricevere una Sua risposta in tempi brevi.</div>
+    </div>
+  </div>
+
+  <!-- D. FORMULE DI CHIUSURA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-close)">✉️</div>
+      <div>
+        <div class="section-title">D. Formule di chiusura · Saluti finali</div>
+        <div class="section-desc">Despedidas y fórmulas de cortesía</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>Distinti saluti,</strong> <span class="hint">la fórmula más formal, neutra</span></div>
+      <div class="phrase"><strong>Cordiali saluti,</strong> <span class="hint">formal pero algo más cálida</span></div>
+      <div class="phrase"><strong>I miei più cordiali saluti,</strong></div>
+      <div class="phrase"><strong>Le porgo i miei più sentiti ringraziamenti</strong> e i miei migliori saluti.</div>
+      <div class="phrase"><strong>In attesa di un Suo cortese riscontro,</strong> Le invio i miei più cordiali saluti.</div>
+      <div class="phrase"><strong>RingraziandoLa</strong> sin d'ora per l'attenzione, Le porgo distinti saluti.</div>
+      <div class="phrase"><strong>Con osservanza,</strong> <span class="hint">muy formal — administración pública</span></div>
+    </div>
+  </div>
+
+  <!-- E. STRUCTURE BLUEPRINT -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">📐</div>
+      <div>
+        <div class="section-title">E. Struttura ideale · Estructura ideal</div>
+        <div class="section-desc">Esquema paso a paso para cualquier lettera formale C1</div>
+      </div>
+    </div>
+    <div class="blueprint">
+      <div class="step">
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <h5>Saluto formale · Apertura</h5>
+          <p>Identifica al destinatario con una fórmula adecuada. Si no conoces a la persona, usa <em>Egregio Signore / Gentile Signora</em>.</p>
+          <div class="step-phrases">
+            <span>Egregio Signore,</span>
+            <span>Gentile Dottoressa,</span>
+            <span>Spettabile Direzione,</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <h5>Oggetto / motivo · Apertura tematica</h5>
+          <p>Explica desde la primera línea por qué escribes. Sé directo y específico.</p>
+          <div class="step-phrases">
+            <span>Le scrivo al fine di…</span>
+            <span>In riferimento a…</span>
+            <span>Mi rivolgo a Lei in qualità di…</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <h5>Sviluppo / dettaglio · Corpo</h5>
+          <p>Aporta el contexto, los datos concretos o el problema. Un párrafo por idea, con conectores formales y congiuntivo donde corresponda.</p>
+          <div class="step-phrases">
+            <span>Inoltre,</span>
+            <span>Peraltro,</span>
+            <span>Tuttavia,</span>
+            <span>Nonostante ciò,</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">4</span>
+        <div class="step-body">
+          <h5>Richiesta · Istanza</h5>
+          <p>Pide claramente lo que necesitas: información, acción, respuesta o compensación. Usa formas perifrásticas y congiuntivo.</p>
+          <div class="step-phrases">
+            <span>Le sarei grato/a se volesse…</span>
+            <span>La prego di voler considerare…</span>
+            <span>Vorrei richiamare la Sua attenzione…</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">5</span>
+        <div class="step-body">
+          <h5>Chiusura cortese · Frase di transizione</h5>
+          <p>Ofrece disponibilidad para seguir en contacto y/o expresa la espera de respuesta.</p>
+          <div class="step-phrases">
+            <span>In attesa di un Suo cortese riscontro,</span>
+            <span>Resto a Sua completa disposizione…</span>
+            <span>RingraziandoLa sin d'ora,</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">6</span>
+        <div class="step-body">
+          <h5>Formula di saluto + firma · Saluti finali</h5>
+          <p>Termina con una fórmula completa coherente con la apertura. <em>Distinti saluti</em> es la opción más segura en PLIDA C1.</p>
+          <div class="step-phrases">
+            <span>Distinti saluti,</span>
+            <span>Cordiali saluti,</span>
+            <span>Con osservanza,</span>
+          </div>
+        </div>
+      </div>
+      <div class="blueprint-footer">
+        <span class="footer-ico">📏</span>
+        <span><strong>Total:</strong> 5–6 párrafos · 250–300 palabras (PLIDA C1) · registro impersonal, Lei di cortesia, congiuntivo en subordinadas, sin contracciones</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- F. MODELLI -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-model)">📄</div>
+      <div>
+        <div class="section-title">F. Sei modelli completi</div>
+        <div class="section-desc">Seis modelos completos · 250–300 palabras · frases clave coloreadas según la teoría</div>
+      </div>
+    </div>
+    <div class="papers">
+
+      <!-- MODEL 1: Reclamo hotel -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 1 · Lettera di reclamo a un hotel</h4>
+        <div class="paper-meta">Oggetto: Soggiorno insoddisfacente presso l'Hotel Splendido · ~270 parole</div>
+        <div class="paper-body">
+          <p>Egregio Direttore,</p>
+          <p><span class="label">Oggetto</span><span class="k-open">Le scrivo al fine di</span> esprimere il mio più vivo disappunto in merito al recente soggiorno presso l'Hotel Splendido, dal 12 al 15 marzo scorsi.</p>
+          <p><span class="label">Esposizione</span>Al mio arrivo, mi è stato comunicato che la camera con vista mare da me prenotata non era disponibile, e sono stata sistemata in una stanza notevolmente più piccola che si affacciava sul parcheggio. <span class="k-add">Inoltre,</span> l'impianto di condizionamento si è rivelato malfunzionante per l'intera durata del soggiorno, <span class="k-contrast">nonostante</span> ben tre solleciti rivolti alla reception. <span class="k-add">Peraltro,</span> mi preme segnalare che il servizio colazione è stato chiuso trenta minuti prima dell'orario indicato sul Vostro sito ufficiale.</p>
+          <p><span class="label">Richiesta</span><span class="k-key">Le sarei profondamente grata se</span> volesse fornirmi una spiegazione esauriente in merito a tali disservizi e proporre un congruo indennizzo per i disagi subiti. <span class="k-key">Mi preme sottolineare che</span> mi attendevo, per un esercizio della Vostra categoria, ben altro standard di accoglienza.</p>
+          <p><span class="label">Chiusura</span><span class="k-key">Confido in un Suo cortese e sollecito riscontro.</span> <span class="k-key">Resto a Sua completa disposizione</span> per qualsiasi ulteriore chiarimento si rendesse necessario.</p>
+          <p><span class="k-close">Distinti saluti,</span><br>Marta García</p>
+        </div>
+      </article>
+
+      <!-- MODEL 2: Candidatura -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 2 · Candidatura per una posizione professionale</h4>
+        <div class="paper-meta">Oggetto: Candidatura — assistente marketing part-time · ~290 parole</div>
+        <div class="paper-body">
+          <p>Gentile Dottoressa Reynaud,</p>
+          <p><span class="label">Apertura</span><span class="k-open">In riferimento a</span> Vs. annuncio pubblicato sulla piattaforma LinkedIn per la posizione di assistente marketing part-time presso l'agenzia Brightside, <span class="k-open">mi pregio di sottoporre alla Sua cortese attenzione</span> la mia candidatura.</p>
+          <p><span class="label">Percorso</span>Attualmente frequento l'ultimo anno della laurea magistrale in Comunicazione presso l'Università di Valencia, e ho svolto due tirocini estivi nell'ambito della gestione dei social media e della creazione di contenuti. <span class="k-add">Inoltre,</span> padroneggio fluentemente l'italiano, lo spagnolo, il catalano e l'inglese, e ho dimestichezza con strumenti professionali quali Canva, Mailchimp e Google Analytics.</p>
+          <p><span class="label">Profilo</span>Sono convinta che il mio percorso accademico, unitamente alle esperienze pratiche maturate, mi consentirebbe di contribuire in modo efficace alla Vs. squadra. <span class="k-add">Peraltro,</span> la flessibilità del mio attuale calendario di studio mi permetterebbe di iniziare con effetto immediato e di garantire le venti ore settimanali previste nell'annuncio.</p>
+          <p><span class="label">Chiusura</span>Allego alla presente il mio curriculum vitae unitamente alle referenze richieste. <span class="k-key">Resto a Sua completa disposizione</span> per un eventuale colloquio conoscitivo, secondo i tempi a Lei più congeniali.</p>
+          <p><span class="k-close">Cordiali saluti,</span><br>Andrés Molina</p>
+        </div>
+      </article>
+
+      <!-- MODEL 3: Richiesta informazioni -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 3 · Richiesta di informazioni su un corso</h4>
+        <div class="paper-meta">Oggetto: Richiesta informazioni — Corso estivo intensivo · ~295 parole</div>
+        <div class="paper-body">
+          <p>Spettabile Segreteria,</p>
+          <p><span class="label">Apertura</span><span class="k-open">Le scrivo al fine di</span> richiedere informazioni più dettagliate in merito al corso intensivo di lingua italiana pubblicizzato sul Vs. sito per la sessione estiva.</p>
+          <p><span class="label">Quesiti</span><span class="k-seq">In primo luogo,</span> desidererei sapere se il corso risulti idoneo a candidati di livello B2 in preparazione all'esame PLIDA C1, e se il materiale didattico sia compreso nella quota di iscrizione indicata. <span class="k-add">Inoltre,</span> <span class="k-key">Le sarei grato se volesse</span> precisare il numero massimo di partecipanti per classe e confermare se le lezioni siano impartite esclusivamente da docenti madrelingua qualificati.</p>
+          <p><span class="label">Contesto</span>Sono particolarmente interessato a percorsi che coniughino revisione grammaticale e pratica intensiva della scrittura, <span class="k-cause">dato che</span> sosterrò la prova alla fine di agosto.</p>
+          <p><span class="label">Richiesta</span><span class="k-key">Le sarei profondamente grato se</span> volesse inviarmi il programma dettagliato e indicare la disponibilità di posti per la sessione del mese di agosto. <span class="k-key">Le sarò inoltre grato per</span> ogni precisazione riguardo alla scadenza ultima per l'iscrizione e alle modalità di pagamento.</p>
+          <p><span class="label">Chiusura</span><span class="k-key">In attesa di un Suo cortese riscontro,</span></p>
+          <p><span class="k-close">Distinti saluti,</span><br>Carlos Vega</p>
+        </div>
+      </article>
+
+      <!-- MODEL 4: Lettera di scuse -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 4 · Lettera di scuse</h4>
+        <div class="paper-meta">Oggetto: Scuse per l'appuntamento mancato di martedì · ~285 parole</div>
+        <div class="paper-body">
+          <p>Gentile Dottoressa Patel,</p>
+          <p><span class="label">Apertura</span><span class="k-open">Le scrivo al fine di</span> porgerLe le mie più sentite scuse per aver mancato il nostro appuntamento di martedì pomeriggio presso la Vostra sede di Madrid.</p>
+          <p><span class="label">Motivazione</span>Purtroppo, il mio volo proveniente da Londra è stato cancellato a causa di un guasto tecnico, e la compagnia aerea non è stata in grado di proporre alcuna soluzione alternativa prima della mattina seguente. <span class="k-cause">Di conseguenza,</span> mi è risultato materialmente impossibile raggiungere la Vostra sede in tempo utile, <span class="k-contrast">nonostante</span> i molteplici tentativi compiuti per individuare una connessione sostitutiva.</p>
+          <p><span class="label">Riconoscimento</span>Sono perfettamente consapevole del disagio arrecato al Vostro staff e mi assumo l'intera responsabilità per non averLa contattata tempestivamente nel corso dell'imprevisto.</p>
+          <p><span class="label">Riprogrammazione</span><span class="k-key">Resto a Sua completa disposizione</span> per riprogrammare l'incontro nel più breve tempo possibile. <span class="k-key">Le sarei profondamente grata se</span> volesse indicarmi quali date della prossima settimana risultino a Lei più congeniali; provvederò ad adattare la mia agenda di conseguenza.</p>
+          <p><span class="label">Chiusura</span>La ringrazio per la comprensione e la pazienza dimostrate. <span class="k-key">Mi auguro che la presente</span> trovi pronta accoglienza da parte Sua.</p>
+          <p><span class="k-close">Cordiali saluti,</span><br>Helena Soto</p>
+        </div>
+      </article>
+
+      <!-- MODEL 5: Richiesta lettera referenza -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 5 · Richiesta di lettera di referenza</h4>
+        <div class="paper-meta">Oggetto: Richiesta di lettera di presentazione · ~295 parole</div>
+        <div class="paper-body">
+          <p>Egregio Professor Hughes,</p>
+          <p><span class="label">Apertura</span><span class="k-open">Mi rivolgo a Lei</span> per chiederLe la cortesia di redigere una lettera di presentazione a supporto della mia candidatura al Master in Relazioni Internazionali presso l'Università di Edimburgo.</p>
+          <p><span class="label">Motivazione</span>Lei mi ha insegnato Politica Comparata durante il terzo anno del mio corso di laurea, e ho avuto il privilegio di redigere la tesi triennale sotto la Sua supervisione. <span class="k-cause">Considerato che</span> il programma in questione attribuisce un peso considerevole alle competenze di ricerca e all'analisi politica, ritengo che la Sua valutazione del mio percorso accademico sarebbe di particolare valore agli occhi della commissione selezionatrice.</p>
+          <p><span class="label">Informazioni pratiche</span>La scadenza per la presentazione delle candidature è fissata al 15 dicembre, e la lettera dovrà essere inoltrata direttamente attraverso il portale online dell'università. <span class="k-key">Le sarei profondamente grata se</span> volesse comunicarmi la Sua disponibilità a supportare la mia richiesta; mi farò premura, in tal caso, di trasmetterLe il mio curriculum vitae, la tesi triennale e una sintesi del programma di studio.</p>
+          <p><span class="label">Chiusura</span><span class="k-key">La ringrazio sin d'ora</span> per la cortese attenzione che vorrà dedicare alla mia richiesta. <span class="k-key">Confido in un Suo cortese riscontro</span> nei tempi a Lei più congeniali.</p>
+          <p><span class="k-close">I miei più cordiali saluti,</span><br>Laura Beltrán</p>
+        </div>
+      </article>
+
+      <!-- MODEL 6: Rimborso -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 6 · Richiesta di rimborso</h4>
+        <div class="paper-meta">Oggetto: Richiesta di rimborso — ordine n. BX-48329 · ~285 parole</div>
+        <div class="paper-body">
+          <p>Spettabile Servizio Clienti,</p>
+          <p><span class="label">Apertura</span><span class="k-open">Le scrivo in riferimento</span> al mio recente ordine (numero BX-48329), effettuato il 3 febbraio scorso tramite il Vs. negozio online.</p>
+          <p><span class="label">Esposizione</span>Il pacco mi è pervenuto con due settimane di ritardo rispetto alla data di consegna stimata e, all'apertura, ho constatato che uno degli articoli — un paio di stivali in pelle — risultava manifestamente difettoso. <span class="k-contrast">Nonostante</span> tre tentativi di contatto telefonico con il Vs. servizio assistenza, non ho ricevuto né riscontro né follow-up alcuno.</p>
+          <p><span class="label">Richiesta</span>Alla luce di tali circostanze, <span class="k-key">Le sarei grato se volesse</span> procedere al rimborso integrale dell'articolo difettoso, comprensivo delle spese di spedizione originarie. <span class="k-key">Le sarò inoltre grato</span> se vorrà chiarirmi per quale ragione le mie precedenti richieste siano rimaste senza alcun riscontro.</p>
+          <p><span class="label">Chiusura</span><span class="k-key">Confido in un Suo cortese e sollecito riscontro.</span> <span class="k-key">Resto a Sua completa disposizione</span> per qualsiasi ulteriore informazione si rendesse necessaria in merito all'ordine.</p>
+          <p><span class="k-close">Distinti saluti,</span><br>Tomás Rivera</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- G. CONSIGLI -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-tip)">💡</div>
+      <div>
+        <div class="section-title">G. Consigli &amp; trappole frequenti</div>
+        <div class="section-desc">Consejos prácticos y errores frecuentes</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip">
+        <div class="tip-icon">✓</div>
+        <div class="tip-body">
+          <h5>Da' del Lei in tutto il testo</h5>
+          <p>Usa sempre <em>Lei</em>, <em>La</em>, <em>Le</em>, <em>Suo/Sua</em> con la maiuscola di cortesia. Mescolare <em>tu</em> con <em>Lei</em> è l'errore che più penalizza l'esaminatore in una lettera formale C1.</p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">✓</div>
+        <div class="tip-body">
+          <h5>Comincia con l'oggetto</h5>
+          <p>Nella prima riga del corpo, esplicita chiaramente il motivo della lettera: <em>Le scrivo al fine di…</em>, <em>In riferimento a…</em>, <em>Mi rivolgo a Lei in qualità di…</em></p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">✓</div>
+        <div class="tip-body">
+          <h5>Usa il congiuntivo nelle subordinate</h5>
+          <p>A livello C1 ci si aspetta congiuntivo dopo <em>benché, sebbene, nonostante, qualora, purché, affinché, prima che</em>. È il segnale più chiaro di padronanza avanzata.</p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">✓</div>
+        <div class="tip-body">
+          <h5>Concludi con formula completa</h5>
+          <p>La <em>formula di saluto</em> deve essere coerente con l'apertura. <em>Distinti saluti</em> rimane la scelta più sicura; <em>Cordiali saluti</em> è leggermente più calda ma sempre formale. Mai <em>baci</em> o <em>a presto</em> in una lettera ufficiale.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Evita il lessico colloquiale</h5>
+          <p>Niente <em>roba</em>, <em>cose</em>, <em>tipo</em>, <em>boh</em>, <em>secondo me</em>. Sostituisci con <em>elementi</em>, <em>aspetti</em>, <em>ad esempio</em>, <em>ritengo</em>. A livello C1 il registro lessicale è il primo discriminante della valutazione.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Attento alla concordanza di genere del participio</h5>
+          <p>Se scrive una donna: <em>sono convinta</em>, <em>sono profondamente grata</em>, <em>resto a Sua disposizione</em>. Un maschile usato erroneamente da una donna è penalizzato immediatamente.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 2: LETTERA INFORMALE ==================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="informal" data-tab="informal">
+
+  <div class="intro">
+    <h3>Lettera Informale · Email Informal</h3>
+    <p>La <strong>lettera informale</strong> in PLIDA C1 si rivolge a <strong>amici, familiari o persone con cui hai un rapporto stretto</strong>. Usa il <em>tu</em>, espressioni idiomatiche, esclamazioni, vocativi affettivi e un tono caloroso. A C1, anche in registro informale, si valorizza la <strong>ricchezza lessicale</strong> e la <strong>varietà sintattica</strong>: l'informalità non è banalità.</p>
+  </div>
+
+  <!-- A. SALUTI E APERTURA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-greet)">👋</div>
+      <div>
+        <div class="section-title">A. Saluti &amp; formule di apertura</div>
+        <div class="section-desc">Saludos y apertura</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>Ciao [Nome]! / Caro [Nome], / Cara [Nome],</strong> <span class="hint">il classico</span></div>
+      <div class="phrase"><strong>Carissimo/a [Nome],</strong> <span class="hint">più affettuoso</span></div>
+      <div class="phrase"><strong>Ehi! / Ehilà!</strong> <span class="hint">molto colloquiale</span></div>
+      <div class="phrase"><strong>Come stai? Tutto bene?</strong> / Come va la vita?</div>
+      <div class="phrase"><strong>Mi ha fatto enormemente piacere</strong> ricevere tue notizie!</div>
+      <div class="phrase"><strong>Scusa se non ti ho scritto prima,</strong> ma in questi ultimi tempi sono stato sommerso di impegni.</div>
+      <div class="phrase"><strong>Chissà che fine hai fatto!</strong> Sono secoli che non ci sentiamo.</div>
+      <div class="phrase"><strong>Ti scrivo per raccontarti</strong>… / Non immagini cosa mi è successo!</div>
+    </div>
+  </div>
+
+  <!-- B. CONNETTIVI INFORMALI -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">🔗</div>
+      <div>
+        <div class="section-title">B. Connettivi informali &amp; espressioni di collegamento</div>
+        <div class="section-desc">Conectores y frases de enlace</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-add)">
+        <div class="item-head"><span class="item-term">Aggiunta</span><span class="item-trans">adición</span></div>
+        <ul class="item-list">
+          <li>Anche,</li>
+          <li>Pure,</li>
+          <li>E poi,</li>
+          <li>Tra l'altro,</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-contrast)">
+        <div class="item-head"><span class="item-term">Opposizione</span><span class="item-trans">contraste</span></div>
+        <ul class="item-list">
+          <li>Però</li>
+          <li>Eppure</li>
+          <li>Comunque,</li>
+          <li>D'altra parte,</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">Causa / Conseguenza</span><span class="item-trans">causa y consecuencia</span></div>
+        <ul class="item-list">
+          <li>Quindi,</li>
+          <li>Per questo,</li>
+          <li>Ecco perché…</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">Concessione</span><span class="item-trans">concesión</span></div>
+        <ul class="item-list">
+          <li>Magari sembrerà strano, ma…</li>
+          <li>Anche se…</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-time)">
+        <div class="item-head"><span class="item-term">Tempo / Discorso</span><span class="item-trans">tiempo, dirigir la conversación</span></div>
+        <ul class="item-list">
+          <li>Insomma,</li>
+          <li>A proposito,</li>
+          <li>All'epoca,</li>
+          <li>Alla fine,</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-seq)">
+        <div class="item-head"><span class="item-term">Opinione</span><span class="item-trans">opinión</span></div>
+        <ul class="item-list">
+          <li>Sinceramente,</li>
+          <li>Personalmente,</li>
+          <li>A mio avviso,</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- C. ESPRESSIONI CHIAVE -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">⭐</div>
+      <div>
+        <div class="section-title">C. Espressioni chiave apprezzate dagli esaminatori</div>
+        <div class="section-desc">Frases clave para enriquecer una lettera informale C1</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>Non ci crederai mai,</strong> ma…</div>
+      <div class="phrase"><strong>Non vedo l'ora di</strong> / Sto morendo dalla voglia di…</div>
+      <div class="phrase"><strong>Sarebbe fantastico</strong> se tu potessi… <span class="hint">+ congiuntivo imperfetto</span></div>
+      <div class="phrase"><strong>Non dimenticarti di…</strong> / Mi raccomando, non dimenticarti!</div>
+      <div class="phrase"><strong>Fammi sapere</strong> cosa ne pensi!</div>
+      <div class="phrase"><strong>Mi farebbe molto piacere</strong> conoscere la tua opinione al riguardo.</div>
+      <div class="phrase"><strong>È un vero peccato</strong> che… <span class="hint">+ congiuntivo</span></div>
+      <div class="phrase"><strong>Mi stavo chiedendo se</strong> ti andrebbe di…</div>
+      <div class="phrase"><strong>Salutami</strong> [Nome] da parte mia.</div>
+      <div class="phrase"><strong>Fammi un colpo di telefono</strong> appena hai un momento!</div>
+    </div>
+  </div>
+
+  <!-- D. CHIUSURE -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-close)">✉️</div>
+      <div>
+        <div class="section-title">D. Formule di chiusura</div>
+        <div class="section-desc">Despedidas y cierres</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>Un abbraccio! / Un grande abbraccio!</strong></div>
+      <div class="phrase"><strong>Un bacio / Baci / Bacioni</strong></div>
+      <div class="phrase"><strong>A presto! / Ci sentiamo presto!</strong></div>
+      <div class="phrase"><strong>Scrivimi presto!</strong> Aspetto tue notizie con impazienza.</div>
+      <div class="phrase"><strong>Mi manchi un sacco!</strong></div>
+      <div class="phrase"><strong>Ti abbraccio forte,</strong></div>
+      <div class="phrase"><strong>Con affetto, / Affettuosamente,</strong></div>
+      <div class="phrase"><strong>Non vedo l'ora di rivederti!</strong> A prestissimo.</div>
+    </div>
+  </div>
+
+  <!-- E. STRUCTURE BLUEPRINT -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">📐</div>
+      <div>
+        <div class="section-title">E. Struttura ideale · Estructura ideal</div>
+        <div class="section-desc">Esquema paso a paso para cualquier lettera informale</div>
+      </div>
+    </div>
+    <div class="blueprint">
+      <div class="step">
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <h5>Saluto caloroso · Apertura</h5>
+          <p>Saluda con calidez usando el nombre de pila. Sin "Egregio" ni "Spettabile".</p>
+          <div class="step-phrases">
+            <span>Ciao [Nome]!</span>
+            <span>Carissimo/a [Nome],</span>
+            <span>Caro [Nome],</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <h5>Apertura amichevole · Convenevoli</h5>
+          <p>Pregunta cómo está la otra persona o discúlpate por tardar en escribir.</p>
+          <div class="step-phrases">
+            <span>Come stai?</span>
+            <span>Tutto bene?</span>
+            <span>Scusa se non ti ho scritto prima…</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <h5>Motivo / notizia · Il cuore della lettera</h5>
+          <p>Introduce la noticia o el motivo principal con tono natural y entusiasta.</p>
+          <div class="step-phrases">
+            <span>Ti scrivo per raccontarti…</span>
+            <span>Non ci crederai mai!</span>
+            <span>Non immagini cosa mi è successo…</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">4</span>
+        <div class="step-body">
+          <h5>Sviluppo · Dettagli, aneddoti</h5>
+          <p>Cuenta los detalles, anécdotas o argumentos con conectores informales y lessico vivace.</p>
+          <div class="step-phrases">
+            <span>Tra l'altro,</span>
+            <span>Comunque,</span>
+            <span>A proposito,</span>
+            <span>Sinceramente,</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">5</span>
+        <div class="step-body">
+          <h5>Richiesta o invito · Invito</h5>
+          <p>Pide algo, invita a un plan o pide opinión sobre lo que cuentas.</p>
+          <div class="step-phrases">
+            <span>Mi stavo chiedendo se ti andrebbe di…</span>
+            <span>Sarebbe fantastico se…</span>
+            <span>Fammi sapere!</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">6</span>
+        <div class="step-body">
+          <h5>Saluto affettuoso + firma · Chiusura</h5>
+          <p>Cierra con afecto y deja una llamada a responder. Acaba con el nombre o apodo.</p>
+          <div class="step-phrases">
+            <span>Un abbraccio!</span>
+            <span>A presto!</span>
+            <span>Ti abbraccio forte,</span>
+            <span>Bacioni,</span>
+          </div>
+        </div>
+      </div>
+      <div class="blueprint-footer">
+        <span class="footer-ico">📏</span>
+        <span><strong>Total:</strong> 5–6 párrafos · 250–300 palabras (PLIDA C1) · tu, registro caloroso, lessico vivace ed espressivo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- F. MODELLI -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-model)">📄</div>
+      <div>
+        <div class="section-title">F. Sei modelli completi</div>
+        <div class="section-desc">Seis modelos completos · 250–300 palabras · frases clave coloreadas según la teoría</div>
+      </div>
+    </div>
+    <div class="papers">
+
+      <!-- MODEL 1: Raccomandare Bologna -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 1 · Consigliare una città a un'amica</h4>
+        <div class="paper-meta">A: Sara · Oggetto: Devi assolutamente andare a Bologna! · ~280 parole</div>
+        <div class="paper-body">
+          <p><span class="k-open">Ciao Sara!</span></p>
+          <p><span class="label">Apertura</span><span class="k-open">Come stai? Tutto bene?</span> <span class="k-open">Scusa se non ti ho scritto prima</span> — la vita è stata piuttosto frenetica da quando sono tornata.</p>
+          <p><span class="label">Notizie</span><span class="k-key">Non ci crederai mai,</span> ma Bologna è stata una folgorazione! Ci sono andata per un lungo weekend il mese scorso e mi sono completamente innamorata della città. Il centro storico, con i suoi portici interminabili e le sue piazze brulicanti, è un labirinto magnifico. <span class="k-time">Sinceramente,</span> potresti passarci un pomeriggio intero limitandoti a vagare con un caffè in mano.</p>
+          <p><span class="label">Consigli</span>Se ci vai, <span class="k-key">non dimenticarti di</span> salire alle Torri degli Asinelli — il panorama da lassù è qualcosa di mozzafiato. <span class="k-add">Tra l'altro,</span> il cibo è una cosa pazzesca: prova assolutamente le tagliatelle al ragù e la mortadella di un'enoteca chiamata Tamburini, mi ringrazierai dopo! <span class="k-add">E poi,</span> i treni da Roma costano una sciocchezza se prenoti per tempo, e in meno di due ore sei lì.</p>
+          <p><span class="label">Chiusura</span><span class="k-key">Mi farebbe molto piacere conoscere la tua opinione</span> se finisci per andarci. <span class="k-key">Fammi sapere!</span></p>
+          <p><span class="k-close">A prestissimo!</span><br><span class="k-close">Un bacione,</span><br>Carmen</p>
+        </div>
+      </article>
+
+      <!-- MODEL 2: Declinare festa -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 2 · Declinare un invito a una festa</h4>
+        <div class="paper-meta">A: Luca · Oggetto: Riguardo a sabato… · ~285 parole</div>
+        <div class="paper-body">
+          <p><span class="k-open">Ehi Luca,</span></p>
+          <p><span class="label">Apertura</span><span class="k-open">Come va la vita?</span> Ho ricevuto il tuo invito ieri — grazie infinite per aver pensato a me, sembra davvero una serata fantastica.</p>
+          <p><span class="label">Motivazione</span>Purtroppo non riuscirò proprio a esserci sabato. Mia sorella sta traslocando proprio quel fine settimana e settimane fa le avevo promesso che l'avrei aiutata con gli scatoloni e con tutto il resto. <span class="k-time">Sinceramente,</span> sono dispiaciutissimo <span class="k-cause">perché</span> non vedevo l'ora di rivedere tutta la compagnia.</p>
+          <p><span class="label">Alternativa</span><span class="k-contrast">Detto questo,</span> <span class="k-key">mi stavo chiedendo se ti andrebbe di</span> andare a cena insieme il venerdì successivo? C'è un nuovo ristorante giapponese appena aperto vicino a casa mia — offro io per farmi perdonare di aver mancato la tua festa! Potremmo anche proporre a Sara e a Tom se sono liberi.</p>
+          <p><span class="label">Chiusura</span><span class="k-time">Comunque,</span> divertiti un mondo sabato — fai un sacco di foto! <span class="k-key">Fammi un colpo di telefono</span> e dimmi qualcosa per venerdì.</p>
+          <p><span class="k-close">A presto!</span><br><span class="k-close">Un abbraccio,</span><br>Diego</p>
+        </div>
+      </article>
+
+      <!-- MODEL 3: Ringraziare per ospitalità -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 3 · Ringraziare un'amica per l'ospitalità</h4>
+        <div class="paper-meta">A: Olivia · Oggetto: Grazie per il fantastico fine settimana! · ~295 parole</div>
+        <div class="paper-body">
+          <p><span class="k-open">Ciao Olivia!</span></p>
+          <p><span class="label">Apertura</span><span class="k-open">Spero proprio che tu stia bene!</span> Volevo solo dirti un grazie enorme per avermi ospitata a casa tua lo scorso fine settimana — mi sono divertita davvero come non mai.</p>
+          <p><span class="label">Punti salienti</span><span class="k-time">Sinceramente,</span> la cena che hai preparato sabato sera era qualcosa di incredibile — quelle lasagne erano la perfezione fatta cucina! <span class="k-add">Tra l'altro,</span> la passeggiata lungo il fiume di domenica mattina è stata il modo più dolce di chiudere il weekend. <span class="k-time">Personalmente,</span> non riesco a credere a quanto mi sentissi rilassata dopo solo due giorni lontana dalla città.</p>
+          <p><span class="label">Invito</span><span class="k-time">A proposito,</span> <span class="k-key">mi stavo chiedendo se ti andrebbe di</span> venire a trovarmi a Barcellona il mese prossimo? La mia coinquilina sarà via per due settimane, <span class="k-cause">quindi</span> avresti un'intera stanza per te, e <span class="k-key">sarebbe fantastico</span> se potessi venire — anche solo per un lungo weekend.</p>
+          <p><span class="label">Chiusura</span><span class="k-time">Comunque,</span> <span class="k-key">salutami</span> Tom e il cane da parte mia. <span class="k-key">Fammi sapere</span> quando ti pare e dimmi qualcosa per Barcellona!</p>
+          <p><span class="k-close">Un bacione,</span><br>Sofía</p>
+        </div>
+      </article>
+
+      <!-- MODEL 4: Inviting on a trip -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 4 · Invitare un amico in viaggio</h4>
+        <div class="paper-meta">A: Marco · Oggetto: Viaggio sui Pirenei — c'è ancora un posto! · ~290 parole</div>
+        <div class="paper-body">
+          <p><span class="k-open">Ehi Marco,</span></p>
+          <p><span class="label">Apertura</span><span class="k-open">Come va la vita?</span> <span class="k-open">Mi ha fatto enormemente piacere</span> avere tue notizie la settimana scorsa — scusa se ci ho messo un'eternità a risponderti, il lavoro in questo periodo è una follia.</p>
+          <p><span class="label">Notizia</span><span class="k-open">Non immagini cosa stiamo combinando!</span> Stiamo organizzando un viaggio in macchina sui Pirenei a luglio e c'è ancora un posto libero in auto. <span class="k-time">Sinceramente,</span> ho pensato subito a te <span class="k-cause">perché</span> sei l'unica persona che conosco che sarebbe pronta a fare trekking, dormire in tenda <span class="k-add">e</span> mangiare tapas tutte le sere.</p>
+          <p><span class="label">Programma</span>L'idea è guidare da Barcellona a San Sebastián in dieci giorni, fermandoci in paesini sperduti lungo la strada. <span class="k-add">Tra l'altro,</span> mio cugino abita a Jaca, <span class="k-cause">quindi</span> avremmo un posto gratis dove dormire a metà percorso. <span class="k-key">Sarebbe fantastico</span> se ti unissi a noi!</p>
+          <p><span class="label">Chiusura</span><span class="k-key">Fammi sapere</span> cosa ne pensi appena puoi — dobbiamo prenotare i campeggi al più presto. <span class="k-close">Aspetto tue notizie con impazienza!</span></p>
+          <p><span class="k-close">A presto,</span><br>Iván</p>
+        </div>
+      </article>
+
+      <!-- MODEL 5: Big news -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 5 · Annunciare una grande notizia</h4>
+        <div class="paper-meta">A: Carla · Oggetto: Ho avuto il lavoro! · ~275 parole</div>
+        <div class="paper-body">
+          <p><span class="k-open">Ciao Carla!</span></p>
+          <p><span class="label">Apertura</span><span class="k-open">Spero proprio che tu stia bene!</span> Sono ere geologiche che non ci sentiamo e ho una notizia bomba da condividere con te.</p>
+          <p><span class="label">Notizia</span><span class="k-open">Non ci crederai mai!</span> Ho ottenuto il posto a Berlino! <span class="k-time">Sinceramente,</span> faccio ancora fatica a crederci — comincio in un piccolo studio di design il mese prossimo e mi trasferirò all'inizio di giugno. <span class="k-time">A dirla tutta,</span> sono un misto di terrore e di un'eccitazione pazzesca.</p>
+          <p><span class="label">Dettagli</span>La ricerca dell'appartamento è stata un incubo finora, ma il mio futuro capo mi sta dando una mano e potrei finire per condividerlo con una delle sue colleghe. <span class="k-add">Tra l'altro,</span> il mio tedesco sta finalmente cominciando ad avere un senso dopo tutti quei corsi serali!</p>
+          <p><span class="label">Chiusura</span><span class="k-key">Mi stavo chiedendo se ti andrebbe di</span> venire a trovarmi una volta che mi sarò sistemata? <span class="k-key">Sarebbe fantastico</span> portarti in giro. <span class="k-time">Comunque,</span> <span class="k-key">fammi un colpo di telefono</span> e raccontami come stai!</p>
+          <p><span class="k-close">Un bacione,</span><br>Marta</p>
+        </div>
+      </article>
+
+      <!-- MODEL 6: Asking for advice -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 6 · Chiedere consiglio a un amico</h4>
+        <div class="paper-meta">A: Paolo · Oggetto: Mi serve la tua opinione sincera · ~290 parole</div>
+        <div class="paper-body">
+          <p><span class="k-open">Ehi Paolo,</span></p>
+          <p><span class="label">Apertura</span><span class="k-open">Come va la vita?</span> Scusa per il messaggio un po' a tradimento — ho davvero bisogno del tuo consiglio su una questione.</p>
+          <p><span class="label">Problema</span><span class="k-key">Non ci crederai mai,</span> ma sta succedendo un casino sul lavoro. Il mio capo mi ha proposto una promozione, che sembra una cosa fantastica, però il ruolo implica trasferirsi nell'ufficio di Roma e lavorare un sacco di ore in più. <span class="k-time">Sinceramente,</span> non sono affatto sicura di essere pronta per quel livello di pressione in questo momento della mia vita.</p>
+          <p><span class="label">Perché te</span><span class="k-cause">Visto che</span> tu sei passato per qualcosa di simile l'anno scorso quando hai avuto la tua promozione, ho pensato che saresti la persona perfetta a cui chiederlo. <span class="k-add">Tra l'altro,</span> sei sempre brutalmente onesto, ed è esattamente quello di cui ho bisogno in questo preciso momento.</p>
+          <p><span class="label">Richiesta</span><span class="k-key">Mi stavo chiedendo se</span> ti andrebbe di prenderci un caffè questo fine settimana? Offro io, ovviamente. Anche solo una chiamata mi aiuterebbe — ho bisogno di parlarne con qualcuno che capisca davvero.</p>
+          <p><span class="label">Chiusura</span><span class="k-key">Fammi sapere</span> cosa ti torna comodo. <span class="k-key">Fammi un colpo di telefono</span> quando puoi!</p>
+          <p><span class="k-close">A presto!</span><br><span class="k-close">Un abbraccio,</span><br>Alex</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- G. CONSIGLI -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-tip)">💡</div>
+      <div>
+        <div class="section-title">G. Consigli &amp; trappole frequenti</div>
+        <div class="section-desc">Consejos prácticos y errores frecuentes</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip">
+        <div class="tip-icon">✓</div>
+        <div class="tip-body">
+          <h5>Dai del tu in tutto il testo</h5>
+          <p><em>tu</em>, <em>il tuo</em>, <em>i tuoi</em>, <em>te</em>. Sciolto e naturale. Mischiare <em>Lei</em> con <em>tu</em> in un messaggio a un amico è un errore di registro evidente.</p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">✓</div>
+        <div class="tip-body">
+          <h5>Saluta con calore prima del tema</h5>
+          <p>Chiedi come sta l'altra persona prima di entrare nel vivo: <em>Come stai?</em>, <em>Tutto bene?</em>, <em>Come va la vita?</em></p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">✓</div>
+        <div class="tip-body">
+          <h5>Chiudi con affetto</h5>
+          <p><em>Un abbraccio!</em>, <em>Un bacione,</em>, <em>A presto!</em>, <em>Ti abbraccio forte</em> — mai <em>Cordiali saluti</em> né <em>Distinti saluti</em> a un amico: spezza completamente il registro.</p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">✓</div>
+        <div class="tip-body">
+          <h5>Lessico vivace, anche se informale</h5>
+          <p>A C1 ci si aspetta espressioni idiomatiche e immagini: <em>è una folgorazione</em>, <em>sono ere geologiche</em>, <em>una notizia bomba</em>, <em>una sciocchezza</em>. Non bastano semplici parole di base: l'informalità non equivale a povertà lessicale.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Non abusare dei diminutivi</h5>
+          <p>Uno o due <em>bacioni</em>, <em>bicchierino</em>, <em>cosina</em> stanno bene; un testo pieno di diminutivi suona infantile. Dosali con misura.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Mantieni una struttura chiara</h5>
+          <p>Anche se è informale, ordina: apertura → contenuto (uno o due paragrafi tematici) → chiusura. Una lettera senza struttura sembra disordinata e abbassa il voto.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 3: SAGGIO =============================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="essay" data-tab="essay">
+
+  <div class="intro">
+    <h3>Saggio Argomentativo · Ensayo Discursivo</h3>
+    <p>Il <strong>saggio argomentativo PLIDA C1</strong> può essere <strong>di opinione, pro e contro</strong> o discorsivo. Struttura classica di 4 paragrafi: <strong>introduzione</strong>, <strong>tesi (argomenti a favore)</strong>, <strong>antitesi (argomenti contro)</strong> e <strong>sintesi (conclusione)</strong>. Mantieni un registro accademico: evita contrazioni, ricorri al congiuntivo dopo verbi di opinione/dubbio e nelle subordinate concessive, utilizza connettivi formali variati.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">💡</span><strong>Tip PLIDA C1:</strong> gli esaminatori valorizzano <em>varietà lessicale</em>, <em>coesione testuale</em>, <em>uso del congiuntivo</em> e <em>strutture marcate</em> (frase scissa, dislocazioni). Un saggio C1 deve mostrare padronanza retorica e maturità argomentativa.
+  </div>
+
+  <!-- A. INTRODUZIONE -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-greet)">👋</div>
+      <div>
+        <div class="section-title">A. Formule di introduzione</div>
+        <div class="section-desc">Frases para abrir el saggio</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>Nell'epoca contemporanea,</strong> è ampiamente riconosciuto che…</div>
+      <div class="phrase"><strong>È un fatto notorio che</strong>…</div>
+      <div class="phrase"><strong>La questione se</strong>… si è imposta con crescente urgenza nel dibattito pubblico.</div>
+      <div class="phrase"><strong>Esiste un acceso dibattito</strong> intorno alla questione di…</div>
+      <div class="phrase"><strong>[Tema] è una problematica</strong> che continua a suscitare opinioni fortemente contrastanti.</div>
+      <div class="phrase"><strong>Va da sé che</strong> + ind. / <strong>È fuor di dubbio che</strong>…</div>
+      <div class="phrase"><strong>Negli ultimi decenni,</strong> [tema] è divenuto motivo di crescente preoccupazione.</div>
+      <div class="phrase"><strong>Una riflessione attenta sulla questione</strong> impone di considerare…</div>
+    </div>
+  </div>
+
+  <!-- B. CONNETTIVI -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">🔗</div>
+      <div>
+        <div class="section-title">B. Connettivi logici accademici</div>
+        <div class="section-desc">Conectores accademicos para argumentar y matizar</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-add)">
+        <div class="item-head"><span class="item-term">Aggiungere argomenti</span><span class="item-trans">añadir argumentos</span></div>
+        <ul class="item-list">
+          <li>Inoltre,</li>
+          <li>In aggiunta a ciò,</li>
+          <li>Peraltro,</li>
+          <li>Non solo… ma anche…</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-contrast)">
+        <div class="item-head"><span class="item-term">Opporre</span><span class="item-trans">contraste</span></div>
+        <ul class="item-list">
+          <li>Per converso,</li>
+          <li>Tuttavia,</li>
+          <li>D'altro canto,</li>
+          <li>Per contro, / Viceversa,</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">Concedere</span><span class="item-trans">concesión + matizar</span></div>
+        <ul class="item-list">
+          <li>Indubbiamente,… ma…</li>
+          <li>È innegabile che + cong.</li>
+          <li>Benché / Sebbene + cong.</li>
+          <li>Per quanto + cong.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">Illustrare</span><span class="item-trans">ejemplos</span></div>
+        <ul class="item-list">
+          <li>Ad esempio,</li>
+          <li>Si pensi al caso di…</li>
+          <li>A titolo esemplificativo,</li>
+          <li>Come dimostra…</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-time)">
+        <div class="item-head"><span class="item-term">Conseguenza</span><span class="item-trans">causa y efecto</span></div>
+        <ul class="item-list">
+          <li>Di conseguenza,</li>
+          <li>Pertanto,</li>
+          <li>Ciò comporta che…</li>
+          <li>Ne consegue che…</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-emph)">
+        <div class="item-head"><span class="item-term">Enfasi</span><span class="item-trans">énfasis</span></div>
+        <ul class="item-list">
+          <li>Invero,</li>
+          <li>In effetti,</li>
+          <li>Vale la pena sottolineare che…</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-summ)">
+        <div class="item-head"><span class="item-term">Riassumere</span><span class="item-trans">resumir</span></div>
+        <ul class="item-list">
+          <li>In sintesi,</li>
+          <li>In definitiva,</li>
+          <li>Tirando le somme,</li>
+          <li>Tutto sommato,</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- C. ESPRESSIONI CHIAVE -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">⭐</div>
+      <div>
+        <div class="section-title">C. Espressioni chiave apprezzate dagli esaminatori</div>
+        <div class="section-desc">Frases clave de hedging y argumentación C1</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>Si potrebbe affermare</strong> che…</div>
+      <div class="phrase"><strong>È indiscutibile che</strong> + cong. / <strong>È innegabile che</strong> + cong.</div>
+      <div class="phrase"><strong>I sostenitori di questa tesi</strong> avanzano l'argomento che…</div>
+      <div class="phrase"><strong>I detrattori, per converso,</strong> obiettano che…</div>
+      <div class="phrase"><strong>Una solida argomentazione</strong> milita a favore di / contro…</div>
+      <div class="phrase"><strong>I dati a disposizione mostrano</strong> che… / Numerosi studi rivelano che…</div>
+      <div class="phrase"><strong>Ciò solleva il più ampio interrogativo</strong> di…</div>
+      <div class="phrase"><strong>Sarebbe ingenuo ritenere</strong> che + cong.</div>
+      <div class="phrase"><strong>Non si può ignorare il fatto</strong> che…</div>
+      <div class="phrase"><strong>Tirando le somme,</strong> appare evidente che…</div>
+      <div class="phrase"><strong>È proprio in tale prospettiva</strong> che si inserisce…  <span class="hint">frase scissa, C1</span></div>
+    </div>
+  </div>
+
+  <!-- D. CONCLUSIONI -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-close)">✉️</div>
+      <div>
+        <div class="section-title">D. Formule di conclusione</div>
+        <div class="section-desc">Conclusiones y cierres</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>In conclusione, / Per concludere, / In definitiva,</strong></div>
+      <div class="phrase"><strong>Dopo aver considerato</strong> entrambe le facce della medaglia, ritengo che…</div>
+      <div class="phrase"><strong>Tutto sommato,</strong> i vantaggi prevalgono nettamente sugli svantaggi.</div>
+      <div class="phrase"><strong>Sebbene esistano argomenti validi</strong> da entrambe le parti, sostengo che…</div>
+      <div class="phrase"><strong>Appare evidente</strong> che siano necessarie ulteriori misure per affrontare adeguatamente la questione.</div>
+      <div class="phrase"><strong>Solo il tempo ci dirà</strong> se… <span class="hint">+ cong. eventualmente</span></div>
+      <div class="phrase"><strong>In ultima analisi,</strong> la decisione spetta a [ciascun cittadino / la società / le istituzioni].</div>
+    </div>
+  </div>
+
+  <!-- E. STRUCTURE BLUEPRINT -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">📐</div>
+      <div>
+        <div class="section-title">E. Struttura ideale · Estructura ideal</div>
+        <div class="section-desc">Esquema de 4 párrafos para cualquier saggio argomentativo C1</div>
+      </div>
+    </div>
+    <div class="blueprint">
+      <div class="step">
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <h5>Introduzione</h5>
+          <div class="step-meta">1 párrafo · ~50–70 palabras</div>
+          <p>Contestualizzazione + tema centrale + anuncio della tua postura o dell'approccio.</p>
+          <div class="step-phrases">
+            <span>Nell'epoca contemporanea, è ampiamente riconosciuto…</span>
+            <span>La questione se…</span>
+            <span>Esiste un acceso dibattito intorno a…</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <h5>Sviluppo 1 — Tesi / La tua opinione</h5>
+          <div class="step-meta">1 párrafo · ~80–100 palabras</div>
+          <p>Primer bloque de argumentos o tu opinión principal. Apoya cada idea con un ejemplo concreto.</p>
+          <div class="step-phrases">
+            <span>In primo luogo,</span>
+            <span>Inoltre,</span>
+            <span>Si pensi al caso di…</span>
+            <span>Ad esempio,</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <h5>Sviluppo 2 — Antitesi / Contraargumento</h5>
+          <div class="step-meta">1 párrafo · ~80–100 palabras</div>
+          <p>Segundo bloque o contraargumento. Si defiendes una postura, refútalo con datos o ejemplos.</p>
+          <div class="step-phrases">
+            <span>Per converso,</span>
+            <span>Tuttavia,</span>
+            <span>Indubbiamente,… ma…</span>
+            <span>I detrattori obiettano che…</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">4</span>
+        <div class="step-body">
+          <h5>Conclusione / Sintesi</h5>
+          <div class="step-meta">1 párrafo · ~50–70 palabras</div>
+          <p>Posicionate claramente, equilibra ambas partes y cierra con una idea fuerte o una reflexión final.</p>
+          <div class="step-phrases">
+            <span>Dopo aver considerato entrambe le facce, ritengo che…</span>
+            <span>In conclusione,</span>
+            <span>Tirando le somme,</span>
+            <span>In ultima analisi,</span>
+          </div>
+        </div>
+      </div>
+      <div class="blueprint-footer">
+        <span class="footer-ico">📏</span>
+        <span><strong>Total:</strong> 4 párrafos · 280–320 palabras (PLIDA C1) · registro accademico, congiuntivo nelle subordinate, connettivi variati</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- F. MODELLI -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-model)">📄</div>
+      <div>
+        <div class="section-title">F. Sei modelli completi</div>
+        <div class="section-desc">Seis modelos completos · 280–320 palabras · 4 párrafos · conectores coloreados</div>
+      </div>
+    </div>
+    <div class="papers">
+
+      <!-- MODEL 1: Volontariato -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 1 · Saggio pro e contro</h4>
+        <div class="paper-meta">È giusto rendere obbligatorio il volontariato per i giovani? · ~310 parole</div>
+        <div class="paper-body">
+          <p><span class="label">Introduzione</span><span class="k-open">Nell'epoca contemporanea, è ampiamente riconosciuto che</span> i giovani debbano svolgere un ruolo attivo all'interno della propria comunità. <span class="k-open">La questione se</span> il volontariato debba diventare un obbligo per loro, <span class="k-contrast">tuttavia,</span> <span class="k-open">si è imposta con crescente urgenza</span>, e solide argomentazioni militano da entrambe le parti.</p>
+          <p><span class="label">Tesi</span><span class="k-seq">In primo luogo,</span> i sostenitori del volontariato obbligatorio avanzano l'argomento che esso offra significativi benefici di natura personale. <span class="k-add">Inoltre,</span> il servizio civile permette ai ragazzi di sviluppare competenze chiave quali lo spirito di squadra, il senso di responsabilità e l'empatia. <span class="k-cause">Si pensi al caso</span> dei programmi scolastici ben documentati in Germania, dove gli studenti che vi partecipano riferiscono livelli più alti di autostima e un più solido impegno civico.</p>
+          <p><span class="label">Antitesi</span><span class="k-contrast">Per converso,</span> i detrattori obiettano che imporre il volontariato agli adolescenti ne snatura l'essenza stessa. Qualora la partecipazione non sia libera, l'esperienza rischia di essere vissuta come una punizione anziché come un contributo autentico. <span class="k-add">Peraltro,</span> molti giovani subiscono già una considerevole pressione accademica, <span class="k-cause">e</span> aggiungere ore obbligatorie potrebbe nuocere ai loro studi e alla loro salute mentale.</p>
+          <p><span class="label">Sintesi</span><span class="k-close">Dopo aver considerato entrambe le facce della medaglia, ritengo che</span> il volontariato vada fortemente incoraggiato, ma mai imposto. Le istituzioni scolastiche potrebbero offrire un riconoscimento ufficiale, crediti o ricompense per la partecipazione, lasciando agli studenti libertà di scelta. <span class="k-close">In ultima analisi,</span> un impegno autentico vale infinitamente più di un'obbedienza forzata.</p>
+        </div>
+      </article>
+
+      <!-- MODEL 2: Social media -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 2 · Saggio di opinione</h4>
+        <div class="paper-meta">«I social media hanno fatto più male che bene.» Si discuta. · ~315 parole</div>
+        <div class="paper-body">
+          <p><span class="label">Introduzione</span><span class="k-open">Negli ultimi decenni,</span> i social media <span class="k-open">sono divenuti motivo di crescente preoccupazione.</span> Piattaforme come Instagram, TikTok e X hanno trasformato il nostro modo di comunicare, ma <span class="k-key">si afferma sempre più spesso che</span> abbiano fatto più male che bene. <span class="k-close">Sebbene esistano argomenti validi da entrambe le parti,</span> sono incline a condividere tale prospettiva.</p>
+          <p><span class="label">Tesi / La mia opinione</span><span class="k-seq">In primo luogo,</span> i social media hanno avuto un impatto profondo sulla salute mentale, in particolare tra gli adolescenti. <span class="k-key">I dati a disposizione mostrano che</span> un uso eccessivo è correlato a disturbi d'ansia, bassa autostima e problemi del sonno. <span class="k-add">Inoltre,</span> la diffusione della disinformazione ha raggiunto proporzioni allarmanti: le fake news viaggiano spesso più rapidamente dei fatti verificati, condizionando elezioni e minando la fiducia nelle istituzioni.</p>
+          <p><span class="label">Antitesi + confutazione</span><span class="k-concess">È innegabile che</span> i social media presentino vantaggi indiscutibili. Permettono a famiglie separate da migliaia di chilometri di restare in contatto e offrono alle piccole imprese una piattaforma gratuita per raggiungere nuovi clienti. <span class="k-contrast">Tuttavia,</span> tali benefici non bilanciano i danni provocati da algoritmi appositamente progettati per tenere gli utenti incollati allo schermo per ore.</p>
+          <p><span class="label">Sintesi</span><span class="k-close">In conclusione,</span> sebbene i social media offrano innegabili opportunità di connessione, <span class="k-key">i dati a disposizione mostrano che</span> le loro conseguenze negative risultano largamente superiori. <span class="k-close">Appare evidente che siano necessarie ulteriori misure,</span> tanto da parte degli utenti quanto delle autorità di regolamentazione, affinché tali piattaforme tornino a servirci anziché danneggiarci.</p>
+        </div>
+      </article>
+
+      <!-- MODEL 3: Trasporti gratuiti -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 3 · Saggio pro e contro</h4>
+        <div class="paper-meta">È opportuno rendere gratuiti i trasporti pubblici nelle grandi città? · ~315 parole</div>
+        <div class="paper-body">
+          <p><span class="label">Introduzione</span><span class="k-open">Negli ultimi decenni,</span> i trasporti urbani <span class="k-open">sono divenuti motivo di crescente preoccupazione.</span> <span class="k-open">La questione se</span> il trasporto pubblico debba essere reso gratuito nelle grandi città <span class="k-open">si è imposta con crescente urgenza</span>, e solide argomentazioni militano da entrambe le parti.</p>
+          <p><span class="label">Tesi</span>I sostenitori della gratuità avanzano l'argomento che essa apporterebbe evidenti benefici di natura ambientale e sociale. <span class="k-add">Inoltre,</span> l'eliminazione dei biglietti incentiverebbe milioni di pendolari a lasciare l'auto a casa, riducendo l'inquinamento e la congestione del traffico. <span class="k-cause">Si pensi al caso</span> del Lussemburgo, dove la gratuità di autobus e treni ha comportato un calo apprezzabile dell'uso dell'auto privata. <span class="k-add">Peraltro,</span> tale misura andrebbe a vantaggio delle famiglie a basso reddito, che destinano oggi una quota significativa del proprio bilancio agli spostamenti.</p>
+          <p><span class="label">Antitesi</span><span class="k-contrast">Per converso,</span> i detrattori obiettano che una simile politica sarebbe estremamente onerosa e difficilmente sostenibile nel tempo. Il mancato introito dovrebbe essere compensato dalla fiscalità generale, scelta spesso impopolare. <span class="k-add">Peraltro,</span> i servizi gratuiti tendono a soffrire di sovraccarico e di un calo qualitativo, <span class="k-cause">come dimostrano</span> alcuni progetti pilota in Estonia.</p>
+          <p><span class="label">Sintesi</span><span class="k-close">Dopo aver considerato entrambe le facce della medaglia,</span> ritengo che la gratuità rappresenti un obiettivo auspicabile, ma soltanto qualora venga affiancata da un finanziamento duraturo e da un investimento reale nella capacità della rete. <span class="k-close">In ultima analisi,</span> la decisione spetta alle amministrazioni locali, chiamate a conciliare ambizione e realismo.</p>
+        </div>
+      </article>
+
+      <!-- MODEL 4: Studi all'estero -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 4 · Saggio di opinione</h4>
+        <div class="paper-meta">Studiare all'estero vale il suo elevato costo? Si discuta. · ~320 parole</div>
+        <div class="paper-body">
+          <p><span class="label">Introduzione</span><span class="k-open">Nell'epoca contemporanea, è ampiamente riconosciuto che</span> l'esperienza internazionale rivesta un valore considerevole. <span class="k-open">La questione se</span> studiare all'estero meriti il suo notevole costo, <span class="k-contrast">tuttavia,</span> <span class="k-open">si è imposta con crescente urgenza</span>, mentre le università aumentano ogni anno le proprie rette. <span class="k-key">A mio personale avviso,</span> i benefici prevalgono ampiamente sul sacrificio finanziario.</p>
+          <p><span class="label">Tesi / La mia opinione</span><span class="k-seq">In primo luogo,</span> studiare all'estero trasforma gli studenti sia sul piano accademico sia su quello personale. Vivere in un paese straniero costringe i giovani a diventare autonomi, adattabili e resilienti. <span class="k-add">Inoltre,</span> formarsi in un diverso sistema educativo li espone a metodi e prospettive nuove. <span class="k-key">Numerosi studi rivelano che</span> i laureati con un'esperienza all'estero percepiscono stipendi più elevati e hanno maggiori probabilità di essere assunti da aziende internazionali.</p>
+          <p><span class="label">Antitesi + confutazione</span><span class="k-concess">È innegabile che</span> l'onere finanziario sia considerevole e che non tutte le famiglie possano permetterselo. <span class="k-contrast">Tuttavia,</span> tale argomento trascura l'ampio ventaglio di borse di studio, programmi di scambio e prestiti agevolati che rendono accessibili queste esperienze. <span class="k-add">Inoltre,</span> il ritorno di lungo periodo — in termini di competenze, lingue e opportunità — supera di gran lunga lo sforzo iniziale.</p>
+          <p><span class="label">Sintesi</span><span class="k-close">Tirando le somme,</span> appare evidente che studiare all'estero costituisca uno degli investimenti più preziosi che un giovane possa intraprendere. <span class="k-close">Appare evidente che siano necessarie ulteriori misure di sostegno</span> affinché un numero crescente di studenti possa accedere a questa opportunità capace di cambiare la vita.</p>
+        </div>
+      </article>
+
+      <!-- MODEL 5: Plastica -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 5 · Saggio pro e contro</h4>
+        <div class="paper-meta">I governi dovrebbero vietare totalmente la plastica monouso? · ~290 parole</div>
+        <div class="paper-body">
+          <p><span class="label">Introduzione</span><span class="k-open">Negli ultimi decenni,</span> l'inquinamento da plastica <span class="k-open">è divenuto motivo di crescente preoccupazione.</span> <span class="k-open">La questione se</span> i governi debbano imporre un divieto totale della plastica monouso <span class="k-open">si è imposta con crescente urgenza</span>, e solide argomentazioni militano da entrambe le parti.</p>
+          <p><span class="label">Tesi</span>I sostenitori di un divieto integrale avanzano l'argomento che i benefici ambientali sarebbero imponenti. <span class="k-add">Inoltre,</span> la plastica monouso impiega secoli a decomporsi e oggi si ritrova negli oceani, nei suoli e persino nell'acqua potabile. <span class="k-cause">Si pensi al caso</span> del Kenya, dove norme rigorose contro i sacchetti di plastica hanno comportato un miglioramento apprezzabile della pulizia urbana. <span class="k-add">Peraltro,</span> un divieto costringerebbe le aziende a investire in alternative biodegradabili, accelerando così l'innovazione.</p>
+          <p><span class="label">Antitesi</span><span class="k-contrast">Per converso,</span> i detrattori obiettano che un divieto immediato risulterebbe poco realistico ed economicamente nefasto. Numerosi settori — dalla sanità all'imballaggio alimentare — dipendono oggi dalla plastica per ragioni di igiene e di sicurezza. <span class="k-add">Inoltre,</span> le alternative valide restano costose, il che penalizzerebbe soprattutto i consumatori a basso reddito e le piccole imprese.</p>
+          <p><span class="label">Sintesi</span><span class="k-close">Dopo aver considerato entrambe le facce,</span> ritengo che un divieto progressivo, abbinato a investimenti pubblici in alternative, rappresenti la via più realistica da percorrere. <span class="k-close">In ultima analisi,</span> l'urgenza della crisi ambientale non ci lascia altra scelta se non quella di agire con determinazione.</p>
+        </div>
+      </article>
+
+      <!-- MODEL 6: Smart working -->
+      <article class="paper">
+        <h4 class="paper-title">Modello 6 · Saggio di opinione</h4>
+        <div class="paper-meta">«Lo smart working è meglio del lavoro in ufficio.» Si discuta. · ~315 parole</div>
+        <div class="paper-body">
+          <p><span class="label">Introduzione</span><span class="k-open">Negli ultimi decenni,</span> il nostro modo di lavorare è stato profondamente trasformato dalle tecnologie digitali. <span class="k-open">La questione se</span> lo smart working risulti preferibile al tradizionale lavoro in ufficio <span class="k-open">si è imposta con crescente urgenza</span>, soprattutto a partire dalla pandemia. <span class="k-close">Sebbene esistano argomenti validi da entrambe le parti,</span> <span class="k-key">sono incline a ritenere</span> che il lavoro a distanza offra più vantaggi che svantaggi.</p>
+          <p><span class="label">Tesi / La mia opinione</span><span class="k-seq">In primo luogo,</span> lo smart working concede ai dipendenti un grado di flessibilità e autonomia che nessun ambiente d'ufficio è in grado di eguagliare. <span class="k-key">Numerosi studi rivelano che</span> i lavoratori a distanza tendono a essere più produttivi e a dichiarare livelli più alti di soddisfazione professionale. <span class="k-add">Inoltre,</span> eliminare il pendolarismo quotidiano consente di risparmiare tempo e denaro, riducendo al contempo l'inquinamento causato dal traffico nelle grandi città.</p>
+          <p><span class="label">Antitesi + confutazione</span><span class="k-concess">È innegabile che</span> lo smart working possa sfumare il confine tra vita professionale e vita personale, e che alcuni dipendenti rimpiangano le interazioni spontanee con i colleghi. <span class="k-contrast">Tuttavia,</span> tali criticità possono essere mitigate con orari ben definiti e riunioni di squadra regolari online. <span class="k-add">Inoltre,</span> i modelli ibridi consentono di godere del meglio di entrambi i mondi.</p>
+          <p><span class="label">Sintesi</span><span class="k-close">In conclusione,</span> sebbene l'ufficio conservi i suoi meriti, <span class="k-key">i dati a disposizione mostrano che</span> lo smart working offre maggiore flessibilità, produttività e qualità della vita. <span class="k-close">Appare evidente che siano necessari ulteriori investimenti</span> nella cultura del lavoro a distanza, qualora le aziende intendano attrarre e trattenere i talenti migliori.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- G. CONSIGLI -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-tip)">💡</div>
+      <div>
+        <div class="section-title">G. Consigli &amp; trappole frequenti</div>
+        <div class="section-desc">Consejos prácticos y errores frecuentes</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip">
+        <div class="tip-icon">✓</div>
+        <div class="tip-body">
+          <h5>Varia i connettivi</h5>
+          <p>Alterna <em>Tuttavia</em> con <em>Nondimeno</em>, <em>Ciononostante</em>, <em>Per converso</em>, <em>D'altro canto</em>. Non ripetere il medesimo due volte di fila: l'esaminatore valorizza la varietà lessicale più della correttezza di un connettivo usato in loop.</p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">✓</div>
+        <div class="tip-body">
+          <h5>Padroneggia il congiuntivo</h5>
+          <p>Obbligatorio dopo <em>benché, sebbene, nonostante, qualora, purché, affinché, prima che, è innegabile che, è probabile che, sembra che</em>. A C1 il congiuntivo non è una raffinatezza: è il banco di prova.</p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">✓</div>
+        <div class="tip-body">
+          <h5>Usa la frase scissa con misura</h5>
+          <p>Una o due strutture come <em>«È proprio in tale prospettiva che…»</em>, <em>«È la mancanza di regole che ha generato…»</em> mostrano padronanza retorica C1. Più di due risultano artificiose.</p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">✓</div>
+        <div class="tip-body">
+          <h5>Dai esempi concreti</h5>
+          <p>Un <em>«Si pensi al caso del Lussemburgo, dove…»</em> corredato da un dato reale alza il voto più di tre affermazioni generiche. Concretezza: paesi, dati, studi o casi specifici.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Evita il lessico colloquiale</h5>
+          <p>In un saggio scrivi <em>di conseguenza</em>, <em>tuttavia</em>, <em>inoltre</em>, non <em>quindi</em>, <em>però</em>, <em>e anche</em>. Il registro informale abbassa immediatamente il voto a C1.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Non abusare di "secondo me"</h5>
+          <p>Sostituiscilo con <em>a mio avviso</em>, <em>a mio parere</em>, <em>dal mio punto di vista</em>, <em>ritengo che + cong.</em>, <em>sono dell'avviso che + cong.</em>, <em>si potrebbe sostenere che</em>. Dimostra registro accademico e varietà.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>La conclusione non è un riassunto</h5>
+          <p>Prendi posizione, chiudi con un'idea forte o uno spunto di riflessione. Non ripetere alla lettera ciò che hai già detto: aggiungi una valutazione o uno sguardo al futuro.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("theme",t);}catch(e){}}
+function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme")||"light";applyTheme(cur==="dark"?"light":"dark");}
+(function initTheme(){let saved=null;try{saved=localStorage.getItem("theme");}catch(e){}if(saved==="dark"||saved==="light"){applyTheme(saved);return;}const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;applyTheme(prefersDark?"dark":"light");})();
+
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function toggleSection(header){
+  header.parentElement.classList.toggle('collapsed');
+}
+function getActiveSections(){return document.querySelectorAll('.tab-panel.active .section');}
+function getActivePapers(){return document.querySelectorAll('.tab-panel.active .paper');}
+function expandAll(){
+  getActiveSections().forEach(s => s.classList.remove('collapsed'));
+  getActivePapers().forEach(p => p.classList.remove('collapsed'));
+}
+function collapseAll(){
+  getActiveSections().forEach(s => s.classList.add('collapsed'));
+  getActivePapers().forEach(p => p.classList.add('collapsed'));
+}
+
+document.querySelectorAll('.paper').forEach(paper => {
+  const title = paper.querySelector('.paper-title');
+  const meta = paper.querySelector('.paper-meta');
+  if(!title || !meta) return;
+  const header = document.createElement('div');
+  header.className = 'paper-header';
+  const wrap = document.createElement('div');
+  wrap.appendChild(title);
+  wrap.appendChild(meta);
+  const toggle = document.createElement('span');
+  toggle.className = 'paper-toggle';
+  toggle.textContent = '▾';
+  header.appendChild(wrap);
+  header.appendChild(toggle);
+  header.addEventListener('click', () => paper.classList.toggle('collapsed'));
+  paper.insertBefore(header, paper.firstChild);
+  paper.classList.add('collapsed');
+});
+
+document.querySelectorAll('.section').forEach(sec => {
+  const icon = sec.querySelector('.section-icon');
+  if (icon) {
+    const m = (icon.getAttribute('style') || '').match(/var\(--c-([a-z]+)\)/);
+    if (m) {
+      sec.style.setProperty('--section-c', `var(--c-${m[1]})`);
+      sec.style.setProperty('--section-c-bg', `var(--c-${m[1]}-bg)`);
+    }
+  }
+  const container = sec.querySelector('.grid, .stack, .papers, .tips-list, .blueprint');
+  if(!container) return;
+  const count = container.matches('.blueprint')
+    ? container.querySelectorAll('.step').length
+    : container.children.length;
+  const badge = document.createElement('span');
+  badge.className = 'section-count';
+  badge.textContent = count;
+  sec.querySelector('.section-header').appendChild(badge);
+});
+
+const FS_KEY = 'ps_it_font_size';
+function updateFontSize(pct){
+  const scale = pct / 100;
+  document.documentElement.style.fontSize = (16 * scale) + 'px';
+  document.getElementById('fs-value').textContent = pct + '%';
+  localStorage.setItem(FS_KEY, pct);
+}
+(function initFontSize(){
+  const saved = localStorage.getItem(FS_KEY);
+  if(saved){
+    document.getElementById('fs-slider').value = saved;
+    updateFontSize(saved);
+  }
+})();
+</script>
+
+</body>
+</html>
