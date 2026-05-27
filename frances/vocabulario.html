@@ -1892,6 +1892,51 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 }
 .btn-srs-save-exit:hover { background: #d6f5d6; }
 
+.btn-srs-fs {
+  border: 1px solid var(--border); border-radius: 20px;
+  padding: 6px 12px; background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem; font-weight: 500;
+  cursor: pointer; color: var(--text2);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.btn-srs-fs:hover { background: var(--bg); }
+
+/* SRS fullscreen — oculta topbar y barra de progreso, agranda tarjeta */
+.srs-fs-bar {
+  display: none;
+  position: absolute;
+  top: 12px; right: 16px;
+  z-index: 20;
+  gap: 8px;
+}
+#srsOverlay.fullscreen .srs-fs-bar { display: flex; }
+#srsOverlay.fullscreen .srs-topbar,
+#srsOverlay.fullscreen .srs-progress-bar { display: none; }
+#srsOverlay.fullscreen .srs-stage {
+  padding: 56px 24px 32px;
+  justify-content: center;
+}
+#srsOverlay.fullscreen .srs-card {
+  width: min(720px, 94vw);
+  padding: 32px 36px 28px;
+  margin-bottom: 22px;
+}
+#srsOverlay.fullscreen .srs-word {
+  font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+  line-height: 1.08;
+}
+#srsOverlay.fullscreen .srs-translation {
+  font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+}
+#srsOverlay.fullscreen .srs-ex-fr { font-size: 1rem; }
+#srsOverlay.fullscreen .srs-ex-es { font-size: 0.92rem; }
+#srsOverlay.fullscreen .srs-rating-row { width: min(720px, 94vw); gap: 12px; }
+#srsOverlay.fullscreen .btn-srs-rate { min-height: 70px; }
+#srsOverlay.fullscreen .btn-srs-rate .srs-rate-icon { font-size: 1.25rem; }
+#srsOverlay.fullscreen .btn-srs-rate .srs-rate-label { font-size: 0.94rem; }
+
 /* Flash de color al calificar */
 .srs-card { transition: transform 0.15s ease, opacity 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease; }
 .srs-card.flash-no  { background: #fbe1e6; border-color: #c42d4a; box-shadow: 0 0 0 3px rgba(196,45,74,0.18), var(--shadow); }
@@ -1946,12 +1991,14 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 .srs-chip-warn  { background: #fdf6e3; color: #6b4a00; border-color: #c9a64d; }
 
 .srs-word {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.6rem, 5.5vw, 2.2rem);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-optical-sizing: auto;
+  font-size: clamp(1.7rem, 5.5vw, 2.3rem);
   font-weight: 700;
+  letter-spacing: -0.035em;
   color: var(--text);
   text-align: center;
-  line-height: 1.18;
+  line-height: 1.08;
   margin-bottom: 8px;
   word-break: break-word;
 }
@@ -1961,36 +2008,53 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 }
 
 .srs-reveal-btn {
-  display: inline-flex; align-items: center; gap: 10px;
-  margin: 18px auto 0;
-  background: var(--accent); color: #fff; border: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  margin: 14px auto 0;
+  background: transparent;
+  color: #2d4ac4;
+  border: 1px solid #b8d1f5;
   border-radius: 100px;
-  padding: 12px 28px;
+  padding: 4px 14px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.92rem; font-weight: 700;
+  font-size: 0.74rem; font-weight: 600;
+  letter-spacing: 0.02em;
   cursor: pointer;
-  box-shadow: 0 2px 10px rgba(139,105,20,0.32);
-  transition: all 0.15s;
-  min-height: 48px;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
-.srs-reveal-btn:hover { filter: brightness(1.06); transform: translateY(-1px); }
+.srs-reveal-btn:hover { background: #eaf4ff; border-color: #8fb6ee; }
 /* Wrapper para centrar el botón de revelar (que es inline-flex) */
 .srs-reveal-wrap { text-align: center; }
 
 .srs-back {
-  display: none; margin-top: 18px;
-  border-top: 1px dashed var(--border);
-  padding-top: 16px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 1px dashed transparent;
+  transition: max-height 0.38s cubic-bezier(.2,.7,.2,1),
+              opacity 0.28s ease 0.06s,
+              margin-top 0.28s ease,
+              padding-top 0.28s ease,
+              border-top-color 0.28s ease;
 }
-.srs-card.revealed .srs-back { display: block; }
+.srs-card.revealed .srs-back {
+  max-height: 900px;
+  opacity: 1;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top-color: var(--border);
+}
 .srs-translation {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.25rem, 4vw, 1.55rem);
-  font-weight: 600;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-optical-sizing: auto;
+  font-size: clamp(1.3rem, 4vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
   color: var(--text);
   text-align: center;
   margin-bottom: 12px;
-  line-height: 1.22;
+  line-height: 1.1;
 }
 .srs-ex-fr {
   font-style: italic;
@@ -2030,6 +2094,18 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   gap: 10px;
   width: min(540px, 96vw);
   margin: 0 auto;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: max-height 0.38s cubic-bezier(.2,.7,.2,1) 0.05s,
+              opacity 0.28s ease 0.12s,
+              transform 0.28s ease 0.12s;
+}
+.srs-rating-row.show {
+  max-height: 200px;
+  opacity: 1;
+  transform: translateY(0);
 }
 .btn-srs-rate {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -2634,7 +2710,12 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
     <div class="srs-tema-chip" id="srsTemaChip">Falsos amigos</div>
     <div class="srs-spacer"></div>
     <button class="btn-srs-save-exit" id="btnSrsSaveExit" type="button" title="Descargar el archivo HTML con todo el progreso acumulado">📥 Exportar HTML</button>
+    <button class="btn-srs-fs" id="btnSrsFullscreen" type="button" title="Pantalla completa (F)">⛶ Pantalla completa</button>
     <button class="btn-srs-close" id="btnSrsExit" type="button" title="Cerrar la sesión. El progreso se mantiene; podrás exportar más tarde">✕ Salir</button>
+  </div>
+  <div class="srs-fs-bar">
+    <button class="btn-srs-fs" id="btnSrsUndoFs" type="button" title="Volver a la tarjeta anterior (Z)" disabled="" style="background:var(--card);border-color:var(--border);">↶ Volver</button>
+    <button class="btn-srs-fs" id="btnSrsExitFullscreen" type="button" title="Mostrar menú" style="background:var(--card);border-color:var(--border);">⇗ Mostrar menú</button>
   </div>
   <div class="srs-progress-bar"><div class="srs-progress-fill" id="srsProgressFill" style="width: 0%;"></div></div>
   <div class="srs-stage" id="srsStage">
@@ -42655,8 +42736,11 @@ function srsStartSession() {
 }
 
 function srsUpdateUndoBtn() {
+  var disabled = srsSession.results.length === 0 || srsSession.advancing;
   var btn = document.getElementById("btnSrsUndo");
-  if (btn) btn.disabled = srsSession.results.length === 0 || srsSession.advancing;
+  if (btn) btn.disabled = disabled;
+  var btnFs = document.getElementById("btnSrsUndoFs");
+  if (btnFs) btnFs.disabled = disabled;
 }
 
 function srsUndo() {
@@ -42759,7 +42843,7 @@ function srsRenderCurrentCard() {
   cardEl.style.transform = "";
   cardEl.style.opacity = "";
   document.getElementById("btnSrsReveal").style.display = "";
-  document.getElementById("srsRatingRow").style.display = "none";
+  document.getElementById("srsRatingRow").classList.remove("show");
   srsSession.revealed = false;
 }
 
@@ -42794,7 +42878,7 @@ function srsReveal() {
 
   document.getElementById("srsCard").classList.add("revealed");
   document.getElementById("btnSrsReveal").style.display = "none";
-  document.getElementById("srsRatingRow").style.display = "";
+  document.getElementById("srsRatingRow").classList.add("show");
   srsSession.revealed = true;
 }
 
@@ -42995,6 +43079,14 @@ function srsCloseStatsModal() {
 function srsInitSwipe() {
   var card = document.getElementById("srsCard");
   if (!card) return;
+
+  // Tap-anywhere-on-card revela
+  card.addEventListener("click", function(e) {
+    if (srsSession.revealed) return;
+    if (e.target.closest("button")) return; // el pill/btnSrsReveal ya dispara srsReveal
+    srsReveal();
+  });
+
   var startX = 0, startY = 0, curDx = 0, curDy = 0, dragging = false;
   var THRESHOLD = 80;
 
@@ -43116,7 +43208,25 @@ function initSRSAddon() {
   document.getElementById("btnSrsExit").addEventListener("click", srsExitSession);
   document.getElementById("btnSrsSaveExit").addEventListener("click", srsExitAndSave);
   document.getElementById("btnSrsUndo").addEventListener("click", srsUndo);
+  var btnUndoFs = document.getElementById("btnSrsUndoFs");
+  if (btnUndoFs) btnUndoFs.addEventListener("click", srsUndo);
   document.getElementById("btnSrsReveal").addEventListener("click", srsReveal);
+
+  function toggleSrsFullscreen() {
+    var ov = document.getElementById("srsOverlay");
+    ov.classList.toggle("fullscreen");
+    var isFs = ov.classList.contains("fullscreen");
+    document.getElementById("btnSrsFullscreen").textContent = isFs ? "⛶ Menú" : "⛶ Pantalla completa";
+    try { localStorage.setItem("srsFullscreen", isFs ? "1" : "0"); } catch (e) {}
+  }
+  document.getElementById("btnSrsFullscreen").addEventListener("click", toggleSrsFullscreen);
+  document.getElementById("btnSrsExitFullscreen").addEventListener("click", toggleSrsFullscreen);
+  try {
+    if (localStorage.getItem("srsFullscreen") === "1") {
+      document.getElementById("srsOverlay").classList.add("fullscreen");
+      document.getElementById("btnSrsFullscreen").textContent = "⛶ Menú";
+    }
+  } catch (e) {}
   var rateBtns = document.querySelectorAll(".btn-srs-rate");
   for (var i = 0; i < rateBtns.length; i++) {
     rateBtns[i].addEventListener("click", function() {
@@ -43170,6 +43280,7 @@ function initSRSAddon() {
     if (ae && (ae.tagName === "INPUT" || ae.tagName === "TEXTAREA" || ae.isContentEditable)) return;
     var k = e.key;
     if (k === "z" || k === "Z") { e.preventDefault(); srsUndo(); return; }
+    if (k === "f" || k === "F") { e.preventDefault(); document.getElementById("btnSrsFullscreen").click(); return; }
     if (!srsSession.revealed) {
       if (k === " " || k === "Enter") {
         e.preventDefault();
@@ -43214,10 +43325,14 @@ function bootAddons() {
         return;
       }
     }
-    // 0b) Overlay sesión SRS
+    // 0b) Overlay sesión SRS — primero salir de fullscreen si está activo
     var srsOv = document.getElementById("srsOverlay");
     if (srsOv && srsOv.classList.contains("active")) {
-      srsExitSession();
+      if (srsOv.classList.contains("fullscreen")) {
+        document.getElementById("btnSrsFullscreen").click();
+      } else {
+        srsExitSession();
+      }
       e.preventDefault();
       return;
     }

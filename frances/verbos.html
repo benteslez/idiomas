@@ -440,6 +440,25 @@ mark{background:rgba(255,200,0,.4);color:inherit;border-radius:2px;padding:0 1px
 .srs-pb{height:3px;background:var(--border);width:100%;flex-shrink:0}
 .srs-pb-fill{height:100%;background:var(--text);transition:width .35s}
 .srs-arena{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:24px 16px;overflow-y:auto;width:100%;max-width:640px;margin:0 auto}
+/* SRS fullscreen — oculta topbar y barra, agranda tarjeta */
+.srs-fs-bar{display:none;position:absolute;top:12px;right:14px;z-index:20;gap:8px}
+.srs-overlay.fullscreen .srs-fs-bar{display:flex}
+.srs-overlay.fullscreen .srs-topbar,
+.srs-overlay.fullscreen .srs-pb{display:none}
+.srs-overlay.fullscreen .srs-arena{max-width:760px;padding:52px 24px 32px;justify-content:center}
+.srs-overlay.fullscreen .srs-card{padding:32px 36px 28px;gap:16px}
+.srs-overlay.fullscreen .srs-front{padding:24px 0}
+.srs-overlay.fullscreen .srs-front-trans{font-size:clamp(28px,3.8vw,40px);line-height:1.08}
+.srs-overlay.fullscreen .srs-front-sub{font-size:14px;margin-top:12px}
+.srs-overlay.fullscreen .srs-rev-verb{font-size:clamp(28px,3.6vw,38px)}
+.srs-overlay.fullscreen .srs-rev-trans{font-size:15px}
+.srs-overlay.fullscreen .srs-rev-table{font-size:16px;padding:16px 20px;gap:6px 16px}
+.srs-overlay.fullscreen .srs-rev-row-pron{font-size:13px}
+.srs-overlay.fullscreen .srs-rev-row-form{font-size:17px}
+.srs-overlay.fullscreen .srs-rate-row{gap:12px}
+.srs-overlay.fullscreen .srs-rate-btn{min-height:68px}
+.srs-overlay.fullscreen .srs-rate-icon{font-size:20px}
+.srs-overlay.fullscreen .srs-rate-label{font-size:14px}
 .srs-card{width:100%;background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:28px 24px;display:flex;flex-direction:column;gap:14px;box-shadow:0 4px 20px rgba(0,0,0,.04);transition:background .25s,border-color .25s,box-shadow .25s;position:relative}
 .srs-card.flash-good{background:#ecfdf5;border-color:#10b981;box-shadow:0 0 0 4px rgba(16,185,129,.18)}
 .srs-card.flash-mid{background:#fff7ed;border-color:#f59e0b;box-shadow:0 0 0 4px rgba(245,158,11,.18)}
@@ -451,7 +470,7 @@ mark{background:rgba(255,200,0,.4);color:inherit;border-radius:2px;padding:0 1px
 .srs-pill.new{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
 .srs-pill.due{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
 .srs-front{text-align:center;padding:20px 0}
-.srs-front-trans{font-family:'Inter',system-ui,sans-serif;font-size:clamp(22px,4vw,32px);font-weight:600;color:var(--text);letter-spacing:-.02em;line-height:1.2}
+.srs-front-trans{font-family:'Inter',system-ui,sans-serif;font-optical-sizing:auto;font-size:clamp(24px,4.4vw,34px);font-weight:700;color:var(--text);letter-spacing:-.035em;line-height:1.05}
 .srs-front-sub{font-size:13px;color:var(--text3);margin-top:8px;letter-spacing:.5px;text-transform:uppercase;font-weight:600}
 .srs-tap-hint{text-align:center;font-size:12px;color:var(--text3);margin-top:12px}
 .srs-reveal{display:flex;flex-direction:column;gap:14px}
@@ -462,8 +481,11 @@ mark{background:rgba(255,200,0,.4);color:inherit;border-radius:2px;padding:0 1px
 .srs-rev-row-form{font-size:15px;color:var(--text);font-weight:500}
 .srs-rev-row-form.dash{color:var(--text3);font-weight:400}
 .srs-rev-warn{background:#fef3c7;border-left:3px solid #f59e0b;padding:8px 12px;border-radius:6px;color:#78350f;font-size:13px;line-height:1.45}
-.srs-reveal-btn{margin-top:14px;padding:14px;border:none;border-radius:12px;background:var(--text);color:#fff;font-family:'Inter',system-ui,sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:filter .15s}
-.srs-reveal-btn:hover{filter:brightness(1.15)}
+.srs-reveal-btn{margin:14px auto 0;padding:4px 14px;border:1px solid #93c5fd;border-radius:100px;background:transparent;color:#1d4ed8;font-family:'Inter',system-ui,sans-serif;font-size:11px;font-weight:600;letter-spacing:.02em;cursor:pointer;transition:background .15s,border-color .15s;align-self:center;display:inline-flex;align-items:center;gap:6px}
+.srs-reveal-btn:hover{background:#eff6ff;border-color:#60a5fa}
+@keyframes srsDropIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.srs-card .srs-reveal{animation:srsDropIn .32s cubic-bezier(.2,.7,.2,1) both}
+.srs-card .srs-rate-row{animation:srsDropIn .32s cubic-bezier(.2,.7,.2,1) .07s both}
 .srs-rate-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
 .srs-rate-btn{min-height:60px;border:1.5px solid;border-radius:12px;background:var(--surface);font-family:'Inter',system-ui,sans-serif;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:8px;transition:all .15s;font-weight:600}
 .srs-rate-btn:hover:not(:disabled){transform:translateY(-1px)}
@@ -3853,7 +3875,12 @@ document.getElementById('importVerbsConfirm').addEventListener('click', function
     <span class="srs-chip" id="srs-chip-bloc" hidden><span class="dot"></span><span class="srs-chip-name"></span></span>
     <span class="srs-topbar-spacer"></span>
     <button class="srs-tb-btn" id="srs-export" title="Exportar HTML">📥 Exportar</button>
+    <button class="srs-tb-btn" id="srs-fs" title="Pantalla completa (F)">⛶ Pantalla completa</button>
     <button class="srs-tb-btn" id="srs-exit" title="Salir (Esc)">✕ Salir</button>
+  </div>
+  <div class="srs-fs-bar">
+    <button class="srs-tb-btn" id="srs-undo-fs" title="Volver / deshacer (Z)" disabled style="background:var(--surface)">↶ Volver</button>
+    <button class="srs-tb-btn" id="srs-fs-exit" title="Mostrar menú" style="background:var(--surface)">⇗ Mostrar menú</button>
   </div>
   <div class="srs-pb"><div class="srs-pb-fill" id="srs-pb-fill" style="width:0%"></div></div>
   <div class="srs-arena" id="srs-arena"></div>
@@ -4060,7 +4087,10 @@ function srsRenderCard(){
   chip.hidden = false;
   chip.querySelector('.dot').style.background = bl.c;
   chip.querySelector('.srs-chip-name').textContent = v.b;
-  undoBtn.disabled = s.undoStack.length === 0 || s.advancing;
+  var undoDisabled = s.undoStack.length === 0 || s.advancing;
+  undoBtn.disabled = undoDisabled;
+  var undoFs = document.getElementById('srs-undo-fs');
+  if(undoFs) undoFs.disabled = undoDisabled;
 
   var tensePill = '<span class="srs-pill tense" style="--tc:' + (SRS_TC[tKey]||'#999') + '">' + tLabel + '</span>';
   var newPill = isNewCard(card) ? '<span class="srs-pill new">🆕 Nueva</span>' : '';
@@ -4481,8 +4511,15 @@ document.addEventListener('keydown', function(e){
   if(/^(INPUT|TEXTAREA)$/.test(e.target.tagName) || e.target.isContentEditable) return;
   var s = srsSession;
   if(!s) return;
-  if(e.key === 'Escape'){ e.preventDefault(); srsExitOverlay(); return; }
+  if(e.key === 'Escape'){
+    e.preventDefault();
+    var ov = document.getElementById('srsOverlay');
+    if(ov.classList.contains('fullscreen')){ toggleSrsFullscreen(); }
+    else { srsExitOverlay(); }
+    return;
+  }
   if(e.key === 'z' || e.key === 'Z'){ e.preventDefault(); srsUndo(); return; }
+  if(e.key === 'f' || e.key === 'F'){ e.preventDefault(); toggleSrsFullscreen(); return; }
   if(!s.revealed){
     if(e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); s.revealed = true; srsRenderCard(); }
     return;
@@ -4506,7 +4543,25 @@ document.getElementById('srs-end-back').addEventListener('click', srsCloseModals
 document.getElementById('srs-end-export').addEventListener('click', function(){ srsCloseModals(); exportHTML(); });
 document.getElementById('srs-exit').addEventListener('click', srsExitOverlay);
 document.getElementById('srs-undo').addEventListener('click', srsUndo);
+var srsUndoFsBtn = document.getElementById('srs-undo-fs');
+if(srsUndoFsBtn) srsUndoFsBtn.addEventListener('click', srsUndo);
 document.getElementById('srs-export').addEventListener('click', function(){ srsExitOverlay(); exportHTML(); });
+
+function toggleSrsFullscreen(){
+  var ov = document.getElementById('srsOverlay');
+  ov.classList.toggle('fullscreen');
+  var isFs = ov.classList.contains('fullscreen');
+  document.getElementById('srs-fs').textContent = isFs ? '⛶ Menú' : '⛶ Pantalla completa';
+  try { localStorage.setItem('verbosSrsFullscreen', isFs ? '1' : '0'); } catch(e){}
+}
+document.getElementById('srs-fs').addEventListener('click', toggleSrsFullscreen);
+document.getElementById('srs-fs-exit').addEventListener('click', toggleSrsFullscreen);
+try {
+  if(localStorage.getItem('verbosSrsFullscreen') === '1'){
+    document.getElementById('srsOverlay').classList.add('fullscreen');
+    document.getElementById('srs-fs').textContent = '⛶ Menú';
+  }
+} catch(e){}
 document.getElementById('srs-banner').addEventListener('click', exportHTML);
 
 ['srsStartModal','srsEndModal','srsStatsModal'].forEach(function(id){
