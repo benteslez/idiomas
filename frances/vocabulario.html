@@ -2704,7 +2704,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 <!-- ═══ OVERLAY SESIÓN SRS ═══ -->
 <div id="srsOverlay" class="">
   <div class="srs-topbar">
-    <button class="btn-srs-undo" id="btnSrsUndo" type="button" title="Volver a la tarjeta anterior (Z)" disabled="">↶ Volver</button>
+    <button class="btn-srs-undo" id="btnSrsUndo" type="button" title="Volver a la tarjeta anterior (Z o -)" disabled="">↶ Volver</button>
     <div class="srs-title">🧠 Repaso SRS</div>
     <div class="srs-counter">Tarjeta <strong id="srsCounterCur">1</strong> de <strong id="srsCounterTot">43</strong></div>
     <div class="srs-tema-chip" id="srsTemaChip">Falsos amigos</div>
@@ -2714,7 +2714,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
     <button class="btn-srs-close" id="btnSrsExit" type="button" title="Cerrar la sesión. El progreso se mantiene; podrás exportar más tarde">✕ Salir</button>
   </div>
   <div class="srs-fs-bar">
-    <button class="btn-srs-fs" id="btnSrsUndoFs" type="button" title="Volver a la tarjeta anterior (Z)" disabled="" style="background:var(--card);border-color:var(--border);">↶ Volver</button>
+    <button class="btn-srs-fs" id="btnSrsUndoFs" type="button" title="Volver a la tarjeta anterior (Z o -)" disabled="" style="background:var(--card);border-color:var(--border);">↶ Volver</button>
     <button class="btn-srs-fs" id="btnSrsExitFullscreen" type="button" title="Mostrar menú" style="background:var(--card);border-color:var(--border);">⇗ Mostrar menú</button>
   </div>
   <div class="srs-progress-bar"><div class="srs-progress-fill" id="srsProgressFill" style="width: 0%;"></div></div>
@@ -43279,7 +43279,7 @@ function initSRSAddon() {
     var ae = document.activeElement;
     if (ae && (ae.tagName === "INPUT" || ae.tagName === "TEXTAREA" || ae.isContentEditable)) return;
     var k = e.key;
-    if (k === "z" || k === "Z") { e.preventDefault(); srsUndo(); return; }
+    if (k === "z" || k === "Z" || k === "-") { e.preventDefault(); srsUndo(); return; }
     if (k === "f" || k === "F") { e.preventDefault(); document.getElementById("btnSrsFullscreen").click(); return; }
     if (!srsSession.revealed) {
       if (k === " " || k === "Enter") {
