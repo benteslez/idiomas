@@ -136,6 +136,636 @@
 .def-box em {
   color: #ffffff;
 }
+
+/* ══════════════ EXERCICES PANEL ══════════════ */
+
+/* ── Selection screen: 10 exercise cards */
+.ex-intro {
+  margin-bottom: 18px;
+  text-align: center;
+}
+.ex-intro h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.5rem; font-weight: 600;
+  letter-spacing: -0.01em; color: var(--text);
+  margin-bottom: 6px;
+}
+.ex-intro p {
+  color: var(--text2); font-size: 0.9em;
+}
+.ex-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.ex-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  position: relative;
+  transition: all var(--t-base) var(--ease);
+  display: flex; flex-direction: column;
+}
+.ex-card:hover {
+  border-color: var(--primary-mid);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+.ex-card-head {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 8px;
+}
+.ex-card-icon {
+  font-size: 1.6rem; line-height: 1;
+  flex-shrink: 0;
+}
+.ex-card-num {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.7em; font-weight: 700;
+  color: var(--text3); letter-spacing: 0.06em;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-pill);
+  padding: 2px 8px; margin-left: auto;
+  flex-shrink: 0;
+}
+.ex-card-name {
+  font-weight: 600; font-size: 0.98em;
+  color: var(--text); margin-bottom: 4px;
+  line-height: 1.3;
+}
+.ex-card-desc {
+  font-size: 0.82em; color: var(--text2);
+  line-height: 1.45; margin-bottom: 12px;
+  flex: 1;
+}
+.ex-card-actions {
+  display: flex; align-items: center; gap: 8px;
+  flex-wrap: wrap;
+}
+.ex-card-play {
+  border: none; background: var(--primary);
+  color: #fff; border-radius: var(--radius-pill);
+  padding: 7px 16px; font-family: inherit;
+  font-size: 0.82em; font-weight: 600; cursor: pointer;
+  transition: all var(--t-base) var(--ease);
+}
+.ex-card-play:hover {
+  background: var(--primary-strong);
+  box-shadow: var(--shadow-primary);
+  transform: translateY(-1px);
+}
+.ex-card-pending {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--warn-bg); border: 1px solid var(--warn-border);
+  color: var(--warn);
+  border-radius: var(--radius-pill);
+  padding: 3px 9px;
+  font-size: 0.72em; font-weight: 600;
+}
+.ex-card-stats-toggle {
+  margin-left: auto;
+  background: transparent; border: none;
+  font-size: 0.74em; color: var(--text3);
+  cursor: pointer; font-family: inherit;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 8px; border-radius: var(--radius-xs);
+  transition: all var(--t-base) var(--ease);
+}
+.ex-card-stats-toggle:hover { color: var(--primary); background: var(--primary-soft); }
+.ex-card-stats {
+  display: none;
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border);
+  margin: 12px -16px -16px;
+  padding: 12px 16px;
+  font-size: 0.78em;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+.ex-card-stats.visible { display: block; }
+.stat-line {
+  display: flex; justify-content: space-between;
+  margin-bottom: 4px; color: var(--text2);
+}
+.stat-line:last-child { margin-bottom: 0; }
+.stat-line strong { color: var(--text); font-weight: 600; }
+.stat-empty { color: var(--text3); font-style: italic; }
+
+/* ── Active exercise area */
+.ex-area { display: none; }
+.ex-area.visible { display: block; }
+.ex-topbar {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 14px; flex-wrap: wrap;
+}
+.ex-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--text2); border-radius: var(--radius-pill);
+  padding: 6px 13px; font-family: inherit;
+  font-size: 0.82em; font-weight: 500; cursor: pointer;
+  transition: all var(--t-base) var(--ease);
+}
+.ex-back:hover { border-color: var(--primary-mid); color: var(--primary); transform: translateX(-2px); }
+.ex-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.05rem; font-weight: 600;
+  color: var(--text); letter-spacing: -0.01em;
+}
+.streak-pill {
+  margin-left: auto;
+  background: var(--warn-bg); border: 1px solid var(--warn-border);
+  color: var(--warn); border-radius: var(--radius-pill);
+  padding: 5px 12px;
+  font-size: 0.82em; font-weight: 700;
+  display: inline-flex; align-items: center; gap: 4px;
+  transition: all var(--t-base) var(--ease);
+}
+.streak-pill.cold {
+  background: var(--bg-elevated); border-color: var(--border);
+  color: var(--text3);
+}
+.streak-pill.fire { animation: streakPulse 600ms var(--ease-out); }
+@keyframes streakPulse {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+/* Progress (visible during round) */
+.ex-progress-bar {
+  background: var(--card); border-radius: var(--radius);
+  padding: 14px 18px; margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+}
+.epb-top {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 8px;
+}
+.epb-frac { font-size: 0.92em; font-weight: 700; color: var(--primary); font-family: 'Fraunces', Georgia, serif; }
+.epb-score { display: flex; gap: 12px; font-size: 0.78em; font-weight: 500; color: var(--text2); flex-wrap: wrap; }
+.epb-score span { white-space: nowrap; }
+.epb-track { height: 6px; background: var(--border); border-radius: var(--radius-pill); overflow: hidden; }
+.epb-fill { height: 100%; background: linear-gradient(90deg, var(--primary-mid), var(--primary)); border-radius: var(--radius-pill); transition: width 400ms var(--ease-out); }
+
+/* Exercise card */
+.ex-q-card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 24px;
+  margin-bottom: 14px;
+  animation: fadeSlideIn 240ms var(--ease-out);
+}
+.ex-q-cat {
+  font-size: 0.7em; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--primary);
+  margin-bottom: 10px;
+}
+.ex-q-prompt {
+  font-size: 1.08em; line-height: 1.7;
+  color: var(--text); margin-bottom: 16px;
+  font-weight: 500;
+}
+.ex-q-prompt .infiner {
+  color: var(--text3); font-size: 0.88em;
+  font-style: italic; font-weight: 500;
+}
+.ex-q-prompt .gap {
+  display: inline-block;
+  min-width: 64px;
+  height: 1.4em;
+  vertical-align: -0.25em;
+  margin: 0 4px;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
+  font-size: 0; /* hide underscore content */
+}
+.ex-q-context {
+  background: var(--primary-soft);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  font-size: 0.95em; color: var(--text);
+  line-height: 1.6;
+}
+.ex-q-context strong { color: var(--primary); font-weight: 700; }
+
+/* Special characters: hidden by default, toggle button reveals it */
+.special-chars-wrap { margin-bottom: 10px; }
+.special-chars-toggle {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent; border: none;
+  color: var(--text3); cursor: pointer;
+  font-family: inherit; font-size: 0.78em; font-weight: 500;
+  padding: 4px 0;
+  transition: color var(--t-base) var(--ease);
+}
+.special-chars-toggle:hover { color: var(--primary); }
+.special-chars-toggle .sct-icon {
+  font-size: 0.92em; font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.special-chars-toggle .sct-caret {
+  display: inline-block;
+  transition: transform var(--t-base) var(--ease);
+  font-size: 0.7em; opacity: 0.7;
+}
+.special-chars-toggle.open .sct-caret { transform: rotate(180deg); }
+.special-chars {
+  display: none;
+  flex-wrap: wrap; gap: 4px;
+  margin-top: 8px;
+  animation: fadeSlideIn 200ms var(--ease-out);
+}
+.special-chars.visible { display: flex; }
+.special-char-btn {
+  min-width: 34px; height: 34px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: inherit; font-size: 0.95em; font-weight: 500;
+  color: var(--text); cursor: pointer;
+  transition: all var(--t-fast) var(--ease);
+}
+.special-char-btn:hover { background: var(--primary-soft); color: var(--primary); border-color: var(--primary-mid); }
+.special-char-btn:active { transform: scale(0.95); }
+@media (max-width: 540px) {
+  .special-char-btn { min-width: 40px; height: 40px; font-size: 1em; }
+}
+
+/* Answer input */
+.ex-input {
+  width: 100%; border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px; font-family: inherit;
+  font-size: 1em; background: var(--card); color: var(--text);
+  outline: none;
+  transition: all var(--t-base) var(--ease);
+}
+.ex-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
+.ex-input.ok   { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 700; }
+.ex-input.err  { background: var(--red-bg);   border-color: var(--red);   color: var(--red);   font-weight: 700; }
+.ex-input.warn { background: var(--warn-bg);  border-color: var(--warn);  color: var(--warn);  font-weight: 700; }
+
+/* Choices for multiple choice / subj vs ind */
+.ex-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.ex-choices.cols-1 { grid-template-columns: 1fr; }
+.ex-choices.cols-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 540px) {
+  .ex-choices { grid-template-columns: 1fr; }
+  .ex-choices.cols-3 { grid-template-columns: 1fr; }
+}
+.ex-choice {
+  border: 1.5px solid var(--border); border-radius: var(--radius-md);
+  padding: 14px 16px; font-family: inherit;
+  font-size: 0.95em; font-weight: 500; cursor: pointer;
+  text-align: left; background: var(--card); color: var(--text);
+  transition: all var(--t-base) var(--ease);
+  position: relative;
+}
+.ex-choice:hover:not(:disabled):not(.ok):not(.err) {
+  border-color: var(--primary-mid); background: var(--primary-soft); color: var(--primary);
+  transform: translateY(-1px); box-shadow: var(--shadow-xs);
+}
+.ex-choice.ok  { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 700; }
+.ex-choice.err { background: var(--red-bg);   border-color: var(--red);   color: var(--red); font-weight: 700; }
+.ex-choice:disabled { cursor: default; opacity: 0.85; }
+.ex-choice-letter {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--bg-elevated); color: var(--text3);
+  font-size: 0.78em; font-weight: 700;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+.ex-choice.ok  .ex-choice-letter { background: var(--green); color: #fff; }
+.ex-choice.err .ex-choice-letter { background: var(--red);   color: #fff; }
+
+/* Action buttons row */
+.ex-actions {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  margin-top: 10px;
+}
+.ex-btn {
+  border: 1px solid var(--border); border-radius: var(--radius-pill);
+  padding: 9px 18px; font-family: inherit;
+  font-size: 0.86em; font-weight: 600; cursor: pointer;
+  background: var(--card); color: var(--text2);
+  transition: all var(--t-base) var(--ease);
+}
+.ex-btn:hover { border-color: var(--primary-mid); color: var(--primary); transform: translateY(-1px); }
+.ex-btn.primary {
+  background: var(--primary); color: #fff; border-color: var(--primary);
+  box-shadow: var(--shadow-primary);
+}
+.ex-btn.primary:hover { background: var(--primary-strong); color: #fff; }
+.ex-btn.warn { background: var(--warn-bg); color: var(--warn); border-color: var(--warn-border); }
+.ex-btn.warn:hover { background: var(--warn); color: #fff; border-color: var(--warn); }
+.ex-btn.ghost { background: transparent; }
+.ex-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* Feedback boxes */
+.ex-fb {
+  display: none;
+  border-radius: var(--radius-md);
+  padding: 12px 15px; margin-top: 12px;
+  font-size: 0.9em; line-height: 1.55;
+  animation: fadeSlideIn 240ms var(--ease-out);
+}
+.ex-fb.visible { display: block; }
+.ex-fb.ok   { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
+.ex-fb.err  { background: var(--red-bg);   border: 1px solid var(--red-border);   color: var(--red); }
+.ex-fb.warn { background: var(--warn-bg);  border: 1px solid var(--warn-border);  color: var(--warn); }
+.ex-fb-expl {
+  margin-top: 6px;
+  color: var(--text2); font-size: 0.95em;
+  font-style: italic;
+}
+.ex-solution {
+  background: var(--blue-bg); border: 1px solid var(--blue-border);
+  border-radius: var(--radius-md);
+  padding: 12px 15px; margin-top: 10px;
+  color: var(--text); font-size: 0.95em; line-height: 1.6;
+}
+.ex-solution .answer { color: var(--blue); font-weight: 700; }
+.ex-solution-expl {
+  margin-top: 8px;
+  font-size: 0.85em; color: var(--text2);
+  font-style: italic;
+}
+
+/* Find error: clickable words */
+.find-error-frase {
+  font-size: 1.08em; line-height: 2;
+  margin-bottom: 14px;
+}
+.fe-word {
+  display: inline-block;
+  padding: 3px 8px;
+  margin: 0 2px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all var(--t-fast) var(--ease);
+  border: 1px solid transparent;
+}
+.fe-word:hover { background: var(--primary-soft); color: var(--primary); }
+.fe-word.selected {
+  background: var(--warn-bg); border-color: var(--warn); color: var(--warn);
+  font-weight: 700;
+}
+.fe-word.correct { background: var(--green-bg); color: var(--green); font-weight: 700; }
+.fe-word.wrong { background: var(--red-bg); color: var(--red); font-weight: 700; text-decoration: line-through; }
+
+/* Reorder: word chips */
+.reorder-pool {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 14px; min-height: 50px;
+  padding: 10px;
+  background: var(--bg-elevated);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+}
+.reorder-built {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 14px; min-height: 50px;
+  padding: 10px;
+  background: var(--primary-soft);
+  border: 1px solid color-mix(in srgb, var(--primary) 25%, transparent);
+  border-radius: var(--radius-md);
+  align-items: center;
+}
+.reorder-built.ok  { background: var(--green-bg); border-color: var(--green); }
+.reorder-built.err { background: var(--red-bg);   border-color: var(--red); }
+.word-chip {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 7px 14px;
+  font-family: inherit; font-size: 0.92em; font-weight: 500;
+  cursor: pointer; color: var(--text);
+  transition: all var(--t-base) var(--ease);
+}
+.word-chip:hover {
+  border-color: var(--primary-mid); color: var(--primary);
+  transform: translateY(-2px); box-shadow: var(--shadow-xs);
+}
+.word-chip.used { opacity: 0.3; pointer-events: none; }
+.word-chip.placed {
+  background: var(--card);
+  border-color: var(--primary-mid);
+  color: var(--primary); font-weight: 600;
+}
+.reorder-placeholder {
+  color: var(--text3); font-style: italic;
+  font-size: 0.88em;
+}
+
+/* Classifier: list of sentences with verdicts */
+.classify-list {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.classify-row {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-size: 0.92em; line-height: 1.5;
+}
+.classify-row.ok  { background: var(--green-bg); border-color: var(--green-border); }
+.classify-row.err { background: var(--red-bg);   border-color: var(--red-border); }
+.classify-tag {
+  display: inline-block;
+  font-size: 0.74em; font-weight: 600;
+  padding: 2px 8px; border-radius: var(--radius-pill);
+  margin-left: 6px;
+}
+.classify-tag.ok  { background: var(--green); color: #fff; }
+.classify-tag.err { background: var(--red);   color: #fff; }
+
+/* Transform: original sentence */
+.transform-orig {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px; margin-bottom: 14px;
+  font-size: 0.95em; color: var(--text2);
+  line-height: 1.55;
+}
+.transform-orig::before {
+  content: "Original →";
+  display: block;
+  font-size: 0.7em; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text3); margin-bottom: 4px;
+}
+
+/* Match expression: 2-col layout */
+.match-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  margin-bottom: 14px;
+}
+@media (max-width: 540px) { .match-grid { grid-template-columns: 1fr; } }
+.match-col-title {
+  font-size: 0.72em; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text3); margin-bottom: 8px;
+}
+.match-item {
+  background: var(--card); border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  cursor: pointer; font-size: 0.92em;
+  text-align: left; font-family: inherit; font-weight: 500;
+  width: 100%;
+  margin-bottom: 8px;
+  transition: all var(--t-base) var(--ease);
+  color: var(--text);
+}
+.match-item:hover:not(.locked) {
+  border-color: var(--primary-mid); background: var(--primary-soft); color: var(--primary);
+}
+.match-item.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.match-item.ok    { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+.match-item.err   { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+.match-item.locked { opacity: 0.55; cursor: default; }
+
+/* Block quiz */
+.bloc-header {
+  background: var(--primary-soft);
+  border-radius: var(--radius-md);
+  padding: 12px 16px; margin-bottom: 14px;
+  font-size: 0.94em;
+  color: var(--primary); font-weight: 600;
+  display: flex; align-items: center; gap: 10px;
+  flex-wrap: wrap;
+}
+.bloc-pill {
+  margin-left: auto;
+  background: var(--primary); color: #fff;
+  font-size: 0.74em; font-weight: 700;
+  padding: 3px 10px; border-radius: var(--radius-pill);
+}
+
+/* Results screen */
+.results-card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 24px;
+  margin-bottom: 14px;
+  animation: fadeSlideIn 360ms var(--ease-out);
+}
+.results-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.4rem; font-weight: 600;
+  color: var(--text); margin-bottom: 12px;
+  text-align: center; letter-spacing: -0.01em;
+}
+.results-emoji { font-size: 2.4rem; text-align: center; margin-bottom: 8px; }
+.results-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.results-stat {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  text-align: center;
+}
+.results-stat.ok   { background: var(--green-bg); border-color: var(--green-border); }
+.results-stat.retr { background: var(--warn-bg);  border-color: var(--warn-border); }
+.results-stat.err  { background: var(--red-bg);   border-color: var(--red-border); }
+.rs-num {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 2rem; font-weight: 700;
+  color: var(--text); display: block; line-height: 1;
+}
+.results-stat.ok .rs-num   { color: var(--green); }
+.results-stat.retr .rs-num { color: var(--warn); }
+.results-stat.err .rs-num  { color: var(--red); }
+.rs-label {
+  font-size: 0.72em; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text3); margin-top: 4px;
+  display: block;
+}
+.results-streak {
+  background: var(--warn-bg); border: 1px solid var(--warn-border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px; margin-bottom: 14px;
+  font-size: 0.92em; color: var(--warn);
+  text-align: center;
+}
+.results-errors-title {
+  font-size: 0.78em; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text3); margin: 16px 0 10px;
+}
+.results-error-item {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-left: 3px solid var(--red);
+  border-radius: var(--radius-md);
+  padding: 12px 14px; margin-bottom: 8px;
+  font-size: 0.89em; line-height: 1.55;
+}
+.results-error-item .err-frase { margin-bottom: 4px; }
+.results-error-item .err-frase .gv { color: var(--green); font-weight: 700; }
+.results-error-item .err-user { color: var(--red); font-size: 0.86em; }
+.results-error-item .err-user s { color: var(--red); }
+.results-error-item .err-expl {
+  margin-top: 6px; font-size: 0.82em;
+  color: var(--text2); font-style: italic;
+}
+.results-actions {
+  display: flex; gap: 10px; justify-content: center;
+  flex-wrap: wrap; margin-top: 16px;
+}
+
+/* Mode switch (advanced) */
+.mode-switch {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px; margin-bottom: 14px;
+  font-size: 0.92em; color: var(--text);
+}
+.mode-switch label { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+.mode-switch input[type="checkbox"] {
+  accent-color: var(--primary);
+  width: 18px; height: 18px;
+  cursor: pointer;
+}
+.mode-switch .hint {
+  font-size: 0.84em; color: var(--text3);
+  margin-left: auto;
+}
+@media (max-width: 540px) {
+  .mode-switch .hint { display: none; }
+}
+
+/* Start screen for round */
+.ex-start {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 24px;
+  margin-bottom: 14px; text-align: center;
+}
+.ex-start h3 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.3rem; font-weight: 600;
+  margin-bottom: 6px;
+}
+.ex-start p {
+  color: var(--text2); font-size: 0.92em;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 540px) {
+  .ex-card-grid { grid-template-columns: 1fr; }
+  .ex-q-card { padding: 18px; }
+}
 </style>
 </head>
 <body>
@@ -166,6 +796,7 @@
 <!-- MODE TOGGLE (Referencia / Ejercicios) -->
 <div class="mode-toggle">
   <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referencia</button>
+  <button class="mode-btn" onclick="switchMode('ex',this)">🎯 Exercices</button>
 </div>
 
 <!-- SECTION NAV (only shown in ref mode) -->
@@ -562,6 +1193,45 @@
 
   </div><!-- /panel-ref -->
 
+  <!-- ══════════ EXERCICES ══════════ -->
+  <div class="panel" id="panel-ex">
+
+    <!-- 1. SELECTION SCREEN: 10 cards -->
+    <div id="ex-selection">
+      <div class="ex-intro">
+        <h2>Choisis ton exercice</h2>
+        <p>10 types d'exercices · 4 catégories · Statistiques sauvegardées</p>
+      </div>
+      <div class="ex-card-grid" id="ex-card-grid"></div>
+    </div>
+
+    <!-- 2. ACTIVE EXERCISE AREA -->
+    <div class="ex-area" id="ex-area">
+      <div class="ex-topbar">
+        <button class="ex-back" onclick="exitExercise()">← Retour</button>
+        <div class="ex-title" id="ex-title"></div>
+        <div class="streak-pill cold" id="streak-pill">🔥 0 en racha</div>
+      </div>
+
+      <div id="ex-start-wrap"></div>
+
+      <div class="ex-progress-bar" id="ex-progress" style="display:none">
+        <div class="epb-top">
+          <div class="epb-frac" id="epb-frac">0 / 0</div>
+          <div class="epb-score">
+            <span style="color:var(--green)">✅ <span id="epb-ok">0</span></span>
+            <span style="color:var(--warn)">🔄 <span id="epb-retry">0</span></span>
+            <span style="color:var(--red)">❌ <span id="epb-err">0</span></span>
+          </div>
+        </div>
+        <div class="epb-track"><div class="epb-fill" id="epb-fill" style="width:0%"></div></div>
+      </div>
+
+      <div id="ex-stage"></div>
+    </div>
+
+  </div><!-- /panel-ex -->
+
 <footer class="page-end">
   <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
@@ -740,6 +1410,1756 @@ function renderTraps() {
 renderIrregs();
 renderTriggers();
 renderTraps();
+
+/* ════════════════════════════════════════════════════════
+   EXERCICES — DATA POOLS
+   ════════════════════════════════════════════════════════ */
+
+const CAT_LABEL = {
+  vo: 'Volonté & désir',
+  im: 'Expressions impersonnelles',
+  co: 'Conjonctions & connecteurs',
+  du: 'Doute & émotion'
+};
+
+/* === POOL 1: Remplis le trou (50) === */
+const POOL_FILL = [
+  // VOLONTÉ
+  {i:'f01',c:'vo',f:"Je veux que tu ___ (venir) avec moi.",v:'venir',r:'viennes',e:'vouloir que → subjonctif'},
+  {i:'f02',c:'vo',f:"Elle souhaite que vous ___ (être) heureux.",v:'être',r:'soyez',e:'souhaiter que → subjonctif'},
+  {i:'f03',c:'vo',f:"Mes parents préfèrent que je ___ (rester) ici.",v:'rester',r:'reste',e:'préférer que → subjonctif'},
+  {i:'f04',c:'vo',f:"Le prof exige que les élèves ___ (faire) leurs devoirs.",v:'faire',r:'fassent',e:'exiger que → subjonctif'},
+  {i:'f05',c:'vo',f:"Je désire que ce projet ___ (réussir).",v:'réussir',r:'réussisse',e:'désirer que → subjonctif'},
+  {i:'f06',c:'vo',f:"Il demande que nous ___ (partir) tôt.",v:'partir',r:'partions',e:'demander que → subjonctif'},
+  {i:'f07',c:'vo',f:"Elle tient à ce que tu ___ (savoir) la vérité.",v:'savoir',r:'saches',e:'tenir à ce que → subjonctif'},
+  {i:'f08',c:'vo',f:"Nous voulons que la fête ___ (être) parfaite.",v:'être',r:'soit',e:'vouloir que → subjonctif'},
+  {i:'f09',c:'vo',f:"Je préfère qu'il ne ___ (dire) rien.",v:'dire',r:'dise',e:'préférer que → subjonctif'},
+  {i:'f10',c:'vo',f:"Tu souhaites qu'elle ___ (revenir) vite.",v:'revenir',r:'revienne',e:'souhaiter que → subjonctif'},
+  {i:'f11',c:'vo',f:"Le directeur exige que vous ___ (avoir) un diplôme.",v:'avoir',r:'ayez',e:'exiger que → subjonctif'},
+  {i:'f12',c:'vo',f:"Elle veut que nous ___ (prendre) le train.",v:'prendre',r:'prenions',e:'vouloir que → subjonctif'},
+  {i:'f13',c:'vo',f:"Je désire qu'on ___ (parler) de ça demain.",v:'parler',r:'parle',e:'désirer que → subjonctif'},
+  // IMPERSONNEL
+  {i:'f14',c:'im',f:"Il faut que tu ___ (boire) plus d'eau.",v:'boire',r:'boives',e:'il faut que → subjonctif'},
+  {i:'f15',c:'im',f:"Il est important que vous ___ (comprendre) la leçon.",v:'comprendre',r:'compreniez',e:'il est important que → subjonctif'},
+  {i:'f16',c:'im',f:"Il est nécessaire qu'il ___ (apprendre) ses verbes.",v:'apprendre',r:'apprenne',e:'il est nécessaire que → subjonctif'},
+  {i:'f17',c:'im',f:"Il est possible qu'elle ___ (avoir) raison.",v:'avoir',r:'ait',e:'il est possible que → subjonctif'},
+  {i:'f18',c:'im',f:"Il est dommage que tu ne ___ (pouvoir) pas rester.",v:'pouvoir',r:'puisses',e:'il est dommage que → subjonctif'},
+  {i:'f19',c:'im',f:"Il vaut mieux que nous ___ (attendre) un peu.",v:'attendre',r:'attendions',e:'il vaut mieux que → subjonctif'},
+  {i:'f20',c:'im',f:"Il est étrange qu'il ne ___ (répondre) pas.",v:'répondre',r:'réponde',e:'il est étrange que → subjonctif'},
+  {i:'f21',c:'im',f:"Il est normal que les enfants ___ (vouloir) jouer.",v:'vouloir',r:'veuillent',e:'il est normal que → subjonctif'},
+  {i:'f22',c:'im',f:"Il faut que je ___ (finir) ce travail.",v:'finir',r:'finisse',e:'il faut que → subjonctif'},
+  {i:'f23',c:'im',f:"Il est important qu'on ___ (être) à l'heure.",v:'être',r:'soit',e:'il est important que → subjonctif'},
+  {i:'f24',c:'im',f:"Il est possible que je ___ (devoir) partir tôt.",v:'devoir',r:'doive',e:'il est possible que → subjonctif'},
+  {i:'f25',c:'im',f:"Il faut qu'elles ___ (savoir) la nouvelle.",v:'savoir',r:'sachent',e:'il faut que → subjonctif'},
+  // CONJONCTION
+  {i:'f26',c:'co',f:"Bien qu'il ___ (faire) froid, elle sort sans manteau.",v:'faire',r:'fasse',e:'bien que → subjonctif'},
+  {i:'f27',c:'co',f:"Je t'explique pour que tu ___ (comprendre).",v:'comprendre',r:'comprennes',e:'pour que → subjonctif'},
+  {i:'f28',c:'co',f:"Tout ira bien à moins qu'il ne ___ (pleuvoir).",v:'pleuvoir',r:'pleuve',e:'à moins que → subjonctif'},
+  {i:'f29',c:'co',f:"Téléphone-moi avant que je ne ___ (partir).",v:'partir',r:'parte',e:'avant que → subjonctif'},
+  {i:'f30',c:'co',f:"Reste ici jusqu'à ce qu'elle ___ (revenir).",v:'revenir',r:'revienne',e:"jusqu'à ce que → subjonctif"},
+  {i:'f31',c:'co',f:"Pourvu qu'il ___ (faire) beau demain !",v:'faire',r:'fasse',e:'pourvu que → subjonctif'},
+  {i:'f32',c:'co',f:"Quoique tu ___ (être) fatigué, viens avec nous.",v:'être',r:'sois',e:'quoique → subjonctif'},
+  {i:'f33',c:'co',f:"Il est sorti sans qu'on l'___ (entendre).",v:'entendre',r:'entende',e:'sans que → subjonctif'},
+  {i:'f34',c:'co',f:"Je t'écris afin que tu ___ (savoir) la vérité.",v:'savoir',r:'saches',e:'afin que → subjonctif'},
+  {i:'f35',c:'co',f:"Elle parle bas de peur que le bébé ne ___ (se réveiller).",v:'se réveiller',r:'se réveille',e:'de peur que → subjonctif'},
+  {i:'f36',c:'co',f:"Bien que nous ___ (avoir) tout préparé, c'est raté.",v:'avoir',r:'ayons',e:'bien que → subjonctif'},
+  {i:'f37',c:'co',f:"Travaille pour que tu ___ (réussir) ton examen.",v:'réussir',r:'réussisses',e:'pour que → subjonctif'},
+  {i:'f38',c:'co',f:"Avant qu'il ne ___ (être) trop tard, agissons.",v:'être',r:'soit',e:'avant que → subjonctif'},
+  // DOUTE & ÉMOTION
+  {i:'f39',c:'du',f:"Je doute qu'il ___ (venir) à temps.",v:'venir',r:'vienne',e:'douter que → subjonctif'},
+  {i:'f40',c:'du',f:"Elle craint que tu ne ___ (faire) une erreur.",v:'faire',r:'fasses',e:'craindre que → subjonctif'},
+  {i:'f41',c:'du',f:"J'ai peur qu'elle ne ___ (comprendre) pas.",v:'comprendre',r:'comprenne',e:'avoir peur que → subjonctif'},
+  {i:'f42',c:'du',f:"Il regrette que nous ___ (devoir) partir.",v:'devoir',r:'devions',e:'regretter que → subjonctif'},
+  {i:'f43',c:'du',f:"Je suis content que tu ___ (être) là.",v:'être',r:'sois',e:'être content que → subjonctif'},
+  {i:'f44',c:'du',f:"Elle est surprise que vous ___ (savoir) déjà tout.",v:'savoir',r:'sachiez',e:'être surpris que → subjonctif'},
+  {i:'f45',c:'du',f:"Nous sommes désolés qu'il ne ___ (pouvoir) pas venir.",v:'pouvoir',r:'puisse',e:'être désolé que → subjonctif'},
+  {i:'f46',c:'du',f:"Je ne crois pas qu'il ___ (dire) la vérité.",v:'dire',r:'dise',e:'ne pas croire que → subjonctif'},
+  {i:'f47',c:'du',f:"Tu ne penses pas qu'elle ___ (avoir) tort ?",v:'avoir',r:'ait',e:'ne pas penser que → subjonctif'},
+  {i:'f48',c:'du',f:"Il s'étonne que tu ___ (vouloir) partir si vite.",v:'vouloir',r:'veuilles',e:"s'étonner que → subjonctif"},
+  {i:'f49',c:'du',f:"Je suis heureux que tout ___ (aller) bien.",v:'aller',r:'aille',e:'être heureux que → subjonctif'},
+  {i:'f50',c:'du',f:"Elle a peur qu'il ne ___ (faire) une bêtise.",v:'faire',r:'fasse',e:'avoir peur que → subjonctif'},
+];
+
+/* === POOL 2: Subj vs Ind (60) — picks between 2 forms === */
+const POOL_SVI = [
+  // VOLONTÉ — vouloir/souhaiter/préférer → toujours subj
+  {i:'s01',c:'vo',f:"Je veux qu'il ___ ce soir.",o:['vient','vienne'],r:'vienne',e:'vouloir que → subjonctif'},
+  {i:'s02',c:'vo',f:"Elle souhaite que nous ___ heureux.",o:['sommes','soyons'],r:'soyons',e:'souhaiter que → subjonctif'},
+  {i:'s03',c:'vo',f:"Tu préfères que je ___ tôt ?",o:['pars','parte'],r:'parte',e:'préférer que → subjonctif'},
+  {i:'s04',c:'vo',f:"Je désire qu'il me ___ la vérité.",o:['dit','dise'],r:'dise',e:'désirer que → subjonctif'},
+  {i:'s05',c:'vo',f:"On exige que vous ___ ponctuels.",o:['êtes','soyez'],r:'soyez',e:'exiger que → subjonctif'},
+  {i:'s06',c:'vo',f:"J'espère qu'il ___ demain.",o:['viendra','vienne'],r:'viendra',e:'espérer que → indicatif (futur)'},
+  {i:'s07',c:'vo',f:"Elle veut que tu ___ tes excuses.",o:['fais','fasses'],r:'fasses',e:'vouloir que → subjonctif'},
+  {i:'s08',c:'vo',f:"J'espère que tu ___ raison.",o:['as','aies'],r:'as',e:'espérer que → indicatif'},
+  // IMPERSONNEL
+  {i:'s09',c:'im',f:"Il faut qu'on ___ vite.",o:['part','parte'],r:'parte',e:'il faut que → subjonctif'},
+  {i:'s10',c:'im',f:"Il est certain qu'elle ___ raison.",o:['a','ait'],r:'a',e:'il est certain que (affirm) → indicatif'},
+  {i:'s11',c:'im',f:"Il est possible qu'il ___ là.",o:['est','soit'],r:'soit',e:'il est possible que → subjonctif'},
+  {i:'s12',c:'im',f:"Il est évident qu'il ___ fatigué.",o:['est','soit'],r:'est',e:'il est évident que (affirm) → indicatif'},
+  {i:'s13',c:'im',f:"Il vaut mieux que tu ___ chez toi.",o:['restes','restes'],r:'restes',e:'il vaut mieux que → subjonctif'},
+  {i:'s14',c:'im',f:"Il semble qu'elle ___ malade.",o:['est','soit'],r:'soit',e:'il semble que → subjonctif'},
+  {i:'s15',c:'im',f:"Il paraît qu'il ___ malade.",o:['est','soit'],r:'est',e:'il paraît que → indicatif'},
+  {i:'s16',c:'im',f:"Il n'est pas sûr qu'il ___ là.",o:['est','soit'],r:'soit',e:'forme négative → subjonctif'},
+  {i:'s17',c:'im',f:"Il est probable qu'elle ___ tort.",o:['a','ait'],r:'a',e:'il est probable que → indicatif'},
+  {i:'s18',c:'im',f:"Il est dommage que tu ne ___ pas venir.",o:['peux','puisses'],r:'puisses',e:'il est dommage que → subjonctif'},
+  {i:'s19',c:'im',f:"Il est nécessaire que tu ___ tôt.",o:['te lèves','te lèves'],r:'te lèves',e:'il est nécessaire que → subjonctif'},
+  // CONJONCTION
+  {i:'s20',c:'co',f:"Bien qu'il ___ tard, on continue.",o:['est','soit'],r:'soit',e:'bien que → subjonctif'},
+  {i:'s21',c:'co',f:"Après qu'il ___ parti, on a parlé.",o:['est','soit'],r:'est',e:'après que → indicatif !'},
+  {i:'s22',c:'co',f:"Avant qu'il ne ___, dis-lui au revoir.",o:['part','parte'],r:'parte',e:'avant que → subjonctif'},
+  {i:'s23',c:'co',f:"Pendant qu'elle ___ , je travaille.",o:['dort','dorme'],r:'dort',e:'pendant que → indicatif'},
+  {i:'s24',c:'co',f:"Pour qu'on ___ heureux, soyons honnêtes.",o:['est','soit'],r:'soit',e:'pour que → subjonctif'},
+  {i:'s25',c:'co',f:"Jusqu'à ce que tu ___ , je t'attends.",o:['reviens','reviennes'],r:'reviennes',e:"jusqu'à ce que → subjonctif"},
+  {i:'s26',c:'co',f:"Parce qu'il ___ malade, il est absent.",o:['est','soit'],r:'est',e:'parce que → indicatif'},
+  {i:'s27',c:'co',f:"Quoiqu'il ___ riche, il est avare.",o:['est','soit'],r:'soit',e:'quoique → subjonctif'},
+  {i:'s28',c:'co',f:"Puisque tu le ___ , parle-lui.",o:['vois','voies'],r:'vois',e:'puisque → indicatif'},
+  {i:'s29',c:'co',f:"Sans qu'on le ___ , il est parti.",o:['voit','voie'],r:'voie',e:'sans que → subjonctif'},
+  {i:'s30',c:'co',f:"Tandis qu'il ___ , je lisais.",o:['dort','dorme'],r:'dort',e:'tandis que → indicatif'},
+  {i:'s31',c:'co',f:"Dès qu'il ___ , appelle-moi.",o:['arrive','arrive'],r:'arrive',e:'dès que → indicatif'},
+  {i:'s32',c:'co',f:"À moins que tu ne ___ d'accord.",o:['es','sois'],r:'sois',e:'à moins que → subjonctif'},
+  {i:'s33',c:'co',f:"Pourvu qu'il ___ beau !",o:['fait','fasse'],r:'fasse',e:'pourvu que → subjonctif'},
+  {i:'s34',c:'co',f:"De peur qu'il ne ___ , je me tais.",o:['comprend','comprenne'],r:'comprenne',e:'de peur que → subjonctif'},
+  {i:'s35',c:'co',f:"Lorsqu'il ___ , dis-lui bonjour.",o:['arrive','arrive'],r:'arrive',e:'lorsque → indicatif'},
+  // DOUTE / ÉMOTION
+  {i:'s36',c:'du',f:"Je pense qu'il ___ ce soir.",o:['vient','vienne'],r:'vient',e:'je pense que (affirm) → indicatif'},
+  {i:'s37',c:'du',f:"Je ne pense pas qu'il ___ ce soir.",o:['vient','vienne'],r:'vienne',e:'ne pas penser que → subjonctif'},
+  {i:'s38',c:'du',f:"Crois-tu qu'elle ___ raison ?",o:['a','ait'],r:'ait',e:'forme interrogative → subjonctif'},
+  {i:'s39',c:'du',f:"Je crois qu'elle ___ raison.",o:['a','ait'],r:'a',e:'croire que (affirm) → indicatif'},
+  {i:'s40',c:'du',f:"Je doute qu'il ___ honnête.",o:['est','soit'],r:'soit',e:'douter que → subjonctif'},
+  {i:'s41',c:'du',f:"Je suis content que tu ___ là.",o:['es','sois'],r:'sois',e:'être content que → subjonctif'},
+  {i:'s42',c:'du',f:"Je sais qu'il ___ déjà parti.",o:['est','soit'],r:'est',e:'savoir que → indicatif'},
+  {i:'s43',c:'du',f:"Je ne sais pas s'il ___ parti.",o:['est','soit'],r:'est',e:'ne pas savoir si → indicatif (interrog. ind.)'},
+  {i:'s44',c:'du',f:"Il regrette que tu ne ___ pas venir.",o:['peux','puisses'],r:'puisses',e:'regretter que → subjonctif'},
+  {i:'s45',c:'du',f:"Elle a peur que tu ne ___ une bêtise.",o:['fais','fasses'],r:'fasses',e:'avoir peur que → subjonctif'},
+  {i:'s46',c:'du',f:"Il craint que vous ne ___ pas.",o:['comprenez','compreniez'],r:'compreniez',e:'craindre que → subjonctif'},
+  {i:'s47',c:'du',f:"Trouves-tu qu'elle ___ raison ?",o:['a','ait'],r:'ait',e:'trouver que (interrog) → subjonctif'},
+  {i:'s48',c:'du',f:"Je trouve qu'elle ___ raison.",o:['a','ait'],r:'a',e:'trouver que (affirm) → indicatif'},
+  {i:'s49',c:'du',f:"Il dit que tu ___ raison.",o:['as','aies'],r:'as',e:'dire que → indicatif'},
+  {i:'s50',c:'du',f:"Il ne dit pas que tu ___ raison.",o:['as','aies'],r:'aies',e:'ne pas dire que → subjonctif'},
+  {i:'s51',c:'du',f:"Penses-tu qu'il ___ honnête ?",o:['est','soit'],r:'soit',e:'penser que (interrog) → subjonctif'},
+  {i:'s52',c:'du',f:"Je suis surpris qu'elle ___ ça.",o:['dit','dise'],r:'dise',e:'être surpris que → subjonctif'},
+  {i:'s53',c:'du',f:"Il s'étonne que tu ___ si jeune.",o:['es','sois'],r:'sois',e:"s'étonner que → subjonctif"},
+  {i:'s54',c:'du',f:"Je trouve qu'il ___ gentil.",o:['est','soit'],r:'est',e:'trouver que (affirm) → indicatif'},
+  {i:'s55',c:'du',f:"Il est heureux que vous ___ là.",o:['êtes','soyez'],r:'soyez',e:'être heureux que → subjonctif'},
+  {i:'s56',c:'du',f:"Elle estime que tu ___ tort.",o:['as','aies'],r:'as',e:'estimer que (affirm) → indicatif'},
+  {i:'s57',c:'du',f:"Elle n'estime pas que tu ___ tort.",o:['as','aies'],r:'aies',e:'ne pas estimer que → subjonctif'},
+  {i:'s58',c:'du',f:"Je suis désolé qu'il ___ malade.",o:['est','soit'],r:'soit',e:'être désolé que → subjonctif'},
+  {i:'s59',c:'du',f:"Je vois bien qu'il ___ fatigué.",o:['est','soit'],r:'est',e:'voir que (affirm) → indicatif'},
+  {i:'s60',c:'du',f:"Je ne vois pas qu'il ___ fatigué.",o:['est','soit'],r:'soit',e:'ne pas voir que → subjonctif'},
+];
+
+/* === POOL 3: Classify subj or ind (60) === */
+const POOL_CLASSIFY = [
+  // VOLONTÉ
+  {i:'c01',c:'vo',f:"Je veux qu'il vienne.",m:'subj',e:'vouloir que → subjonctif'},
+  {i:'c02',c:'vo',f:"J'espère qu'il viendra.",m:'ind',e:'espérer que → indicatif'},
+  {i:'c03',c:'vo',f:"Elle souhaite que tu sois heureux.",m:'subj',e:'souhaiter que → subjonctif'},
+  {i:'c04',c:'vo',f:"Il préfère que nous partions tôt.",m:'subj',e:'préférer que → subjonctif'},
+  {i:'c05',c:'vo',f:"J'espère qu'elle a compris.",m:'ind',e:'espérer que → indicatif'},
+  {i:'c06',c:'vo',f:"Le prof exige que vous soyez ponctuels.",m:'subj',e:'exiger que → subjonctif'},
+  {i:'c07',c:'vo',f:"Elle désire qu'on parte ensemble.",m:'subj',e:'désirer que → subjonctif'},
+  {i:'c08',c:'vo',f:"Je sais que tu veux partir.",m:'ind',e:'savoir que → indicatif'},
+  // IMPERSONNEL
+  {i:'c09',c:'im',f:"Il faut que tu finisses.",m:'subj',e:'il faut que → subjonctif'},
+  {i:'c10',c:'im',f:"Il est sûr qu'il viendra.",m:'ind',e:'il est sûr que (affirm) → indicatif'},
+  {i:'c11',c:'im',f:"Il est possible qu'elle ait raison.",m:'subj',e:'il est possible que → subjonctif'},
+  {i:'c12',c:'im',f:"Il est évident qu'il a tort.",m:'ind',e:'il est évident que (affirm) → indicatif'},
+  {i:'c13',c:'im',f:"Il vaut mieux qu'on attende.",m:'subj',e:'il vaut mieux que → subjonctif'},
+  {i:'c14',c:'im',f:"Il est clair qu'il est fatigué.",m:'ind',e:'il est clair que (affirm) → indicatif'},
+  {i:'c15',c:'im',f:"Il semble que tout aille bien.",m:'subj',e:'il semble que → subjonctif'},
+  {i:'c16',c:'im',f:"Il paraît qu'elle est partie.",m:'ind',e:'il paraît que → indicatif'},
+  {i:'c17',c:'im',f:"Il est probable qu'il pleuvra.",m:'ind',e:'il est probable que → indicatif'},
+  {i:'c18',c:'im',f:"Il est nécessaire que tu viennes.",m:'subj',e:'il est nécessaire que → subjonctif'},
+  {i:'c19',c:'im',f:"Il est dommage qu'il ne soit pas là.",m:'subj',e:'il est dommage que → subjonctif'},
+  {i:'c20',c:'im',f:"Il n'est pas certain qu'il vienne.",m:'subj',e:'forme négative → subjonctif'},
+  // CONJONCTION
+  {i:'c21',c:'co',f:"Bien qu'il fasse froid, il sort.",m:'subj',e:'bien que → subjonctif'},
+  {i:'c22',c:'co',f:"Après qu'il est parti, j'ai pleuré.",m:'ind',e:'après que → indicatif !'},
+  {i:'c23',c:'co',f:"Avant qu'il ne parte, parlons-lui.",m:'subj',e:'avant que → subjonctif'},
+  {i:'c24',c:'co',f:"Parce qu'il est tard, je rentre.",m:'ind',e:'parce que → indicatif'},
+  {i:'c25',c:'co',f:"Pour qu'on comprenne, explique-toi.",m:'subj',e:'pour que → subjonctif'},
+  {i:'c26',c:'co',f:"Pendant qu'il dort, on parle.",m:'ind',e:'pendant que → indicatif'},
+  {i:'c27',c:'co',f:"À moins qu'il ne pleuve, on sort.",m:'subj',e:'à moins que → subjonctif'},
+  {i:'c28',c:'co',f:"Dès qu'il arrive, prévenez-moi.",m:'ind',e:'dès que → indicatif'},
+  {i:'c29',c:'co',f:"Jusqu'à ce qu'il revienne, j'attends.",m:'subj',e:"jusqu'à ce que → subjonctif"},
+  {i:'c30',c:'co',f:"Lorsque tu arrives, appelle-moi.",m:'ind',e:'lorsque → indicatif'},
+  {i:'c31',c:'co',f:"Pourvu qu'il fasse beau !",m:'subj',e:'pourvu que → subjonctif'},
+  {i:'c32',c:'co',f:"Puisque tu le veux, allons-y.",m:'ind',e:'puisque → indicatif'},
+  {i:'c33',c:'co',f:"Sans qu'il le sache, on l'aide.",m:'subj',e:'sans que → subjonctif'},
+  {i:'c34',c:'co',f:"Tandis qu'il rit, elle pleure.",m:'ind',e:'tandis que → indicatif'},
+  {i:'c35',c:'co',f:"Quoique tu sois fatigué, viens.",m:'subj',e:'quoique → subjonctif'},
+  {i:'c36',c:'co',f:"Afin que tu réussisses, étudie.",m:'subj',e:'afin que → subjonctif'},
+  {i:'c37',c:'co',f:"De peur qu'il ne parte, je me dépêche.",m:'subj',e:'de peur que → subjonctif'},
+  {i:'c38',c:'co',f:"Comme il pleut, je reste.",m:'ind',e:'comme (cause) → indicatif'},
+  // DOUTE / ÉMOTION
+  {i:'c39',c:'du',f:"Je pense qu'il vient.",m:'ind',e:'je pense que (affirm) → indicatif'},
+  {i:'c40',c:'du',f:"Je ne pense pas qu'il vienne.",m:'subj',e:'ne pas penser que → subjonctif'},
+  {i:'c41',c:'du',f:"Je doute qu'il vienne.",m:'subj',e:'douter que → subjonctif'},
+  {i:'c42',c:'du',f:"Je crois qu'il a raison.",m:'ind',e:'croire que (affirm) → indicatif'},
+  {i:'c43',c:'du',f:"Je ne crois pas qu'il ait raison.",m:'subj',e:'ne pas croire que → subjonctif'},
+  {i:'c44',c:'du',f:"Crois-tu qu'il vienne ?",m:'subj',e:'forme interrogative → subjonctif'},
+  {i:'c45',c:'du',f:"Je sais qu'il est là.",m:'ind',e:'savoir que → indicatif'},
+  {i:'c46',c:'du',f:"Je suis content que tu sois là.",m:'subj',e:'être content que → subjonctif'},
+  {i:'c47',c:'du',f:"Il regrette que tu partes.",m:'subj',e:'regretter que → subjonctif'},
+  {i:'c48',c:'du',f:"J'ai peur qu'il ne fasse une erreur.",m:'subj',e:'avoir peur que → subjonctif'},
+  {i:'c49',c:'du',f:"Elle dit qu'il vient demain.",m:'ind',e:'dire que → indicatif'},
+  {i:'c50',c:'du',f:"Elle ne dit pas qu'il vienne demain.",m:'subj',e:'ne pas dire que (volonté) → subjonctif'},
+  {i:'c51',c:'du',f:"Il est heureux que tu réussisses.",m:'subj',e:'être heureux que → subjonctif'},
+  {i:'c52',c:'du',f:"Je trouve qu'il est gentil.",m:'ind',e:'trouver que (affirm) → indicatif'},
+  {i:'c53',c:'du',f:"Trouves-tu qu'il soit gentil ?",m:'subj',e:'trouver que (interrog) → subjonctif'},
+  {i:'c54',c:'du',f:"Je suis surpris qu'elle parte.",m:'subj',e:'être surpris que → subjonctif'},
+  {i:'c55',c:'du',f:"Je vois qu'il a compris.",m:'ind',e:'voir que → indicatif'},
+  {i:'c56',c:'du',f:"Je ne vois pas qu'il ait compris.",m:'subj',e:'ne pas voir que → subjonctif'},
+  {i:'c57',c:'du',f:"Il craint qu'elle ne parte.",m:'subj',e:'craindre que → subjonctif'},
+  {i:'c58',c:'du',f:"Il s'étonne que tu sois là.",m:'subj',e:"s'étonner que → subjonctif"},
+  {i:'c59',c:'du',f:"Je suis désolé qu'il soit malade.",m:'subj',e:'être désolé que → subjonctif'},
+  {i:'c60',c:'du',f:"J'entends qu'il chante.",m:'ind',e:'entendre que (perception) → indicatif'},
+];
+
+/* === POOL 4: Complete sentence with longer context (50) === */
+const POOL_COMPLETE = [
+  {i:'cp01',c:'vo',f:"Mes parents veulent absolument que je ___ (réussir) mon bac cette année.",v:'réussir',r:'réussisse',e:'vouloir que → subjonctif'},
+  {i:'cp02',c:'vo',f:"Le directeur souhaite que tous les employés ___ (être) présents lundi.",v:'être',r:'soient',e:'souhaiter que → subjonctif'},
+  {i:'cp03',c:'vo',f:"Je préférerais que vous ne ___ (dire) rien à ma sœur.",v:'dire',r:'disiez',e:'préférer que → subjonctif'},
+  {i:'cp04',c:'vo',f:"Elle exige que ses étudiants ___ (rendre) leurs devoirs à temps.",v:'rendre',r:'rendent',e:'exiger que → subjonctif'},
+  {i:'cp05',c:'vo',f:"Je tiens à ce que tu ___ (savoir) à quel point je t'apprécie.",v:'savoir',r:'saches',e:'tenir à ce que → subjonctif'},
+  {i:'cp06',c:'vo',f:"Le professeur demande que les élèves ___ (faire) silence pendant le test.",v:'faire',r:'fassent',e:'demander que → subjonctif'},
+  {i:'cp07',c:'vo',f:"Nous voulons que ce voyage ___ (rester) un souvenir inoubliable.",v:'rester',r:'reste',e:'vouloir que → subjonctif'},
+  {i:'cp08',c:'vo',f:"Il désire que sa fille ___ (aller) étudier en France.",v:'aller',r:'aille',e:'désirer que → subjonctif'},
+  {i:'cp09',c:'vo',f:"Mon père préfère que je ___ (prendre) le train plutôt que la voiture.",v:'prendre',r:'prenne',e:'préférer que → subjonctif'},
+  {i:'cp10',c:'vo',f:"L'entraîneur exige que nous ___ (venir) à l'heure aux entraînements.",v:'venir',r:'venions',e:'exiger que → subjonctif'},
+  {i:'cp11',c:'vo',f:"Elle souhaiterait que son mari ___ (pouvoir) rentrer plus tôt le soir.",v:'pouvoir',r:'puisse',e:'souhaiter que → subjonctif'},
+  {i:'cp12',c:'vo',f:"Je voudrais que tout le monde ___ (comprendre) la situation.",v:'comprendre',r:'comprenne',e:'vouloir que → subjonctif'},
+  {i:'cp13',c:'im',f:"Il faut absolument que tu ___ (boire) plus d'eau quand il fait chaud.",v:'boire',r:'boives',e:'il faut que → subjonctif'},
+  {i:'cp14',c:'im',f:"Il est essentiel que les enfants ___ (apprendre) à respecter les autres.",v:'apprendre',r:'apprennent',e:'il est essentiel que → subjonctif'},
+  {i:'cp15',c:'im',f:"Il est possible que la réunion ___ (être) reportée à la semaine prochaine.",v:'être',r:'soit',e:'il est possible que → subjonctif'},
+  {i:'cp16',c:'im',f:"Il vaut mieux que nous ___ (attendre) leur décision avant d'agir.",v:'attendre',r:'attendions',e:'il vaut mieux que → subjonctif'},
+  {i:'cp17',c:'im',f:"Il est dommage que tu ne ___ (pouvoir) pas assister à mon mariage.",v:'pouvoir',r:'puisses',e:'il est dommage que → subjonctif'},
+  {i:'cp18',c:'im',f:"Il est important que vous ___ (savoir) ce qui s'est vraiment passé.",v:'savoir',r:'sachiez',e:'il est important que → subjonctif'},
+  {i:'cp19',c:'im',f:"Il est étrange qu'il n'___ (avoir) toujours pas répondu à mon message.",v:'avoir',r:'ait',e:'il est étrange que → subjonctif'},
+  {i:'cp20',c:'im',f:"Il est nécessaire que tout le monde ___ (faire) un effort.",v:'faire',r:'fasse',e:'il est nécessaire que → subjonctif'},
+  {i:'cp21',c:'im',f:"Il semble que cette décision ne ___ (plaire) à personne.",v:'plaire',r:'plaise',e:'il semble que → subjonctif'},
+  {i:'cp22',c:'im',f:"Il est temps que nous ___ (partir) si on veut être à l'heure.",v:'partir',r:'partions',e:'il est temps que → subjonctif'},
+  {i:'cp23',c:'im',f:"Il est rare qu'elle ___ (venir) sans prévenir.",v:'venir',r:'vienne',e:'il est rare que → subjonctif'},
+  {i:'cp24',c:'co',f:"Bien que tu ___ (être) fatigué, tu continues à travailler.",v:'être',r:'sois',e:'bien que → subjonctif'},
+  {i:'cp25',c:'co',f:"Je te répète ça pour que tu ___ (comprendre) bien la situation.",v:'comprendre',r:'comprennes',e:'pour que → subjonctif'},
+  {i:'cp26',c:'co',f:"Nous partirons demain à moins qu'il ne ___ (pleuvoir).",v:'pleuvoir',r:'pleuve',e:'à moins que → subjonctif'},
+  {i:'cp27',c:'co',f:"Téléphone-lui avant qu'elle ne ___ (partir) au bureau.",v:'partir',r:'parte',e:'avant que → subjonctif'},
+  {i:'cp28',c:'co',f:"Reste ici jusqu'à ce que le médecin ___ (arriver).",v:'arriver',r:'arrive',e:"jusqu'à ce que → subjonctif"},
+  {i:'cp29',c:'co',f:"Pourvu que tout ___ (se passer) bien pour son entretien !",v:'se passer',r:'se passe',e:'pourvu que → subjonctif'},
+  {i:'cp30',c:'co',f:"Quoique nous ___ (avoir) tout préparé, l'accueil a échoué.",v:'avoir',r:'ayons',e:'quoique → subjonctif'},
+  {i:'cp31',c:'co',f:"Il est parti sans qu'on ___ (savoir) où il allait.",v:'savoir',r:'sache',e:'sans que → subjonctif'},
+  {i:'cp32',c:'co',f:"Je vais te le répéter afin que tu ___ (retenir) cette règle.",v:'retenir',r:'retiennes',e:'afin que → subjonctif'},
+  {i:'cp33',c:'co',f:"Elle marche sur la pointe des pieds de peur que le bébé ne ___ (se réveiller).",v:'se réveiller',r:'se réveille',e:'de peur que → subjonctif'},
+  {i:'cp34',c:'co',f:"Bien qu'il ___ (faire) très chaud, elle porte un pull.",v:'faire',r:'fasse',e:'bien que → subjonctif'},
+  {i:'cp35',c:'co',f:"À condition qu'il ___ (vouloir) bien nous aider, ça marchera.",v:'vouloir',r:'veuille',e:'à condition que → subjonctif'},
+  {i:'cp36',c:'co',f:"Avant que ce ___ (être) trop tard, prévenons les autorités.",v:'être',r:'soit',e:'avant que → subjonctif'},
+  {i:'cp37',c:'co',f:"Il faut agir vite, pour que personne ne ___ (souffrir).",v:'souffrir',r:'souffre',e:'pour que → subjonctif'},
+  {i:'cp38',c:'co',f:"Quoi qu'il ___ (faire), il ne sera jamais satisfait.",v:'faire',r:'fasse',e:'quoi que → subjonctif'},
+  {i:'cp39',c:'du',f:"Je doute sérieusement qu'il ___ (venir) à temps pour le dîner.",v:'venir',r:'vienne',e:'douter que → subjonctif'},
+  {i:'cp40',c:'du',f:"Ma mère craint que je ne ___ (faire) une bêtise pendant le voyage.",v:'faire',r:'fasse',e:'craindre que → subjonctif'},
+  {i:'cp41',c:'du',f:"J'ai peur qu'elle ne ___ (comprendre) pas mon point de vue.",v:'comprendre',r:'comprenne',e:'avoir peur que → subjonctif'},
+  {i:'cp42',c:'du',f:"Il regrette profondément que nous ne ___ (pouvoir) pas l'accompagner.",v:'pouvoir',r:'puissions',e:'regretter que → subjonctif'},
+  {i:'cp43',c:'du',f:"Je suis vraiment content que tu ___ (être) venu nous voir.",v:'être',r:'sois',e:'être content que → subjonctif'},
+  {i:'cp44',c:'du',f:"Elle est surprise que vous ne ___ (savoir) pas la nouvelle.",v:'savoir',r:'sachiez',e:'être surpris que → subjonctif'},
+  {i:'cp45',c:'du',f:"Je ne crois absolument pas qu'il ___ (dire) la vérité.",v:'dire',r:'dise',e:'ne pas croire que → subjonctif'},
+  {i:'cp46',c:'du',f:"Penses-tu vraiment qu'elle ___ (avoir) tort dans cette histoire ?",v:'avoir',r:'ait',e:'penser que (interrog) → subjonctif'},
+  {i:'cp47',c:'du',f:"Il s'étonne que tu ___ (vouloir) partir aussi rapidement.",v:'vouloir',r:'veuilles',e:"s'étonner que → subjonctif"},
+  {i:'cp48',c:'du',f:"Nous sommes désolés que vous ne ___ (pouvoir) pas rester plus longtemps.",v:'pouvoir',r:'puissiez',e:'être désolé que → subjonctif'},
+  {i:'cp49',c:'du',f:"Je suis ravi que tu ___ (aller) mieux après ton opération.",v:'aller',r:'ailles',e:'être ravi que → subjonctif'},
+  {i:'cp50',c:'du',f:"Il craint que ses parents ne ___ (être) déçus de ses résultats.",v:'être',r:'soient',e:'craindre que → subjonctif'},
+];
+
+/* === POOL 5: Find the error (50) — f is sentence with error, err is the wrong word, cor is correct === */
+const POOL_ERROR = [
+  {i:'e01',c:'vo',f:"Je veux que tu viens avec moi.",err:'viens',cor:'viennes',e:'vouloir que → subjonctif'},
+  {i:'e02',c:'vo',f:"Elle souhaite que vous êtes heureux.",err:'êtes',cor:'soyez',e:'souhaiter que → subjonctif'},
+  {i:'e03',c:'vo',f:"Mes parents préfèrent que je reste à la maison.",err:'',cor:'',e:'CORRECT - skip'},
+  {i:'e03',c:'vo',f:"Mes parents préfèrent que je restes à la maison.",err:'restes',cor:'reste',e:'1re pers. → reste (pas restes)'},
+  {i:'e04',c:'vo',f:"Le prof exige que les élèves font leurs devoirs.",err:'font',cor:'fassent',e:'exiger que → subjonctif (fassent)'},
+  {i:'e05',c:'vo',f:"Je désire que ce projet réussit.",err:'réussit',cor:'réussisse',e:'désirer que → subjonctif'},
+  {i:'e06',c:'vo',f:"Il demande que nous partons tôt.",err:'partons',cor:'partions',e:'demander que → subjonctif'},
+  {i:'e07',c:'vo',f:"Elle tient à ce que tu sais la vérité.",err:'sais',cor:'saches',e:'tenir à ce que → subjonctif'},
+  {i:'e08',c:'vo',f:"Nous voulons que la fête est parfaite.",err:'est',cor:'soit',e:'vouloir que → subjonctif'},
+  {i:'e09',c:'vo',f:"J'espère qu'il vienne demain.",err:'vienne',cor:'viendra',e:'espérer que → indicatif futur'},
+  {i:'e10',c:'vo',f:"Elle veut que tu fais tes excuses.",err:'fais',cor:'fasses',e:'vouloir que → subjonctif'},
+  {i:'e11',c:'vo',f:"J'espère que tu aies raison.",err:'aies',cor:'as',e:'espérer que → indicatif'},
+  {i:'e12',c:'vo',f:"Nous préférons qu'il part avant nous.",err:'part',cor:'parte',e:'préférer que → subjonctif'},
+  {i:'e13',c:'im',f:"Il faut que tu bois plus d'eau.",err:'bois',cor:'boives',e:'il faut que → subjonctif'},
+  {i:'e14',c:'im',f:"Il est important que vous comprenez la leçon.",err:'comprenez',cor:'compreniez',e:'il est important que → subjonctif'},
+  {i:'e15',c:'im',f:"Il est nécessaire qu'il apprend ses verbes.",err:'apprend',cor:'apprenne',e:'il est nécessaire que → subjonctif'},
+  {i:'e16',c:'im',f:"Il est certain qu'il vienne demain.",err:'vienne',cor:'viendra',e:'il est certain que (affirm) → indicatif'},
+  {i:'e17',c:'im',f:"Il est dommage que tu ne peux pas rester.",err:'peux',cor:'puisses',e:'il est dommage que → subjonctif'},
+  {i:'e18',c:'im',f:"Il vaut mieux que nous attendons.",err:'attendons',cor:'attendions',e:'il vaut mieux que → subjonctif'},
+  {i:'e19',c:'im',f:"Il est évident qu'elle ait raison.",err:'ait',cor:'a',e:'il est évident que (affirm) → indicatif'},
+  {i:'e20',c:'im',f:"Il est normal que les enfants veulent jouer.",err:'veulent',cor:'veuillent',e:'il est normal que → subjonctif'},
+  {i:'e21',c:'im',f:"Il faut que je finis ce travail.",err:'finis',cor:'finisse',e:'il faut que → subjonctif'},
+  {i:'e22',c:'im',f:"Il est possible que je dois partir tôt.",err:'dois',cor:'doive',e:'il est possible que → subjonctif'},
+  {i:'e23',c:'im',f:"Il faut qu'elles savent la nouvelle.",err:'savent',cor:'sachent',e:'il faut que → subjonctif'},
+  {i:'e24',c:'im',f:"Il semble qu'elle est malade.",err:'est',cor:'soit',e:'il semble que → subjonctif'},
+  {i:'e25',c:'im',f:"Il est probable qu'il pleuve demain.",err:'pleuve',cor:'pleuvra',e:'il est probable que → indicatif'},
+  {i:'e26',c:'co',f:"Bien qu'il fait froid, elle sort sans manteau.",err:'fait',cor:'fasse',e:'bien que → subjonctif'},
+  {i:'e27',c:'co',f:"Je t'explique pour que tu comprends.",err:'comprends',cor:'comprennes',e:'pour que → subjonctif'},
+  {i:'e28',c:'co',f:"Tout ira bien à moins qu'il pleut.",err:'pleut',cor:'pleuve',e:'à moins que → subjonctif'},
+  {i:'e29',c:'co',f:"Téléphone avant qu'il part.",err:'part',cor:'parte',e:'avant que → subjonctif'},
+  {i:'e30',c:'co',f:"Reste ici jusqu'à ce qu'elle revient.",err:'revient',cor:'revienne',e:"jusqu'à ce que → subjonctif"},
+  {i:'e31',c:'co',f:"Pourvu qu'il fait beau demain !",err:'fait',cor:'fasse',e:'pourvu que → subjonctif'},
+  {i:'e32',c:'co',f:"Quoique tu es fatigué, viens avec nous.",err:'es',cor:'sois',e:'quoique → subjonctif'},
+  {i:'e33',c:'co',f:"Il est sorti sans qu'on l'entend.",err:'entend',cor:'entende',e:'sans que → subjonctif'},
+  {i:'e34',c:'co',f:"Après qu'il soit parti, on a parlé.",err:'soit',cor:'est',e:'après que → indicatif !'},
+  {i:'e35',c:'co',f:"Je t'écris afin que tu sais la vérité.",err:'sais',cor:'saches',e:'afin que → subjonctif'},
+  {i:'e36',c:'co',f:"Elle parle bas de peur que le bébé se réveille.",err:'',cor:'',e:'CORRECT - skip'},
+  {i:'e36',c:'co',f:"Bien que nous avons tout préparé, c'est raté.",err:'avons',cor:'ayons',e:'bien que → subjonctif'},
+  {i:'e37',c:'co',f:"Parce qu'il soit malade, il est absent.",err:'soit',cor:'est',e:'parce que → indicatif'},
+  {i:'e38',c:'co',f:"Travaille pour que tu réussis ton examen.",err:'réussis',cor:'réussisses',e:'pour que → subjonctif'},
+  {i:'e39',c:'du',f:"Je doute qu'il vient à temps.",err:'vient',cor:'vienne',e:'douter que → subjonctif'},
+  {i:'e40',c:'du',f:"Elle craint que tu fais une erreur.",err:'fais',cor:'fasses',e:'craindre que → subjonctif'},
+  {i:'e41',c:'du',f:"J'ai peur qu'elle ne comprend pas.",err:'comprend',cor:'comprenne',e:'avoir peur que → subjonctif'},
+  {i:'e42',c:'du',f:"Il regrette que nous devons partir.",err:'devons',cor:'devions',e:'regretter que → subjonctif'},
+  {i:'e43',c:'du',f:"Je suis content que tu es là.",err:'es',cor:'sois',e:'être content que → subjonctif'},
+  {i:'e44',c:'du',f:"Elle est surprise que vous savez déjà tout.",err:'savez',cor:'sachiez',e:'être surpris que → subjonctif'},
+  {i:'e45',c:'du',f:"Nous sommes désolés qu'il ne peut pas venir.",err:'peut',cor:'puisse',e:'être désolé que → subjonctif'},
+  {i:'e46',c:'du',f:"Je ne crois pas qu'il dit la vérité.",err:'dit',cor:'dise',e:'ne pas croire que → subjonctif'},
+  {i:'e47',c:'du',f:"Je pense qu'elle ait tort.",err:'ait',cor:'a',e:'je pense que (affirm) → indicatif'},
+  {i:'e48',c:'du',f:"Il s'étonne que tu veux partir si vite.",err:'veux',cor:'veuilles',e:"s'étonner que → subjonctif"},
+  {i:'e49',c:'du',f:"Je suis heureux que tout va bien.",err:'va',cor:'aille',e:'être heureux que → subjonctif'},
+  {i:'e50',c:'du',f:"Elle a peur qu'il ne fait une bêtise.",err:'fait',cor:'fasse',e:'avoir peur que → subjonctif'},
+].filter(x => x.err);
+
+/* === POOL 6: Reorder words (50) === */
+const POOL_REORDER = [
+  {i:'r01',c:'vo',w:['Je','veux','que','tu','viennes','avec','moi'],e:'vouloir que → subjonctif'},
+  {i:'r02',c:'vo',w:['Elle','souhaite','que','vous','soyez','heureux'],e:'souhaiter que → subjonctif'},
+  {i:'r03',c:'vo',w:['Le','prof','exige','que','les','élèves','fassent','leurs','devoirs'],e:'exiger que → subjonctif'},
+  {i:'r04',c:'vo',w:['Je','désire','que','tu','dises','la','vérité'],e:'désirer que → subjonctif'},
+  {i:'r05',c:'vo',w:['Il','demande','que','nous','partions','tôt'],e:'demander que → subjonctif'},
+  {i:'r06',c:'vo',w:['Elle','tient','à','ce','que','tu','saches','tout'],e:'tenir à ce que → subjonctif'},
+  {i:'r07',c:'vo',w:['Nous','voulons','que','la','fête','soit','parfaite'],e:'vouloir que → subjonctif'},
+  {i:'r08',c:'vo',w:['Je','préfère','que','tu','prennes','le','train'],e:'préférer que → subjonctif'},
+  {i:'r09',c:'vo',w:['Tu','souhaites','que','je','vienne','plus','tôt'],e:'souhaiter que → subjonctif'},
+  {i:'r10',c:'vo',w:['Le','directeur','exige','que','vous','ayez','un','diplôme'],e:'exiger que → subjonctif'},
+  {i:'r11',c:'vo',w:["J'espère",'que','tu','viendras','demain'],e:'espérer que → indicatif'},
+  {i:'r12',c:'vo',w:['Elle','veut','que','nous','fassions','attention'],e:'vouloir que → subjonctif'},
+  {i:'r13',c:'im',w:['Il','faut','que','tu','boives','plus',"d'eau"],e:'il faut que → subjonctif'},
+  {i:'r14',c:'im',w:['Il','est','important','que','vous','compreniez'],e:'il est important que → subjonctif'},
+  {i:'r15',c:'im',w:['Il','est','nécessaire',"qu'il",'apprenne','ses','verbes'],e:'il est nécessaire que → subjonctif'},
+  {i:'r16',c:'im',w:['Il','est','possible',"qu'elle",'ait','raison'],e:'il est possible que → subjonctif'},
+  {i:'r17',c:'im',w:['Il','est','dommage','que','tu','ne','puisses','pas','rester'],e:'il est dommage que → subjonctif'},
+  {i:'r18',c:'im',w:['Il','vaut','mieux','que','nous','attendions'],e:'il vaut mieux que → subjonctif'},
+  {i:'r19',c:'im',w:['Il','est','normal','que','les','enfants','veuillent','jouer'],e:'il est normal que → subjonctif'},
+  {i:'r20',c:'im',w:['Il','faut','que','je','finisse','ce','travail'],e:'il faut que → subjonctif'},
+  {i:'r21',c:'im',w:['Il','est','possible','que','je','doive','partir'],e:'il est possible que → subjonctif'},
+  {i:'r22',c:'im',w:['Il','semble',"qu'elle",'soit','malade'],e:'il semble que → subjonctif'},
+  {i:'r23',c:'im',w:['Il','est','temps','que','nous','partions'],e:'il est temps que → subjonctif'},
+  {i:'r24',c:'im',w:['Il','est','évident',"qu'il",'a','tort'],e:'il est évident que → indicatif'},
+  {i:'r25',c:'co',w:['Bien',"qu'il",'fasse','froid','elle','sort'],e:'bien que → subjonctif'},
+  {i:'r26',c:'co',w:["Je",'explique','pour','que','tu','comprennes'],e:'pour que → subjonctif'},
+  {i:'r27',c:'co',w:['À','moins',"qu'il",'ne','pleuve','on','sort'],e:'à moins que → subjonctif'},
+  {i:'r28',c:'co',w:['Téléphone','avant',"qu'il",'ne','parte'],e:'avant que → subjonctif'},
+  {i:'r29',c:'co',w:['Reste',"jusqu'à",'ce',"qu'elle",'revienne'],e:"jusqu'à ce que → subjonctif"},
+  {i:'r30',c:'co',w:['Pourvu',"qu'il",'fasse','beau','demain'],e:'pourvu que → subjonctif'},
+  {i:'r31',c:'co',w:['Quoique','tu','sois','fatigué','viens'],e:'quoique → subjonctif'},
+  {i:'r32',c:'co',w:['Il','est','sorti','sans',"qu'on",'le','voie'],e:'sans que → subjonctif'},
+  {i:'r33',c:'co',w:["J'écris",'afin','que','tu','saches','tout'],e:'afin que → subjonctif'},
+  {i:'r34',c:'co',w:['Elle','parle','bas','de','peur','que','le','bébé','se','réveille'],e:'de peur que → subjonctif'},
+  {i:'r35',c:'co',w:['Bien','que','nous','ayons','tout','préparé',"c'est",'raté'],e:'bien que → subjonctif'},
+  {i:'r36',c:'co',w:['Travaille','pour','que','tu','réussisses'],e:'pour que → subjonctif'},
+  {i:'r37',c:'co',w:['Avant','que','ce','soit','trop','tard','agissons'],e:'avant que → subjonctif'},
+  {i:'r38',c:'co',w:['Après',"qu'il",'est','parti','on','a','parlé'],e:'après que → indicatif'},
+  {i:'r39',c:'du',w:['Je','doute',"qu'il",'vienne','à','temps'],e:'douter que → subjonctif'},
+  {i:'r40',c:'du',w:['Elle','craint','que','tu','ne','fasses','une','erreur'],e:'craindre que → subjonctif'},
+  {i:'r41',c:'du',w:["J'ai",'peur',"qu'elle",'ne','comprenne','pas'],e:'avoir peur que → subjonctif'},
+  {i:'r42',c:'du',w:['Il','regrette','que','nous','devions','partir'],e:'regretter que → subjonctif'},
+  {i:'r43',c:'du',w:['Je','suis','content','que','tu','sois','là'],e:'être content que → subjonctif'},
+  {i:'r44',c:'du',w:['Elle','est','surprise','que','vous','sachiez','tout'],e:'être surpris que → subjonctif'},
+  {i:'r45',c:'du',w:['Nous','sommes','désolés',"qu'il",'ne','puisse','pas','venir'],e:'être désolé que → subjonctif'},
+  {i:'r46',c:'du',w:['Je','ne','crois','pas',"qu'il",'dise','la','vérité'],e:'ne pas croire que → subjonctif'},
+  {i:'r47',c:'du',w:['Penses-tu',"qu'elle",'ait','tort'],e:'forme interrogative → subjonctif'},
+  {i:'r48',c:'du',w:['Il',"s'étonne",'que','tu','veuilles','partir'],e:"s'étonner que → subjonctif"},
+  {i:'r49',c:'du',w:['Je','suis','heureux','que','tout','aille','bien'],e:'être heureux que → subjonctif'},
+  {i:'r50',c:'du',w:['Elle','a','peur',"qu'il",'ne','fasse','une','bêtise'],e:'avoir peur que → subjonctif'},
+];
+
+/* === POOL 7: Guided transformation (50) === */
+/* o = original sentence, t = transformed sentence with ___, v = verb (infinitive), r = correct form */
+const POOL_TRANSFORM = [
+  {i:'t01',c:'vo',o:"Tu dois partir.",t:"Il faut que tu ___ .",v:'partir',r:'partes',e:'il faut que → subjonctif'},
+  {i:'t02',c:'vo',o:"Je veux que je parte.",t:"Je veux ___ .",v:'partir',r:'partir',e:'même sujet → infinitif'},
+  {i:'t03',c:'vo',o:"Tu peux le faire.",t:"Il faut que tu le ___ .",v:'faire',r:'fasses',e:'il faut que → subjonctif'},
+  {i:'t04',c:'vo',o:"Vous devez être à l'heure.",t:"Il est important que vous ___ à l'heure.",v:'être',r:'soyez',e:'il est important que → subjonctif'},
+  {i:'t05',c:'vo',o:"Elle souhaite qu'elle vienne.",t:"Elle souhaite ___ .",v:'venir',r:'venir',e:'même sujet → infinitif'},
+  {i:'t06',c:'vo',o:"Tu dois savoir la vérité.",t:"Je veux que tu ___ la vérité.",v:'savoir',r:'saches',e:'vouloir que → subjonctif'},
+  {i:'t07',c:'vo',o:"Nous devons partir tôt.",t:"Il faut que nous ___ tôt.",v:'partir',r:'partions',e:'il faut que → subjonctif'},
+  {i:'t08',c:'vo',o:"Je dois finir ce travail.",t:"Il faut que je ___ ce travail.",v:'finir',r:'finisse',e:'il faut que → subjonctif'},
+  {i:'t09',c:'vo',o:"Il veut qu'il sorte.",t:"Il veut ___ .",v:'sortir',r:'sortir',e:'même sujet → infinitif'},
+  {i:'t10',c:'vo',o:"Tu peux faire des progrès.",t:"Il faudrait que tu ___ des progrès.",v:'faire',r:'fasses',e:'il faut que → subjonctif'},
+  {i:'t11',c:'vo',o:"Je préfère que je parte seul.",t:"Je préfère ___ seul.",v:'partir',r:'partir',e:'même sujet → infinitif'},
+  {i:'t12',c:'vo',o:"Vous devez prendre vos médicaments.",t:"Il faut que vous ___ vos médicaments.",v:'prendre',r:'preniez',e:'il faut que → subjonctif'},
+  {i:'t13',c:'im',o:"Il est important d'apprendre cela.",t:"Il est important que tu ___ cela.",v:'apprendre',r:'apprennes',e:'il est important que → subjonctif'},
+  {i:'t14',c:'im',o:"Il faut écouter le prof.",t:"Il faut qu'on ___ le prof.",v:'écouter',r:'écoute',e:'il faut que → subjonctif'},
+  {i:'t15',c:'im',o:"Il vaut mieux rester ici.",t:"Il vaut mieux que tu ___ ici.",v:'rester',r:'restes',e:'il vaut mieux que → subjonctif'},
+  {i:'t16',c:'im',o:"Il faut faire attention.",t:"Il faut que vous ___ attention.",v:'faire',r:'fassiez',e:'il faut que → subjonctif'},
+  {i:'t17',c:'im',o:"Il est temps de partir.",t:"Il est temps que nous ___ .",v:'partir',r:'partions',e:'il est temps que → subjonctif'},
+  {i:'t18',c:'im',o:"Il est dommage de ne pas venir.",t:"Il est dommage que tu ne ___ pas.",v:'venir',r:'viennes',e:'il est dommage que → subjonctif'},
+  {i:'t19',c:'im',o:"Il est nécessaire de dormir.",t:"Il est nécessaire que vous ___ .",v:'dormir',r:'dormiez',e:'il est nécessaire que → subjonctif'},
+  {i:'t20',c:'im',o:"Il est rare de la voir.",t:"Il est rare qu'on la ___ .",v:'voir',r:'voie',e:'il est rare que → subjonctif'},
+  {i:'t21',c:'im',o:"Il faut savoir l'écouter.",t:"Il faut que tu ___ l'écouter.",v:'savoir',r:'saches',e:'il faut que → subjonctif'},
+  {i:'t22',c:'im',o:"Il vaut mieux savoir.",t:"Il vaut mieux que nous ___ .",v:'savoir',r:'sachions',e:'il vaut mieux que → subjonctif'},
+  {i:'t23',c:'im',o:"Il faut pouvoir réussir.",t:"Il faut que tu ___ réussir.",v:'pouvoir',r:'puisses',e:'il faut que → subjonctif'},
+  {i:'t24',c:'im',o:"Il est urgent d'agir.",t:"Il est urgent que nous ___ .",v:'agir',r:'agissions',e:'il est urgent que → subjonctif'},
+  {i:'t25',c:'co',o:"Tu travailles dur, mais tu n'avances pas.",t:"Bien que tu ___ dur, tu n'avances pas.",v:'travailler',r:'travailles',e:'bien que → subjonctif'},
+  {i:'t26',c:'co',o:"Je t'aide pour réussir.",t:"Je t'aide pour que tu ___ .",v:'réussir',r:'réussisses',e:'pour que → subjonctif'},
+  {i:'t27',c:'co',o:"Je viendrai si tu n'es pas malade.",t:"Je viendrai à moins que tu ne ___ malade.",v:'être',r:'sois',e:'à moins que → subjonctif'},
+  {i:'t28',c:'co',o:"Téléphone-moi avant son départ.",t:"Téléphone-moi avant qu'il ne ___ .",v:'partir',r:'parte',e:'avant que → subjonctif'},
+  {i:'t29',c:'co',o:"Attends son arrivée.",t:"Attends jusqu'à ce qu'il ___ .",v:'arriver',r:'arrive',e:"jusqu'à ce que → subjonctif"},
+  {i:'t30',c:'co',o:"Il fait froid, mais elle sort sans manteau.",t:"Bien qu'il ___ froid, elle sort sans manteau.",v:'faire',r:'fasse',e:'bien que → subjonctif'},
+  {i:'t31',c:'co',o:"Je t'écris pour t'expliquer.",t:"Je t'écris afin que tu ___ .",v:'comprendre',r:'comprennes',e:'afin que → subjonctif'},
+  {i:'t32',c:'co',o:"Il est sorti, personne ne l'a vu.",t:"Il est sorti sans qu'on le ___ .",v:'voir',r:'voie',e:'sans que → subjonctif'},
+  {i:'t33',c:'co',o:"Espérons qu'il fera beau.",t:"Pourvu qu'il ___ beau !",v:'faire',r:'fasse',e:'pourvu que → subjonctif'},
+  {i:'t34',c:'co',o:"Elle parle bas pour ne pas réveiller le bébé.",t:"Elle parle bas de peur que le bébé ne ___ .",v:'se réveiller',r:'se réveille',e:'de peur que → subjonctif'},
+  {i:'t35',c:'co',o:"Tu es fatigué, tu viens quand même.",t:"Quoique tu ___ fatigué, tu viens.",v:'être',r:'sois',e:'quoique → subjonctif'},
+  {i:'t36',c:'co',o:"Je t'explique pour ta compréhension.",t:"Je t'explique pour que tu ___ .",v:'comprendre',r:'comprennes',e:'pour que → subjonctif'},
+  {i:'t37',c:'co',o:"S'il pleut, on annule.",t:"À moins qu'il ne ___ , on sort.",v:'pleuvoir',r:'pleuve',e:'à moins que → subjonctif'},
+  {i:'t38',c:'co',o:"Avant son retour, ranges-tout.",t:"Range tout avant qu'il ne ___ .",v:'revenir',r:'revienne',e:'avant que → subjonctif'},
+  {i:'t39',c:'du',o:"Il viendra peut-être.",t:"Je doute qu'il ___ .",v:'venir',r:'vienne',e:'douter que → subjonctif'},
+  {i:'t40',c:'du',o:"Tu risques de faire une erreur.",t:"Elle craint que tu ne ___ une erreur.",v:'faire',r:'fasses',e:'craindre que → subjonctif'},
+  {i:'t41',c:'du',o:"Elle ne comprendra peut-être pas.",t:"J'ai peur qu'elle ne ___ pas.",v:'comprendre',r:'comprenne',e:'avoir peur que → subjonctif'},
+  {i:'t42',c:'du',o:"Vous devez partir, et il le regrette.",t:"Il regrette que vous ___ partir.",v:'devoir',r:'deviez',e:'regretter que → subjonctif'},
+  {i:'t43',c:'du',o:"Tu es là, j'en suis content.",t:"Je suis content que tu ___ là.",v:'être',r:'sois',e:'être content que → subjonctif'},
+  {i:'t44',c:'du',o:"Vous savez déjà tout, ça la surprend.",t:"Elle est surprise que vous ___ déjà tout.",v:'savoir',r:'sachiez',e:'être surpris que → subjonctif'},
+  {i:'t45',c:'du',o:"Il ne peut pas venir, on le regrette.",t:"Nous sommes désolés qu'il ne ___ pas venir.",v:'pouvoir',r:'puisse',e:'être désolé que → subjonctif'},
+  {i:'t46',c:'du',o:"Il dira sans doute la vérité.",t:"Je ne crois pas qu'il ___ la vérité.",v:'dire',r:'dise',e:'ne pas croire que → subjonctif'},
+  {i:'t47',c:'du',o:"Elle a peut-être tort.",t:"Penses-tu qu'elle ___ tort ?",v:'avoir',r:'ait',e:'penser que (interrog) → subjonctif'},
+  {i:'t48',c:'du',o:"Tu veux partir si vite ?",t:"Il s'étonne que tu ___ partir si vite.",v:'vouloir',r:'veuilles',e:"s'étonner que → subjonctif"},
+  {i:'t49',c:'du',o:"Tout va bien, j'en suis heureux.",t:"Je suis heureux que tout ___ bien.",v:'aller',r:'aille',e:'être heureux que → subjonctif'},
+  {i:'t50',c:'du',o:"Il fera peut-être une bêtise.",t:"Elle a peur qu'il ne ___ une bêtise.",v:'faire',r:'fasse',e:'avoir peur que → subjonctif'},
+];
+
+/* === POOL 8: Multiple choice (60) — d = 3 distractors === */
+const POOL_MCQ = [
+  {i:'m01',c:'vo',f:"Je veux que tu ___ avec moi.",r:'viennes',d:['viens','venir','venais'],e:'vouloir que → subjonctif'},
+  {i:'m02',c:'vo',f:"Elle souhaite que vous ___ heureux.",r:'soyez',d:['êtes','être','étiez'],e:'souhaiter que → subjonctif'},
+  {i:'m03',c:'vo',f:"Le prof exige que les élèves ___ leurs devoirs.",r:'fassent',d:['font','faire','faisaient'],e:'exiger que → subjonctif'},
+  {i:'m04',c:'vo',f:"Je désire qu'il me ___ la vérité.",r:'dise',d:['dit','dire','disait'],e:'désirer que → subjonctif'},
+  {i:'m05',c:'vo',f:"Ils préfèrent que je ___ tôt.",r:'parte',d:['pars','partir','partais'],e:'préférer que → subjonctif'},
+  {i:'m06',c:'vo',f:"Elle veut que tu ___ tes excuses.",r:'fasses',d:['fais','faire','ferais'],e:'vouloir que → subjonctif'},
+  {i:'m07',c:'vo',f:"J'espère qu'il ___ demain.",r:'viendra',d:['vienne','vient','venir'],e:'espérer que → indicatif futur'},
+  {i:'m08',c:'vo',f:"Nous tenons à ce que tu ___ tout.",r:'saches',d:['sais','savoir','savais'],e:'tenir à ce que → subjonctif'},
+  {i:'m09',c:'vo',f:"Le directeur demande que nous ___ ponctuels.",r:'soyons',d:['sommes','être','étions'],e:'demander que → subjonctif'},
+  {i:'m10',c:'vo',f:"Mes parents souhaitent que je ___ médecin.",r:'devienne',d:['deviens','devenir','devenais'],e:'souhaiter que → subjonctif'},
+  {i:'m11',c:'vo',f:"Elle voudrait que vous ___ avec elle.",r:'veniez',d:['venez','venir','viendriez'],e:'vouloir que → subjonctif'},
+  {i:'m12',c:'vo',f:"Je préfère qu'on ne ___ pas de ça.",r:'parle',d:['parlons','parler','parlerait'],e:'préférer que → subjonctif'},
+  {i:'m13',c:'vo',f:"Il exige qu'on ___ silence.",r:'fasse',d:['fait','faire','ferait'],e:'exiger que → subjonctif'},
+  {i:'m14',c:'vo',f:"Tu veux qu'on ___ le bus.",r:'prenne',d:['prend','prendre','prendrait'],e:'vouloir que → subjonctif'},
+  {i:'m15',c:'vo',f:"Elle aimerait que tu ___ là.",r:'sois',d:['es','être','étais'],e:'aimer que → subjonctif'},
+  {i:'m16',c:'im',f:"Il faut que tu ___ plus d'eau.",r:'boives',d:['bois','boire','buvais'],e:'il faut que → subjonctif'},
+  {i:'m17',c:'im',f:"Il est important que vous ___ la leçon.",r:'compreniez',d:['comprenez','comprendre','compreniez'],e:'il est important que → subjonctif'},
+  {i:'m18',c:'im',f:"Il est nécessaire qu'il ___ ses leçons.",r:'apprenne',d:['apprend','apprendre','apprenait'],e:'il est nécessaire que → subjonctif'},
+  {i:'m19',c:'im',f:"Il est possible qu'elle ___ raison.",r:'ait',d:['a','avoir','avait'],e:'il est possible que → subjonctif'},
+  {i:'m20',c:'im',f:"Il est dommage que tu ne ___ pas rester.",r:'puisses',d:['peux','pouvoir','pouvais'],e:'il est dommage que → subjonctif'},
+  {i:'m21',c:'im',f:"Il vaut mieux que nous ___ .",r:'attendions',d:['attendons','attendre','attendrions'],e:'il vaut mieux que → subjonctif'},
+  {i:'m22',c:'im',f:"Il est certain qu'il ___ demain.",r:'viendra',d:['vienne','venir','venait'],e:'il est certain que (affirm) → indicatif'},
+  {i:'m23',c:'im',f:"Il faut que je ___ ce travail.",r:'finisse',d:['finis','finir','finissais'],e:'il faut que → subjonctif'},
+  {i:'m24',c:'im',f:"Il est temps que vous ___ .",r:'partiez',d:['partez','partir','partiriez'],e:'il est temps que → subjonctif'},
+  {i:'m25',c:'im',f:"Il est étrange qu'il ne ___ pas.",r:'réponde',d:['répond','répondre','répondait'],e:'il est étrange que → subjonctif'},
+  {i:'m26',c:'im',f:"Il semble qu'elle ___ malade.",r:'soit',d:['est','être','était'],e:'il semble que → subjonctif'},
+  {i:'m27',c:'im',f:"Il est évident qu'il ___ raison.",r:'a',d:['ait','avoir','avait'],e:'il est évident que (affirm) → indicatif'},
+  {i:'m28',c:'im',f:"Il faut qu'on ___ la situation.",r:'comprenne',d:['comprend','comprendre','comprendrait'],e:'il faut que → subjonctif'},
+  {i:'m29',c:'im',f:"Il est rare qu'elle ___ en retard.",r:'soit',d:['est','être','était'],e:'il est rare que → subjonctif'},
+  {i:'m30',c:'im',f:"Il est temps que tu ___ une décision.",r:'prennes',d:['prends','prendre','prendrais'],e:'il est temps que → subjonctif'},
+  {i:'m31',c:'co',f:"Bien qu'il ___ froid, elle sort.",r:'fasse',d:['fait','faire','ferait'],e:'bien que → subjonctif'},
+  {i:'m32',c:'co',f:"Je t'explique pour que tu ___ .",r:'comprennes',d:['comprends','comprendre','comprendrais'],e:'pour que → subjonctif'},
+  {i:'m33',c:'co',f:"À moins qu'il ne ___ , on sort.",r:'pleuve',d:['pleut','pleuvoir','pleuvait'],e:'à moins que → subjonctif'},
+  {i:'m34',c:'co',f:"Avant qu'il ne ___ , parlons-lui.",r:'parte',d:['part','partir','partait'],e:'avant que → subjonctif'},
+  {i:'m35',c:'co',f:"Jusqu'à ce qu'elle ___ , j'attends.",r:'revienne',d:['revient','revenir','revenait'],e:"jusqu'à ce que → subjonctif"},
+  {i:'m36',c:'co',f:"Pourvu qu'il ___ beau !",r:'fasse',d:['fait','faire','ferait'],e:'pourvu que → subjonctif'},
+  {i:'m37',c:'co',f:"Quoique tu ___ fatigué, viens.",r:'sois',d:['es','être','étais'],e:'quoique → subjonctif'},
+  {i:'m38',c:'co',f:"Sans qu'on le ___ , il est parti.",r:'voie',d:['voit','voir','voyait'],e:'sans que → subjonctif'},
+  {i:'m39',c:'co',f:"Afin que tu ___ la vérité, voici.",r:'saches',d:['sais','savoir','savais'],e:'afin que → subjonctif'},
+  {i:'m40',c:'co',f:"De peur qu'il ne ___ , je me tais.",r:'comprenne',d:['comprend','comprendre','comprendrait'],e:'de peur que → subjonctif'},
+  {i:'m41',c:'co',f:"Après qu'il ___ parti, j'ai parlé.",r:'est',d:['soit','être','était'],e:'après que → indicatif !'},
+  {i:'m42',c:'co',f:"Parce qu'il ___ tard, je rentre.",r:'est',d:['soit','être','était'],e:'parce que → indicatif'},
+  {i:'m43',c:'co',f:"Pendant qu'il ___ , je travaille.",r:'dort',d:['dorme','dormir','dormait'],e:'pendant que → indicatif'},
+  {i:'m44',c:'co',f:"Dès qu'il ___ , appelle.",r:'arrive',d:['arrive','arriver','arrivait'],e:'dès que → indicatif'},
+  {i:'m45',c:'co',f:"Lorsqu'il ___ , dis bonjour.",r:'arrive',d:['arrive','arriver','arrivait'],e:'lorsque → indicatif'},
+  {i:'m46',c:'du',f:"Je doute qu'il ___ à temps.",r:'vienne',d:['vient','venir','venait'],e:'douter que → subjonctif'},
+  {i:'m47',c:'du',f:"Elle craint que tu ne ___ une erreur.",r:'fasses',d:['fais','faire','faisais'],e:'craindre que → subjonctif'},
+  {i:'m48',c:'du',f:"J'ai peur qu'elle ne ___ pas.",r:'comprenne',d:['comprend','comprendre','comprenait'],e:'avoir peur que → subjonctif'},
+  {i:'m49',c:'du',f:"Il regrette que nous ___ partir.",r:'devions',d:['devons','devoir','devrions'],e:'regretter que → subjonctif'},
+  {i:'m50',c:'du',f:"Je suis content que tu ___ là.",r:'sois',d:['es','être','étais'],e:'être content que → subjonctif'},
+  {i:'m51',c:'du',f:"Je ne crois pas qu'il ___ la vérité.",r:'dise',d:['dit','dire','disait'],e:'ne pas croire que → subjonctif'},
+  {i:'m52',c:'du',f:"Je pense qu'elle ___ raison.",r:'a',d:['ait','avoir','avait'],e:'je pense que (affirm) → indicatif'},
+  {i:'m53',c:'du',f:"Crois-tu qu'elle ___ raison ?",r:'ait',d:['a','avoir','avait'],e:'forme interrogative → subjonctif'},
+  {i:'m54',c:'du',f:"Il s'étonne que tu ___ partir.",r:'veuilles',d:['veux','vouloir','voulais'],e:"s'étonner que → subjonctif"},
+  {i:'m55',c:'du',f:"Nous sommes surpris qu'il ___ là.",r:'soit',d:['est','être','était'],e:'être surpris que → subjonctif'},
+  {i:'m56',c:'du',f:"Je suis désolé qu'il ___ malade.",r:'soit',d:['est','être','était'],e:'être désolé que → subjonctif'},
+  {i:'m57',c:'du',f:"Trouves-tu qu'il ___ gentil ?",r:'soit',d:['est','être','était'],e:'trouver que (interrog) → subjonctif'},
+  {i:'m58',c:'du',f:"Je trouve qu'il ___ gentil.",r:'est',d:['soit','être','était'],e:'trouver que (affirm) → indicatif'},
+  {i:'m59',c:'du',f:"Je sais qu'il ___ là.",r:'est',d:['soit','être','était'],e:'savoir que → indicatif'},
+  {i:'m60',c:'du',f:"Je ne vois pas qu'il ___ compris.",r:'ait',d:['a','avoir','avait'],e:'ne pas voir que → subjonctif'},
+];
+
+/* === POOL 9: Match expression with mode (60) === */
+/* m: 'subj' | 'ind' | 'both' */
+const POOL_MATCH = [
+  {i:'a01',c:'vo',ex:'vouloir que',m:'subj',e:'volonté → subjonctif'},
+  {i:'a02',c:'vo',ex:'souhaiter que',m:'subj',e:'souhait → subjonctif'},
+  {i:'a03',c:'vo',ex:'désirer que',m:'subj',e:'désir → subjonctif'},
+  {i:'a04',c:'vo',ex:'préférer que',m:'subj',e:'préférence → subjonctif'},
+  {i:'a05',c:'vo',ex:'exiger que',m:'subj',e:'exigence → subjonctif'},
+  {i:'a06',c:'vo',ex:'demander que',m:'subj',e:'demande → subjonctif'},
+  {i:'a07',c:'vo',ex:"tenir à ce que",m:'subj',e:'volonté forte → subjonctif'},
+  {i:'a08',c:'vo',ex:"espérer que",m:'ind',e:'exception : indicatif futur'},
+  {i:'a09',c:'vo',ex:"aimer que",m:'subj',e:'sentiment → subjonctif'},
+  {i:'a10',c:'vo',ex:"interdire que",m:'subj',e:'interdiction → subjonctif'},
+  {i:'a11',c:'im',ex:'il faut que',m:'subj',e:'obligation → subjonctif'},
+  {i:'a12',c:'im',ex:'il est nécessaire que',m:'subj',e:'nécessité → subjonctif'},
+  {i:'a13',c:'im',ex:'il est important que',m:'subj',e:'importance → subjonctif'},
+  {i:'a14',c:'im',ex:'il est possible que',m:'subj',e:'possibilité → subjonctif'},
+  {i:'a15',c:'im',ex:'il est probable que',m:'ind',e:'probabilité forte → indicatif'},
+  {i:'a16',c:'im',ex:'il est certain que',m:'both',e:'affirm: ind / négatif: subj'},
+  {i:'a17',c:'im',ex:'il est sûr que',m:'both',e:'affirm: ind / négatif: subj'},
+  {i:'a18',c:'im',ex:'il est évident que',m:'both',e:'affirm: ind / négatif: subj'},
+  {i:'a19',c:'im',ex:'il vaut mieux que',m:'subj',e:'préférence → subjonctif'},
+  {i:'a20',c:'im',ex:'il semble que',m:'subj',e:'apparence subjective → subjonctif'},
+  {i:'a21',c:'im',ex:'il paraît que',m:'ind',e:'rumeur → indicatif'},
+  {i:'a22',c:'im',ex:'il est dommage que',m:'subj',e:'regret → subjonctif'},
+  {i:'a23',c:'im',ex:'il est étrange que',m:'subj',e:'étonnement → subjonctif'},
+  {i:'a24',c:'im',ex:'il est temps que',m:'subj',e:'urgence → subjonctif'},
+  {i:'a25',c:'im',ex:'il est rare que',m:'subj',e:'rareté → subjonctif'},
+  {i:'a26',c:'im',ex:'il est normal que',m:'subj',e:'jugement → subjonctif'},
+  {i:'a27',c:'im',ex:'il est vrai que',m:'both',e:'affirm: ind / négatif: subj'},
+  {i:'a28',c:'co',ex:'bien que',m:'subj',e:'concession → subjonctif'},
+  {i:'a29',c:'co',ex:'quoique',m:'subj',e:'concession → subjonctif'},
+  {i:'a30',c:'co',ex:'pour que',m:'subj',e:'but → subjonctif'},
+  {i:'a31',c:'co',ex:'afin que',m:'subj',e:'but → subjonctif'},
+  {i:'a32',c:'co',ex:'avant que',m:'subj',e:'antériorité → subjonctif'},
+  {i:'a33',c:'co',ex:'après que',m:'ind',e:'postériorité → indicatif !'},
+  {i:'a34',c:'co',ex:"jusqu'à ce que",m:'subj',e:'limite → subjonctif'},
+  {i:'a35',c:'co',ex:'pourvu que',m:'subj',e:'condition souhaitée → subjonctif'},
+  {i:'a36',c:'co',ex:'à moins que',m:'subj',e:'exception → subjonctif'},
+  {i:'a37',c:'co',ex:'sans que',m:'subj',e:'manière sans → subjonctif'},
+  {i:'a38',c:'co',ex:'de peur que',m:'subj',e:'crainte → subjonctif'},
+  {i:'a39',c:'co',ex:'de crainte que',m:'subj',e:'crainte → subjonctif'},
+  {i:'a40',c:'co',ex:'à condition que',m:'subj',e:'condition → subjonctif'},
+  {i:'a41',c:'co',ex:'en attendant que',m:'subj',e:'attente → subjonctif'},
+  {i:'a42',c:'co',ex:'parce que',m:'ind',e:'cause → indicatif'},
+  {i:'a43',c:'co',ex:'puisque',m:'ind',e:'cause → indicatif'},
+  {i:'a44',c:'co',ex:'pendant que',m:'ind',e:'simultanéité → indicatif'},
+  {i:'a45',c:'co',ex:'tandis que',m:'ind',e:'simultanéité → indicatif'},
+  {i:'a46',c:'co',ex:'dès que',m:'ind',e:'antériorité → indicatif'},
+  {i:'a47',c:'co',ex:'lorsque',m:'ind',e:'temps → indicatif'},
+  {i:'a48',c:'co',ex:'aussitôt que',m:'ind',e:'temps → indicatif'},
+  {i:'a49',c:'co',ex:'alors que',m:'ind',e:'opposition → indicatif'},
+  {i:'a50',c:'co',ex:'tant que',m:'ind',e:'durée → indicatif'},
+  {i:'a51',c:'du',ex:'douter que',m:'subj',e:'doute → subjonctif'},
+  {i:'a52',c:'du',ex:'craindre que',m:'subj',e:'crainte → subjonctif'},
+  {i:'a53',c:'du',ex:'avoir peur que',m:'subj',e:'peur → subjonctif'},
+  {i:'a54',c:'du',ex:'regretter que',m:'subj',e:'regret → subjonctif'},
+  {i:'a55',c:'du',ex:'être content que',m:'subj',e:'joie → subjonctif'},
+  {i:'a56',c:'du',ex:'ne pas croire que',m:'subj',e:'doute → subjonctif'},
+  {i:'a57',c:'du',ex:'ne pas penser que',m:'subj',e:'doute → subjonctif'},
+  {i:'a58',c:'du',ex:'croire que',m:'both',e:'affirm: ind / négatif: subj'},
+  {i:'a59',c:'du',ex:'penser que',m:'both',e:'affirm: ind / négatif: subj'},
+  {i:'a60',c:'du',ex:"s'étonner que",m:'subj',e:'étonnement → subjonctif'},
+];
+
+/* === POOL 10: Block quiz config === */
+/* Each block references items from POOL_FILL and POOL_MCQ by category */
+const POOL_BLOCS = [
+  {id:'b1', title:'Verbes de volonté et désir', icon:'💪', cat:'vo', count:6},
+  {id:'b2', title:'Expressions impersonnelles', icon:'📋', cat:'im', count:6},
+  {id:'b3', title:'Conjonctions et connecteurs', icon:'🔗', cat:'co', count:6},
+  {id:'b4', title:'Verbes de doute et émotion', icon:'💭', cat:'du', count:6},
+];
+
+/* === EXERCISE TYPES (cards) === */
+const EX_TYPES = [
+  {id:'fill',     icon:'✍️',  name:'Remplis le trou',       desc:"Écris la forme correcte du verbe au subjonctif.",                       pool:'POOL_FILL',      size:12},
+  {id:'svi',      icon:'⚖️',  name:'Subjonctif vs Indicatif', desc:"Choisis la forme correcte entre subjonctif et indicatif.",            pool:'POOL_SVI',       size:12},
+  {id:'classify', icon:'🗂️',  name:'Classificateur',         desc:"Classe chaque phrase : subjonctif ou indicatif ?",                    pool:'POOL_CLASSIFY',  size:8},
+  {id:'complete', icon:'📝',  name:'Complète la phrase',     desc:"Phrases plus longues avec l'expression déclencheuse visible.",        pool:'POOL_COMPLETE',  size:12},
+  {id:'error',    icon:'🔍',  name:"Trouve l'erreur",        desc:"Clique sur le mot incorrect et écris la forme correcte.",             pool:'POOL_ERROR',     size:8},
+  {id:'reorder',  icon:'🧩',  name:'Réorganise la phrase',   desc:"Clique sur les mots dans le bon ordre.",                              pool:'POOL_REORDER',   size:8},
+  {id:'transform',icon:'🔄',  name:'Transformation guidée',  desc:"Transforme la phrase : infinitif → subjonctif ou vice-versa.",        pool:'POOL_TRANSFORM', size:10},
+  {id:'mcq',      icon:'🅰️',  name:'Choix multiple',         desc:"4 options A/B/C/D · une seule correcte.",                             pool:'POOL_MCQ',       size:12},
+  {id:'match',    icon:'🔗',  name:'Associe au mode',        desc:"Pour chaque expression, dis si elle exige subj/ind/les deux.",        pool:'POOL_MATCH',     size:8},
+  {id:'blocs',    icon:'🎯',  name:'Quiz par blocs',         desc:"4 blocs thématiques × 6 questions · 24 questions au total.",          pool:'POOL_BLOCS',     size:24},
+];
+
+const POOL_REGISTRY = {POOL_FILL,POOL_SVI,POOL_CLASSIFY,POOL_COMPLETE,POOL_ERROR,POOL_REORDER,POOL_TRANSFORM,POOL_MCQ,POOL_MATCH,POOL_BLOCS};
+
+/* ════════════════════════════════════════════════════════
+   EXERCICES — ENGINE (shared logic)
+   ════════════════════════════════════════════════════════ */
+
+const LS_PREFIX = 'subjonctif_';
+const LS_KEY = (type, sub) => `${LS_PREFIX}${type}_${sub}`;
+
+/* Normalize: lowercase, trim, collapse spaces */
+function normalize(s) {
+  return (s || '').toString().trim().toLowerCase().replace(/\s+/g, ' ');
+}
+/* Strip accents */
+function stripAccents(s) {
+  return normalize(s).normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/œ/g,'oe').replace(/æ/g,'ae');
+}
+/* Compare answer */
+function compareAnswer(user, correct) {
+  const u = normalize(user), c = normalize(correct);
+  if (u === c) return 'ok';
+  if (stripAccents(u) === stripAccents(c)) return 'accent';
+  return 'err';
+}
+
+/* Shuffle (Fisher-Yates) */
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+/* Pick N random unique items from pool */
+function pickN(pool, n) {
+  return shuffle(pool).slice(0, Math.min(n, pool.length));
+}
+
+/* localStorage helpers */
+function loadJSON(key, def) {
+  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : def; } catch(e) { return def; }
+}
+function saveJSON(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+}
+
+/* Per-type stats stored as: { plays, totalCorrect, totalAttempts, lastPlayed, verbErrors: {verb: count}, pendingErrors: [ids] } */
+function getStats(typeId) {
+  return loadJSON(LS_KEY(typeId, 'stats'), {
+    plays: 0, totalCorrect: 0, totalAttempts: 0,
+    lastPlayed: null, verbErrors: {}, pendingErrors: []
+  });
+}
+function saveStats(typeId, stats) {
+  saveJSON(LS_KEY(typeId, 'stats'), stats);
+}
+function recordRoundStats(typeId, results, sessionErrorIds, sessionErrorVerbs) {
+  const s = getStats(typeId);
+  s.plays = (s.plays || 0) + 1;
+  const ok = results.filter(r => r.outcome === 'ok' || r.outcome === 'retry').length;
+  s.totalCorrect += ok;
+  s.totalAttempts += results.length;
+  s.lastPlayed = Date.now();
+  (sessionErrorVerbs || []).forEach(v => { if (v) s.verbErrors[v] = (s.verbErrors[v]||0) + 1; });
+  const existing = new Set(s.pendingErrors || []);
+  (sessionErrorIds || []).forEach(id => existing.add(id));
+  s.pendingErrors = Array.from(existing);
+  saveStats(typeId, s);
+}
+function clearPendingForIds(typeId, ids) {
+  const s = getStats(typeId);
+  const toRemove = new Set(ids);
+  s.pendingErrors = (s.pendingErrors || []).filter(id => !toRemove.has(id));
+  saveStats(typeId, s);
+}
+
+/* Time-ago formatter */
+function fmtTimeAgo(ts) {
+  if (!ts) return 'jamais';
+  const d = (Date.now() - ts) / 1000;
+  if (d < 60) return "à l'instant";
+  if (d < 3600) return `${Math.floor(d/60)} min`;
+  if (d < 86400) return `${Math.floor(d/3600)} h`;
+  if (d < 604800) return `${Math.floor(d/86400)} j`;
+  return `${Math.floor(d/604800)} sem.`;
+}
+
+/* === Exercise SESSION state === */
+const session = {
+  type: null,           // current exercise type id
+  items: [],            // current round items
+  idx: 0,
+  results: [],          // [{id, outcome:'ok'|'retry'|'err'|'pending', userAnswer, item}]
+  streak: 0,
+  bestStreak: 0,
+  triedOnce: false,     // true after first attempt on current item
+  usedHint: false,
+  advancedMode: false,
+  errorIds: [],         // ids failed in this session
+  errorVerbs: [],
+  // bloc-specific
+  bloc: { idx: 0, blocResults: [] }
+};
+
+/* ════════════════════════════════════════════════════════
+   SELECTION SCREEN
+   ════════════════════════════════════════════════════════ */
+
+function renderExSelection() {
+  const grid = document.getElementById('ex-card-grid');
+  if (!grid) return;
+  grid.innerHTML = EX_TYPES.map((t, idx) => {
+    const stats = getStats(t.id);
+    const pendingN = (stats.pendingErrors || []).length;
+    const successPct = stats.totalAttempts ? Math.round(100 * stats.totalCorrect / stats.totalAttempts) : null;
+    const topVerbs = Object.entries(stats.verbErrors || {}).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    return `
+      <div class="ex-card" data-type="${t.id}">
+        <div class="ex-card-head">
+          <span class="ex-card-icon">${t.icon}</span>
+          <div style="flex:1">
+            <div class="ex-card-name">${t.name}</div>
+          </div>
+          <span class="ex-card-num">${idx+1}/10</span>
+        </div>
+        <div class="ex-card-desc">${t.desc}</div>
+        <div class="ex-card-actions">
+          <button class="ex-card-play" onclick="startExercise('${t.id}')">Jouer →</button>
+          ${pendingN > 0 ? `<span class="ex-card-pending">● ${pendingN} en attente</span>` : ''}
+          <button class="ex-card-stats-toggle" onclick="toggleCardStats('${t.id}')">📊 Stats</button>
+        </div>
+        <div class="ex-card-stats" id="card-stats-${t.id}">
+          ${stats.plays ? `
+            <div class="stat-line"><span>Parties jouées</span><strong>${stats.plays}</strong></div>
+            <div class="stat-line"><span>% réussite</span><strong>${successPct ?? '—'}%</strong></div>
+            <div class="stat-line"><span>Dernière partie</span><strong>${fmtTimeAgo(stats.lastPlayed)}</strong></div>
+            ${topVerbs.length ? `<div class="stat-line"><span>Verbes ratés</span><strong>${topVerbs.map(([v,n])=>`${v} (${n})`).join(', ')}</strong></div>` : ''}
+          ` : `<div class="stat-empty">Pas encore joué.</div>`}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleCardStats(typeId) {
+  const el = document.getElementById('card-stats-' + typeId);
+  if (el) el.classList.toggle('visible');
+}
+
+/* ════════════════════════════════════════════════════════
+   EXERCISE FLOW: start / exit
+   ════════════════════════════════════════════════════════ */
+
+function startExercise(typeId) {
+  session.type = typeId;
+  session.idx = 0;
+  session.results = [];
+  session.streak = 0;
+  session.bestStreak = 0;
+  session.triedOnce = false;
+  session.usedHint = false;
+  session.errorIds = [];
+  session.errorVerbs = [];
+  session.bloc = { idx: 0, blocResults: [] };
+  const type = EX_TYPES.find(t => t.id === typeId);
+  document.getElementById('ex-selection').style.display = 'none';
+  document.getElementById('ex-area').classList.add('visible');
+  document.getElementById('ex-title').textContent = `${type.icon} ${type.name}`;
+  showStartScreen(type);
+}
+
+function exitExercise() {
+  document.getElementById('ex-selection').style.display = '';
+  document.getElementById('ex-area').classList.remove('visible');
+  document.getElementById('ex-progress').style.display = 'none';
+  document.getElementById('ex-stage').innerHTML = '';
+  document.getElementById('ex-start-wrap').innerHTML = '';
+  renderExSelection();
+}
+
+/* ════════════════════════════════════════════════════════
+   START SCREEN — shown before the first card of a round
+   ════════════════════════════════════════════════════════ */
+
+function showStartScreen(type) {
+  document.getElementById('ex-progress').style.display = 'none';
+  document.getElementById('ex-stage').innerHTML = '';
+  const supportsAdvanced = ['fill','complete','transform'].includes(type.id);
+  const stats = getStats(type.id);
+  const pendingN = (stats.pendingErrors || []).length;
+  document.getElementById('ex-start-wrap').innerHTML = `
+    <div class="ex-start">
+      <h3>${type.icon} ${type.name}</h3>
+      <p>${type.desc}</p>
+      ${supportsAdvanced ? `
+        <div class="mode-switch">
+          <label>
+            <input type="checkbox" id="adv-mode" onchange="session.advancedMode = this.checked">
+            <span><strong>Mode avancé</strong> — sans afficher l'infinitif entre parenthèses</span>
+          </label>
+        </div>
+      ` : ''}
+      <div class="ex-actions" style="justify-content:center">
+        <button class="ex-btn primary" onclick="beginRound()">Commencer la partie</button>
+        ${pendingN > 0 ? `<button class="ex-btn warn" onclick="beginRound(true)">Rejouer ${pendingN} erreurs</button>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+/* ════════════════════════════════════════════════════════
+   BEGIN A ROUND
+   ════════════════════════════════════════════════════════ */
+
+function beginRound(onlyPending) {
+  const type = EX_TYPES.find(t => t.id === session.type);
+  document.getElementById('ex-start-wrap').innerHTML = '';
+  if (type.id === 'blocs') {
+    startBlocRound();
+    return;
+  }
+  const pool = POOL_REGISTRY[type.pool];
+  let items;
+  if (onlyPending) {
+    const stats = getStats(type.id);
+    const pendingSet = new Set(stats.pendingErrors || []);
+    const pendingItems = pool.filter(x => pendingSet.has(x.i));
+    items = shuffle(pendingItems);
+  } else {
+    items = pickN(pool, type.size);
+  }
+  if (!items.length) {
+    // Fallback if pool is empty
+    items = pickN(pool, type.size);
+  }
+  session.items = items;
+  session.idx = 0;
+  session.results = [];
+  session.streak = 0;
+  session.bestStreak = 0;
+  session.errorIds = [];
+  session.errorVerbs = [];
+  document.getElementById('ex-progress').style.display = 'block';
+  updateStreak();
+  renderCurrent();
+}
+
+/* ════════════════════════════════════════════════════════
+   PROGRESS / STREAK
+   ════════════════════════════════════════════════════════ */
+
+function updateProgressBar() {
+  const total = session.items.length;
+  const done = session.idx;
+  document.getElementById('epb-frac').textContent = `${done} / ${total}`;
+  document.getElementById('epb-fill').style.width = (100 * done / total) + '%';
+  const counts = { ok:0, retry:0, err:0 };
+  session.results.forEach(r => { if (counts[r.outcome] !== undefined) counts[r.outcome]++; });
+  document.getElementById('epb-ok').textContent = counts.ok;
+  document.getElementById('epb-retry').textContent = counts.retry;
+  document.getElementById('epb-err').textContent = counts.err;
+}
+
+function updateStreak() {
+  const pill = document.getElementById('streak-pill');
+  pill.textContent = `🔥 ${session.streak} en racha`;
+  pill.classList.toggle('cold', session.streak === 0);
+  if (session.streak > 0) {
+    pill.classList.remove('fire');
+    void pill.offsetWidth;
+    pill.classList.add('fire');
+  }
+  if (session.streak > session.bestStreak) session.bestStreak = session.streak;
+}
+
+/* ════════════════════════════════════════════════════════
+   SPECIAL CHARS — clickable accent bar
+   ════════════════════════════════════════════════════════ */
+const SPECIAL_CHARS = ['é','è','ê','ë','î','ï','ô','ù','û','ç','œ'];
+
+function specialCharsHTML(inputId) {
+  const wrapId = 'sc-wrap-' + inputId;
+  const togId = 'sc-tog-' + inputId;
+  return `<div class="special-chars-wrap" id="${wrapId}">
+    <button type="button" class="special-chars-toggle" id="${togId}" onclick="toggleSpecialChars('${inputId}')">
+      <span class="sct-icon">é è ê</span>
+      <span>Caractères spéciaux</span>
+      <span class="sct-caret">▾</span>
+    </button>
+    <div class="special-chars" id="sc-${inputId}">
+      ${SPECIAL_CHARS.map(c =>
+        `<button type="button" class="special-char-btn" onclick="insertChar('${inputId}','${c}')">${c}</button>`
+      ).join('')}
+    </div>
+  </div>`;
+}
+
+function toggleSpecialChars(inputId) {
+  const bar = document.getElementById('sc-' + inputId);
+  const tog = document.getElementById('sc-tog-' + inputId);
+  if (!bar || !tog) return;
+  const open = bar.classList.toggle('visible');
+  tog.classList.toggle('open', open);
+}
+
+function insertChar(inputId, ch) {
+  const inp = document.getElementById(inputId);
+  if (!inp) return;
+  const start = inp.selectionStart ?? inp.value.length;
+  const end = inp.selectionEnd ?? inp.value.length;
+  inp.value = inp.value.substring(0, start) + ch + inp.value.substring(end);
+  inp.focus();
+  inp.selectionStart = inp.selectionEnd = start + ch.length;
+}
+
+function focusInput(id) {
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.focus();
+  }, 50);
+}
+
+function escapeHTML(s) {
+  return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/* ════════════════════════════════════════════════════════
+   DISPATCHER — render current item by type
+   ════════════════════════════════════════════════════════ */
+
+function renderCurrent() {
+  updateProgressBar();
+  const item = session.items[session.idx];
+  if (!item) return showResults();
+  session.triedOnce = false;
+  session.usedHint = false;
+  const type = session.type;
+  if (type === 'fill')      renderFill(item);
+  else if (type === 'svi')  renderSVI(item);
+  else if (type === 'classify') renderClassify(item);
+  else if (type === 'complete') renderFill(item, true);
+  else if (type === 'error') renderError(item);
+  else if (type === 'reorder') renderReorder(item);
+  else if (type === 'transform') renderTransform(item);
+  else if (type === 'mcq') renderMCQ(item);
+  else if (type === 'match') renderMatch(item);
+  else if (type === 'blocs') renderBlocQuestion(item);
+}
+
+function catTag(cat) {
+  return `<div class="ex-q-cat">${CAT_LABEL[cat] || ''}</div>`;
+}
+
+/* === RENDERER: FILL (and COMPLETE) === */
+function renderFill(item, isComplete) {
+  const stage = document.getElementById('ex-stage');
+  const inputId = 'fill-input-' + session.idx;
+  let frase = item.f;
+  if (session.advancedMode) {
+    frase = frase.replace(/\s*\(([^)]+)\)/, '');
+  }
+  const fraseHTML = escapeHTML(frase).replace(/___/, '<span class="gap">_____</span>');
+  stage.innerHTML = `
+    <div class="ex-q-card">
+      ${catTag(item.c)}
+      <div class="ex-q-prompt">${fraseHTML}</div>
+      ${specialCharsHTML(inputId)}
+      <input type="text" class="ex-input" id="${inputId}"
+             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+             placeholder="Écris la forme correcte…">
+      <div class="ex-actions" id="fill-actions">
+        <button class="ex-btn primary" onclick="checkFill('${inputId}')">Vérifier</button>
+      </div>
+      <div class="ex-fb" id="fill-fb"></div>
+    </div>
+  `;
+  const inp = document.getElementById(inputId);
+  inp.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); if (!inp.disabled) checkFill(inputId); }
+  });
+  focusInput(inputId);
+}
+
+function checkFill(inputId) {
+  const item = session.items[session.idx];
+  const inp = document.getElementById(inputId);
+  const user = inp.value;
+  if (!user.trim()) return;
+  const verdict = compareAnswer(user, item.r);
+  const fb = document.getElementById('fill-fb');
+  if (verdict === 'ok') {
+    inp.classList.remove('err','warn'); inp.classList.add('ok');
+    inp.disabled = true;
+    fb.className = 'ex-fb ok visible';
+    fb.innerHTML = `✅ <strong>Correct !</strong>`;
+    document.getElementById('fill-actions').innerHTML = '';
+    registerOutcome(session.triedOnce || session.usedHint ? 'retry' : 'ok', item, user);
+    setTimeout(advance, 1200);
+  } else if (verdict === 'accent') {
+    inp.classList.remove('ok','err'); inp.classList.add('warn');
+    fb.className = 'ex-fb warn visible';
+    fb.innerHTML = `⚠️ <strong>Presque !</strong> Vérifie les accents : <s>${escapeHTML(user)}</s> → <u>${escapeHTML(item.r)}</u>`;
+    setTimeout(() => {
+      inp.classList.remove('warn');
+      inp.value = '';
+      inp.focus();
+      fb.classList.remove('visible');
+    }, 1400);
+  } else {
+    session.triedOnce = true;
+    inp.classList.remove('ok','warn'); inp.classList.add('err');
+    fb.className = 'ex-fb err visible';
+    fb.innerHTML = `❌ <strong>Incorrect.</strong>`;
+    showRetryOptions(inputId);
+  }
+}
+
+function showRetryOptions(inputId) {
+  const actions = document.getElementById('fill-actions');
+  actions.innerHTML = `
+    <button class="ex-btn primary" onclick="retryFill('${inputId}')">Réessayer</button>
+    <button class="ex-btn warn" onclick="showHint('${inputId}')">💡 Indice</button>
+    <button class="ex-btn ghost" onclick="showSolution('${inputId}')">Voir la solution</button>
+  `;
+}
+
+function retryFill(inputId) {
+  const inp = document.getElementById(inputId);
+  inp.disabled = false;
+  inp.classList.remove('err','warn','ok');
+  inp.value = '';
+  document.getElementById('fill-fb').classList.remove('visible');
+  document.getElementById('fill-actions').innerHTML =
+    `<button class="ex-btn primary" onclick="checkFill('${inputId}')">Vérifier</button>`;
+  focusInput(inputId);
+}
+
+function showHint(inputId) {
+  const item = session.items[session.idx];
+  session.usedHint = true;
+  const fb = document.getElementById('fill-fb');
+  fb.className = 'ex-fb warn visible';
+  fb.innerHTML = `💡 <strong>Indice :</strong> commence par <u>${escapeHTML(item.r[0])}</u>…`;
+  document.getElementById('fill-actions').innerHTML =
+    `<button class="ex-btn primary" onclick="checkFill('${inputId}')">Vérifier</button>
+     <button class="ex-btn ghost" onclick="showSolution('${inputId}')">Voir la solution</button>`;
+  const inp = document.getElementById(inputId);
+  inp.disabled = false;
+  inp.classList.remove('err');
+  inp.value = '';
+  focusInput(inputId);
+}
+
+function showSolution(inputId) {
+  const item = session.items[session.idx];
+  const inp = document.getElementById(inputId);
+  const userVal = inp.value;
+  inp.disabled = true;
+  const card = document.querySelector('#ex-stage .ex-q-card');
+  const actions = document.getElementById('fill-actions');
+  const resolved = (item.f || '').replace(/___/, `<span class="answer">${escapeHTML(item.r)}</span>`).replace(/\s*\([^)]+\)/, '');
+  document.getElementById('fill-fb').classList.remove('visible');
+  let solBlock = card.querySelector('.ex-solution');
+  if (solBlock) solBlock.remove();
+  solBlock = document.createElement('div');
+  solBlock.className = 'ex-solution';
+  solBlock.innerHTML = `<div>${resolved}</div><div class="ex-solution-expl">${escapeHTML(item.e || '')}</div>`;
+  actions.insertAdjacentElement('beforebegin', solBlock);
+  actions.innerHTML = `<button class="ex-btn primary" onclick="advance()">Suivant →</button>`;
+  registerOutcome('err', item, userVal);
+}
+
+/* === REGISTER / ADVANCE === */
+function registerOutcome(outcome, item, userAnswer) {
+  if (session.results[session.idx]) return;
+  session.results[session.idx] = { id: item.i, outcome, userAnswer, item };
+  if (outcome === 'ok') {
+    session.streak++;
+  } else {
+    session.streak = 0;
+    if (outcome === 'err') {
+      session.errorIds.push(item.i);
+      if (item.v) session.errorVerbs.push(item.v);
+    }
+  }
+  updateStreak();
+  updateProgressBar();
+}
+
+function advance() {
+  session.idx++;
+  if (session.idx >= session.items.length) {
+    if (session.type === 'blocs') return finishBlocBlock();
+    return showResults();
+  }
+  renderCurrent();
+}
+
+/* === RENDERER: SVI (Subj vs Ind, 2 options) === */
+function renderSVI(item) {
+  const stage = document.getElementById('ex-stage');
+  // Shuffle the 2 options so the correct isn't always in same position
+  const opts = shuffle(item.o);
+  const fraseHTML = escapeHTML(item.f).replace(/___/, '<span class="gap">_____</span>');
+  stage.innerHTML = `
+    <div class="ex-q-card">
+      ${catTag(item.c)}
+      <div class="ex-q-prompt">${fraseHTML}</div>
+      <div class="ex-choices">
+        ${opts.map((o,i)=>`<button class="ex-choice" data-val="${escapeHTML(o)}" onclick="checkSVI(this)"><span class="ex-choice-letter">${String.fromCharCode(65+i)}</span>${escapeHTML(o)}</button>`).join('')}
+      </div>
+      <div class="ex-fb" id="svi-fb"></div>
+      <div class="ex-actions" id="svi-actions"></div>
+    </div>
+  `;
+}
+
+function checkSVI(btn) {
+  const item = session.items[session.idx];
+  const choice = btn.dataset.val;
+  document.querySelectorAll('#ex-stage .ex-choice').forEach(b => { b.disabled = true; });
+  const correctBtn = Array.from(document.querySelectorAll('#ex-stage .ex-choice'))
+    .find(b => b.dataset.val === item.r);
+  if (correctBtn) correctBtn.classList.add('ok');
+  const fb = document.getElementById('svi-fb');
+  if (choice === item.r) {
+    fb.className = 'ex-fb ok visible';
+    fb.innerHTML = `✅ <strong>Correct !</strong><div class="ex-fb-expl">${escapeHTML(item.e || '')}</div>`;
+    registerOutcome('ok', item, choice);
+    setTimeout(advance, 1200);
+  } else {
+    btn.classList.add('err');
+    fb.className = 'ex-fb err visible';
+    fb.innerHTML = `❌ <strong>Incorrect.</strong><div class="ex-fb-expl">${escapeHTML(item.e || '')}</div>`;
+    document.getElementById('svi-actions').innerHTML =
+      `<button class="ex-btn primary" onclick="advance()">Suivant →</button>`;
+    registerOutcome('err', item, choice);
+  }
+}
+
+/* === RENDERER: MCQ (4 choices, no retry) === */
+function renderMCQ(item) {
+  const stage = document.getElementById('ex-stage');
+  const allOpts = shuffle([item.r, ...item.d]);
+  const fraseHTML = escapeHTML(item.f).replace(/___/, '<span class="gap">_____</span>');
+  stage.innerHTML = `
+    <div class="ex-q-card">
+      ${catTag(item.c)}
+      <div class="ex-q-prompt">${fraseHTML}</div>
+      <div class="ex-choices">
+        ${allOpts.map((o,i)=>`<button class="ex-choice" data-val="${escapeHTML(o)}" onclick="checkMCQ(this)"><span class="ex-choice-letter">${String.fromCharCode(65+i)}</span>${escapeHTML(o)}</button>`).join('')}
+      </div>
+      <div class="ex-fb" id="mcq-fb"></div>
+      <div class="ex-actions" id="mcq-actions"></div>
+    </div>
+  `;
+}
+
+function checkMCQ(btn) {
+  const item = session.items[session.idx];
+  const choice = btn.dataset.val;
+  document.querySelectorAll('#ex-stage .ex-choice').forEach(b => { b.disabled = true; });
+  const correctBtn = Array.from(document.querySelectorAll('#ex-stage .ex-choice'))
+    .find(b => b.dataset.val === item.r);
+  if (correctBtn) correctBtn.classList.add('ok');
+  const fb = document.getElementById('mcq-fb');
+  if (choice === item.r) {
+    fb.className = 'ex-fb ok visible';
+    fb.innerHTML = `✅ <strong>Correct !</strong><div class="ex-fb-expl">${escapeHTML(item.e || '')}</div>`;
+    registerOutcome('ok', item, choice);
+    setTimeout(advance, 1200);
+  } else {
+    btn.classList.add('err');
+    fb.className = 'ex-fb err visible';
+    fb.innerHTML = `❌ <strong>Incorrect.</strong><div class="ex-fb-expl">${escapeHTML(item.e || '')}</div>`;
+    document.getElementById('mcq-actions').innerHTML =
+      `<button class="ex-btn primary" onclick="advance()">Suivant →</button>`;
+    registerOutcome('err', item, choice);
+  }
+}
+
+/* === RENDERER: CLASSIFY (subj or ind, one at a time, summary at end) === */
+function renderClassify(item) {
+  const stage = document.getElementById('ex-stage');
+  stage.innerHTML = `
+    <div class="ex-q-card">
+      ${catTag(item.c)}
+      <div class="ex-q-prompt">${escapeHTML(item.f)}</div>
+      <div class="ex-choices">
+        <button class="ex-choice" onclick="checkClassify('subj')"><span class="ex-choice-letter">S</span>Subjonctif</button>
+        <button class="ex-choice" onclick="checkClassify('ind')"><span class="ex-choice-letter">I</span>Indicatif</button>
+      </div>
+      <div class="ex-fb" id="cl-fb"></div>
+      <div class="ex-actions" id="cl-actions"></div>
+    </div>
+  `;
+}
+
+function checkClassify(choice) {
+  const item = session.items[session.idx];
+  document.querySelectorAll('#ex-stage .ex-choice').forEach(b => { b.disabled = true; });
+  const buttons = document.querySelectorAll('#ex-stage .ex-choice');
+  const correctIdx = item.m === 'subj' ? 0 : 1;
+  buttons[correctIdx].classList.add('ok');
+  const fb = document.getElementById('cl-fb');
+  if (choice === item.m) {
+    fb.className = 'ex-fb ok visible';
+    fb.innerHTML = `✅ <strong>Correct !</strong><div class="ex-fb-expl">${escapeHTML(item.e || '')}</div>`;
+    registerOutcome('ok', item, choice);
+    setTimeout(advance, 1100);
+  } else {
+    const userIdx = choice === 'subj' ? 0 : 1;
+    buttons[userIdx].classList.add('err');
+    fb.className = 'ex-fb err visible';
+    fb.innerHTML = `❌ <strong>Incorrect.</strong><div class="ex-fb-expl">${escapeHTML(item.e || '')}</div>`;
+    document.getElementById('cl-actions').innerHTML =
+      `<button class="ex-btn primary" onclick="advance()">Suivant →</button>`;
+    registerOutcome('err', item, choice);
+  }
+}
+
+/* === RENDERER: MATCH (expression → subj/ind/both) === */
+function renderMatch(item) {
+  const stage = document.getElementById('ex-stage');
+  stage.innerHTML = `
+    <div class="ex-q-card">
+      ${catTag(item.c)}
+      <div class="ex-q-prompt">Quel mode est exigé par : <strong style="color:var(--primary)">${escapeHTML(item.ex)}</strong> ?</div>
+      <div class="ex-choices cols-3">
+        <button class="ex-choice" onclick="checkMatch('subj')"><span class="ex-choice-letter">S</span>Subjonctif</button>
+        <button class="ex-choice" onclick="checkMatch('ind')"><span class="ex-choice-letter">I</span>Indicatif</button>
+        <button class="ex-choice" onclick="checkMatch('both')"><span class="ex-choice-letter">2</span>Les deux selon contexte</button>
+      </div>
+      <div class="ex-fb" id="match-fb"></div>
+      <div class="ex-actions" id="match-actions"></div>
+    </div>
+  `;
+}
+
+function checkMatch(choice) {
+  const item = session.items[session.idx];
+  document.querySelectorAll('#ex-stage .ex-choice').forEach(b => { b.disabled = true; });
+  const buttons = document.querySelectorAll('#ex-stage .ex-choice');
+  const correctIdx = item.m === 'subj' ? 0 : (item.m === 'ind' ? 1 : 2);
+  buttons[correctIdx].classList.add('ok');
+  const fb = document.getElementById('match-fb');
+  if (choice === item.m) {
+    fb.className = 'ex-fb ok visible';
+    fb.innerHTML = `✅ <strong>Correct !</strong><div class="ex-fb-expl">${escapeHTML(item.e || '')}</div>`;
+    registerOutcome('ok', item, choice);
+    setTimeout(advance, 1100);
+  } else {
+    const userIdx = choice === 'subj' ? 0 : (choice === 'ind' ? 1 : 2);
+    buttons[userIdx].classList.add('err');
+    fb.className = 'ex-fb err visible';
+    fb.innerHTML = `❌ <strong>Incorrect.</strong><div class="ex-fb-expl">${escapeHTML(item.e || '')}</div>`;
+    document.getElementById('match-actions').innerHTML =
+      `<button class="ex-btn primary" onclick="advance()">Suivant →</button>`;
+    registerOutcome('err', item, choice);
+  }
+}
+
+/* === RENDERER: FIND ERROR === */
+function renderError(item) {
+  const stage = document.getElementById('ex-stage');
+  const tokens = item.f.split(/(\s+)/);
+  const inputId = 'fe-input-' + session.idx;
+  stage.innerHTML = `
+    <div class="ex-q-card">
+      ${catTag(item.c)}
+      <div class="ex-q-prompt" style="margin-bottom:8px">Clique sur le mot incorrect :</div>
+      <div class="find-error-frase" id="fe-frase">
+        ${tokens.map((tok, i) => /^\s+$/.test(tok) ? tok :
+          `<span class="fe-word" data-i="${i}" data-w="${escapeHTML(tok.replace(/[.,;:!?]/g,''))}" onclick="selectErrorWord(this)">${escapeHTML(tok)}</span>`
+        ).join('')}
+      </div>
+      <div id="fe-input-wrap" style="display:none">
+        <div class="ex-q-prompt" style="font-size:0.95em;margin-bottom:8px">Écris la forme correcte :</div>
+        ${specialCharsHTML(inputId)}
+        <input type="text" class="ex-input" id="${inputId}"
+               autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+               placeholder="forme correcte…">
+      </div>
+      <div class="ex-actions" id="fe-actions"></div>
+      <div class="ex-fb" id="fe-fb"></div>
+    </div>
+  `;
+}
+
+function selectErrorWord(el) {
+  document.querySelectorAll('#fe-frase .fe-word').forEach(w => w.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('fe-input-wrap').style.display = '';
+  const inputId = 'fe-input-' + session.idx;
+  document.getElementById('fe-actions').innerHTML =
+    `<button class="ex-btn primary" onclick="checkErrorAnswer('${inputId}')">Vérifier</button>`;
+  const inp = document.getElementById(inputId);
+  inp.value = '';
+  inp.disabled = false;
+  inp.classList.remove('ok','err','warn');
+  inp.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); checkErrorAnswer(inputId); }
+  });
+  focusInput(inputId);
+}
+
+function checkErrorAnswer(inputId) {
+  const item = session.items[session.idx];
+  const inp = document.getElementById(inputId);
+  const user = inp.value;
+  if (!user.trim()) return;
+  const selectedWord = document.querySelector('#fe-frase .fe-word.selected');
+  const selectedTxt = selectedWord ? selectedWord.dataset.w : '';
+  const wordCorrect = normalize(selectedTxt) === normalize(item.err);
+  const verdict = compareAnswer(user, item.cor);
+  const fb = document.getElementById('fe-fb');
+  if (wordCorrect && verdict === 'ok') {
+    inp.classList.add('ok'); inp.disabled = true;
+    selectedWord.classList.remove('selected');
+    selectedWord.classList.add('correct');
+    selectedWord.innerHTML = escapeHTML(item.cor);
+    fb.className = 'ex-fb ok visible';
+    fb.innerHTML = `✅ <strong>Correct !</strong><div class="ex-fb-expl">${escapeHTML(item.e || '')}</div>`;
+    document.getElementById('fe-actions').innerHTML = '';
+    registerOutcome(session.triedOnce || session.usedHint ? 'retry' : 'ok', item, user);
+    setTimeout(advance, 1200);
+  } else if (verdict === 'accent' && wordCorrect) {
+    inp.classList.add('warn');
+    fb.className = 'ex-fb warn visible';
+    fb.innerHTML = `⚠️ <strong>Presque !</strong> Vérifie les accents : <s>${escapeHTML(user)}</s> → <u>${escapeHTML(item.cor)}</u>`;
+    setTimeout(() => { inp.classList.remove('warn'); inp.value = ''; inp.focus(); fb.classList.remove('visible'); }, 1400);
+  } else {
+    session.triedOnce = true;
+    inp.classList.add('err');
+    fb.className = 'ex-fb err visible';
+    fb.innerHTML = wordCorrect
+      ? `❌ <strong>Mot bien identifié, mais ce n'est pas la bonne forme.</strong>`
+      : `❌ <strong>Ce n'est pas le mot incorrect.</strong>`;
+    document.getElementById('fe-actions').innerHTML = `
+      <button class="ex-btn primary" onclick="retryError('${inputId}')">Réessayer</button>
+      <button class="ex-btn warn" onclick="showErrorHint('${inputId}')">💡 Indice</button>
+      <button class="ex-btn ghost" onclick="showErrorSolution('${inputId}')">Voir la solution</button>
+    `;
+  }
+}
+
+function retryError(inputId) {
+  const inp = document.getElementById(inputId);
+  if (inp) { inp.disabled = false; inp.value = ''; inp.classList.remove('err','warn','ok'); }
+  document.querySelectorAll('#fe-frase .fe-word').forEach(w => w.classList.remove('selected','wrong'));
+  document.getElementById('fe-fb').classList.remove('visible');
+  document.getElementById('fe-input-wrap').style.display = 'none';
+  document.getElementById('fe-actions').innerHTML = '';
+}
+
+function showErrorHint(inputId) {
+  const item = session.items[session.idx];
+  session.usedHint = true;
+  retryError(inputId);
+  const target = Array.from(document.querySelectorAll('#fe-frase .fe-word')).find(w => normalize(w.dataset.w) === normalize(item.err));
+  if (target) selectErrorWord(target);
+  const fb = document.getElementById('fe-fb');
+  fb.className = 'ex-fb warn visible';
+  fb.innerHTML = `💡 <strong>Indice :</strong> commence par <u>${escapeHTML(item.cor[0])}</u>…`;
+}
+
+function showErrorSolution(inputId) {
+  const item = session.items[session.idx];
+  const card = document.querySelector('#ex-stage .ex-q-card');
+  document.querySelectorAll('#fe-frase .fe-word').forEach(w => {
+    if (normalize(w.dataset.w) === normalize(item.err)) {
+      w.classList.add('wrong');
+      w.innerHTML = `<s>${escapeHTML(item.err)}</s> → <span style="color:var(--green)">${escapeHTML(item.cor)}</span>`;
+    }
+  });
+  document.getElementById('fe-fb').classList.remove('visible');
+  let solBlock = card.querySelector('.ex-solution');
+  if (solBlock) solBlock.remove();
+  solBlock = document.createElement('div');
+  solBlock.className = 'ex-solution';
+  solBlock.innerHTML = `<div class="ex-solution-expl">${escapeHTML(item.e || '')}</div>`;
+  document.getElementById('fe-actions').insertAdjacentElement('beforebegin', solBlock);
+  const userVal = (document.getElementById(inputId) || {}).value || '';
+  document.getElementById('fe-actions').innerHTML = `<button class="ex-btn primary" onclick="advance()">Suivant →</button>`;
+  registerOutcome('err', item, userVal);
+}
+
+/* === RENDERER: REORDER === */
+function renderReorder(item) {
+  const stage = document.getElementById('ex-stage');
+  const shuffled = shuffle(item.w);
+  stage.innerHTML = `
+    <div class="ex-q-card">
+      ${catTag(item.c)}
+      <div class="ex-q-prompt">Réorganise les mots dans le bon ordre :</div>
+      <div class="reorder-built" id="reorder-built"><span class="reorder-placeholder">Clique sur les mots ci-dessous…</span></div>
+      <div class="reorder-pool" id="reorder-pool">
+        ${shuffled.map((w,i) => `<button class="word-chip" data-i="${i}" data-w="${escapeHTML(w)}" onclick="pickWord(${i})">${escapeHTML(w)}</button>`).join('')}
+      </div>
+      <div class="ex-actions" id="reorder-actions">
+        <button class="ex-btn ghost" onclick="undoWord()">↶ Annuler</button>
+        <button class="ex-btn primary" id="reorder-check" onclick="checkReorder()" disabled>Vérifier</button>
+      </div>
+      <div class="ex-fb" id="reorder-fb"></div>
+    </div>
+  `;
+  session._reorderPicked = [];
+}
+
+function pickWord(i) { session._reorderPicked.push(i); refreshReorder(); }
+function undoWord() { if (session._reorderPicked.length) { session._reorderPicked.pop(); refreshReorder(); } }
+
+function refreshReorder() {
+  const item = session.items[session.idx];
+  const built = document.getElementById('reorder-built');
+  const pool = document.getElementById('reorder-pool');
+  const usedSet = new Set(session._reorderPicked);
+  pool.querySelectorAll('.word-chip').forEach(c => {
+    const idx = parseInt(c.dataset.i, 10);
+    c.classList.toggle('used', usedSet.has(idx));
+  });
+  if (!session._reorderPicked.length) {
+    built.innerHTML = '<span class="reorder-placeholder">Clique sur les mots ci-dessous…</span>';
+  } else {
+    built.innerHTML = session._reorderPicked.map(idx => {
+      const chip = pool.querySelector(`.word-chip[data-i="${idx}"]`);
+      return `<span class="word-chip placed">${escapeHTML(chip.dataset.w)}</span>`;
+    }).join('');
+  }
+  built.classList.remove('ok','err');
+  const totalNeeded = item.w.length;
+  const checkBtn = document.getElementById('reorder-check');
+  if (checkBtn) checkBtn.disabled = session._reorderPicked.length !== totalNeeded;
+}
+
+function checkReorder() {
+  const item = session.items[session.idx];
+  const pool = document.getElementById('reorder-pool');
+  const built = session._reorderPicked.map(idx => pool.querySelector(`.word-chip[data-i="${idx}"]`).dataset.w);
+  const userSentence = normalize(built.join(' '));
+  const correctSentence = normalize(item.w.join(' '));
+  const builtEl = document.getElementById('reorder-built');
+  const fb = document.getElementById('reorder-fb');
+  if (userSentence === correctSentence) {
+    builtEl.classList.add('ok');
+    fb.className = 'ex-fb ok visible';
+    fb.innerHTML = `✅ <strong>Correct !</strong><div class="ex-fb-expl">${escapeHTML(item.e || '')}</div>`;
+    document.getElementById('reorder-actions').innerHTML = '';
+    registerOutcome(session.triedOnce ? 'retry' : 'ok', item, built.join(' '));
+    setTimeout(advance, 1200);
+  } else {
+    session.triedOnce = true;
+    builtEl.classList.add('err');
+    fb.className = 'ex-fb err visible';
+    fb.innerHTML = `❌ <strong>Pas tout à fait.</strong>`;
+    document.getElementById('reorder-actions').innerHTML = `
+      <button class="ex-btn primary" onclick="retryReorder()">Réessayer</button>
+      <button class="ex-btn ghost" onclick="showReorderSolution()">Voir la solution</button>
+    `;
+  }
+}
+
+function retryReorder() {
+  session._reorderPicked = [];
+  refreshReorder();
+  document.getElementById('reorder-fb').classList.remove('visible');
+  document.getElementById('reorder-actions').innerHTML = `
+    <button class="ex-btn ghost" onclick="undoWord()">↶ Annuler</button>
+    <button class="ex-btn primary" id="reorder-check" onclick="checkReorder()" disabled>Vérifier</button>
+  `;
+}
+
+function showReorderSolution() {
+  const item = session.items[session.idx];
+  const card = document.querySelector('#ex-stage .ex-q-card');
+  let sol = card.querySelector('.ex-solution');
+  if (sol) sol.remove();
+  sol = document.createElement('div');
+  sol.className = 'ex-solution';
+  sol.innerHTML = `<div><span class="answer">${escapeHTML(item.w.join(' '))}</span></div><div class="ex-solution-expl">${escapeHTML(item.e || '')}</div>`;
+  document.getElementById('reorder-actions').insertAdjacentElement('beforebegin', sol);
+  document.getElementById('reorder-actions').innerHTML = `<button class="ex-btn primary" onclick="advance()">Suivant →</button>`;
+  registerOutcome('err', item, '');
+}
+
+/* === RENDERER: TRANSFORM === */
+function renderTransform(item) {
+  const stage = document.getElementById('ex-stage');
+  const inputId = 'transform-input-' + session.idx;
+  let transformed = item.t;
+  if (session.advancedMode) transformed = transformed.replace(/\s*\(([^)]+)\)/, '');
+  const transformedHTML = escapeHTML(transformed).replace(/___/, '<span class="gap">_____</span>');
+  stage.innerHTML = `
+    <div class="ex-q-card">
+      ${catTag(item.c)}
+      <div class="transform-orig">${escapeHTML(item.o)}</div>
+      ${!session.advancedMode && item.v ? `<div class="ex-q-prompt" style="font-size:0.88em;color:var(--text3);margin-bottom:8px">Verbe : <strong>${escapeHTML(item.v)}</strong></div>` : ''}
+      <div class="ex-q-prompt">${transformedHTML}</div>
+      ${specialCharsHTML(inputId)}
+      <input type="text" class="ex-input" id="${inputId}"
+             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+             placeholder="Écris la forme correcte…">
+      <div class="ex-actions" id="fill-actions">
+        <button class="ex-btn primary" onclick="checkFill('${inputId}')">Vérifier</button>
+      </div>
+      <div class="ex-fb" id="fill-fb"></div>
+    </div>
+  `;
+  const inp = document.getElementById(inputId);
+  inp.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); if (!inp.disabled) checkFill(inputId); }
+  });
+  focusInput(inputId);
+}
+
+/* === BLOC QUIZ (Pool 10) === */
+function startBlocRound() {
+  session.bloc = { idx: 0, blocResults: [] };
+  beginNextBloc();
+}
+
+function beginNextBloc() {
+  const bloc = POOL_BLOCS[session.bloc.idx];
+  const fills = shuffle(POOL_FILL.filter(x => x.c === bloc.cat));
+  const mcqs = shuffle(POOL_MCQ.filter(x => x.c === bloc.cat));
+  const items = [];
+  for (let i = 0; i < bloc.count; i++) {
+    if (i % 2 === 0 && fills.length) items.push({...fills.shift(), _kind:'fill'});
+    else if (mcqs.length) items.push({...mcqs.shift(), _kind:'mcq'});
+    else if (fills.length) items.push({...fills.shift(), _kind:'fill'});
+  }
+  session.items = items;
+  session.idx = 0;
+  session.results = [];
+  session.streak = 0;
+  session.errorIds = [];
+  session.errorVerbs = [];
+  document.getElementById('ex-progress').style.display = 'block';
+  document.getElementById('ex-start-wrap').innerHTML = '';
+  updateStreak();
+  renderCurrent();
+}
+
+function renderBlocQuestion(item) {
+  if (item._kind === 'mcq') renderMCQ(item);
+  else renderFill(item);
+  const bloc = POOL_BLOCS[session.bloc.idx];
+  const header = document.createElement('div');
+  header.className = 'bloc-header';
+  header.innerHTML = `${bloc.icon} <strong>Bloc ${session.bloc.idx + 1}/4</strong> · ${escapeHTML(bloc.title)}<span class="bloc-pill">Q ${session.idx + 1}/${session.items.length}</span>`;
+  const stage = document.getElementById('ex-stage');
+  if (stage.firstElementChild) stage.insertBefore(header, stage.firstElementChild);
+  else stage.appendChild(header);
+}
+
+function finishBlocBlock() {
+  session.bloc.blocResults.push({
+    title: POOL_BLOCS[session.bloc.idx].title,
+    icon: POOL_BLOCS[session.bloc.idx].icon,
+    results: session.results.slice()
+  });
+  session.bloc.idx++;
+  if (session.bloc.idx < POOL_BLOCS.length) {
+    showBlocSummary();
+  } else {
+    showBlocFinalResults();
+  }
+}
+
+function showBlocSummary() {
+  const stage = document.getElementById('ex-stage');
+  document.getElementById('ex-progress').style.display = 'none';
+  const last = session.bloc.blocResults[session.bloc.blocResults.length - 1];
+  const ok = last.results.filter(r => r.outcome === 'ok' || r.outcome === 'retry').length;
+  const errors = last.results.filter(r => r.outcome === 'err');
+  stage.innerHTML = `
+    <div class="results-card">
+      <div class="results-emoji">${ok === last.results.length ? '🎉' : ok >= last.results.length * 0.7 ? '👍' : '💪'}</div>
+      <div class="results-title">Bloc ${session.bloc.idx}/4 terminé · ${ok}/${last.results.length}</div>
+      <div class="results-stats">
+        <div class="results-stat ok"><span class="rs-num">${ok}</span><span class="rs-label">Correctes</span></div>
+        <div class="results-stat err"><span class="rs-num">${errors.length}</span><span class="rs-label">Échouées</span></div>
+      </div>
+      ${errors.length ? `
+        <div class="results-errors-title">Tes erreurs</div>
+        ${errors.map(r => buildErrorItemHTML(r)).join('')}
+      ` : ''}
+      <div class="results-actions">
+        <button class="ex-btn primary" onclick="beginNextBloc()">Bloc suivant →</button>
+      </div>
+    </div>
+  `;
+}
+
+function showBlocFinalResults() {
+  const stage = document.getElementById('ex-stage');
+  document.getElementById('ex-progress').style.display = 'none';
+  const allResults = session.bloc.blocResults.flatMap(b => b.results);
+  const ok = allResults.filter(r => r.outcome === 'ok' || r.outcome === 'retry').length;
+  const total = allResults.length;
+  const errors = allResults.filter(r => r.outcome === 'err');
+  const sessionErrorIds = errors.map(r => r.id);
+  const sessionErrorVerbs = errors.map(r => r.item && r.item.v).filter(Boolean);
+  recordRoundStats('blocs', allResults, sessionErrorIds, sessionErrorVerbs);
+  stage.innerHTML = `
+    <div class="results-card">
+      <div class="results-emoji">${ok === total ? '🏆' : ok >= total * 0.7 ? '🌟' : '📚'}</div>
+      <div class="results-title">Quiz terminé · ${ok}/${total}</div>
+      <div class="results-stats">
+        <div class="results-stat ok"><span class="rs-num">${ok}</span><span class="rs-label">Correctes</span></div>
+        <div class="results-stat err"><span class="rs-num">${errors.length}</span><span class="rs-label">Échouées</span></div>
+      </div>
+      ${session.bloc.blocResults.map((b,i) => {
+        const bok = b.results.filter(r => r.outcome === 'ok' || r.outcome === 'retry').length;
+        return `<div class="stat-line" style="padding:8px 0;border-bottom:1px solid var(--border)">
+          <span>${b.icon} ${escapeHTML(b.title)}</span><strong>${bok}/${b.results.length}</strong>
+        </div>`;
+      }).join('')}
+      ${errors.length ? `
+        <div class="results-errors-title">Toutes tes erreurs</div>
+        ${errors.map(r => buildErrorItemHTML(r)).join('')}
+      ` : ''}
+      <div class="results-actions">
+        ${errors.length ? `<button class="ex-btn warn" onclick="replayBlocErrors()">Rejouer les erreurs</button>` : ''}
+        <button class="ex-btn primary" onclick="restartBlocs()">Recommencer le quiz</button>
+        <button class="ex-btn ghost" onclick="exitExercise()">Retour</button>
+      </div>
+    </div>
+  `;
+}
+
+function restartBlocs() {
+  document.getElementById('ex-stage').innerHTML = '';
+  startBlocRound();
+}
+
+function replayBlocErrors() {
+  const allResults = session.bloc.blocResults.flatMap(b => b.results);
+  const errorItems = allResults.filter(r => r.outcome === 'err').map(r => r.item);
+  if (!errorItems.length) return restartBlocs();
+  session.items = shuffle(errorItems);
+  session.idx = 0;
+  session.results = [];
+  session.streak = 0;
+  session.errorIds = [];
+  session.errorVerbs = [];
+  session.bloc = { idx: 0, blocResults: [] };
+  document.getElementById('ex-stage').innerHTML = '';
+  document.getElementById('ex-progress').style.display = 'block';
+  updateStreak();
+  renderCurrent();
+}
+
+/* ════════════════════════════════════════════════════════
+   RESULTS SCREEN (for non-bloc exercises)
+   ════════════════════════════════════════════════════════ */
+
+function buildErrorItemHTML(r) {
+  const item = r.item || {};
+  let frase;
+  if (session.type === 'reorder' && item.w) {
+    frase = item.w.join(' ');
+  } else if (session.type === 'error' && item.f) {
+    frase = item.f.replace(item.err, '') + ' → ' + item.cor;
+    frase = item.f.split(' ').map(w => {
+      const clean = w.replace(/[.,;:!?]/g,'');
+      return clean === item.err ? `<s>${escapeHTML(w)}</s> <span class="gv">${escapeHTML(item.cor)}</span>` : escapeHTML(w);
+    }).join(' ');
+  } else if (item.f) {
+    const ans = item.r || item.cor || '';
+    frase = escapeHTML(item.f).replace('___', `<span class="gv">${escapeHTML(ans)}</span>`);
+  } else if (session.type === 'classify') {
+    frase = escapeHTML(item.f || '') + ` <span class="gv">(${item.m === 'subj' ? 'subjonctif' : 'indicatif'})</span>`;
+  } else if (session.type === 'match') {
+    const modeLabel = item.m === 'subj' ? 'Subjonctif' : item.m === 'ind' ? 'Indicatif' : 'Les deux';
+    frase = `<strong>${escapeHTML(item.ex || '')}</strong> → <span class="gv">${modeLabel}</span>`;
+  } else {
+    frase = escapeHTML(item.f || '');
+  }
+  const userPart = r.userAnswer ? `<div class="err-user">Ta réponse : <s>${escapeHTML(r.userAnswer)}</s></div>` : '';
+  const explPart = item.e ? `<div class="err-expl">${escapeHTML(item.e)}</div>` : '';
+  return `<div class="results-error-item">
+    <div class="err-frase">${frase}</div>
+    ${userPart}
+    ${explPart}
+  </div>`;
+}
+
+function showResults() {
+  const stage = document.getElementById('ex-stage');
+  document.getElementById('ex-progress').style.display = 'none';
+  const ok = session.results.filter(r => r.outcome === 'ok').length;
+  const retr = session.results.filter(r => r.outcome === 'retry').length;
+  const errs = session.results.filter(r => r.outcome === 'err');
+  const total = session.results.length;
+  const allOk = ok + retr === total;
+  const emoji = allOk ? (errs.length === 0 ? '🏆' : '🎉') : (ok + retr >= total * 0.7 ? '👍' : '💪');
+  // Save stats
+  const errorIds = errs.map(r => r.id);
+  const errorVerbs = errs.map(r => r.item && r.item.v).filter(Boolean);
+  recordRoundStats(session.type, session.results, errorIds, errorVerbs);
+  // Also clear pending errors for items that were now answered correctly
+  const correctIds = session.results.filter(r => r.outcome !== 'err').map(r => r.id);
+  if (correctIds.length) clearPendingForIds(session.type, correctIds);
+
+  const hasRetry = ['fill','complete','transform','error','reorder'].includes(session.type);
+
+  stage.innerHTML = `
+    <div class="results-card">
+      <div class="results-emoji">${emoji}</div>
+      <div class="results-title">Partie terminée · ${ok + retr}/${total}</div>
+      <div class="results-stats">
+        <div class="results-stat ok"><span class="rs-num">${ok}</span><span class="rs-label">Du premier coup</span></div>
+        ${hasRetry ? `<div class="results-stat retr"><span class="rs-num">${retr}</span><span class="rs-label">Après réessai</span></div>` : ''}
+        <div class="results-stat err"><span class="rs-num">${errs.length}</span><span class="rs-label">Échouées</span></div>
+      </div>
+      <div class="results-streak">🔥 Meilleure série : <strong>${session.bestStreak}</strong></div>
+      ${errs.length ? `
+        <div class="results-errors-title">Tes erreurs</div>
+        ${errs.map(r => buildErrorItemHTML(r)).join('')}
+      ` : ''}
+      <div class="results-actions">
+        ${errs.length ? `<button class="ex-btn warn" onclick="replayErrors()">Rejouer avec les erreurs</button>` : ''}
+        <button class="ex-btn primary" onclick="newRound()">Nouvelle partie</button>
+        <button class="ex-btn ghost" onclick="exitExercise()">Retour</button>
+      </div>
+    </div>
+  `;
+}
+
+function replayErrors() {
+  const errorItems = session.results.filter(r => r.outcome === 'err').map(r => r.item);
+  if (!errorItems.length) return newRound();
+  session.items = shuffle(errorItems);
+  session.idx = 0;
+  session.results = [];
+  session.streak = 0;
+  session.bestStreak = 0;
+  session.errorIds = [];
+  session.errorVerbs = [];
+  document.getElementById('ex-progress').style.display = 'block';
+  updateStreak();
+  renderCurrent();
+}
+
+function newRound() {
+  // Build new round of size N, ensuring previous session errors are included
+  const type = EX_TYPES.find(t => t.id === session.type);
+  const pool = POOL_REGISTRY[type.pool];
+  const prevErrors = session.results.filter(r => r.outcome === 'err').map(r => r.item);
+  const seenIds = new Set(session.results.map(r => r.id));
+  const unseen = shuffle(pool.filter(x => !seenIds.has(x.i)));
+  const fillN = Math.max(0, type.size - prevErrors.length);
+  const newItems = [...shuffle(prevErrors), ...unseen.slice(0, fillN)];
+  // If somehow under-sized, top up with any pool items
+  while (newItems.length < type.size) {
+    const r = pool[Math.floor(Math.random() * pool.length)];
+    if (!newItems.find(x => x.i === r.i)) newItems.push(r);
+  }
+  session.items = newItems.slice(0, type.size);
+  session.idx = 0;
+  session.results = [];
+  session.streak = 0;
+  session.bestStreak = 0;
+  session.errorIds = [];
+  session.errorVerbs = [];
+  document.getElementById('ex-progress').style.display = 'block';
+  updateStreak();
+  renderCurrent();
+}
+
+renderExSelection();
 </script>
 </body>
 </html>

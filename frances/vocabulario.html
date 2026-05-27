@@ -1771,6 +1771,536 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   font-weight: 800;
   letter-spacing: -0.018em;
 }
+
+/* ═══════════════════════════════════════════
+   SRS — Repetición espaciada (SM-2)
+   ═══════════════════════════════════════════ */
+
+/* Botones header (SRS + Stats) */
+.hdr-srs-row {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  justify-content: center; margin-top: 14px;
+}
+/* Igualar tamaño de los 3 botones del header */
+.hdr-srs-row > .btn-game,
+.hdr-srs-row > .btn-srs {
+  margin-top: 0;
+  min-width: 170px;
+  height: 38px;
+  padding: 0 16px;
+  justify-content: center;
+}
+.btn-srs {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: none; border-radius: 20px;
+  padding: 7px 14px 7px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem; font-weight: 600;
+  cursor: pointer; white-space: nowrap;
+  background: linear-gradient(135deg, #3d6b2d 0%, #2d8b7a 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(45,123,58,0.35);
+  transition: all 0.18s;
+}
+.btn-srs:hover {
+  box-shadow: 0 4px 16px rgba(45,123,58,0.45);
+  transform: translateY(-1px);
+}
+.btn-srs-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 24px; height: 22px; padding: 0 8px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.22);
+  font-size: 0.78rem; font-weight: 700; line-height: 1;
+  color: #fff;
+}
+.btn-srs-badge.zero { background: rgba(255,255,255,0.32); }
+.btn-srs-stats {
+  background: linear-gradient(135deg, #5c7a3e 0%, #3a5c9b 100%);
+  box-shadow: 0 2px 8px rgba(58,92,155,0.35);
+}
+.btn-srs-stats:hover { box-shadow: 0 4px 16px rgba(58,92,155,0.45); }
+
+/* Banner de progreso sin guardar */
+.srs-unsaved-banner {
+  display: none;
+  position: sticky; top: 0; z-index: 400;
+  background: linear-gradient(135deg, #fdf6e3, #fbe9a8);
+  border-bottom: 1px solid #c9a64d;
+  color: #6b4a00;
+  padding: 8px 18px;
+  font-size: 0.82rem; font-weight: 600;
+  text-align: center; cursor: pointer;
+  transition: filter 0.15s;
+}
+.srs-unsaved-banner.visible { display: block; }
+.srs-unsaved-banner:hover { filter: brightness(0.96); }
+.srs-unsaved-banner .lnk {
+  text-decoration: underline; text-underline-offset: 2px;
+}
+
+/* Overlay SRS (sesión y modales) */
+#srsOverlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 600;
+  background: var(--bg);
+  flex-direction: column;
+  overflow: hidden;
+}
+#srsOverlay.active { display: flex; }
+
+.srs-topbar {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 18px;
+  display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+.srs-topbar .srs-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--text); flex-shrink: 0;
+}
+.srs-topbar .srs-counter {
+  font-size: 0.78rem; color: var(--text3); font-weight: 500;
+  letter-spacing: 0.04em; white-space: nowrap;
+}
+.srs-topbar .srs-counter strong { color: var(--text); }
+.srs-topbar .srs-tema-chip {
+  display: inline-flex; align-items: center; flex-shrink: 0;
+  border-radius: 100px; padding: 3px 10px;
+  font-size: 0.7rem; font-weight: 600;
+  background: var(--border); color: var(--text2);
+  white-space: nowrap;
+}
+.srs-topbar .srs-spacer { flex: 1; }
+.btn-srs-close, .btn-srs-undo, .btn-srs-save-exit {
+  border: 1px solid var(--border); border-radius: 20px;
+  padding: 6px 12px; background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem; font-weight: 500;
+  cursor: pointer; color: var(--text2);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.btn-srs-close:hover, .btn-srs-undo:hover:not(:disabled) { background: var(--bg); }
+.btn-srs-undo:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn-srs-save-exit {
+  border-color: #2d7a3a; color: #1a5a22; font-weight: 600;
+  background: #eaffea;
+}
+.btn-srs-save-exit:hover { background: #d6f5d6; }
+
+/* Flash de color al calificar */
+.srs-card { transition: transform 0.15s ease, opacity 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease; }
+.srs-card.flash-no  { background: #fbe1e6; border-color: #c42d4a; box-shadow: 0 0 0 3px rgba(196,45,74,0.18), var(--shadow); }
+.srs-card.flash-mid { background: #fbe8d6; border-color: #c46b2d; box-shadow: 0 0 0 3px rgba(196,107,45,0.18), var(--shadow); }
+.srs-card.flash-yes { background: #d8f0dc; border-color: #2d7a3a; box-shadow: 0 0 0 3px rgba(45,122,58,0.20), var(--shadow); }
+
+.srs-progress-bar {
+  height: 4px; background: var(--border);
+  flex-shrink: 0;
+}
+.srs-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #2d8b7a);
+  transition: width 0.3s ease;
+  width: 0%;
+}
+
+.srs-stage {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-start;
+  padding: 24px 20px 40px;
+  position: relative;
+}
+
+/* Tarjeta SRS */
+.srs-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  width: min(540px, 96vw);
+  padding: 28px 26px 24px;
+  position: relative;
+  margin-bottom: 20px;
+  transition: transform 0.15s ease, opacity 0.18s ease;
+  touch-action: pan-y;
+}
+.srs-card-chips {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px;
+  justify-content: center;
+}
+.srs-chip {
+  display: inline-flex; align-items: center;
+  border-radius: 100px; padding: 3px 11px;
+  font-size: 0.7rem; font-weight: 600;
+  background: var(--bg); color: var(--text2);
+  border: 1px solid var(--border);
+}
+.srs-chip-new   { background: #eaf4ff; color: #2d4ac4; border-color: #b8d1f5; }
+.srs-chip-due   { background: #fff0ea; color: #8b2000; border-color: #f0b090; }
+.srs-chip-warn  { background: #fdf6e3; color: #6b4a00; border-color: #c9a64d; }
+
+.srs-word {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 5.5vw, 2.2rem);
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  line-height: 1.18;
+  margin-bottom: 8px;
+  word-break: break-word;
+}
+.srs-warn-icon-corner {
+  position: absolute; top: 14px; right: 16px;
+  font-size: 1.05rem; opacity: 0.7;
+}
+
+.srs-reveal-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin: 18px auto 0;
+  background: var(--accent); color: #fff; border: none;
+  border-radius: 100px;
+  padding: 12px 28px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem; font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(139,105,20,0.32);
+  transition: all 0.15s;
+  min-height: 48px;
+}
+.srs-reveal-btn:hover { filter: brightness(1.06); transform: translateY(-1px); }
+/* Wrapper para centrar el botón de revelar (que es inline-flex) */
+.srs-reveal-wrap { text-align: center; }
+
+.srs-back {
+  display: none; margin-top: 18px;
+  border-top: 1px dashed var(--border);
+  padding-top: 16px;
+}
+.srs-card.revealed .srs-back { display: block; }
+.srs-translation {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.25rem, 4vw, 1.55rem);
+  font-weight: 600;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 12px;
+  line-height: 1.22;
+}
+.srs-ex-fr {
+  font-style: italic;
+  color: var(--text2);
+  font-size: 0.92rem;
+  text-align: center;
+  margin-bottom: 4px;
+  line-height: 1.45;
+}
+.srs-ex-es {
+  color: var(--text3);
+  font-size: 0.84rem;
+  text-align: center;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.srs-syn {
+  text-align: center; color: var(--accent);
+  font-size: 0.86rem; font-weight: 600; margin-top: 6px;
+}
+.srs-warn-box {
+  margin-top: 12px;
+  background: var(--warn-bg);
+  border-left: 4px solid var(--warn-border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 0.82rem; color: #6b4a00;
+  line-height: 1.45;
+}
+.srs-warn-box::before {
+  content: "⚠️ "; font-size: 0.92rem;
+}
+
+/* Botones de calificación */
+.srs-rating-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: min(540px, 96vw);
+  margin: 0 auto;
+}
+.btn-srs-rate {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px;
+  border: none; border-radius: 14px;
+  min-height: 64px; padding: 10px 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem; font-weight: 700;
+  cursor: pointer;
+  color: #fff;
+  transition: transform 0.12s, filter 0.12s;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+}
+.btn-srs-rate:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.btn-srs-rate:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-srs-rate .srs-rate-icon { font-size: 1.15rem; line-height: 1; }
+.btn-srs-rate .srs-rate-label { font-size: 0.86rem; font-weight: 700; }
+.btn-srs-rate .srs-rate-interval { font-size: 0.7rem; opacity: 0.92; font-weight: 500; }
+.btn-srs-rate.r-no  { background: linear-gradient(135deg, #c42d4a, #8b1a2d); }
+.btn-srs-rate.r-mid { background: linear-gradient(135deg, #c46b2d, #8b4513); }
+.btn-srs-rate.r-yes { background: linear-gradient(135deg, #2d7a3a, #1a5a22); }
+
+/* Indicadores de swipe */
+.srs-swipe-hints {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: none;
+}
+.srs-card.swiping .srs-swipe-hints { display: block; }
+.srs-swipe-hint {
+  position: absolute;
+  display: flex; align-items: center; justify-content: center;
+  width: 60px; height: 60px; border-radius: 50%;
+  font-size: 1.5rem; font-weight: 700; color: #fff;
+  opacity: 0; transition: opacity 0.12s;
+}
+.srs-swipe-hint.left  { left: -20px; top: 50%; transform: translateY(-50%); background: #c42d4a; }
+.srs-swipe-hint.right { right: -20px; top: 50%; transform: translateY(-50%); background: #2d7a3a; }
+.srs-swipe-hint.up    { top: -20px; left: 50%; transform: translateX(-50%); background: #c46b2d; }
+.srs-card.swipe-left  .srs-swipe-hint.left  { opacity: 0.85; }
+.srs-card.swipe-right .srs-swipe-hint.right { opacity: 0.85; }
+.srs-card.swipe-up    .srs-swipe-hint.up    { opacity: 0.85; }
+
+/* Modal de inicio sesión / resumen / stats */
+.srs-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.55); z-index: 700;
+  display: none; align-items: center; justify-content: center;
+  padding: 16px;
+}
+.srs-modal-overlay.active { display: flex; }
+.srs-modal {
+  background: var(--card); border-radius: 18px;
+  padding: 22px 24px; width: min(560px, 96vw);
+  box-shadow: 0 12px 50px rgba(0,0,0,0.32);
+  display: flex; flex-direction: column; gap: 14px;
+  max-height: 92vh; overflow-y: auto;
+}
+.srs-modal h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-weight: 700; color: var(--text); margin: 0;
+}
+.srs-modal-sub {
+  font-size: 0.8rem; color: var(--text3); margin: 0;
+}
+.srs-modal-section {
+  border-top: 1px solid var(--border); padding-top: 12px;
+}
+.srs-modal-section h3 {
+  font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text2); margin: 0 0 8px;
+}
+
+.srs-summary-pills {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.srs-summary-pill {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 0.84rem; color: var(--text2);
+}
+.srs-summary-pill strong { color: var(--accent); font-weight: 700; }
+.srs-summary-pill.big {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+  font-weight: 700;
+}
+.srs-summary-pill.big strong { color: #fff; }
+
+.srs-tema-list {
+  display: flex; flex-direction: column; gap: 4px;
+  max-height: 240px; overflow-y: auto;
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 8px;
+}
+.srs-tema-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 8px; border-radius: 6px;
+  font-size: 0.86rem; color: var(--text2);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.srs-tema-item:hover:not(.disabled) { background: var(--bg); }
+.srs-tema-item.disabled {
+  opacity: 0.45; cursor: not-allowed;
+}
+.srs-tema-item input[type=checkbox] {
+  accent-color: var(--accent);
+  width: 16px; height: 16px; flex-shrink: 0;
+}
+.srs-tema-item .srs-tema-name { flex: 1; }
+.srs-tema-item .srs-tema-count {
+  font-size: 0.74rem; color: var(--text3); font-weight: 600;
+}
+.srs-tema-quick {
+  display: flex; gap: 8px; margin-top: 8px;
+}
+.btn-srs-quick {
+  border: 1px solid var(--border); border-radius: 100px;
+  padding: 4px 11px; font-size: 0.74rem; font-weight: 600;
+  cursor: pointer; background: var(--bg); color: var(--text2);
+}
+.btn-srs-quick:hover { background: var(--border); }
+
+.srs-modal-actions {
+  display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap;
+  margin-top: 4px;
+}
+.btn-srs-primary {
+  background: linear-gradient(135deg, #3d6b2d, #2d8b7a); color: #fff;
+  border: none; border-radius: 12px;
+  padding: 10px 22px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem; font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(45,123,58,0.35);
+  transition: all 0.15s;
+  min-height: 44px;
+}
+.btn-srs-primary:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-1px); }
+.btn-srs-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-srs-secondary {
+  background: transparent; color: var(--text2);
+  border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 10px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem; font-weight: 500; cursor: pointer;
+  min-height: 44px;
+}
+.btn-srs-secondary:hover { background: var(--bg); }
+
+/* Resumen post-sesión */
+.srs-result-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+}
+@media (max-width: 480px) {
+  .srs-result-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.srs-result-cell {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 10px;
+  text-align: center;
+}
+.srs-result-cell .num {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.4rem; font-weight: 800; color: var(--text);
+  display: block;
+}
+.srs-result-cell .lbl {
+  font-size: 0.72rem; color: var(--text3);
+  letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600;
+}
+.srs-result-cell.yes .num { color: #2d7a3a; }
+.srs-result-cell.mid .num { color: #c46b2d; }
+.srs-result-cell.no  .num { color: #c42d4a; }
+
+.srs-tema-table, .srs-stats-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.srs-tema-table th, .srs-tema-table td,
+.srs-stats-table th, .srs-stats-table td {
+  text-align: left; padding: 7px 8px;
+  border-bottom: 1px solid var(--border);
+}
+.srs-tema-table th, .srs-stats-table th {
+  font-size: 0.7rem; text-transform: uppercase;
+  color: var(--text3); font-weight: 700; letter-spacing: 0.06em;
+}
+.srs-tema-table td:not(:first-child),
+.srs-stats-table td:not(:first-child) { text-align: right; }
+.srs-tema-table th:not(:first-child),
+.srs-stats-table th:not(:first-child) { text-align: right; }
+
+/* Stats panel */
+.srs-stats-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+}
+@media (max-width: 480px) {
+  .srs-stats-grid { grid-template-columns: 1fr; }
+}
+.srs-stats-cell {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+.srs-stats-cell .lbl {
+  font-size: 0.7rem; color: var(--text3); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.srs-stats-cell .num {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.25rem; font-weight: 800; color: var(--text);
+}
+.srs-stats-cell .pct {
+  font-size: 0.78rem; color: var(--text3); margin-left: 6px; font-weight: 500;
+}
+.srs-stats-cell .pct::before { content: "·"; margin-right: 6px; opacity: 0.4; }
+
+.srs-bar-chart {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 6px; height: 130px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px 6px;
+}
+.srs-bar-col {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; gap: 4px; height: 100%;
+  min-width: 0;
+}
+.srs-bar-num {
+  font-size: 0.7rem; font-weight: 700; color: var(--text2);
+  height: 14px;
+}
+.srs-bar-fill-wrap {
+  flex: 1; width: 100%;
+  display: flex; align-items: flex-end;
+}
+.srs-bar-fill {
+  width: 100%; border-radius: 6px 6px 2px 2px;
+  background: linear-gradient(180deg, var(--accent), #2d8b7a);
+  min-height: 2px;
+  transition: height 0.3s ease;
+}
+.srs-bar-fill.today {
+  background: linear-gradient(180deg, #c42d4a, #8b1a2d);
+}
+.srs-bar-label {
+  font-size: 0.68rem; color: var(--text3); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+
+.srs-empty-state {
+  text-align: center; padding: 30px 10px;
+  color: var(--text2);
+}
+.srs-empty-state .ico { font-size: 2.4rem; }
+.srs-empty-state .msg {
+  font-size: 1rem; font-weight: 600; margin-top: 6px;
+}
+.srs-empty-state .sub {
+  font-size: 0.84rem; color: var(--text3); margin-top: 6px;
+}
 </style>
 </head>
 <body>
@@ -1785,8 +2315,17 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
     <div class="stat-pill pill">✓ Ya lo sé <strong id="statKnown">15</strong></div>
     <div class="stat-pill pill">Mostrando <strong id="statShowing">1642</strong></div>
   </div>
-  <button class="btn-game" id="btnOpenGame">🃏 Modo Juego</button>
+  <div class="hdr-srs-row">
+    <button class="btn-game" id="btnOpenGame">🃏 Modo Juego</button>
+    <button class="btn-srs" id="btnOpenSRS" type="button">🧠 Repaso SRS <span class="btn-srs-badge zero" id="srsBadge">0</span></button>
+    <button class="btn-srs btn-srs-stats" id="btnOpenSRSStats" type="button">📊 Stats</button>
+  </div>
 </header>
+
+<!-- Banner de progreso SRS sin guardar -->
+<div class="srs-unsaved-banner" id="srsUnsavedBanner" role="button" tabindex="0">
+  💾 Progreso sin guardar — pulsa para <span class="lnk">exportar el HTML</span>
+</div>
 
 <div class="controls">
   <div class="controls-row" id="topicRow">
@@ -2084,6 +2623,174 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
     </div>
   </div>
 
+</div>
+
+<!-- ═══ OVERLAY SESIÓN SRS ═══ -->
+<div id="srsOverlay">
+  <div class="srs-topbar">
+    <button class="btn-srs-undo" id="btnSrsUndo" type="button" title="Volver a la tarjeta anterior (Z)" disabled>↶ Volver</button>
+    <div class="srs-title">🧠 Repaso SRS</div>
+    <div class="srs-counter">Tarjeta <strong id="srsCounterCur">0</strong> de <strong id="srsCounterTot">0</strong></div>
+    <div class="srs-tema-chip" id="srsTemaChip">—</div>
+    <div class="srs-spacer"></div>
+    <button class="btn-srs-save-exit" id="btnSrsSaveExit" type="button" title="Descargar el archivo HTML con todo el progreso acumulado">📥 Exportar HTML</button>
+    <button class="btn-srs-close" id="btnSrsExit" type="button" title="Cerrar la sesión. El progreso se mantiene; podrás exportar más tarde">✕ Salir</button>
+  </div>
+  <div class="srs-progress-bar"><div class="srs-progress-fill" id="srsProgressFill"></div></div>
+  <div class="srs-stage" id="srsStage">
+    <div class="srs-card" id="srsCard">
+      <div class="srs-warn-icon-corner" id="srsWarnCorner" style="display:none;">⚠️</div>
+      <div class="srs-card-chips" id="srsCardChips"></div>
+      <div class="srs-word" id="srsWord">—</div>
+      <div class="srs-reveal-wrap">
+        <button class="srs-reveal-btn" id="btnSrsReveal" type="button" title="Atajo: Espacio / Enter">Revelar</button>
+      </div>
+      <div class="srs-back" id="srsBack">
+        <div class="srs-translation" id="srsTranslation"></div>
+        <div class="srs-ex-fr" id="srsExFr"></div>
+        <div class="srs-ex-es" id="srsExEs"></div>
+        <div class="srs-syn" id="srsSyn"></div>
+        <div class="srs-warn-box" id="srsWarnBox" style="display:none;"></div>
+      </div>
+      <div class="srs-swipe-hints">
+        <div class="srs-swipe-hint left">✕</div>
+        <div class="srs-swipe-hint up">≈</div>
+        <div class="srs-swipe-hint right">✓</div>
+      </div>
+    </div>
+    <div class="srs-rating-row" id="srsRatingRow" style="display:none;">
+      <button class="btn-srs-rate r-no" data-q="0" type="button" title="Atajo: 1 o ←">
+        <span class="srs-rate-icon">✕</span>
+        <span class="srs-rate-label">No lo sé</span>
+        <span class="srs-rate-interval" id="srsIntNo">mañana</span>
+      </button>
+      <button class="btn-srs-rate r-mid" data-q="3" type="button" title="Atajo: 2 o ↑">
+        <span class="srs-rate-icon">≈</span>
+        <span class="srs-rate-label">Difícil</span>
+        <span class="srs-rate-interval" id="srsIntMid">—</span>
+      </button>
+      <button class="btn-srs-rate r-yes" data-q="5" type="button" title="Atajo: 3 o →">
+        <span class="srs-rate-icon">✓</span>
+        <span class="srs-rate-label">Fácil</span>
+        <span class="srs-rate-interval" id="srsIntYes">—</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL INICIO DE SESIÓN SRS ═══ -->
+<div class="srs-modal-overlay" id="srsStartModal">
+  <div class="srs-modal" role="dialog" aria-label="Inicio de sesión de repaso SRS">
+    <h2>Sesión de repaso</h2>
+    <p class="srs-modal-sub" id="srsStartSub">Cargando…</p>
+    <p class="srs-modal-sub" style="font-size:0.74rem;opacity:0.85;">💡 Tu progreso se acumula durante la sesión del navegador. Puedes hacer varias sesiones seguidas y <strong>exportar el HTML al final</strong> para guardarlo en disco.</p>
+
+    <div class="srs-modal-section" id="srsStartSummarySection">
+      <h3>Resumen</h3>
+      <div class="srs-summary-pills" id="srsStartSummary"></div>
+    </div>
+
+    <div class="srs-modal-section" id="srsStartTemasSection">
+      <h3>Temas a incluir</h3>
+      <div class="srs-tema-list" id="srsStartTemaList"></div>
+      <div class="srs-tema-quick">
+        <button class="btn-srs-quick" id="btnSrsTemaAll" type="button">Todos</button>
+        <button class="btn-srs-quick" id="btnSrsTemaNone" type="button">Ninguno</button>
+      </div>
+    </div>
+
+    <div class="srs-empty-state" id="srsStartEmpty" style="display:none;">
+      <div class="ico">✅</div>
+      <div class="msg">¡Al día! No hay tarjetas pendientes hoy.</div>
+      <div class="sub" id="srsStartEmptySub"></div>
+    </div>
+
+    <div class="srs-modal-actions">
+      <button class="btn-srs-secondary" id="btnSrsStartCancel" type="button">Cancelar</button>
+      <button class="btn-srs-primary"  id="btnSrsStartGo" type="button">Empezar sesión</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL RESUMEN POST-SESIÓN ═══ -->
+<div class="srs-modal-overlay" id="srsSummaryModal">
+  <div class="srs-modal" role="dialog" aria-label="Resumen de sesión SRS">
+    <h2>¡Sesión completada! 🎉</h2>
+    <p class="srs-modal-sub" id="srsSummarySub"></p>
+
+    <div class="srs-modal-section">
+      <h3>Resultados</h3>
+      <div class="srs-result-grid">
+        <div class="srs-result-cell"><span class="num" id="srsResTotal">0</span><span class="lbl">Total</span></div>
+        <div class="srs-result-cell yes"><span class="num" id="srsResYes">0</span><span class="lbl">✓ Fácil</span></div>
+        <div class="srs-result-cell mid"><span class="num" id="srsResMid">0</span><span class="lbl">≈ Difícil</span></div>
+        <div class="srs-result-cell no"><span class="num" id="srsResNo">0</span><span class="lbl">✕ No sabía</span></div>
+      </div>
+      <div class="srs-summary-pills" style="margin-top:10px;">
+        <div class="srs-summary-pill big">Aciertos: <strong id="srsResPct">0%</strong></div>
+        <div class="srs-summary-pill" id="srsResNext">Próxima sesión: —</div>
+      </div>
+    </div>
+
+    <div class="srs-modal-section" id="srsResTemaSection" style="display:none;">
+      <h3>Por tema</h3>
+      <table class="srs-tema-table">
+        <thead><tr><th>Tema</th><th>Revisadas</th><th>% acierto</th></tr></thead>
+        <tbody id="srsResTemaBody"></tbody>
+      </table>
+    </div>
+
+    <div class="srs-modal-actions">
+      <button class="btn-srs-secondary" id="btnSrsResBack" type="button">Volver a la app</button>
+      <button class="btn-srs-primary"  id="btnSrsResExport" type="button">💾 Exportar HTML</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL ESTADÍSTICAS SRS ═══ -->
+<div class="srs-modal-overlay" id="srsStatsModal">
+  <div class="srs-modal" role="dialog" aria-label="Estadísticas SRS">
+    <h2>📊 Estadísticas SRS</h2>
+
+    <div class="srs-modal-section">
+      <h3>Estado del mazo</h3>
+      <div class="srs-stats-grid">
+        <div class="srs-stats-cell"><div class="lbl">Total</div><div class="num" id="srsStatTotal">0</div></div>
+        <div class="srs-stats-cell"><div class="lbl">🆕 Nuevas</div><div class="num" id="srsStatNew">0<span class="pct" id="srsStatNewPct"></span></div></div>
+        <div class="srs-stats-cell"><div class="lbl">📘 Aprendiendo</div><div class="num" id="srsStatLearn">0<span class="pct" id="srsStatLearnPct"></span></div></div>
+        <div class="srs-stats-cell"><div class="lbl">🏆 Maduras</div><div class="num" id="srsStatMature">0<span class="pct" id="srsStatMaturePct"></span></div></div>
+      </div>
+    </div>
+
+    <div class="srs-modal-section">
+      <h3>Actividad</h3>
+      <div class="srs-stats-grid">
+        <div class="srs-stats-cell"><div class="lbl">🔥 Racha actual</div><div class="num" id="srsStatStreak">0</div></div>
+        <div class="srs-stats-cell"><div class="lbl">Sesiones realizadas</div><div class="num" id="srsStatSessions">0</div></div>
+        <div class="srs-stats-cell"><div class="lbl">Tarjetas estudiadas</div><div class="num" id="srsStatCards">0</div></div>
+        <div class="srs-stats-cell"><div class="lbl">Pendientes hoy</div><div class="num" id="srsStatPending">0</div></div>
+      </div>
+    </div>
+
+    <div class="srs-modal-section">
+      <h3>Próximos 7 días</h3>
+      <div class="srs-bar-chart" id="srsBarChart"></div>
+    </div>
+
+    <div class="srs-modal-section">
+      <h3>Desglose por tema</h3>
+      <div style="max-height:260px;overflow-y:auto;">
+        <table class="srs-stats-table">
+          <thead><tr><th>Tema</th><th>Total</th><th>🆕</th><th>📘</th><th>🏆</th><th>Hoy</th></tr></thead>
+          <tbody id="srsStatTemaBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="srs-modal-actions">
+      <button class="btn-srs-primary" id="btnSrsStatsClose" type="button">Cerrar</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -37863,6 +38570,7 @@ function initImportExport() {
   }
 
   function doExport() {
+    var _wasUnsaved = (typeof srsUnsavedProgress !== "undefined" && srsUnsavedProgress);
     try {
       // ── Limpiar estado visual transitorio antes de capturar el HTML ────
       // Para que el archivo exportado no se abra con el menú/modales abiertos.
@@ -37885,6 +38593,14 @@ function initImportExport() {
         gameOv.classList.remove("fullscreen");
       }
 
+      // Cerrar overlay y modales SRS para no exportar estado transitorio
+      ["srsOverlay", "srsStartModal", "srsSummaryModal", "srsStatsModal"].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.remove("active");
+      });
+      var unsavedBanner = document.getElementById("srsUnsavedBanner");
+      if (unsavedBanner) unsavedBanner.classList.remove("visible");
+
       var dj  = JSON.stringify(DATA, null, 2);
       document.getElementById('grid').innerHTML = '';
       document.getElementById('importPreviewList').innerHTML = '';
@@ -37893,9 +38609,11 @@ function initImportExport() {
       var e   = src.indexOf("\nvar TEMA_CLASS", s);
       if (s < 0 || e < 0) { alert("No se pudo localizar DATA."); return; }
       var out = src.slice(0, s) + "var DATA = " + dj + ";\n" + src.slice(e);
-      // Embed progreso (knownIds + cardEdits) en el script #embeddedState
+      // Embed progreso (knownIds + cardEdits + srsGlobal) en el script #embeddedState
       // Evitamos literales "</scr"+"ipt>" en el código fuente para no cerrar este propio <script> al parsear.
-      var embedJson = JSON.stringify({ known: knownIds, edits: cardEdits }).replace(/</g, "\\u003c");
+      var embedPayload = { known: knownIds, edits: cardEdits };
+      if (typeof srsGlobal !== "undefined" && srsGlobal) embedPayload.srsGlobal = srsGlobal;
+      var embedJson = JSON.stringify(embedPayload).replace(/</g, "\\u003c");
       var embedOpen  = '<scr' + 'ipt type="application/json" id="embeddedState">';
       var embedClose = '</scr' + 'ipt>';
       var embStart = out.indexOf(embedOpen);
@@ -37910,7 +38628,11 @@ function initImportExport() {
       a.download = "vocabulario_delf_b1.html";
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
       render();
+      // Limpiar el aviso de progreso SRS sin guardar (si existe el sistema)
+      if (typeof markSaved === "function") markSaved();
     } catch(err) {
+      // Si había progreso sin guardar y falló, restablecer el banner visible
+      if (_wasUnsaved && typeof markUnsaved === "function") markUnsaved();
       alert("Error al exportar: " + err.message);
     }
   }
@@ -38074,9 +38796,861 @@ function initImportExport() {
 
 initCardEditor();
 initGame();
+
+/* ═══════════════════════════════════════════════════════════════════
+   SRS — Repetición espaciada (algoritmo SM-2)
+   ═══════════════════════════════════════════════════════════════════ */
+
+var srsGlobal = { sessions: 0, cardsStudied: 0, lastSessionDate: null, sessionDates: [] };
+var srsUnsavedProgress = false;
+
+var srsSession = {
+  queue: [],
+  idx: 0,
+  revealed: false,
+  results: [],          // { card, quality, prevSrs }
+  selectedTemas: null,  // array de temas seleccionados al inicio
+  advancing: false      // true durante el flash entre tarjetas
+};
+
+function srsTodayISO() {
+  return new Date().toISOString().split("T")[0];
+}
+
+function initSRS(card) {
+  card.srs = {
+    interval: 1,
+    repetitions: 0,
+    easeFactor: 2.5,
+    nextReview: srsTodayISO(),
+    lastReview: null,
+    history: []
+  };
+}
+
+function sm2(card, quality) {
+  if (!card.srs) initSRS(card);
+  var srs = card.srs;
+
+  if (quality >= 3) {
+    if (srs.repetitions === 0) srs.interval = 1;
+    else if (srs.repetitions === 1) srs.interval = 6;
+    else srs.interval = Math.round(srs.interval * srs.easeFactor);
+    srs.repetitions += 1;
+  } else {
+    srs.repetitions = 0;
+    srs.interval = 1;
+  }
+
+  srs.easeFactor = Math.max(
+    1.3,
+    srs.easeFactor + 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)
+  );
+
+  var today = new Date();
+  srs.lastReview = today.toISOString().split("T")[0];
+  var next = new Date();
+  next.setDate(next.getDate() + srs.interval);
+  srs.nextReview = next.toISOString().split("T")[0];
+
+  srs.history.push({ date: srs.lastReview, quality: quality });
+
+  return srs;
+}
+
+// Simulación pura: calcula qué intervalo resultaría sin mutar nada
+function previewInterval(card, quality) {
+  var srs = card.srs;
+  var reps = srs ? srs.repetitions : 0;
+  var interval = srs ? srs.interval : 1;
+  var ease = srs ? srs.easeFactor : 2.5;
+
+  if (quality >= 3) {
+    if (reps === 0) interval = 1;
+    else if (reps === 1) interval = 6;
+    else interval = Math.round(interval * ease);
+  } else {
+    interval = 1;
+  }
+  return interval;
+}
+
+function formatInterval(days) {
+  if (days <= 1) return "mañana";
+  if (days < 30) return "en " + days + " días";
+  if (days < 365) {
+    var m = Math.round(days / 30);
+    return "en " + m + (m === 1 ? " mes" : " meses");
+  }
+  var y = (days / 365).toFixed(1);
+  return "en " + y + " años";
+}
+
+function getSRSQueue(temasSeleccionados) {
+  var today = srsTodayISO();
+  var due = DATA.filter(function(card) {
+    if (temasSeleccionados && temasSeleccionados.length > 0) {
+      if (temasSeleccionados.indexOf(card.tema) === -1) return false;
+    }
+    if (!card.srs) return true;
+    return card.srs.nextReview <= today;
+  });
+  due.sort(function(a, b) {
+    var aNew = !a.srs;
+    var bNew = !b.srs;
+    if (aNew && !bNew) return 1;
+    if (!aNew && bNew) return -1;
+    if (aNew && bNew) return 0;
+    return a.srs.nextReview.localeCompare(b.srs.nextReview);
+  });
+  return due;
+}
+
+function getPendientesPorTema() {
+  var today = srsTodayISO();
+  var result = {};
+  DATA.forEach(function(card) {
+    var pendiente = !card.srs || card.srs.nextReview <= today;
+    if (pendiente) {
+      var tema = card.tema || "Sin tema";
+      result[tema] = (result[tema] || 0) + 1;
+    }
+  });
+  return result;
+}
+
+function getAllTemasOrdered() {
+  var seen = {};
+  var out = [];
+  DATA.forEach(function(c) {
+    var t = c.tema || "Sin tema";
+    if (!seen[t]) { seen[t] = true; out.push(t); }
+  });
+  out.sort(function(a, b) { return a.localeCompare(b, "es"); });
+  return out;
+}
+
+function countNewVsReview(temasSeleccionados) {
+  var today = srsTodayISO();
+  var n = 0, r = 0;
+  DATA.forEach(function(card) {
+    if (temasSeleccionados && temasSeleccionados.length > 0) {
+      if (temasSeleccionados.indexOf(card.tema) === -1) return;
+    }
+    if (!card.srs) n++;
+    else if (card.srs.nextReview <= today) r++;
+  });
+  return { nuevas: n, repaso: r, total: n + r };
+}
+
+function srsEstimatedMinutes(total) {
+  var secs = total * 10;
+  var mins = Math.max(1, Math.round(secs / 60));
+  return mins;
+}
+
+// ── Banner & beforeunload ──
+function markUnsaved() {
+  srsUnsavedProgress = true;
+  var b = document.getElementById("srsUnsavedBanner");
+  if (b) b.classList.add("visible");
+}
+function markSaved() {
+  srsUnsavedProgress = false;
+  var b = document.getElementById("srsUnsavedBanner");
+  if (b) b.classList.remove("visible");
+}
+
+// ── Badge ──
+function updateSrsBadge() {
+  var badge = document.getElementById("srsBadge");
+  if (!badge) return;
+  var total = 0;
+  var today = srsTodayISO();
+  for (var i = 0; i < DATA.length; i++) {
+    var c = DATA[i];
+    if (!c.srs || c.srs.nextReview <= today) total++;
+  }
+  if (total === 0) {
+    badge.textContent = "✓";
+    badge.classList.add("zero");
+  } else {
+    badge.textContent = String(total);
+    badge.classList.remove("zero");
+  }
+}
+
+// ── Modal inicio de sesión ──
+function srsOpenStartModal() {
+  var modal = document.getElementById("srsStartModal");
+  if (!modal) return;
+  var pendByTema = getPendientesPorTema();
+  var totalPend = Object.keys(pendByTema).reduce(function(s, k) { return s + pendByTema[k]; }, 0);
+
+  var summarySection = document.getElementById("srsStartSummarySection");
+  var temasSection   = document.getElementById("srsStartTemasSection");
+  var emptyState     = document.getElementById("srsStartEmpty");
+  var startBtn       = document.getElementById("btnSrsStartGo");
+  var cancelBtn      = document.getElementById("btnSrsStartCancel");
+  var subEl          = document.getElementById("srsStartSub");
+
+  if (totalPend === 0) {
+    summarySection.style.display = "none";
+    temasSection.style.display = "none";
+    emptyState.style.display = "block";
+    startBtn.style.display = "none";
+    cancelBtn.textContent = "Cerrar";
+    subEl.textContent = "Estás al día con tus repasos.";
+    // Próximo repaso más cercano
+    var soonest = null, soonestCount = 0;
+    DATA.forEach(function(c) {
+      if (c.srs && c.srs.nextReview) {
+        if (!soonest || c.srs.nextReview < soonest) soonest = c.srs.nextReview;
+      }
+    });
+    if (soonest) {
+      DATA.forEach(function(c) {
+        if (c.srs && c.srs.nextReview === soonest) soonestCount++;
+      });
+      document.getElementById("srsStartEmptySub").textContent =
+        "Vuelve el " + soonest + " con " + soonestCount + " tarjeta" + (soonestCount === 1 ? "" : "s") + ".";
+    } else {
+      document.getElementById("srsStartEmptySub").textContent = "No hay próximos repasos programados.";
+    }
+    modal.classList.add("active");
+    return;
+  }
+
+  summarySection.style.display = "";
+  temasSection.style.display = "";
+  emptyState.style.display = "none";
+  startBtn.style.display = "";
+  cancelBtn.textContent = "Cancelar";
+  subEl.textContent = "Elige los temas que quieres repasar hoy.";
+
+  // Renderizar lista temas
+  var allTemas = getAllTemasOrdered();
+  var listEl = document.getElementById("srsStartTemaList");
+  listEl.innerHTML = "";
+  allTemas.forEach(function(tema) {
+    var count = pendByTema[tema] || 0;
+    var disabled = count === 0;
+    var label = document.createElement("label");
+    label.className = "srs-tema-item" + (disabled ? " disabled" : "");
+    var chk = document.createElement("input");
+    chk.type = "checkbox";
+    chk.value = tema;
+    chk.checked = !disabled;
+    chk.disabled = disabled;
+    chk.addEventListener("change", srsUpdateStartSummary);
+    var name = document.createElement("span");
+    name.className = "srs-tema-name";
+    name.textContent = tema;
+    var ct = document.createElement("span");
+    ct.className = "srs-tema-count";
+    ct.textContent = count > 0 ? "(" + count + " pendiente" + (count === 1 ? "" : "s") + ")" : "(0)";
+    label.appendChild(chk);
+    label.appendChild(name);
+    label.appendChild(ct);
+    listEl.appendChild(label);
+  });
+
+  srsUpdateStartSummary();
+  modal.classList.add("active");
+}
+
+function srsCloseStartModal() {
+  var modal = document.getElementById("srsStartModal");
+  if (modal) modal.classList.remove("active");
+}
+
+function srsGetSelectedTemas() {
+  var checks = document.querySelectorAll("#srsStartTemaList input[type=checkbox]:not(:disabled)");
+  var out = [];
+  for (var i = 0; i < checks.length; i++) {
+    if (checks[i].checked) out.push(checks[i].value);
+  }
+  return out;
+}
+
+function srsUpdateStartSummary() {
+  var selected = srsGetSelectedTemas();
+  var pillsEl = document.getElementById("srsStartSummary");
+  var startBtn = document.getElementById("btnSrsStartGo");
+  var counts;
+  if (selected.length === 0) {
+    counts = { nuevas: 0, repaso: 0, total: 0 };
+  } else {
+    counts = countNewVsReview(selected);
+  }
+  var mins = srsEstimatedMinutes(counts.total);
+  pillsEl.innerHTML = "";
+  pillsEl.insertAdjacentHTML("beforeend",
+    '<div class="srs-summary-pill big">Total: <strong>' + counts.total + '</strong></div>'
+    + '<div class="srs-summary-pill">🆕 Nuevas: <strong>' + counts.nuevas + '</strong></div>'
+    + '<div class="srs-summary-pill">🔄 A repasar: <strong>' + counts.repaso + '</strong></div>'
+    + '<div class="srs-summary-pill">⏱ ~' + mins + ' min</div>'
+  );
+  if (counts.total === 0) {
+    startBtn.disabled = true;
+    startBtn.textContent = "Selecciona al menos un tema con pendientes";
+  } else {
+    startBtn.disabled = false;
+    startBtn.textContent = "Empezar sesión";
+  }
+}
+
+// ── Sesión ──
+function srsStartSession() {
+  var selected = srsGetSelectedTemas();
+  if (selected.length === 0) return;
+  var queue = getSRSQueue(selected);
+  if (queue.length === 0) return;
+  srsSession.queue = queue;
+  srsSession.idx = 0;
+  srsSession.revealed = false;
+  srsSession.results = [];
+  srsSession.selectedTemas = selected.slice();
+  srsSession.advancing = false;
+  srsCloseStartModal();
+  document.getElementById("srsOverlay").classList.add("active");
+  srsRenderCurrentCard();
+  srsUpdateUndoBtn();
+}
+
+function srsUpdateUndoBtn() {
+  var btn = document.getElementById("btnSrsUndo");
+  if (btn) btn.disabled = srsSession.results.length === 0 || srsSession.advancing;
+}
+
+function srsUndo() {
+  if (srsSession.results.length === 0 || srsSession.advancing) return;
+  var last = srsSession.results.pop();
+  // Restaurar el srs previo de la tarjeta (deep snapshot guardado al calificar)
+  if (last.prevSrs === null || last.prevSrs === undefined) {
+    delete last.card.srs;
+  } else {
+    last.card.srs = last.prevSrs;
+  }
+  // Retroceder el índice (la tarjeta sigue siendo la misma instancia en la cola)
+  srsSession.idx = Math.max(0, srsSession.idx - 1);
+  // Si tras deshacer ya no quedan calificaciones, también limpiamos el flag
+  // de "sin guardar" SOLO si no quedaba progreso antes de esta sesión.
+  // Por simplicidad lo dejamos: el usuario puede exportar igualmente sin cambios.
+  srsRenderCurrentCard();
+  // Mostrar revelada porque el usuario ya la había visto
+  srsReveal();
+  srsUpdateUndoBtn();
+}
+
+function srsExitAndSave() {
+  // Cerramos primero el overlay para que el export no capture la sesión abierta
+  srsExitSession();
+  srsTriggerExport();
+}
+
+function srsExitSession() {
+  // El progreso queda en memoria (DATA[i].srs) y el banner amarillo recuerda exportar.
+  document.getElementById("srsOverlay").classList.remove("active");
+  // Reset card transform por si se interrumpió un swipe
+  var card = document.getElementById("srsCard");
+  if (card) {
+    card.style.transform = "";
+    card.style.opacity = "";
+    card.classList.remove("swiping", "swipe-left", "swipe-right", "swipe-up");
+  }
+  updateSrsBadge();
+}
+
+function srsRenderCurrentCard() {
+  var i = srsSession.idx;
+  var total = srsSession.queue.length;
+  document.getElementById("srsCounterCur").textContent = String(i + 1);
+  document.getElementById("srsCounterTot").textContent = String(total);
+  var pct = total > 0 ? (i / total) * 100 : 0;
+  document.getElementById("srsProgressFill").style.width = pct + "%";
+
+  if (i >= total) {
+    srsFinishSession();
+    return;
+  }
+
+  var card = srsSession.queue[i];
+  // Frente: español (traducción). Al revelar se muestra el francés.
+  document.getElementById("srsWord").textContent = card.t || "—";
+  document.getElementById("srsTemaChip").textContent = card.tema || "—";
+
+  // Chips
+  var chipsEl = document.getElementById("srsCardChips");
+  chipsEl.innerHTML = "";
+  if (card.tema) {
+    var c1 = document.createElement("span");
+    c1.className = "srs-chip";
+    c1.textContent = card.tema;
+    chipsEl.appendChild(c1);
+  }
+  if (card.nivel) {
+    var c2 = document.createElement("span");
+    c2.className = "srs-chip";
+    c2.textContent = card.nivel;
+    chipsEl.appendChild(c2);
+  }
+  if (!card.srs) {
+    var c3 = document.createElement("span");
+    c3.className = "srs-chip srs-chip-new";
+    c3.textContent = "🆕 Nueva";
+    chipsEl.appendChild(c3);
+  } else {
+    var today = srsTodayISO();
+    if (card.srs.nextReview < today) {
+      var diffDays = Math.floor((Date.parse(today) - Date.parse(card.srs.nextReview)) / 86400000);
+      if (diffDays >= 2) {
+        var c4 = document.createElement("span");
+        c4.className = "srs-chip srs-chip-due";
+        c4.textContent = "⏰ Vencida " + diffDays + "d";
+        chipsEl.appendChild(c4);
+      }
+    }
+  }
+
+  // Warn corner
+  var warnCorner = document.getElementById("srsWarnCorner");
+  warnCorner.style.display = card.warn ? "" : "none";
+
+  // Reset reveal state
+  var cardEl = document.getElementById("srsCard");
+  cardEl.classList.remove("revealed", "swiping", "swipe-left", "swipe-right", "swipe-up");
+  cardEl.style.transform = "";
+  cardEl.style.opacity = "";
+  document.getElementById("btnSrsReveal").style.display = "";
+  document.getElementById("srsRatingRow").style.display = "none";
+  srsSession.revealed = false;
+}
+
+function srsReveal() {
+  var i = srsSession.idx;
+  var card = srsSession.queue[i];
+  if (!card) return;
+
+  // Al revelar mostramos el término en francés (el .t ya está en el frente)
+  document.getElementById("srsTranslation").textContent = card.w || "";
+  var exFr = document.getElementById("srsExFr");
+  exFr.textContent = card.ex_fr || "";
+  exFr.style.display = card.ex_fr ? "" : "none";
+  var exEs = document.getElementById("srsExEs");
+  exEs.textContent = card.ex_es || "";
+  exEs.style.display = card.ex_es ? "" : "none";
+  var syn = document.getElementById("srsSyn");
+  if (card.syn) { syn.textContent = "≈ " + card.syn; syn.style.display = ""; }
+  else { syn.textContent = ""; syn.style.display = "none"; }
+  var warnBox = document.getElementById("srsWarnBox");
+  if (card.warn) {
+    warnBox.style.display = "";
+    warnBox.textContent = card.warn;
+  } else {
+    warnBox.style.display = "none";
+  }
+
+  // Intervalos previstos
+  document.getElementById("srsIntNo").textContent  = formatInterval(previewInterval(card, 0));
+  document.getElementById("srsIntMid").textContent = formatInterval(previewInterval(card, 3));
+  document.getElementById("srsIntYes").textContent = formatInterval(previewInterval(card, 5));
+
+  document.getElementById("srsCard").classList.add("revealed");
+  document.getElementById("btnSrsReveal").style.display = "none";
+  document.getElementById("srsRatingRow").style.display = "";
+  srsSession.revealed = true;
+}
+
+function srsRate(quality) {
+  if (!srsSession.revealed || srsSession.advancing) return;
+  var i = srsSession.idx;
+  var card = srsSession.queue[i];
+  if (!card) return;
+  // Snapshot profundo del srs previo para permitir deshacer
+  var prevSrs = card.srs ? JSON.parse(JSON.stringify(card.srs)) : null;
+  sm2(card, quality);
+  srsSession.results.push({ card: card, quality: quality, prevSrs: prevSrs });
+  markUnsaved();
+  // Feedback visual: flash de color sobre la tarjeta
+  var cls = quality === 5 ? "flash-yes" : (quality === 3 ? "flash-mid" : "flash-no");
+  var cardEl = document.getElementById("srsCard");
+  cardEl.classList.add(cls);
+  srsSession.advancing = true;
+  srsUpdateUndoBtn();
+  setTimeout(function() {
+    cardEl.classList.remove("flash-yes", "flash-mid", "flash-no");
+    srsSession.advancing = false;
+    srsSession.idx++;
+    srsRenderCurrentCard();
+    srsUpdateUndoBtn();
+  }, 320);
+}
+
+function srsFinishSession() {
+  // Cerrar overlay
+  document.getElementById("srsOverlay").classList.remove("active");
+  // Actualizar contadores globales
+  srsGlobal.sessions = (srsGlobal.sessions || 0) + 1;
+  srsGlobal.cardsStudied = (srsGlobal.cardsStudied || 0) + srsSession.results.length;
+  var today = srsTodayISO();
+  srsGlobal.lastSessionDate = today;
+  if (!srsGlobal.sessionDates) srsGlobal.sessionDates = [];
+  if (srsGlobal.sessionDates.indexOf(today) === -1) srsGlobal.sessionDates.push(today);
+  // Pintar resumen
+  srsRenderSummary();
+  document.getElementById("srsSummaryModal").classList.add("active");
+  updateSrsBadge();
+}
+
+function srsRenderSummary() {
+  var res = srsSession.results;
+  var total = res.length;
+  var yes = 0, mid = 0, no = 0;
+  var byTema = {};
+  res.forEach(function(r) {
+    if (r.quality === 5) yes++;
+    else if (r.quality === 3) mid++;
+    else no++;
+    var t = r.card.tema || "Sin tema";
+    if (!byTema[t]) byTema[t] = { tot: 0, ok: 0 };
+    byTema[t].tot++;
+    if (r.quality >= 3) byTema[t].ok++;
+  });
+  var pct = total > 0 ? Math.round(((yes + mid) / total) * 100) : 0;
+  document.getElementById("srsResTotal").textContent = total;
+  document.getElementById("srsResYes").textContent = yes;
+  document.getElementById("srsResMid").textContent = mid;
+  document.getElementById("srsResNo").textContent = no;
+  document.getElementById("srsResPct").textContent = pct + "%";
+
+  // Próxima sesión: cuántas pendientes mañana (hoy + 1)
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  var tStr = tomorrow.toISOString().split("T")[0];
+  var pendMan = 0;
+  DATA.forEach(function(c) {
+    if (!c.srs || c.srs.nextReview <= tStr) pendMan++;
+  });
+  document.getElementById("srsResNext").textContent = "Mañana: " + pendMan + " tarjeta" + (pendMan === 1 ? "" : "s") + " pendientes";
+  document.getElementById("srsSummarySub").textContent = "Buen trabajo. Recuerda exportar el HTML para guardar el progreso.";
+
+  // Desglose por tema (si > 1)
+  var temasArr = Object.keys(byTema);
+  var section = document.getElementById("srsResTemaSection");
+  if (temasArr.length > 1) {
+    section.style.display = "";
+    var body = document.getElementById("srsResTemaBody");
+    body.innerHTML = "";
+    temasArr.sort().forEach(function(t) {
+      var d = byTema[t];
+      var pctT = d.tot > 0 ? Math.round((d.ok / d.tot) * 100) : 0;
+      var tr = document.createElement("tr");
+      tr.innerHTML = "<td>" + escHtml(t) + "</td><td>" + d.tot + "</td><td>" + pctT + "%</td>";
+      body.appendChild(tr);
+    });
+  } else {
+    section.style.display = "none";
+  }
+}
+
+function srsCloseSummary() {
+  document.getElementById("srsSummaryModal").classList.remove("active");
+}
+
+// ── Estadísticas ──
+function srsComputeStreak() {
+  if (!srsGlobal.sessionDates || srsGlobal.sessionDates.length === 0) return 0;
+  var dates = {};
+  srsGlobal.sessionDates.forEach(function(d) { dates[d] = true; });
+  var streak = 0;
+  var cur = new Date();
+  // Si no hay sesión hoy, empezamos desde ayer
+  var todayStr = cur.toISOString().split("T")[0];
+  if (!dates[todayStr]) cur.setDate(cur.getDate() - 1);
+  while (true) {
+    var s = cur.toISOString().split("T")[0];
+    if (dates[s]) { streak++; cur.setDate(cur.getDate() - 1); }
+    else break;
+  }
+  return streak;
+}
+
+function srsOpenStatsModal() {
+  var total = DATA.length;
+  var nNew = 0, nLearn = 0, nMature = 0;
+  DATA.forEach(function(c) {
+    if (!c.srs || c.srs.repetitions === 0) nNew++;
+    else if (c.srs.interval > 21) nMature++;
+    else nLearn++;
+  });
+  document.getElementById("srsStatTotal").textContent = total;
+  document.getElementById("srsStatNew").innerHTML = nNew + '<span class="pct" id="srsStatNewPct">' + (total ? Math.round(nNew * 100 / total) + "%" : "0%") + '</span>';
+  document.getElementById("srsStatLearn").innerHTML = nLearn + '<span class="pct">' + (total ? Math.round(nLearn * 100 / total) + "%" : "0%") + '</span>';
+  document.getElementById("srsStatMature").innerHTML = nMature + '<span class="pct">' + (total ? Math.round(nMature * 100 / total) + "%" : "0%") + '</span>';
+
+  document.getElementById("srsStatStreak").textContent = srsComputeStreak();
+  document.getElementById("srsStatSessions").textContent = srsGlobal.sessions || 0;
+  document.getElementById("srsStatCards").textContent = srsGlobal.cardsStudied || 0;
+
+  var today = srsTodayISO();
+  var pendToday = 0;
+  DATA.forEach(function(c) { if (!c.srs || c.srs.nextReview <= today) pendToday++; });
+  document.getElementById("srsStatPending").textContent = pendToday;
+
+  // Gráfico 7 días
+  var dayNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+  var counts = [];
+  for (var d = 0; d < 7; d++) {
+    var date = new Date();
+    date.setDate(date.getDate() + d);
+    var iso = date.toISOString().split("T")[0];
+    var cnt = 0;
+    DATA.forEach(function(c) {
+      if (c.srs && c.srs.nextReview === iso) cnt++;
+      else if (!c.srs && d === 0) cnt++;
+    });
+    counts.push({ label: d === 0 ? "Hoy" : dayNames[date.getDay()], num: cnt, today: d === 0 });
+  }
+  var maxN = Math.max.apply(null, counts.map(function(c) { return c.num; }));
+  if (maxN === 0) maxN = 1;
+  var chartEl = document.getElementById("srsBarChart");
+  chartEl.innerHTML = "";
+  counts.forEach(function(c) {
+    var col = document.createElement("div");
+    col.className = "srs-bar-col";
+    var hPct = (c.num / maxN) * 100;
+    col.innerHTML =
+      '<div class="srs-bar-num">' + c.num + '</div>'
+      + '<div class="srs-bar-fill-wrap"><div class="srs-bar-fill' + (c.today ? ' today' : '') + '" style="height:' + hPct + '%;"></div></div>'
+      + '<div class="srs-bar-label">' + c.label + '</div>';
+    chartEl.appendChild(col);
+  });
+
+  // Desglose por tema
+  var temaBody = document.getElementById("srsStatTemaBody");
+  temaBody.innerHTML = "";
+  var temaMap = {};
+  DATA.forEach(function(c) {
+    var t = c.tema || "Sin tema";
+    if (!temaMap[t]) temaMap[t] = { tot: 0, nuevo: 0, learn: 0, mature: 0, hoy: 0 };
+    var x = temaMap[t];
+    x.tot++;
+    if (!c.srs || c.srs.repetitions === 0) x.nuevo++;
+    else if (c.srs.interval > 21) x.mature++;
+    else x.learn++;
+    if (!c.srs || c.srs.nextReview <= today) x.hoy++;
+  });
+  Object.keys(temaMap).sort().forEach(function(t) {
+    var x = temaMap[t];
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + escHtml(t) + "</td><td>" + x.tot + "</td><td>" + x.nuevo + "</td><td>" + x.learn + "</td><td>" + x.mature + "</td><td>" + x.hoy + "</td>";
+    temaBody.appendChild(tr);
+  });
+
+  document.getElementById("srsStatsModal").classList.add("active");
+}
+
+function srsCloseStatsModal() {
+  document.getElementById("srsStatsModal").classList.remove("active");
+}
+
+// ── Swipe ──
+function srsInitSwipe() {
+  var card = document.getElementById("srsCard");
+  if (!card) return;
+  var startX = 0, startY = 0, curDx = 0, curDy = 0, dragging = false;
+  var THRESHOLD = 80;
+
+  function onStart(e) {
+    if (!srsSession.revealed) return;
+    var t = e.touches ? e.touches[0] : e;
+    startX = t.clientX; startY = t.clientY;
+    curDx = 0; curDy = 0;
+    dragging = true;
+    card.classList.add("swiping");
+    card.style.transition = "none";
+  }
+  function onMove(e) {
+    if (!dragging) return;
+    var t = e.touches ? e.touches[0] : e;
+    curDx = t.clientX - startX;
+    curDy = t.clientY - startY;
+    // Solo aplicar gesto si es claramente direccional
+    var absX = Math.abs(curDx), absY = Math.abs(curDy);
+    card.classList.remove("swipe-left", "swipe-right", "swipe-up");
+    if (absX > absY && absX > 30) {
+      card.style.transform = "translateX(" + curDx + "px) rotate(" + (curDx * 0.04) + "deg)";
+      card.style.opacity = String(Math.max(0.55, 1 - absX / 400));
+      if (curDx < -30) card.classList.add("swipe-left");
+      else if (curDx > 30) card.classList.add("swipe-right");
+      if (e.cancelable) e.preventDefault();
+    } else if (curDy < -30 && absY > absX) {
+      card.style.transform = "translateY(" + curDy + "px)";
+      card.style.opacity = String(Math.max(0.55, 1 - absY / 400));
+      card.classList.add("swipe-up");
+      if (e.cancelable) e.preventDefault();
+    } else {
+      card.style.transform = "";
+      card.style.opacity = "";
+    }
+  }
+  function onEnd() {
+    if (!dragging) return;
+    dragging = false;
+    card.style.transition = "";
+    card.classList.remove("swiping", "swipe-left", "swipe-right", "swipe-up");
+    var absX = Math.abs(curDx), absY = Math.abs(curDy);
+    var fired = false;
+    if (absX > absY && absX > THRESHOLD) {
+      fired = true;
+      if (curDx < 0) srsRate(0);
+      else srsRate(5);
+    } else if (curDy < -THRESHOLD && absY > absX) {
+      fired = true;
+      srsRate(3);
+    }
+    if (!fired) {
+      card.style.transform = "";
+      card.style.opacity = "";
+    }
+  }
+  // Touch
+  card.addEventListener("touchstart", onStart, { passive: true });
+  card.addEventListener("touchmove",  onMove,  { passive: false });
+  card.addEventListener("touchend",   onEnd);
+  card.addEventListener("touchcancel", onEnd);
+}
+
+// ── Cargar srsGlobal desde embeddedState ──
+function loadSRSGlobal() {
+  try {
+    var el = document.getElementById("embeddedState");
+    if (!el) return;
+    var s = JSON.parse(el.textContent || "{}");
+    if (s.srsGlobal && typeof s.srsGlobal === "object") {
+      srsGlobal.sessions       = s.srsGlobal.sessions || 0;
+      srsGlobal.cardsStudied   = s.srsGlobal.cardsStudied || 0;
+      srsGlobal.lastSessionDate = s.srsGlobal.lastSessionDate || null;
+      srsGlobal.sessionDates   = Array.isArray(s.srsGlobal.sessionDates) ? s.srsGlobal.sessionDates.slice() : [];
+    }
+  } catch (e) {}
+}
+
+// ── Triggers de exportar HTML desde botones SRS ──
+function srsTriggerExport() {
+  var btn = document.getElementById("btnExport");
+  if (btn) { btn.click(); return; }
+  // Fallback: si por algún motivo el botón no está, intentar otra ruta
+  if (typeof doExport === "function") {
+    try { doExport(); } catch(e) {}
+  }
+}
+
+// ── Init / wire-up ──
+function initSRSAddon() {
+  loadSRSGlobal();
+  updateSrsBadge();
+
+  // Botones principales
+  var bOpen = document.getElementById("btnOpenSRS");
+  if (bOpen) bOpen.addEventListener("click", srsOpenStartModal);
+  var bStats = document.getElementById("btnOpenSRSStats");
+  if (bStats) bStats.addEventListener("click", srsOpenStatsModal);
+
+  // Modal inicio
+  document.getElementById("btnSrsStartCancel").addEventListener("click", srsCloseStartModal);
+  document.getElementById("btnSrsStartGo").addEventListener("click", srsStartSession);
+  document.getElementById("btnSrsTemaAll").addEventListener("click", function() {
+    var checks = document.querySelectorAll("#srsStartTemaList input[type=checkbox]:not(:disabled)");
+    for (var i = 0; i < checks.length; i++) checks[i].checked = true;
+    srsUpdateStartSummary();
+  });
+  document.getElementById("btnSrsTemaNone").addEventListener("click", function() {
+    var checks = document.querySelectorAll("#srsStartTemaList input[type=checkbox]:not(:disabled)");
+    for (var i = 0; i < checks.length; i++) checks[i].checked = false;
+    srsUpdateStartSummary();
+  });
+  // Click fuera cierra modal
+  document.getElementById("srsStartModal").addEventListener("click", function(e) {
+    if (e.target === this) srsCloseStartModal();
+  });
+
+  // Overlay sesión
+  document.getElementById("btnSrsExit").addEventListener("click", srsExitSession);
+  document.getElementById("btnSrsSaveExit").addEventListener("click", srsExitAndSave);
+  document.getElementById("btnSrsUndo").addEventListener("click", srsUndo);
+  document.getElementById("btnSrsReveal").addEventListener("click", srsReveal);
+  var rateBtns = document.querySelectorAll(".btn-srs-rate");
+  for (var i = 0; i < rateBtns.length; i++) {
+    rateBtns[i].addEventListener("click", function() {
+      var q = parseInt(this.getAttribute("data-q"), 10);
+      srsRate(q);
+    });
+  }
+  srsInitSwipe();
+
+  // Modal resumen
+  document.getElementById("btnSrsResBack").addEventListener("click", srsCloseSummary);
+  document.getElementById("btnSrsResExport").addEventListener("click", function() {
+    srsCloseSummary();
+    srsTriggerExport();
+  });
+  document.getElementById("srsSummaryModal").addEventListener("click", function(e) {
+    if (e.target === this) srsCloseSummary();
+  });
+
+  // Modal stats
+  document.getElementById("btnSrsStatsClose").addEventListener("click", srsCloseStatsModal);
+  document.getElementById("srsStatsModal").addEventListener("click", function(e) {
+    if (e.target === this) srsCloseStatsModal();
+  });
+
+  // Banner sin guardar
+  var banner = document.getElementById("srsUnsavedBanner");
+  if (banner) {
+    banner.addEventListener("click", srsTriggerExport);
+    banner.addEventListener("keydown", function(e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); srsTriggerExport(); }
+    });
+  }
+
+  // beforeunload
+  window.addEventListener("beforeunload", function(e) {
+    if (srsUnsavedProgress) {
+      e.preventDefault();
+      e.returnValue = "Tienes progreso SRS sin guardar. ¿Exportar antes de salir?";
+      return e.returnValue;
+    }
+  });
+
+  // Atajos de teclado durante la sesión SRS
+  // Espacio/Enter = revelar
+  // 1 / ← = No sé · 2 / ↑ = Difícil · 3 / → = Fácil · Z = deshacer
+  document.addEventListener("keydown", function(e) {
+    var ov = document.getElementById("srsOverlay");
+    if (!ov || !ov.classList.contains("active")) return;
+    var ae = document.activeElement;
+    if (ae && (ae.tagName === "INPUT" || ae.tagName === "TEXTAREA" || ae.isContentEditable)) return;
+    var k = e.key;
+    if (k === "z" || k === "Z") { e.preventDefault(); srsUndo(); return; }
+    if (!srsSession.revealed) {
+      if (k === " " || k === "Enter") {
+        e.preventDefault();
+        srsReveal();
+      }
+      return;
+    }
+    if (k === "1" || k === "ArrowLeft")  { e.preventDefault(); srsRate(0); }
+    else if (k === "2" || k === "ArrowUp")    { e.preventDefault(); srsRate(3); }
+    else if (k === "3" || k === "ArrowRight") { e.preventDefault(); srsRate(5); }
+  });
+}
+
 // Esperar a que TODO el DOM esté parseado (incluidos los modales al final del HTML)
 function bootAddons() {
   initImportExport();
+  initSRSAddon();
 
   // ── ESC cierra el cuadro de diálogo más interno visible ───────────────
   document.addEventListener("keydown", function(e) {
@@ -38093,6 +39667,24 @@ function bootAddons() {
       ae.closest(".manage-menu")
     );
     if (inField && !inModal) return;
+
+    // 0) Modales SRS (resumen, stats, inicio)
+    var srsModals = ["srsSummaryModal", "srsStatsModal", "srsStartModal"];
+    for (var si = 0; si < srsModals.length; si++) {
+      var sm = document.getElementById(srsModals[si]);
+      if (sm && sm.classList.contains("active")) {
+        sm.classList.remove("active");
+        e.preventDefault();
+        return;
+      }
+    }
+    // 0b) Overlay sesión SRS
+    var srsOv = document.getElementById("srsOverlay");
+    if (srsOv && srsOv.classList.contains("active")) {
+      srsExitSession();
+      e.preventDefault();
+      return;
+    }
 
     // 1) Editor de tarjeta (más interno)
     var editOv = document.getElementById("editModalOverlay");
