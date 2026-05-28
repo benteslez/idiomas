@@ -2396,127 +2396,9 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 }
 
 /* ═══════════════════════════════════
-   SELECTOR DE PERFIL · CLOUD SYNC
+   PERFIL · INDICADOR · CLOUD SYNC
+   (selector de perfil vive en /index.html)
    ═══════════════════════════════════ */
-.profile-overlay {
-  position: fixed; inset: 0;
-  background: rgba(15,12,8,0.62);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  display: none; align-items: center; justify-content: center;
-  z-index: 9999; padding: 20px;
-}
-.profile-overlay.active { display: flex; }
-.profile-modal {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 32px 28px 26px;
-  width: 100%; max-width: 420px;
-  text-align: center;
-  font-family: 'DM Sans', sans-serif;
-}
-.profile-modal h2 {
-  font-family: 'Manrope', sans-serif;
-  font-size: 1.4rem;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  color: var(--text);
-  margin-bottom: 4px;
-}
-.profile-modal .pm-sub {
-  font-size: 0.82rem;
-  color: var(--text3);
-  margin-bottom: 22px;
-}
-.profile-list {
-  display: flex; flex-direction: column; gap: 10px;
-}
-.profile-btn {
-  display: flex; align-items: center; gap: 14px;
-  padding: 14px 16px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem; font-weight: 600;
-  color: var(--text);
-  text-align: left;
-  transition: all 0.15s;
-  width: 100%;
-}
-.profile-btn:hover {
-  background: var(--warn-bg);
-  border-color: var(--accent);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
-}
-.profile-btn .pb-avatar {
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 1.05rem;
-  flex-shrink: 0;
-}
-.profile-btn[data-profile="sergio"] .pb-avatar  { background: #1a4d7a; }
-.profile-btn[data-profile="invitado"] .pb-avatar { background: #6b6b6b; }
-.profile-btn .pb-name { flex: 1; }
-.profile-btn .pb-lock {
-  font-size: 0.78rem; color: var(--text3); font-weight: 500;
-}
-.profile-pwd-row {
-  display: none; flex-direction: column; gap: 10px;
-  margin-top: 18px; padding-top: 16px;
-  border-top: 1px solid var(--border);
-}
-.profile-pwd-row.active { display: flex; }
-.profile-pwd-row label {
-  font-size: 0.78rem; color: var(--text2); font-weight: 600;
-  text-align: left;
-}
-.profile-pwd-row input {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 1rem;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--bg);
-  color: var(--text);
-  width: 100%;
-  letter-spacing: 0.18em;
-}
-.profile-pwd-row input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(139,105,20,0.12);
-}
-.profile-pwd-row .pp-actions {
-  display: flex; gap: 8px;
-}
-.profile-pwd-row button {
-  flex: 1;
-  padding: 10px 14px;
-  border-radius: 10px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.86rem; font-weight: 600;
-  cursor: pointer; border: 1px solid var(--border);
-  background: var(--bg); color: var(--text2);
-  transition: all 0.15s;
-}
-.profile-pwd-row button.pp-ok {
-  background: var(--accent); color: #fff; border-color: var(--accent);
-}
-.profile-pwd-row button:hover { transform: translateY(-1px); }
-.profile-pwd-error {
-  font-size: 0.78rem; color: #c43030;
-  margin-top: -4px; text-align: left;
-  display: none;
-}
-.profile-pwd-error.active { display: block; }
 
 /* Pill de perfil activo en la cabecera */
 .hdr-profile-row {
@@ -41876,7 +41758,7 @@ function deleteCard() {
 
   // Eliminar también de cardEdits y knownIds si existieran
   if (cardEdits[raw.id]) { delete cardEdits[raw.id]; saveCardEdits(); }
-  if (knownIds[raw.id])  { delete knownIds[raw.id];  saveStorage(); }
+  if (knownIds[raw.id])  { delete knownIds[raw.id];  saveKnown(); }
 
   // Eliminar de la deck actual del juego
   gameState.deck.splice(gameState.cursor, 1);
@@ -43733,39 +43615,7 @@ if (document.readyState === "loading") {
 
 <script type="application/json" id="embeddedState">{"known":{},"edits":{},"srsGlobal":{"sessions":10,"cardsStudied":212,"lastSessionDate":"2026-05-27","sessionDates":["2026-05-27"]}}</script>
 
-<!-- ═══ SELECTOR DE PERFIL ═══ -->
-<div class="profile-overlay" id="profileOverlay" role="dialog" aria-label="Seleccionar perfil">
-  <div class="profile-modal">
-    <h2>¿Quién está estudiando?</h2>
-    <p class="pm-sub">Tu progreso se guardará en la nube por perfil.</p>
-    <div class="profile-list" id="profileList">
-      <button type="button" class="profile-btn" data-profile="ruben">
-        <span class="pb-avatar">R</span>
-        <span class="pb-name">Rubén</span>
-        <span class="pb-lock">🔒</span>
-      </button>
-      <button type="button" class="profile-btn" data-profile="sergio">
-        <span class="pb-avatar">S</span>
-        <span class="pb-name">Sergio</span>
-        <span class="pb-lock">🔒</span>
-      </button>
-      <button type="button" class="profile-btn" data-profile="invitado">
-        <span class="pb-avatar">I</span>
-        <span class="pb-name">Invitado</span>
-        <span class="pb-lock"></span>
-      </button>
-    </div>
-    <div class="profile-pwd-row" id="profilePwdRow">
-      <label for="profilePwdInput" id="profilePwdLabel">Contraseña para Rubén</label>
-      <input type="password" id="profilePwdInput" inputmode="numeric" autocomplete="off" placeholder="••••">
-      <div class="profile-pwd-error" id="profilePwdError">Contraseña incorrecta</div>
-      <div class="pp-actions">
-        <button type="button" id="profilePwdCancel">Volver</button>
-        <button type="button" class="pp-ok" id="profilePwdOk">Entrar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- (Selector de perfil eliminado: la elección se hace en /index.html) -->
 
 <!-- ═══ INDICADOR DE SINCRONIZACIÓN ═══ -->
 <div class="cloud-status" id="cloudStatus" role="status" aria-live="polite">
@@ -44187,108 +44037,33 @@ if (document.readyState === "loading") {
     loadProfileData(profile);
   }
 
-  // ───────────────── UI: SELECTOR + CONTRASEÑA ─────────────────
-  function getUnlocked(){
-    try {
-      var s = sessionStorage.getItem(LS_SESS_UNLOCK);
-      return s ? JSON.parse(s) : {};
-    } catch(e){ return {}; }
-  }
-  function markUnlocked(profile){
-    var u = getUnlocked();
-    u[profile] = true;
-    try { sessionStorage.setItem(LS_SESS_UNLOCK, JSON.stringify(u)); } catch(e){}
-  }
-
-  function showOverlay(){
-    var ov = document.getElementById('profileOverlay');
-    if (ov) ov.classList.add('active');
-    hidePwdRow();
-  }
-  function hideOverlay(){
-    var ov = document.getElementById('profileOverlay');
-    if (ov) ov.classList.remove('active');
-  }
-  function showPwdRow(profile){
-    pendingProfile = profile;
-    var row = document.getElementById('profilePwdRow');
-    var lbl = document.getElementById('profilePwdLabel');
-    var inp = document.getElementById('profilePwdInput');
-    var err = document.getElementById('profilePwdError');
-    if (lbl) lbl.textContent = 'Contraseña para ' + (PROFILE_LABEL[profile] || profile);
-    if (inp) { inp.value = ''; setTimeout(function(){ inp.focus(); }, 50); }
-    if (err) err.classList.remove('active');
-    if (row) row.classList.add('active');
-  }
-  function hidePwdRow(){
-    pendingProfile = null;
-    var row = document.getElementById('profilePwdRow');
-    if (row) row.classList.remove('active');
-  }
-  function tryPwd(){
-    if (!pendingProfile) return;
-    var inp = document.getElementById('profilePwdInput');
-    var err = document.getElementById('profilePwdError');
-    if (!inp) return;
-    if (inp.value === PROFILE_PWD) {
-      markUnlocked(pendingProfile);
-      var p = pendingProfile;
-      hidePwdRow();
-      hideOverlay();
-      setActiveProfile(p);
-    } else {
-      if (err) err.classList.add('active');
-      inp.value = '';
-      inp.focus();
-    }
-  }
-
-  function pickProfile(profile){
-    if (profile === 'invitado') {
-      hideOverlay();
-      setActiveProfile('invitado');
-      return;
-    }
-    if (getUnlocked()[profile]) {
-      hideOverlay();
-      setActiveProfile(profile);
-      return;
-    }
-    showPwdRow(profile);
-  }
-
-  function wireOverlay(){
-    var list = document.getElementById('profileList');
-    if (list) {
-      list.addEventListener('click', function(e){
-        var btn = e.target.closest('.profile-btn');
-        if (!btn) return;
-        pickProfile(btn.getAttribute('data-profile'));
-      });
-    }
-    var inp = document.getElementById('profilePwdInput');
-    var ok  = document.getElementById('profilePwdOk');
-    var cancel = document.getElementById('profilePwdCancel');
-    if (ok)     ok.addEventListener('click', tryPwd);
-    if (cancel) cancel.addEventListener('click', hidePwdRow);
-    if (inp)    inp.addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); tryPwd(); } });
-
+  // ───────────────── UI: PILL → ÍNDICE ─────────────────
+  function wirePill(){
     var pill = document.getElementById('hdrProfilePill');
-    if (pill) pill.addEventListener('click', function(){ showOverlay(); });
+    if (!pill) return;
+    pill.title = 'Cambiar perfil (vuelve al índice)';
+    pill.addEventListener('click', function(){
+      // La selección de perfil se hace en el índice; al volver, regresamos aquí.
+      var here = window.location.pathname + window.location.search + window.location.hash;
+      window.location.href = '../index.html?return=' + encodeURIComponent(here);
+    });
   }
 
   // ───────────────── BOOT ─────────────────
   function boot(){
-    wireOverlay();
-    installHooks();
+    wirePill();
     var saved = null;
     try { saved = localStorage.getItem(LS_PROFILE); } catch(e){}
     if (saved && PROFILES.indexOf(saved) !== -1) {
+      installHooks();
       setActiveProfile(saved);
     } else {
-      activeProfile = null;
-      updateProfilePill();
-      showOverlay();
+      // Sin perfil → fuera de aquí, hay que elegir en el índice.
+      // Conservamos la URL actual como ?return=… para que el índice nos traiga de vuelta.
+      setStatus('offline', 'Elige un perfil en el índice', 0);
+      var here = window.location.pathname + window.location.search + window.location.hash;
+      var dest = '../index.html?return=' + encodeURIComponent(here);
+      setTimeout(function(){ window.location.replace(dest); }, 600);
     }
   }
 

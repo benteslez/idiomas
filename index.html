@@ -81,12 +81,55 @@ body > *{position:relative;z-index:1;}
 .lang-card:nth-child(8){animation-delay:.23s;}
 .lang-card:nth-child(n+9){animation-delay:.26s;}
 @media (prefers-reduced-motion: reduce){.lang-card{animation:none;}}
+
+/* ─── PROFILE SELECTOR ─── */
+.header-inner{position:relative;}
+.hdr-profile-row{position:absolute;top:0;right:0;display:flex;align-items:center;gap:6px;}
+.hdr-profile-pill{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px 5px 5px;font-family:'DM Sans',sans-serif;font-size:.76rem;font-weight:600;color:var(--text2);box-shadow:var(--shadow-sm);cursor:pointer;transition:all .15s;}
+.hdr-profile-pill:hover{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent);}
+.hdr-profile-pill .pp-avatar{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.74rem;}
+.hdr-profile-pill[data-profile="sergio"] .pp-avatar{background:#1a4d7a;}
+.hdr-profile-pill[data-profile="invitado"] .pp-avatar{background:#6b6b6b;}
+.hdr-profile-pill .pp-switch{font-size:.66rem;color:var(--text3);margin-left:2px;letter-spacing:.04em;}
+
+.profile-overlay{position:fixed;inset:0;background:rgba(15,12,8,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px;}
+.profile-overlay.active{display:flex;}
+.profile-modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:32px 28px 26px;width:100%;max-width:420px;text-align:center;font-family:'DM Sans',sans-serif;}
+.profile-modal h2{font-family:'Manrope',sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:-.01em;color:var(--text);margin-bottom:4px;}
+.profile-modal .pm-sub{font-size:.82rem;color:var(--text3);margin-bottom:22px;}
+.profile-list{display:flex;flex-direction:column;gap:10px;}
+.profile-btn{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg);border:1px solid var(--border);border-radius:14px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;color:var(--text);text-align:left;transition:all .15s;width:100%;}
+.profile-btn:hover{background:var(--accent-light);border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);}
+.profile-btn .pb-avatar{width:38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.05rem;flex-shrink:0;}
+.profile-btn[data-profile="sergio"] .pb-avatar{background:#1a4d7a;}
+.profile-btn[data-profile="invitado"] .pb-avatar{background:#6b6b6b;}
+.profile-btn .pb-name{flex:1;}
+.profile-btn .pb-lock{font-size:.78rem;color:var(--text3);font-weight:500;}
+.profile-pwd-row{display:none;flex-direction:column;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid var(--border);}
+.profile-pwd-row.active{display:flex;}
+.profile-pwd-row label{font-size:.78rem;color:var(--text2);font-weight:600;text-align:left;}
+.profile-pwd-row input{font-family:'DM Sans',sans-serif;font-size:1rem;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);width:100%;letter-spacing:.18em;}
+.profile-pwd-row input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(122,90,10,.12);}
+.profile-pwd-row .pp-actions{display:flex;gap:8px;}
+.profile-pwd-row button{flex:1;padding:10px 14px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.86rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--text2);transition:all .15s;}
+.profile-pwd-row button.pp-ok{background:var(--accent);color:#fff;border-color:var(--accent);}
+.profile-pwd-row button:hover{transform:translateY(-1px);}
+.profile-pwd-error{font-size:.78rem;color:#c43030;margin-top:-4px;text-align:left;display:none;}
+.profile-pwd-error.active{display:block;}
+@media (max-width:560px){.hdr-profile-row{top:-2px;right:0;}.hdr-profile-pill{font-size:.72rem;padding:4px 10px 4px 4px;}}
 </style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="header-inner">
+    <div class="hdr-profile-row">
+      <button type="button" class="hdr-profile-pill" id="hdrProfilePill" data-profile="invitado" title="Cambiar de perfil">
+        <span class="pp-avatar" id="hdrProfileAvatar">I</span>
+        <span class="pp-name" id="hdrProfileName">Invitado</span>
+        <span class="pp-switch">▼</span>
+      </button>
+    </div>
     <div class="header-top">
       <h1>Mis Idiomas</h1>
       <span class="header-tag">Referencia completa</span>
@@ -187,6 +230,146 @@ body > *{position:relative;z-index:1;}
 
   </div>
 </main>
+
+<!-- ═══ SELECTOR DE PERFIL ═══ -->
+<div class="profile-overlay" id="profileOverlay" role="dialog" aria-label="Seleccionar perfil">
+  <div class="profile-modal">
+    <h2>¿Quién está estudiando?</h2>
+    <p class="pm-sub">Tu progreso se guardará en la nube por perfil.</p>
+    <div class="profile-list" id="profileList">
+      <button type="button" class="profile-btn" data-profile="ruben">
+        <span class="pb-avatar">R</span>
+        <span class="pb-name">Rubén</span>
+        <span class="pb-lock">🔒</span>
+      </button>
+      <button type="button" class="profile-btn" data-profile="sergio">
+        <span class="pb-avatar">S</span>
+        <span class="pb-name">Sergio</span>
+        <span class="pb-lock">🔒</span>
+      </button>
+      <button type="button" class="profile-btn" data-profile="invitado">
+        <span class="pb-avatar">I</span>
+        <span class="pb-name">Invitado</span>
+        <span class="pb-lock"></span>
+      </button>
+    </div>
+    <div class="profile-pwd-row" id="profilePwdRow">
+      <label for="profilePwdInput" id="profilePwdLabel">Contraseña para Rubén</label>
+      <input type="password" id="profilePwdInput" inputmode="numeric" autocomplete="off" placeholder="••••">
+      <div class="profile-pwd-error" id="profilePwdError">Contraseña incorrecta</div>
+      <div class="pp-actions">
+        <button type="button" id="profilePwdCancel">Volver</button>
+        <button type="button" class="pp-ok" id="profilePwdOk">Entrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script id="profilePickerModule">
+(function(){
+  var PROFILES      = ['ruben', 'sergio', 'invitado'];
+  var PROFILE_LABEL = { ruben: 'Rubén', sergio: 'Sergio', invitado: 'Invitado' };
+  var PROFILE_INIT  = { ruben: 'R',     sergio: 'S',      invitado: 'I'        };
+  var PROFILE_PWD   = '1295';
+  var LS_PROFILE    = 'delf_active_profile';
+  var SS_UNLOCK     = 'delf_profile_unlocked';
+  var pendingProfile = null;
+
+  // ── Return URL ──
+  function getReturnURL(){
+    try {
+      var m = window.location.search.match(/[?&]return=([^&]+)/);
+      if (!m) return null;
+      var raw = decodeURIComponent(m[1]);
+      // Sólo aceptamos rutas relativas (no esquemas externos) — defensa contra open-redirect.
+      if (/^https?:|^\/\//i.test(raw)) return null;
+      return raw;
+    } catch(e){ return null; }
+  }
+  function maybeGoBack(){
+    var ret = getReturnURL();
+    if (ret) window.location.replace(ret);
+  }
+
+  function getUnlocked(){
+    try { var s = sessionStorage.getItem(SS_UNLOCK); return s ? JSON.parse(s) : {}; }
+    catch(e){ return {}; }
+  }
+  function markUnlocked(profile){
+    var u = getUnlocked(); u[profile] = true;
+    try { sessionStorage.setItem(SS_UNLOCK, JSON.stringify(u)); } catch(e){}
+  }
+  function getActive(){
+    try { return localStorage.getItem(LS_PROFILE); } catch(e){ return null; }
+  }
+  function setActive(profile){
+    try { localStorage.setItem(LS_PROFILE, profile); } catch(e){}
+    updatePill();
+  }
+  function updatePill(){
+    var p = getActive() || 'invitado';
+    var pill = document.getElementById('hdrProfilePill');
+    var av   = document.getElementById('hdrProfileAvatar');
+    var nm   = document.getElementById('hdrProfileName');
+    if (pill) pill.setAttribute('data-profile', p);
+    if (av)   av.textContent = PROFILE_INIT[p] || '?';
+    if (nm)   nm.textContent = PROFILE_LABEL[p] || p;
+  }
+
+  function showOverlay(){ document.getElementById('profileOverlay').classList.add('active'); hidePwdRow(); }
+  function hideOverlay(){ document.getElementById('profileOverlay').classList.remove('active'); }
+  function showPwdRow(profile){
+    pendingProfile = profile;
+    document.getElementById('profilePwdLabel').textContent = 'Contraseña para ' + (PROFILE_LABEL[profile] || profile);
+    var inp = document.getElementById('profilePwdInput');
+    inp.value = ''; setTimeout(function(){ inp.focus(); }, 50);
+    document.getElementById('profilePwdError').classList.remove('active');
+    document.getElementById('profilePwdRow').classList.add('active');
+  }
+  function hidePwdRow(){
+    pendingProfile = null;
+    document.getElementById('profilePwdRow').classList.remove('active');
+  }
+  function tryPwd(){
+    if (!pendingProfile) return;
+    var inp = document.getElementById('profilePwdInput');
+    if (inp.value === PROFILE_PWD) {
+      markUnlocked(pendingProfile);
+      var p = pendingProfile;
+      hidePwdRow(); hideOverlay(); setActive(p); maybeGoBack();
+    } else {
+      document.getElementById('profilePwdError').classList.add('active');
+      inp.value = ''; inp.focus();
+    }
+  }
+  function pickProfile(profile){
+    if (profile === 'invitado')             { hideOverlay(); setActive('invitado'); maybeGoBack(); return; }
+    if (getUnlocked()[profile])             { hideOverlay(); setActive(profile);    maybeGoBack(); return; }
+    showPwdRow(profile);
+  }
+
+  document.getElementById('profileList').addEventListener('click', function(e){
+    var btn = e.target.closest('.profile-btn');
+    if (btn) pickProfile(btn.getAttribute('data-profile'));
+  });
+  document.getElementById('profilePwdOk').addEventListener('click', tryPwd);
+  document.getElementById('profilePwdCancel').addEventListener('click', hidePwdRow);
+  document.getElementById('profilePwdInput').addEventListener('keydown', function(e){
+    if (e.key === 'Enter') { e.preventDefault(); tryPwd(); }
+  });
+  document.getElementById('hdrProfilePill').addEventListener('click', showOverlay);
+
+  // Boot
+  var active = getActive();
+  updatePill();
+  // Mostramos el modal si:
+  //  - aún no hay perfil elegido, o
+  //  - venimos con ?return=… (intención explícita de cambiar antes de volver al vocabulario)
+  if (!active || PROFILES.indexOf(active) === -1 || getReturnURL()) {
+    showOverlay();
+  }
+})();
+</script>
 
 </body>
 </html>
