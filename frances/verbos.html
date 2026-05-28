@@ -443,8 +443,10 @@ mark{background:rgba(255,200,0,.4);color:inherit;border-radius:2px;padding:0 1px
 /* SRS fullscreen — oculta topbar y barra, agranda tarjeta */
 .srs-fs-bar{display:none;position:absolute;top:12px;right:14px;z-index:20;gap:8px}
 .srs-overlay.fullscreen .srs-fs-bar{display:flex}
-.srs-overlay.fullscreen .srs-topbar,
-.srs-overlay.fullscreen .srs-pb{display:none}
+.srs-overlay.fullscreen .srs-topbar{display:none}
+.srs-overlay.fullscreen .srs-pb{position:absolute;top:0;left:0;right:0;z-index:19}
+.srs-fs-counter{display:inline-flex;align-items:center;font-family:'Inter',system-ui,sans-serif;font-size:13px;font-weight:600;color:var(--text2);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 12px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.srs-fs-counter strong{color:var(--text);font-weight:700}
 .srs-overlay.fullscreen .srs-arena{max-width:760px;padding:52px 24px 32px;justify-content:center}
 .srs-overlay.fullscreen .srs-card{padding:32px 36px 28px;gap:16px}
 .srs-overlay.fullscreen .srs-front{padding:24px 0}
@@ -3879,6 +3881,7 @@ document.getElementById('importVerbsConfirm').addEventListener('click', function
     <button class="srs-tb-btn" id="srs-exit" title="Salir (Esc)">✕ Salir</button>
   </div>
   <div class="srs-fs-bar">
+    <span class="srs-fs-counter" id="srs-counter-fs"><strong>0</strong>/<strong>0</strong></span>
     <button class="srs-tb-btn" id="srs-undo-fs" title="Volver / deshacer (Z o -)" disabled style="background:var(--surface)">↶ Volver</button>
     <button class="srs-tb-btn" id="srs-fs-exit" title="Mostrar menú" style="background:var(--surface)">⇗ Mostrar menú</button>
   </div>
@@ -4083,6 +4086,8 @@ function srsRenderCard(){
   var v = card.verb, tKey = card.tenseKey, tLabel = tenseLabel(tKey);
   var bl = BL[v.b] || {c:'#999'};
   counter.textContent = 'Tarjeta ' + (s.idx + 1) + ' de ' + s.queue.length;
+  var counterFs = document.getElementById('srs-counter-fs');
+  if(counterFs) counterFs.innerHTML = '<strong>' + (s.idx + 1) + '</strong>/<strong>' + s.queue.length + '</strong>';
   pb.style.width = (s.idx / s.queue.length * 100) + '%';
   chip.hidden = false;
   chip.querySelector('.dot').style.background = bl.c;

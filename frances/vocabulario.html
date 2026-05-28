@@ -1912,8 +1912,25 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   gap: 8px;
 }
 #srsOverlay.fullscreen .srs-fs-bar { display: flex; }
-#srsOverlay.fullscreen .srs-topbar,
-#srsOverlay.fullscreen .srs-progress-bar { display: none; }
+#srsOverlay.fullscreen .srs-topbar { display: none; }
+/* La barra de progreso sigue visible en pantalla completa */
+#srsOverlay.fullscreen .srs-progress-bar {
+  position: absolute; top: 0; left: 0; right: 0;
+  z-index: 19;
+}
+.srs-fs-counter {
+  display: inline-flex; align-items: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--text2);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 12px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.srs-fs-counter strong { color: var(--text); font-weight: 700; }
 #srsOverlay.fullscreen .srs-stage {
   padding: 56px 24px 32px;
   justify-content: center;
@@ -2377,12 +2394,229 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 .srs-empty-state .sub {
   font-size: 0.84rem; color: var(--text3); margin-top: 6px;
 }
+
+/* ═══════════════════════════════════
+   SELECTOR DE PERFIL · CLOUD SYNC
+   ═══════════════════════════════════ */
+.profile-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15,12,8,0.62);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: none; align-items: center; justify-content: center;
+  z-index: 9999; padding: 20px;
+}
+.profile-overlay.active { display: flex; }
+.profile-modal {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 28px 26px;
+  width: 100%; max-width: 420px;
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+}
+.profile-modal h2 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.profile-modal .pm-sub {
+  font-size: 0.82rem;
+  color: var(--text3);
+  margin-bottom: 22px;
+}
+.profile-list {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.profile-btn {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem; font-weight: 600;
+  color: var(--text);
+  text-align: left;
+  transition: all 0.15s;
+  width: 100%;
+}
+.profile-btn:hover {
+  background: var(--warn-bg);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+.profile-btn .pb-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1.05rem;
+  flex-shrink: 0;
+}
+.profile-btn[data-profile="sergio"] .pb-avatar  { background: #1a4d7a; }
+.profile-btn[data-profile="invitado"] .pb-avatar { background: #6b6b6b; }
+.profile-btn .pb-name { flex: 1; }
+.profile-btn .pb-lock {
+  font-size: 0.78rem; color: var(--text3); font-weight: 500;
+}
+.profile-pwd-row {
+  display: none; flex-direction: column; gap: 10px;
+  margin-top: 18px; padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.profile-pwd-row.active { display: flex; }
+.profile-pwd-row label {
+  font-size: 0.78rem; color: var(--text2); font-weight: 600;
+  text-align: left;
+}
+.profile-pwd-row input {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+  width: 100%;
+  letter-spacing: 0.18em;
+}
+.profile-pwd-row input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(139,105,20,0.12);
+}
+.profile-pwd-row .pp-actions {
+  display: flex; gap: 8px;
+}
+.profile-pwd-row button {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.86rem; font-weight: 600;
+  cursor: pointer; border: 1px solid var(--border);
+  background: var(--bg); color: var(--text2);
+  transition: all 0.15s;
+}
+.profile-pwd-row button.pp-ok {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+}
+.profile-pwd-row button:hover { transform: translateY(-1px); }
+.profile-pwd-error {
+  font-size: 0.78rem; color: #c43030;
+  margin-top: -4px; text-align: left;
+  display: none;
+}
+.profile-pwd-error.active { display: block; }
+
+/* Pill de perfil activo en la cabecera */
+.hdr-profile-row {
+  position: absolute; top: 14px; right: 14px;
+  display: flex; align-items: center; gap: 6px;
+  z-index: 5;
+}
+.hdr-profile-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 5px 12px 5px 5px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text2);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.hdr-profile-pill:hover {
+  background: var(--warn-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.hdr-profile-pill .pp-avatar {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-size: 0.74rem;
+}
+.hdr-profile-pill[data-profile="sergio"] .pp-avatar { background: #1a4d7a; }
+.hdr-profile-pill[data-profile="invitado"] .pp-avatar { background: #6b6b6b; }
+.hdr-profile-pill .pp-switch {
+  font-size: 0.66rem;
+  color: var(--text3);
+  margin-left: 2px;
+  letter-spacing: 0.04em;
+}
+
+/* Indicador de sync en la esquina inferior derecha */
+.cloud-status {
+  position: fixed;
+  bottom: 14px; right: 14px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 13px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text2);
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 8000;
+}
+.cloud-status.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.cloud-status .cs-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--text3);
+  flex-shrink: 0;
+}
+.cloud-status.saving  .cs-dot { background: #c4a030; animation: cs-pulse 1s ease-in-out infinite; }
+.cloud-status.saved   .cs-dot { background: #2d7a3a; }
+.cloud-status.offline .cs-dot { background: #c43030; }
+.cloud-status.error   .cs-dot { background: #c43030; }
+@keyframes cs-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
+
+@media (max-width: 560px) {
+  .hdr-profile-row { top: 10px; right: 10px; }
+  .hdr-profile-pill { font-size: 0.72rem; padding: 4px 10px 4px 4px; }
+  .cloud-status { bottom: 8px; right: 8px; font-size: 0.7rem; padding: 6px 10px; }
+}
 </style>
 </head>
 <body data-__gcrweb-annotatedpagecontent-processed="666A90AA3421D086012789876F7E33A2">
 
 <header class="site-header hdr">
   <a href="index.html" class="hdr-back" title="Volver al índice">← Índice</a>
+  <div class="hdr-profile-row">
+    <button type="button" class="hdr-profile-pill" id="hdrProfilePill" data-profile="invitado" title="Cambiar de perfil">
+      <span class="pp-avatar" id="hdrProfileAvatar">I</span>
+      <span class="pp-name" id="hdrProfileName">Invitado</span>
+      <span class="pp-switch">▼</span>
+    </button>
+  </div>
   <div class="hdr-lbl">Powered by @benteslez</div>
   <h1>Vocabulaire</h1>
   <div class="stats-row hdr-pills">
@@ -2714,6 +2948,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
     <button class="btn-srs-close" id="btnSrsExit" type="button" title="Cerrar la sesión. El progreso se mantiene; podrás exportar más tarde">✕ Salir</button>
   </div>
   <div class="srs-fs-bar">
+    <span class="srs-fs-counter" id="srsCounterFs"><strong>1</strong>/<strong>43</strong></span>
     <button class="btn-srs-fs" id="btnSrsUndoFs" type="button" title="Volver a la tarjeta anterior (Z o -)" disabled="" style="background:var(--card);border-color:var(--border);">↶ Volver</button>
     <button class="btn-srs-fs" id="btnSrsExitFullscreen" type="button" title="Mostrar menú" style="background:var(--card);border-color:var(--border);">⇗ Mostrar menú</button>
   </div>
@@ -42787,6 +43022,8 @@ function srsRenderCurrentCard() {
   var total = srsSession.queue.length;
   document.getElementById("srsCounterCur").textContent = String(i + 1);
   document.getElementById("srsCounterTot").textContent = String(total);
+  var counterFs = document.getElementById("srsCounterFs");
+  if (counterFs) counterFs.innerHTML = "<strong>" + (i + 1) + "</strong>/<strong>" + total + "</strong>";
   var pct = total > 0 ? (i / total) * 100 : 0;
   document.getElementById("srsProgressFill").style.width = pct + "%";
 
@@ -43514,5 +43751,496 @@ if (document.readyState === "loading") {
 </div>
 
 <script type="application/json" id="embeddedState">{"known":{},"edits":{},"srsGlobal":{"sessions":10,"cardsStudied":212,"lastSessionDate":"2026-05-27","sessionDates":["2026-05-27"]}}</script>
+
+<!-- ═══ SELECTOR DE PERFIL ═══ -->
+<div class="profile-overlay" id="profileOverlay" role="dialog" aria-label="Seleccionar perfil">
+  <div class="profile-modal">
+    <h2>¿Quién está estudiando?</h2>
+    <p class="pm-sub">Tu progreso se guardará en la nube por perfil.</p>
+    <div class="profile-list" id="profileList">
+      <button type="button" class="profile-btn" data-profile="ruben">
+        <span class="pb-avatar">R</span>
+        <span class="pb-name">Rubén</span>
+        <span class="pb-lock">🔒</span>
+      </button>
+      <button type="button" class="profile-btn" data-profile="sergio">
+        <span class="pb-avatar">S</span>
+        <span class="pb-name">Sergio</span>
+        <span class="pb-lock">🔒</span>
+      </button>
+      <button type="button" class="profile-btn" data-profile="invitado">
+        <span class="pb-avatar">I</span>
+        <span class="pb-name">Invitado</span>
+        <span class="pb-lock"></span>
+      </button>
+    </div>
+    <div class="profile-pwd-row" id="profilePwdRow">
+      <label for="profilePwdInput" id="profilePwdLabel">Contraseña para Rubén</label>
+      <input type="password" id="profilePwdInput" inputmode="numeric" autocomplete="off" placeholder="••••">
+      <div class="profile-pwd-error" id="profilePwdError">Contraseña incorrecta</div>
+      <div class="pp-actions">
+        <button type="button" id="profilePwdCancel">Volver</button>
+        <button type="button" class="pp-ok" id="profilePwdOk">Entrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ INDICADOR DE SINCRONIZACIÓN ═══ -->
+<div class="cloud-status" id="cloudStatus" role="status" aria-live="polite">
+  <span class="cs-dot"></span>
+  <span class="cs-text">Listo</span>
+</div>
+
+<!-- ═══ MÓDULO DE SINCRONIZACIÓN EN LA NUBE (Supabase) ═══ -->
+<script id="cloudSyncModule">
+(function(){
+  // ───────────────── CONFIGURACIÓN ─────────────────
+  var APP_ID        = 'frances';                              // ← cambiar en cada HTML (ingles, aleman, …)
+  var SUPABASE_URL  = 'https://fwnhszukuopcrajfbsab.supabase.co';
+  var SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3bmhzenVrdW9wY3JhamZic2FiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NzU2ODYsImV4cCI6MjA5NTU1MTY4Nn0.FYjkiUQ9kkYtHVCpejB7xX4mG45O1cuTOte5eN6btHk';
+  var PROFILES      = ['ruben', 'sergio', 'invitado'];
+  var PROFILE_LABEL = { ruben: 'Rubén', sergio: 'Sergio', invitado: 'Invitado' };
+  var PROFILE_INIT  = { ruben: 'R',     sergio: 'S',      invitado: 'I'        };
+  var PROFILE_PWD   = '1295';                                  // contraseña para Rubén y Sergio
+  var SAVE_DEBOUNCE = 1500;                                    // ms
+
+  // Claves localStorage
+  var LS_PROFILE      = 'delf_active_profile';
+  var LS_SESS_UNLOCK  = 'delf_profile_unlocked';               // perfiles desbloqueados en esta sesión del navegador
+  function LS_BACKUP(profile){ return 'delf_cloud_backup__' + APP_ID + '__' + profile; }
+
+  // Compatibilidad credenciales no rellenadas
+  var CLOUD_ENABLED = !!(SUPABASE_URL && SUPABASE_KEY &&
+                         SUPABASE_URL.indexOf('REPLACE_WITH') === -1 &&
+                         SUPABASE_KEY.indexOf('REPLACE_WITH') === -1);
+
+  // ───────────────── ESTADO INTERNO ─────────────────
+  var activeProfile = null;
+  var pendingProfile = null;
+  var saveTimer  = null;
+  var statusEl   = null;
+  var statusTxt  = null;
+  var hideTimer  = null;
+
+  // ───────────────── UTILIDADES STATE ─────────────────
+  function readGlobals(){
+    var payload = {
+      known:     (typeof knownIds   !== 'undefined') ? knownIds   : {},
+      flipped:   (typeof flippedIds !== 'undefined') ? flippedIds : {},
+      edits:     (typeof cardEdits  !== 'undefined') ? cardEdits  : {},
+      srsGlobal: (typeof srsGlobal  !== 'undefined') ? srsGlobal  : {},
+      srsCards:  {}
+    };
+    if (typeof DATA !== 'undefined' && DATA && DATA.length) {
+      for (var i = 0; i < DATA.length; i++) {
+        var c = DATA[i];
+        if (c && c.srs) payload.srsCards[c.id] = c.srs;
+      }
+    }
+    return payload;
+  }
+
+  function applyPayload(data){
+    if (!data || typeof data !== 'object') data = {};
+    // Vaciar y rellenar las referencias originales (no reasignar para no romper closures)
+    if (typeof knownIds !== 'undefined') {
+      Object.keys(knownIds).forEach(function(k){ delete knownIds[k]; });
+      if (data.known && typeof data.known === 'object') {
+        Object.keys(data.known).forEach(function(k){ knownIds[k] = data.known[k]; });
+      }
+    }
+    if (typeof flippedIds !== 'undefined') {
+      Object.keys(flippedIds).forEach(function(k){ delete flippedIds[k]; });
+      if (data.flipped && typeof data.flipped === 'object') {
+        Object.keys(data.flipped).forEach(function(k){ flippedIds[k] = data.flipped[k]; });
+      }
+    }
+    if (typeof cardEdits !== 'undefined') {
+      Object.keys(cardEdits).forEach(function(k){ delete cardEdits[k]; });
+      if (data.edits && typeof data.edits === 'object') {
+        Object.keys(data.edits).forEach(function(k){ cardEdits[k] = data.edits[k]; });
+      }
+    }
+    if (typeof srsGlobal !== 'undefined') {
+      Object.keys(srsGlobal).forEach(function(k){ delete srsGlobal[k]; });
+      var defaults = { sessions: 0, cardsStudied: 0, lastSessionDate: null, sessionDates: [] };
+      Object.keys(defaults).forEach(function(k){ srsGlobal[k] = defaults[k]; });
+      if (data.srsGlobal && typeof data.srsGlobal === 'object') {
+        Object.keys(data.srsGlobal).forEach(function(k){ srsGlobal[k] = data.srsGlobal[k]; });
+      }
+    }
+    if (typeof DATA !== 'undefined' && DATA && DATA.length) {
+      var srsMap = (data.srsCards && typeof data.srsCards === 'object') ? data.srsCards : {};
+      for (var i = 0; i < DATA.length; i++) {
+        var c = DATA[i];
+        if (!c) continue;
+        if (srsMap[c.id]) c.srs = srsMap[c.id];
+        else if (c.srs)   delete c.srs;
+      }
+    }
+    // Reaplicar ediciones a DATA (sobre los valores actuales)
+    if (typeof cardEdits !== 'undefined' && typeof DATA !== 'undefined') {
+      Object.keys(cardEdits).forEach(function(id){
+        var entry = DATA.find(function(x){ return x.id === parseInt(id, 10); });
+        if (!entry) return;
+        var e = cardEdits[id];
+        if (e.w     !== undefined) entry.w     = e.w;
+        if (e.t     !== undefined) entry.t     = e.t;
+        if (e.ex_fr !== undefined) entry.ex_fr = e.ex_fr;
+        if (e.ex_es !== undefined) entry.ex_es = e.ex_es;
+        if (e.syn   !== undefined) entry.syn   = e.syn;
+        if (e.warn  !== undefined) entry.warn  = e.warn;
+        if (e.nivel !== undefined) entry.nivel = e.nivel;
+      });
+      if (typeof rebuildSearchIndex === 'function') rebuildSearchIndex();
+    }
+    // Persistir copia a localStorage clásico para que las funciones existentes encuentren el estado
+    try { localStorage.setItem('delf_known',       JSON.stringify(knownIds));   } catch(e){}
+    try { localStorage.setItem('delf_flipped',     JSON.stringify(flippedIds)); } catch(e){}
+    try { localStorage.setItem('delf_card_edits',  JSON.stringify(cardEdits));  } catch(e){}
+  }
+
+  function reRenderAll(){
+    try { if (typeof reRender        === 'function') reRender(true); } catch(e){}
+    try { if (typeof updateStats     === 'function') updateStats();   } catch(e){}
+    try { if (typeof updateSrsBadge  === 'function') updateSrsBadge(); } catch(e){}
+    try { if (typeof buildTopicUI    === 'function') buildTopicUI();   } catch(e){}
+  }
+
+  // ───────────────── INDICADOR DE ESTADO ─────────────────
+  function setStatus(kind, text, autohide){
+    if (!statusEl) {
+      statusEl  = document.getElementById('cloudStatus');
+      statusTxt = statusEl ? statusEl.querySelector('.cs-text') : null;
+    }
+    if (!statusEl) return;
+    statusEl.classList.remove('saving','saved','offline','error');
+    if (kind) statusEl.classList.add(kind);
+    if (statusTxt) statusTxt.textContent = text;
+    statusEl.classList.add('visible');
+    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+    if (autohide) {
+      hideTimer = setTimeout(function(){
+        statusEl.classList.remove('visible');
+      }, autohide);
+    }
+  }
+
+  // ───────────────── PROFILE PILL ─────────────────
+  function updateProfilePill(){
+    var pill   = document.getElementById('hdrProfilePill');
+    var avatar = document.getElementById('hdrProfileAvatar');
+    var nameEl = document.getElementById('hdrProfileName');
+    if (!pill || !avatar || !nameEl) return;
+    var p = activeProfile || 'invitado';
+    pill.setAttribute('data-profile', p);
+    avatar.textContent = PROFILE_INIT[p] || '?';
+    nameEl.textContent = PROFILE_LABEL[p] || p;
+  }
+
+  // ───────────────── SUPABASE I/O ─────────────────
+  function cloudKey(profile){ return APP_ID + '_' + profile; }
+
+  function cloudLoad(profile){
+    if (!CLOUD_ENABLED) return Promise.reject(new Error('cloud-disabled'));
+    var url = SUPABASE_URL.replace(/\/$/,'') +
+              '/rest/v1/progress?user_id=eq.' + encodeURIComponent(cloudKey(profile)) +
+              '&select=data';
+    return fetch(url, {
+      headers: {
+        apikey:        SUPABASE_KEY,
+        Authorization: 'Bearer ' + SUPABASE_KEY,
+        Accept:        'application/json'
+      }
+    }).then(function(r){
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function(rows){
+      if (Array.isArray(rows) && rows.length > 0) return rows[0].data || {};
+      return null; // sin registro previo
+    });
+  }
+
+  function cloudSave(profile, payload){
+    if (!CLOUD_ENABLED) return Promise.reject(new Error('cloud-disabled'));
+    var url = SUPABASE_URL.replace(/\/$/,'') + '/rest/v1/progress?on_conflict=user_id';
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        apikey:         SUPABASE_KEY,
+        Authorization:  'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        Prefer:         'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify({
+        user_id:    cloudKey(profile),
+        data:       payload,
+        updated_at: new Date().toISOString()
+      })
+    }).then(function(r){
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+    });
+  }
+
+  // ───────────────── SAVE PIPELINE ─────────────────
+  function persistLocalBackup(profile, payload){
+    try { localStorage.setItem(LS_BACKUP(profile), JSON.stringify(payload)); } catch(e){}
+  }
+  function readLocalBackup(profile){
+    try {
+      var s = localStorage.getItem(LS_BACKUP(profile));
+      return s ? JSON.parse(s) : null;
+    } catch(e){ return null; }
+  }
+
+  function doSaveNow(){
+    if (!activeProfile) return;
+    var payload = readGlobals();
+    persistLocalBackup(activeProfile, payload);
+    if (!CLOUD_ENABLED) {
+      setStatus('offline', '⚠ Sin nube (credenciales)', 2500);
+      return;
+    }
+    if (!navigator.onLine) {
+      setStatus('offline', '⚠ Sin conexión — guardado local', 3000);
+      return;
+    }
+    setStatus('saving', '☁ Guardando…', 0);
+    cloudSave(activeProfile, payload).then(function(){
+      setStatus('saved', '✓ Guardado', 1800);
+    }).catch(function(err){
+      console.warn('[cloudSync] save error', err);
+      setStatus('offline', '⚠ Sin conexión — guardado local', 3500);
+    });
+  }
+
+  function scheduleSave(){
+    if (!activeProfile) return;
+    if (saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(function(){
+      saveTimer = null;
+      doSaveNow();
+    }, SAVE_DEBOUNCE);
+  }
+
+  // ───────────────── HOOKS A LAS FUNCIONES EXISTENTES ─────────────────
+  function installHooks(){
+    function wrap(name){
+      var orig = window[name];
+      if (typeof orig !== 'function') return;
+      window[name] = function(){
+        var r = orig.apply(this, arguments);
+        scheduleSave();
+        return r;
+      };
+    }
+    wrap('saveKnown');
+    wrap('saveFlipped');
+    wrap('saveCardEdits');
+    // sm2 muta card.srs por rating
+    if (typeof window.sm2 === 'function') {
+      var origSm2 = window.sm2;
+      window.sm2 = function(){
+        var r = origSm2.apply(this, arguments);
+        scheduleSave();
+        return r;
+      };
+    }
+    // srsFinishSession actualiza srsGlobal
+    if (typeof window.srsFinishSession === 'function') {
+      var origFin = window.srsFinishSession;
+      window.srsFinishSession = function(){
+        var r = origFin.apply(this, arguments);
+        scheduleSave();
+        return r;
+      };
+    }
+    // doImport / doImportConfirm sustituyen DATA y/o edits
+    if (typeof window.doImportConfirm === 'function') {
+      var origImp = window.doImportConfirm;
+      window.doImportConfirm = function(){
+        var r = origImp.apply(this, arguments);
+        scheduleSave();
+        return r;
+      };
+    }
+    // Guardado oportunista al ocultar la pestaña
+    document.addEventListener('visibilitychange', function(){
+      if (document.visibilityState === 'hidden' && saveTimer) {
+        clearTimeout(saveTimer);
+        saveTimer = null;
+        doSaveNow();
+      }
+    });
+    window.addEventListener('online',  function(){ setStatus('saved', '✓ Conectado', 1800); doSaveNow(); });
+    window.addEventListener('offline', function(){ setStatus('offline', '⚠ Sin conexión', 0); });
+  }
+
+  // ───────────────── SWITCH DE PERFIL ─────────────────
+  function loadProfileData(profile){
+    setStatus('saving', '☁ Cargando perfil…', 0);
+    var localBackup = readLocalBackup(profile);
+    var finish = function(payload){
+      applyPayload(payload || {});
+      reRenderAll();
+    };
+    if (!CLOUD_ENABLED || !navigator.onLine) {
+      finish(localBackup);
+      if (!CLOUD_ENABLED) setStatus('offline', '⚠ Modo local (sin nube)', 2500);
+      else setStatus('offline', '⚠ Sin conexión — local', 2500);
+      return;
+    }
+    cloudLoad(profile).then(function(remote){
+      if (remote && Object.keys(remote).length) {
+        finish(remote);
+        persistLocalBackup(profile, remote);
+        setStatus('saved', '✓ Perfil cargado', 1800);
+      } else if (localBackup) {
+        finish(localBackup);
+        setStatus('saved', '✓ Perfil cargado (local)', 1800);
+        // Subir backup local al estar vacío en la nube
+        scheduleSave();
+      } else {
+        finish({});
+        setStatus('saved', '✓ Perfil nuevo', 1800);
+      }
+    }).catch(function(err){
+      console.warn('[cloudSync] load error', err);
+      finish(localBackup);
+      setStatus('offline', '⚠ Sin conexión — local', 3000);
+    });
+  }
+
+  function setActiveProfile(profile, opts){
+    opts = opts || {};
+    if (!profile || PROFILES.indexOf(profile) === -1) profile = 'invitado';
+    var prev = activeProfile;
+    // Guardar progreso del perfil anterior antes del cambio
+    if (prev && prev !== profile) {
+      if (saveTimer) { clearTimeout(saveTimer); saveTimer = null; }
+      doSaveNow();
+    }
+    activeProfile = profile;
+    try { localStorage.setItem(LS_PROFILE, profile); } catch(e){}
+    updateProfilePill();
+    if (opts.skipLoad) return;
+    loadProfileData(profile);
+  }
+
+  // ───────────────── UI: SELECTOR + CONTRASEÑA ─────────────────
+  function getUnlocked(){
+    try {
+      // sessionStorage para que se olvide al cerrar el navegador
+      var s = sessionStorage.getItem(LS_SESS_UNLOCK);
+      return s ? JSON.parse(s) : {};
+    } catch(e){ return {}; }
+  }
+  function markUnlocked(profile){
+    var u = getUnlocked();
+    u[profile] = true;
+    try { sessionStorage.setItem(LS_SESS_UNLOCK, JSON.stringify(u)); } catch(e){}
+  }
+
+  function showOverlay(){
+    var ov = document.getElementById('profileOverlay');
+    if (ov) ov.classList.add('active');
+    hidePwdRow();
+  }
+  function hideOverlay(){
+    var ov = document.getElementById('profileOverlay');
+    if (ov) ov.classList.remove('active');
+  }
+  function showPwdRow(profile){
+    pendingProfile = profile;
+    var row = document.getElementById('profilePwdRow');
+    var lbl = document.getElementById('profilePwdLabel');
+    var inp = document.getElementById('profilePwdInput');
+    var err = document.getElementById('profilePwdError');
+    if (lbl) lbl.textContent = 'Contraseña para ' + (PROFILE_LABEL[profile] || profile);
+    if (inp) { inp.value = ''; setTimeout(function(){ inp.focus(); }, 50); }
+    if (err) err.classList.remove('active');
+    if (row) row.classList.add('active');
+  }
+  function hidePwdRow(){
+    pendingProfile = null;
+    var row = document.getElementById('profilePwdRow');
+    if (row) row.classList.remove('active');
+  }
+  function tryPwd(){
+    if (!pendingProfile) return;
+    var inp = document.getElementById('profilePwdInput');
+    var err = document.getElementById('profilePwdError');
+    if (!inp) return;
+    if (inp.value === PROFILE_PWD) {
+      markUnlocked(pendingProfile);
+      var p = pendingProfile;
+      hidePwdRow();
+      hideOverlay();
+      setActiveProfile(p);
+    } else {
+      if (err) err.classList.add('active');
+      inp.value = '';
+      inp.focus();
+    }
+  }
+
+  function pickProfile(profile){
+    if (profile === 'invitado') {
+      hideOverlay();
+      setActiveProfile('invitado');
+      return;
+    }
+    if (getUnlocked()[profile]) {
+      hideOverlay();
+      setActiveProfile(profile);
+      return;
+    }
+    showPwdRow(profile);
+  }
+
+  function wireOverlay(){
+    var list = document.getElementById('profileList');
+    if (list) {
+      list.addEventListener('click', function(e){
+        var btn = e.target.closest('.profile-btn');
+        if (!btn) return;
+        pickProfile(btn.getAttribute('data-profile'));
+      });
+    }
+    var inp = document.getElementById('profilePwdInput');
+    var ok  = document.getElementById('profilePwdOk');
+    var cancel = document.getElementById('profilePwdCancel');
+    if (ok)     ok.addEventListener('click', tryPwd);
+    if (cancel) cancel.addEventListener('click', hidePwdRow);
+    if (inp)    inp.addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); tryPwd(); } });
+
+    var pill = document.getElementById('hdrProfilePill');
+    if (pill) pill.addEventListener('click', function(){ showOverlay(); });
+  }
+
+  // ───────────────── BOOT ─────────────────
+  function boot(){
+    wireOverlay();
+    installHooks();
+    var saved = null;
+    try { saved = localStorage.getItem(LS_PROFILE); } catch(e){}
+    if (saved && PROFILES.indexOf(saved) !== -1) {
+      setActiveProfile(saved);
+    } else {
+      activeProfile = null;
+      updateProfilePill();
+      showOverlay();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    // Esperar un tick para que bootAddons / loadStorage hayan corrido
+    setTimeout(boot, 0);
+  }
+})();
+</script>
 
 </body></html>
