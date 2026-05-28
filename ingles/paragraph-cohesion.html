@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paragraph Structure &amp; Cohesion · B2–C1 Linguaskill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Page identity: Paragraph Structure & Cohesion → deep teal (Writing & Production) */
+  --primary:#0f766e; --primary-soft:#ecfdf5; --primary-mid:#14b8a6; --primary-strong:#064e3b;
+  --primary-glow:rgba(15,118,110,.14);
+  /* Per-tab identity colors */
+  --tab-anatomy:#4338ca;   --tab-anatomy-soft:#eef2ff;   --tab-anatomy-mid:#6366f1;
+  --tab-internal:#0e7490;  --tab-internal-soft:#ecfeff;  --tab-internal-mid:#06b6d4;
+  --tab-external:#b45309;  --tab-external-soft:#fffbeb;  --tab-external-mid:#f59e0b;
+  /* Legacy aliases */
+  --accent:var(--primary); --accent-light:var(--primary-soft); --accent-mid:var(--primary-mid);
+  /* Neutrals */
+  --bg:#f7f7f5; --bg-elevated:#fbfbfa; --card:#ffffff;
+  --border:#ececec; --border-strong:#dfdfdf;
+  --text:#18181b; --text2:#52525b; --text3:#71717a;
+  /* Paper (model examples) */
+  --paper:#fefef9; --paper-border:#e7e5d6;
+  /* Shadows */
+  --shadow-xs:0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:0 2px 8px rgba(15,23,42,.04),0 1px 2px rgba(15,23,42,.03);
+  --shadow:0 4px 16px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+  --shadow-primary:0 6px 20px var(--primary-glow);
+  /* Geometry */
+  --radius:18px; --radius-md:14px; --radius-sm:10px; --radius-xs:6px; --radius-pill:999px;
+  /* Motion */
+  --ease:cubic-bezier(0.4,0,0.2,1); --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --t-fast:120ms; --t-base:200ms;
+  /* Section colors (A→E) */
+  --c-greet:#7c3aed;     --c-greet-bg:#f5f3ff;
+  --c-conn:#0e7490;      --c-conn-bg:#ecfeff;
+  --c-key:#1d4ed8;       --c-key-bg:#eff6ff;
+  --c-close:#be185d;     --c-close-bg:#fdf2f8;
+  --c-model:#b45309;     --c-model-bg:#fffbeb;
+  --c-tip:#ca8a04;       --c-tip-bg:#fef9c3;
+  --c-struct:#4338ca;    --c-struct-bg:#e0e7ff;
+  /* Sub-category colors for connectors */
+  --c-add:#0e7490;       --c-contrast:#be185d;
+  --c-cause:#15803d;     --c-purpose:#7c3aed;
+  --c-seq:#1d4ed8;       --c-time:#0369a1;
+  --c-emph:#b91c1c;      --c-summ:#7c3aed;
+}
+[data-theme="dark"]{
+  --primary:#5eead4; --primary-soft:#0a2a26; --primary-mid:#2dd4bf; --primary-strong:#99f6e4;
+  --primary-glow:rgba(94,234,212,.18);
+  --tab-anatomy:#a5b4fc;   --tab-anatomy-soft:rgba(165,180,252,.12); --tab-anatomy-mid:#6366f1;
+  --tab-internal:#22d3ee;  --tab-internal-soft:rgba(34,211,238,.12); --tab-internal-mid:#06b6d4;
+  --tab-external:#fbbf24;  --tab-external-soft:rgba(251,191,36,.12); --tab-external-mid:#f59e0b;
+  --bg:#0a0a0b; --bg-elevated:#131316; --card:#18181b;
+  --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --paper:#1e1e24; --paper-border:#3a3a42;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.2);
+  --shadow:0 4px 16px rgba(0,0,0,.30),0 1px 3px rgba(0,0,0,.20);
+  --shadow-primary:0 6px 24px var(--primary-glow);
+  --c-greet:#a78bfa;     --c-greet-bg:rgba(167,139,250,.10);
+  --c-conn:#22d3ee;      --c-conn-bg:rgba(34,211,238,.10);
+  --c-key:#60a5fa;       --c-key-bg:rgba(96,165,250,.10);
+  --c-close:#f472b6;     --c-close-bg:rgba(244,114,182,.10);
+  --c-model:#fbbf24;     --c-model-bg:rgba(251,191,36,.10);
+  --c-tip:#facc15;       --c-tip-bg:rgba(250,204,21,.10);
+  --c-struct:#a5b4fc;    --c-struct-bg:rgba(165,180,252,.10);
+  --c-add:#22d3ee;       --c-contrast:#f472b6;
+  --c-cause:#4ade80;     --c-purpose:#a78bfa;
+  --c-seq:#60a5fa;       --c-time:#38bdf8;
+  --c-emph:#f87171;      --c-summ:#a78bfa;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+*:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-xs);}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
+
+/* HEADER */
+.site-header{background:linear-gradient(180deg,var(--bg-elevated),var(--bg));padding:32px 20px 22px;position:relative;}
+.site-header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-strong) 20%,var(--border-strong) 80%,transparent);}
+.header-inner{max-width:1000px;margin:0 auto;}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.site-header h1{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:600;letter-spacing:-0.02em;color:var(--text);line-height:1.1;}
+.header-tag{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);background:var(--primary-soft);border-radius:var(--radius-pill);padding:4px 11px;}
+.header-sub{font-size:.88rem;color:var(--text3);font-weight:400;margin-top:4px;line-height:1.55;}
+.header-sub strong{color:var(--primary);font-weight:600;}
+
+/* HEADER ACTIONS BAR */
+.header-actions{max-width:1000px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:8px 14px 8px 11px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.back-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateX(-2px);box-shadow:var(--shadow);}
+.back-btn:active{transform:translateX(-2px) scale(.97);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+
+/* THEME TOGGLE */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.theme-toggle:hover{color:var(--primary);border-color:var(--primary-mid);transform:translateY(-1px);box-shadow:var(--shadow);}
+.theme-toggle .icon-sun{display:none;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+
+/* TABS — per-tab colors */
+.tabs-wrap{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-elevated) 85%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--border);padding:14px 20px;}
+.tabs{max-width:1000px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;}
+.tab{border:1px solid var(--border);border-radius:var(--radius-pill);padding:9px 18px;font-family:inherit;font-size:.85rem;font-weight:500;cursor:pointer;background:var(--card);color:var(--text2);transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:7px;}
+.tab:hover{transform:translateY(-1px);box-shadow:var(--shadow-xs);border-color:var(--tab-c,var(--primary-mid));color:var(--tab-c,var(--primary));}
+.tab.active{background:var(--tab-c,var(--primary));color:#fff;border-color:var(--tab-c,var(--primary));font-weight:600;box-shadow:0 6px 20px color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+[data-theme="dark"] .tab.active{color:#0a0a0b;}
+.tab[data-tab="anatomy"]{--tab-c:var(--tab-anatomy);}
+.tab[data-tab="internal"]{--tab-c:var(--tab-internal);}
+.tab[data-tab="external"]{--tab-c:var(--tab-external);}
+.tab .ico{font-size:1rem;line-height:1;}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:32px 20px 64px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeSlideIn 360ms var(--ease-out);}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* INTRO */
+.intro{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:28px;box-shadow:var(--shadow-xs);}
+.intro h3{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--tab-c,var(--primary));margin-bottom:10px;}
+.intro p{font-size:.92rem;color:var(--text2);line-height:1.65;}
+.intro p strong{color:var(--tab-c,var(--primary));font-weight:600;}
+
+/* TOOLBAR */
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.tool-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:7px 15px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:6px;}
+.tool-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateY(-1px);box-shadow:var(--shadow-xs);}
+.tool-btn .ico{font-size:.85rem;line-height:1;}
+
+/* FONT SIZE SLIDER */
+.fs-control{display:inline-flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:6px 14px;}
+.fs-label{font-family:inherit;font-weight:600;color:var(--text3);line-height:1;user-select:none;}
+.fs-label.small{font-size:.78rem;}
+.fs-label.large{font-size:1.1rem;}
+.fs-slider{-webkit-appearance:none;appearance:none;width:100px;height:4px;background:var(--border-strong);border-radius:2px;outline:none;cursor:pointer;accent-color:var(--primary);}
+.fs-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);transition:transform var(--t-fast) var(--ease);}
+.fs-slider::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.fs-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);}
+.fs-value{font-size:.72rem;font-weight:600;color:var(--text3);min-width:32px;text-align:right;}
+
+/* SECTION (collapsible) */
+.section{margin-bottom:14px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow var(--t-base) var(--ease);}
+.section:hover{box-shadow:var(--shadow);}
+.section-header{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;user-select:none;transition:background var(--t-base) var(--ease);background:transparent;}
+.section-header:hover{background:var(--bg-elevated);}
+.section:not(.collapsed) .section-header{border-bottom:1px solid var(--border);}
+.section-icon{width:38px;height:38px;border-radius:var(--radius-sm);display:inline-flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;background:transparent!important;border:2px solid var(--section-c,var(--primary));color:var(--section-c,var(--primary));}
+.section-title{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--text);line-height:1.2;}
+.section-desc{font-size:.78rem;color:var(--text3);margin-top:2px;line-height:1.45;}
+.section-header > div:not(.section-icon){flex:1;}
+.section-header::after{content:"▾";font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease);margin-left:8px;flex-shrink:0;font-weight:600;}
+.section.collapsed .section-header::after{transform:rotate(-90deg);}
+.section.collapsed .section-header:hover::after{color:var(--primary);}
+.section-count{font-size:.7rem;font-weight:600;color:var(--text3);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px 10px;margin-left:auto;flex-shrink:0;transition:all var(--t-base) var(--ease);}
+.section-header:hover .section-count{border-color:var(--primary-mid);color:var(--primary);}
+.section > .grid, .section > .stack, .section > .papers, .section > .tips-list, .section > .blueprint{padding:18px 20px 20px;}
+.section.collapsed > *:not(.section-header){display:none!important;}
+
+/* GRID + ITEM */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.item{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 30%,transparent)!important;border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-xs);transition:transform var(--t-base) var(--ease),box-shadow var(--t-base) var(--ease),border-color var(--t-base) var(--ease);border-left:4px solid var(--section-c,var(--primary))!important;}
+.item:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--section-c,var(--primary-mid))!important;}
+.item-head{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.item-term{font-family:'Manrope','Inter',sans-serif;font-size:1.02rem;font-weight:700;letter-spacing:-0.005em;color:var(--section-c,var(--text));line-height:1.3;}
+.item-trans{font-size:.76rem;color:var(--text3);font-style:italic;}
+.item-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;}
+.item-list li{font-size:.88rem;color:var(--text2);line-height:1.5;padding:5px 0 5px 12px;border-left:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);}
+.item-list li strong{color:var(--text);font-weight:600;}
+
+/* STACK (single-column phrase list, for A/C/D sections) */
+.stack{display:flex;flex-direction:column;gap:8px;}
+.phrase{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-sm);padding:10px 14px;font-size:.92rem;color:var(--text2);line-height:1.5;transition:all var(--t-base) var(--ease);}
+.phrase:hover{transform:translateX(2px);border-color:var(--section-c,var(--primary));box-shadow:var(--shadow-xs);}
+.phrase strong{color:var(--text);font-weight:600;}
+.phrase .hint{font-size:.74rem;color:var(--text3);font-style:italic;margin-left:6px;}
+
+/* PAPER (model examples) */
+.papers{display:flex;flex-direction:column;gap:14px;}
+.paper{background:var(--paper);border:1px solid var(--paper-border);border-radius:var(--radius-md);padding:22px 26px;box-shadow:var(--shadow-sm);position:relative;transition:box-shadow var(--t-base) var(--ease);}
+.paper:hover{box-shadow:var(--shadow);}
+.paper::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--tab-c,var(--primary)),transparent);border-radius:var(--radius-md) var(--radius-md) 0 0;}
+.paper-header{display:flex;align-items:flex-start;gap:14px;cursor:pointer;user-select:none;}
+.paper-header > div:first-child{flex:1;min-width:0;}
+.paper-header .paper-meta{margin-bottom:0;}
+.paper-toggle{font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease),color var(--t-base) var(--ease);flex-shrink:0;font-weight:700;line-height:1.4;}
+.paper-header:hover .paper-toggle,.paper-header:hover .paper-title{color:var(--tab-c,var(--primary));}
+.paper.collapsed .paper-toggle{transform:rotate(-90deg);}
+.paper.collapsed .paper-body{display:none;}
+.paper:not(.collapsed) .paper-body{margin-top:18px;}
+.paper-title{font-family:'Fraunces',Georgia,serif;font-size:1.05rem;font-weight:600;color:var(--tab-c,var(--primary));margin-bottom:6px;letter-spacing:-0.01em;transition:color var(--t-base) var(--ease);}
+.paper-meta{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:18px;}
+.paper-body{font-family:'Inter',sans-serif;font-size:.94rem;line-height:1.8;color:var(--text);}
+.paper-body p{margin-bottom:12px;}
+.paper-body p:last-child{margin-bottom:0;}
+.paper-body em{font-style:italic;color:var(--text2);}
+
+/* COLOR-CODED INLINE PHRASES IN MODELS — match theory section colors */
+.paper-body .k-open    {color:var(--c-greet);    font-weight:600;}
+.paper-body .k-add     {color:var(--c-add);      font-weight:600;}
+.paper-body .k-contrast{color:var(--c-contrast); font-weight:600;}
+.paper-body .k-cause   {color:var(--c-cause);    font-weight:600;}
+.paper-body .k-concess {color:var(--c-purpose);  font-weight:600;}
+.paper-body .k-purpose {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-seq     {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-time    {color:var(--c-time);     font-weight:600;}
+.paper-body .k-emph    {color:var(--c-emph);     font-weight:600;}
+.paper-body .k-summ    {color:var(--c-summ);     font-weight:600;}
+.paper-body .k-key     {color:var(--c-key);      font-weight:600;}
+.paper-body .k-close   {color:var(--c-close);    font-weight:600;}
+
+/* STRUCTURE BLUEPRINT (vertical timeline) */
+.blueprint{display:flex;flex-direction:column;gap:0;position:relative;}
+.step{display:flex;gap:14px;align-items:flex-start;position:relative;padding:6px 0 14px 0;}
+.step::before{content:"";position:absolute;left:18px;top:42px;bottom:-4px;width:2px;background:color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);}
+.step:last-of-type::before{display:none;}
+.step-num{width:38px;height:38px;border-radius:50%;background:var(--card);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--section-c,var(--primary));position:relative;z-index:1;}
+.step-body{flex:1;min-width:0;padding-top:6px;}
+.step-body h5{font-family:'Manrope',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-0.005em;}
+.step-body .step-meta{font-size:.72rem;color:var(--text3);font-style:italic;margin-bottom:6px;font-weight:500;}
+.step-body > p{font-size:.86rem;color:var(--text2);line-height:1.55;margin-bottom:9px;}
+.step-phrases{display:flex;flex-wrap:wrap;gap:5px;}
+.step-phrases span{font-size:.76rem;color:var(--section-c,var(--primary));background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);padding:4px 11px;border-radius:var(--radius-pill);font-weight:600;line-height:1.4;transition:all var(--t-base) var(--ease);}
+.step-phrases span:hover{background:color-mix(in srgb,var(--section-c,var(--primary)) 24%,transparent);border-color:var(--section-c,var(--primary));}
+.blueprint-footer{margin-top:6px;padding:12px 16px;background:color-mix(in srgb,var(--section-c,var(--primary)) 10%,transparent);border-radius:var(--radius-md);font-size:.86rem;color:var(--text2);display:flex;align-items:center;gap:10px;border:1px dashed color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);}
+.blueprint-footer strong{color:var(--section-c,var(--primary));font-weight:600;}
+.blueprint-footer .footer-ico{font-size:1rem;flex-shrink:0;}
+
+/* TIPS SECTION */
+.tips-list{display:flex;flex-direction:column;gap:10px;}
+.tip{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-md);padding:14px 16px;display:flex;gap:14px;align-items:flex-start;transition:all var(--t-base) var(--ease);}
+.tip:hover{transform:translateX(2px);box-shadow:var(--shadow-xs);border-color:var(--section-c,var(--primary));}
+.tip.warn{--section-c:var(--c-emph);}
+.tip-icon{font-size:.9rem;flex-shrink:0;line-height:1;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);color:var(--section-c,var(--primary));font-weight:800;margin-top:1px;}
+.tip-body{flex:1;min-width:0;}
+.tip-body h5{font-family:'Manrope',sans-serif;font-size:.95rem;font-weight:700;color:var(--section-c,var(--primary));margin-bottom:4px;letter-spacing:-0.005em;line-height:1.3;}
+.tip-body p{font-size:.86rem;color:var(--text2);line-height:1.55;}
+.tip-body p em{color:var(--text);font-style:normal;background:var(--bg-elevated);padding:1px 5px;border-radius:var(--radius-xs);font-size:.92em;font-weight:500;}
+
+/* INLINE STRUCTURAL LABELS */
+.label{display:inline-block;font-family:'JetBrains Mono','Manrope',sans-serif;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:var(--radius-xs);background:var(--tab-c-soft,var(--primary-soft));color:var(--tab-c,var(--primary));margin-right:6px;vertical-align:middle;border:1px solid color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+
+/* CALLOUT */
+.callout{background:var(--tab-c-soft,var(--primary-soft));border-radius:var(--radius-md);padding:14px 16px;margin:0 0 24px;font-size:.88rem;color:var(--text2);line-height:1.6;border-left:3px solid var(--tab-c,var(--primary));}
+.callout strong{color:var(--tab-c,var(--primary));font-weight:600;}
+.callout a{color:var(--tab-c,var(--primary));font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px;transition:opacity var(--t-base) var(--ease);}
+.callout a:hover{opacity:.75;}
+.callout .ico{font-size:1rem;margin-right:5px;}
+
+/* Set tab-c-soft based on active panel */
+.tab-panel[data-tab="anatomy"]{--tab-c:var(--tab-anatomy);--tab-c-soft:var(--tab-anatomy-soft);}
+.tab-panel[data-tab="internal"]{--tab-c:var(--tab-internal);--tab-c-soft:var(--tab-internal-soft);}
+.tab-panel[data-tab="external"]{--tab-c:var(--tab-external);--tab-c-soft:var(--tab-external-soft);}
+
+@media (max-width: 600px){
+  .paper{padding:20px 18px;}
+  .paper-body{font-size:.88rem;}
+  .grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-actions">
+    <a class="back-btn" href="index.html" title="Volver al índice">
+      <span class="arrow">←</span><span>Inicio</span>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>🧱 Paragraph Structure &amp; Cohesion · Estructura y cohesión del párrafo</h1>
+      <span class="header-tag">Linguaskill B2 · B2–C1</span>
+    </div>
+    <p class="header-sub">
+      Cómo construir un <strong>párrafo coherente</strong> en inglés (topic sentence · supporting · concluding) y enlazarlo internamente y con el resto del texto · <strong>Paragraph anatomy</strong>, <strong>internal cohesion</strong>, <strong>cross-paragraph linkage</strong>
+    </p>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" data-tab="anatomy" onclick="showTab('anatomy', this)">
+      <span class="ico">🧱</span><span>Anatomía del párrafo</span>
+    </button>
+    <button class="tab" data-tab="internal" onclick="showTab('internal', this)">
+      <span class="ico">🔗</span><span>Cohesión interna</span>
+    </button>
+    <button class="tab" data-tab="external" onclick="showTab('external', this)">
+      <span class="ico">🧵</span><span>Cohesión entre párrafos</span>
+    </button>
+  </div>
+</div>
+
+<main class="main">
+
+<div class="toolbar">
+  <div class="fs-control" title="Tamaño del texto">
+    <span class="fs-label small">A</span>
+    <input type="range" class="fs-slider" id="fs-slider" min="85" max="140" step="5" value="100" oninput="updateFontSize(this.value)">
+    <span class="fs-label large">A</span>
+    <span class="fs-value" id="fs-value">100%</span>
+  </div>
+  <div class="toolbar-actions">
+    <button class="tool-btn" onclick="expandAll()"><span class="ico">▾</span>Expandir todos</button>
+    <button class="tool-btn" onclick="collapseAll()"><span class="ico">▸</span>Colapsar todos</button>
+  </div>
+</div>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 1: ANATOMY ============================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel active" id="anatomy" data-tab="anatomy">
+
+  <div class="intro">
+    <h3>Anatomía del párrafo · Paragraph anatomy</h3>
+    <p>En inglés académico, un párrafo es <strong>una unidad de pensamiento</strong>: <strong>una idea principal</strong> defendida con explicación y evidencia, y cerrada con una frase que enlaza con lo siguiente. La estructura canónica es <strong>topic sentence → supporting sentences → concluding/linking sentence</strong>. En el Linguaskill (Writing Part 2) esta estructura te puntúa directamente el criterio <strong>Coherence &amp; Cohesion</strong>.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Regla de oro:</strong> un párrafo = una idea. Si necesitas defender dos ideas distintas, son dos párrafos distintos. La idea debe poder resumirse en <strong>la primera frase</strong>.
+  </div>
+
+  <!-- A. ESTRUCTURA — BLUEPRINT -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">📐</div>
+      <div>
+        <div class="section-title">A. Estructura · Paragraph structure</div>
+        <div class="section-desc">Topic sentence → supporting sentences → concluding/linking sentence</div>
+      </div>
+    </div>
+    <div class="blueprint">
+      <div class="step">
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <h5>Topic sentence · idea principal</h5>
+          <div class="step-meta">qué vas a defender en este párrafo · 1 frase, normalmente la primera</div>
+          <p>Anuncia la afirmación central del párrafo de forma específica y argumentable. Debe poder responder a la pregunta «¿de qué trata este párrafo?» en una sola línea.</p>
+          <div class="step-phrases">
+            <span>The main advantage of X is…</span>
+            <span>One of the most pressing concerns is…</span>
+            <span>X has profoundly changed…</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <h5>Supporting sentence (explanation) · explicación</h5>
+          <div class="step-meta">desarrolla, matiza o define la idea de la topic sentence</div>
+          <p>Explica <em>por qué</em> o <em>cómo</em> es cierto lo que afirmas: una razón, un mecanismo causal, una definición o una matización.</p>
+          <div class="step-phrases">
+            <span>This is because…</span>
+            <span>In other words,…</span>
+            <span>What this means is that…</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <h5>Supporting sentence (example/evidence) · ejemplo o evidencia</h5>
+          <div class="step-meta">aterriza la idea con un caso concreto, un dato o un estudio</div>
+          <p>Sin un ejemplo, la idea queda abstracta y poco creíble. El examinador busca <em>concrete support</em>: estadística, anécdota, estudio, contraste.</p>
+          <div class="step-phrases">
+            <span>For instance,…</span>
+            <span>A recent study found that…</span>
+            <span>A clear example of this is…</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">4</span>
+        <div class="step-body">
+          <h5>Concluding / linking sentence · cierre y enlace</h5>
+          <div class="step-meta">cierra la idea Y prepara el siguiente párrafo</div>
+          <p>No repitas la topic sentence: <em>cierra</em> con una consecuencia, una valoración o una <strong>frase puente</strong> que anticipe lo que viene en el párrafo siguiente.</p>
+          <div class="step-phrases">
+            <span>This is why…</span>
+            <span>Such concerns lead to…</span>
+            <span>However, this is only part of the picture.</span>
+          </div>
+        </div>
+      </div>
+      <div class="blueprint-footer">
+        <span class="footer-ico">📏</span>
+        <span><strong>Longitud típica B2–C1:</strong> 4–6 frases · 60–90 palabras por párrafo · una idea por párrafo. En el essay del Linguaskill, 3–4 párrafos: introducción + 2 cuerpos + conclusión.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- B. TOPIC SENTENCES -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">⭐</div>
+      <div>
+        <div class="section-title">B. Topic sentences · cómo formular la idea principal</div>
+        <div class="section-desc">Patrones que el examinador reconoce inmediatamente</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>Social media has profoundly changed the way teenagers communicate.</strong> <span class="hint">afirmación clara y específica</span></div>
+      <div class="phrase"><strong>Although remote work offers undeniable flexibility, it also weakens team cohesion.</strong> <span class="hint">concesión + tesis · anuncia estructura</span></div>
+      <div class="phrase"><strong>There are three main reasons why cities should invest in cycling infrastructure.</strong> <span class="hint">previsualización numérica · útil en essays</span></div>
+      <div class="phrase"><strong>The most significant impact of climate change is felt in coastal communities.</strong> <span class="hint">superlativo · foco preciso</span></div>
+      <div class="phrase"><strong>Online learning only works when students have strong self-discipline.</strong> <span class="hint">condición / límite · evita afirmaciones absolutas</span></div>
+      <div class="phrase"><strong>A second, equally important, factor is the role of public transport.</strong> <span class="hint">enlaza con el párrafo anterior y abre el nuevo</span></div>
+      <div class="phrase"><strong>Critics often argue that streaming platforms have killed cinema; this view, however, is misleading.</strong> <span class="hint">opone una postura para defender la propia</span></div>
+      <div class="phrase"><strong>Despite these benefits, smartphones pose a serious threat to children's attention spans.</strong> <span class="hint">bisagra: cierra una idea, abre la siguiente</span></div>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS HISPANO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Interferencias del español que hunden el criterio Coherence &amp; Cohesion</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Párrafos-monstruo (un solo bloque)</h5>
+          <p>En español es habitual el párrafo de 15 líneas con varias ideas mezcladas. En inglés académico, cada idea va en <em>su</em> párrafo. Si tu párrafo tiene dos topic sentences posibles, parte en dos.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Enterrar la idea principal al final</h5>
+          <p>El típico arranque <em>"Nowadays, in the modern world, in today's society…"</em> retrasa la tesis. El inglés es <em>front-loaded</em>: la afirmación va al principio del párrafo, no al final.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Repetir el mismo sustantivo en cada frase</h5>
+          <p><em>"Social media is bad. Social media affects sleep. Social media reduces attention…"</em> suena infantil. Usa <em>this trend</em>, <em>such platforms</em>, <em>they</em>, <em>the phenomenon</em> para variar sin perder el referente.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Comma splice (oraciones encadenadas con comas)</h5>
+          <p><em>"It was raining, we stayed at home"</em> es un error grave en inglés. Usa <em>punto</em>, <em>punto y coma</em> o un conector subordinante: <em>"It was raining<strong>, so</strong> we stayed at home"</em> / <em>"<strong>Because</strong> it was raining, we stayed at home"</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Abusar de «First, Second, Third» como única cohesión</h5>
+          <p>Numerar párrafos es fácil pero el examinador lo lee como cohesión mecánica. Alterna con marcadores semánticos: <em>"A further concern…"</em>, <em>"Equally important…"</em>, <em>"In addition to this…"</em>, <em>"A second, related, issue…"</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Párrafos aislados, sin puente con el anterior</h5>
+          <p>Cada párrafo nuevo debe enganchar con el anterior: una palabra de referencia (<em>"This shift…"</em>, <em>"Such concerns…"</em>) o una frase bisagra (<em>"However, this is only part of the picture."</em>). Si el lector siente un «corte», te bajan en Cohesion.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 2: INTERNAL COHESION ==================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="internal" data-tab="internal">
+
+  <div class="intro">
+    <h3>Cohesión interna · Internal cohesion</h3>
+    <p>La cohesión interna es lo que hace que un párrafo <strong>fluya como un texto</strong> y no como una lista de frases independientes. Se construye con cuatro familias de mecanismos: <strong>referencia</strong>, <strong>sustitución/elipsis</strong>, <strong>conexión lógica</strong> (conectores) y <strong>cadenas léxicas</strong> (sinónimos y repetición controlada).</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🔁</span>Esta pestaña <strong>resume</strong> los mecanismos. Para el catálogo completo de conectores consulta el <strong><a href="linkers-connectors.html">Tema 24 · Linkers &amp; Connectors</a></strong>; para el detalle gramatical de referencia, sustitución y elipsis, el <strong><a href="reference-substitution-ellipsis.html">Tema 26 · Reference, Substitution &amp; Ellipsis</a></strong>.
+  </div>
+
+  <!-- A. MECANISMOS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">🔗</div>
+      <div>
+        <div class="section-title">A. Mecanismos de cohesión interna</div>
+        <div class="section-desc">Las herramientas que enlazan una frase con la siguiente</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-conn)">
+        <div class="item-head"><span class="item-term">Reference</span><span class="item-trans">referencia anafórica</span></div>
+        <ul class="item-list">
+          <li><strong>this / that</strong> — esto, eso <em>(retoma una idea entera)</em></li>
+          <li><strong>these / those</strong> — estos / aquellos</li>
+          <li><strong>such (a) + N</strong> — tal · ese tipo de</li>
+          <li><strong>it / they</strong> — pronombre clásico</li>
+          <li><strong>the former / the latter</strong> — el primero / el segundo</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-add)">
+        <div class="item-head"><span class="item-term">Substitution</span><span class="item-trans">sustitución</span></div>
+        <ul class="item-list">
+          <li><strong>one / ones</strong> — sustituye a un sustantivo contable</li>
+          <li><strong>do / do so / do that</strong> — sustituye a un verbo</li>
+          <li><strong>so / not</strong> — sustituye a una cláusula entera (<em>I think so</em>)</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">Ellipsis</span><span class="item-trans">elipsis</span></div>
+        <ul class="item-list">
+          <li>Omitir lo recuperable del contexto evita la repetición</li>
+          <li><em>She can swim and [she can] dive.</em></li>
+          <li><em>Some prefer tea, others [prefer] coffee.</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-seq)">
+        <div class="item-head"><span class="item-term">Connectors</span><span class="item-trans">conectores lógicos</span></div>
+        <ul class="item-list">
+          <li><strong>Addition:</strong> moreover, furthermore</li>
+          <li><strong>Contrast:</strong> however, nevertheless</li>
+          <li><strong>Cause:</strong> consequently, as a result</li>
+          <li><strong>Concession:</strong> although, even though</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">Lexical chains</span><span class="item-trans">sinónimos e hiperónimos</span></div>
+        <ul class="item-list">
+          <li><em>smartphones → these devices → the technology → such gadgets</em></li>
+          <li><em>students → learners → young people → this group</em></li>
+          <li>Varía sin perder el referente</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-time)">
+        <div class="item-head"><span class="item-term">Controlled repetition</span><span class="item-trans">repetición léxica controlada</span></div>
+        <ul class="item-list">
+          <li>Repite la <strong>palabra clave</strong> del tema para mantener el hilo</li>
+          <li>Pero varía las <strong>palabras satélite</strong> alrededor</li>
+          <li>Repetición ≠ machaconería: hay que decidir qué se repite</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- C. EJEMPLOS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">💬</div>
+      <div>
+        <div class="section-title">C. Ejemplos en contexto</div>
+        <div class="section-desc">Cada mecanismo, aplicado en una secuencia de frases real</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>The committee approved the proposal last week. This decision</strong> will affect every department in the company. <span class="hint">this + sustantivo resumen — referencia a la frase entera</span></div>
+      <div class="phrase"><strong>Some students prefer online classes; others prefer face-to-face lessons. The former</strong> value flexibility, while <strong>the latter</strong> appreciate direct contact with teachers. <span class="hint">the former / the latter — referencia ordenada</span></div>
+      <div class="phrase">The new policy has cut emissions by 12 % in just two years. <strong>Such progress</strong> would have seemed unthinkable a decade ago. <span class="hint">such + sustantivo — retoma toda la idea anterior</span></div>
+      <div class="phrase">She wanted a new bicycle for her birthday, and her younger brother wanted <strong>one</strong> too. <span class="hint">one — sustitución de "bicycle"</span></div>
+      <div class="phrase">If you can attend the meeting on Friday, please <strong>do so</strong> before noon. <span class="hint">do so — sustitución del verbo "attend the meeting"</span></div>
+      <div class="phrase">Some experts believe inflation will fall by the summer. <strong>Others do not.</strong> <span class="hint">elipsis: "do not [believe inflation will fall]"</span></div>
+      <div class="phrase"><strong>Smartphones</strong> have transformed daily life. <strong>These devices</strong> are no longer mere tools but extensions of our identity, and <strong>such technology</strong> raises serious questions about privacy. <span class="hint">cadena léxica: smartphones → these devices → such technology</span></div>
+      <div class="phrase">The report highlighted three serious problems. <strong>However,</strong> it offered no concrete solutions. <strong>As a result,</strong> the council had to commission a second study. <span class="hint">contraste + consecuencia · dos conectores hilando tres frases</span></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 3: EXTERNAL COHESION ==================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="external" data-tab="external">
+
+  <div class="intro">
+    <h3>Cohesión entre párrafos · Cross-paragraph cohesion</h3>
+    <p>Cada párrafo debe <strong>enganchar con el anterior</strong> y <strong>preparar el siguiente</strong>. Los enlaces se construyen con tres técnicas combinadas: una <strong>palabra de referencia</strong> al principio (<em>this shift</em>, <em>such concerns</em>), un <strong>conector lógico</strong> de transición (<em>however</em>, <em>as a result</em>, <em>in contrast</em>) y una <strong>frase bisagra</strong> al final del párrafo anterior (<em>«this is only part of the picture»</em>). En el cuadro siguiente verás el mismo contenido escrito sin cohesión y luego cohesionado.</p>
+  </div>
+
+  <!-- E. ANTES / DESPUÉS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-model)">📄</div>
+      <div>
+        <div class="section-title">E. Antes / después · Before &amp; after</div>
+        <div class="section-desc">El mismo tema, sin cohesión y con cohesión · enlaces resaltados</div>
+      </div>
+    </div>
+    <div class="papers">
+
+      <!-- BEFORE -->
+      <article class="paper">
+        <h4 class="paper-title">❌ Antes · sin cohesión interna ni externa</h4>
+        <div class="paper-meta">Tema: social media &amp; teenagers · ~110 palabras · frases cortas, repetición, sin enlaces</div>
+        <div class="paper-body">
+          <p>Social media is bad for teenagers. Teenagers spend many hours on social media every day. Teenagers do not sleep enough. Teenagers also have problems with concentration. Social media affects mental health. Many studies say social media affects mental health.</p>
+          <p>Schools should do something about social media. Schools should teach about social media. Teachers can help students with social media. Parents can help too. Parents do not always know what their children do on social media. There are many apps. Some apps are dangerous, parents do not know about them.</p>
+          <p><em>Problemas:</em> «social media» repetido 8 veces · ninguna referencia (<em>this</em>, <em>such</em>, <em>they</em>) · sin conectores lógicos · sin frase bisagra entre los dos párrafos · comma splice en la última línea (<em>"…dangerous, parents do not know…"</em>).</p>
+        </div>
+      </article>
+
+      <!-- AFTER -->
+      <article class="paper">
+        <h4 class="paper-title">✅ Después · misma información, cohesión interna y externa</h4>
+        <div class="paper-meta">Mismo tema · ~150 palabras · topic sentence + reference + connectors + bridging</div>
+        <div class="paper-body">
+          <p><span class="k-key">Social media has become a major source of concern for parents and educators alike.</span> Teenagers spend several hours a day scrolling through these platforms, and <span class="k-key">this constant exposure</span> disrupts their sleep patterns and weakens their ability to concentrate. <span class="k-add">As a result,</span> numerous studies have linked <span class="k-key">such habits</span> to a marked decline in adolescent mental health. <span class="k-add">However,</span> blaming the technology alone misses the bigger picture.</p>
+          <p><span class="k-add">Faced with this growing problem,</span> <span class="k-key">schools have a crucial role to play.</span> <span class="k-key">They</span> can integrate digital literacy into the curriculum <span class="k-add">so that</span> students learn to recognise manipulative algorithms and protect their privacy. <span class="k-add">However,</span> teachers cannot tackle <span class="k-key">the issue</span> alone: parents also need to be involved, <span class="k-add">since</span> many apps that appear harmless contain hidden risks <span class="k-key">they</span> are simply not aware of.</p>
+          <p><em>Cambios:</em> <span class="k-key">azul</span> = referencia / topic sentence (<em>this exposure</em>, <em>such habits</em>, <em>they</em>, <em>the issue</em>). <span class="k-add">Cian</span> = conector lógico o frase puente (<em>as a result</em>, <em>however</em>, <em>faced with this problem</em>, <em>so that</em>, <em>since</em>). La frase final del párrafo 1 (<em>«blaming the technology alone misses the bigger picture»</em>) abre la puerta al párrafo 2, que arranca con la respuesta a esa pregunta.</p>
+        </div>
+      </article>
+
+      <!-- CHECKLIST -->
+      <article class="paper">
+        <h4 class="paper-title">📋 Checklist de cohesión entre párrafos</h4>
+        <div class="paper-meta">Antes de entregar el essay · 30 segundos por párrafo</div>
+        <div class="paper-body">
+          <p><span class="k-key">1. ¿La primera frase de cada párrafo retoma algo del anterior?</span> Busca un <em>this / these / such / the former</em> o un conector de transición (<em>however</em>, <em>furthermore</em>, <em>in contrast</em>).</p>
+          <p><span class="k-key">2. ¿Hay una topic sentence reconocible?</span> Si tu primera frase es <em>«Nowadays…»</em> o <em>«In today's world…»</em>, reescríbela: la tesis del párrafo debe ser explícita.</p>
+          <p><span class="k-key">3. ¿La última frase prepara el siguiente párrafo?</span> Una valoración, una pregunta retórica o una frase bisagra (<em>«…but this is only part of the picture»</em>) evita el «corte» entre párrafos.</p>
+          <p><span class="k-key">4. ¿Has repetido el mismo sustantivo más de tres veces?</span> Cambia algunos por <em>this trend</em>, <em>such platforms</em>, <em>they</em>, <em>the phenomenon</em>.</p>
+          <p><span class="k-key">5. ¿Has usado solo «First / Second / Third» como cohesión?</span> Alterna con <em>a further point is…</em>, <em>equally important…</em>, <em>a second, related concern…</em></p>
+          <p><span class="k-add">Relevancia Linguaskill:</span> esta lista cubre directamente el descriptor de <strong>Coherence &amp; Cohesion</strong> del Writing Part 2, y también la lógica de <strong>Reading Part 7</strong> (Missing Sentences / Extracts), donde tienes que detectar qué frase encaja en un hueco usando precisamente estas pistas de referencia y conexión.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+/* THEME */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("theme",t);}catch(e){}}
+function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme")||"light";applyTheme(cur==="dark"?"light":"dark");}
+(function initTheme(){let saved=null;try{saved=localStorage.getItem("theme");}catch(e){}if(saved==="dark"||saved==="light"){applyTheme(saved);return;}const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;applyTheme(prefersDark?"dark":"light");})();
+
+/* TABS */
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* SECTIONS */
+function toggleSection(header){
+  header.parentElement.classList.toggle('collapsed');
+}
+function getActiveSections(){
+  return document.querySelectorAll('.tab-panel.active .section');
+}
+function getActivePapers(){
+  return document.querySelectorAll('.tab-panel.active .paper');
+}
+function expandAll(){
+  getActiveSections().forEach(s => s.classList.remove('collapsed'));
+  getActivePapers().forEach(p => p.classList.remove('collapsed'));
+}
+function collapseAll(){
+  getActiveSections().forEach(s => s.classList.add('collapsed'));
+  getActivePapers().forEach(p => p.classList.add('collapsed'));
+}
+
+/* MODEL PAPERS — wrap title+meta in a clickable header, collapse by default */
+document.querySelectorAll('.paper').forEach(paper => {
+  const title = paper.querySelector('.paper-title');
+  const meta = paper.querySelector('.paper-meta');
+  if(!title || !meta) return;
+  const header = document.createElement('div');
+  header.className = 'paper-header';
+  const wrap = document.createElement('div');
+  wrap.appendChild(title);
+  wrap.appendChild(meta);
+  const toggle = document.createElement('span');
+  toggle.className = 'paper-toggle';
+  toggle.textContent = '▾';
+  header.appendChild(wrap);
+  header.appendChild(toggle);
+  header.addEventListener('click', () => paper.classList.toggle('collapsed'));
+  paper.insertBefore(header, paper.firstChild);
+  paper.classList.add('collapsed');
+});
+
+/* Set section colors + item counts */
+document.querySelectorAll('.section').forEach(sec => {
+  const icon = sec.querySelector('.section-icon');
+  if (icon) {
+    const m = (icon.getAttribute('style') || '').match(/var\(--c-([a-z]+)\)/);
+    if (m) {
+      sec.style.setProperty('--section-c', `var(--c-${m[1]})`);
+      sec.style.setProperty('--section-c-bg', `var(--c-${m[1]}-bg)`);
+    }
+  }
+  const container = sec.querySelector('.grid, .stack, .papers, .tips-list, .blueprint');
+  if(!container) return;
+  const count = container.matches('.blueprint')
+    ? container.querySelectorAll('.step').length
+    : container.children.length;
+  const badge = document.createElement('span');
+  badge.className = 'section-count';
+  badge.textContent = count;
+  sec.querySelector('.section-header').appendChild(badge);
+});
+
+/* FONT SIZE SLIDER */
+const FS_KEY = 'idiomas_font_size';
+function updateFontSize(pct){
+  const scale = pct / 100;
+  document.documentElement.style.fontSize = (16 * scale) + 'px';
+  document.getElementById('fs-value').textContent = pct + '%';
+  localStorage.setItem(FS_KEY, pct);
+}
+(function initFontSize(){
+  const saved = localStorage.getItem(FS_KEY);
+  if(saved){
+    document.getElementById('fs-slider').value = saved;
+    updateFontSize(saved);
+  }
+})();
+</script>
+
+</body>
+</html>

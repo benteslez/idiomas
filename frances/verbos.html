@@ -565,12 +565,38 @@ mark{background:rgba(255,200,0,.4);color:inherit;border-radius:2px;padding:0 1px
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:6px}
+
+/* ── PERFIL · CLOUD SYNC ── */
+.hdr-profile-row{position:absolute;top:14px;right:14px;display:flex;align-items:center;gap:6px;z-index:5;}
+.hdr-profile-pill{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px 5px 5px;font-size:12px;font-weight:600;color:var(--text2);box-shadow:var(--shadow-sm);cursor:pointer;transition:all .15s;font-family:'Inter',system-ui,sans-serif;}
+.hdr-profile-pill:hover{background:var(--accent-bg);border-color:var(--accent);color:var(--accent);}
+.hdr-profile-pill .pp-avatar{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;}
+.hdr-profile-pill[data-profile="sergio"] .pp-avatar{background:#1a4d7a;}
+.hdr-profile-pill[data-profile="invitado"] .pp-avatar{background:#6b6b6b;}
+.hdr-profile-pill .pp-switch{font-size:10px;color:var(--text3);margin-left:2px;letter-spacing:.04em;}
+
+.cloud-status{position:fixed;bottom:14px;right:14px;display:inline-flex;align-items:center;gap:8px;padding:8px 13px;background:var(--surface);border:1px solid var(--border);border-radius:100px;font-family:'Inter',system-ui,sans-serif;font-size:12px;font-weight:600;color:var(--text2);box-shadow:var(--shadow-sm);opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .25s ease,transform .25s ease;z-index:8000;}
+.cloud-status.visible{opacity:1;transform:translateY(0);}
+.cloud-status .cs-dot{width:8px;height:8px;border-radius:50%;background:var(--text3);flex-shrink:0;}
+.cloud-status.saving  .cs-dot{background:#c4a030;animation:cs-pulse 1s ease-in-out infinite;}
+.cloud-status.saved   .cs-dot{background:#10b981;}
+.cloud-status.offline .cs-dot{background:#dc2626;}
+.cloud-status.error   .cs-dot{background:#dc2626;}
+@keyframes cs-pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+@media (max-width:560px){.hdr-profile-row{top:10px;right:10px;}.hdr-profile-pill{font-size:11px;padding:4px 10px 4px 4px;}.cloud-status{bottom:8px;right:8px;font-size:11px;padding:6px 10px;}}
 </style>
 </head>
 <body>
 
 <div class="hdr">
   <a href="index.html" class="hdr-back" title="Volver al índice">← Índice</a>
+  <div class="hdr-profile-row">
+    <button type="button" class="hdr-profile-pill" id="hdrProfilePill" data-profile="invitado" title="Cambiar perfil (vuelve al índice)">
+      <span class="pp-avatar" id="hdrProfileAvatar">I</span>
+      <span class="pp-name" id="hdrProfileName">Invitado</span>
+      <span class="pp-switch">▼</span>
+    </button>
+  </div>
   <div class="hdr-lbl">Powered by @benteslez</div>
   <h1>Verbos esenciales en francés</h1>
   <div class="hdr-pills" id="hdr-pills">
@@ -580,7 +606,7 @@ mark{background:rgba(255,200,0,.4);color:inherit;border-radius:2px;padding:0 1px
   </div>
 </div>
 
-<div class="srs-banner" id="srs-banner" title="Pulsa para exportar el HTML">💾 Progreso sin guardar — pulsa para exportar el HTML</div>
+<!-- (Banner "Progreso sin guardar" eliminado: ahora todo se sincroniza en la nube.) -->
 
 <div class="ctrl">
   <div class="srow">
@@ -4567,17 +4593,305 @@ try {
     document.getElementById('srs-fs').textContent = '⛶ Menú';
   }
 } catch(e){}
-document.getElementById('srs-banner').addEventListener('click', exportHTML);
+// (Banner "Progreso sin guardar" y beforeunload eliminados: sincronización a Supabase automática.)
 
 ['srsStartModal','srsEndModal','srsStatsModal'].forEach(function(id){
   document.getElementById(id).addEventListener('click', function(e){ if(e.target === this) srsCloseModals(); });
 });
 
-window.addEventListener('beforeunload', function(e){
-  if(srsUnsavedProgress){ e.preventDefault(); e.returnValue = 'Tienes progreso de repaso sin exportar.'; return e.returnValue; }
-});
-
 updateSrsBadge();
+</script>
+
+<!-- ═══ INDICADOR DE SINCRONIZACIÓN ═══ -->
+<div class="cloud-status" id="cloudStatus" role="status" aria-live="polite">
+  <span class="cs-dot"></span>
+  <span class="cs-text">Listo</span>
+</div>
+
+<!-- ═══ MÓDULO DE SINCRONIZACIÓN EN LA NUBE (Supabase) ═══ -->
+<script id="cloudSyncModule">
+(function(){
+  // ───────────────── CONFIGURACIÓN ─────────────────
+  var APP_ID        = 'frances_verbos';
+  var SUPABASE_URL  = 'https://fwnhszukuopcrajfbsab.supabase.co';
+  var SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3bmhzenVrdW9wY3JhamZic2FiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NzU2ODYsImV4cCI6MjA5NTU1MTY4Nn0.FYjkiUQ9kkYtHVCpejB7xX4mG45O1cuTOte5eN6btHk';
+  var PROFILES      = ['ruben', 'sergio', 'invitado'];
+  var PROFILE_LABEL = { ruben: 'Rubén', sergio: 'Sergio', invitado: 'Invitado' };
+  var PROFILE_INIT  = { ruben: 'R',     sergio: 'S',      invitado: 'I'        };
+  var SAVE_DEBOUNCE = 1500;
+
+  var LS_PROFILE      = 'delf_active_profile';
+  var CLOUD_ENABLED   = !!(SUPABASE_URL && SUPABASE_KEY &&
+                           SUPABASE_URL.indexOf('REPLACE_WITH') === -1 &&
+                           SUPABASE_KEY.indexOf('REPLACE_WITH') === -1);
+
+  var activeProfile = null;
+  var saveTimer = null;
+  var statusEl  = null, statusTxt = null, hideTimer = null;
+
+  // ───────────────── ESTADO ↔ PAYLOAD ─────────────────
+  function readGlobals(){
+    var payload = {
+      mastered:    (typeof mastered    !== 'undefined' && mastered) ? Array.from(mastered) : [],
+      customVerbs: (typeof customVerbs !== 'undefined' && Array.isArray(customVerbs)) ? customVerbs.slice() : [],
+      srsGlobal:   (typeof srsGlobal   !== 'undefined') ? {
+        sessions:        srsGlobal.sessions || 0,
+        cardsStudied:    srsGlobal.cardsStudied || 0,
+        lastSessionDate: srsGlobal.lastSessionDate || null,
+        sessionDates:    Array.isArray(srsGlobal.sessionDates) ? srsGlobal.sessionDates.slice() : []
+      } : { sessions:0, cardsStudied:0, lastSessionDate:null, sessionDates:[] },
+      srsCards:    {}
+    };
+    if (typeof V !== 'undefined' && V && V.length) {
+      for (var i = 0; i < V.length; i++) {
+        var v = V[i];
+        if (v && v.srs && Object.keys(v.srs).length > 0) payload.srsCards[v.n] = v.srs;
+      }
+    }
+    return payload;
+  }
+
+  // Aplica el payload remoto a las variables vivas, mutando en sitio (no reasigna const V).
+  function applyPayload(data){
+    if (!data || typeof data !== 'object') data = {};
+
+    // mastered (Set)
+    if (typeof mastered !== 'undefined' && mastered && typeof mastered.clear === 'function') {
+      mastered.clear();
+      var m = Array.isArray(data.mastered) ? data.mastered : [];
+      for (var i = 0; i < m.length; i++) mastered.add(m[i]);
+      try { localStorage.setItem('delf_mastered', JSON.stringify(Array.from(mastered))); } catch(e){}
+    }
+
+    // customVerbs (array): reemplazar y re-mergear en V (deduplicando por v.v)
+    if (typeof customVerbs !== 'undefined' && Array.isArray(customVerbs)) {
+      customVerbs.length = 0;
+      var cv = Array.isArray(data.customVerbs) ? data.customVerbs : [];
+      for (var i = 0; i < cv.length; i++) customVerbs.push(cv[i]);
+      try { localStorage.setItem('delf_custom_verbs', JSON.stringify(customVerbs)); } catch(e){}
+      // Re-merge en V (sin duplicar)
+      if (typeof V !== 'undefined' && Array.isArray(V)) {
+        var existing = new Set(V.map(function(x){ return x.v; }));
+        customVerbs.forEach(function(c){
+          if (c && !existing.has(c.v)) V.push(c);
+        });
+      }
+    }
+
+    // srsGlobal: mutar en sitio
+    if (typeof srsGlobal !== 'undefined') {
+      var src = (data.srsGlobal && typeof data.srsGlobal === 'object') ? data.srsGlobal : {};
+      srsGlobal.sessions        = Number(src.sessions) || 0;
+      srsGlobal.cardsStudied    = Number(src.cardsStudied) || 0;
+      srsGlobal.lastSessionDate = src.lastSessionDate || null;
+      srsGlobal.sessionDates    = Array.isArray(src.sessionDates) ? src.sessionDates.slice() : [];
+    }
+
+    // V[i].srs por verbo (clave = v.n)
+    if (typeof V !== 'undefined' && V && V.length) {
+      var srsMap = (data.srsCards && typeof data.srsCards === 'object') ? data.srsCards : {};
+      for (var i = 0; i < V.length; i++) {
+        var v = V[i];
+        if (!v) continue;
+        var entry = srsMap[v.n];
+        if (entry) v.srs = entry;
+        else if (v.srs) delete v.srs;
+      }
+    }
+
+    // Reconstruir índice de búsqueda si añadimos customVerbs nuevos
+    try { if (typeof buildSearchIndex === 'function') buildSearchIndex(); } catch(e){}
+  }
+
+  function reRenderAll(){
+    try { if (typeof render === 'function')         render();         } catch(e){}
+    try { if (typeof updateProgress === 'function') updateProgress(); } catch(e){}
+    try { if (typeof updateHdrPills === 'function') updateHdrPills(); } catch(e){}
+    try { if (typeof updateSrsBadge === 'function') updateSrsBadge(); } catch(e){}
+  }
+
+  // ───────────────── INDICADOR ─────────────────
+  function setStatus(kind, text, autohide){
+    if (!statusEl) {
+      statusEl  = document.getElementById('cloudStatus');
+      statusTxt = statusEl ? statusEl.querySelector('.cs-text') : null;
+    }
+    if (!statusEl) return;
+    statusEl.classList.remove('saving','saved','offline','error');
+    if (kind) statusEl.classList.add(kind);
+    if (statusTxt) statusTxt.textContent = text;
+    statusEl.classList.add('visible');
+    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+    if (autohide) hideTimer = setTimeout(function(){ statusEl.classList.remove('visible'); }, autohide);
+  }
+
+  // ───────────────── PROFILE PILL ─────────────────
+  function updateProfilePill(){
+    var pill   = document.getElementById('hdrProfilePill');
+    var avatar = document.getElementById('hdrProfileAvatar');
+    var nameEl = document.getElementById('hdrProfileName');
+    if (!pill || !avatar || !nameEl) return;
+    var p = activeProfile || 'invitado';
+    pill.setAttribute('data-profile', p);
+    avatar.textContent = PROFILE_INIT[p] || '?';
+    nameEl.textContent = PROFILE_LABEL[p] || p;
+  }
+
+  function wirePill(){
+    var pill = document.getElementById('hdrProfilePill');
+    if (!pill) return;
+    pill.addEventListener('click', function(){
+      var here = window.location.pathname + window.location.search + window.location.hash;
+      window.location.href = '../index.html?return=' + encodeURIComponent(here);
+    });
+  }
+
+  // ───────────────── SUPABASE I/O ─────────────────
+  function cloudKey(profile){ return APP_ID + '_' + profile; }
+
+  function cloudLoad(profile){
+    if (!CLOUD_ENABLED) return Promise.reject(new Error('cloud-disabled'));
+    var url = SUPABASE_URL.replace(/\/$/,'') +
+              '/rest/v1/progress?user_id=eq.' + encodeURIComponent(cloudKey(profile)) +
+              '&select=data';
+    return fetch(url, {
+      headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY, Accept: 'application/json' }
+    }).then(function(r){
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function(rows){
+      if (Array.isArray(rows) && rows.length > 0) return rows[0].data || {};
+      return null;
+    });
+  }
+
+  function cloudSave(profile, payload){
+    if (!CLOUD_ENABLED) return Promise.reject(new Error('cloud-disabled'));
+    var url = SUPABASE_URL.replace(/\/$/,'') + '/rest/v1/progress?on_conflict=user_id';
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        Prefer: 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify({ user_id: cloudKey(profile), data: payload, updated_at: new Date().toISOString() })
+    }).then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); });
+  }
+
+  function doSaveNow(){
+    if (!activeProfile) return;
+    var payload = readGlobals();
+    if (!CLOUD_ENABLED) { setStatus('offline', '⚠ Sin nube (credenciales)', 2500); return; }
+    if (!navigator.onLine) { setStatus('offline', '⚠ Sin conexión', 3000); return; }
+    setStatus('saving', '☁ Guardando…', 0);
+    cloudSave(activeProfile, payload).then(function(){
+      setStatus('saved', '✓ Guardado', 1800);
+    }).catch(function(err){
+      console.warn('[verbos cloudSync] save error', err);
+      setStatus('offline', '⚠ Sin conexión — local', 3500);
+    });
+  }
+  function scheduleSave(){
+    if (!activeProfile) return;
+    if (saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(function(){ saveTimer = null; doSaveNow(); }, SAVE_DEBOUNCE);
+  }
+
+  // ───────────────── HOOKS ─────────────────
+  function installHooks(){
+    function wrap(name){
+      var orig = window[name];
+      if (typeof orig !== 'function') return;
+      window[name] = function(){ var r = orig.apply(this, arguments); scheduleSave(); return r; };
+    }
+    wrap('toggleMastered');
+    wrap('saveCustomVerbs');
+    wrap('sm2');               // mutar V[i].srs[tense]
+    wrap('srsFinishSession');  // mutar srsGlobal
+    wrap('srsRate');           // por si modifica srsGlobal antes de sm2
+
+    document.addEventListener('visibilitychange', function(){
+      if (document.visibilityState === 'hidden' && saveTimer) {
+        clearTimeout(saveTimer); saveTimer = null; doSaveNow();
+      }
+    });
+    window.addEventListener('online',  function(){ setStatus('saved', '✓ Conectado', 1800); doSaveNow(); });
+    window.addEventListener('offline', function(){ setStatus('offline', '⚠ Sin conexión', 0); });
+  }
+
+  // ───────────────── CARGA DE PERFIL ─────────────────
+  function loadProfileData(profile){
+    setStatus('saving', '☁ Cargando perfil…', 0);
+    if (!CLOUD_ENABLED || !navigator.onLine) {
+      setStatus('offline', !CLOUD_ENABLED ? '⚠ Modo local (sin nube)' : '⚠ Sin conexión', 2500);
+      return;
+    }
+    cloudLoad(profile).then(function(remote){
+      if (remote && Object.keys(remote).length) {
+        // Merge srsGlobal: lo que ya hay en el embedded HTML puede tener histórico mayor.
+        var localG = (typeof srsGlobal !== 'undefined') ? srsGlobal : {};
+        var rG = remote.srsGlobal || {};
+        var localDates  = Array.isArray(localG.sessionDates) ? localG.sessionDates : [];
+        var remoteDates = Array.isArray(rG.sessionDates) ? rG.sessionDates : [];
+        var allDatesSet = {};
+        localDates.concat(remoteDates).forEach(function(d){ if(d) allDatesSet[d] = true; });
+        var mergedDates = Object.keys(allDatesSet).sort();
+        var lastA = localG.lastSessionDate || null;
+        var lastB = rG.lastSessionDate || null;
+        var lastMerged = (lastA && lastB) ? (lastA > lastB ? lastA : lastB) : (lastA || lastB);
+        remote.srsGlobal = {
+          sessions:        Math.max(Number(localG.sessions)||0,     Number(rG.sessions)||0),
+          cardsStudied:    Math.max(Number(localG.cardsStudied)||0, Number(rG.cardsStudied)||0),
+          lastSessionDate: lastMerged,
+          sessionDates:    mergedDates
+        };
+        applyPayload(remote);
+        reRenderAll();
+        setStatus('saved', '✓ Perfil cargado', 1800);
+      } else {
+        // Sin fila en la nube: subir el estado embebido como semilla
+        scheduleSave();
+        setStatus('saved', '✓ Perfil nuevo (semilla local)', 2200);
+      }
+    }).catch(function(err){
+      console.warn('[verbos cloudSync] load error', err);
+      setStatus('offline', '⚠ Sin conexión — local', 3000);
+    });
+  }
+
+  function setActiveProfile(profile){
+    if (!profile || PROFILES.indexOf(profile) === -1) profile = 'invitado';
+    if (activeProfile && activeProfile !== profile) {
+      if (saveTimer) { clearTimeout(saveTimer); saveTimer = null; }
+      doSaveNow();
+    }
+    activeProfile = profile;
+    try { localStorage.setItem(LS_PROFILE, profile); } catch(e){}
+    updateProfilePill();
+    loadProfileData(profile);
+  }
+
+  // ───────────────── BOOT ─────────────────
+  function boot(){
+    wirePill();
+    var saved = null;
+    try { saved = localStorage.getItem(LS_PROFILE); } catch(e){}
+    if (saved && PROFILES.indexOf(saved) !== -1) {
+      installHooks();
+      setActiveProfile(saved);
+    } else {
+      setStatus('offline', 'Elige un perfil en el índice', 0);
+      var here = window.location.pathname + window.location.search + window.location.hash;
+      var dest = '../index.html?return=' + encodeURIComponent(here);
+      setTimeout(function(){ window.location.replace(dest); }, 600);
+    }
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else setTimeout(boot, 0);
+})();
 </script>
 
 </body></html>

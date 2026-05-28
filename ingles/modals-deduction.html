@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modals of Deduction &amp; Perfect Modals · B2–C1 Linguaskill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Page identity: Modals of Deduction → indigo (verbos) */
+  --primary:#4338ca; --primary-soft:#eef2ff; --primary-mid:#6366f1; --primary-strong:#312e81;
+  --primary-glow:rgba(67,56,202,.14);
+  /* Per-tab identity colors */
+  --tab-present:#1d4ed8;  --tab-present-soft:#eff6ff;  --tab-present-mid:#3b82f6;
+  --tab-past:#b45309;     --tab-past-soft:#fffbeb;     --tab-past-mid:#f59e0b;
+  --tab-regret:#7c3aed;   --tab-regret-soft:#f5f3ff;   --tab-regret-mid:#8b5cf6;
+  /* Legacy aliases */
+  --accent:var(--primary); --accent-light:var(--primary-soft); --accent-mid:var(--primary-mid);
+  /* Neutrals */
+  --bg:#f7f7f5; --bg-elevated:#fbfbfa; --card:#ffffff;
+  --border:#ececec; --border-strong:#dfdfdf;
+  --text:#18181b; --text2:#52525b; --text3:#71717a;
+  /* Paper (model examples) */
+  --paper:#fefef9; --paper-border:#e7e5d6;
+  /* Shadows */
+  --shadow-xs:0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:0 2px 8px rgba(15,23,42,.04),0 1px 2px rgba(15,23,42,.03);
+  --shadow:0 4px 16px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+  --shadow-primary:0 6px 20px var(--primary-glow);
+  /* Geometry */
+  --radius:18px; --radius-md:14px; --radius-sm:10px; --radius-xs:6px; --radius-pill:999px;
+  /* Motion */
+  --ease:cubic-bezier(0.4,0,0.2,1); --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --t-fast:120ms; --t-base:200ms;
+  /* Section colors (A→E) */
+  --c-greet:#7c3aed;     --c-greet-bg:#f5f3ff;
+  --c-conn:#0e7490;      --c-conn-bg:#ecfeff;
+  --c-key:#1d4ed8;       --c-key-bg:#eff6ff;
+  --c-close:#be185d;     --c-close-bg:#fdf2f8;
+  --c-model:#b45309;     --c-model-bg:#fffbeb;
+  --c-tip:#ca8a04;       --c-tip-bg:#fef9c3;
+  --c-struct:#4338ca;    --c-struct-bg:#e0e7ff;
+  /* Sub-category colors for connectors */
+  --c-add:#0e7490;       --c-contrast:#be185d;
+  --c-cause:#15803d;     --c-purpose:#7c3aed;
+  --c-seq:#1d4ed8;       --c-time:#0369a1;
+  --c-emph:#b91c1c;      --c-summ:#7c3aed;
+}
+[data-theme="dark"]{
+  --primary:#a5b4fc; --primary-soft:#1e1b4b; --primary-mid:#818cf8; --primary-strong:#c7d2fe;
+  --primary-glow:rgba(165,180,252,.18);
+  --tab-present:#60a5fa;  --tab-present-soft:rgba(96,165,250,.12);  --tab-present-mid:#3b82f6;
+  --tab-past:#fbbf24;     --tab-past-soft:rgba(251,191,36,.12);     --tab-past-mid:#f59e0b;
+  --tab-regret:#c4b5fd;   --tab-regret-soft:rgba(196,181,253,.12);  --tab-regret-mid:#8b5cf6;
+  --bg:#0a0a0b; --bg-elevated:#131316; --card:#18181b;
+  --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --paper:#1e1e24; --paper-border:#3a3a42;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.2);
+  --shadow:0 4px 16px rgba(0,0,0,.30),0 1px 3px rgba(0,0,0,.20);
+  --shadow-primary:0 6px 24px var(--primary-glow);
+  --c-greet:#a78bfa;     --c-greet-bg:rgba(167,139,250,.10);
+  --c-conn:#22d3ee;      --c-conn-bg:rgba(34,211,238,.10);
+  --c-key:#60a5fa;       --c-key-bg:rgba(96,165,250,.10);
+  --c-close:#f472b6;     --c-close-bg:rgba(244,114,182,.10);
+  --c-model:#fbbf24;     --c-model-bg:rgba(251,191,36,.10);
+  --c-tip:#facc15;       --c-tip-bg:rgba(250,204,21,.10);
+  --c-struct:#a5b4fc;    --c-struct-bg:rgba(165,180,252,.10);
+  --c-add:#22d3ee;       --c-contrast:#f472b6;
+  --c-cause:#4ade80;     --c-purpose:#a78bfa;
+  --c-seq:#60a5fa;       --c-time:#38bdf8;
+  --c-emph:#f87171;      --c-summ:#a78bfa;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+*:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-xs);}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
+
+/* HEADER */
+.site-header{background:linear-gradient(180deg,var(--bg-elevated),var(--bg));padding:32px 20px 22px;position:relative;}
+.site-header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-strong) 20%,var(--border-strong) 80%,transparent);}
+.header-inner{max-width:1000px;margin:0 auto;}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.site-header h1{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:600;letter-spacing:-0.02em;color:var(--text);line-height:1.1;}
+.header-tag{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);background:var(--primary-soft);border-radius:var(--radius-pill);padding:4px 11px;}
+.header-sub{font-size:.88rem;color:var(--text3);font-weight:400;margin-top:4px;line-height:1.55;}
+.header-sub strong{color:var(--primary);font-weight:600;}
+
+/* HEADER ACTIONS BAR */
+.header-actions{max-width:1000px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:8px 14px 8px 11px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.back-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateX(-2px);box-shadow:var(--shadow);}
+.back-btn:active{transform:translateX(-2px) scale(.97);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+
+/* THEME TOGGLE */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.theme-toggle:hover{color:var(--primary);border-color:var(--primary-mid);transform:translateY(-1px);box-shadow:var(--shadow);}
+.theme-toggle .icon-sun{display:none;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+
+/* TABS — per-tab colors */
+.tabs-wrap{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-elevated) 85%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--border);padding:14px 20px;}
+.tabs{max-width:1000px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;}
+.tab{border:1px solid var(--border);border-radius:var(--radius-pill);padding:9px 18px;font-family:inherit;font-size:.85rem;font-weight:500;cursor:pointer;background:var(--card);color:var(--text2);transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:7px;}
+.tab:hover{transform:translateY(-1px);box-shadow:var(--shadow-xs);border-color:var(--tab-c,var(--primary-mid));color:var(--tab-c,var(--primary));}
+.tab.active{background:var(--tab-c,var(--primary));color:#fff;border-color:var(--tab-c,var(--primary));font-weight:600;box-shadow:0 6px 20px color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+[data-theme="dark"] .tab.active{color:#0a0a0b;}
+.tab[data-tab="present"]{--tab-c:var(--tab-present);}
+.tab[data-tab="past"]{--tab-c:var(--tab-past);}
+.tab[data-tab="regret"]{--tab-c:var(--tab-regret);}
+.tab .ico{font-size:1rem;line-height:1;}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:32px 20px 64px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeSlideIn 360ms var(--ease-out);}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* INTRO */
+.intro{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:28px;box-shadow:var(--shadow-xs);}
+.intro h3{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--tab-c,var(--primary));margin-bottom:10px;}
+.intro p{font-size:.92rem;color:var(--text2);line-height:1.65;}
+.intro p strong{color:var(--tab-c,var(--primary));font-weight:600;}
+
+/* TOOLBAR */
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.tool-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:7px 15px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:6px;}
+.tool-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateY(-1px);box-shadow:var(--shadow-xs);}
+.tool-btn .ico{font-size:.85rem;line-height:1;}
+
+/* FONT SIZE SLIDER */
+.fs-control{display:inline-flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:6px 14px;}
+.fs-label{font-family:inherit;font-weight:600;color:var(--text3);line-height:1;user-select:none;}
+.fs-label.small{font-size:.78rem;}
+.fs-label.large{font-size:1.1rem;}
+.fs-slider{-webkit-appearance:none;appearance:none;width:100px;height:4px;background:var(--border-strong);border-radius:2px;outline:none;cursor:pointer;accent-color:var(--primary);}
+.fs-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);transition:transform var(--t-fast) var(--ease);}
+.fs-slider::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.fs-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);}
+.fs-value{font-size:.72rem;font-weight:600;color:var(--text3);min-width:32px;text-align:right;}
+
+/* SECTION (collapsible) */
+.section{margin-bottom:14px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow var(--t-base) var(--ease);}
+.section:hover{box-shadow:var(--shadow);}
+.section-header{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;user-select:none;transition:background var(--t-base) var(--ease);background:transparent;}
+.section-header:hover{background:var(--bg-elevated);}
+.section:not(.collapsed) .section-header{border-bottom:1px solid var(--border);}
+.section-icon{width:38px;height:38px;border-radius:var(--radius-sm);display:inline-flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;background:transparent!important;border:2px solid var(--section-c,var(--primary));color:var(--section-c,var(--primary));}
+.section-title{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--text);line-height:1.2;}
+.section-desc{font-size:.78rem;color:var(--text3);margin-top:2px;line-height:1.45;}
+.section-header > div:not(.section-icon){flex:1;}
+.section-header::after{content:"▾";font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease);margin-left:8px;flex-shrink:0;font-weight:600;}
+.section.collapsed .section-header::after{transform:rotate(-90deg);}
+.section.collapsed .section-header:hover::after{color:var(--primary);}
+.section-count{font-size:.7rem;font-weight:600;color:var(--text3);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px 10px;margin-left:auto;flex-shrink:0;transition:all var(--t-base) var(--ease);}
+.section-header:hover .section-count{border-color:var(--primary-mid);color:var(--primary);}
+.section > .grid, .section > .stack, .section > .papers, .section > .tips-list, .section > .blueprint, .section > .table-wrap{padding:18px 20px 20px;}
+.section.collapsed > *:not(.section-header){display:none!important;}
+
+/* GRID + ITEM */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.item{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 30%,transparent)!important;border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-xs);transition:transform var(--t-base) var(--ease),box-shadow var(--t-base) var(--ease),border-color var(--t-base) var(--ease);border-left:4px solid var(--section-c,var(--primary))!important;}
+.item:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--section-c,var(--primary-mid))!important;}
+.item-head{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.item-term{font-family:'Manrope','Inter',sans-serif;font-size:1.02rem;font-weight:700;letter-spacing:-0.005em;color:var(--section-c,var(--text));line-height:1.3;}
+.item-trans{font-size:.76rem;color:var(--text3);font-style:italic;}
+.item-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;}
+.item-list li{font-size:.88rem;color:var(--text2);line-height:1.5;padding:5px 0 5px 12px;border-left:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);}
+.item-list li strong{color:var(--text);font-weight:600;}
+
+/* STACK (single-column phrase list, for A/C/D sections) */
+.stack{display:flex;flex-direction:column;gap:8px;}
+.phrase{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-sm);padding:10px 14px;font-size:.92rem;color:var(--text2);line-height:1.5;transition:all var(--t-base) var(--ease);}
+.phrase:hover{transform:translateX(2px);border-color:var(--section-c,var(--primary));box-shadow:var(--shadow-xs);}
+.phrase strong{color:var(--text);font-weight:600;}
+.phrase .hint{font-size:.74rem;color:var(--text3);font-style:italic;margin-left:6px;}
+
+/* PAPER (model examples) */
+.papers{display:flex;flex-direction:column;gap:14px;}
+.paper{background:var(--paper);border:1px solid var(--paper-border);border-radius:var(--radius-md);padding:22px 26px;box-shadow:var(--shadow-sm);position:relative;transition:box-shadow var(--t-base) var(--ease);}
+.paper:hover{box-shadow:var(--shadow);}
+.paper::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--tab-c,var(--primary)),transparent);border-radius:var(--radius-md) var(--radius-md) 0 0;}
+.paper-header{display:flex;align-items:flex-start;gap:14px;cursor:pointer;user-select:none;}
+.paper-header > div:first-child{flex:1;min-width:0;}
+.paper-header .paper-meta{margin-bottom:0;}
+.paper-toggle{font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease),color var(--t-base) var(--ease);flex-shrink:0;font-weight:700;line-height:1.4;}
+.paper-header:hover .paper-toggle,.paper-header:hover .paper-title{color:var(--tab-c,var(--primary));}
+.paper.collapsed .paper-toggle{transform:rotate(-90deg);}
+.paper.collapsed .paper-body{display:none;}
+.paper:not(.collapsed) .paper-body{margin-top:18px;}
+.paper-title{font-family:'Fraunces',Georgia,serif;font-size:1.05rem;font-weight:600;color:var(--tab-c,var(--primary));margin-bottom:6px;letter-spacing:-0.01em;transition:color var(--t-base) var(--ease);}
+.paper-meta{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:18px;}
+.paper-body{font-family:'Inter',sans-serif;font-size:.94rem;line-height:1.8;color:var(--text);}
+.paper-body p{margin-bottom:12px;}
+.paper-body p:last-child{margin-bottom:0;}
+.paper-body em{font-style:italic;color:var(--text2);}
+
+/* COLOR-CODED INLINE PHRASES IN MODELS — match theory section colors */
+.paper-body .k-open    {color:var(--c-greet);    font-weight:600;}
+.paper-body .k-add     {color:var(--c-add);      font-weight:600;}
+.paper-body .k-contrast{color:var(--c-contrast); font-weight:600;}
+.paper-body .k-cause   {color:var(--c-cause);    font-weight:600;}
+.paper-body .k-concess {color:var(--c-purpose);  font-weight:600;}
+.paper-body .k-purpose {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-seq     {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-time    {color:var(--c-time);     font-weight:600;}
+.paper-body .k-emph    {color:var(--c-emph);     font-weight:600;}
+.paper-body .k-summ    {color:var(--c-summ);     font-weight:600;}
+.paper-body .k-key     {color:var(--c-key);      font-weight:600;}
+.paper-body .k-close   {color:var(--c-close);    font-weight:600;}
+
+/* STRUCTURE BLUEPRINT (vertical timeline) */
+.blueprint{display:flex;flex-direction:column;gap:0;position:relative;}
+.step{display:flex;gap:14px;align-items:flex-start;position:relative;padding:6px 0 14px 0;}
+.step::before{content:"";position:absolute;left:18px;top:42px;bottom:-4px;width:2px;background:color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);}
+.step:last-of-type::before{display:none;}
+.step-num{width:38px;height:38px;border-radius:50%;background:var(--card);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--section-c,var(--primary));position:relative;z-index:1;}
+.step-body{flex:1;min-width:0;padding-top:6px;}
+.step-body h5{font-family:'Manrope',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-0.005em;}
+.step-body .step-meta{font-size:.72rem;color:var(--text3);font-style:italic;margin-bottom:6px;font-weight:500;}
+.step-body > p{font-size:.86rem;color:var(--text2);line-height:1.55;margin-bottom:9px;}
+.step-phrases{display:flex;flex-wrap:wrap;gap:5px;}
+.step-phrases span{font-size:.76rem;color:var(--section-c,var(--primary));background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);padding:4px 11px;border-radius:var(--radius-pill);font-weight:600;line-height:1.4;transition:all var(--t-base) var(--ease);}
+.step-phrases span:hover{background:color-mix(in srgb,var(--section-c,var(--primary)) 24%,transparent);border-color:var(--section-c,var(--primary));}
+.blueprint-footer{margin-top:6px;padding:12px 16px;background:color-mix(in srgb,var(--section-c,var(--primary)) 10%,transparent);border-radius:var(--radius-md);font-size:.86rem;color:var(--text2);display:flex;align-items:center;gap:10px;border:1px dashed color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);}
+.blueprint-footer strong{color:var(--section-c,var(--primary));font-weight:600;}
+.blueprint-footer .footer-ico{font-size:1rem;flex-shrink:0;}
+
+/* TIPS SECTION */
+.tips-list{display:flex;flex-direction:column;gap:10px;}
+.tip{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-md);padding:14px 16px;display:flex;gap:14px;align-items:flex-start;transition:all var(--t-base) var(--ease);}
+.tip:hover{transform:translateX(2px);box-shadow:var(--shadow-xs);border-color:var(--section-c,var(--primary));}
+.tip.warn{--section-c:var(--c-emph);}
+.tip-icon{font-size:.9rem;flex-shrink:0;line-height:1;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);color:var(--section-c,var(--primary));font-weight:800;margin-top:1px;}
+.tip-body{flex:1;min-width:0;}
+.tip-body h5{font-family:'Manrope',sans-serif;font-size:.95rem;font-weight:700;color:var(--section-c,var(--primary));margin-bottom:4px;letter-spacing:-0.005em;line-height:1.3;}
+.tip-body p{font-size:.86rem;color:var(--text2);line-height:1.55;}
+.tip-body p em{color:var(--text);font-style:normal;background:var(--bg-elevated);padding:1px 5px;border-radius:var(--radius-xs);font-size:.92em;font-weight:500;}
+
+/* INLINE STRUCTURAL LABELS */
+.label{display:inline-block;font-family:'JetBrains Mono','Manrope',sans-serif;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:var(--radius-xs);background:var(--tab-c-soft,var(--primary-soft));color:var(--tab-c,var(--primary));margin-right:6px;vertical-align:middle;border:1px solid color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+
+/* CALLOUT */
+.callout{background:var(--tab-c-soft,var(--primary-soft));border-radius:var(--radius-md);padding:14px 16px;margin:0 0 24px;font-size:.88rem;color:var(--text2);line-height:1.6;border-left:3px solid var(--tab-c,var(--primary));}
+.callout strong{color:var(--tab-c,var(--primary));font-weight:600;}
+.callout .ico{font-size:1rem;margin-right:5px;}
+
+/* Set tab-c-soft based on active panel */
+.tab-panel[data-tab="present"]{--tab-c:var(--tab-present);--tab-c-soft:var(--tab-present-soft);}
+.tab-panel[data-tab="past"]{--tab-c:var(--tab-past);--tab-c-soft:var(--tab-past-soft);}
+.tab-panel[data-tab="regret"]{--tab-c:var(--tab-regret);--tab-c-soft:var(--tab-regret-soft);}
+
+@media (max-width: 600px){
+  .paper{padding:20px 18px;}
+  .paper-body{font-size:.88rem;}
+  .grid{grid-template-columns:1fr;}
+}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-xs);margin:0 0 4px;}
+.gram-table{width:100%;border-collapse:collapse;background:var(--card);font-size:.88rem;}
+.gram-table caption{caption-side:top;text-align:left;font-family:'Manrope',sans-serif;font-weight:700;color:var(--section-c,var(--primary));padding:0 0 8px;font-size:.9rem;}
+.gram-table th{background:color-mix(in srgb,var(--section-c,var(--primary)) 12%,transparent);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;text-align:left;padding:10px 14px;border-bottom:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;}
+.gram-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);line-height:1.5;vertical-align:top;}
+.gram-table tr:last-child td{border-bottom:none;}
+.gram-table tbody tr{transition:background var(--t-fast) var(--ease);}
+.gram-table tbody tr:hover{background:var(--bg-elevated);}
+.gram-table td strong,.gram-table .en{color:var(--text);font-weight:600;}
+.gram-table .es{font-style:italic;color:var(--text3);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-actions">
+    <a class="back-btn" href="index.html" title="Volver al índice">
+      <span class="arrow">←</span><span>Inicio</span>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>🕵️ Modals of Deduction &amp; Perfect Modals · Modales de deducción y modales perfectos</h1>
+      <span class="header-tag">Linguaskill B2 · B2–C1</span>
+    </div>
+    <p class="header-sub">
+      Cómo inferir, especular y valorar con modales: <strong>must / can't / might</strong> en presente, <strong>must have / can't have / might have</strong> en pasado y <strong>should have / could have / needn't have</strong> para reproche y arrepentimiento.
+    </p>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" data-tab="present" onclick="showTab('present', this)">
+      <span class="ico">🕵️</span><span>Deducción en presente</span>
+    </button>
+    <button class="tab" data-tab="past" onclick="showTab('past', this)">
+      <span class="ico">⏮️</span><span>Deducción en pasado</span>
+    </button>
+    <button class="tab" data-tab="regret" onclick="showTab('regret', this)">
+      <span class="ico">😔</span><span>Reproche y arrepentimiento</span>
+    </button>
+  </div>
+</div>
+
+<main class="main">
+
+<div class="toolbar">
+  <div class="fs-control" title="Tamaño del texto">
+    <span class="fs-label small">A</span>
+    <input type="range" class="fs-slider" id="fs-slider" min="85" max="140" step="5" value="100" oninput="updateFontSize(this.value)">
+    <span class="fs-label large">A</span>
+    <span class="fs-value" id="fs-value">100%</span>
+  </div>
+  <div class="toolbar-actions">
+    <button class="tool-btn" onclick="expandAll()"><span class="ico">▾</span>Expandir todos</button>
+    <button class="tool-btn" onclick="collapseAll()"><span class="ico">▸</span>Colapsar todos</button>
+  </div>
+</div>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 1: PRESENT DEDUCTION ==================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel active" id="present" data-tab="present">
+
+  <div class="intro">
+    <h3>Deducción en presente · Present deduction</h3>
+    <p>Cuando inferimos algo a partir de pruebas o lógica, usamos <strong>modal + infinitivo sin "to"</strong>. El modal expresa el <strong>grado de certeza</strong> de la deducción: desde la certeza positiva (<em>must</em>) hasta la imposibilidad (<em>can't</em>), pasando por la posibilidad (<em>might / may / could</em>). No es opinión ni obligación: es inferencia.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Linguaskill:</strong> aparece en huecos de <strong>Reading</strong> (inferencia léxica) y es clave en <strong>Listening</strong> para captar matices del hablante. En <strong>Speaking Part 4</strong> y essays, demuestra valoración y razonamiento — eleva el nivel inmediatamente.
+  </div>
+
+  <!-- A. FORMA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">🔧</div>
+      <div>
+        <div class="section-title">A. Forma · Form</div>
+        <div class="section-desc">Modal + infinitivo sin "to" · forma continua con be + -ing</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <caption>Construcciones básicas — el modal nunca cambia ni lleva "to"</caption>
+        <thead>
+          <tr><th>Grado de certeza</th><th>Estructura</th><th>Significado</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Certeza positiva</strong></td>
+            <td><strong>must</strong> + infinitive<br>He <em>must be</em> at home.</td>
+            <td><span class="es">"Debe (de) estar en casa." — fuerte deducción basada en pruebas.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Certeza negativa</strong></td>
+            <td><strong>can't / cannot</strong> + infinitive<br>She <em>can't be</em> serious.</td>
+            <td><span class="es">"No puede estar hablando en serio." — imposibilidad lógica.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Probabilidad alta</strong></td>
+            <td><strong>should / ought to</strong> + infinitive<br>The plane <em>should arrive</em> by now.</td>
+            <td><span class="es">"Debería llegar ya." — expectativa lógica.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Posibilidad neutra</strong></td>
+            <td><strong>may</strong> + infinitive<br>It <em>may rain</em> later.</td>
+            <td><span class="es">"Puede que llueva." — posibilidad real, registro algo más formal.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Posibilidad incierta</strong></td>
+            <td><strong>might / could</strong> + infinitive<br>They <em>might be</em> stuck in traffic.</td>
+            <td><span class="es">"Quizá estén atascados." — conjetura suave.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Forma continua</strong></td>
+            <td>modal + <strong>be + -ing</strong><br>She <em>must be working</em> late.</td>
+            <td><span class="es">"Debe de estar trabajando hasta tarde." — acción en curso ahora.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Con verbos de estado</strong></td>
+            <td>modal + <strong>be</strong> + adj./noun<br>He <em>could be</em> a doctor.</td>
+            <td><span class="es">"Podría ser médico." — característica o identidad.</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- B. ESCALA DE PROBABILIDAD -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">⭐</div>
+      <div>
+        <div class="section-title">B. Escala de probabilidad · Probability scale</div>
+        <div class="section-desc">De la certeza positiva (must) a la negativa (can't), pasando por might/may/could</div>
+      </div>
+    </div>
+    <div class="blueprint">
+      <div class="step">
+        <span class="step-num">100<small style="font-size:.6em">%</small></span>
+        <div class="step-body">
+          <h5>must · certeza positiva</h5>
+          <p class="step-meta">"Debe (de) ser / estar…" — fuerte inferencia.</p>
+          <p>Usas <em>must</em> cuando las pruebas te llevan a una sola conclusión razonable.</p>
+          <div class="step-phrases">
+            <span>He must be exhausted.</span>
+            <span>That must be her car.</span>
+            <span>You must be joking!</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">~80<small style="font-size:.6em">%</small></span>
+        <div class="step-body">
+          <h5>should / ought to · alta probabilidad</h5>
+          <p class="step-meta">"Debería…" — expectativa lógica, no certeza.</p>
+          <p>Algo es altamente probable según lo previsto, pero no del todo seguro.</p>
+          <div class="step-phrases">
+            <span>The train should arrive on time.</span>
+            <span>She ought to be home by now.</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">~50<small style="font-size:.6em">%</small></span>
+        <div class="step-body">
+          <h5>may · posibilidad neutra</h5>
+          <p class="step-meta">"Puede que…" — registro algo más formal que <em>might</em>.</p>
+          <p>Posibilidad equilibrada, sin inclinarse a favor ni en contra.</p>
+          <div class="step-phrases">
+            <span>It may snow tonight.</span>
+            <span>She may know the answer.</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">~30<small style="font-size:.6em">%</small></span>
+        <div class="step-body">
+          <h5>might / could · posibilidad incierta</h5>
+          <p class="step-meta">"Quizás…" / "podría ser…" — conjetura suave.</p>
+          <p>Posibilidad real pero baja; <em>could</em> y <em>might</em> son intercambiables aquí.</p>
+          <div class="step-phrases">
+            <span>He might be in the garden.</span>
+            <span>It could be a mistake.</span>
+            <span>They might not come.</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">0<small style="font-size:.6em">%</small></span>
+        <div class="step-body">
+          <h5>can't / cannot · imposibilidad</h5>
+          <p class="step-meta">"No puede ser que…" — certeza negativa.</p>
+          <p>La negativa de <em>must</em> NO es <em>mustn't</em> (eso es prohibición); es <em>can't</em>.</p>
+          <div class="step-phrases">
+            <span>She can't be at work — it's Sunday.</span>
+            <span>That can't be true.</span>
+            <span>You cannot be serious.</span>
+          </div>
+        </div>
+      </div>
+      <div class="blueprint-footer">
+        <span class="footer-ico">🧭</span>
+        <span><strong>Memoriza el eje:</strong> must · should · may · might/could · can't — los cinco peldaños desde "seguro que sí" hasta "seguro que no".</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- C. EJEMPLOS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">💬</div>
+      <div>
+        <div class="section-title">C. Ejemplos reales · Real examples</div>
+        <div class="section-desc">Inferencias en contexto, con la estructura clave en negrita</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase">Look at those clouds — it <strong>must be</strong> about to rain. <span class="hint">Mira esas nubes, debe de estar a punto de llover.</span></div>
+      <div class="phrase">She <strong>can't be</strong> at the office; her car is in the driveway. <span class="hint">No puede estar en la oficina; su coche está en la entrada.</span></div>
+      <div class="phrase">You <strong>must be</strong> joking! <span class="hint">¡Tienes que estar bromeando!</span></div>
+      <div class="phrase">They <strong>might be</strong> stuck in traffic — give them ten more minutes. <span class="hint">Pueden estar atascados; dales diez minutos más.</span></div>
+      <div class="phrase">He <strong>could be</strong> Spanish, judging by his accent. <span class="hint">Podría ser español, a juzgar por su acento.</span></div>
+      <div class="phrase">It <strong>may not be</strong> a good idea to call her now. <span class="hint">Puede que no sea buena idea llamarla ahora.</span></div>
+      <div class="phrase">She <strong>must be working</strong> from home today — the lights are on. <span class="hint">Debe de estar teletrabajando hoy; las luces están encendidas.</span></div>
+      <div class="phrase">The package <strong>should be</strong> here by tomorrow. <span class="hint">El paquete debería estar aquí mañana.</span></div>
+      <div class="phrase">That <strong>can't be</strong> Tom — he's much taller. <span class="hint">Ese no puede ser Tom; él es mucho más alto.</span></div>
+      <div class="phrase">You <strong>must be</strong> proud of your team. <span class="hint">Debes de estar orgulloso de tu equipo.</span></div>
+      <div class="phrase">There's no answer; she <strong>might be sleeping</strong>. <span class="hint">No contesta; quizá esté durmiendo.</span></div>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Errores frecuentes por interferencia del español</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"He mustn't be home" ✗ → "He can't be home" ✓</h5>
+          <p>La negativa de la deducción <strong>NO es <em>mustn't</em></strong> (que significa "prohibido"). Para "no puede ser que…" usa siempre <em>can't / cannot</em>. <em>Mustn't</em> + verbo solo significa <em>obligación de no hacer algo</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"must be" (deducción) ≠ "must" (obligación)</h5>
+          <p>Pista: el español "<strong>deber de</strong>" = deducción (<em>debe de estar cansado</em>), "<strong>deber</strong>" sin <em>de</em> = obligación (<em>debe estudiar</em>). El inglés usa <em>must</em> en ambos casos, pero el contexto y la presencia de <em>be</em> + estado lo aclaran.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"It has to be true" / "It must be true" — matiz</h5>
+          <p>Ambos expresan deducción, pero <em>must</em> es la opción estándar de B2/C1. <em>Has to</em> suena más coloquial y americano. En examen, usa <em>must</em> para deducción.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"She must to be tired" ✗ → "She must be tired" ✓</h5>
+          <p>Los modales NUNCA llevan <em>to</em>. Es un error de interferencia con la estructura española "<em>debe (de) estar cansada</em>". La excepción es <em>ought <strong>to</strong></em>, que lo lleva por convención.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"He can be at home" ✗ (deducción) → "He could / might be at home" ✓</h5>
+          <p><em>Can</em> en afirmativa NO se usa para deducción puntual. Para "puede que esté" usa <em>could / might / may</em>. <em>Can</em> expresa capacidad general (<em>can swim</em>) o posibilidad teórica.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 2: PAST DEDUCTION ======================= -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="past" data-tab="past">
+
+  <div class="intro">
+    <h3>Deducción en pasado · Past deduction</h3>
+    <p>Para inferir qué ocurrió o cómo se hizo algo, usamos <strong>modal + have + participio pasado</strong> (perfect modal). El modal mantiene su escala de certeza (must / can't / might…) pero ahora la deducción mira hacia atrás. Es la forma de hablar de hipótesis sobre hechos pasados, esencial en B2-C1.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🔍</span><strong>Atajo mental:</strong> añade <strong><em>have + past participle</em></strong> al modal de presente y trasladas la deducción al pasado. <em>must be</em> → <em>must have been</em>; <em>can't be</em> → <em>can't have been</em>; <em>might be</em> → <em>might have been</em>.
+  </div>
+
+  <!-- A. FORMA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">🔧</div>
+      <div>
+        <div class="section-title">A. Forma · Form</div>
+        <div class="section-desc">Modal + have + participio pasado · forma continua con have been + -ing</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <caption>Perfect modals — el modal nunca cambia; cambia el sentido temporal</caption>
+        <thead>
+          <tr><th>Grado de certeza</th><th>Estructura</th><th>Significado</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Certeza positiva pasada</strong></td>
+            <td><strong>must have</strong> + past participle<br>She <em>must have left</em> early.</td>
+            <td><span class="es">"Debe de haberse ido pronto." — inferencia segura sobre el pasado.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Certeza negativa pasada</strong></td>
+            <td><strong>can't / couldn't have</strong> + pp<br>He <em>can't have known</em> the truth.</td>
+            <td><span class="es">"No puede haber sabido la verdad." — imposibilidad retrospectiva.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Posibilidad pasada</strong></td>
+            <td><strong>might / may / could have</strong> + pp<br>They <em>might have missed</em> the bus.</td>
+            <td><span class="es">"Quizás hayan perdido el autobús." — hipótesis sobre el pasado.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Probabilidad alta pasada</strong></td>
+            <td><strong>should / ought to have</strong> + pp<br>The package <em>should have arrived</em> by Monday.</td>
+            <td><span class="es">"El paquete debería haber llegado." — expectativa pasada (a menudo no cumplida).</span></td>
+          </tr>
+          <tr>
+            <td><strong>Continua pasada</strong></td>
+            <td>modal + <strong>have been + -ing</strong><br>He <em>must have been working</em> all night.</td>
+            <td><span class="es">"Debe de haber estado trabajando toda la noche." — acción prolongada en el pasado.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Pasiva</strong></td>
+            <td>modal + <strong>have been</strong> + pp<br>The window <em>might have been broken</em> by the storm.</td>
+            <td><span class="es">"La ventana puede haber sido rota por la tormenta." — autoría incierta.</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- C. EJEMPLOS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">💬</div>
+      <div>
+        <div class="section-title">C. Ejemplos reales · Real examples</div>
+        <div class="section-desc">Inferencias sobre hechos pasados, con la estructura clave en negrita</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase">Look at the lights — they <strong>must have arrived</strong> already. <span class="hint">Mira las luces, deben de haber llegado ya.</span></div>
+      <div class="phrase">The car <strong>can't have broken down</strong>; it's brand new. <span class="hint">El coche no puede haberse averiado; es nuevo.</span></div>
+      <div class="phrase">She <strong>might have forgotten</strong> the meeting. <span class="hint">Puede que se haya olvidado de la reunión.</span></div>
+      <div class="phrase">They <strong>could have taken</strong> the wrong train. <span class="hint">Podrían haber cogido el tren equivocado.</span></div>
+      <div class="phrase">I'm not sure, but he <strong>may have left</strong> the keys in the car. <span class="hint">No estoy seguro, pero puede que haya dejado las llaves en el coche.</span></div>
+      <div class="phrase">He <strong>must have been working</strong> all night — he looks exhausted. <span class="hint">Debe de haber estado trabajando toda la noche; parece agotado.</span></div>
+      <div class="phrase">You <strong>can't have seen</strong> him at the gym; he was with me. <span class="hint">No puedes haberlo visto en el gimnasio; estaba conmigo.</span></div>
+      <div class="phrase">She <strong>should have called</strong> by now; something's wrong. <span class="hint">Ya debería haber llamado; algo va mal.</span></div>
+      <div class="phrase">The thief <strong>must have climbed</strong> through the window. <span class="hint">El ladrón debe de haber entrado por la ventana.</span></div>
+      <div class="phrase">He <strong>might not have noticed</strong> the change. <span class="hint">Quizá no se haya dado cuenta del cambio.</span></div>
+      <div class="phrase">The fire <strong>could have been caused</strong> by a faulty cable. <span class="hint">El incendio podría haber sido causado por un cable defectuoso.</span></div>
+      <div class="phrase">They <strong>couldn't have known</strong> we were coming. <span class="hint">No podían haber sabido que veníamos.</span></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 3: REGRET & CRITICISM =================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="regret" data-tab="regret">
+
+  <div class="intro">
+    <h3>Reproche y arrepentimiento · Regret &amp; criticism</h3>
+    <p>Los <strong>perfect modals</strong> también valoran retrospectivamente lo que <strong>ocurrió, no ocurrió o pudo haber ocurrido</strong>. <em>Should have done</em> = reproche o arrepentimiento; <em>could have done</em> = oportunidad perdida; <em>needn't have done</em> = esfuerzo innecesario. Son recursos imprescindibles en Speaking y Writing de B2-C1.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">💭</span><strong>Linguaskill:</strong> valoración retrospectiva muy valorada en <strong>Speaking Part 4</strong> (reflexión sobre experiencias) y en essays narrativos o de opinión. Demuestra un dominio claro de la perspectiva temporal y de los matices afectivos.
+  </div>
+
+  <!-- A. ESTRUCTURAS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">🔧</div>
+      <div>
+        <div class="section-title">A. Estructuras · Patterns</div>
+        <div class="section-desc">Perfect modals para reproche, arrepentimiento, oportunidad perdida y crítica</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <caption>Cada estructura expresa un matiz distinto de valoración pasada</caption>
+        <thead>
+          <tr><th>Estructura</th><th>Significado</th><th>Ejemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>should have</strong> + pp</td>
+            <td><span class="es">"Debería haber…" — algo no se hizo y se debía hacer (reproche / arrepentimiento).</span></td>
+            <td><span class="en">You should have called me.</span><br><span class="es">Deberías haberme llamado.</span></td>
+          </tr>
+          <tr>
+            <td><strong>shouldn't have</strong> + pp</td>
+            <td><span class="es">"No debería haber…" — algo se hizo y no debía hacerse (crítica).</span></td>
+            <td><span class="en">She shouldn't have said that.</span><br><span class="es">No debería haber dicho eso.</span></td>
+          </tr>
+          <tr>
+            <td><strong>ought to have</strong> + pp</td>
+            <td><span class="es">"Debería haber…" — equivalente más formal de <em>should have</em>.</span></td>
+            <td><span class="en">He ought to have warned us.</span><br><span class="es">Debería habernos avisado.</span></td>
+          </tr>
+          <tr>
+            <td><strong>could have</strong> + pp</td>
+            <td><span class="es">"Podría haber…" — oportunidad o capacidad no aprovechada.</span></td>
+            <td><span class="en">We could have won the match.</span><br><span class="es">Podríamos haber ganado el partido.</span></td>
+          </tr>
+          <tr>
+            <td><strong>might have</strong> + pp <em>(reproche)</em></td>
+            <td><span class="es">"Podrías haber…" — reproche por descuido o falta de consideración.</span></td>
+            <td><span class="en">You might have warned me!</span><br><span class="es">¡Podrías haberme avisado!</span></td>
+          </tr>
+          <tr>
+            <td><strong>needn't have</strong> + pp</td>
+            <td><span class="es">"No hacía falta haber…" — lo hiciste, pero era innecesario.</span></td>
+            <td><span class="en">You needn't have bought milk; we had some.</span><br><span class="es">No hacía falta que compraras leche; teníamos.</span></td>
+          </tr>
+          <tr>
+            <td><strong>didn't need to</strong> + infinitive</td>
+            <td><span class="es">"No hacía falta…" — no era necesario (y quizá ni siquiera lo hiciste).</span></td>
+            <td><span class="en">I didn't need to take an umbrella.</span><br><span class="es">No hacía falta que llevara paraguas.</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- C. EJEMPLOS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">💬</div>
+      <div>
+        <div class="section-title">C. Ejemplos reales · Real examples</div>
+        <div class="section-desc">Reproches, arrepentimientos y oportunidades perdidas en contexto</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase">I <strong>should have studied</strong> harder for the exam. <span class="hint">Debería haber estudiado más para el examen.</span></div>
+      <div class="phrase">You <strong>shouldn't have lied</strong> to her. <span class="hint">No deberías haberle mentido.</span></div>
+      <div class="phrase">We <strong>could have taken</strong> the early train and avoided all this. <span class="hint">Podríamos haber cogido el tren temprano y evitarnos todo esto.</span></div>
+      <div class="phrase">He <strong>needn't have apologised</strong>; it wasn't his fault. <span class="hint">No hacía falta que se disculpara; no fue culpa suya.</span></div>
+      <div class="phrase">You <strong>might have told me</strong> you were coming! <span class="hint">¡Podrías haberme avisado de que venías!</span></div>
+      <div class="phrase">I <strong>ought to have eaten</strong> less last night. <span class="hint">Tendría que haber comido menos anoche.</span></div>
+      <div class="phrase">She <strong>could have called</strong> if she was running late. <span class="hint">Podría haber llamado si iba con retraso.</span></div>
+      <div class="phrase">I <strong>shouldn't have wasted</strong> so much time on social media. <span class="hint">No debería haber perdido tanto tiempo en redes.</span></div>
+      <div class="phrase">They <strong>should have warned</strong> us about the road works. <span class="hint">Deberían habernos avisado de las obras.</span></div>
+      <div class="phrase">You <strong>needn't have cooked</strong>; we ate on the way. <span class="hint">No hacía falta que cocinaras; comimos por el camino.</span></div>
+      <div class="phrase">I <strong>could have been</strong> a contender. <span class="hint">Podría haber sido alguien importante. (lamento clásico)</span></div>
+      <div class="phrase">We <strong>shouldn't have left</strong> so early — we missed the best part. <span class="hint">No deberíamos habernos ido tan pronto; nos perdimos lo mejor.</span></div>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Errores frecuentes por interferencia del español o por confusión interna</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"should have + pp" = "debería haber…", NO "tendría que tener"</h5>
+          <p>Es <strong>perfect infinitive</strong> (<em>have + participio</em>): <em>I should have called</em> = "debería haber llamado". Nada de <em>"I should have had called"</em> ✗. El verbo <em>have</em> ya está incluido en la estructura.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"should of" ✗ → "should have / should've" ✓</h5>
+          <p>Error muy frecuente de hablantes nativos por la pronunciación reducida <em>/ʃʊd əv/</em>. Pero al escribir es SIEMPRE <em>have</em>. Lo mismo con <em>could've, would've, might've, must've</em>. Nunca <em>*of</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"needn't have done" ≠ "didn't need to do"</h5>
+          <p><em>You needn't have come</em> = <strong>viniste</strong> pero no hacía falta (esfuerzo desperdiciado). <em>You didn't need to come</em> = <strong>no hacía falta</strong> que vinieras (y quizá no viniste). Confundirlos cambia el hecho real.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"could have done" ≠ "was able to do"</h5>
+          <p><em>I could have run faster</em> = "podría haber corrido más" (oportunidad NO realizada). <em>I was able to run faster</em> = "logré correr más" (capacidad realmente ejercida). Para hechos pasados consumados, usa <em>was/were able to</em> o el past simple.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"You must have called me" — ojo al doble sentido</h5>
+          <p>Puede ser <strong>deducción</strong> ("debes de haberme llamado" — supongo que sí) o nunca expresa reproche. Para reprochar usa siempre <em>should have called</em>. No confundas la inferencia con la crítica.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"I should have to study more" ✗ → "I should study more" / "I should have studied more" ✓</h5>
+          <p>No mezcles <em>should</em> con <em>have to</em>. <em>Should</em> ya es un modal completo. <em>Should + have + pp</em> es la única combinación válida (reproche pasado).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+/* THEME */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("theme",t);}catch(e){}}
+function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme")||"light";applyTheme(cur==="dark"?"light":"dark");}
+(function initTheme(){let saved=null;try{saved=localStorage.getItem("theme");}catch(e){}if(saved==="dark"||saved==="light"){applyTheme(saved);return;}const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;applyTheme(prefersDark?"dark":"light");})();
+
+/* TABS */
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* SECTIONS */
+function toggleSection(header){
+  header.parentElement.classList.toggle('collapsed');
+}
+function getActiveSections(){
+  return document.querySelectorAll('.tab-panel.active .section');
+}
+function getActivePapers(){
+  return document.querySelectorAll('.tab-panel.active .paper');
+}
+function expandAll(){
+  getActiveSections().forEach(s => s.classList.remove('collapsed'));
+  getActivePapers().forEach(p => p.classList.remove('collapsed'));
+}
+function collapseAll(){
+  getActiveSections().forEach(s => s.classList.add('collapsed'));
+  getActivePapers().forEach(p => p.classList.add('collapsed'));
+}
+
+/* MODEL PAPERS — wrap title+meta in a clickable header, collapse by default */
+document.querySelectorAll('.paper').forEach(paper => {
+  const title = paper.querySelector('.paper-title');
+  const meta = paper.querySelector('.paper-meta');
+  if(!title || !meta) return;
+  const header = document.createElement('div');
+  header.className = 'paper-header';
+  const wrap = document.createElement('div');
+  wrap.appendChild(title);
+  wrap.appendChild(meta);
+  const toggle = document.createElement('span');
+  toggle.className = 'paper-toggle';
+  toggle.textContent = '▾';
+  header.appendChild(wrap);
+  header.appendChild(toggle);
+  header.addEventListener('click', () => paper.classList.toggle('collapsed'));
+  paper.insertBefore(header, paper.firstChild);
+  paper.classList.add('collapsed');
+});
+
+/* Set section colors + item counts */
+document.querySelectorAll('.section').forEach(sec => {
+  const icon = sec.querySelector('.section-icon');
+  if (icon) {
+    const m = (icon.getAttribute('style') || '').match(/var\(--c-([a-z]+)\)/);
+    if (m) {
+      sec.style.setProperty('--section-c', `var(--c-${m[1]})`);
+      sec.style.setProperty('--section-c-bg', `var(--c-${m[1]}-bg)`);
+    }
+  }
+  const container = sec.querySelector('.grid, .stack, .papers, .tips-list, .blueprint, .table-wrap');
+  if(!container) return;
+  let count = 0;
+  if (container.matches('.blueprint')) {
+    count = container.querySelectorAll('.step').length;
+  } else if (container.matches('.table-wrap')) {
+    count = container.querySelectorAll('tbody tr').length;
+  } else {
+    count = container.children.length;
+  }
+  const badge = document.createElement('span');
+  badge.className = 'section-count';
+  badge.textContent = count;
+  sec.querySelector('.section-header').appendChild(badge);
+});
+
+/* FONT SIZE SLIDER */
+const FS_KEY = 'idiomas_font_size';
+function updateFontSize(pct){
+  const scale = pct / 100;
+  document.documentElement.style.fontSize = (16 * scale) + 'px';
+  document.getElementById('fs-value').textContent = pct + '%';
+  localStorage.setItem(FS_KEY, pct);
+}
+(function initFontSize(){
+  const saved = localStorage.getItem(FS_KEY);
+  if(saved){
+    document.getElementById('fs-slider').value = saved;
+    updateFontSize(saved);
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -7,20 +7,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=DM+Sans:wght@300;400;500;600&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f3f1ec;
-  --card: #fbfaf6;
-  --border: #e2ddd0;
-  --text: #1a1814;
-  --text2: #44413a;
-  --text3: #706c64;
-  --accent: #8b6914;
-  --warn-bg: #fdf6e3;
-  --warn-border: #8b6914;
-  --shadow: 0 2px 14px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
-  --shadow-hover: 0 14px 38px rgba(0,0,0,0.20), 0 4px 12px rgba(0,0,0,0.10);
-  --shadow-sm: 0 1px 6px rgba(0,0,0,0.07);
-  --radius: 20px;
-  --radius-sm: 10px;
+  --bg: #fafafa;
+  --card: #ffffff;
+  --border: #e4e4e7;
+  --border2: #d4d4d8;
+  --text: #09090b;
+  --text2: #3f3f46;
+  --text3: #71717a;
+  --accent: #2563eb;
+  --accent-b: rgba(37,99,235,.22);
+  --accent-bg: rgba(37,99,235,.08);
+  --warn-bg: #fffbeb;
+  --warn-border: #d97706;
+  --shadow: 0 1px 2px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.05);
+  --shadow-hover: 0 4px 14px rgba(0,0,0,.10), 0 2px 6px rgba(0,0,0,.06);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.04);
+  --radius: 12px;
+  --radius-sm: 8px;
   --flip-dur: 0.42s;
 
   --c-env: #2d7a3a;
@@ -54,11 +57,6 @@ body {
   color: var(--text);
   min-height: 100vh;
   position: relative;
-}
-/* NOISE TEXTURE */
-body::before{
-  content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.55;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .035 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 body > *{position:relative;z-index:1;}
 /* El slider escala SOLO el contenido de las tarjetas — font-size se aplica via JS */
@@ -163,9 +161,9 @@ body > *{position:relative;z-index:1;}
 .btn-filter.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 .btn-filter:hover:not(.active) { background: var(--border); }
 
-.btn-flipmode { border-color: #a0845c; color: #6b4c1e; }
-.btn-flipmode.active { background: #5a3a10; color: #fdf6e3; border-color: #5a3a10; }
-.btn-flipmode:hover:not(.active) { background: #f5ead8; }
+.btn-flipmode { border-color: var(--border); color: var(--text2); }
+.btn-flipmode.active { background: var(--text); color: #fff; border-color: var(--text); }
+.btn-flipmode:hover:not(.active) { background: var(--bg); color: var(--text); border-color: var(--text2); }
 
 .sep { width: 1px; background: var(--border); height: 18px; display: inline-block; margin: 0 2px; }
 .label-sm { font-size: 0.72rem; color: var(--text3); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
@@ -197,6 +195,126 @@ body > *{position:relative;z-index:1;}
   cursor: pointer; background: transparent; color: #c42d4a; transition: all 0.15s;
 }
 .btn-clear:hover { background: #fff0f2; border-color: #c42d4a; }
+
+/* ── DROPDOWN FILTERS (estilo verbos.html) ── */
+.srow {
+  display: flex; align-items: center; gap: 10px;
+  max-width: 1160px; margin: 0 auto;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 12px 18px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color .15s, box-shadow .15s;
+}
+.srow:hover { border-color: var(--border2, var(--text3)); }
+.srow:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg, rgba(37,99,235,.08));
+}
+.srow-icon {
+  color: var(--text3); flex-shrink: 0;
+  transition: color .15s;
+}
+.srow:focus-within .srow-icon { color: var(--accent); }
+.srow .search-input {
+  flex: 1; width: auto; background: none; border: none; outline: none;
+  font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 400;
+  color: var(--text); padding: 0; line-height: 1.4;
+  letter-spacing: -0.005em;
+}
+.srow .search-input::placeholder { color: var(--text3); font-weight: 400; }
+.clr-btn {
+  background: var(--bg); border: none; color: var(--text3);
+  cursor: pointer; padding: 5px;
+  width: 24px; height: 24px;
+  display: none; align-items: center; justify-content: center;
+  flex-shrink: 0; border-radius: 50%;
+  transition: background .15s, color .15s;
+}
+.clr-btn:hover { background: var(--border); color: var(--text); }
+.clr-btn.vis { display: inline-flex; }
+
+.font-row {
+  display: flex; align-items: center; gap: 8px;
+  max-width: 1160px; margin: 0 auto;
+}
+.font-row label {
+  font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--text3); font-weight: 600; white-space: nowrap;
+}
+.font-row input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
+.font-row .fval {
+  font-size: 11px; color: var(--text2);
+  min-width: 36px; text-align: right; font-variant-numeric: tabular-nums;
+}
+
+.toolbar { display: flex; flex-direction: column; gap: 7px; max-width: 1160px; margin: 0 auto; width: 100%; }
+.ctrl-row { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+
+.dd { position: relative; display: inline-block; }
+.dd-trig {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 12px; border-radius: 100px;
+  border: 1px solid var(--border); background: transparent;
+  font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 500;
+  color: var(--text2); cursor: pointer; white-space: nowrap;
+  transition: all .15s; line-height: 1;
+}
+.dd-trig:hover { background: var(--bg); color: var(--text); }
+.dd.open .dd-trig { background: var(--bg); color: var(--text); }
+.dd-trig.has-active { background: var(--text); color: #fff; border-color: var(--text); }
+.dd-trig.has-active:hover { background: var(--text); color: #fff; }
+.dd-trig-lbl { color: var(--text3); font-weight: 500; }
+.dd-trig.has-active .dd-trig-lbl { color: rgba(255,255,255,0.65); }
+.dd-trig-val { font-weight: 600; color: var(--text); }
+.dd-trig.has-active .dd-trig-val { color: #fff; }
+.dd-trig-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 16px; height: 16px; padding: 0 5px; border-radius: 100px;
+  background: #fff; color: var(--text); font-size: 10px; font-weight: 700; line-height: 1;
+}
+.dd-trig-badge:empty { display: none; }
+.dd-arrow { flex-shrink: 0; transition: transform .2s; opacity: .65; }
+.dd.open .dd-arrow { transform: rotate(180deg); }
+.dd-menu {
+  display: none; position: absolute; top: calc(100% + 6px); left: 0;
+  min-width: 210px; background: var(--card);
+  border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.06);
+  padding: 5px; z-index: 200;
+}
+.dd.open .dd-menu { display: block; }
+.dd-menu-scroll { max-height: 340px; overflow-y: auto; min-width: 240px; }
+.dd-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  width: 100%; padding: 8px 10px; border: none; background: transparent;
+  font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--text);
+  cursor: pointer; border-radius: 6px; text-align: left;
+}
+.dd-item:hover { background: var(--bg); }
+.dd-item.active { font-weight: 600; }
+.dd-item.active::after { content: '✓'; color: var(--text); font-weight: 600; }
+.dd-item .dd-item-count { font-size: 10px; color: var(--text3); font-variant-numeric: tabular-nums; font-weight: 400; }
+.dd-item.active .dd-item-count { color: var(--text2); }
+.dd-check {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px 10px; border-radius: 6px; cursor: pointer;
+  font-size: 0.85rem; color: var(--text); user-select: none;
+}
+.dd-check:hover { background: var(--bg); }
+.dd-check input { margin: 0; accent-color: var(--text); cursor: pointer; }
+
+.btn-icon {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text2); font-size: 13px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: all .15s; padding: 0; line-height: 1;
+}
+.btn-icon:hover { background: var(--bg); color: var(--text); border-color: var(--text2); }
+#btnKnown.btn-icon.active { background: #2d7a3a; color: #fff; border-color: #2d7a3a; }
+#btnUnknown.btn-icon.active { background: #c42d4a; color: #fff; border-color: #c42d4a; }
+
+.dd[hidden] { display: none !important; }
 
 /* ── GRID ── */
 .grid {
@@ -447,24 +565,37 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   display: flex; flex-direction: column; gap: 10px;
   transition: padding 0.2s;
 }
-.controls.collapsed .controls-row { display: none; }
+.controls.collapsed .srow,
+.controls.collapsed .font-row,
+.controls.collapsed .toolbar { display: none; }
 .controls.collapsed {
   padding: 6px 24px;
   gap: 0;
 }
-/* Bar always visible at bottom of controls */
-.controls-collapse-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 2px 0;
+
+/* Fila inferior de acciones: 3 iconos juntos a la derecha */
+.controls-actions {
+  display: flex; align-items: center;
+  justify-content: flex-end; gap: 6px;
+  margin-top: 2px;
 }
+.controls.collapsed .controls-actions { margin-top: 0; }
 .controls-collapsed-label {
-  display: none;
-  font-size: 0.75rem; color: var(--text3);
-  font-weight: 500;
+  display: none; flex: 1;
+  font-size: 0.75rem; color: var(--text3); font-weight: 500;
 }
 .controls.collapsed .controls-collapsed-label { display: block; }
+
+/* Variante de iconos para Gestión / Limpiar / Ocultar */
+.btn-icon-action {
+  width: 32px; height: 32px;
+}
+.btn-icon-action.open {
+  background: var(--text); color: #fff; border-color: var(--text);
+}
+.btn-icon-clear:hover {
+  background: #fef2f2; color: #c42d4a; border-color: #c42d4a;
+}
 
 /* ── MODO JUEGO FULLSCREEN ── */
 .btn-game-fullscreen {
@@ -524,20 +655,21 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 /* Botón de acceso al juego en el header */
 .btn-game {
   display: inline-flex; align-items: center; gap: 6px;
-  border: none; border-radius: 20px;
-  padding: 7px 16px;
+  border: 1px solid var(--border); border-radius: 100px;
+  padding: 6px 14px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.82rem; font-weight: 600;
+  font-size: 0.78rem; font-weight: 500;
   cursor: pointer; white-space: nowrap;
-  background: linear-gradient(135deg, #2d4ac4 0%, #6b2dc4 100%);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(45,74,196,0.35);
-  transition: all 0.18s;
+  background: var(--card);
+  color: var(--text2);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s;
   margin-top: 14px;
 }
 .btn-game:hover {
-  box-shadow: 0 4px 16px rgba(45,74,196,0.45);
-  transform: translateY(-1px);
+  background: var(--bg);
+  color: var(--text);
+  border-color: var(--text2);
 }
 
 /* GAME OVERLAY — fullscreen */
@@ -1480,15 +1612,15 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 .btn-manage {
   flex-shrink: 0; border-radius: 20px;
   padding: 5px 13px; font-family: 'DM Sans', sans-serif;
-  font-size: 0.78rem; font-weight: 600; cursor: pointer;
+  font-size: 0.78rem; font-weight: 500; cursor: pointer;
   white-space: nowrap;
   background: transparent;
-  color: var(--accent);
-  border: 1.5px solid var(--accent);
+  color: var(--text2);
+  border: 1px solid var(--border);
   transition: all 0.15s;
 }
-.btn-manage:hover { background: var(--accent); color: #fff; }
-.btn-manage.open  { background: var(--accent); color: #fff; }
+.btn-manage:hover { background: var(--bg); color: var(--text); border-color: var(--text2); }
+.btn-manage.open  { background: var(--text); color: #fff; border-color: var(--text); }
 
 .manage-menu-wrap { position: relative; display: inline-block; }
 .manage-menu {
@@ -1778,48 +1910,60 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 
 /* Botones header (SRS + Stats) */
 .hdr-srs-row {
-  display: flex; flex-wrap: wrap; gap: 8px;
+  display: flex; flex-wrap: wrap; gap: 6px;
   justify-content: center; margin-top: 14px;
 }
-/* Igualar tamaño de los 3 botones del header */
+/* Botones de header: compactos y neutros */
 .hdr-srs-row > .btn-game,
-.hdr-srs-row > .btn-srs {
+.hdr-srs-row > .btn-srs,
+.hdr-srs-row > .btn-srs-stats {
   margin-top: 0;
-  min-width: 170px;
-  height: 38px;
-  padding: 0 16px;
+  min-width: 0;
+  height: 30px;
+  padding: 0 12px;
   justify-content: center;
+  background: var(--card);
+  color: var(--text2);
+  border: 1px solid var(--border);
+  font-size: 0.78rem; font-weight: 500;
+  box-shadow: var(--shadow-sm);
+}
+.hdr-srs-row > .btn-game:hover,
+.hdr-srs-row > .btn-srs:hover,
+.hdr-srs-row > .btn-srs-stats:hover {
+  background: var(--bg);
+  color: var(--text);
+  border-color: var(--text2);
+  box-shadow: var(--shadow-sm);
+  transform: none;
 }
 .btn-srs {
-  display: inline-flex; align-items: center; gap: 8px;
-  border: none; border-radius: 20px;
-  padding: 7px 14px 7px 16px;
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--border); border-radius: 100px;
+  padding: 6px 12px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.82rem; font-weight: 600;
+  font-size: 0.78rem; font-weight: 500;
   cursor: pointer; white-space: nowrap;
-  background: linear-gradient(135deg, #3d6b2d 0%, #2d8b7a 100%);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(45,123,58,0.35);
-  transition: all 0.18s;
+  background: var(--card);
+  color: var(--text2);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s;
 }
 .btn-srs:hover {
-  box-shadow: 0 4px 16px rgba(45,123,58,0.45);
-  transform: translateY(-1px);
+  background: var(--bg);
+  color: var(--text);
+  border-color: var(--text2);
 }
 .btn-srs-badge {
   display: inline-flex; align-items: center; justify-content: center;
-  min-width: 24px; height: 22px; padding: 0 8px;
+  min-width: 18px; height: 18px; padding: 0 6px;
   border-radius: 100px;
-  background: rgba(255,255,255,0.22);
-  font-size: 0.78rem; font-weight: 700; line-height: 1;
-  color: #fff;
+  background: var(--text);
+  font-size: 10px; font-weight: 700; line-height: 1;
+  color: #fff; font-variant-numeric: tabular-nums;
 }
-.btn-srs-badge.zero { background: rgba(255,255,255,0.32); }
-.btn-srs-stats {
-  background: linear-gradient(135deg, #5c7a3e 0%, #3a5c9b 100%);
-  box-shadow: 0 2px 8px rgba(58,92,155,0.35);
-}
-.btn-srs-stats:hover { box-shadow: 0 4px 16px rgba(58,92,155,0.45); }
+.btn-srs-badge.zero { background: #10b981; }
+.btn-srs-stats { /* heredamos del estilo neutro de .hdr-srs-row */ }
 
 /* Banner de progreso sin guardar */
 .srs-unsaved-banner {
@@ -2517,100 +2661,195 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 <!-- Banner "Progreso sin guardar" eliminado: ahora todo se sincroniza en la nube. -->
 
 <div class="controls">
-  <div class="controls-row" id="topicRow">
-    <button class="btn-topic active" data-tema="" id="btnTemaAll">Todos</button>
-    <button class="btn-topic" data-tema="DELF" id="btnTemaTop1" style="">DELF</button>
-    <button class="btn-topic" data-tema="Conectores" id="btnTemaTop2" style="">Conectores</button>
-    <button class="btn-topic" data-tema="Salud" id="btnTemaTop3" style="">Salud</button>
-    <select id="temaSelect" class="tema-select" __gcruniqueid="1"><option value="">— Todos los temas —</option><option value="Alimentación">Alimentación (102)</option><option value="Ciudad">Ciudad (1)</option><option value="Comercio">Comercio (5)</option><option value="Conectores">Conectores (187)</option><option value="Conversación">Conversación (10)</option><option value="Cultura">Cultura (8)</option><option value="Cultura y ocio">Cultura y ocio (82)</option><option value="DELF">DELF (260)</option><option value="Economía">Economía (7)</option><option value="Educación">Educación (89)</option><option value="Emergencias">Emergencias (13)</option><option value="Expresión oral">Expresión oral (22)</option><option value="Falsos amigos">Falsos amigos (43)</option><option value="Gramática">Gramática (5)</option><option value="Medio ambiente">Medio ambiente (80)</option><option value="Política">Política (4)</option><option value="Reclamaciones">Reclamaciones (52)</option><option value="Salud">Salud (173)</option><option value="Seguridad">Seguridad (4)</option><option value="Sociedad">Sociedad (83)</option><option value="Tecnologia">Tecnologia (80)</option><option value="Tiempo">Tiempo (3)</option><option value="Trabajo">Trabajo (105)</option><option value="Transporte">Transporte (80)</option><option value="Verbos">Verbos (6)</option><option value="Viajes">Viajes (138)</option></select>
-    <span class="sep"></span>
-    <span class="label-sm">Nivel:</span>
-    <select id="nivelSelect" class="tema-select" __gcruniqueid="2">
-      <option value="">Todos</option>
-      <option value="B1">B1</option>
-      <option value="B2">B2</option>
-      <option value="C1">C1</option>
-      <option value="C2">C2</option>
-    </select>
+  <div class="srow">
+    <svg class="srow-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+    </svg>
+    <input class="search-input" id="searchInput" type="text" placeholder="Buscar palabra, traducción, ejemplo…" autocomplete="off" autocorrect="off" spellcheck="false">
+    <button class="clr-btn" id="searchClr" aria-label="Limpiar búsqueda" title="Limpiar búsqueda">
+      <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+      </svg>
+    </button>
   </div>
-  <div class="controls-row">
-    <span class="label-sm">Cat:</span>
-    <button class="btn-filter active" data-cat="">Todas</button>
-    <button class="btn-filter" data-cat="Nombre">Nombre</button>
-    <button class="btn-filter" data-cat="Verbo">Verbo</button>
-    <button class="btn-filter" data-cat="Adjetivo">Adjetivo</button>
-    <button class="btn-filter" data-cat="Adverbio">Adverbio</button>
-    <button class="btn-filter" data-cat="Expresion">Expresión</button>
-    <div class="sep"></div>
-    <span class="label-sm">Género:</span>
-    <button class="btn-filter active" data-gen="">Todo</button>
-    <button class="btn-filter" data-gen="m">M</button>
-    <button class="btn-filter" data-gen="f">F</button>
-    <button class="btn-filter" data-gen="mf">M/F</button>
-    <div class="sep"></div>
-    <button class="btn-filter" id="btnTop">★ Top B1</button>
-    <button class="btn-filter" id="btnKnown">✓ Ya lo sé</button>
-    <button class="btn-filter" id="btnUnknown">✕ No lo sé</button>
-    <button class="btn-filter" id="btnOral">🗣 Oral</button>
-    <button class="btn-filter" id="btnEscrito">✍ Escrito</button>
+  <div class="font-row">
+    <label>Tamaño</label>
+    <input type="range" id="fsSlider" min="85" max="160" value="100" step="5" aria-label="Tamaño de letra">
+    <span class="fval" id="fsVal">100%</span>
   </div>
-  <!-- Subfiltro fn — visible solo cuando tema=Conectores -->
-  <div class="controls-row" id="fnFilterRow">
-    <span class="label-sm">🔗 Función:</span>
-    <div class="topic-scroll" id="fnScroll">
-      <button class="btn-fn btn-fn-all active" data-fn="">Todas</button>
-      <button class="btn-fn" data-fn="Causa" style="background:#7a3010;">Causa</button>
-      <button class="btn-fn" data-fn="Consecuencia" style="background:#1a4d7a;">Consecuencia</button>
-      <button class="btn-fn" data-fn="Oposición" style="background:#4a1a7a;">Oposición</button>
-      <button class="btn-fn" data-fn="Concesión" style="background:#7a1a4a;">Concesión</button>
-      <button class="btn-fn" data-fn="Adición" style="background:#1a5a1a;">Adición</button>
-      <button class="btn-fn" data-fn="Ilustración" style="background:#4a3a0a;">Ilustración</button>
-      <button class="btn-fn" data-fn="Condición" style="background:#7a5a0a;">Condición</button>
-      <button class="btn-fn" data-fn="Tiempo" style="background:#1a4a4a;">Tiempo</button>
-      <button class="btn-fn" data-fn="Finalidad" style="background:#3a0a7a;">Finalidad</button>
-      <button class="btn-fn" data-fn="Restricción" style="background:#6a1010;">Restricción</button>
-      <button class="btn-fn" data-fn="Reformulación" style="background:#0a4a5a;">Reformulación</button>
-      <button class="btn-fn" data-fn="Conclusión" style="background:#2a4a0a;">Conclusión</button>
-      <button class="btn-fn" data-fn="Enumeración" style="background:#4a2a0a;">Enumeración</button>
-      <button class="btn-fn" data-fn="Comparación" style="background:#0a2a5a;">Comparación</button>
+  <div class="toolbar">
+    <div class="ctrl-row">
+
+      <!-- Ordenar -->
+      <div class="dd" data-dd="sort">
+        <button class="dd-trig" type="button">
+          <span class="dd-trig-lbl">Ordenar:</span>
+          <span class="dd-trig-val" id="dd-sort-val">Relevancia</span>
+          <svg class="dd-arrow" viewBox="0 0 10 10" width="8" height="8"><path d="M2 4l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="dd-menu" id="dd-sort-menu">
+          <button class="dd-item active" data-sort="rel">Relevancia</button>
+          <button class="dd-item" data-sort="az">A → Z</button>
+          <button class="dd-item" data-sort="za">Z → A</button>
+        </div>
+      </div>
+
+      <!-- Tema -->
+      <div class="dd" data-dd="tema">
+        <button class="dd-trig" type="button">
+          <span class="dd-trig-lbl">Tema:</span>
+          <span class="dd-trig-val" id="dd-tema-val">Todos</span>
+          <svg class="dd-arrow" viewBox="0 0 10 10" width="8" height="8"><path d="M2 4l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="dd-menu dd-menu-scroll" id="dd-tema-menu"></div>
+      </div>
+
+      <!-- Nivel -->
+      <div class="dd" data-dd="nivel">
+        <button class="dd-trig" type="button">
+          <span class="dd-trig-lbl">Nivel:</span>
+          <span class="dd-trig-val" id="dd-nivel-val">Todos</span>
+          <svg class="dd-arrow" viewBox="0 0 10 10" width="8" height="8"><path d="M2 4l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="dd-menu" id="dd-nivel-menu">
+          <button class="dd-item active" data-nivel="">Todos</button>
+          <button class="dd-item" data-nivel="B1">B1</button>
+          <button class="dd-item" data-nivel="B2">B2</button>
+          <button class="dd-item" data-nivel="C1">C1</button>
+          <button class="dd-item" data-nivel="C2">C2</button>
+        </div>
+      </div>
+
+      <!-- Categoría -->
+      <div class="dd" data-dd="cat">
+        <button class="dd-trig" type="button">
+          <span class="dd-trig-lbl">Cat:</span>
+          <span class="dd-trig-val" id="dd-cat-val">Todas</span>
+          <svg class="dd-arrow" viewBox="0 0 10 10" width="8" height="8"><path d="M2 4l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="dd-menu" id="dd-cat-menu">
+          <button class="dd-item active" data-cat="">Todas</button>
+          <button class="dd-item" data-cat="Nombre">Nombre</button>
+          <button class="dd-item" data-cat="Verbo">Verbo</button>
+          <button class="dd-item" data-cat="Adjetivo">Adjetivo</button>
+          <button class="dd-item" data-cat="Adverbio">Adverbio</button>
+          <button class="dd-item" data-cat="Expresion">Expresión</button>
+        </div>
+      </div>
+
+      <!-- Género -->
+      <div class="dd" data-dd="gen">
+        <button class="dd-trig" type="button">
+          <span class="dd-trig-lbl">Género:</span>
+          <span class="dd-trig-val" id="dd-gen-val">Todo</span>
+          <svg class="dd-arrow" viewBox="0 0 10 10" width="8" height="8"><path d="M2 4l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="dd-menu" id="dd-gen-menu">
+          <button class="dd-item active" data-gen="">Todo</button>
+          <button class="dd-item" data-gen="m">M</button>
+          <button class="dd-item" data-gen="f">F</button>
+          <button class="dd-item" data-gen="mf">M/F</button>
+        </div>
+      </div>
+
+      <!-- Filtros (multi: Top, Oral, Escrito) -->
+      <div class="dd" data-dd="flags">
+        <button class="dd-trig" type="button">
+          <span>Filtros</span>
+          <span class="dd-trig-badge" id="dd-flags-badge"></span>
+          <svg class="dd-arrow" viewBox="0 0 10 10" width="8" height="8"><path d="M2 4l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="dd-menu" id="dd-flags-menu">
+          <label class="dd-check"><input type="checkbox" data-flag="top"><span>★ Top B1</span></label>
+          <label class="dd-check"><input type="checkbox" data-flag="oral"><span>🗣 Oral</span></label>
+          <label class="dd-check"><input type="checkbox" data-flag="escrito"><span>✍ Escrito</span></label>
+        </div>
+      </div>
+
+      <!-- Función (condicional - Conectores) -->
+      <div class="dd" data-dd="fn" id="dd-fn" hidden>
+        <button class="dd-trig" type="button">
+          <span class="dd-trig-lbl">🔗 Función:</span>
+          <span class="dd-trig-val" id="dd-fn-val">Todas</span>
+          <svg class="dd-arrow" viewBox="0 0 10 10" width="8" height="8"><path d="M2 4l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="dd-menu dd-menu-scroll" id="dd-fn-menu">
+          <button class="dd-item active" data-fn="">Todas</button>
+          <button class="dd-item" data-fn="Causa">Causa</button>
+          <button class="dd-item" data-fn="Consecuencia">Consecuencia</button>
+          <button class="dd-item" data-fn="Oposición">Oposición</button>
+          <button class="dd-item" data-fn="Concesión">Concesión</button>
+          <button class="dd-item" data-fn="Adición">Adición</button>
+          <button class="dd-item" data-fn="Ilustración">Ilustración</button>
+          <button class="dd-item" data-fn="Condición">Condición</button>
+          <button class="dd-item" data-fn="Tiempo">Tiempo</button>
+          <button class="dd-item" data-fn="Finalidad">Finalidad</button>
+          <button class="dd-item" data-fn="Restricción">Restricción</button>
+          <button class="dd-item" data-fn="Reformulación">Reformulación</button>
+          <button class="dd-item" data-fn="Conclusión">Conclusión</button>
+          <button class="dd-item" data-fn="Enumeración">Enumeración</button>
+          <button class="dd-item" data-fn="Comparación">Comparación</button>
+        </div>
+      </div>
+
+      <!-- Subtema (condicional - dinámico) -->
+      <div class="dd" data-dd="subtema" id="dd-subtema" hidden>
+        <button class="dd-trig" type="button">
+          <span class="dd-trig-lbl">🏷 Subtema:</span>
+          <span class="dd-trig-val" id="dd-subtema-val">Todos</span>
+          <svg class="dd-arrow" viewBox="0 0 10 10" width="8" height="8"><path d="M2 4l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="dd-menu dd-menu-scroll" id="dd-subtema-menu"></div>
+      </div>
+
+      <!-- Registro (condicional - DELF) -->
+      <div class="dd" data-dd="reg" id="dd-reg" hidden>
+        <button class="dd-trig" type="button">
+          <span class="dd-trig-lbl">📝 Registro:</span>
+          <span class="dd-trig-val" id="dd-reg-val">Todos</span>
+          <svg class="dd-arrow" viewBox="0 0 10 10" width="8" height="8"><path d="M2 4l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="dd-menu" id="dd-reg-menu">
+          <button class="dd-item active" data-reg="">Todos</button>
+          <button class="dd-item" data-reg="Formal">Formal</button>
+          <button class="dd-item" data-reg="Informal">Informal</button>
+        </div>
+      </div>
+
+      <!-- Know / No-know icons -->
+      <button class="btn-icon" id="btnKnown" aria-label="Ya lo sé" title="Ya lo sé">✓</button>
+      <button class="btn-icon" id="btnUnknown" aria-label="No lo sé" title="No lo sé">✕</button>
+
+      <!-- Vista -->
+      <button class="btn-filter btn-flipmode" id="btnViewFront" data-view="front">▶ Frente</button>
+      <button class="btn-filter btn-flipmode active" id="btnViewBack" data-view="back">◀ Reverso</button>
+
     </div>
   </div>
-  <!-- Subfiltro subtema — visible solo cuando el tema activo tiene tarjetas con subtema -->
-  <div class="controls-row" id="subtemaFilterRow">
-    <span class="label-sm">🏷 Subtema:</span>
-    <div class="topic-scroll" id="subtemaScroll">
-      <button class="btn-subtema btn-subtema-all active" data-subtema="">Todos</button>
-    </div>
+
+  <!-- Hidden legacy elements (kept so unchanged JS paths don't break) -->
+  <div style="display:none" aria-hidden="true">
+    <button id="btnTemaAll" data-tema=""></button>
+    <button id="btnTemaTop1" data-tema=""></button>
+    <button id="btnTemaTop2" data-tema=""></button>
+    <button id="btnTemaTop3" data-tema=""></button>
+    <select id="temaSelect"><option value=""></option></select>
+    <select id="nivelSelect"><option value=""></option><option value="B1">B1</option><option value="B2">B2</option><option value="C1">C1</option><option value="C2">C2</option></select>
+    <select id="sortSelect"><option value="rel">Relevancia</option><option value="az">A → Z</option><option value="za">Z → A</option></select>
+    <button id="btnTop"></button>
+    <button id="btnOral"></button>
+    <button id="btnEscrito"></button>
+    <div id="fnFilterRow"><div id="fnScroll"><button class="btn-fn btn-fn-all active" data-fn=""></button></div></div>
+    <div id="subtemaFilterRow"><div id="subtemaScroll"></div></div>
+    <div id="regFilterRow"><button class="btn-reg active" data-reg=""></button><button class="btn-reg" data-reg="Formal"></button><button class="btn-reg" data-reg="Informal"></button></div>
   </div>
-  <!-- Subfiltro registro (Formal/Informal) — visible solo cuando tema=DELF -->
-  <div class="controls-row" id="regFilterRow">
-    <span class="label-sm">📝 Registro:</span>
-    <button class="btn-reg active" data-reg="">Todos</button>
-    <button class="btn-reg" data-reg="Formal">Formal</button>
-    <button class="btn-reg" data-reg="Informal">Informal</button>
-  </div>
-  <div class="controls-row">
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input class="search-input" id="searchInput" type="text" placeholder="Buscar palabra, traducción, ejemplo..." __gcruniqueid="3">
-    </div>
-    <select class="sort-select" id="sortSelect" __gcruniqueid="4">
-      <option value="rel">Relevancia</option>
-      <option value="az">A → Z</option>
-      <option value="za">Z → A</option>
-    </select>
-    <div class="slider-wrap">
-      <span>A</span>
-      <input type="range" id="fsSlider" min="85" max="160" value="100">
-      <span>A</span>
-    </div>
-    <div class="sep"></div>
-    <span class="label-sm">Vista:</span>
-    <button class="btn-filter btn-flipmode" id="btnViewFront" data-view="front">▶ Frente</button>
-    <button class="btn-filter btn-flipmode active" id="btnViewBack" data-view="back">◀ Reverso</button>
-    <div class="sep"></div>
-    <div class="manage-menu-wrap">
-      <button class="btn-manage" id="btnManage" type="button">⚙ Gestión</button>
+
+  <!-- Acciones agrupadas en iconos: Gestión, Limpiar, Ocultar/Mostrar filtros -->
+  <div class="controls-actions">
+    <span class="controls-collapsed-label">Filtros ocultos</span>
+    <div class="manage-menu-wrap" style="position:relative">
+      <button class="btn-icon btn-icon-action" id="btnManage" type="button" aria-label="Gestión" title="Gestión">⚙</button>
       <div class="manage-menu" id="manageMenu">
         <div class="manage-menu-section">Añadir</div>
         <button id="btnAddCard">+ Tarjeta manual</button>
@@ -2622,12 +2861,8 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
         <button id="btnImportJSON">↰ Importar JSON (restaurar)</button>
       </div>
     </div>
-    <button class="btn-clear" id="btnClear">✕ Limpiar</button>
-  </div>
-  <!-- Collapse bar: always visible, outside controls-rows -->
-  <div class="controls-collapse-bar">
-    <span class="controls-collapsed-label">Filtros ocultos — pulsa para mostrar</span>
-    <button class="btn-collapse" id="btnCollapse">⇧ Ocultar filtros</button>
+    <button class="btn-icon btn-icon-action btn-icon-clear" id="btnClear" aria-label="Limpiar filtros" title="Limpiar filtros">✕</button>
+    <button class="btn-icon btn-icon-action" id="btnCollapse" aria-label="Ocultar filtros" title="Ocultar filtros">⇧</button>
   </div>
 </div>
 
@@ -40572,108 +40807,117 @@ function setDefaultView(v) {
 var PINNED_TEMAS = ["DELF"];
 
 function buildTopicUI() {
-  // Calcula top 3 temas por número de tarjetas
   var counts = {};
   DATA.forEach(function(d){ if (d.tema) counts[d.tema] = (counts[d.tema]||0) + 1; });
-  // Asegurar presencia de temas fijados, aunque tengan 0 tarjetas
   PINNED_TEMAS.forEach(function(t){ if (counts[t] == null) counts[t] = 0; });
-  var sorted = Object.keys(counts).sort(function(a,b){ return counts[b]-counts[a]; });
-  var top3 = sorted.slice(0,3);
-
-  // Actualiza los 3 botones rápidos
-  [1,2,3].forEach(function(n){
-    var btn = document.getElementById("btnTemaTop"+n);
-    if (!btn) return;
-    var t = top3[n-1];
-    if (t) {
-      btn.setAttribute("data-tema", t);
-      btn.textContent = t;
-      btn.style.display = "";
-    } else {
-      btn.style.display = "none";
-    }
-  });
-
-  // Pobla el select con todos los temas ordenados alfabéticamente
-  var sel = document.getElementById("temaSelect");
-  if (!sel) return;
   var allTemas = Object.keys(counts).sort(function(a,b){ return a.localeCompare(b,"es"); });
-  sel.innerHTML = '<option value="">— Todos los temas —</option>';
-  allTemas.forEach(function(t){
-    var opt = document.createElement("option");
-    opt.value = t;
-    opt.textContent = t + " (" + counts[t] + ")";
-    sel.appendChild(opt);
-  });
 
-  // Sincronizar estado activo visualmente
+  // Pobla el dropdown de tema (estilo verbos)
+  var ddMenu = document.getElementById("dd-tema-menu");
+  if (ddMenu) {
+    var total = DATA.length;
+    var html = '<button class="dd-item' + (state.tema === "" ? " active" : "") + '" data-tema="">'
+             + 'Todos <span class="dd-item-count">' + total + '</span></button>';
+    allTemas.forEach(function(t){
+      var active = state.tema === t ? " active" : "";
+      html += '<button class="dd-item' + active + '" data-tema="' + escHtml(t) + '">'
+            + escHtml(t) + ' <span class="dd-item-count">' + counts[t] + '</span></button>';
+    });
+    ddMenu.innerHTML = html;
+  }
+
+  // Legacy: mantener el select oculto sincronizado para código que aún lo lea
+  var sel = document.getElementById("temaSelect");
+  if (sel) {
+    sel.innerHTML = '<option value="">— Todos los temas —</option>';
+    allTemas.forEach(function(t){
+      var opt = document.createElement("option");
+      opt.value = t;
+      opt.textContent = t + " (" + counts[t] + ")";
+      sel.appendChild(opt);
+    });
+  }
+
   syncTopicUI();
 }
 
 function syncTopicUI() {
-  var t = state.tema;
-  // Todos
-  document.getElementById("btnTemaAll").classList.toggle("active", t === "");
-  // Top 3
-  [1,2,3].forEach(function(n){
-    var btn = document.getElementById("btnTemaTop"+n);
-    if (btn) btn.classList.toggle("active", btn.getAttribute("data-tema") === t && t !== "");
-  });
-  // Select
-  var sel = document.getElementById("temaSelect");
-  if (sel) {
-    sel.value = t;
-    sel.classList.toggle("has-active", t !== "");
+  var t = state.tema || "";
+  // Dropdown trigger
+  var val = document.getElementById("dd-tema-val");
+  if (val) val.textContent = t || "Todos";
+  var menu = document.getElementById("dd-tema-menu");
+  if (menu) {
+    menu.querySelectorAll(".dd-item").forEach(function(i){
+      i.classList.toggle("active", (i.getAttribute("data-tema") || "") === t);
+    });
+    var trig = menu.parentNode.querySelector(".dd-trig");
+    if (trig) trig.classList.toggle("has-active", t !== "");
   }
+  // Legacy: select oculto + botón Todos (por si quedan referencias)
+  var allBtn = document.getElementById("btnTemaAll");
+  if (allBtn) allBtn.classList.toggle("active", t === "");
+  var sel = document.getElementById("temaSelect");
+  if (sel) sel.value = t;
 }
 
 function setTema(t) {
   state.tema = t;
   syncTopicUI();
-  // Actualizar fn row si existe
-  var row = document.getElementById("fnFilterRow");
-  if (row) {
+
+  // Mostrar / ocultar dropdown Función (Conectores)
+  var fnDd = document.getElementById("dd-fn");
+  if (fnDd) {
     if (t === "Conectores") {
-      row.classList.add("visible");
+      fnDd.hidden = false;
     } else {
-      row.classList.remove("visible");
+      fnDd.hidden = true;
       state.fn = "";
-      var fnScroll = document.getElementById("fnScroll");
-      if (fnScroll) {
-        fnScroll.querySelectorAll(".btn-fn").forEach(function(b){ b.classList.remove("active"); });
-        var allBtn = fnScroll.querySelector(".btn-fn-all");
-        if (allBtn) allBtn.classList.add("active");
-      }
+      var fnMenu = document.getElementById("dd-fn-menu");
+      if (fnMenu) fnMenu.querySelectorAll(".dd-item").forEach(function(i){
+        i.classList.toggle("active", (i.getAttribute("data-fn") || "") === "");
+      });
+      var fnTrig = fnDd.querySelector(".dd-trig");
+      if (fnTrig) fnTrig.classList.remove("has-active");
+      var fnVal = document.getElementById("dd-fn-val");
+      if (fnVal) fnVal.textContent = "Todas";
     }
   }
-  // Actualizar fila de subtema (dinámica)
+
+  // Reconstruir dropdown Subtema (dinámico)
   rebuildSubtemaRow();
-  // Actualizar fila de registro (solo visible en DELF)
-  var regRow = document.getElementById("regFilterRow");
-  if (regRow) {
+
+  // Mostrar / ocultar dropdown Registro (DELF)
+  var regDd = document.getElementById("dd-reg");
+  if (regDd) {
     if (t === "DELF") {
-      regRow.classList.add("visible");
+      regDd.hidden = false;
     } else {
-      regRow.classList.remove("visible");
+      regDd.hidden = true;
       state.reg = "";
-      var regBtns = regRow.querySelectorAll(".btn-reg");
-      regBtns.forEach(function(b){ b.classList.remove("active"); });
-      var allReg = regRow.querySelector(".btn-reg[data-reg='']");
-      if (allReg) allReg.classList.add("active");
+      var regMenu = document.getElementById("dd-reg-menu");
+      if (regMenu) regMenu.querySelectorAll(".dd-item").forEach(function(i){
+        i.classList.toggle("active", (i.getAttribute("data-reg") || "") === "");
+      });
+      var regTrig = regDd.querySelector(".dd-trig");
+      if (regTrig) regTrig.classList.remove("has-active");
+      var regVal = document.getElementById("dd-reg-val");
+      if (regVal) regVal.textContent = "Todos";
     }
   }
+
   reRender();
 }
 
-// Construye dinámicamente los botones de subtema a partir de las tarjetas
-// del tema activo. Visible solo si hay al menos un subtema para ese tema.
+// Rellena el dropdown de subtema. Visible solo si hay al menos un subtema
+// para el tema activo.
 function rebuildSubtemaRow() {
-  var row    = document.getElementById("subtemaFilterRow");
-  var scroll = document.getElementById("subtemaScroll");
-  if (!row || !scroll) return;
+  var dd   = document.getElementById("dd-subtema");
+  var menu = document.getElementById("dd-subtema-menu");
+  if (!dd || !menu) return;
 
   if (!state.tema) {
-    row.classList.remove("visible");
+    dd.hidden = true;
     state.subtema = "";
     return;
   }
@@ -40685,24 +40929,225 @@ function rebuildSubtemaRow() {
   var list = Object.keys(subtemas).sort(function(a,b){ return a.localeCompare(b,"fr"); });
 
   if (list.length === 0) {
-    row.classList.remove("visible");
+    dd.hidden = true;
     state.subtema = "";
     return;
   }
 
-  // Si el subtema activo ya no existe en el nuevo tema, resetéalo.
   if (state.subtema && list.indexOf(state.subtema) === -1) state.subtema = "";
 
-  var html = "<button class=\"btn-subtema btn-subtema-all" +
-    (state.subtema === "" ? " active" : "") +
-    "\" data-subtema=\"\">Todos</button>";
+  var html = '<button class="dd-item' + (state.subtema === "" ? " active" : "") + '" data-subtema="">Todos</button>';
   list.forEach(function(s) {
     var active = (state.subtema === s) ? " active" : "";
-    html += "<button class=\"btn-subtema" + active + "\" data-subtema=\"" +
-      escHtml(s) + "\">" + escHtml(s) + "</button>";
+    html += '<button class="dd-item' + active + '" data-subtema="' + escHtml(s) + '">' + escHtml(s) + '</button>';
   });
-  scroll.innerHTML = html;
-  row.classList.add("visible");
+  menu.innerHTML = html;
+
+  var val = document.getElementById("dd-subtema-val");
+  if (val) val.textContent = state.subtema || "Todos";
+  var trig = dd.querySelector(".dd-trig");
+  if (trig) trig.classList.toggle("has-active", state.subtema !== "");
+
+  dd.hidden = false;
+}
+
+// Inicializa dropdowns (Ordenar, Tema, Nivel, Cat, Género, Filtros, Función,
+// Subtema, Registro) estilo verbos.html. Abre/cierra y cablea cambios al state.
+function initDropdownFilters() {
+  // Open/close generic
+  document.querySelectorAll(".dd").forEach(function(dd){
+    var trig = dd.querySelector(".dd-trig");
+    if (!trig) return;
+    trig.addEventListener("click", function(e){
+      e.stopPropagation();
+      var open = dd.classList.contains("open");
+      document.querySelectorAll(".dd.open").forEach(function(d){ if (d !== dd) d.classList.remove("open"); });
+      dd.classList.toggle("open", !open);
+    });
+  });
+  document.addEventListener("click", function(e){
+    document.querySelectorAll(".dd.open").forEach(function(d){
+      if (!d.contains(e.target)) d.classList.remove("open");
+    });
+  });
+
+  // Helper: single-select dropdown
+  function wireSingle(menuId, dataAttr, valId, defaultVal, defaultLabel, onChange) {
+    var menu = document.getElementById(menuId);
+    if (!menu) return;
+    var dd = menu.parentNode;
+    var trig = dd.querySelector(".dd-trig");
+    var valSpan = document.getElementById(valId);
+    menu.addEventListener("click", function(e){
+      var btn = e.target.closest(".dd-item");
+      if (!btn || !menu.contains(btn)) return;
+      var v = btn.getAttribute(dataAttr) || "";
+      menu.querySelectorAll(".dd-item").forEach(function(i){
+        i.classList.toggle("active", (i.getAttribute(dataAttr) || "") === v);
+      });
+      // Tomar solo el primer nodo de texto del botón (sin el contador span)
+      var label = btn.firstChild && btn.firstChild.nodeType === 3
+        ? btn.firstChild.nodeValue.trim()
+        : btn.textContent.trim();
+      if (valSpan) valSpan.textContent = label || defaultLabel;
+      if (trig) trig.classList.toggle("has-active", v !== defaultVal);
+      dd.classList.remove("open");
+      if (onChange) onChange(v);
+    });
+  }
+
+  // Ordenar
+  wireSingle("dd-sort-menu", "data-sort", "dd-sort-val", "rel", "Relevancia", function(v){
+    state.sort = v;
+    var sel = document.getElementById("sortSelect");
+    if (sel) sel.value = v;
+    reRender();
+  });
+
+  // Tema — delegamos en setTema() que sincroniza todo
+  var temaMenu = document.getElementById("dd-tema-menu");
+  if (temaMenu) {
+    temaMenu.addEventListener("click", function(e){
+      var btn = e.target.closest(".dd-item");
+      if (!btn) return;
+      var t = btn.getAttribute("data-tema") || "";
+      this.parentNode.classList.remove("open");
+      setTema(t);
+    });
+  }
+
+  // Nivel
+  wireSingle("dd-nivel-menu", "data-nivel", "dd-nivel-val", "", "Todos", function(v){
+    state.nivel = v;
+    var sel = document.getElementById("nivelSelect");
+    if (sel) sel.value = v;
+    reRender();
+  });
+
+  // Categoría
+  wireSingle("dd-cat-menu", "data-cat", "dd-cat-val", "", "Todas", function(v){
+    state.cat = v;
+    reRender();
+  });
+
+  // Género
+  wireSingle("dd-gen-menu", "data-gen", "dd-gen-val", "", "Todo", function(v){
+    state.gen = v;
+    reRender();
+  });
+
+  // Filtros (multi-checkbox: top, oral, escrito)
+  var flagsMenu = document.getElementById("dd-flags-menu");
+  if (flagsMenu) {
+    var flagsTrig = flagsMenu.parentNode.querySelector(".dd-trig");
+    var flagsBadge = document.getElementById("dd-flags-badge");
+    function updateFlagsBadge(){
+      var cnt = flagsMenu.querySelectorAll("input[type=checkbox]:checked").length;
+      if (flagsBadge) flagsBadge.textContent = cnt > 0 ? String(cnt) : "";
+      if (flagsTrig) flagsTrig.classList.toggle("has-active", cnt > 0);
+    }
+    flagsMenu.querySelectorAll("input[type=checkbox]").forEach(function(cb){
+      cb.addEventListener("change", function(){
+        var flag = cb.getAttribute("data-flag");
+        state[flag] = cb.checked;
+        updateFlagsBadge();
+        reRender();
+      });
+    });
+    // Expone para btnClear
+    window._ddResetFlags = function(){
+      flagsMenu.querySelectorAll("input[type=checkbox]").forEach(function(cb){ cb.checked = false; });
+      updateFlagsBadge();
+    };
+  }
+
+  // Función
+  wireSingle("dd-fn-menu", "data-fn", "dd-fn-val", "", "Todas", function(v){
+    state.fn = v;
+    reRender();
+  });
+
+  // Subtema (contenido dinámico)
+  var subMenu = document.getElementById("dd-subtema-menu");
+  if (subMenu) {
+    subMenu.addEventListener("click", function(e){
+      var btn = e.target.closest(".dd-item");
+      if (!btn) return;
+      var v = btn.getAttribute("data-subtema") || "";
+      this.querySelectorAll(".dd-item").forEach(function(i){
+        i.classList.toggle("active", (i.getAttribute("data-subtema") || "") === v);
+      });
+      var val = document.getElementById("dd-subtema-val");
+      if (val) val.textContent = v || "Todos";
+      var trig = this.parentNode.querySelector(".dd-trig");
+      if (trig) trig.classList.toggle("has-active", v !== "");
+      this.parentNode.classList.remove("open");
+      state.subtema = v;
+      reRender();
+    });
+  }
+
+  // Registro
+  wireSingle("dd-reg-menu", "data-reg", "dd-reg-val", "", "Todos", function(v){
+    state.reg = v;
+    reRender();
+  });
+
+  // Known / Unknown: los handlers de click ya los engancha initFilters() en
+  // los botones #btnKnown/#btnUnknown (mismos IDs reutilizados como btn-icon).
+
+  // Botón ✕ para limpiar la búsqueda
+  var searchInput = document.getElementById("searchInput");
+  var searchClr   = document.getElementById("searchClr");
+  if (searchInput && searchClr) {
+    searchInput.addEventListener("input", function(){
+      searchClr.classList.toggle("vis", this.value.length > 0);
+    });
+    searchClr.addEventListener("click", function(){
+      searchInput.value = "";
+      searchClr.classList.remove("vis");
+      state.search = "";
+      reRender();
+    });
+  }
+
+  // Valor numérico del slider de tamaño
+  var fsSlider = document.getElementById("fsSlider");
+  var fsVal    = document.getElementById("fsVal");
+  if (fsSlider && fsVal) {
+    fsVal.textContent = fsSlider.value + "%";
+    fsSlider.addEventListener("input", function(){ fsVal.textContent = this.value + "%"; });
+  }
+
+  // Reset visual de dropdowns cuando se pulsa Limpiar
+  var btnClear = document.getElementById("btnClear");
+  if (btnClear) {
+    btnClear.addEventListener("click", function(){
+      function reset(menuId, valId, defLabel, dataAttr, defVal){
+        var menu = document.getElementById(menuId);
+        if (!menu) return;
+        menu.querySelectorAll(".dd-item").forEach(function(i){
+          i.classList.toggle("active", (i.getAttribute(dataAttr) || "") === defVal);
+        });
+        var val = document.getElementById(valId);
+        if (val) val.textContent = defLabel;
+        var trig = menu.parentNode.querySelector(".dd-trig");
+        if (trig) trig.classList.remove("has-active");
+      }
+      reset("dd-sort-menu",  "dd-sort-val",  "Relevancia", "data-sort",  "rel");
+      reset("dd-nivel-menu", "dd-nivel-val", "Todos",      "data-nivel", "");
+      reset("dd-cat-menu",   "dd-cat-val",   "Todas",      "data-cat",   "");
+      reset("dd-gen-menu",   "dd-gen-val",   "Todo",       "data-gen",   "");
+      reset("dd-fn-menu",    "dd-fn-val",    "Todas",      "data-fn",    "");
+      reset("dd-reg-menu",   "dd-reg-val",   "Todos",      "data-reg",   "");
+      if (window._ddResetFlags) window._ddResetFlags();
+      var fnDd = document.getElementById("dd-fn"); if (fnDd) fnDd.hidden = true;
+      var regDd = document.getElementById("dd-reg"); if (regDd) regDd.hidden = true;
+      var subDd = document.getElementById("dd-subtema"); if (subDd) subDd.hidden = true;
+      if (searchClr) searchClr.classList.remove("vis");
+      if (fsVal && fsSlider) fsVal.textContent = fsSlider.value + "%";
+    });
+  }
 }
 
 function initFilters() {
@@ -40873,7 +41318,9 @@ function initFilters() {
   var controls    = document.querySelector(".controls");
   btnCollapse.addEventListener("click", function() {
     var collapsed = controls.classList.toggle("collapsed");
-    btnCollapse.textContent = collapsed ? "\u2B07 Mostrar filtros" : "\u2B06 Ocultar filtros";
+    btnCollapse.textContent = collapsed ? "\u21E9" : "\u21E7";
+    btnCollapse.setAttribute("aria-label", collapsed ? "Mostrar filtros" : "Ocultar filtros");
+    btnCollapse.setAttribute("title",      collapsed ? "Mostrar filtros" : "Ocultar filtros");
   });
 
   // Fn subfiltro (conectores)
@@ -40919,6 +41366,9 @@ function initFilters() {
   // Apply persisted view mode
   document.getElementById("btnViewFront").classList.toggle("active", state.defaultView==="front");
   document.getElementById("btnViewBack").classList.toggle("active",  state.defaultView==="back");
+
+  // Cablear los dropdowns nuevos (estilo verbos.html)
+  initDropdownFilters();
 }
 
 function applyFontSize(v) {

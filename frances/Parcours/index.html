@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parcours B1 · Camino de estudio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Profile pill + cloud status (shared visual lang) */
+.hdr-profile-row{position:absolute;top:0;right:0;display:flex;align-items:center;}
+.hdr-profile-pill{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:100px;padding:4px 11px 4px 4px;font-family:inherit;font-size:.75rem;font-weight:600;color:var(--text2);box-shadow:var(--shadow-xs);cursor:pointer;transition:all .15s;}
+.hdr-profile-pill:hover{background:var(--bg);border-color:var(--border-strong);color:var(--text);}
+.hdr-profile-pill .pp-avatar{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem;}
+.hdr-profile-pill[data-profile="ruben"] .pp-avatar{background:var(--accent);}
+.hdr-profile-pill[data-profile="sergio"] .pp-avatar{background:#7c3aed;}
+.hdr-profile-pill[data-profile="invitado"] .pp-avatar{background:var(--text3);}
+.hdr-profile-pill .pp-switch{font-size:.6rem;color:var(--text3);margin-left:2px;}
+.cloud-status{position:fixed;bottom:14px;right:14px;display:inline-flex;align-items:center;gap:7px;padding:7px 13px;background:#fff;border:1px solid var(--border);border-radius:100px;font-family:inherit;font-size:.74rem;font-weight:600;color:var(--text2);box-shadow:var(--shadow);opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .25s ease, transform .25s ease;z-index:8000;}
+.cloud-status.visible{opacity:1;transform:translateY(0);}
+.cloud-status .cs-dot{width:8px;height:8px;border-radius:50%;background:var(--text3);flex-shrink:0;}
+.cloud-status.saving  .cs-dot{background:#d97706;animation:cs-pulse 1s ease-in-out infinite;}
+.cloud-status.saved   .cs-dot{background:#15803d;}
+.cloud-status.offline .cs-dot{background:#b91c1c;}
+.cloud-status.error   .cs-dot{background:#b91c1c;}
+@keyframes cs-pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.header-inner{position:relative;}
+</style>
+<style>
+:root{
+  --bg:#fafafa; --surface:#ffffff; --border:#e5e5e5; --border-strong:#d4d4d4;
+  --text:#0a0a0a; --text2:#525252; --text3:#737373;
+  --accent:#2563eb; --accent-soft:#dbeafe; --accent-deep:#1d4ed8;
+  --done:#10b981; --done-bg:#d1fae5;
+  --locked:#a3a3a3; --locked-bg:#f5f5f5;
+  /* Dossier palette */
+  --d1:#2563eb; --d1-bg:#dbeafe; --d1-soft:#eff6ff;
+  --d2:#7c3aed; --d2-bg:#ede9fe; --d2-soft:#faf5ff;
+  --d3:#d97706; --d3-bg:#fef3c7; --d3-soft:#fffbeb;
+  --d4:#0d9488; --d4-bg:#ccfbf1; --d4-soft:#f0fdfa;
+  --d5:#16a34a; --d5-bg:#dcfce7; --d5-soft:#f0fdf4;
+  --d6:#e11d48; --d6-bg:#ffe4e6; --d6-soft:#fff1f2;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.04);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.05),0 1px 2px rgba(0,0,0,.04);
+  --shadow:0 4px 16px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;font-feature-settings:"cv02","cv03","cv04","cv11";}
+
+/* HEADER */
+.site-header{background:var(--surface);border-bottom:1px solid var(--border);padding:24px 20px 22px;position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(10px);background:rgba(255,255,255,.85);}
+.header-inner{max-width:880px;margin:0 auto;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:5px 12px 5px 9px;font-size:.78rem;font-weight:600;color:var(--text2);text-decoration:none;transition:all .15s;box-shadow:var(--shadow-xs);margin-bottom:12px;}
+.back-btn:hover{background:var(--bg);border-color:var(--border-strong);color:var(--text);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+.header-top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
+h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
+.header-tag{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:100px;padding:3px 10px;}
+.header-sub{font-size:.82rem;color:var(--text3);font-weight:500;margin-top:4px;}
+.header-sub strong{color:var(--text);font-weight:700;}
+
+/* PROGRESS BAR */
+.progress-wrap{margin-top:14px;}
+.progress-bar{height:6px;background:var(--border);border-radius:100px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--accent);border-radius:100px;transition:width .4s cubic-bezier(.22,1,.36,1);}
+.progress-meta{display:flex;justify-content:space-between;font-size:.72rem;color:var(--text3);margin-top:6px;font-variant-numeric:tabular-nums;}
+.progress-meta button{background:none;border:none;color:var(--accent);font-family:inherit;font-size:.72rem;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;}
+.progress-meta button:hover{color:var(--accent-deep);}
+
+/* MAIN */
+.main{max-width:880px;margin:0 auto;padding:36px 20px 80px;}
+
+/* LEGEND */
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.74rem;color:var(--text3);margin-bottom:32px;}
+.legend-item{display:inline-flex;align-items:center;gap:6px;}
+.legend-dot{width:10px;height:10px;border-radius:50%;}
+.legend-dot.done{background:var(--done);}
+.legend-dot.current{background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.legend-dot.locked{background:var(--locked);}
+
+/* DOSSIER GROUP */
+.dossier{margin-bottom:26px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 18px 14px;box-shadow:var(--shadow-xs);position:relative;overflow:hidden;}
+.dossier::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--d-color,var(--accent));}
+.dossier[data-d="1"]{--d-color:var(--d1);--d-bg:var(--d1-bg);--d-soft:var(--d1-soft);}
+.dossier[data-d="2"]{--d-color:var(--d2);--d-bg:var(--d2-bg);--d-soft:var(--d2-soft);}
+.dossier[data-d="3"]{--d-color:var(--d3);--d-bg:var(--d3-bg);--d-soft:var(--d3-soft);}
+.dossier[data-d="4"]{--d-color:var(--d4);--d-bg:var(--d4-bg);--d-soft:var(--d4-soft);}
+.dossier[data-d="5"]{--d-color:var(--d5);--d-bg:var(--d5-bg);--d-soft:var(--d5-soft);}
+.dossier[data-d="6"]{--d-color:var(--d6);--d-bg:var(--d6-bg);--d-soft:var(--d6-soft);}
+.dossier-head{display:flex;align-items:center;gap:10px;padding:0 0 14px 4px;flex-wrap:wrap;}
+.dossier-num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;background:var(--d-color);color:#fff;font-size:.74rem;font-weight:700;font-variant-numeric:tabular-nums;}
+.dossier-title{font-size:.95rem;font-weight:700;letter-spacing:-.012em;color:var(--d-color);}
+.dossier-desc{font-size:.78rem;color:var(--text3);font-weight:500;}
+
+/* TIMELINE (CAMINO) */
+.camino{position:relative;padding-left:34px;}
+.camino::before{content:"";position:absolute;left:13px;top:8px;bottom:8px;width:2px;background:repeating-linear-gradient(to bottom, var(--d-bg) 0, var(--d-bg) 4px, transparent 4px, transparent 8px);}
+
+.node{position:relative;margin-bottom:12px;display:block;text-decoration:none;color:inherit;}
+.node:last-child{margin-bottom:4px;}
+.node-dot{position:absolute;left:-34px;top:18px;width:28px;height:28px;border-radius:50%;background:var(--surface);border:2px solid var(--d-bg);display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:700;color:var(--d-color);z-index:2;transition:all .2s;font-variant-numeric:tabular-nums;}
+.node[data-state="done"] .node-dot{background:var(--done);border-color:var(--done);color:#fff;}
+.node[data-state="current"] .node-dot{background:var(--d-color);border-color:var(--d-color);color:#fff;box-shadow:0 0 0 5px var(--d-bg);}
+.node[data-state="locked"] .node-dot{background:var(--locked-bg);border-color:var(--border);color:var(--locked);}
+
+.node-card{background:var(--d-soft);border:1px solid var(--d-bg);border-radius:12px;padding:14px 16px;transition:all .2s;}
+.node:hover .node-card{border-color:var(--d-color);transform:translateY(-1px);box-shadow:var(--shadow-sm);}
+.node[data-state="locked"]{pointer-events:none;}
+.node[data-state="locked"] .node-card{opacity:.5;background:var(--locked-bg);border-color:var(--border);}
+.node[data-state="current"] .node-card{border-color:var(--d-color);box-shadow:0 0 0 3px var(--d-bg),var(--shadow-sm);background:#fff;}
+.node[data-state="done"] .node-card{background:var(--done-bg);border-color:var(--done);}
+
+.node-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.node-label{font-size:.66rem;font-weight:700;color:var(--d-color);letter-spacing:.08em;text-transform:uppercase;opacity:.85;}
+.node-badge{font-size:.64rem;font-weight:700;color:#fff;background:var(--d-color);border-radius:100px;padding:2px 9px;letter-spacing:.04em;}
+.node-badge.done-badge{color:#fff;background:var(--done);}
+.node-title{font-size:1rem;font-weight:700;letter-spacing:-.012em;color:var(--text);margin-bottom:8px;line-height:1.35;}
+.node-meta{display:flex;flex-wrap:wrap;gap:6px;}
+.meta-tag{font-size:.7rem;font-weight:500;color:var(--text2);background:#fff;border:1px solid var(--border);border-radius:100px;padding:2px 9px;}
+.meta-tag.gram{color:var(--d-color);background:var(--d-bg);border-color:transparent;font-weight:600;}
+.node-prog{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:600;color:var(--text2);background:#fff;border:1px solid var(--border);border-radius:100px;padding:2px 9px 2px 4px;margin-top:8px;}
+.node-prog .prog-dot{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--d-bg);color:var(--d-color);font-size:.62rem;font-weight:700;}
+.node-prog.full{color:var(--done);background:var(--done-bg);border-color:var(--done);}
+.node-prog.full .prog-dot{background:var(--done);color:#fff;}
+
+/* RESET MODAL (minimal confirm) */
+.confirm{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;padding:20px;z-index:100;}
+.confirm.show{display:flex;}
+.confirm-box{background:var(--surface);border-radius:14px;padding:22px 22px 18px;max-width:340px;width:100%;box-shadow:var(--shadow);}
+.confirm-box p{font-size:.88rem;color:var(--text);margin-bottom:14px;line-height:1.5;}
+.confirm-actions{display:flex;gap:8px;justify-content:flex-end;}
+.btn{font-family:inherit;font-size:.8rem;font-weight:600;border-radius:8px;padding:7px 14px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;transition:all .15s;}
+.btn:hover{background:var(--bg);}
+.btn-danger{background:var(--text);color:var(--surface);border-color:var(--text);}
+.btn-danger:hover{background:#222;}
+
+@media (max-width:520px){
+  .main{padding:24px 16px 60px;}
+  .camino{padding-left:30px;}
+  .node-dot{left:-30px;width:24px;height:24px;font-size:.68rem;}
+  .camino::before{left:11px;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="hdr-profile-row">
+      <button type="button" class="hdr-profile-pill" id="hdrProfilePill" data-profile="invitado" title="Cambiar de perfil">
+        <span class="pp-avatar" id="hdrProfileAvatar">I</span>
+        <span class="pp-name" id="hdrProfileName">Invitado</span>
+        <span class="pp-switch">▼</span>
+      </button>
+    </div>
+    <a class="back-btn" href="../index.html"><span class="arrow">‹</span><span>Français</span></a>
+    <div class="header-top">
+      <h1>Parcours B1</h1>
+      <span class="header-tag">Camino de estudio</span>
+    </div>
+    <p class="header-sub"><strong id="done-count">0</strong> / 17 leçons · <span id="dossier-meta">Dossier 1 en curso</span></p>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <div class="progress-meta">
+        <span id="progress-pct">0% completado</span>
+        <button id="reset-btn">Reiniciar progreso</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="legend">
+    <span class="legend-item"><span class="legend-dot done"></span>Completado</span>
+    <span class="legend-item"><span class="legend-dot current"></span>Actual</span>
+    <span class="legend-item"><span class="legend-dot locked"></span>Bloqueado</span>
+  </div>
+
+  <!-- ============ DOSSIER 1 ============ -->
+  <section class="dossier" data-d="1">
+    <div class="dossier-head">
+      <span class="dossier-num">1</span>
+      <span class="dossier-title">Apprendre &amp; vivre ensemble</span>
+      <span class="dossier-desc">· estudios, animales, artes</span>
+    </div>
+    <div class="camino">
+      <a class="node" data-id="1" href="lecon_01.html">
+        <span class="node-dot">1</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 1</span><span class="node-badge">Empieza aquí</span></div>
+          <div class="node-title">Parler de ses études</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · études, disciplines</span>
+            <span class="meta-tag gram">Pronoms relatifs : qui · que · où · dont</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" data-id="2" href="#">
+        <span class="node-dot">2</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 2</span></div>
+          <div class="node-title">Le monde animal</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · animaux</span>
+            <span class="meta-tag gram">Indéfinis + ni…ni</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" data-id="3" href="#">
+        <span class="node-dot">3</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 3</span></div>
+          <div class="node-title">Sortir, voir un spectacle</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · arts</span>
+            <span class="meta-tag gram">COD + COI (ordre)</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ DOSSIER 2 ============ -->
+  <section class="dossier" data-d="2">
+    <div class="dossier-head">
+      <span class="dossier-num">2</span>
+      <span class="dossier-title">Communiquer &amp; vivre la ville</span>
+      <span class="dossier-desc">· teléfono, ciudad, liceo</span>
+    </div>
+    <div class="camino">
+      <a class="node" data-id="4" href="#">
+        <span class="node-dot">4</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 4</span></div>
+          <div class="node-title">Au téléphone, par message</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · communication</span>
+            <span class="meta-tag gram">Subjonctif (souhait)</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" data-id="5" href="#">
+        <span class="node-dot">5</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 5</span></div>
+          <div class="node-title">Aménagements urbains</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · ville</span>
+            <span class="meta-tag gram">Interrogation + hypothèse</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" data-id="6" href="#">
+        <span class="node-dot">6</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 6</span></div>
+          <div class="node-title">Vie au lycée</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · scolarité</span>
+            <span class="meta-tag gram">Subjonctif (sentiment, doute)</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ DOSSIER 3 ============ -->
+  <section class="dossier" data-d="3">
+    <div class="dossier-head">
+      <span class="dossier-num">3</span>
+      <span class="dossier-title">Échanger &amp; consommer</span>
+      <span class="dossier-desc">· compras, dinero, opiniones</span>
+    </div>
+    <div class="camino">
+      <a class="node" data-id="7" href="#">
+        <span class="node-dot">7</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 7</span></div>
+          <div class="node-title">Rapporter un échange</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · opinions</span>
+            <span class="meta-tag gram">Discours rapporté au passé</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" data-id="8" href="#">
+        <span class="node-dot">8</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 8</span></div>
+          <div class="node-title">Pouvoir d'achat</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · achats</span>
+            <span class="meta-tag gram">Pronoms personnels (ordre)</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" data-id="9" href="#">
+        <span class="node-dot">9</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 9</span></div>
+          <div class="node-title">L'argent et les chiffres</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · argent</span>
+            <span class="meta-tag gram">Pronom y</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ DOSSIER 4 ============ -->
+  <section class="dossier" data-d="4">
+    <div class="dossier-head">
+      <span class="dossier-num">4</span>
+      <span class="dossier-title">Décrire &amp; travailler</span>
+      <span class="dossier-desc">· físico, personalidad, trabajo</span>
+    </div>
+    <div class="camino">
+      <a class="node" data-id="10" href="#">
+        <span class="node-dot">10</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 10</span></div>
+          <div class="node-title">L'allure et le style</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · apparence</span>
+            <span class="meta-tag gram">Place des adjectifs</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" data-id="11" href="#">
+        <span class="node-dot">11</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 11</span></div>
+          <div class="node-title">Traits de personnalité</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · caractère</span>
+            <span class="meta-tag gram">Adjectif + à/de + infinitif</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" data-id="12" href="#">
+        <span class="node-dot">12</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 12</span></div>
+          <div class="node-title">Travail et environnement</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · travail</span>
+            <span class="meta-tag gram">Pronoms relatifs composés</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ DOSSIER 5 ============ -->
+  <section class="dossier" data-d="5">
+    <div class="dossier-head">
+      <span class="dossier-num">5</span>
+      <span class="dossier-title">S'engager &amp; informer</span>
+      <span class="dossier-desc">· formal, política, actualidad</span>
+    </div>
+    <div class="camino">
+      <a class="node" data-id="13" href="#">
+        <span class="node-dot">13</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 13</span></div>
+          <div class="node-title">Lettre formelle, entreprise</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · entreprise</span>
+            <span class="meta-tag gram">Articulateurs de but</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" data-id="14" href="#">
+        <span class="node-dot">14</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 14</span></div>
+          <div class="node-title">Catastrophes et politique</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · actualité</span>
+            <span class="meta-tag gram">Forme passive</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" data-id="15" href="#">
+        <span class="node-dot">15</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 15</span></div>
+          <div class="node-title">Société et grands évènements</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · société</span>
+            <span class="meta-tag gram">Nominalisation + cause/conséquence</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ DOSSIER 6 ============ -->
+  <section class="dossier" data-d="6">
+    <div class="dossier-head">
+      <span class="dossier-num">6</span>
+      <span class="dossier-title">Agir pour la planète</span>
+      <span class="dossier-desc">· ecología, militancia</span>
+    </div>
+    <div class="camino">
+      <a class="node" data-id="16" href="#">
+        <span class="node-dot">16</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 16</span></div>
+          <div class="node-title">Écologie et indignation</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · environnement</span>
+            <span class="meta-tag gram">Expression de l'indignation</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" data-id="17" href="#">
+        <span class="node-dot">17</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Leçon 17</span></div>
+          <div class="node-title">Action militante</div>
+          <div class="node-meta">
+            <span class="meta-tag">Vocabulario · engagement</span>
+            <span class="meta-tag gram">Subjonctif d'opinion</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- RESET CONFIRM -->
+<div class="confirm" id="confirm">
+  <div class="confirm-box">
+    <p>¿Reiniciar todo el progreso del parcours? Esto borrará el estado de las leçons completadas.</p>
+    <div class="confirm-actions">
+      <button class="btn" id="cancel-reset">Cancelar</button>
+      <button class="btn btn-danger" id="confirm-reset">Reiniciar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY   = 'parcours_b1_state';
+const SCORES_KEY    = 'parcours_b1_scores';
+const DRAFTS_KEY    = 'parcours_b1_drafts';
+const PE_KEY        = 'parcours_b1_pe_done';
+const CHECKLIST_KEY = 'parcours_b1_checklist';
+const TOTAL = 17;
+// Por leçon: {exos, pe, check} — total ítems trackables
+const ITEMS_PER_LECON = { 1: { exos: 10, pe: 4, check: 8 } };  // 10 ejercicios + 4 PE + 8 checklist = 22
+const AVAILABLE = [1];
+
+function loadJSON(key){
+  try{ return JSON.parse(localStorage.getItem(key) || '{}'); }
+  catch(e){ return {}; }
+}
+function loadState(){ return loadJSON(STORAGE_KEY); }
+function saveState(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+function loadScores(){ return loadJSON(SCORES_KEY); }
+function loadDrafts(){ return loadJSON(DRAFTS_KEY); }
+function loadPEDone(){ return loadJSON(PE_KEY); }
+function loadChecklist(){ return loadJSON(CHECKLIST_KEY); }
+
+function paintProgressTag(node, leconId){
+  const def = ITEMS_PER_LECON[leconId];
+  if(!def) return;
+  const scores = loadScores();
+  const drafts = loadDrafts();
+  const peDone = loadPEDone();
+  const check  = loadChecklist();
+
+  const sCount  = scores[leconId] ? Object.keys(scores[leconId]).length : 0;
+  const dCount  = drafts[leconId]
+    ? Object.values(drafts[leconId]).filter(v => v && v.trim().length > 0).length
+    : 0;
+  const peCount = (peDone[leconId] || []).length;
+  const ckCount = (check[leconId]  || []).length;
+
+  const exoTot   = def.exos + def.pe + def.check;
+  const completed = sCount + dCount + peCount + ckCount;
+
+  if(completed === 0){
+    const existing = node.querySelector('.node-prog');
+    if(existing) existing.remove();
+    return;
+  }
+  let tag = node.querySelector('.node-prog');
+  if(!tag){
+    tag = document.createElement('span');
+    tag.className = 'node-prog';
+    const meta = node.querySelector('.node-meta');
+    if(meta) meta.parentNode.insertBefore(tag, meta.nextSibling);
+  }
+  tag.innerHTML = '<span class="prog-dot">'+completed+'</span> '+completed+' / '+exoTot+' avances';
+  tag.classList.toggle('full', completed === exoTot);
+}
+
+function render(){
+  const state = loadState();
+  const done = state.done || [];
+  const nodes = document.querySelectorAll('.node');
+  let current = null;
+
+  nodes.forEach(n=>{
+    const id = +n.dataset.id;
+    const isAvailable = AVAILABLE.includes(id);
+    if(done.includes(id)){
+      n.dataset.state = 'done';
+      const badge = n.querySelector('.node-badge');
+      if(badge){ badge.textContent='Completado'; badge.classList.add('done-badge'); }
+      else{
+        const top = n.querySelector('.node-top');
+        const span = document.createElement('span'); span.className='node-badge done-badge'; span.textContent='Completado';
+        top.appendChild(span);
+      }
+    } else if(isAvailable && !current){
+      n.dataset.state='current';
+      current = id;
+    } else if(!isAvailable){
+      n.dataset.state='locked';
+      n.setAttribute('aria-disabled','true');
+    }
+    if(isAvailable) paintProgressTag(n, id);
+  });
+
+  const pct = Math.round(done.length/TOTAL*100);
+  document.getElementById('done-count').textContent = done.length;
+  document.getElementById('progress-fill').style.width = pct+'%';
+  document.getElementById('progress-pct').textContent = pct+'% completado';
+
+  // Dossier en curso
+  const dossierMap = {1:1,2:1,3:1, 4:2,5:2,6:2, 7:3,8:3,9:3, 10:4,11:4,12:4, 13:5,14:5,15:5, 16:6,17:6};
+  const focus = current || (done.length ? done[done.length-1] : 1);
+  document.getElementById('dossier-meta').textContent = 'Dossier '+dossierMap[focus]+(current?' en curso':' completado');
+}
+
+// Reset modal — borra estado Y scores
+const confirmEl = document.getElementById('confirm');
+document.getElementById('reset-btn').addEventListener('click', ()=>confirmEl.classList.add('show'));
+document.getElementById('cancel-reset').addEventListener('click', ()=>confirmEl.classList.remove('show'));
+document.getElementById('confirm-reset').addEventListener('click', ()=>{
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(SCORES_KEY);
+  localStorage.removeItem(DRAFTS_KEY);
+  localStorage.removeItem(PE_KEY);
+  localStorage.removeItem(CHECKLIST_KEY);
+  confirmEl.classList.remove('show');
+  document.querySelectorAll('.node-prog').forEach(t=>t.remove());
+  render();
+  if(window.parcoursCloud) window.parcoursCloud.notify();
+});
+confirmEl.addEventListener('click', e=>{ if(e.target===confirmEl) confirmEl.classList.remove('show'); });
+
+// Re-render when cloud finishes loading remote data
+window.addEventListener('parcours:cloud-loaded', ()=>{
+  document.querySelectorAll('.node-prog').forEach(t=>t.remove());
+  // Reset state classes
+  document.querySelectorAll('.node').forEach(n=>{ n.dataset.state=''; n.removeAttribute('aria-disabled'); });
+  render();
+});
+
+render();
+</script>
+
+<div class="cloud-status" id="cloudStatus" role="status" aria-live="polite">
+  <span class="cs-dot"></span>
+  <span class="cs-text">Listo</span>
+</div>
+<script src="parcours.js"></script>
+</body>
+</html>

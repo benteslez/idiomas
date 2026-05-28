@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reported Speech · B2 Linguaskill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Page identity: Reported Speech → indigo (verbos) */
+  --primary:#4338ca; --primary-soft:#eef2ff; --primary-mid:#6366f1; --primary-strong:#312e81;
+  --primary-glow:rgba(67,56,202,.14);
+  /* Per-tab identity colors */
+  --tab-backshift:#4338ca;   --tab-backshift-soft:#eef2ff;   --tab-backshift-mid:#6366f1;
+  --tab-questions:#7c3aed;   --tab-questions-soft:#f5f3ff;   --tab-questions-mid:#8b5cf6;
+  --tab-verbs:#0f766e;       --tab-verbs-soft:#ecfdf5;       --tab-verbs-mid:#14b8a6;
+  /* Legacy aliases */
+  --accent:var(--primary); --accent-light:var(--primary-soft); --accent-mid:var(--primary-mid);
+  /* Neutrals */
+  --bg:#f7f7f5; --bg-elevated:#fbfbfa; --card:#ffffff;
+  --border:#ececec; --border-strong:#dfdfdf;
+  --text:#18181b; --text2:#52525b; --text3:#71717a;
+  /* Paper (model examples) */
+  --paper:#fefef9; --paper-border:#e7e5d6;
+  /* Shadows */
+  --shadow-xs:0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:0 2px 8px rgba(15,23,42,.04),0 1px 2px rgba(15,23,42,.03);
+  --shadow:0 4px 16px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+  --shadow-primary:0 6px 20px var(--primary-glow);
+  /* Geometry */
+  --radius:18px; --radius-md:14px; --radius-sm:10px; --radius-xs:6px; --radius-pill:999px;
+  /* Motion */
+  --ease:cubic-bezier(0.4,0,0.2,1); --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --t-fast:120ms; --t-base:200ms;
+  /* Section colors (A→E) */
+  --c-greet:#7c3aed;     --c-greet-bg:#f5f3ff;
+  --c-conn:#0e7490;      --c-conn-bg:#ecfeff;
+  --c-key:#1d4ed8;       --c-key-bg:#eff6ff;
+  --c-close:#be185d;     --c-close-bg:#fdf2f8;
+  --c-model:#b45309;     --c-model-bg:#fffbeb;
+  --c-tip:#ca8a04;       --c-tip-bg:#fef9c3;
+  --c-struct:#4338ca;    --c-struct-bg:#e0e7ff;
+  /* Sub-category colors for connectors */
+  --c-add:#0e7490;       --c-contrast:#be185d;
+  --c-cause:#15803d;     --c-purpose:#7c3aed;
+  --c-seq:#1d4ed8;       --c-time:#0369a1;
+  --c-emph:#b91c1c;      --c-summ:#7c3aed;
+}
+[data-theme="dark"]{
+  --primary:#a5b4fc; --primary-soft:#1e1b4b; --primary-mid:#818cf8; --primary-strong:#c7d2fe;
+  --primary-glow:rgba(165,180,252,.18);
+  --tab-backshift:#a5b4fc;   --tab-backshift-soft:rgba(165,180,252,.12);  --tab-backshift-mid:#818cf8;
+  --tab-questions:#c4b5fd;   --tab-questions-soft:rgba(196,181,253,.12);  --tab-questions-mid:#a78bfa;
+  --tab-verbs:#5eead4;       --tab-verbs-soft:rgba(94,234,212,.12);       --tab-verbs-mid:#2dd4bf;
+  --bg:#0a0a0b; --bg-elevated:#131316; --card:#18181b;
+  --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --paper:#1e1e24; --paper-border:#3a3a42;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.2);
+  --shadow:0 4px 16px rgba(0,0,0,.30),0 1px 3px rgba(0,0,0,.20);
+  --shadow-primary:0 6px 24px var(--primary-glow);
+  --c-greet:#a78bfa;     --c-greet-bg:rgba(167,139,250,.10);
+  --c-conn:#22d3ee;      --c-conn-bg:rgba(34,211,238,.10);
+  --c-key:#60a5fa;       --c-key-bg:rgba(96,165,250,.10);
+  --c-close:#f472b6;     --c-close-bg:rgba(244,114,182,.10);
+  --c-model:#fbbf24;     --c-model-bg:rgba(251,191,36,.10);
+  --c-tip:#facc15;       --c-tip-bg:rgba(250,204,21,.10);
+  --c-struct:#a5b4fc;    --c-struct-bg:rgba(165,180,252,.10);
+  --c-add:#22d3ee;       --c-contrast:#f472b6;
+  --c-cause:#4ade80;     --c-purpose:#a78bfa;
+  --c-seq:#60a5fa;       --c-time:#38bdf8;
+  --c-emph:#f87171;      --c-summ:#a78bfa;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+*:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-xs);}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
+
+/* HEADER */
+.site-header{background:linear-gradient(180deg,var(--bg-elevated),var(--bg));padding:32px 20px 22px;position:relative;}
+.site-header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-strong) 20%,var(--border-strong) 80%,transparent);}
+.header-inner{max-width:1000px;margin:0 auto;}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.site-header h1{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:600;letter-spacing:-0.02em;color:var(--text);line-height:1.1;}
+.header-tag{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);background:var(--primary-soft);border-radius:var(--radius-pill);padding:4px 11px;}
+.header-sub{font-size:.88rem;color:var(--text3);font-weight:400;margin-top:4px;line-height:1.55;}
+.header-sub strong{color:var(--primary);font-weight:600;}
+
+/* HEADER ACTIONS BAR */
+.header-actions{max-width:1000px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:8px 14px 8px 11px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.back-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateX(-2px);box-shadow:var(--shadow);}
+.back-btn:active{transform:translateX(-2px) scale(.97);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+
+/* THEME TOGGLE */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.theme-toggle:hover{color:var(--primary);border-color:var(--primary-mid);transform:translateY(-1px);box-shadow:var(--shadow);}
+.theme-toggle .icon-sun{display:none;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+
+/* TABS — per-tab colors */
+.tabs-wrap{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-elevated) 85%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--border);padding:14px 20px;}
+.tabs{max-width:1000px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;}
+.tab{border:1px solid var(--border);border-radius:var(--radius-pill);padding:9px 18px;font-family:inherit;font-size:.85rem;font-weight:500;cursor:pointer;background:var(--card);color:var(--text2);transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:7px;}
+.tab:hover{transform:translateY(-1px);box-shadow:var(--shadow-xs);border-color:var(--tab-c,var(--primary-mid));color:var(--tab-c,var(--primary));}
+.tab.active{background:var(--tab-c,var(--primary));color:#fff;border-color:var(--tab-c,var(--primary));font-weight:600;box-shadow:0 6px 20px color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+[data-theme="dark"] .tab.active{color:#0a0a0b;}
+.tab[data-tab="backshift"]{--tab-c:var(--tab-backshift);}
+.tab[data-tab="questions"]{--tab-c:var(--tab-questions);}
+.tab[data-tab="verbs"]{--tab-c:var(--tab-verbs);}
+.tab .ico{font-size:1rem;line-height:1;}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:32px 20px 64px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeSlideIn 360ms var(--ease-out);}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* INTRO */
+.intro{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:28px;box-shadow:var(--shadow-xs);}
+.intro h3{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--tab-c,var(--primary));margin-bottom:10px;}
+.intro p{font-size:.92rem;color:var(--text2);line-height:1.65;}
+.intro p strong{color:var(--tab-c,var(--primary));font-weight:600;}
+
+/* TOOLBAR */
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.tool-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:7px 15px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:6px;}
+.tool-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateY(-1px);box-shadow:var(--shadow-xs);}
+.tool-btn .ico{font-size:.85rem;line-height:1;}
+
+/* FONT SIZE SLIDER */
+.fs-control{display:inline-flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:6px 14px;}
+.fs-label{font-family:inherit;font-weight:600;color:var(--text3);line-height:1;user-select:none;}
+.fs-label.small{font-size:.78rem;}
+.fs-label.large{font-size:1.1rem;}
+.fs-slider{-webkit-appearance:none;appearance:none;width:100px;height:4px;background:var(--border-strong);border-radius:2px;outline:none;cursor:pointer;accent-color:var(--primary);}
+.fs-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);transition:transform var(--t-fast) var(--ease);}
+.fs-slider::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.fs-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);}
+.fs-value{font-size:.72rem;font-weight:600;color:var(--text3);min-width:32px;text-align:right;}
+
+/* SECTION (collapsible) */
+.section{margin-bottom:14px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow var(--t-base) var(--ease);}
+.section:hover{box-shadow:var(--shadow);}
+.section-header{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;user-select:none;transition:background var(--t-base) var(--ease);background:transparent;}
+.section-header:hover{background:var(--bg-elevated);}
+.section:not(.collapsed) .section-header{border-bottom:1px solid var(--border);}
+.section-icon{width:38px;height:38px;border-radius:var(--radius-sm);display:inline-flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;background:transparent!important;border:2px solid var(--section-c,var(--primary));color:var(--section-c,var(--primary));}
+.section-title{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--text);line-height:1.2;}
+.section-desc{font-size:.78rem;color:var(--text3);margin-top:2px;line-height:1.45;}
+.section-header > div:not(.section-icon){flex:1;}
+.section-header::after{content:"▾";font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease);margin-left:8px;flex-shrink:0;font-weight:600;}
+.section.collapsed .section-header::after{transform:rotate(-90deg);}
+.section.collapsed .section-header:hover::after{color:var(--primary);}
+.section-count{font-size:.7rem;font-weight:600;color:var(--text3);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px 10px;margin-left:auto;flex-shrink:0;transition:all var(--t-base) var(--ease);}
+.section-header:hover .section-count{border-color:var(--primary-mid);color:var(--primary);}
+.section > .grid, .section > .stack, .section > .papers, .section > .tips-list, .section > .blueprint{padding:18px 20px 20px;}
+.section.collapsed > *:not(.section-header){display:none!important;}
+
+/* GRID + ITEM */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.item{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 30%,transparent)!important;border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-xs);transition:transform var(--t-base) var(--ease),box-shadow var(--t-base) var(--ease),border-color var(--t-base) var(--ease);border-left:4px solid var(--section-c,var(--primary))!important;}
+.item:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--section-c,var(--primary-mid))!important;}
+.item-head{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.item-term{font-family:'Manrope','Inter',sans-serif;font-size:1.02rem;font-weight:700;letter-spacing:-0.005em;color:var(--section-c,var(--text));line-height:1.3;}
+.item-trans{font-size:.76rem;color:var(--text3);font-style:italic;}
+.item-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;}
+.item-list li{font-size:.88rem;color:var(--text2);line-height:1.5;padding:5px 0 5px 12px;border-left:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);}
+.item-list li strong{color:var(--text);font-weight:600;}
+
+/* STACK (single-column phrase list, for A/C/D sections) */
+.stack{display:flex;flex-direction:column;gap:8px;}
+.phrase{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-sm);padding:10px 14px;font-size:.92rem;color:var(--text2);line-height:1.5;transition:all var(--t-base) var(--ease);}
+.phrase:hover{transform:translateX(2px);border-color:var(--section-c,var(--primary));box-shadow:var(--shadow-xs);}
+.phrase strong{color:var(--text);font-weight:600;}
+.phrase .hint{font-size:.74rem;color:var(--text3);font-style:italic;margin-left:6px;}
+
+/* PAPER (model examples) */
+.papers{display:flex;flex-direction:column;gap:14px;}
+.paper{background:var(--paper);border:1px solid var(--paper-border);border-radius:var(--radius-md);padding:22px 26px;box-shadow:var(--shadow-sm);position:relative;transition:box-shadow var(--t-base) var(--ease);}
+.paper:hover{box-shadow:var(--shadow);}
+.paper::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--tab-c,var(--primary)),transparent);border-radius:var(--radius-md) var(--radius-md) 0 0;}
+.paper-header{display:flex;align-items:flex-start;gap:14px;cursor:pointer;user-select:none;}
+.paper-header > div:first-child{flex:1;min-width:0;}
+.paper-header .paper-meta{margin-bottom:0;}
+.paper-toggle{font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease),color var(--t-base) var(--ease);flex-shrink:0;font-weight:700;line-height:1.4;}
+.paper-header:hover .paper-toggle,.paper-header:hover .paper-title{color:var(--tab-c,var(--primary));}
+.paper.collapsed .paper-toggle{transform:rotate(-90deg);}
+.paper.collapsed .paper-body{display:none;}
+.paper:not(.collapsed) .paper-body{margin-top:18px;}
+.paper-title{font-family:'Fraunces',Georgia,serif;font-size:1.05rem;font-weight:600;color:var(--tab-c,var(--primary));margin-bottom:6px;letter-spacing:-0.01em;transition:color var(--t-base) var(--ease);}
+.paper-meta{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:18px;}
+.paper-body{font-family:'Inter',sans-serif;font-size:.94rem;line-height:1.8;color:var(--text);}
+.paper-body p{margin-bottom:12px;}
+.paper-body p:last-child{margin-bottom:0;}
+.paper-body em{font-style:italic;color:var(--text2);}
+
+/* COLOR-CODED INLINE PHRASES IN MODELS — match theory section colors */
+.paper-body .k-open    {color:var(--c-greet);    font-weight:600;}
+.paper-body .k-add     {color:var(--c-add);      font-weight:600;}
+.paper-body .k-contrast{color:var(--c-contrast); font-weight:600;}
+.paper-body .k-cause   {color:var(--c-cause);    font-weight:600;}
+.paper-body .k-concess {color:var(--c-purpose);  font-weight:600;}
+.paper-body .k-purpose {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-seq     {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-time    {color:var(--c-time);     font-weight:600;}
+.paper-body .k-emph    {color:var(--c-emph);     font-weight:600;}
+.paper-body .k-summ    {color:var(--c-summ);     font-weight:600;}
+.paper-body .k-key     {color:var(--c-key);      font-weight:600;}
+.paper-body .k-close   {color:var(--c-close);    font-weight:600;}
+
+/* STRUCTURE BLUEPRINT (vertical timeline) */
+.blueprint{display:flex;flex-direction:column;gap:0;position:relative;}
+.step{display:flex;gap:14px;align-items:flex-start;position:relative;padding:6px 0 14px 0;}
+.step::before{content:"";position:absolute;left:18px;top:42px;bottom:-4px;width:2px;background:color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);}
+.step:last-of-type::before{display:none;}
+.step-num{width:38px;height:38px;border-radius:50%;background:var(--card);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--section-c,var(--primary));position:relative;z-index:1;}
+.step-body{flex:1;min-width:0;padding-top:6px;}
+.step-body h5{font-family:'Manrope',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-0.005em;}
+.step-body .step-meta{font-size:.72rem;color:var(--text3);font-style:italic;margin-bottom:6px;font-weight:500;}
+.step-body > p{font-size:.86rem;color:var(--text2);line-height:1.55;margin-bottom:9px;}
+.step-phrases{display:flex;flex-wrap:wrap;gap:5px;}
+.step-phrases span{font-size:.76rem;color:var(--section-c,var(--primary));background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);padding:4px 11px;border-radius:var(--radius-pill);font-weight:600;line-height:1.4;transition:all var(--t-base) var(--ease);}
+.step-phrases span:hover{background:color-mix(in srgb,var(--section-c,var(--primary)) 24%,transparent);border-color:var(--section-c,var(--primary));}
+.blueprint-footer{margin-top:6px;padding:12px 16px;background:color-mix(in srgb,var(--section-c,var(--primary)) 10%,transparent);border-radius:var(--radius-md);font-size:.86rem;color:var(--text2);display:flex;align-items:center;gap:10px;border:1px dashed color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);}
+.blueprint-footer strong{color:var(--section-c,var(--primary));font-weight:600;}
+.blueprint-footer .footer-ico{font-size:1rem;flex-shrink:0;}
+
+/* TIPS SECTION */
+.tips-list{display:flex;flex-direction:column;gap:10px;}
+.tip{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-md);padding:14px 16px;display:flex;gap:14px;align-items:flex-start;transition:all var(--t-base) var(--ease);}
+.tip:hover{transform:translateX(2px);box-shadow:var(--shadow-xs);border-color:var(--section-c,var(--primary));}
+.tip.warn{--section-c:var(--c-emph);}
+.tip-icon{font-size:.9rem;flex-shrink:0;line-height:1;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);color:var(--section-c,var(--primary));font-weight:800;margin-top:1px;}
+.tip-body{flex:1;min-width:0;}
+.tip-body h5{font-family:'Manrope',sans-serif;font-size:.95rem;font-weight:700;color:var(--section-c,var(--primary));margin-bottom:4px;letter-spacing:-0.005em;line-height:1.3;}
+.tip-body p{font-size:.86rem;color:var(--text2);line-height:1.55;}
+.tip-body p em{color:var(--text);font-style:normal;background:var(--bg-elevated);padding:1px 5px;border-radius:var(--radius-xs);font-size:.92em;font-weight:500;}
+
+/* INLINE STRUCTURAL LABELS */
+.label{display:inline-block;font-family:'JetBrains Mono','Manrope',sans-serif;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:var(--radius-xs);background:var(--tab-c-soft,var(--primary-soft));color:var(--tab-c,var(--primary));margin-right:6px;vertical-align:middle;border:1px solid color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+
+/* CALLOUT */
+.callout{background:var(--tab-c-soft,var(--primary-soft));border-radius:var(--radius-md);padding:14px 16px;margin:0 0 24px;font-size:.88rem;color:var(--text2);line-height:1.6;border-left:3px solid var(--tab-c,var(--primary));}
+.callout strong{color:var(--tab-c,var(--primary));font-weight:600;}
+.callout .ico{font-size:1rem;margin-right:5px;}
+
+/* Set tab-c-soft based on active panel */
+.tab-panel[data-tab="backshift"]{--tab-c:var(--tab-backshift);--tab-c-soft:var(--tab-backshift-soft);}
+.tab-panel[data-tab="questions"]{--tab-c:var(--tab-questions);--tab-c-soft:var(--tab-questions-soft);}
+.tab-panel[data-tab="verbs"]{--tab-c:var(--tab-verbs);--tab-c-soft:var(--tab-verbs-soft);}
+
+@media (max-width: 600px){
+  .paper{padding:20px 18px;}
+  .paper-body{font-size:.88rem;}
+  .grid{grid-template-columns:1fr;}
+}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-xs);margin:0 0 4px;}
+.gram-table{width:100%;border-collapse:collapse;background:var(--card);font-size:.88rem;}
+.gram-table caption{caption-side:top;text-align:left;font-family:'Manrope',sans-serif;font-weight:700;color:var(--section-c,var(--primary));padding:0 0 8px;font-size:.9rem;}
+.gram-table th{background:color-mix(in srgb,var(--section-c,var(--primary)) 12%,transparent);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;text-align:left;padding:10px 14px;border-bottom:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;}
+.gram-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);line-height:1.5;vertical-align:top;}
+.gram-table tr:last-child td{border-bottom:none;}
+.gram-table tbody tr{transition:background var(--t-fast) var(--ease);}
+.gram-table tbody tr:hover{background:var(--bg-elevated);}
+.gram-table td strong,.gram-table .en{color:var(--text);font-weight:600;}
+.gram-table .es{font-style:italic;color:var(--text3);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-actions">
+    <a class="back-btn" href="index.html" title="Volver al índice">
+      <span class="arrow">←</span><span>Inicio</span>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>🗣️ Reported Speech · Estilo indirecto</h1>
+      <span class="header-tag">Linguaskill B2 · B2–C1</span>
+    </div>
+    <p class="header-sub">
+      <strong>Backshift</strong> de tiempos, pronombres y referencias · <strong>Preguntas indirectas</strong> sin inversión · <strong>Reporting verbs</strong> con sus patrones (suggest doing, accuse of, persuade to)
+    </p>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" data-tab="backshift" onclick="showTab('backshift', this)">
+      <span class="ico">⏬</span><span>Backshift</span>
+    </button>
+    <button class="tab" data-tab="questions" onclick="showTab('questions', this)">
+      <span class="ico">❓</span><span>Preguntas indirectas</span>
+    </button>
+    <button class="tab" data-tab="verbs" onclick="showTab('verbs', this)">
+      <span class="ico">🎬</span><span>Reporting verbs</span>
+    </button>
+  </div>
+</div>
+
+<main class="main">
+
+<div class="toolbar">
+  <div class="fs-control" title="Tamaño del texto">
+    <span class="fs-label small">A</span>
+    <input type="range" class="fs-slider" id="fs-slider" min="85" max="140" step="5" value="100" oninput="updateFontSize(this.value)">
+    <span class="fs-label large">A</span>
+    <span class="fs-value" id="fs-value">100%</span>
+  </div>
+  <div class="toolbar-actions">
+    <button class="tool-btn" onclick="expandAll()"><span class="ico">▾</span>Expandir todos</button>
+    <button class="tool-btn" onclick="collapseAll()"><span class="ico">▸</span>Colapsar todos</button>
+  </div>
+</div>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 1: BACKSHIFT ============================ -->
+<!-- ==================================================================== -->
+<section class="tab-panel active" id="backshift" data-tab="backshift">
+
+  <div class="intro">
+    <h3>Backshift · Cambio de tiempos</h3>
+    <p>Cuando el verbo introductor (<em>said, told, explained, asked…</em>) va en <strong>pasado</strong>, los tiempos verbales de la oración reportada <strong>retroceden un paso</strong>: present → past, past → past perfect, will → would. También cambian los <strong>pronombres</strong> y las <strong>referencias de tiempo y lugar</strong>: <em>now → then</em>, <em>here → there</em>, <em>this → that</em>.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Linguaskill:</strong> base de la <em>reformulación</em> en Writing y la <em>comprensión inferencial</em> en Reading &amp; Listening (entender lo que alguien dijo sobre lo que dijo otro).
+  </div>
+
+  <!-- A. CAMBIO DE TIEMPOS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">🔧</div>
+      <div>
+        <div class="section-title">A. Cambio de tiempos · Tense backshift</div>
+        <div class="section-desc">Cada tiempo retrocede un paso al pasado</div>
+      </div>
+    </div>
+    <div class="table-wrap" style="margin:18px 20px 10px;--section-c:var(--c-struct);">
+      <table class="gram-table">
+        <caption>Backshift de tiempos verbales (verbo introductor en pasado)</caption>
+        <thead>
+          <tr><th>Directo (original)</th><th>Indirecto (reported)</th><th>Ejemplo EN</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Present Simple</strong></td><td>Past Simple</td><td class="en">"I work here." → He said he <strong>worked</strong> there.</td></tr>
+          <tr><td><strong>Present Continuous</strong></td><td>Past Continuous</td><td class="en">"I'm working." → She said she <strong>was working</strong>.</td></tr>
+          <tr><td><strong>Present Perfect</strong></td><td>Past Perfect</td><td class="en">"I've finished." → He said he <strong>had finished</strong>.</td></tr>
+          <tr><td><strong>Present Perfect Continuous</strong></td><td>Past Perfect Continuous</td><td class="en">"I've been waiting." → She said she <strong>had been waiting</strong>.</td></tr>
+          <tr><td><strong>Past Simple</strong></td><td>Past Perfect</td><td class="en">"I worked late." → He said he <strong>had worked</strong> late.</td></tr>
+          <tr><td><strong>Past Continuous</strong></td><td>Past Perfect Continuous</td><td class="en">"I was sleeping." → She said she <strong>had been sleeping</strong>.</td></tr>
+          <tr><td><strong>Past Perfect</strong></td><td>Past Perfect (no cambia)</td><td class="en">"I had left." → He said he <strong>had left</strong>.</td></tr>
+          <tr><td><strong>will</strong></td><td>would</td><td class="en">"I will help you." → She said she <strong>would</strong> help me.</td></tr>
+          <tr><td><strong>be going to</strong></td><td>was/were going to</td><td class="en">"I'm going to call." → He said he <strong>was going to</strong> call.</td></tr>
+          <tr><td><strong>can</strong></td><td>could</td><td class="en">"I can swim." → She said she <strong>could</strong> swim.</td></tr>
+          <tr><td><strong>may</strong></td><td>might</td><td class="en">"I may come." → He said he <strong>might</strong> come.</td></tr>
+          <tr><td><strong>must</strong> (obligación)</td><td>had to</td><td class="en">"You must leave." → She said I <strong>had to</strong> leave.</td></tr>
+          <tr><td><strong>shall</strong> (oferta/futuro)</td><td>should / would</td><td class="en">"Shall we go?" → He asked if we <strong>should</strong> go.</td></tr>
+          <tr><td><strong>could · would · might · should · ought to · used to</strong></td><td>No cambian</td><td class="en">"I could help." → She said she <strong>could</strong> help.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- B. PRONOMBRES Y TIEMPO/LUGAR -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">⭐</div>
+      <div>
+        <div class="section-title">B. Pronombres · Tiempo · Lugar</div>
+        <div class="section-desc">Referencias deícticas que también retroceden</div>
+      </div>
+    </div>
+    <div class="table-wrap" style="margin:18px 20px 10px;--section-c:var(--c-key);">
+      <table class="gram-table">
+        <caption>Pronombres y posesivos — cambian según quién informa a quién</caption>
+        <thead>
+          <tr><th>Directo</th><th>Indirecto</th><th>Ejemplo EN</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>I / me</strong></td><td>he / she · him / her</td><td class="en">"I'm tired." → He said <strong>he</strong> was tired.</td></tr>
+          <tr><td><strong>we / us</strong></td><td>they / them</td><td class="en">"We left early." → They said <strong>they</strong> had left early.</td></tr>
+          <tr><td><strong>you</strong></td><td>I / me · he / she (según contexto)</td><td class="en">"You're right." → She told me <strong>I</strong> was right.</td></tr>
+          <tr><td><strong>my / our</strong></td><td>his · her · their</td><td class="en">"My car broke down." → He said <strong>his</strong> car had broken down.</td></tr>
+          <tr><td><strong>this / these</strong></td><td>that / those</td><td class="en">"I like <strong>this</strong> book." → She said she liked <strong>that</strong> book.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-wrap" style="margin:6px 20px 20px;--section-c:var(--c-key);">
+      <table class="gram-table">
+        <caption>Referencias temporales y de lugar</caption>
+        <thead>
+          <tr><th>Directo</th><th>Indirecto</th><th>Ejemplo EN</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>now</strong></td><td>then · at that moment</td><td class="en">"I'm busy now." → He said he was busy <strong>then</strong>.</td></tr>
+          <tr><td><strong>today</strong></td><td>that day</td><td class="en">"I'm leaving today." → She said she was leaving <strong>that day</strong>.</td></tr>
+          <tr><td><strong>tonight</strong></td><td>that night</td><td class="en">"I'll call tonight." → He said he would call <strong>that night</strong>.</td></tr>
+          <tr><td><strong>yesterday</strong></td><td>the day before · the previous day</td><td class="en">"I saw her yesterday." → He said he had seen her <strong>the day before</strong>.</td></tr>
+          <tr><td><strong>tomorrow</strong></td><td>the next day · the following day</td><td class="en">"I'll come tomorrow." → She said she would come <strong>the next day</strong>.</td></tr>
+          <tr><td><strong>last week / month / year</strong></td><td>the previous week · the week before</td><td class="en">"I quit last month." → He said he had quit <strong>the previous month</strong>.</td></tr>
+          <tr><td><strong>next week / month / year</strong></td><td>the following week · the week after</td><td class="en">"I'll move next year." → She said she would move <strong>the following year</strong>.</td></tr>
+          <tr><td><strong>ago</strong></td><td>before · previously</td><td class="en">"I met him two days ago." → He said he had met him two days <strong>before</strong>.</td></tr>
+          <tr><td><strong>here</strong></td><td>there</td><td class="en">"I work here." → She said she worked <strong>there</strong>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- C. CUÁNDO NO HAY BACKSHIFT -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">💬</div>
+      <div>
+        <div class="section-title">C. Cuándo NO hay backshift</div>
+        <div class="section-desc">Excepciones — el tiempo verbal puede quedarse igual</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase" style="--section-c:var(--c-conn)"><strong>Verdad general o hecho universal.</strong> Sin retroceso obligatorio: <em>She said water <strong>boils</strong> at 100°C.</em> <span class="hint">El hecho es siempre cierto, no tiene sentido pasar al pasado.</span></div>
+      <div class="phrase" style="--section-c:var(--c-conn)"><strong>Verbo introductor en presente o futuro.</strong> Cuando reportas con <em>says, is saying, will say</em>, el tiempo de la oración subordinada no cambia: <em>He <strong>says</strong> he <strong>is tired</strong>.</em></div>
+      <div class="phrase" style="--section-c:var(--c-conn)"><strong>La situación sigue siendo verdad.</strong> Opcional: puedes mantener el presente si la información sigue vigente: <em>She told me she <strong>lives</strong> in Paris (and she still does).</em></div>
+      <div class="phrase" style="--section-c:var(--c-conn)"><strong>Reporte muy reciente (justo dicho).</strong> Si reportas algo dicho hace segundos: <em>Sorry, what did you say? — I said I <strong>am</strong> hungry.</em></div>
+      <div class="phrase" style="--section-c:var(--c-conn)"><strong>Past perfect ya está "al fondo".</strong> No retrocede más: <em>"I had finished by 6." → He said he <strong>had finished</strong> by 6.</em></div>
+      <div class="phrase" style="--section-c:var(--c-conn)"><strong>Modales sin equivalente pasado.</strong> <em>could, would, might, should, ought to, used to</em> no tienen forma más antigua: se quedan igual.</div>
+      <div class="phrase" style="--section-c:var(--c-conn)"><strong>Tiempos hipotéticos (condicionales 2 y 3).</strong> <em>"If I had more time, I would help" → He said that if he had more time he would help.</em> <span class="hint">El pasado hipotético no cambia.</span></div>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS HISPANO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Interferencias del español más frecuentes</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Say" vs "tell" — distinción que en español no existe</h5>
+          <p>Ambos significan "decir", pero el patrón es distinto: <em>say (something) [to somebody]</em> y <em>tell <strong>somebody</strong> (something)</em>. <strong>He said me</strong> ✗ → <em>He told me</em> ✓ · <strong>He told that he was tired</strong> ✗ → <em>He said (that) he was tired</em> ✓. Regla rápida: si va seguido directamente de la persona, es <em>tell</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Backshift de will → would, can → could</h5>
+          <p>No traducir literalmente "dijo que vendrá" → <strong>He said he will come</strong> ✗. En inglés es obligatorio: <em>He said he <strong>would</strong> come</em>. Lo mismo con <em>can → could</em>: <em>She said she <strong>could</strong> swim</em>. El español permite mantener el futuro/presente; el inglés exige el paso atrás.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Pronombres: cambia el deíctico, no solo el verbo</h5>
+          <p>Muchos hispanohablantes hacen backshift del verbo pero olvidan el pronombre: <strong>He said that I am tired</strong> (si reportas las palabras de Juan: "I am tired"). Lo correcto: <em>He said that <strong>he</strong> was tired</em>. El "I" original pertenece al hablante directo, no al que reporta.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Referencias temporales: today ≠ today</h5>
+          <p>Cuando reportas días después, <em>today</em> se convierte en <em>that day</em>, <em>yesterday</em> en <em>the day before</em>, <em>tomorrow</em> en <em>the next day</em>. <strong>He said he would come tomorrow</strong> (dicho hace una semana) es confuso → <em>He said he would come <strong>the next day</strong></em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Must" → had to (obligación), pero "must" deductivo no cambia</h5>
+          <p>Para obligación: <em>"You must leave." → He said I <strong>had to</strong> leave</em>. Para deducción/certeza: <em>"It must be a mistake." → She said it <strong>must be</strong> a mistake</em>. Es uno de los matices avanzados que distingue B2 de C1.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"That" es opcional, pero después del nombre no se omite</h5>
+          <p>Tras <em>say / tell / think</em>, <em>that</em> es opcional: <em>He said (that) he was tired</em>. Pero tras <em>explain, suggest, admit, deny, claim, announce</em>, se prefiere escribirlo explícitamente: <em>She explained <strong>that</strong> the project had been delayed</em>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 2: PREGUNTAS INDIRECTAS ================= -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="questions" data-tab="questions">
+
+  <div class="intro">
+    <h3>Indirect Questions · Preguntas indirectas</h3>
+    <p>Al reportar o suavizar una pregunta, esta deja de tener forma interrogativa: <strong>orden afirmativo</strong> (sujeto + verbo), <strong>sin auxiliar <em>do/does/did</em></strong> y <strong>sin signo de interrogación</strong> al final. Las preguntas <em>yes/no</em> se introducen con <strong>if / whether</strong>; las <em>wh-</em> conservan su pronombre interrogativo.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Linguaskill:</strong> aparece en <em>Speaking</em> (preguntas educadas en role-plays) y en <em>Reading &amp; Listening</em> (transcripción de entrevistas, encuestas y noticias).
+  </div>
+
+  <!-- A. ESTRUCTURA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">🔧</div>
+      <div>
+        <div class="section-title">A. Estructura · Structure</div>
+        <div class="section-desc">Sin inversión, sin auxiliar, sin signo de interrogación</div>
+      </div>
+    </div>
+    <div class="table-wrap" style="margin:18px 20px 10px;--section-c:var(--c-key);">
+      <table class="gram-table">
+        <caption>Yes/No questions → if / whether + sujeto + verbo</caption>
+        <thead>
+          <tr><th>Directa</th><th>Indirecta</th><th>Traducción ES</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">"<strong>Do you speak</strong> English?"</td><td class="en">He asked <strong>if I spoke</strong> English. <span class="es">(no: <strong>if did I speak</strong> ✗)</span></td><td class="es">Me preguntó si hablaba inglés.</td></tr>
+          <tr><td class="en">"<strong>Are you</strong> ready?"</td><td class="en">She asked <strong>whether I was</strong> ready.</td><td class="es">Me preguntó si estaba listo.</td></tr>
+          <tr><td class="en">"<strong>Have you finished</strong>?"</td><td class="en">He asked <strong>if I had finished</strong>.</td><td class="es">Me preguntó si había terminado.</td></tr>
+          <tr><td class="en">"<strong>Will you come</strong>?"</td><td class="en">She asked <strong>whether I would come</strong>.</td><td class="es">Me preguntó si iría.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-wrap" style="margin:6px 20px 10px;--section-c:var(--c-key);">
+      <table class="gram-table">
+        <caption>WH- questions → wh-word + sujeto + verbo</caption>
+        <thead>
+          <tr><th>Directa</th><th>Indirecta</th><th>Traducción ES</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">"<strong>Where do you live</strong>?"</td><td class="en">He asked <strong>where I lived</strong>. <span class="es">(no: <strong>where did I live</strong> ✗)</span></td><td class="es">Me preguntó dónde vivía.</td></tr>
+          <tr><td class="en">"<strong>What's</strong> your name?"</td><td class="en">She asked <strong>what my name was</strong>.</td><td class="es">Me preguntó cómo me llamaba.</td></tr>
+          <tr><td class="en">"<strong>Why did</strong> she leave?"</td><td class="en">He wanted to know <strong>why she had left</strong>.</td><td class="es">Quiso saber por qué se había ido.</td></tr>
+          <tr><td class="en">"<strong>How much does</strong> it cost?"</td><td class="en">I asked <strong>how much it cost</strong>.</td><td class="es">Pregunté cuánto costaba.</td></tr>
+          <tr><td class="en">"<strong>When are</strong> you arriving?"</td><td class="en">She asked <strong>when I was arriving</strong>.</td><td class="es">Me preguntó cuándo llegaba.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-wrap" style="margin:6px 20px 20px;--section-c:var(--c-key);">
+      <table class="gram-table">
+        <caption>Preguntas educadas (polite questions) — misma estructura</caption>
+        <thead>
+          <tr><th>Directa (brusca)</th><th>Indirecta (educada)</th><th>Traducción ES</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="en"><strong>Where is</strong> the station?</td><td class="en"><strong>Could you tell me where the station is</strong>?</td><td class="es">¿Podría decirme dónde está la estación?</td></tr>
+          <tr><td class="en"><strong>What time does</strong> the meeting start?</td><td class="en"><strong>Do you know what time the meeting starts</strong>?</td><td class="es">¿Sabes a qué hora empieza la reunión?</td></tr>
+          <tr><td class="en"><strong>How much is</strong> it?</td><td class="en"><strong>I'd like to know how much it is</strong>.</td><td class="es">Me gustaría saber cuánto cuesta.</td></tr>
+          <tr><td class="en"><strong>Is</strong> this seat free?</td><td class="en"><strong>Do you mind if I ask whether this seat is free</strong>?</td><td class="es">¿Le importa que le pregunte si este asiento está libre?</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- C. EJEMPLOS REALES -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">💬</div>
+      <div>
+        <div class="section-title">C. Ejemplos reales · Real examples</div>
+        <div class="section-desc">EN + ES, registros formal y coloquial</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase" style="--section-c:var(--c-key)"><strong>Could you tell me where the nearest pharmacy is?</strong> <span class="hint">¿Podrías decirme dónde está la farmacia más cercana? — petición educada</span></div>
+      <div class="phrase" style="--section-c:var(--c-key)"><strong>She asked me if I had finished the report.</strong> <span class="hint">Me preguntó si había terminado el informe. — pasado, formal</span></div>
+      <div class="phrase" style="--section-c:var(--c-key)"><strong>Do you know what time the meeting starts?</strong> <span class="hint">¿Sabes a qué hora empieza la reunión? — coloquial pero correcto</span></div>
+      <div class="phrase" style="--section-c:var(--c-key)"><strong>I wonder whether they're coming or not.</strong> <span class="hint">Me pregunto si vendrán o no. — reflexión personal</span></div>
+      <div class="phrase" style="--section-c:var(--c-key)"><strong>He wanted to know how long I had lived there.</strong> <span class="hint">Quiso saber cuánto tiempo había vivido allí.</span></div>
+      <div class="phrase" style="--section-c:var(--c-key)"><strong>Can you tell me whether this train goes to Oxford?</strong> <span class="hint">¿Puedes decirme si este tren va a Oxford? — pregunta sí/no educada</span></div>
+      <div class="phrase" style="--section-c:var(--c-key)"><strong>I asked why she was leaving so early.</strong> <span class="hint">Pregunté por qué se iba tan temprano.</span></div>
+      <div class="phrase" style="--section-c:var(--c-key)"><strong>The interviewer asked me what my greatest weakness was.</strong> <span class="hint">El entrevistador me preguntó cuál era mi mayor debilidad. — formal</span></div>
+      <div class="phrase" style="--section-c:var(--c-key)"><strong>I'd like to ask whether the room rate includes breakfast.</strong> <span class="hint">Me gustaría preguntar si la tarifa incluye desayuno. — muy formal</span></div>
+      <div class="phrase" style="--section-c:var(--c-key)"><strong>She asked if I could lend her some money.</strong> <span class="hint">Me preguntó si podía prestarle algo de dinero. — coloquial</span></div>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS HISPANO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Interferencias del español más frecuentes</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>NO inversión sujeto-verbo en la subordinada</h5>
+          <p>La pregunta directa <em>"Where does she live?"</em> tiene inversión. La indirecta NO: <strong>He asked where did she live</strong> ✗ → <em>He asked <strong>where she lived</strong></em> ✓. Mismo principio en <em>Could you tell me where <strong>is</strong> the station?</em> ✗ → <em>Could you tell me where <strong>the station is</strong>?</em> ✓.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>NO auxiliar do / does / did en la subordinada</h5>
+          <p>El auxiliar de pregunta desaparece: <em>"Do you smoke?" → She asked if I <strong>smoked</strong></em> (no <strong>if I did smoke</strong> ✗). El tiempo verbal queda en la forma normal afirmativa, con backshift si toca.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"If" vs "whether" — ambos sirven, con matices</h5>
+          <p>Para preguntas yes/no, ambos valen: <em>I asked if / whether she was coming</em>. <strong>Whether</strong> suena más formal y es obligatorio antes de <em>to + infinitivo</em> (<em>I don't know whether <strong>to go</strong> or stay</em>) y antes de <em>or not</em> al inicio (<em>whether or not it rains</em>). <strong>If</strong> nunca se usa en estos dos casos.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Sin signo de interrogación al final</h5>
+          <p>La pregunta indirecta es una oración <strong>declarativa</strong>: termina en punto, no en "?": <em>He asked where I lived.</em> ✓ Pero ojo: si la oración <strong>completa</strong> es una pregunta (<em>Could you tell me…?</em>), entonces sí lleva "?": <em>Could you tell me where the station is<strong>?</strong></em> El signo va por la oración principal, no por la subordinada.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"What" no es "qué" siempre — cuidado con la palabra interrogativa</h5>
+          <p>Mantén el pronombre interrogativo original: <em>"Why did she leave?" → He asked <strong>why</strong> she had left</em>. No lo sustituyas por <em>that</em>: <strong>He asked that she had left</strong> ✗ (esto significaría "pidió que se fuera"). El <em>wh-</em> es obligatorio.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Ask" + persona, no "ask to" + persona</h5>
+          <p>"Le pregunté a Juan" no es <strong>I asked to John</strong> ✗ sino <em>I asked <strong>John</strong></em> ✓. <em>Ask</em> funciona como <em>tell</em>: complemento directo de persona sin preposición. La preposición <em>to</em> solo aparece en <em>I have a question to ask you</em>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 3: REPORTING VERBS + PATRÓN ============= -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="verbs" data-tab="verbs">
+
+  <div class="intro">
+    <h3>Reporting Verbs &amp; Patterns · Verbos de reporte y su patrón</h3>
+    <p>Más allá de <em>say</em> y <em>tell</em>, en B2–C1 se espera variedad léxica: <em>suggest, recommend, admit, deny, accuse, persuade, advise, warn, promise, offer, refuse, agree, apologise…</em> Cada uno exige <strong>su propio patrón</strong>: + V-ing, + to + inf, + sb + to + inf, + sb + of + V-ing, + that + clause. Memorizar el patrón es lo que distingue una redacción mediocre de una alta.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Linguaskill:</strong> imprescindible en <em>Speaking Part 2.1</em> (resumir lo que alguien dijo), en <em>Writing</em> (reformular instrucciones u opiniones) y en <em>Reading &amp; Listening</em> (huecos con reporting verbs).
+  </div>
+
+  <div class="callout" style="--tab-c:var(--c-emph);--tab-c-soft:color-mix(in srgb,var(--c-emph) 10%,transparent);">
+    <span class="ico">⚠️</span><strong>Cuidado nº 1:</strong> <em>suggest</em> NO admite <em>to + infinitivo</em>. <strong>He suggested me to go</strong> ✗ → <em>He suggested <strong>going</strong></em> ✓ o <em>He suggested <strong>that I go / should go</strong></em> ✓. Mismo error con <em>recommend</em>: <strong>recommend me to try</strong> ✗ → <em>recommend <strong>trying</strong></em> ✓.
+  </div>
+
+  <!-- A. PATRONES -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">🔧</div>
+      <div>
+        <div class="section-title">A. Patrones · Patterns</div>
+        <div class="section-desc">Cada verbo con su construcción típica</div>
+      </div>
+    </div>
+    <div class="table-wrap" style="margin:18px 20px 10px;--section-c:var(--c-key);">
+      <table class="gram-table">
+        <caption>Verbos + V-ing (gerundio)</caption>
+        <thead>
+          <tr><th>Patrón</th><th>Verbos típicos</th><th>Ejemplo EN</th><th>Traducción ES</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>verb + V-ing</strong></td><td>suggest, recommend, admit, deny, mention, consider</td><td class="en">He <strong>suggested going</strong> home early. / She <strong>admitted lying</strong>.</td><td class="es">Sugirió volver a casa. / Admitió haber mentido.</td></tr>
+          <tr><td><strong>verb + sb + of + V-ing</strong></td><td>accuse, suspect</td><td class="en">They <strong>accused him of cheating</strong> on the exam.</td><td class="es">Le acusaron de copiar en el examen.</td></tr>
+          <tr><td><strong>verb + (sb) + for + V-ing</strong></td><td>apologise (for), thank sb for, blame sb for, criticise sb for, forgive sb for</td><td class="en">He <strong>apologised for being</strong> late. / I <strong>thanked her for helping</strong> me.</td><td class="es">Se disculpó por llegar tarde. / Le agradecí que me ayudara.</td></tr>
+          <tr><td><strong>verb + on + V-ing</strong></td><td>insist, congratulate sb on</td><td class="en">She <strong>insisted on paying</strong>. / They <strong>congratulated her on passing</strong>.</td><td class="es">Insistió en pagar. / La felicitaron por aprobar.</td></tr>
+          <tr><td><strong>verb + about + V-ing</strong></td><td>complain, talk, worry, think</td><td class="en">He <strong>complained about working</strong> weekends.</td><td class="es">Se quejó de trabajar los fines de semana.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-wrap" style="margin:6px 20px 10px;--section-c:var(--c-key);">
+      <table class="gram-table">
+        <caption>Verbos + to + infinitivo</caption>
+        <thead>
+          <tr><th>Patrón</th><th>Verbos típicos</th><th>Ejemplo EN</th><th>Traducción ES</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>verb + to + inf</strong></td><td>offer, refuse, promise, agree, decide, threaten, claim, hope</td><td class="en">She <strong>offered to help</strong>. / He <strong>refused to answer</strong>.</td><td class="es">Se ofreció a ayudar. / Se negó a contestar.</td></tr>
+          <tr><td><strong>verb + sb + to + inf</strong></td><td>persuade, advise, ask, tell, invite, order, encourage, remind, force, allow</td><td class="en">She <strong>persuaded me to go</strong>. / He <strong>advised her to wait</strong>.</td><td class="es">Me convenció de ir. / Le aconsejó esperar.</td></tr>
+          <tr><td><strong>verb + sb + (not) + to + inf</strong></td><td>warn, tell, ask, remind, advise</td><td class="en">He <strong>warned me not to touch</strong> it. / She <strong>told me not to wait</strong>.</td><td class="es">Me advirtió que no lo tocara. / Me dijo que no esperara.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-wrap" style="margin:6px 20px 20px;--section-c:var(--c-key);">
+      <table class="gram-table">
+        <caption>Verbos + that + cláusula</caption>
+        <thead>
+          <tr><th>Patrón</th><th>Verbos típicos</th><th>Ejemplo EN</th><th>Traducción ES</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>verb + (that) + clause</strong></td><td>say, explain, announce, claim, mention, admit, deny, promise, agree, reply, add</td><td class="en">She <strong>explained that she was busy</strong>. / He <strong>claimed that he hadn't seen it</strong>.</td><td class="es">Explicó que estaba ocupada. / Afirmó que no lo había visto.</td></tr>
+          <tr><td><strong>verb + sb + (that) + clause</strong></td><td>tell, inform, assure, remind, convince, warn, promise</td><td class="en">He <strong>assured me that everything was fine</strong>. / She <strong>reminded me that the deadline was Friday</strong>.</td><td class="es">Me aseguró que todo estaba bien. / Me recordó que el plazo era el viernes.</td></tr>
+          <tr><td><strong>suggest / recommend / insist + (that) + S + (should) + base form</strong></td><td>suggest, recommend, insist, demand, propose, request</td><td class="en">She <strong>suggested that we (should) leave</strong> early. / He <strong>insisted that I (should) apologise</strong>.</td><td class="es">Sugirió que nos fuéramos temprano. / Insistió en que me disculpara.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- E. EN CONTEXTO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-model)">📄</div>
+      <div>
+        <div class="section-title">E. En contexto · In context</div>
+        <div class="section-desc">Resúmenes estilo Speaking Part 2.1 — reporting language en acción</div>
+      </div>
+    </div>
+    <div class="papers">
+
+      <article class="paper">
+        <h4 class="paper-title">Model 1 · Resumen de una clase / Tutorial summary</h4>
+        <div class="paper-meta">Speaking Part 2.1 · ~95 words</div>
+        <div class="paper-body">
+          <p>Last Tuesday, the tutor <span class="k-key">explained that</span> we would have to submit our research proposals before the end of the month. She <span class="k-key">recommended choosing</span> a narrow topic and <span class="k-key">warned us not to underestimate</span> the literature review. Several students <span class="k-key">complained about</span> the tight deadline, but the tutor <span class="k-key">insisted that</span> the dates were non-negotiable. At the end of the session, she <span class="k-key">offered to review</span> a draft of our outline, and she <span class="k-key">reminded us that</span> the next workshop would focus on referencing.</p>
+        </div>
+      </article>
+
+      <article class="paper">
+        <h4 class="paper-title">Model 2 · Resumen de una reunión / Meeting summary</h4>
+        <div class="paper-meta">Speaking Part 2.1 · ~90 words</div>
+        <div class="paper-body">
+          <p>In yesterday's team meeting, the manager <span class="k-key">announced that</span> the company would launch a new product in September. She <span class="k-key">asked everyone to contribute</span> ideas for the marketing campaign and <span class="k-key">suggested holding</span> a brainstorming session next week. One colleague <span class="k-key">admitted that</span> he hadn't read the latest report, while another <span class="k-key">apologised for missing</span> the previous meeting. Finally, the manager <span class="k-key">promised to share</span> the budget details by Friday and <span class="k-key">encouraged us to send</span> any concerns by email.</p>
+        </div>
+      </article>
+
+      <article class="paper">
+        <h4 class="paper-title">Model 3 · Resumen de una conferencia / Lecture summary</h4>
+        <div class="paper-meta">Speaking Part 2.1 · ~95 words</div>
+        <div class="paper-body">
+          <p>The speaker, a well-known climate scientist, <span class="k-key">claimed that</span> the next decade would be decisive for global emissions. He <span class="k-key">accused governments of failing</span> to act on their commitments and <span class="k-key">criticised some industries for resisting</span> regulation. However, he <span class="k-key">acknowledged that</span> public awareness had improved significantly. He <span class="k-key">urged the audience to support</span> local environmental initiatives and <span class="k-key">advised young professionals to consider</span> careers in green sectors. At the end, he <span class="k-key">invited us to ask</span> questions and <span class="k-key">offered to send</span> his slides by email.</p>
+        </div>
+      </article>
+
+      <article class="paper">
+        <h4 class="paper-title">Model 4 · Resumen de una conversación con un cliente / Customer summary</h4>
+        <div class="paper-meta">Speaking Part 2.1 · ~90 words</div>
+        <div class="paper-body">
+          <p>Earlier today, a customer <span class="k-key">complained that</span> her order had arrived two weeks late. She <span class="k-key">accused us of ignoring</span> her previous emails and <span class="k-key">demanded that</span> the company refund the full amount. I <span class="k-key">apologised for the inconvenience</span> and <span class="k-key">assured her that</span> we would investigate immediately. I also <span class="k-key">offered to send</span> a replacement free of charge. She <span class="k-key">agreed to wait</span> a few more days, but <span class="k-key">warned me that</span> if the issue was not resolved she would post a negative review online.</p>
+        </div>
+      </article>
+
+      <article class="paper">
+        <h4 class="paper-title">Model 5 · Resumen de un debate televisivo / TV debate summary</h4>
+        <div class="paper-meta">Speaking Part 2.1 · ~95 words</div>
+        <div class="paper-body">
+          <p>During last night's debate, the two candidates <span class="k-key">disagreed about</span> almost every issue. The first candidate <span class="k-key">accused his opponent of misleading</span> voters and <span class="k-key">claimed that</span> his policies would damage the economy. The second candidate <span class="k-key">denied lying</span> and <span class="k-key">insisted that</span> his proposals had been misrepresented. The moderator <span class="k-key">reminded them that</span> personal attacks were not allowed and <span class="k-key">asked both speakers to focus</span> on policy. Towards the end, both <span class="k-key">agreed to meet</span> again before the elections to discuss healthcare in more detail.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+/* THEME */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("theme",t);}catch(e){}}
+function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme")||"light";applyTheme(cur==="dark"?"light":"dark");}
+(function initTheme(){let saved=null;try{saved=localStorage.getItem("theme");}catch(e){}if(saved==="dark"||saved==="light"){applyTheme(saved);return;}const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;applyTheme(prefersDark?"dark":"light");})();
+
+/* TABS */
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* SECTIONS */
+function toggleSection(header){
+  header.parentElement.classList.toggle('collapsed');
+}
+function getActiveSections(){
+  return document.querySelectorAll('.tab-panel.active .section');
+}
+function getActivePapers(){
+  return document.querySelectorAll('.tab-panel.active .paper');
+}
+function expandAll(){
+  getActiveSections().forEach(s => s.classList.remove('collapsed'));
+  getActivePapers().forEach(p => p.classList.remove('collapsed'));
+}
+function collapseAll(){
+  getActiveSections().forEach(s => s.classList.add('collapsed'));
+  getActivePapers().forEach(p => p.classList.add('collapsed'));
+}
+
+/* MODEL PAPERS — wrap title+meta in a clickable header, collapse by default */
+document.querySelectorAll('.paper').forEach(paper => {
+  const title = paper.querySelector('.paper-title');
+  const meta = paper.querySelector('.paper-meta');
+  if(!title || !meta) return;
+  const header = document.createElement('div');
+  header.className = 'paper-header';
+  const wrap = document.createElement('div');
+  wrap.appendChild(title);
+  wrap.appendChild(meta);
+  const toggle = document.createElement('span');
+  toggle.className = 'paper-toggle';
+  toggle.textContent = '▾';
+  header.appendChild(wrap);
+  header.appendChild(toggle);
+  header.addEventListener('click', () => paper.classList.toggle('collapsed'));
+  paper.insertBefore(header, paper.firstChild);
+  paper.classList.add('collapsed');
+});
+
+/* Set section colors + item counts */
+document.querySelectorAll('.section').forEach(sec => {
+  const icon = sec.querySelector('.section-icon');
+  if (icon) {
+    const m = (icon.getAttribute('style') || '').match(/var\(--c-([a-z]+)\)/);
+    if (m) {
+      sec.style.setProperty('--section-c', `var(--c-${m[1]})`);
+      sec.style.setProperty('--section-c-bg', `var(--c-${m[1]}-bg)`);
+    }
+  }
+  const container = sec.querySelector('.grid, .stack, .papers, .tips-list, .blueprint');
+  if(!container) return;
+  const count = container.matches('.blueprint')
+    ? container.querySelectorAll('.step').length
+    : container.children.length;
+  const badge = document.createElement('span');
+  badge.className = 'section-count';
+  badge.textContent = count;
+  sec.querySelector('.section-header').appendChild(badge);
+});
+
+/* FONT SIZE SLIDER */
+const FS_KEY = 'idiomas_font_size';
+function updateFontSize(pct){
+  const scale = pct / 100;
+  document.documentElement.style.fontSize = (16 * scale) + 'px';
+  document.getElementById('fs-value').textContent = pct + '%';
+  localStorage.setItem(FS_KEY, pct);
+}
+(function initFontSize(){
+  const saved = localStorage.getItem(FS_KEY);
+  if(saved){
+    document.getElementById('fs-slider').value = saved;
+    updateFontSize(saved);
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linkers &amp; Connectors · Conectores · Linguaskill B2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Page identity: Linkers & Connectors (Discourse) → Cyan */
+  --primary:#0e7490; --primary-soft:#ecfeff; --primary-mid:#06b6d4; --primary-strong:#0c4a6e;
+  --primary-glow:rgba(14,116,144,.14);
+  /* Per-tab identity colors */
+  --tab-add:#0d9488;       --tab-add-soft:#ecfdf5;       --tab-add-mid:#14b8a6;
+  --tab-contrast:#be185d;  --tab-contrast-soft:#fdf2f8;  --tab-contrast-mid:#ec4899;
+  --tab-cause:#4f46e5;     --tab-cause-soft:#eef2ff;     --tab-cause-mid:#6366f1;
+  --tab-emph:#d97706;      --tab-emph-soft:#fffbeb;      --tab-emph-mid:#f59e0b;
+  /* Legacy aliases */
+  --accent:var(--primary); --accent-light:var(--primary-soft); --accent-mid:var(--primary-mid);
+  /* Neutrals */
+  --bg:#f7f7f5; --bg-elevated:#fbfbfa; --card:#ffffff;
+  --border:#ececec; --border-strong:#dfdfdf;
+  --text:#18181b; --text2:#52525b; --text3:#71717a;
+  /* Paper (model examples) */
+  --paper:#fefef9; --paper-border:#e7e5d6;
+  /* Shadows */
+  --shadow-xs:0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:0 2px 8px rgba(15,23,42,.04),0 1px 2px rgba(15,23,42,.03);
+  --shadow:0 4px 16px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+  --shadow-primary:0 6px 20px var(--primary-glow);
+  /* Geometry */
+  --radius:18px; --radius-md:14px; --radius-sm:10px; --radius-xs:6px; --radius-pill:999px;
+  /* Motion */
+  --ease:cubic-bezier(0.4,0,0.2,1); --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --t-fast:120ms; --t-base:200ms;
+  /* Section colors (A→E) */
+  --c-greet:#7c3aed;     --c-greet-bg:#f5f3ff;
+  --c-conn:#0e7490;      --c-conn-bg:#ecfeff;
+  --c-key:#1d4ed8;       --c-key-bg:#eff6ff;
+  --c-close:#be185d;     --c-close-bg:#fdf2f8;
+  --c-model:#b45309;     --c-model-bg:#fffbeb;
+  --c-tip:#ca8a04;       --c-tip-bg:#fef9c3;
+  --c-struct:#4338ca;    --c-struct-bg:#e0e7ff;
+  /* Sub-category colors */
+  --c-add:#0e7490;       --c-contrast:#be185d;
+  --c-cause:#15803d;     --c-purpose:#7c3aed;
+  --c-seq:#1d4ed8;       --c-time:#0369a1;
+  --c-emph:#b91c1c;      --c-summ:#7c3aed;
+}
+[data-theme="dark"]{
+  --primary:#67e8f9; --primary-soft:#083344; --primary-mid:#22d3ee; --primary-strong:#a5f3fc;
+  --primary-glow:rgba(103,232,249,.18);
+  --tab-add:#2dd4bf;       --tab-add-soft:rgba(45,212,191,.12);     --tab-add-mid:#14b8a6;
+  --tab-contrast:#f472b6;  --tab-contrast-soft:rgba(244,114,182,.12); --tab-contrast-mid:#ec4899;
+  --tab-cause:#818cf8;     --tab-cause-soft:rgba(129,140,248,.12);   --tab-cause-mid:#6366f1;
+  --tab-emph:#fbbf24;      --tab-emph-soft:rgba(251,191,36,.12);     --tab-emph-mid:#f59e0b;
+  --bg:#0a0a0b; --bg-elevated:#131316; --card:#18181b;
+  --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --paper:#1e1e24; --paper-border:#3a3a42;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.2);
+  --shadow:0 4px 16px rgba(0,0,0,.30),0 1px 3px rgba(0,0,0,.20);
+  --shadow-primary:0 6px 24px var(--primary-glow);
+  --c-greet:#a78bfa;     --c-greet-bg:rgba(167,139,250,.10);
+  --c-conn:#22d3ee;      --c-conn-bg:rgba(34,211,238,.10);
+  --c-key:#60a5fa;       --c-key-bg:rgba(96,165,250,.10);
+  --c-close:#f472b6;     --c-close-bg:rgba(244,114,182,.10);
+  --c-model:#fbbf24;     --c-model-bg:rgba(251,191,36,.10);
+  --c-tip:#facc15;       --c-tip-bg:rgba(250,204,21,.10);
+  --c-struct:#a5b4fc;    --c-struct-bg:rgba(165,180,252,.10);
+  --c-add:#22d3ee;       --c-contrast:#f472b6;
+  --c-cause:#4ade80;     --c-purpose:#a78bfa;
+  --c-seq:#60a5fa;       --c-time:#38bdf8;
+  --c-emph:#f87171;      --c-summ:#a78bfa;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+*:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-xs);}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
+
+/* HEADER */
+.site-header{background:linear-gradient(180deg,var(--bg-elevated),var(--bg));padding:32px 20px 22px;position:relative;}
+.site-header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-strong) 20%,var(--border-strong) 80%,transparent);}
+.header-inner{max-width:1000px;margin:0 auto;}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.site-header h1{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:600;letter-spacing:-0.02em;color:var(--text);line-height:1.1;}
+.header-tag{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);background:var(--primary-soft);border-radius:var(--radius-pill);padding:4px 11px;}
+.header-sub{font-size:.88rem;color:var(--text3);font-weight:400;margin-top:4px;line-height:1.55;}
+.header-sub strong{color:var(--primary);font-weight:600;}
+
+/* HEADER ACTIONS BAR */
+.header-actions{max-width:1000px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:8px 14px 8px 11px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.back-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateX(-2px);box-shadow:var(--shadow);}
+.back-btn:active{transform:translateX(-2px) scale(.97);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+
+/* THEME TOGGLE */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.theme-toggle:hover{color:var(--primary);border-color:var(--primary-mid);transform:translateY(-1px);box-shadow:var(--shadow);}
+.theme-toggle .icon-sun{display:none;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+
+/* TABS — per-tab colors */
+.tabs-wrap{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-elevated) 85%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--border);padding:14px 20px;}
+.tabs{max-width:1000px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;}
+.tab{border:1px solid var(--border);border-radius:var(--radius-pill);padding:9px 18px;font-family:inherit;font-size:.85rem;font-weight:500;cursor:pointer;background:var(--card);color:var(--text2);transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:7px;}
+.tab:hover{transform:translateY(-1px);box-shadow:var(--shadow-xs);border-color:var(--tab-c,var(--primary-mid));color:var(--tab-c,var(--primary));}
+.tab.active{background:var(--tab-c,var(--primary));color:#fff;border-color:var(--tab-c,var(--primary));font-weight:600;box-shadow:0 6px 20px color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+[data-theme="dark"] .tab.active{color:#0a0a0b;}
+.tab[data-tab="add"]{--tab-c:var(--tab-add);}
+.tab[data-tab="contrast"]{--tab-c:var(--tab-contrast);}
+.tab[data-tab="cause"]{--tab-c:var(--tab-cause);}
+.tab[data-tab="emph"]{--tab-c:var(--tab-emph);}
+.tab .ico{font-size:1rem;line-height:1;}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:32px 20px 64px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeSlideIn 360ms var(--ease-out);}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* INTRO */
+.intro{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:28px;box-shadow:var(--shadow-xs);}
+.intro h3{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--tab-c,var(--primary));margin-bottom:10px;}
+.intro p{font-size:.92rem;color:var(--text2);line-height:1.65;}
+.intro p strong{color:var(--tab-c,var(--primary));font-weight:600;}
+
+/* TOOLBAR */
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.tool-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:7px 15px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:6px;}
+.tool-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateY(-1px);box-shadow:var(--shadow-xs);}
+.tool-btn .ico{font-size:.85rem;line-height:1;}
+
+/* FONT SIZE SLIDER */
+.fs-control{display:inline-flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:6px 14px;}
+.fs-label{font-family:inherit;font-weight:600;color:var(--text3);line-height:1;user-select:none;}
+.fs-label.small{font-size:.78rem;}
+.fs-label.large{font-size:1.1rem;}
+.fs-slider{-webkit-appearance:none;appearance:none;width:100px;height:4px;background:var(--border-strong);border-radius:2px;outline:none;cursor:pointer;accent-color:var(--primary);}
+.fs-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);transition:transform var(--t-fast) var(--ease);}
+.fs-slider::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.fs-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);}
+.fs-value{font-size:.72rem;font-weight:600;color:var(--text3);min-width:32px;text-align:right;}
+
+/* SECTION (collapsible) */
+.section{margin-bottom:14px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow var(--t-base) var(--ease);}
+.section:hover{box-shadow:var(--shadow);}
+.section-header{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;user-select:none;transition:background var(--t-base) var(--ease);background:transparent;}
+.section-header:hover{background:var(--bg-elevated);}
+.section:not(.collapsed) .section-header{border-bottom:1px solid var(--border);}
+.section-icon{width:38px;height:38px;border-radius:var(--radius-sm);display:inline-flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;background:transparent!important;border:2px solid var(--section-c,var(--primary));color:var(--section-c,var(--primary));}
+.section-title{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--text);line-height:1.2;}
+.section-desc{font-size:.78rem;color:var(--text3);margin-top:2px;line-height:1.45;}
+.section-header > div:not(.section-icon){flex:1;}
+.section-header::after{content:"▾";font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease);margin-left:8px;flex-shrink:0;font-weight:600;}
+.section.collapsed .section-header::after{transform:rotate(-90deg);}
+.section.collapsed .section-header:hover::after{color:var(--primary);}
+.section-count{font-size:.7rem;font-weight:600;color:var(--text3);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px 10px;margin-left:auto;flex-shrink:0;transition:all var(--t-base) var(--ease);}
+.section-header:hover .section-count{border-color:var(--primary-mid);color:var(--primary);}
+.section > .grid, .section > .stack, .section > .papers, .section > .tips-list, .section > .blueprint, .section > .table-wrap{padding:18px 20px 20px;}
+.section.collapsed > *:not(.section-header){display:none!important;}
+
+/* GRID + ITEM */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.item{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 30%,transparent)!important;border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-xs);transition:transform var(--t-base) var(--ease),box-shadow var(--t-base) var(--ease),border-color var(--t-base) var(--ease);border-left:4px solid var(--section-c,var(--primary))!important;}
+.item:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--section-c,var(--primary-mid))!important;}
+.item-head{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.item-term{font-family:'Manrope','Inter',sans-serif;font-size:1.02rem;font-weight:700;letter-spacing:-0.005em;color:var(--section-c,var(--text));line-height:1.3;}
+.item-trans{font-size:.76rem;color:var(--text3);font-style:italic;}
+.item-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;}
+.item-list li{font-size:.88rem;color:var(--text2);line-height:1.5;padding:5px 0 5px 12px;border-left:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);}
+.item-list li strong{color:var(--text);font-weight:600;}
+
+/* STACK (single-column phrase list, for A/C/D sections) */
+.stack{display:flex;flex-direction:column;gap:8px;}
+.phrase{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-sm);padding:10px 14px;font-size:.92rem;color:var(--text2);line-height:1.5;transition:all var(--t-base) var(--ease);}
+.phrase:hover{transform:translateX(2px);border-color:var(--section-c,var(--primary));box-shadow:var(--shadow-xs);}
+.phrase strong{color:var(--text);font-weight:600;}
+.phrase .hint{font-size:.74rem;color:var(--text3);font-style:italic;margin-left:6px;}
+
+/* PAPER (model examples) */
+.papers{display:flex;flex-direction:column;gap:14px;}
+.paper{background:var(--paper);border:1px solid var(--paper-border);border-radius:var(--radius-md);padding:22px 26px;box-shadow:var(--shadow-sm);position:relative;transition:box-shadow var(--t-base) var(--ease);}
+.paper:hover{box-shadow:var(--shadow);}
+.paper::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--tab-c,var(--primary)),transparent);border-radius:var(--radius-md) var(--radius-md) 0 0;}
+.paper-header{display:flex;align-items:flex-start;gap:14px;cursor:pointer;user-select:none;}
+.paper-header > div:first-child{flex:1;min-width:0;}
+.paper-header .paper-meta{margin-bottom:0;}
+.paper-toggle{font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease),color var(--t-base) var(--ease);flex-shrink:0;font-weight:700;line-height:1.4;}
+.paper-header:hover .paper-toggle,.paper-header:hover .paper-title{color:var(--tab-c,var(--primary));}
+.paper.collapsed .paper-toggle{transform:rotate(-90deg);}
+.paper.collapsed .paper-body{display:none;}
+.paper:not(.collapsed) .paper-body{margin-top:18px;}
+.paper-title{font-family:'Fraunces',Georgia,serif;font-size:1.05rem;font-weight:600;color:var(--tab-c,var(--primary));margin-bottom:6px;letter-spacing:-0.01em;transition:color var(--t-base) var(--ease);}
+.paper-meta{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:18px;}
+.paper-body{font-family:'Inter',sans-serif;font-size:.94rem;line-height:1.8;color:var(--text);}
+.paper-body p{margin-bottom:12px;}
+.paper-body p:last-child{margin-bottom:0;}
+.paper-body em{font-style:italic;color:var(--text2);}
+
+/* COLOR-CODED INLINE PHRASES IN MODELS */
+.paper-body .k-open    {color:var(--c-greet);    font-weight:600;}
+.paper-body .k-add     {color:var(--c-add);      font-weight:600;}
+.paper-body .k-contrast{color:var(--c-contrast); font-weight:600;}
+.paper-body .k-cause   {color:var(--c-cause);    font-weight:600;}
+.paper-body .k-concess {color:var(--c-purpose);  font-weight:600;}
+.paper-body .k-purpose {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-seq     {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-time    {color:var(--c-time);     font-weight:600;}
+.paper-body .k-emph    {color:var(--c-emph);     font-weight:600;}
+.paper-body .k-summ    {color:var(--c-summ);     font-weight:600;}
+.paper-body .k-key     {color:var(--c-key);      font-weight:600;}
+.paper-body .k-close   {color:var(--c-close);    font-weight:600;}
+
+/* STRUCTURE BLUEPRINT (vertical timeline) */
+.blueprint{display:flex;flex-direction:column;gap:0;position:relative;}
+.step{display:flex;gap:14px;align-items:flex-start;position:relative;padding:6px 0 14px 0;}
+.step::before{content:"";position:absolute;left:18px;top:42px;bottom:-4px;width:2px;background:color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);}
+.step:last-of-type::before{display:none;}
+.step-num{width:38px;height:38px;border-radius:50%;background:var(--card);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--section-c,var(--primary));position:relative;z-index:1;}
+.step-body{flex:1;min-width:0;padding-top:6px;}
+.step-body h5{font-family:'Manrope',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-0.005em;}
+.step-body .step-meta{font-size:.72rem;color:var(--text3);font-style:italic;margin-bottom:6px;font-weight:500;}
+.step-body > p{font-size:.86rem;color:var(--text2);line-height:1.55;margin-bottom:9px;}
+.step-phrases{display:flex;flex-wrap:wrap;gap:5px;}
+.step-phrases span{font-size:.76rem;color:var(--section-c,var(--primary));background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);padding:4px 11px;border-radius:var(--radius-pill);font-weight:600;line-height:1.4;transition:all var(--t-base) var(--ease);}
+.step-phrases span:hover{background:color-mix(in srgb,var(--section-c,var(--primary)) 24%,transparent);border-color:var(--section-c,var(--primary));}
+.blueprint-footer{margin-top:6px;padding:12px 16px;background:color-mix(in srgb,var(--section-c,var(--primary)) 10%,transparent);border-radius:var(--radius-md);font-size:.86rem;color:var(--text2);display:flex;align-items:center;gap:10px;border:1px dashed color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);}
+.blueprint-footer strong{color:var(--section-c,var(--primary));font-weight:600;}
+.blueprint-footer .footer-ico{font-size:1rem;flex-shrink:0;}
+
+/* TIPS SECTION */
+.tips-list{display:flex;flex-direction:column;gap:10px;}
+.tip{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-md);padding:14px 16px;display:flex;gap:14px;align-items:flex-start;transition:all var(--t-base) var(--ease);}
+.tip:hover{transform:translateX(2px);box-shadow:var(--shadow-xs);border-color:var(--section-c,var(--primary));}
+.tip.warn{--section-c:var(--c-emph);}
+.tip-icon{font-size:.9rem;flex-shrink:0;line-height:1;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);color:var(--section-c,var(--primary));font-weight:800;margin-top:1px;}
+.tip-body{flex:1;min-width:0;}
+.tip-body h5{font-family:'Manrope',sans-serif;font-size:.95rem;font-weight:700;color:var(--section-c,var(--primary));margin-bottom:4px;letter-spacing:-0.005em;line-height:1.3;}
+.tip-body p{font-size:.86rem;color:var(--text2);line-height:1.55;}
+.tip-body p em{color:var(--text);font-style:normal;background:var(--bg-elevated);padding:1px 5px;border-radius:var(--radius-xs);font-size:.92em;font-weight:500;}
+
+/* INLINE STRUCTURAL LABELS */
+.label{display:inline-block;font-family:'JetBrains Mono','Manrope',sans-serif;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:var(--radius-xs);background:var(--tab-c-soft,var(--primary-soft));color:var(--tab-c,var(--primary));margin-right:6px;vertical-align:middle;border:1px solid color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+
+/* CALLOUT */
+.callout{background:var(--tab-c-soft,var(--primary-soft));border-radius:var(--radius-md);padding:14px 16px;margin:0 0 24px;font-size:.88rem;color:var(--text2);line-height:1.6;border-left:3px solid var(--tab-c,var(--primary));}
+.callout strong{color:var(--tab-c,var(--primary));font-weight:600;}
+.callout .ico{font-size:1rem;margin-right:5px;}
+
+/* Set tab-c-soft based on active panel */
+.tab-panel[data-tab="add"]{--tab-c:var(--tab-add);--tab-c-soft:var(--tab-add-soft);}
+.tab-panel[data-tab="contrast"]{--tab-c:var(--tab-contrast);--tab-c-soft:var(--tab-contrast-soft);}
+.tab-panel[data-tab="cause"]{--tab-c:var(--tab-cause);--tab-c-soft:var(--tab-cause-soft);}
+.tab-panel[data-tab="emph"]{--tab-c:var(--tab-emph);--tab-c-soft:var(--tab-emph-soft);}
+
+@media (max-width: 600px){
+  .paper{padding:20px 18px;}
+  .paper-body{font-size:.88rem;}
+  .grid{grid-template-columns:1fr;}
+}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-xs);margin:0 0 4px;}
+.gram-table{width:100%;border-collapse:collapse;background:var(--card);font-size:.88rem;}
+.gram-table caption{caption-side:top;text-align:left;font-family:'Manrope',sans-serif;font-weight:700;color:var(--section-c,var(--primary));padding:0 0 8px;font-size:.9rem;}
+.gram-table th{background:color-mix(in srgb,var(--section-c,var(--primary)) 12%,transparent);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;text-align:left;padding:10px 14px;border-bottom:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;}
+.gram-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);line-height:1.5;vertical-align:top;}
+.gram-table tr:last-child td{border-bottom:none;}
+.gram-table tbody tr{transition:background var(--t-fast) var(--ease);}
+.gram-table tbody tr:hover{background:var(--bg-elevated);}
+.gram-table td strong,.gram-table .en{color:var(--text);font-weight:600;}
+.gram-table .es{font-style:italic;color:var(--text3);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-actions">
+    <a class="back-btn" href="index.html" title="Volver al índice">
+      <span class="arrow">←</span><span>Inicio</span>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>🔗 Linkers &amp; Connectors · Conectores</h1>
+      <span class="header-tag">Linguaskill B2 · B2–C1</span>
+    </div>
+    <p class="header-sub">
+      Inventario funcional de conectores discursivos — <strong>adición y secuencia</strong>, <strong>contraste y concesión</strong>, <strong>causa, efecto y propósito</strong>, <strong>énfasis, ejemplo y resumen</strong> — con tipo gramatical, posición, puntuación y registro.
+    </p>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" data-tab="add" onclick="showTab('add', this)">
+      <span class="ico">➕</span><span>Adición y secuencia</span>
+    </button>
+    <button class="tab" data-tab="contrast" onclick="showTab('contrast', this)">
+      <span class="ico">↔️</span><span>Contraste y concesión</span>
+    </button>
+    <button class="tab" data-tab="cause" onclick="showTab('cause', this)">
+      <span class="ico">➡️</span><span>Causa, efecto y propósito</span>
+    </button>
+    <button class="tab" data-tab="emph" onclick="showTab('emph', this)">
+      <span class="ico">🎯</span><span>Énfasis, ejemplo y resumen</span>
+    </button>
+  </div>
+</div>
+
+<main class="main">
+
+<div class="toolbar">
+  <div class="fs-control" title="Tamaño del texto">
+    <span class="fs-label small">A</span>
+    <input type="range" class="fs-slider" id="fs-slider" min="85" max="140" step="5" value="100" oninput="updateFontSize(this.value)">
+    <span class="fs-label large">A</span>
+    <span class="fs-value" id="fs-value">100%</span>
+  </div>
+  <div class="toolbar-actions">
+    <button class="tool-btn" onclick="expandAll()"><span class="ico">▾</span>Expandir todos</button>
+    <button class="tool-btn" onclick="collapseAll()"><span class="ico">▸</span>Colapsar todos</button>
+  </div>
+</div>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 1: ADD & SEQUENCE ======================= -->
+<!-- ==================================================================== -->
+<section class="tab-panel active" id="add" data-tab="add">
+
+  <div class="intro">
+    <h3>Adición y secuencia · Addition &amp; Sequence</h3>
+    <p>Sirven para <strong>sumar argumentos</strong>, ordenar ideas y construir párrafos cohesivos. Los <em>adverbios conectivos</em> (Moreover, Furthermore, In addition) abren oración con coma; las <em>conjunciones</em> (and, plus) enlazan elementos dentro de una misma oración.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Linguaskill:</strong> <strong>Coherence &amp; Cohesion</strong> es uno de los cuatro criterios de calificación en <strong>Writing P1 (email)</strong> y <strong>P2 (essay)</strong>. Variar los conectores de adición sube directamente la nota.
+  </div>
+
+  <!-- A. CONECTORES POR FUNCIÓN -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">🔗</div>
+      <div>
+        <div class="section-title">A. Conectores por función</div>
+        <div class="section-desc">Subfunciones de adición y secuencia con ejemplos</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-add)">
+        <div class="item-head"><span class="item-term">Adición formal</span><span class="item-trans">essay · writing</span></div>
+        <ul class="item-list">
+          <li><strong>Moreover,</strong> the policy has clear long-term benefits.</li>
+          <li><strong>Furthermore,</strong> the data confirm this trend.</li>
+          <li><strong>In addition,</strong> the project creates 200 new jobs.</li>
+          <li><strong>What is more,</strong> the costs remain modest.</li>
+          <li><strong>Additionally,</strong> public support has grown.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-seq)">
+        <div class="item-head"><span class="item-term">Adición neutra · informal</span><span class="item-trans">email · speaking</span></div>
+        <ul class="item-list">
+          <li><strong>Also,</strong> I want to mention the budget.</li>
+          <li><strong>Plus,</strong> the deadline is flexible.</li>
+          <li><strong>On top of that,</strong> she speaks three languages.</li>
+          <li><strong>And another thing,</strong> the room is great.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">Secuencia · orden</span><span class="item-trans">structuring paragraphs</span></div>
+        <ul class="item-list">
+          <li><strong>First and foremost,</strong> safety must be guaranteed.</li>
+          <li><strong>Firstly / To begin with,</strong> let us consider the costs.</li>
+          <li><strong>Secondly / Next,</strong> we should look at the timing.</li>
+          <li><strong>Finally / Lastly,</strong> let us turn to the benefits.</li>
+          <li><strong>Subsequently,</strong> the plan was revised.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">Equivalencia · similitud</span><span class="item-trans">comparing in the same line</span></div>
+        <ul class="item-list">
+          <li><strong>Similarly,</strong> France has reduced emissions.</li>
+          <li><strong>Likewise,</strong> Germany has invested heavily.</li>
+          <li><strong>Equally,</strong> the public sector benefits.</li>
+          <li><strong>In the same way,</strong> small firms can innovate.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-time)">
+        <div class="item-head"><span class="item-term">Adición correlativa</span><span class="item-trans">paired structures</span></div>
+        <ul class="item-list">
+          <li><strong>Not only</strong> X <strong>but also</strong> Y.</li>
+          <li><strong>Both</strong> X <strong>and</strong> Y.</li>
+          <li><strong>As well as</strong> Y, X is essential.</li>
+          <li><strong>Apart from</strong> Y, X must be considered.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- B. FORMA Y PUNTUACIÓN -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">🔧</div>
+      <div>
+        <div class="section-title">B. Forma y puntuación</div>
+        <div class="section-desc">Tipo gramatical, posición y signos correctos — causa nº1 de error</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Conector</th>
+            <th>Posición</th>
+            <th>Puntuación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Adverbio conectivo</strong></td>
+            <td>Moreover · Furthermore · In addition · Additionally</td>
+            <td>Inicio de oración nueva</td>
+            <td class="en">. <strong>Moreover,</strong> …  ó  ; <strong>moreover,</strong> …</td>
+          </tr>
+          <tr>
+            <td><strong>Conjunción coordinante</strong></td>
+            <td>and</td>
+            <td>Une elementos u oraciones</td>
+            <td class="en">X <strong>and</strong> Y (sin coma) · X, Y, <strong>and</strong> Z (coma Oxford opc.)</td>
+          </tr>
+          <tr>
+            <td><strong>Adverbio coloquial</strong></td>
+            <td>Also · Plus · Besides</td>
+            <td>Inicio o medio</td>
+            <td class="en"><strong>Also,</strong> …  ·  …, <strong>plus</strong> …  (coma inicial sí)</td>
+          </tr>
+          <tr>
+            <td><strong>Adverbio de secuencia</strong></td>
+            <td>Firstly · Secondly · Finally · Lastly</td>
+            <td>Inicio de oración / párrafo</td>
+            <td class="en"><strong>Firstly,</strong> … (coma obligatoria)</td>
+          </tr>
+          <tr>
+            <td><strong>Locución</strong></td>
+            <td>What is more · First and foremost · To begin with</td>
+            <td>Inicio</td>
+            <td class="en"><strong>What is more,</strong> …</td>
+          </tr>
+          <tr>
+            <td><strong>Correlativo</strong></td>
+            <td>not only … but also · both … and</td>
+            <td>Antes y después del elemento</td>
+            <td class="en"><strong>Not only</strong> X <strong>but also</strong> Y (sin coma)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- C. REGISTRO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-tip)">⭐</div>
+      <div>
+        <div class="section-title">C. Registro · formal ↔ informal</div>
+        <div class="section-desc">Equivalencias para subir o bajar el tono</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <thead>
+          <tr>
+            <th>Función</th>
+            <th>Formal (essay · email formal)</th>
+            <th>Informal (email casual · speaking)</th>
+            <th>Glosa ES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Adición</td>
+            <td class="en">Furthermore · Moreover</td>
+            <td class="en">Also · Plus</td>
+            <td class="es">además · es más</td>
+          </tr>
+          <tr>
+            <td>Adición</td>
+            <td class="en">In addition</td>
+            <td class="en">And</td>
+            <td class="es">además · y</td>
+          </tr>
+          <tr>
+            <td>Adición</td>
+            <td class="en">What is more</td>
+            <td class="en">What's more · On top of that</td>
+            <td class="es">y lo que es más</td>
+          </tr>
+          <tr>
+            <td>Secuencia inicio</td>
+            <td class="en">First and foremost · Firstly</td>
+            <td class="en">First of all · To start with</td>
+            <td class="es">en primer lugar</td>
+          </tr>
+          <tr>
+            <td>Secuencia tiempo</td>
+            <td class="en">Subsequently · Thereafter</td>
+            <td class="en">Then · After that</td>
+            <td class="es">después · luego</td>
+          </tr>
+          <tr>
+            <td>Cierre serie</td>
+            <td class="en">Finally · Lastly</td>
+            <td class="en">In the end · At last</td>
+            <td class="es">por último</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS HISPANO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Errores típicos de adición y secuencia</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Moreover" no une dos oraciones con coma sola</h5>
+          <p>Es <strong>adverbio</strong>, no conjunción: <em>*The plan failed, moreover the costs rose</em> → <em>The plan failed. <strong>Moreover,</strong> the costs rose.</em> O con punto y coma: <em>The plan failed; <strong>moreover,</strong> the costs rose.</em></p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Coma obligatoria tras conector inicial</h5>
+          <p><em>Moreover, …</em>, <em>Furthermore, …</em>, <em>In addition, …</em>, <em>Firstly, …</em> Todos llevan coma. En español es opcional; en inglés es la norma escrita.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>No empieces oración formal con "And"</h5>
+          <p>En <strong>Writing P2</strong>, evita iniciar con <em>And</em>, <em>But</em>, <em>So</em>: usa <em>Moreover</em>, <em>However</em>, <em>Therefore</em>. En español <em>"Y además"</em> es válido; en inglés académico no.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Además" no siempre es "moreover"</h5>
+          <p>El español <em>"además"</em> puede ser <em>moreover/furthermore</em> (formal), <em>also</em> (neutro) o <em>besides</em>. Reserva <em>moreover</em> para añadir un argumento de peso, no cualquier idea adicional.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Orden de correlativos: "not only … but also"</h5>
+          <p>El segundo elemento debe ir tras <em>but also</em>: <em>*She is not only intelligent, also kind</em> → <em>She is <strong>not only</strong> intelligent <strong>but also</strong> kind</em>. Si inicia oración, exige inversión: <em>Not only does she sing, but she also dances.</em></p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Firstly / Secondly / Finally" — no repitas patrón</h5>
+          <p>No mezcles <em>First</em> con <em>Secondly</em>: o todos en <em>-ly</em> (<em>Firstly, Secondly, Lastly</em>) o todos sin él (<em>First, Second, Last</em>). La consistencia se evalúa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 2: CONTRAST & CONCESSION ================ -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="contrast" data-tab="contrast">
+
+  <div class="intro">
+    <h3>Contraste y concesión · Contrast &amp; Concession</h3>
+    <p>Permiten introducir <strong>ideas opuestas</strong> o <strong>reconocer un argumento contrario</strong>. La distinción clave es gramatical: <em>However / Nevertheless</em> son adverbios (separan oraciones), <em>Although / Even though</em> son conjunciones (introducen cláusula), <em>Despite / In spite of</em> son preposiciones (van con sustantivo o gerundio).</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Linguaskill:</strong> el contraste es la función que más aparece en los <strong>huecos de Reading (Parts 2–4)</strong> y en <strong>Part 7 — Missing Sentences</strong>, donde la pista cohesiva (<em>However, Nevertheless</em>) decide la respuesta correcta.
+  </div>
+
+  <!-- A. CONECTORES POR FUNCIÓN -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">🔗</div>
+      <div>
+        <div class="section-title">A. Conectores por función</div>
+        <div class="section-desc">Subfunciones de contraste y concesión con ejemplos</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-contrast)">
+        <div class="item-head"><span class="item-term">Contraste directo (adverbio)</span><span class="item-trans">sentence-linking</span></div>
+        <ul class="item-list">
+          <li><strong>However,</strong> the results were inconclusive.</li>
+          <li><strong>Nevertheless,</strong> the project went ahead.</li>
+          <li><strong>Nonetheless,</strong> the team succeeded.</li>
+          <li><strong>Still,</strong> the cost remains a concern.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-add)">
+        <div class="item-head"><span class="item-term">Contraste por oposición</span><span class="item-trans">two sides</span></div>
+        <ul class="item-list">
+          <li><strong>On the one hand,</strong> it is cheap; <strong>on the other hand,</strong> it is unreliable.</li>
+          <li><strong>In contrast,</strong> the rival product lasts longer.</li>
+          <li><strong>By contrast,</strong> rural areas grew faster.</li>
+          <li><strong>Conversely,</strong> rates fell in the south.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">Concesión (conjunción)</span><span class="item-trans">+ clause</span></div>
+        <ul class="item-list">
+          <li><strong>Although</strong> it rained, we went out.</li>
+          <li><strong>Even though</strong> she was tired, she finished.</li>
+          <li><strong>Though</strong> small, the team was efficient.</li>
+          <li><strong>While / Whereas</strong> Spain exports oil, France imports it.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">Concesión (preposición)</span><span class="item-trans">+ noun · -ing</span></div>
+        <ul class="item-list">
+          <li><strong>Despite</strong> the rain, we went out.</li>
+          <li><strong>In spite of</strong> being tired, she finished.</li>
+          <li><strong>Despite the fact that</strong> he was late, …</li>
+          <li><strong>Regardless of</strong> the cost, …</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-seq)">
+        <div class="item-head"><span class="item-term">Concesión enfática</span><span class="item-trans">stronger contrast</span></div>
+        <ul class="item-list">
+          <li><strong>Yet,</strong> nobody complained.</li>
+          <li><strong>Even so,</strong> the deal closed.</li>
+          <li><strong>That said,</strong> exceptions remain.</li>
+          <li><strong>All the same,</strong> we proceeded.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-time)">
+        <div class="item-head"><span class="item-term">Contraste informal</span><span class="item-trans">email casual · speaking</span></div>
+        <ul class="item-list">
+          <li><strong>But</strong> nobody came.</li>
+          <li><strong>Though</strong> (al final) — <em>It's cold. Nice though.</em></li>
+          <li><strong>Mind you,</strong> it wasn't easy.</li>
+          <li><strong>Then again,</strong> it could work.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- B. FORMA Y PUNTUACIÓN -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">🔧</div>
+      <div>
+        <div class="section-title">B. Forma y puntuación</div>
+        <div class="section-desc">Adverbio vs conjunción vs preposición — la distinción decisiva</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Conector</th>
+            <th>Posición / qué le sigue</th>
+            <th>Puntuación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Adverbio conectivo</strong></td>
+            <td>However · Nevertheless · Nonetheless · Still</td>
+            <td>Inicio de oración nueva (no une cláusulas con coma sola)</td>
+            <td class="en">. <strong>However,</strong> …  ó  ; <strong>however,</strong> …</td>
+          </tr>
+          <tr>
+            <td><strong>Adverbio</strong> (intermedio)</td>
+            <td>however · nevertheless</td>
+            <td>Tras el sujeto, entre comas</td>
+            <td class="en">The plan, <strong>however,</strong> was rejected.</td>
+          </tr>
+          <tr>
+            <td><strong>Conjunción coordinante</strong></td>
+            <td>but · yet</td>
+            <td>Une dos oraciones en una</td>
+            <td class="en">It rained, <strong>but</strong> we went out.</td>
+          </tr>
+          <tr>
+            <td><strong>Conjunción subordinante</strong></td>
+            <td>Although · Even though · Though · While · Whereas</td>
+            <td>+ <em>cláusula</em> (sujeto + verbo)</td>
+            <td class="en"><strong>Although</strong> it rained, we went. · We went <strong>although</strong> it rained.</td>
+          </tr>
+          <tr>
+            <td><strong>Preposición</strong></td>
+            <td>Despite · In spite of · Regardless of</td>
+            <td>+ <em>sustantivo</em> o <em>gerundio (-ing)</em></td>
+            <td class="en"><strong>Despite</strong> the rain, … · <strong>Despite being</strong> tired, …</td>
+          </tr>
+          <tr>
+            <td><strong>Frase introductoria</strong></td>
+            <td>On the other hand · In contrast · By contrast</td>
+            <td>Inicio (exige un contraste previo)</td>
+            <td class="en">…, <strong>On the other hand,</strong> …</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- C. REGISTRO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-tip)">⭐</div>
+      <div>
+        <div class="section-title">C. Registro · formal ↔ informal</div>
+        <div class="section-desc">Equivalencias para subir o bajar el tono</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <thead>
+          <tr>
+            <th>Función</th>
+            <th>Formal (essay · email formal)</th>
+            <th>Informal (email casual · speaking)</th>
+            <th>Glosa ES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Contraste fuerte</td>
+            <td class="en">However · Nevertheless</td>
+            <td class="en">But · Still</td>
+            <td class="es">sin embargo · pero</td>
+          </tr>
+          <tr>
+            <td>Concesión (clause)</td>
+            <td class="en">Although · Even though</td>
+            <td class="en">Though (al final) · Even if</td>
+            <td class="es">aunque · a pesar de que</td>
+          </tr>
+          <tr>
+            <td>Concesión (N / -ing)</td>
+            <td class="en">Despite · In spite of</td>
+            <td class="en">Even with</td>
+            <td class="es">a pesar de</td>
+          </tr>
+          <tr>
+            <td>Dos perspectivas</td>
+            <td class="en">On the other hand · In contrast</td>
+            <td class="en">But · Then again</td>
+            <td class="es">por otro lado · en cambio</td>
+          </tr>
+          <tr>
+            <td>Comparación opuesta</td>
+            <td class="en">Whereas · While</td>
+            <td class="en">But · And yet</td>
+            <td class="es">mientras que</td>
+          </tr>
+          <tr>
+            <td>Concesión enfática</td>
+            <td class="en">Nonetheless · Notwithstanding</td>
+            <td class="en">Anyway · Even so</td>
+            <td class="es">aun así · no obstante</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS HISPANO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Errores típicos de contraste y concesión</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"However" no une oraciones con coma (comma splice)</h5>
+          <p><em>*It rained, however we went out</em> ✗. Correcto: <em>It rained. <strong>However,</strong> we went out.</em> O con punto y coma: <em>It rained; <strong>however,</strong> we went out.</em> El español <em>"sin embargo"</em> sí admite la coma sola, pero el inglés no.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Despite of" no existe</h5>
+          <p>Es <em>despite</em> o <em>in spite of</em>, pero nunca <em>*despite of</em>. Lo más fácil: <em>despite</em> (una palabra) o <em>in spite of</em> (tres palabras) — sin solapar.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Despite" + sustantivo o -ing, NUNCA + oración</h5>
+          <p><em>*Despite he was late, …</em> → <em><strong>Despite being</strong> late, …</em> o <em><strong>Despite the fact that</strong> he was late, …</em> o <em><strong>Although</strong> he was late, …</em>. La preposición no admite cláusula con sujeto.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Although … but" — un solo conector</h5>
+          <p>No dupliques: <em>*Although it rained, but we went out</em> ✗. En inglés se usa <em>although</em> o <em>but</em>, no los dos. El error viene del español <em>"aunque llovía, pero salimos"</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"On the other hand" exige contraste previo</h5>
+          <p>Si no has presentado un primer punto de vista, no puedes usarlo. O lo introduces con <em>On the one hand, …</em>, o sustitúyelo por <em>However</em>. <em>*The film was bad. On the other hand, I left.</em> ✗ — no hay dos lados.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"While / Whereas" expresan contraste, no tiempo</h5>
+          <p>En posición inicial y con cláusulas paralelas, son contraste: <em><strong>Whereas</strong> Spain exports oil, France imports it.</em> Si lo que quieres es "mientras" temporal, usa <em>while</em> con verbos progresivos: <em>While I was reading, the phone rang.</em></p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>No empieces oración formal con "But"</h5>
+          <p>En <strong>Writing P2</strong> sustituye <em>But</em> inicial por <em>However</em>, <em>Yet</em> o <em>Nevertheless</em>. <em>But</em> coordina dentro de la oración; al inicio de párrafo suena coloquial.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 3: CAUSE, EFFECT & PURPOSE ============== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="cause" data-tab="cause">
+
+  <div class="intro">
+    <h3>Causa, efecto y propósito · Cause, Effect &amp; Purpose</h3>
+    <p>Construyen la <strong>línea lógica</strong> de cualquier argumentación. Distingue siempre entre <em>conjunción</em> (because, since, as · + cláusula), <em>preposición</em> (because of, due to, owing to · + sustantivo), <em>adverbio conectivo de efecto</em> (therefore, consequently, thus) y <em>propósito</em> (in order to + infinitivo / so that + cláusula con modal).</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Linguaskill:</strong> esencial en <strong>Reading Part 7 (Extended Reading)</strong> y en la argumentación del <strong>essay (Writing P2)</strong>. En <strong>Speaking P4</strong>, justificar opiniones con <em>therefore / as a result</em> demuestra control de B2+.
+  </div>
+
+  <!-- A. CONECTORES POR FUNCIÓN -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">🔗</div>
+      <div>
+        <div class="section-title">A. Conectores por función</div>
+        <div class="section-desc">Causa, efecto, propósito y consecuencia con ejemplos</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">Causa (conjunción)</span><span class="item-trans">+ clause</span></div>
+        <ul class="item-list">
+          <li><strong>Because</strong> the bridge collapsed, traffic was diverted.</li>
+          <li><strong>Since</strong> nobody objected, we approved the plan.</li>
+          <li><strong>As</strong> she was unwell, she stayed home.</li>
+          <li><strong>Given that</strong> deadlines were tight, we acted fast.</li>
+          <li><strong>Seeing that</strong> nobody complained, we proceeded.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-contrast)">
+        <div class="item-head"><span class="item-term">Causa (preposición)</span><span class="item-trans">+ noun / -ing</span></div>
+        <ul class="item-list">
+          <li><strong>Because of</strong> the rain, the match was cancelled.</li>
+          <li><strong>Due to</strong> technical issues, the train was late.</li>
+          <li><strong>Owing to</strong> heavy snow, schools closed.</li>
+          <li><strong>On account of</strong> her illness, she withdrew.</li>
+          <li><strong>Thanks to</strong> his help, we finished early.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">Efecto (adverbio)</span><span class="item-trans">formal · essay</span></div>
+        <ul class="item-list">
+          <li><strong>Therefore,</strong> the policy must be reviewed.</li>
+          <li><strong>Consequently,</strong> profits fell.</li>
+          <li><strong>Thus,</strong> the agreement was signed.</li>
+          <li><strong>Hence,</strong> the new strategy.</li>
+          <li><strong>Accordingly,</strong> measures were taken.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-add)">
+        <div class="item-head"><span class="item-term">Efecto (frase)</span><span class="item-trans">discourse linkers</span></div>
+        <ul class="item-list">
+          <li><strong>As a result,</strong> sales dropped.</li>
+          <li><strong>As a consequence,</strong> the law was amended.</li>
+          <li><strong>For this reason,</strong> we postponed the meeting.</li>
+          <li><strong>This led to</strong> a sharp decline.</li>
+          <li><strong>This resulted in</strong> further delays.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">Propósito (+ infinitivo)</span><span class="item-trans">aim of action</span></div>
+        <ul class="item-list">
+          <li><strong>In order to</strong> reduce costs, we restructured.</li>
+          <li><strong>So as to</strong> avoid delays, we left early.</li>
+          <li><strong>To</strong> save money, switch off the lights.</li>
+          <li><strong>With the aim of</strong> boosting exports, …</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-seq)">
+        <div class="item-head"><span class="item-term">Propósito (+ cláusula)</span><span class="item-trans">+ modal verb</span></div>
+        <ul class="item-list">
+          <li><strong>So that</strong> we can finish on time, …</li>
+          <li><strong>In order that</strong> all members may attend, …</li>
+          <li>negativo · <strong>so as not to / in order not to</strong> + inf</li>
+          <li>precaución · <strong>in case</strong> it rains (≠ if)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- B. FORMA Y PUNTUACIÓN -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">🔧</div>
+      <div>
+        <div class="section-title">B. Forma y puntuación</div>
+        <div class="section-desc">Qué tipo gramatical exige cada conector</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Conector</th>
+            <th>Posición / qué le sigue</th>
+            <th>Puntuación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Conjunción de causa</strong></td>
+            <td>because · since · as · given that</td>
+            <td>+ <em>cláusula</em> (sujeto + verbo)</td>
+            <td class="en">X <strong>because</strong> Y · <strong>Because</strong> Y, X.</td>
+          </tr>
+          <tr>
+            <td><strong>Preposición de causa</strong></td>
+            <td>because of · due to · owing to · thanks to</td>
+            <td>+ <em>sustantivo</em> o <em>-ing</em></td>
+            <td class="en"><strong>Due to</strong> the rain, … · <strong>Owing to</strong> being late, …</td>
+          </tr>
+          <tr>
+            <td><strong>Adverbio conectivo de efecto</strong></td>
+            <td>Therefore · Consequently · Thus · Hence · Accordingly</td>
+            <td>Inicio de oración nueva</td>
+            <td class="en">. <strong>Therefore,</strong> …  ó  ; <strong>therefore,</strong> …</td>
+          </tr>
+          <tr>
+            <td><strong>Frase de efecto</strong></td>
+            <td>As a result · As a consequence · For this reason</td>
+            <td>Inicio de oración</td>
+            <td class="en"><strong>As a result,</strong> …</td>
+          </tr>
+          <tr>
+            <td><strong>Propósito + to-inf</strong></td>
+            <td>in order to · so as to · to</td>
+            <td>+ <em>infinitivo</em> (mismo sujeto)</td>
+            <td class="en"><strong>In order to</strong> save, …</td>
+          </tr>
+          <tr>
+            <td><strong>Propósito + clause</strong></td>
+            <td>so that · in order that</td>
+            <td>+ <em>cláusula con modal</em> (can/will/would/may)</td>
+            <td class="en">… <strong>so that</strong> we <strong>can</strong> finish.</td>
+          </tr>
+          <tr>
+            <td><strong>Conjunción coordinante</strong></td>
+            <td>so</td>
+            <td>Une dos oraciones (informal)</td>
+            <td class="en">It rained, <strong>so</strong> we stayed in.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- C. REGISTRO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-tip)">⭐</div>
+      <div>
+        <div class="section-title">C. Registro · formal ↔ informal</div>
+        <div class="section-desc">Equivalencias para subir o bajar el tono</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <thead>
+          <tr>
+            <th>Función</th>
+            <th>Formal (essay · email formal)</th>
+            <th>Informal (email casual · speaking)</th>
+            <th>Glosa ES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Efecto</td>
+            <td class="en">Therefore · Consequently · Thus</td>
+            <td class="en">So · That's why</td>
+            <td class="es">por lo tanto · así que</td>
+          </tr>
+          <tr>
+            <td>Efecto</td>
+            <td class="en">As a result · As a consequence</td>
+            <td class="en">So · Because of this</td>
+            <td class="es">como resultado</td>
+          </tr>
+          <tr>
+            <td>Causa (preposición)</td>
+            <td class="en">Owing to · Due to · On account of</td>
+            <td class="en">Because of · Thanks to</td>
+            <td class="es">debido a</td>
+          </tr>
+          <tr>
+            <td>Causa (clause)</td>
+            <td class="en">Since · Given that</td>
+            <td class="en">Because · As</td>
+            <td class="es">ya que · puesto que</td>
+          </tr>
+          <tr>
+            <td>Propósito (+ inf)</td>
+            <td class="en">In order to · So as to</td>
+            <td class="en">To</td>
+            <td class="es">para · con tal de</td>
+          </tr>
+          <tr>
+            <td>Propósito (+ clause)</td>
+            <td class="en">In order that · So that</td>
+            <td class="en">So</td>
+            <td class="es">para que</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS HISPANO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Errores típicos de causa, efecto y propósito</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Due to / Owing to" no van con oración</h5>
+          <p>Son <strong>preposiciones</strong>: exigen sustantivo o gerundio. <em>*Due to it rained, …</em> ✗ → <em><strong>Due to</strong> the rain, …</em> o <em><strong>Because</strong> it rained, …</em>. <em>Owing to <strong>being</strong> late, …</em> con gerundio sí vale.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Therefore" es adverbio: cuidado con comma splice</h5>
+          <p><em>*Sales dropped, therefore we changed strategy</em> ✗. Correcto: <em>Sales dropped. <strong>Therefore,</strong> we changed strategy.</em> O con punto y coma: <em>Sales dropped; <strong>therefore,</strong> we changed strategy.</em></p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"So that" exige modal en la cláusula</h5>
+          <p>Para propósito futuro, usa <em>can / will</em>; para hipotético o pasado, <em>could / would</em>: <em>I left early <strong>so that I could catch</strong> the train.</em> Sin modal, suena raro: <em>*so that I catch the train</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"As" tiene tres valores: causa, tiempo y comparación</h5>
+          <p>(1) Causa: <em>As I was tired, I left.</em> (2) Tiempo: <em>As I was leaving, the phone rang.</em> (3) Comparación: <em>As big as a house.</em> El contexto desambigua — al escribir, prefiere <em>since/because</em> para causa si hay riesgo de ambigüedad.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"So" inicial es informal</h5>
+          <p>En <strong>essay (Writing P2)</strong> sustituye <em>So, sales fell</em> por <em>Therefore, sales fell</em> o <em>As a result, sales fell</em>. En español <em>"así que"</em> es neutro; <em>so</em> al inicio en inglés escrito formal baja registro.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"In order to" + infinitivo, "in order that" + cláusula</h5>
+          <p><em>*In order to we save money</em> ✗ → <em><strong>In order to</strong> save money, …</em> o <em><strong>In order that</strong> we may save money, …</em>. Mismo sujeto = infinitivo; sujeto distinto = cláusula con modal.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Because of" ≠ "because"</h5>
+          <p><em>Because of</em> = preposición (<em>because of the rain</em>); <em>because</em> = conjunción (<em>because it rained</em>). Confundirlos es un fallo típico en huecos de Reading.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 4: EMPHASIS, EXAMPLE & SUMMARY ========== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="emph" data-tab="emph">
+
+  <div class="intro">
+    <h3>Énfasis, ejemplo y resumen · Emphasis, Example &amp; Summary</h3>
+    <p>Cierran el inventario discursivo: <strong>enfatizar</strong> (indeed, in fact, above all), <strong>ejemplificar</strong> (for instance, such as, namely) y <strong>concluir</strong> (in conclusion, to sum up, overall). Son los conectores que más matiz aportan en un essay y los que más diferencian un B2 sólido de un C1.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Linguaskill:</strong> imprescindibles en el último párrafo del <strong>essay (Writing P2)</strong> — <em>In conclusion, … Overall, …</em> — y en <strong>Speaking P4</strong> para concretar con ejemplos: <em>For instance, in my country, …</em>
+  </div>
+
+  <!-- A. CONECTORES POR FUNCIÓN -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">🔗</div>
+      <div>
+        <div class="section-title">A. Conectores por función</div>
+        <div class="section-desc">Énfasis, ejemplificación, aclaración y cierre</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-emph)">
+        <div class="item-head"><span class="item-term">Énfasis</span><span class="item-trans">stressing a point</span></div>
+        <ul class="item-list">
+          <li><strong>Indeed,</strong> the evidence is overwhelming.</li>
+          <li><strong>In fact,</strong> the figures doubled in a year.</li>
+          <li><strong>Above all,</strong> safety must come first.</li>
+          <li><strong>In particular,</strong> rural areas have suffered.</li>
+          <li><strong>Especially</strong> among young people.</li>
+          <li><strong>More importantly,</strong> jobs were created.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">Ejemplo</span><span class="item-trans">illustrating</span></div>
+        <ul class="item-list">
+          <li><strong>For instance,</strong> in Germany, recycling rates are high.</li>
+          <li><strong>For example,</strong> consider the case of Sweden.</li>
+          <li>fruits <strong>such as</strong> oranges and lemons</li>
+          <li><strong>like</strong> Madrid or Barcelona (informal)</li>
+          <li><strong>e.g.</strong> Spain, France (lista breve, paréntesis)</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">Aclaración · reformulación</span><span class="item-trans">restating</span></div>
+        <ul class="item-list">
+          <li><strong>Namely,</strong> three issues: cost, time and quality.</li>
+          <li><strong>That is (to say),</strong> the project will be delayed.</li>
+          <li><strong>In other words,</strong> the plan failed.</li>
+          <li><strong>i.e.</strong> the working population (paréntesis)</li>
+          <li><strong>Or rather,</strong> half the population.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-summ)">
+        <div class="item-head"><span class="item-term">Resumen · conclusión</span><span class="item-trans">closing paragraph</span></div>
+        <ul class="item-list">
+          <li><strong>In conclusion,</strong> the policy should continue.</li>
+          <li><strong>To sum up,</strong> the benefits outweigh the costs.</li>
+          <li><strong>To conclude,</strong> further research is needed.</li>
+          <li><strong>All in all,</strong> the project succeeded.</li>
+          <li><strong>In short,</strong> we must act now.</li>
+          <li><strong>Overall,</strong> the results are positive.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-add)">
+        <div class="item-head"><span class="item-term">Generalización</span><span class="item-trans">broad statements</span></div>
+        <ul class="item-list">
+          <li><strong>On the whole,</strong> public opinion supports the plan.</li>
+          <li><strong>By and large,</strong> the policy has worked.</li>
+          <li><strong>Broadly speaking,</strong> the data agree.</li>
+          <li><strong>In general,</strong> citizens accept the change.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-time)">
+        <div class="item-head"><span class="item-term">Concesión a la conclusión</span><span class="item-trans">final hedging</span></div>
+        <ul class="item-list">
+          <li><strong>All things considered,</strong> the plan is viable.</li>
+          <li><strong>On balance,</strong> the advantages prevail.</li>
+          <li><strong>Taking everything into account,</strong> …</li>
+          <li><strong>At the end of the day,</strong> … (informal)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- B. FORMA Y PUNTUACIÓN -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">🔧</div>
+      <div>
+        <div class="section-title">B. Forma y puntuación</div>
+        <div class="section-desc">Tipo gramatical, posición y signos correctos</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Conector</th>
+            <th>Posición / qué le sigue</th>
+            <th>Puntuación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Adverbio enfático</strong></td>
+            <td>Indeed · In fact</td>
+            <td>Inicio de oración o intercalado</td>
+            <td class="en"><strong>Indeed,</strong> … · The result is, <strong>in fact,</strong> positive.</td>
+          </tr>
+          <tr>
+            <td><strong>Frase enfática</strong></td>
+            <td>Above all · In particular · More importantly</td>
+            <td>Inicio de oración</td>
+            <td class="en"><strong>Above all,</strong> …</td>
+          </tr>
+          <tr>
+            <td><strong>Frase ejemplificadora</strong></td>
+            <td>For instance · For example</td>
+            <td>Inicio de oración o intercalada</td>
+            <td class="en"><strong>For instance,</strong> … · X is, <strong>for example,</strong> Y.</td>
+          </tr>
+          <tr>
+            <td><strong>Preposición ejemplificadora</strong></td>
+            <td>such as · like (informal)</td>
+            <td>+ <em>lista nominal</em>, dentro de la oración</td>
+            <td class="en">fruits <strong>such as</strong> oranges, lemons and limes (sin coma antes en lista corta)</td>
+          </tr>
+          <tr>
+            <td><strong>Aclaración</strong></td>
+            <td>namely · that is · i.e.</td>
+            <td>Tras coma, antes de la lista o reformulación</td>
+            <td class="en">three issues, <strong>namely</strong> X, Y and Z.</td>
+          </tr>
+          <tr>
+            <td><strong>Frase de cierre</strong></td>
+            <td>In conclusion · To sum up · Overall · All in all</td>
+            <td>Inicio del último párrafo</td>
+            <td class="en"><strong>In conclusion,</strong> …</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- C. REGISTRO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-tip)">⭐</div>
+      <div>
+        <div class="section-title">C. Registro · formal ↔ informal</div>
+        <div class="section-desc">Equivalencias para subir o bajar el tono</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <thead>
+          <tr>
+            <th>Función</th>
+            <th>Formal (essay · email formal)</th>
+            <th>Informal (email casual · speaking)</th>
+            <th>Glosa ES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Énfasis</td>
+            <td class="en">Indeed · In fact</td>
+            <td class="en">Actually · Really</td>
+            <td class="es">de hecho · en realidad</td>
+          </tr>
+          <tr>
+            <td>Énfasis</td>
+            <td class="en">Above all · In particular</td>
+            <td class="en">Most of all · Especially</td>
+            <td class="es">sobre todo · en particular</td>
+          </tr>
+          <tr>
+            <td>Ejemplo</td>
+            <td class="en">For instance · For example</td>
+            <td class="en">Like · Say</td>
+            <td class="es">por ejemplo</td>
+          </tr>
+          <tr>
+            <td>Lista nominal</td>
+            <td class="en">such as · namely</td>
+            <td class="en">like (informal)</td>
+            <td class="es">como · a saber</td>
+          </tr>
+          <tr>
+            <td>Aclaración</td>
+            <td class="en">That is to say · In other words</td>
+            <td class="en">I mean · You know</td>
+            <td class="es">es decir · o sea</td>
+          </tr>
+          <tr>
+            <td>Conclusión</td>
+            <td class="en">In conclusion · To conclude · Overall</td>
+            <td class="en">All in all · Basically · In the end</td>
+            <td class="es">en conclusión · en resumen</td>
+          </tr>
+          <tr>
+            <td>Resumen</td>
+            <td class="en">To sum up · In summary</td>
+            <td class="en">In short · The bottom line is</td>
+            <td class="es">en resumen · resumiendo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS HISPANO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Errores típicos de énfasis, ejemplo y resumen</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Actually" no es "actualmente"</h5>
+          <p><em>Actually</em> = <strong>en realidad / de hecho</strong>, no "actualmente". Para "actualmente" usa <em>currently</em>, <em>at present</em>, <em>nowadays</em>. <em>*Actually I live in Madrid</em> (= "En realidad vivo en Madrid") ≠ "Actualmente vivo en Madrid" → <em><strong>Currently / At present,</strong> I live in Madrid.</em></p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"For example" + oración / "such as" + lista nominal</h5>
+          <p><em>For example, Germany has cut emissions</em> (oración completa). <em>Countries <strong>such as</strong> Germany and France</em> (lista nominal). No mezcles: <em>*Such as Germany has cut emissions</em> ✗.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"e.g." vs "i.e." — significados distintos</h5>
+          <p><em><strong>e.g.</strong></em> (<em>exempli gratia</em>) = "por ejemplo", introduce <strong>ejemplos no exhaustivos</strong>: <em>EU countries (e.g., Spain, France)</em>. <em><strong>i.e.</strong></em> (<em>id est</em>) = "es decir", introduce <strong>aclaraciones exactas</strong>: <em>the EU-27 (i.e., the current members)</em>. En texto formal van entre paréntesis.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"In conclusion" solo en el último párrafo</h5>
+          <p>Anuncia el cierre del texto: úsalo una sola vez, al inicio del último párrafo del essay. En un email corto suena pomposo — sustitúyelo por <em>Overall</em>, <em>All in all</em> o simplemente cierra con la idea principal.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>No repitas literalmente en la conclusión</h5>
+          <p>El error típico tras <em>In conclusion,</em> es copiar la tesis con otras palabras. Suma una <strong>valoración final</strong>, una <strong>recomendación</strong> o una <strong>proyección</strong>: <em>In conclusion, the evidence supports investment; <strong>further studies should now focus on cost-benefit analysis</strong>.</em></p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Like" como "such as" suena informal en escritura</h5>
+          <p><em>Cities like Madrid</em> es aceptable en speaking, pero en <strong>Writing P2</strong> prefiere <em>Cities <strong>such as</strong> Madrid</em>. Algunos manuales aún lo penalizan en registro académico estricto.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Above all" enfatiza la idea más importante, no la suma</h5>
+          <p>No es sinónimo de <em>moreover</em>. Marca <strong>la idea principal</strong> dentro de varios argumentos: <em>The plan is cheap, quick and, <strong>above all,</strong> safe.</em> Si solo añades, usa <em>moreover</em> o <em>furthermore</em>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E. EN CONTEXTO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-model)">📄</div>
+      <div>
+        <div class="section-title">E. En contexto · Connectors in action</div>
+        <div class="section-desc">Párrafos modelo con los conectores coloreados por función</div>
+      </div>
+    </div>
+    <div class="papers">
+
+      <article class="paper">
+        <h4 class="paper-title">Model 1 · Essay paragraph — Public transport investment</h4>
+        <div class="paper-meta">Writing P2 · ~165 words · all four functions in play</div>
+        <div class="paper-body">
+          <p><span class="label">Seq</span><span class="k-seq">First and foremost,</span> well-funded public transport reduces the dependence on private cars, which in turn lowers urban congestion and pollution. <span class="k-add">Moreover,</span> frequent and affordable services give low-income citizens access to jobs and education, <span class="k-add">in addition</span> to easing the daily routines of millions of commuters.</p>
+          <p><span class="label">Contrast</span><span class="k-contrast">However,</span> opponents argue that the financial cost is prohibitive, <span class="k-emph">especially</span> in smaller cities with low ridership. <span class="k-contrast">Nevertheless,</span> this objection overlooks the long-term savings in healthcare and environmental damage. <span class="k-emph">Indeed,</span> several European studies have shown that every euro invested in metro and bus systems generates roughly two euros in economic activity.</p>
+          <p><span class="label">Cause</span><span class="k-cause">Therefore,</span> governments should view public transport not as an expense but as a strategic investment. <span class="k-summ">In conclusion,</span> <span class="k-concess">although</span> the initial outlay is considerable, the social, economic and environmental benefits more than justify the policy.</p>
+        </div>
+      </article>
+
+      <article class="paper">
+        <h4 class="paper-title">Model 2 · Essay paragraph — Remote work</h4>
+        <div class="paper-meta">Writing P2 · ~165 words · emphasis, example &amp; summary in focus</div>
+        <div class="paper-body">
+          <p><span class="label">Topic</span>Remote work has reshaped the labour market in ways few would have predicted a decade ago. <span class="k-emph">In fact,</span> recent surveys suggest that over half of European employees now work from home at least one day a week. <span class="k-add">Furthermore,</span> companies report measurable gains in productivity and lower office costs.</p>
+          <p><span class="label">Examples</span>The benefits are visible across very different sectors. <span class="k-emph">For instance,</span> technology firms <span class="k-key">such as</span> Microsoft and Spotify have adopted hybrid policies as a permanent standard. <span class="k-contrast">On the other hand,</span> traditional industries — <span class="k-emph">namely</span> manufacturing and hospitality — cannot easily follow the same path.</p>
+          <p><span class="label">Closure</span><span class="k-summ">All in all,</span> the trend appears irreversible. <span class="k-summ">In conclusion,</span> <span class="k-concess">although</span> remote work is not a universal solution, its careful integration is, <span class="k-emph">above all,</span> a sign of how flexible the modern workplace must become.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+/* THEME — shared key "theme" across the whole site */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("theme",t);}catch(e){}}
+function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme")||"light";applyTheme(cur==="dark"?"light":"dark");}
+(function initTheme(){let saved=null;try{saved=localStorage.getItem("theme");}catch(e){}if(saved==="dark"||saved==="light"){applyTheme(saved);return;}const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;applyTheme(prefersDark?"dark":"light");})();
+
+/* TABS */
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* SECTIONS */
+function toggleSection(header){
+  header.parentElement.classList.toggle('collapsed');
+}
+function getActiveSections(){
+  return document.querySelectorAll('.tab-panel.active .section');
+}
+function getActivePapers(){
+  return document.querySelectorAll('.tab-panel.active .paper');
+}
+function expandAll(){
+  getActiveSections().forEach(s => s.classList.remove('collapsed'));
+  getActivePapers().forEach(p => p.classList.remove('collapsed'));
+}
+function collapseAll(){
+  getActiveSections().forEach(s => s.classList.add('collapsed'));
+  getActivePapers().forEach(p => p.classList.add('collapsed'));
+}
+
+/* MODEL PAPERS — wrap title+meta in a clickable header, collapse by default */
+document.querySelectorAll('.paper').forEach(paper => {
+  const title = paper.querySelector('.paper-title');
+  const meta = paper.querySelector('.paper-meta');
+  if(!title || !meta) return;
+  const header = document.createElement('div');
+  header.className = 'paper-header';
+  const wrap = document.createElement('div');
+  wrap.appendChild(title);
+  wrap.appendChild(meta);
+  const toggle = document.createElement('span');
+  toggle.className = 'paper-toggle';
+  toggle.textContent = '▾';
+  header.appendChild(wrap);
+  header.appendChild(toggle);
+  header.addEventListener('click', () => paper.classList.toggle('collapsed'));
+  paper.insertBefore(header, paper.firstChild);
+  paper.classList.add('collapsed');
+});
+
+/* Set section colors + item counts */
+document.querySelectorAll('.section').forEach(sec => {
+  const icon = sec.querySelector('.section-icon');
+  if (icon) {
+    const m = (icon.getAttribute('style') || '').match(/var\(--c-([a-z]+)\)/);
+    if (m) {
+      sec.style.setProperty('--section-c', `var(--c-${m[1]})`);
+      sec.style.setProperty('--section-c-bg', `var(--c-${m[1]}-bg)`);
+    }
+  }
+  const container = sec.querySelector('.grid, .stack, .papers, .tips-list, .blueprint, .table-wrap');
+  if(!container) return;
+  let count;
+  if (container.matches('.blueprint')) {
+    count = container.querySelectorAll('.step').length;
+  } else if (container.matches('.table-wrap')) {
+    count = container.querySelectorAll('tbody tr').length;
+  } else {
+    count = container.children.length;
+  }
+  const badge = document.createElement('span');
+  badge.className = 'section-count';
+  badge.textContent = count;
+  sec.querySelector('.section-header').appendChild(badge);
+});
+
+/* FONT SIZE SLIDER — shared key "idiomas_font_size" across the whole site */
+const FS_KEY = 'idiomas_font_size';
+function updateFontSize(pct){
+  const scale = pct / 100;
+  document.documentElement.style.fontSize = (16 * scale) + 'px';
+  document.getElementById('fs-value').textContent = pct + '%';
+  localStorage.setItem(FS_KEY, pct);
+}
+(function initFontSize(){
+  const saved = localStorage.getItem(FS_KEY);
+  if(saved){
+    document.getElementById('fs-slider').value = saved;
+    updateFontSize(saved);
+  }
+})();
+</script>
+
+</body>
+</html>

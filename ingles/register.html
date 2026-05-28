@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register · Registro · B2–C1 Linguaskill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Page identity: Register → cyan (Discourse) */
+  --primary:#0e7490; --primary-soft:#ecfeff; --primary-mid:#06b6d4; --primary-strong:#164e63;
+  --primary-glow:rgba(14,116,144,.14);
+  /* Per-tab identity colors */
+  --tab-spectrum:#0e7490;  --tab-spectrum-soft:#ecfeff;  --tab-spectrum-mid:#06b6d4;
+  --tab-lexis:#1d4ed8;     --tab-lexis-soft:#eff6ff;     --tab-lexis-mid:#3b82f6;
+  --tab-grammar:#7c3aed;   --tab-grammar-soft:#f5f3ff;   --tab-grammar-mid:#8b5cf6;
+  /* Legacy aliases */
+  --accent:var(--primary); --accent-light:var(--primary-soft); --accent-mid:var(--primary-mid);
+  /* Neutrals */
+  --bg:#f7f7f5; --bg-elevated:#fbfbfa; --card:#ffffff;
+  --border:#ececec; --border-strong:#dfdfdf;
+  --text:#18181b; --text2:#52525b; --text3:#71717a;
+  /* Paper (model examples) */
+  --paper:#fefef9; --paper-border:#e7e5d6;
+  /* Shadows */
+  --shadow-xs:0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:0 2px 8px rgba(15,23,42,.04),0 1px 2px rgba(15,23,42,.03);
+  --shadow:0 4px 16px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+  --shadow-primary:0 6px 20px var(--primary-glow);
+  /* Geometry */
+  --radius:18px; --radius-md:14px; --radius-sm:10px; --radius-xs:6px; --radius-pill:999px;
+  /* Motion */
+  --ease:cubic-bezier(0.4,0,0.2,1); --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --t-fast:120ms; --t-base:200ms;
+  /* Section colors (A→E) */
+  --c-greet:#7c3aed;     --c-greet-bg:#f5f3ff;
+  --c-conn:#0e7490;      --c-conn-bg:#ecfeff;
+  --c-key:#1d4ed8;       --c-key-bg:#eff6ff;
+  --c-close:#be185d;     --c-close-bg:#fdf2f8;
+  --c-model:#b45309;     --c-model-bg:#fffbeb;
+  --c-tip:#ca8a04;       --c-tip-bg:#fef9c3;
+  --c-struct:#4338ca;    --c-struct-bg:#e0e7ff;
+  /* Sub-category colors for connectors */
+  --c-add:#0e7490;       --c-contrast:#be185d;
+  --c-cause:#15803d;     --c-purpose:#7c3aed;
+  --c-seq:#1d4ed8;       --c-time:#0369a1;
+  --c-emph:#b91c1c;      --c-summ:#7c3aed;
+}
+[data-theme="dark"]{
+  --primary:#67e8f9; --primary-soft:#083344; --primary-mid:#22d3ee; --primary-strong:#a5f3fc;
+  --primary-glow:rgba(103,232,249,.18);
+  --tab-spectrum:#67e8f9;  --tab-spectrum-soft:rgba(103,232,249,.12); --tab-spectrum-mid:#22d3ee;
+  --tab-lexis:#60a5fa;     --tab-lexis-soft:rgba(96,165,250,.12);    --tab-lexis-mid:#3b82f6;
+  --tab-grammar:#c4b5fd;   --tab-grammar-soft:rgba(196,181,253,.12); --tab-grammar-mid:#8b5cf6;
+  --bg:#0a0a0b; --bg-elevated:#131316; --card:#18181b;
+  --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --paper:#1e1e24; --paper-border:#3a3a42;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.2);
+  --shadow:0 4px 16px rgba(0,0,0,.30),0 1px 3px rgba(0,0,0,.20);
+  --shadow-primary:0 6px 24px var(--primary-glow);
+  --c-greet:#a78bfa;     --c-greet-bg:rgba(167,139,250,.10);
+  --c-conn:#22d3ee;      --c-conn-bg:rgba(34,211,238,.10);
+  --c-key:#60a5fa;       --c-key-bg:rgba(96,165,250,.10);
+  --c-close:#f472b6;     --c-close-bg:rgba(244,114,182,.10);
+  --c-model:#fbbf24;     --c-model-bg:rgba(251,191,36,.10);
+  --c-tip:#facc15;       --c-tip-bg:rgba(250,204,21,.10);
+  --c-struct:#a5b4fc;    --c-struct-bg:rgba(165,180,252,.10);
+  --c-add:#22d3ee;       --c-contrast:#f472b6;
+  --c-cause:#4ade80;     --c-purpose:#a78bfa;
+  --c-seq:#60a5fa;       --c-time:#38bdf8;
+  --c-emph:#f87171;      --c-summ:#a78bfa;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+*:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-xs);}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
+
+/* HEADER */
+.site-header{background:linear-gradient(180deg,var(--bg-elevated),var(--bg));padding:32px 20px 22px;position:relative;}
+.site-header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-strong) 20%,var(--border-strong) 80%,transparent);}
+.header-inner{max-width:1000px;margin:0 auto;}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.site-header h1{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:600;letter-spacing:-0.02em;color:var(--text);line-height:1.1;}
+.header-tag{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);background:var(--primary-soft);border-radius:var(--radius-pill);padding:4px 11px;}
+.header-sub{font-size:.88rem;color:var(--text3);font-weight:400;margin-top:4px;line-height:1.55;}
+.header-sub strong{color:var(--primary);font-weight:600;}
+
+/* HEADER ACTIONS BAR */
+.header-actions{max-width:1000px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:8px 14px 8px 11px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.back-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateX(-2px);box-shadow:var(--shadow);}
+.back-btn:active{transform:translateX(-2px) scale(.97);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+
+/* THEME TOGGLE */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.theme-toggle:hover{color:var(--primary);border-color:var(--primary-mid);transform:translateY(-1px);box-shadow:var(--shadow);}
+.theme-toggle .icon-sun{display:none;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+
+/* TABS — per-tab colors */
+.tabs-wrap{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-elevated) 85%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--border);padding:14px 20px;}
+.tabs{max-width:1000px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;}
+.tab{border:1px solid var(--border);border-radius:var(--radius-pill);padding:9px 18px;font-family:inherit;font-size:.85rem;font-weight:500;cursor:pointer;background:var(--card);color:var(--text2);transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:7px;}
+.tab:hover{transform:translateY(-1px);box-shadow:var(--shadow-xs);border-color:var(--tab-c,var(--primary-mid));color:var(--tab-c,var(--primary));}
+.tab.active{background:var(--tab-c,var(--primary));color:#fff;border-color:var(--tab-c,var(--primary));font-weight:600;box-shadow:0 6px 20px color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+[data-theme="dark"] .tab.active{color:#0a0a0b;}
+.tab[data-tab="spectrum"]{--tab-c:var(--tab-spectrum);}
+.tab[data-tab="lexis"]{--tab-c:var(--tab-lexis);}
+.tab[data-tab="grammar"]{--tab-c:var(--tab-grammar);}
+.tab .ico{font-size:1rem;line-height:1;}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:32px 20px 64px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeSlideIn 360ms var(--ease-out);}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* INTRO */
+.intro{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:28px;box-shadow:var(--shadow-xs);}
+.intro h3{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--tab-c,var(--primary));margin-bottom:10px;}
+.intro p{font-size:.92rem;color:var(--text2);line-height:1.65;}
+.intro p strong{color:var(--tab-c,var(--primary));font-weight:600;}
+
+/* TOOLBAR */
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.tool-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:7px 15px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:6px;}
+.tool-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateY(-1px);box-shadow:var(--shadow-xs);}
+.tool-btn .ico{font-size:.85rem;line-height:1;}
+
+/* FONT SIZE SLIDER */
+.fs-control{display:inline-flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:6px 14px;}
+.fs-label{font-family:inherit;font-weight:600;color:var(--text3);line-height:1;user-select:none;}
+.fs-label.small{font-size:.78rem;}
+.fs-label.large{font-size:1.1rem;}
+.fs-slider{-webkit-appearance:none;appearance:none;width:100px;height:4px;background:var(--border-strong);border-radius:2px;outline:none;cursor:pointer;accent-color:var(--primary);}
+.fs-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);transition:transform var(--t-fast) var(--ease);}
+.fs-slider::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.fs-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);}
+.fs-value{font-size:.72rem;font-weight:600;color:var(--text3);min-width:32px;text-align:right;}
+
+/* SECTION (collapsible) */
+.section{margin-bottom:14px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow var(--t-base) var(--ease);}
+.section:hover{box-shadow:var(--shadow);}
+.section-header{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;user-select:none;transition:background var(--t-base) var(--ease);background:transparent;}
+.section-header:hover{background:var(--bg-elevated);}
+.section:not(.collapsed) .section-header{border-bottom:1px solid var(--border);}
+.section-icon{width:38px;height:38px;border-radius:var(--radius-sm);display:inline-flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;background:transparent!important;border:2px solid var(--section-c,var(--primary));color:var(--section-c,var(--primary));}
+.section-title{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--text);line-height:1.2;}
+.section-desc{font-size:.78rem;color:var(--text3);margin-top:2px;line-height:1.45;}
+.section-header > div:not(.section-icon){flex:1;}
+.section-header::after{content:"▾";font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease);margin-left:8px;flex-shrink:0;font-weight:600;}
+.section.collapsed .section-header::after{transform:rotate(-90deg);}
+.section.collapsed .section-header:hover::after{color:var(--primary);}
+.section-count{font-size:.7rem;font-weight:600;color:var(--text3);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px 10px;margin-left:auto;flex-shrink:0;transition:all var(--t-base) var(--ease);}
+.section-header:hover .section-count{border-color:var(--primary-mid);color:var(--primary);}
+.section > .grid, .section > .stack, .section > .papers, .section > .tips-list, .section > .blueprint{padding:18px 20px 20px;}
+.section.collapsed > *:not(.section-header){display:none!important;}
+
+/* GRID + ITEM */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.item{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 30%,transparent)!important;border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-xs);transition:transform var(--t-base) var(--ease),box-shadow var(--t-base) var(--ease),border-color var(--t-base) var(--ease);border-left:4px solid var(--section-c,var(--primary))!important;}
+.item:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--section-c,var(--primary-mid))!important;}
+.item-head{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.item-term{font-family:'Manrope','Inter',sans-serif;font-size:1.02rem;font-weight:700;letter-spacing:-0.005em;color:var(--section-c,var(--text));line-height:1.3;}
+.item-trans{font-size:.76rem;color:var(--text3);font-style:italic;}
+.item-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;}
+.item-list li{font-size:.88rem;color:var(--text2);line-height:1.5;padding:5px 0 5px 12px;border-left:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);}
+.item-list li strong{color:var(--text);font-weight:600;}
+
+/* STACK (single-column phrase list, for A/C/D sections) */
+.stack{display:flex;flex-direction:column;gap:8px;}
+.phrase{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-sm);padding:10px 14px;font-size:.92rem;color:var(--text2);line-height:1.5;transition:all var(--t-base) var(--ease);}
+.phrase:hover{transform:translateX(2px);border-color:var(--section-c,var(--primary));box-shadow:var(--shadow-xs);}
+.phrase strong{color:var(--text);font-weight:600;}
+.phrase .hint{font-size:.74rem;color:var(--text3);font-style:italic;margin-left:6px;}
+
+/* PAPER (model examples) */
+.papers{display:flex;flex-direction:column;gap:14px;}
+.paper{background:var(--paper);border:1px solid var(--paper-border);border-radius:var(--radius-md);padding:22px 26px;box-shadow:var(--shadow-sm);position:relative;transition:box-shadow var(--t-base) var(--ease);}
+.paper:hover{box-shadow:var(--shadow);}
+.paper::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--tab-c,var(--primary)),transparent);border-radius:var(--radius-md) var(--radius-md) 0 0;}
+.paper-header{display:flex;align-items:flex-start;gap:14px;cursor:pointer;user-select:none;}
+.paper-header > div:first-child{flex:1;min-width:0;}
+.paper-header .paper-meta{margin-bottom:0;}
+.paper-toggle{font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease),color var(--t-base) var(--ease);flex-shrink:0;font-weight:700;line-height:1.4;}
+.paper-header:hover .paper-toggle,.paper-header:hover .paper-title{color:var(--tab-c,var(--primary));}
+.paper.collapsed .paper-toggle{transform:rotate(-90deg);}
+.paper.collapsed .paper-body{display:none;}
+.paper:not(.collapsed) .paper-body{margin-top:18px;}
+.paper-title{font-family:'Fraunces',Georgia,serif;font-size:1.05rem;font-weight:600;color:var(--tab-c,var(--primary));margin-bottom:6px;letter-spacing:-0.01em;transition:color var(--t-base) var(--ease);}
+.paper-meta{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:18px;}
+.paper-body{font-family:'Inter',sans-serif;font-size:.94rem;line-height:1.8;color:var(--text);}
+.paper-body p{margin-bottom:12px;}
+.paper-body p:last-child{margin-bottom:0;}
+.paper-body em{font-style:italic;color:var(--text2);}
+
+/* COLOR-CODED INLINE PHRASES IN MODELS — match theory section colors */
+.paper-body .k-open    {color:var(--c-greet);    font-weight:600;}
+.paper-body .k-add     {color:var(--c-add);      font-weight:600;}
+.paper-body .k-contrast{color:var(--c-contrast); font-weight:600;}
+.paper-body .k-cause   {color:var(--c-cause);    font-weight:600;}
+.paper-body .k-concess {color:var(--c-purpose);  font-weight:600;}
+.paper-body .k-purpose {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-seq     {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-time    {color:var(--c-time);     font-weight:600;}
+.paper-body .k-emph    {color:var(--c-emph);     font-weight:600;}
+.paper-body .k-summ    {color:var(--c-summ);     font-weight:600;}
+.paper-body .k-key     {color:var(--c-key);      font-weight:600;}
+.paper-body .k-close   {color:var(--c-close);    font-weight:600;}
+
+/* STRUCTURE BLUEPRINT (vertical timeline) */
+.blueprint{display:flex;flex-direction:column;gap:0;position:relative;}
+.step{display:flex;gap:14px;align-items:flex-start;position:relative;padding:6px 0 14px 0;}
+.step::before{content:"";position:absolute;left:18px;top:42px;bottom:-4px;width:2px;background:color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);}
+.step:last-of-type::before{display:none;}
+.step-num{width:38px;height:38px;border-radius:50%;background:var(--card);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--section-c,var(--primary));position:relative;z-index:1;}
+.step-body{flex:1;min-width:0;padding-top:6px;}
+.step-body h5{font-family:'Manrope',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-0.005em;}
+.step-body .step-meta{font-size:.72rem;color:var(--text3);font-style:italic;margin-bottom:6px;font-weight:500;}
+.step-body > p{font-size:.86rem;color:var(--text2);line-height:1.55;margin-bottom:9px;}
+.step-phrases{display:flex;flex-wrap:wrap;gap:5px;}
+.step-phrases span{font-size:.76rem;color:var(--section-c,var(--primary));background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);padding:4px 11px;border-radius:var(--radius-pill);font-weight:600;line-height:1.4;transition:all var(--t-base) var(--ease);}
+.step-phrases span:hover{background:color-mix(in srgb,var(--section-c,var(--primary)) 24%,transparent);border-color:var(--section-c,var(--primary));}
+.blueprint-footer{margin-top:6px;padding:12px 16px;background:color-mix(in srgb,var(--section-c,var(--primary)) 10%,transparent);border-radius:var(--radius-md);font-size:.86rem;color:var(--text2);display:flex;align-items:center;gap:10px;border:1px dashed color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);}
+.blueprint-footer strong{color:var(--section-c,var(--primary));font-weight:600;}
+.blueprint-footer .footer-ico{font-size:1rem;flex-shrink:0;}
+
+/* TIPS SECTION */
+.tips-list{display:flex;flex-direction:column;gap:10px;}
+.tip{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-md);padding:14px 16px;display:flex;gap:14px;align-items:flex-start;transition:all var(--t-base) var(--ease);}
+.tip:hover{transform:translateX(2px);box-shadow:var(--shadow-xs);border-color:var(--section-c,var(--primary));}
+.tip.warn{--section-c:var(--c-emph);}
+.tip-icon{font-size:.9rem;flex-shrink:0;line-height:1;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);color:var(--section-c,var(--primary));font-weight:800;margin-top:1px;}
+.tip-body{flex:1;min-width:0;}
+.tip-body h5{font-family:'Manrope',sans-serif;font-size:.95rem;font-weight:700;color:var(--section-c,var(--primary));margin-bottom:4px;letter-spacing:-0.005em;line-height:1.3;}
+.tip-body p{font-size:.86rem;color:var(--text2);line-height:1.55;}
+.tip-body p em{color:var(--text);font-style:normal;background:var(--bg-elevated);padding:1px 5px;border-radius:var(--radius-xs);font-size:.92em;font-weight:500;}
+
+/* INLINE STRUCTURAL LABELS */
+.label{display:inline-block;font-family:'JetBrains Mono','Manrope',sans-serif;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:var(--radius-xs);background:var(--tab-c-soft,var(--primary-soft));color:var(--tab-c,var(--primary));margin-right:6px;vertical-align:middle;border:1px solid color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+
+/* CALLOUT */
+.callout{background:var(--tab-c-soft,var(--primary-soft));border-radius:var(--radius-md);padding:14px 16px;margin:0 0 24px;font-size:.88rem;color:var(--text2);line-height:1.6;border-left:3px solid var(--tab-c,var(--primary));}
+.callout strong{color:var(--tab-c,var(--primary));font-weight:600;}
+.callout .ico{font-size:1rem;margin-right:5px;}
+
+/* Set tab-c-soft based on active panel */
+.tab-panel[data-tab="spectrum"]{--tab-c:var(--tab-spectrum);--tab-c-soft:var(--tab-spectrum-soft);}
+.tab-panel[data-tab="lexis"]{--tab-c:var(--tab-lexis);--tab-c-soft:var(--tab-lexis-soft);}
+.tab-panel[data-tab="grammar"]{--tab-c:var(--tab-grammar);--tab-c-soft:var(--tab-grammar-soft);}
+
+@media (max-width: 600px){
+  .paper{padding:20px 18px;}
+  .paper-body{font-size:.88rem;}
+  .grid{grid-template-columns:1fr;}
+}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-xs);margin:0 0 4px;}
+.gram-table{width:100%;border-collapse:collapse;background:var(--card);font-size:.88rem;}
+.gram-table caption{caption-side:top;text-align:left;font-family:'Manrope',sans-serif;font-weight:700;color:var(--section-c,var(--primary));padding:0 0 8px;font-size:.9rem;}
+.gram-table th{background:color-mix(in srgb,var(--section-c,var(--primary)) 12%,transparent);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;text-align:left;padding:10px 14px;border-bottom:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;}
+.gram-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);line-height:1.5;vertical-align:top;}
+.gram-table tr:last-child td{border-bottom:none;}
+.gram-table tbody tr{transition:background var(--t-fast) var(--ease);}
+.gram-table tbody tr:hover{background:var(--bg-elevated);}
+.gram-table td strong,.gram-table .en{color:var(--text);font-weight:600;}
+.gram-table .es{font-style:italic;color:var(--text3);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-actions">
+    <a class="back-btn" href="index.html" title="Volver al índice">
+      <span class="arrow">←</span><span>Inicio</span>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>🎚️ Register · Registro</h1>
+      <span class="header-tag">Linguaskill B2 · B2–C1</span>
+    </div>
+    <p class="header-sub">
+      Cómo elegir y mantener el <strong>tono adecuado</strong>: formal · neutral · informal · léxico (verbo latino vs phrasal) · gramática (contracciones, pasiva, nominalización) · <strong>criterio evaluado</strong> en Writing P1, P2 y Speaking.
+    </p>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" data-tab="spectrum" onclick="showTab('spectrum', this)">
+      <span class="ico">🎚️</span><span>El espectro</span>
+    </button>
+    <button class="tab" data-tab="lexis" onclick="showTab('lexis', this)">
+      <span class="ico">🔤</span><span>Léxico y equivalencias</span>
+    </button>
+    <button class="tab" data-tab="grammar" onclick="showTab('grammar', this)">
+      <span class="ico">🧱</span><span>Gramática del registro</span>
+    </button>
+  </div>
+</div>
+
+<main class="main">
+
+<div class="toolbar">
+  <div class="fs-control" title="Tamaño del texto">
+    <span class="fs-label small">A</span>
+    <input type="range" class="fs-slider" id="fs-slider" min="85" max="140" step="5" value="100" oninput="updateFontSize(this.value)">
+    <span class="fs-label large">A</span>
+    <span class="fs-value" id="fs-value">100%</span>
+  </div>
+  <div class="toolbar-actions">
+    <button class="tool-btn" onclick="expandAll()"><span class="ico">▾</span>Expandir todos</button>
+    <button class="tool-btn" onclick="collapseAll()"><span class="ico">▸</span>Colapsar todos</button>
+  </div>
+</div>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 1: SPECTRUM ============================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel active" id="spectrum" data-tab="spectrum">
+
+  <div class="intro">
+    <h3>El espectro · Formal · neutral · informal</h3>
+    <p>El inglés discrimina el registro <strong>mucho más</strong> que el español. El examinador del Linguaskill puntúa explícitamente si el registro es <strong>apropiado al destinatario</strong> y <strong>coherente</strong> en todo el texto. Aquí ves los tres niveles, cuándo se usa cada uno y cómo se reformula la misma idea en cada registro.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Regla de coherencia:</strong> un texto, un registro. Mezclar <em>"Dear Mr Smith"</em> con <em>"BTW, thanks a million!"</em> es uno de los errores que el examinador detecta en la primera lectura y se penaliza directamente.
+  </div>
+
+  <!-- A. TRES NIVELES -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">⭐</div>
+      <div>
+        <div class="section-title">A. Tres niveles · cuándo y dónde se usa cada uno</div>
+        <div class="section-desc">Formal · Neutral · Informal: contexto, marcas y saludos</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">Formal</span><span class="item-trans">registro alto · impersonal</span></div>
+        <ul class="item-list">
+          <li><strong>Dónde:</strong> emails formales (queja, solicitud), cover letters, <strong>ensayo discursivo</strong> del Linguaskill, documentos legales, papers académicos.</li>
+          <li><strong>Speaking:</strong> discursos, presentaciones, entrevistas oficiales.</li>
+          <li><strong>Marcas:</strong> sin contracciones · verbos latinos (<em>request, require, assist</em>) · pasiva frecuente · nominalización.</li>
+          <li><strong>Apertura:</strong> <em>Dear Sir/Madam,</em> · <em>Dear Mr/Ms Smith,</em></li>
+          <li><strong>Cierre:</strong> <em>Yours faithfully,</em> · <em>Yours sincerely,</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-conn)">
+        <div class="item-head"><span class="item-term">Neutral</span><span class="item-trans">registro estándar · profesional</span></div>
+        <ul class="item-list">
+          <li><strong>Dónde:</strong> email a un colega que no conoces personalmente, reports, news articles, BBC English, customer service.</li>
+          <li><strong>Speaking:</strong> reuniones profesionales, trato con desconocidos, exámenes orales.</li>
+          <li><strong>Marcas:</strong> contracciones moderadas · phrasal verbs comunes · sin slang · sintaxis estándar.</li>
+          <li><strong>Apertura:</strong> <em>Dear Anna,</em> · <em>Hello James,</em></li>
+          <li><strong>Cierre:</strong> <em>Kind regards,</em> · <em>Best regards,</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">Informal</span><span class="item-trans">registro cercano · conversacional</span></div>
+        <ul class="item-list">
+          <li><strong>Dónde:</strong> email/WhatsApp a amigos y familia, redes sociales, blogs personales.</li>
+          <li><strong>Speaking:</strong> con amigos, familia, compañeros de la misma edad.</li>
+          <li><strong>Marcas:</strong> contracciones siempre · phrasal verbs · slang aceptable · elipsis · exclamaciones.</li>
+          <li><strong>Apertura:</strong> <em>Hi Sam!</em> · <em>Hey Anna,</em></li>
+          <li><strong>Cierre:</strong> <em>Take care,</em> · <em>Cheers,</em> · <em>Love,</em></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- C. MISMA IDEA EN TRES REGISTROS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">💬</div>
+      <div>
+        <div class="section-title">C. Misma idea, tres registros</div>
+        <div class="section-desc">La misma intención reformulada para que veas el contraste de un vistazo</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase">
+        <strong>Disculparse por no asistir a una reunión</strong><br>
+        <span class="hint">formal</span> I am writing to apologise for my absence from yesterday's meeting.<br>
+        <span class="hint">neutral</span> I'm sorry I missed the meeting yesterday.<br>
+        <span class="hint">informal</span> Hey, sorry I couldn't make it yesterday!
+      </div>
+      <div class="phrase">
+        <strong>Pedir información sobre un curso</strong><br>
+        <span class="hint">formal</span> I am writing to enquire about the availability of your summer course.<br>
+        <span class="hint">neutral</span> Could you let me know if the summer course is still open?<br>
+        <span class="hint">informal</span> Hi, is there still room on the summer course?
+      </div>
+      <div class="phrase">
+        <strong>Rechazar una invitación</strong><br>
+        <span class="hint">formal</span> I regret to inform you that I will be unable to attend.<br>
+        <span class="hint">neutral</span> I'm afraid I can't come.<br>
+        <span class="hint">informal</span> Sorry, I can't make it!
+      </div>
+      <div class="phrase">
+        <strong>Confirmar asistencia</strong><br>
+        <span class="hint">formal</span> I am pleased to confirm my attendance at the conference on Friday.<br>
+        <span class="hint">neutral</span> I can confirm I'll be at the conference on Friday.<br>
+        <span class="hint">informal</span> Yeah, I'll be there Friday!
+      </div>
+      <div class="phrase">
+        <strong>Agradecer ayuda</strong><br>
+        <span class="hint">formal</span> I am extremely grateful for your kind assistance.<br>
+        <span class="hint">neutral</span> Thanks very much for your help.<br>
+        <span class="hint">informal</span> Thanks a million — you're a lifesaver!
+      </div>
+      <div class="phrase">
+        <strong>Pedir una respuesta</strong><br>
+        <span class="hint">formal</span> I would appreciate your reply at your earliest convenience.<br>
+        <span class="hint">neutral</span> Could you get back to me when you have a moment?<br>
+        <span class="hint">informal</span> Let me know when you can!
+      </div>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS HISPANO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Interferencias del español que rompen el registro en inglés</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Los verbos latinos suenan FORMALES en inglés</h5>
+          <p>Para un hispanohablante <em>obtain</em>, <em>require</em>, <em>commence</em> suenan «normales» (son <em>obtener</em>, <em>requerir</em>, <em>comenzar</em>). En inglés son <strong>marcadamente formales</strong>: usarlos en un email a un amigo suena pedante. El día a día anglosajón prefiere <em>get</em>, <em>need</em>, <em>start</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Contracciones SOLO en informal/neutral</h5>
+          <p><em>I'm, don't, won't, it's</em> son <strong>incompatibles</strong> con el registro formal. En un email formal o en el essay del Linguaskill escribe siempre la forma completa: <em>I am, do not, will not, it is</em>. Una sola contracción ya marca el texto como informal.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>«Hi / Hey» no aparece en un email formal</h5>
+          <p>En español <em>«Hola Juan,»</em> puede valer en un email semi-formal; en inglés <em>"Hi"</em> y <em>"Hey"</em> son saludos coloquiales. Para una queja o solicitud usa <em>Dear Sir/Madam</em> o <em>Dear Mr/Ms [Apellido]</em>. El neutral acepta <em>Dear Anna</em>; el coloquial, <em>Hi Anna!</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>No mezcles registros en el mismo texto</h5>
+          <p>Si abres con <em>"Dear Sir/Madam,"</em> no puedes cerrar con <em>"Cheers!"</em> ni soltar un <em>"by the way,"</em> en medio. La <strong>coherencia de registro</strong> es uno de los descriptores explícitos del Linguaskill Writing: una sola mezcla baja la nota global.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>El inglés marca más la distancia formal</h5>
+          <p>El español es <strong>más uniforme</strong> entre registros (mismo léxico, cambio sobre todo de tono y de tuteo). El inglés marca el formal con <em>pasiva</em> (<em>"It has been decided that…"</em>) y <em>nominalización</em> (<em>"the implementation of the policy"</em> en lugar de <em>"when the policy was implemented"</em>). Sin esas dos palancas, el texto suena demasiado oral.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>«Please» no salva un tono inadecuado</h5>
+          <p>Añadir <em>"please"</em> no convierte una frase informal en formal. <em>"Please send it asap"</em> sigue siendo coloquial. La versión formal es <em>"I would be grateful if you could send it at your earliest convenience"</em>: cambia <strong>la estructura entera</strong>, no solo añade cortesía.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 2: LEXIS ================================ -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="lexis" data-tab="lexis">
+
+  <div class="intro">
+    <h3>Léxico y equivalencias · Vocabulary register</h3>
+    <p>El léxico es <strong>la marca más visible</strong> del registro. La regla: cuando hay un <strong>verbo latino</strong> (de raíz greco-latina) y un <strong>phrasal verb</strong> que significan lo mismo, el verbo latino es la opción <strong>formal</strong> y el phrasal es la <strong>coloquial</strong>. Cambiar uno por otro sube o baja el registro al instante, sin tocar el resto de la frase.</p>
+  </div>
+
+  <!-- A. VERBO LATINO VS PHRASAL — TABLE -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">🔤</div>
+      <div>
+        <div class="section-title">A. Verbo latino vs phrasal verb</div>
+        <div class="section-desc">14 pares clave para subir o bajar el registro con un solo cambio</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead>
+            <tr>
+              <th style="width:22%">Formal · latinate</th>
+              <th style="width:22%">Informal · phrasal</th>
+              <th style="width:18%">Significado</th>
+              <th>Ejemplo en contexto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="en">request</span></td><td><span class="en">ask for</span></td><td><span class="es">pedir</span></td><td>I would like to <strong>request</strong> a meeting. / Can I <strong>ask for</strong> a coffee?</td></tr>
+            <tr><td><span class="en">require</span></td><td><span class="en">need</span></td><td><span class="es">necesitar</span></td><td>All staff are <strong>required</strong> to wear ID. / I <strong>need</strong> a pen.</td></tr>
+            <tr><td><span class="en">assist</span></td><td><span class="en">help</span></td><td><span class="es">ayudar</span></td><td>May I <strong>assist</strong> you, madam? / Can you <strong>help</strong> me with this?</td></tr>
+            <tr><td><span class="en">obtain</span></td><td><span class="en">get</span></td><td><span class="es">obtener, conseguir</span></td><td>A copy may be <strong>obtained</strong> at reception. / I <strong>got</strong> the tickets online.</td></tr>
+            <tr><td><span class="en">purchase</span></td><td><span class="en">buy</span></td><td><span class="es">comprar</span></td><td>Items <strong>purchased</strong> online may be returned. / I <strong>bought</strong> a new phone yesterday.</td></tr>
+            <tr><td><span class="en">inform</span></td><td><span class="en">tell · let (sb) know</span></td><td><span class="es">informar, decir</span></td><td>Please be <strong>informed</strong> that the office is closed. / <strong>Tell</strong> me when you arrive.</td></tr>
+            <tr><td><span class="en">apologise</span></td><td><span class="en">say sorry</span></td><td><span class="es">disculparse</span></td><td>I <strong>apologise</strong> for the delay. / He didn't even <strong>say sorry</strong>.</td></tr>
+            <tr><td><span class="en">establish</span></td><td><span class="en">set up</span></td><td><span class="es">fundar, montar</span></td><td>The company was <strong>established</strong> in 1990. / She <strong>set up</strong> her own business last year.</td></tr>
+            <tr><td><span class="en">enquire</span></td><td><span class="en">ask about</span></td><td><span class="es">preguntar por</span></td><td>I am writing to <strong>enquire</strong> about the course. / I want to <strong>ask about</strong> the timetable.</td></tr>
+            <tr><td><span class="en">attempt</span></td><td><span class="en">try</span></td><td><span class="es">intentar</span></td><td>We have <strong>attempted</strong> to contact you. / I <strong>tried</strong> to call you twice.</td></tr>
+            <tr><td><span class="en">commence</span></td><td><span class="en">start · begin</span></td><td><span class="es">empezar</span></td><td>The meeting will <strong>commence</strong> at 10 a.m. / We <strong>start</strong> at ten.</td></tr>
+            <tr><td><span class="en">terminate</span></td><td><span class="en">end · finish</span></td><td><span class="es">terminar</span></td><td>The contract <strong>terminates</strong> in May. / The film <strong>ends</strong> at midnight.</td></tr>
+            <tr><td><span class="en">resolve</span></td><td><span class="en">sort out</span></td><td><span class="es">resolver</span></td><td>We will <strong>resolve</strong> the matter promptly. / Don't worry, I'll <strong>sort it out</strong>.</td></tr>
+            <tr><td><span class="en">discover</span></td><td><span class="en">find out</span></td><td><span class="es">descubrir, enterarse</span></td><td>It was <strong>discovered</strong> that the report was inaccurate. / I just <strong>found out</strong> she's leaving.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- B. PALABRAS A EVITAR EN FORMAL -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">B. Palabras a evitar en un texto formal</div>
+        <div class="section-desc">Coloquialismos frecuentes y sus alternativas formales</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-emph)">
+        <div class="item-head"><span class="item-term">stuff</span><span class="item-trans">cosas, material</span></div>
+        <ul class="item-list">
+          <li>→ <strong>items</strong></li>
+          <li>→ <strong>belongings</strong> (objetos personales)</li>
+          <li>→ <strong>equipment / material</strong></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-emph)">
+        <div class="item-head"><span class="item-term">guys</span><span class="item-trans">tíos, chicos</span></div>
+        <ul class="item-list">
+          <li>→ <strong>colleagues</strong> (en el trabajo)</li>
+          <li>→ <strong>team / people</strong></li>
+          <li>→ <strong>everyone</strong> (para dirigirse al grupo)</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-emph)">
+        <div class="item-head"><span class="item-term">thing</span><span class="item-trans">cosa, tema</span></div>
+        <ul class="item-list">
+          <li>→ <strong>matter / issue</strong> (asunto)</li>
+          <li>→ <strong>aspect / point</strong> (en argumentación)</li>
+          <li>→ <strong>item</strong> (objeto físico)</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-emph)">
+        <div class="item-head"><span class="item-term">kids</span><span class="item-trans">críos, niños</span></div>
+        <ul class="item-list">
+          <li>→ <strong>children</strong></li>
+          <li>→ <strong>young people</strong> (adolescentes)</li>
+          <li>→ <strong>minors</strong> (legal)</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-emph)">
+        <div class="item-head"><span class="item-term">a lot of</span><span class="item-trans">muchos, mucho</span></div>
+        <ul class="item-list">
+          <li>→ <strong>a great deal of</strong> (incontable)</li>
+          <li>→ <strong>numerous / a number of</strong> (contable)</li>
+          <li>→ <strong>considerable / substantial</strong></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-emph)">
+        <div class="item-head"><span class="item-term">OK / okay</span><span class="item-trans">vale, bien</span></div>
+        <ul class="item-list">
+          <li>→ <strong>acceptable</strong></li>
+          <li>→ <strong>satisfactory</strong></li>
+          <li>→ <strong>suitable / appropriate</strong></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-emph)">
+        <div class="item-head"><span class="item-term">really nice</span><span class="item-trans">muy bueno, agradable</span></div>
+        <ul class="item-list">
+          <li>→ <strong>excellent / outstanding</strong></li>
+          <li>→ <strong>highly satisfactory</strong></li>
+          <li>→ <strong>commendable</strong> (digno de elogio)</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-emph)">
+        <div class="item-head"><span class="item-term">get</span><span class="item-trans">conseguir, recibir, llegar…</span></div>
+        <ul class="item-list">
+          <li>→ <strong>receive</strong> (recibir)</li>
+          <li>→ <strong>obtain / acquire</strong> (conseguir)</li>
+          <li>→ <strong>arrive at / reach</strong> (llegar)</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-emph)">
+        <div class="item-head"><span class="item-term">big</span><span class="item-trans">grande, importante</span></div>
+        <ul class="item-list">
+          <li>→ <strong>significant</strong> (importante)</li>
+          <li>→ <strong>substantial / considerable</strong></li>
+          <li>→ <strong>major</strong> (decisivo)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 3: GRAMMAR ============================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="grammar" data-tab="grammar">
+
+  <div class="intro">
+    <h3>Gramática del registro · Grammatical markers</h3>
+    <p>Más allá del léxico, la <strong>gramática</strong> también marca el registro. Cuatro palancas clave: <strong>contracciones</strong>, <strong>phrasal verbs vs verbos latinos</strong>, <strong>voz pasiva + nominalización</strong>, y <strong>elipsis + question tags</strong>. Saber pulsar cada una permite ajustar el tono sin reescribir el contenido.</p>
+  </div>
+
+  <!-- A. MARCADORES GRAMATICALES — TABLE -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">🧱</div>
+      <div>
+        <div class="section-title">A. Marcadores gramaticales del registro</div>
+        <div class="section-desc">Ocho mecanismos que delatan el nivel formal/informal de una frase</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead>
+            <tr>
+              <th style="width:18%">Marcador</th>
+              <th style="width:32%">Formal</th>
+              <th style="width:30%">Neutral / Informal</th>
+              <th>Por qué</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Contracciones</strong></td>
+              <td><span class="en">I am writing · do not · will not · cannot</span></td>
+              <td><span class="en">I'm writing · don't · won't · can't</span></td>
+              <td>Marca nº 1 de informalidad. Una sola contracción rompe el registro formal.</td>
+            </tr>
+            <tr>
+              <td><strong>Phrasal verbs</strong></td>
+              <td><span class="en">postpone · distribute · investigate</span></td>
+              <td><span class="en">put off · hand out · look into</span></td>
+              <td>Phrasal verb (anglosajón) = informal · verbo latino = formal.</td>
+            </tr>
+            <tr>
+              <td><strong>Voz pasiva</strong></td>
+              <td><span class="en">It has been decided that the policy will change.</span></td>
+              <td><span class="en">We've decided to change the policy.</span></td>
+              <td>La pasiva esconde al agente → distancia, impersonalidad, registro formal.</td>
+            </tr>
+            <tr>
+              <td><strong>Nominalización</strong></td>
+              <td><span class="en">The implementation of the policy was delayed.</span></td>
+              <td><span class="en">They delayed implementing the policy.</span></td>
+              <td>Convertir verbos en sustantivos abstractos (<em>implement → implementation</em>) sube el registro.</td>
+            </tr>
+            <tr>
+              <td><strong>Question tags</strong></td>
+              <td><span class="es">(prácticamente ausentes)</span></td>
+              <td><span class="en">It's cold today, isn't it? · You're coming, aren't you?</span></td>
+              <td>Marca conversacional muy informal. Casi nunca en escritura formal.</td>
+            </tr>
+            <tr>
+              <td><strong>Elipsis</strong></td>
+              <td><span class="en">Would you like a coffee? · I will see you later.</span></td>
+              <td><span class="en">Want a coffee? · See you later. · Got it?</span></td>
+              <td>Omitir sujeto o auxiliar = registro coloquial oral.</td>
+            </tr>
+            <tr>
+              <td><strong>Modales tentativos</strong></td>
+              <td><span class="en">I would be grateful if you could send the report.</span></td>
+              <td><span class="en">Can you send the report?</span></td>
+              <td><em>Would/could/might</em> añaden distancia cortés → formal. <em>Can/will</em> = directo.</td>
+            </tr>
+            <tr>
+              <td><strong>Subordinación</strong></td>
+              <td><span class="en">Although the report was completed late, the conclusions remain valid.</span></td>
+              <td><span class="en">The report was late. But the conclusions are still OK.</span></td>
+              <td>Frases largas con subordinadas = formal. Frases cortas yuxtapuestas = informal.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- E. EN CONTEXTO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-model)">📄</div>
+      <div>
+        <div class="section-title">E. En contexto · mismo mensaje, dos registros</div>
+        <div class="section-desc">Un mismo encargo (pedir ampliación de plazo) escrito en formal y en informal · marcadores resaltados</div>
+      </div>
+    </div>
+    <div class="papers">
+
+      <!-- PAPER 1: FORMAL -->
+      <article class="paper">
+        <h4 class="paper-title">📧 Versión formal · email a un profesor / supervisor</h4>
+        <div class="paper-meta">Subject: Request for an extension to the deadline · ~120 palabras</div>
+        <div class="paper-body">
+          <p>Dear Dr Hughes,</p>
+          <p><span class="k-key">I am writing to request</span> a brief extension to the deadline for the final report. Due to <span class="k-key">unforeseen personal circumstances</span>, <span class="k-key">I have been unable</span> to complete the project to the standard <span class="k-key">I would wish</span>.</p>
+          <p><span class="k-key">I would be most grateful if you could grant</span> me an additional three working days <span class="k-key">to finalise</span> my submission. Should this be possible, <span class="k-key">I would be happy to provide</span> any further documentation <span class="k-key">you may require</span>.</p>
+          <p>Thank you for your consideration.</p>
+          <p><span class="k-key">Yours sincerely,</span><br>Marta García</p>
+          <p><em>Marcadores formales (azul):</em> verbos latinos (<em>request, grant, finalise, provide, require</em>) · formas completas sin contracciones (<em>I am, I have been, I would</em>) · modales tentativos (<em>would, could, may</em>) · cláusula condicional invertida (<em>Should this be possible</em>) · cierre <em>Yours sincerely</em>.</p>
+        </div>
+      </article>
+
+      <!-- PAPER 2: INFORMAL -->
+      <article class="paper">
+        <h4 class="paper-title">💬 Versión informal · mensaje a una compañera de equipo</h4>
+        <div class="paper-meta">Subject: A bit of help with the deadline? · ~120 palabras</div>
+        <div class="paper-body">
+          <p>Hi Jane,</p>
+          <p><span class="k-key">Hope you're doing well</span>! Just a quick one — <span class="k-key">I've</span> <span class="k-key">run into</span> a bit of a problem with the final report and <span class="k-key">I won't</span> be able to <span class="k-key">get it in</span> by Friday. Something's <span class="k-key">come up</span> at home and <span class="k-key">I haven't</span> been able to finish it the way <span class="k-key">I'd</span> like.</p>
+          <p>Any chance I could have a couple more days? <span class="k-key">I promise I'll</span> <span class="k-key">get it over to you</span> by Monday. <span class="k-key">Let me know</span>!</p>
+          <p><span class="k-key">Thanks a million</span> 🙏</p>
+          <p><span class="k-key">Cheers,</span><br>Marta</p>
+          <p><em>Marcadores informales (azul):</em> contracciones (<em>I've, I'd, I'll, won't, haven't, you're</em>) · phrasal verbs (<em>run into, come up, get in, get over to</em>) · saludo coloquial (<em>Hi</em>) · expresiones idiomáticas (<em>a bit of, thanks a million, just a quick one</em>) · cierre <em>Cheers</em>.</p>
+        </div>
+      </article>
+
+      <!-- PAPER 3: QUICK REFERENCE -->
+      <article class="paper">
+        <h4 class="paper-title">📋 Quick reference · qué registro usar en cada caso</h4>
+        <div class="paper-meta">Mini guía de decisión para el Linguaskill · 30 segundos</div>
+        <div class="paper-body">
+          <p><span class="k-key">¿Quién es el lector?</span> Si es <em>una autoridad</em> (jefe, profesor, institución que no conoces) → <strong>formal</strong>. Si es <em>un colega o desconocido en contexto profesional</em> → <strong>neutral</strong>. Si es <em>un amigo, familiar o peer</em> → <strong>informal</strong>.</p>
+          <p><span class="k-key">¿Qué tipo de texto es?</span> Queja, solicitud oficial, cover letter, ensayo del Linguaskill → <strong>formal</strong>. Email profesional rutinario, report, news → <strong>neutral</strong>. WhatsApp, redes, mensaje a amigos → <strong>informal</strong>.</p>
+          <p><span class="k-key">¿Linguaskill Writing P1?</span> Si el enunciado dice <em>"write an email to your manager / a company / a teacher"</em> → <strong>formal</strong>. Si dice <em>"to a friend / to your classmate"</em> → <strong>informal</strong>. El enunciado SIEMPRE lo indica.</p>
+          <p><span class="k-key">¿Linguaskill Writing P2 (essay)?</span> Siempre <strong>semi-formal a formal</strong>: sin contracciones, conectores académicos, opinión razonada con pasiva ocasional.</p>
+          <p><span class="k-key">Antes de entregar:</span> relee la primera y la última frase. ¿El saludo y la despedida pertenecen al mismo registro? ¿Hay alguna contracción colada en un texto formal? Si la respuesta no es clara, reescribe.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+/* THEME */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("theme",t);}catch(e){}}
+function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme")||"light";applyTheme(cur==="dark"?"light":"dark");}
+(function initTheme(){let saved=null;try{saved=localStorage.getItem("theme");}catch(e){}if(saved==="dark"||saved==="light"){applyTheme(saved);return;}const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;applyTheme(prefersDark?"dark":"light");})();
+
+/* TABS */
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* SECTIONS */
+function toggleSection(header){
+  header.parentElement.classList.toggle('collapsed');
+}
+function getActiveSections(){
+  return document.querySelectorAll('.tab-panel.active .section');
+}
+function getActivePapers(){
+  return document.querySelectorAll('.tab-panel.active .paper');
+}
+function expandAll(){
+  getActiveSections().forEach(s => s.classList.remove('collapsed'));
+  getActivePapers().forEach(p => p.classList.remove('collapsed'));
+}
+function collapseAll(){
+  getActiveSections().forEach(s => s.classList.add('collapsed'));
+  getActivePapers().forEach(p => p.classList.add('collapsed'));
+}
+
+/* MODEL PAPERS — wrap title+meta in a clickable header, collapse by default */
+document.querySelectorAll('.paper').forEach(paper => {
+  const title = paper.querySelector('.paper-title');
+  const meta = paper.querySelector('.paper-meta');
+  if(!title || !meta) return;
+  const header = document.createElement('div');
+  header.className = 'paper-header';
+  const wrap = document.createElement('div');
+  wrap.appendChild(title);
+  wrap.appendChild(meta);
+  const toggle = document.createElement('span');
+  toggle.className = 'paper-toggle';
+  toggle.textContent = '▾';
+  header.appendChild(wrap);
+  header.appendChild(toggle);
+  header.addEventListener('click', () => paper.classList.toggle('collapsed'));
+  paper.insertBefore(header, paper.firstChild);
+  paper.classList.add('collapsed');
+});
+
+/* Set section colors + item counts */
+document.querySelectorAll('.section').forEach(sec => {
+  const icon = sec.querySelector('.section-icon');
+  if (icon) {
+    const m = (icon.getAttribute('style') || '').match(/var\(--c-([a-z]+)\)/);
+    if (m) {
+      sec.style.setProperty('--section-c', `var(--c-${m[1]})`);
+      sec.style.setProperty('--section-c-bg', `var(--c-${m[1]}-bg)`);
+    }
+  }
+  const container = sec.querySelector('.grid, .stack, .papers, .tips-list, .blueprint');
+  if(!container) return;
+  const count = container.matches('.blueprint')
+    ? container.querySelectorAll('.step').length
+    : container.children.length;
+  const badge = document.createElement('span');
+  badge.className = 'section-count';
+  badge.textContent = count;
+  sec.querySelector('.section-header').appendChild(badge);
+});
+
+/* FONT SIZE SLIDER */
+const FS_KEY = 'idiomas_font_size';
+function updateFontSize(pct){
+  const scale = pct / 100;
+  document.documentElement.style.fontSize = (16 * scale) + 'px';
+  document.getElementById('fs-value').textContent = pct + '%';
+  localStorage.setItem(FS_KEY, pct);
+}
+(function initFontSize(){
+  const saved = localStorage.getItem(FS_KEY);
+  if(saved){
+    document.getElementById('fs-slider').value = saved;
+    updateFontSize(saved);
+  }
+})();
+</script>
+
+</body>
+</html>

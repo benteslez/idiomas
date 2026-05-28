@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conditionals · Condicionales · Linguaskill B2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Page identity: Conditionals (Verbos y tiempos) → Indigo */
+  --primary:#4338ca; --primary-soft:#eef2ff; --primary-mid:#6366f1; --primary-strong:#312e81;
+  --primary-glow:rgba(67,56,202,.14);
+  /* Per-tab identity colors */
+  --tab-real:#15803d;      --tab-real-soft:#ecfdf5;      --tab-real-mid:#22c55e;
+  --tab-irreal:#1d4ed8;    --tab-irreal-soft:#eff6ff;    --tab-irreal-mid:#3b82f6;
+  --tab-mixto:#7c3aed;     --tab-mixto-soft:#f5f3ff;     --tab-mixto-mid:#8b5cf6;
+  /* Legacy aliases */
+  --accent:var(--primary); --accent-light:var(--primary-soft); --accent-mid:var(--primary-mid);
+  /* Neutrals */
+  --bg:#f7f7f5; --bg-elevated:#fbfbfa; --card:#ffffff;
+  --border:#ececec; --border-strong:#dfdfdf;
+  --text:#18181b; --text2:#52525b; --text3:#71717a;
+  /* Paper (model examples) */
+  --paper:#fefef9; --paper-border:#e7e5d6;
+  /* Shadows */
+  --shadow-xs:0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:0 2px 8px rgba(15,23,42,.04),0 1px 2px rgba(15,23,42,.03);
+  --shadow:0 4px 16px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+  --shadow-primary:0 6px 20px var(--primary-glow);
+  /* Geometry */
+  --radius:18px; --radius-md:14px; --radius-sm:10px; --radius-xs:6px; --radius-pill:999px;
+  /* Motion */
+  --ease:cubic-bezier(0.4,0,0.2,1); --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --t-fast:120ms; --t-base:200ms;
+  /* Section colors (A→E) */
+  --c-greet:#7c3aed;     --c-greet-bg:#f5f3ff;
+  --c-conn:#0e7490;      --c-conn-bg:#ecfeff;
+  --c-key:#1d4ed8;       --c-key-bg:#eff6ff;
+  --c-close:#be185d;     --c-close-bg:#fdf2f8;
+  --c-model:#b45309;     --c-model-bg:#fffbeb;
+  --c-tip:#ca8a04;       --c-tip-bg:#fef9c3;
+  --c-struct:#4338ca;    --c-struct-bg:#e0e7ff;
+  /* Sub-category colors */
+  --c-add:#0e7490;       --c-contrast:#be185d;
+  --c-cause:#15803d;     --c-purpose:#7c3aed;
+  --c-seq:#1d4ed8;       --c-time:#0369a1;
+  --c-emph:#b91c1c;      --c-summ:#7c3aed;
+}
+[data-theme="dark"]{
+  --primary:#a5b4fc; --primary-soft:#1e1b4b; --primary-mid:#818cf8; --primary-strong:#c7d2fe;
+  --primary-glow:rgba(165,180,252,.18);
+  --tab-real:#4ade80;      --tab-real-soft:rgba(74,222,128,.12);    --tab-real-mid:#22c55e;
+  --tab-irreal:#60a5fa;    --tab-irreal-soft:rgba(96,165,250,.12);  --tab-irreal-mid:#3b82f6;
+  --tab-mixto:#c4b5fd;     --tab-mixto-soft:rgba(196,181,253,.12);  --tab-mixto-mid:#8b5cf6;
+  --bg:#0a0a0b; --bg-elevated:#131316; --card:#18181b;
+  --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --paper:#1e1e24; --paper-border:#3a3a42;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.2);
+  --shadow:0 4px 16px rgba(0,0,0,.30),0 1px 3px rgba(0,0,0,.20);
+  --shadow-primary:0 6px 24px var(--primary-glow);
+  --c-greet:#a78bfa;     --c-greet-bg:rgba(167,139,250,.10);
+  --c-conn:#22d3ee;      --c-conn-bg:rgba(34,211,238,.10);
+  --c-key:#60a5fa;       --c-key-bg:rgba(96,165,250,.10);
+  --c-close:#f472b6;     --c-close-bg:rgba(244,114,182,.10);
+  --c-model:#fbbf24;     --c-model-bg:rgba(251,191,36,.10);
+  --c-tip:#facc15;       --c-tip-bg:rgba(250,204,21,.10);
+  --c-struct:#a5b4fc;    --c-struct-bg:rgba(165,180,252,.10);
+  --c-add:#22d3ee;       --c-contrast:#f472b6;
+  --c-cause:#4ade80;     --c-purpose:#a78bfa;
+  --c-seq:#60a5fa;       --c-time:#38bdf8;
+  --c-emph:#f87171;      --c-summ:#a78bfa;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+*:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-xs);}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
+
+/* HEADER */
+.site-header{background:linear-gradient(180deg,var(--bg-elevated),var(--bg));padding:32px 20px 22px;position:relative;}
+.site-header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-strong) 20%,var(--border-strong) 80%,transparent);}
+.header-inner{max-width:1000px;margin:0 auto;}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.site-header h1{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:600;letter-spacing:-0.02em;color:var(--text);line-height:1.1;}
+.header-tag{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);background:var(--primary-soft);border-radius:var(--radius-pill);padding:4px 11px;}
+.header-sub{font-size:.88rem;color:var(--text3);font-weight:400;margin-top:4px;line-height:1.55;}
+.header-sub strong{color:var(--primary);font-weight:600;}
+
+/* HEADER ACTIONS BAR */
+.header-actions{max-width:1000px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:8px 14px 8px 11px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.back-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateX(-2px);box-shadow:var(--shadow);}
+.back-btn:active{transform:translateX(-2px) scale(.97);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+
+/* THEME TOGGLE */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.theme-toggle:hover{color:var(--primary);border-color:var(--primary-mid);transform:translateY(-1px);box-shadow:var(--shadow);}
+.theme-toggle .icon-sun{display:none;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+
+/* TABS — per-tab colors */
+.tabs-wrap{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-elevated) 85%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--border);padding:14px 20px;}
+.tabs{max-width:1000px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;}
+.tab{border:1px solid var(--border);border-radius:var(--radius-pill);padding:9px 18px;font-family:inherit;font-size:.85rem;font-weight:500;cursor:pointer;background:var(--card);color:var(--text2);transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:7px;}
+.tab:hover{transform:translateY(-1px);box-shadow:var(--shadow-xs);border-color:var(--tab-c,var(--primary-mid));color:var(--tab-c,var(--primary));}
+.tab.active{background:var(--tab-c,var(--primary));color:#fff;border-color:var(--tab-c,var(--primary));font-weight:600;box-shadow:0 6px 20px color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+[data-theme="dark"] .tab.active{color:#0a0a0b;}
+.tab[data-tab="real"]{--tab-c:var(--tab-real);}
+.tab[data-tab="irreal"]{--tab-c:var(--tab-irreal);}
+.tab[data-tab="mixto"]{--tab-c:var(--tab-mixto);}
+.tab .ico{font-size:1rem;line-height:1;}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:32px 20px 64px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeSlideIn 360ms var(--ease-out);}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* INTRO */
+.intro{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:28px;box-shadow:var(--shadow-xs);}
+.intro h3{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--tab-c,var(--primary));margin-bottom:10px;}
+.intro p{font-size:.92rem;color:var(--text2);line-height:1.65;}
+.intro p strong{color:var(--tab-c,var(--primary));font-weight:600;}
+
+/* TOOLBAR */
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.tool-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:7px 15px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:6px;}
+.tool-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateY(-1px);box-shadow:var(--shadow-xs);}
+.tool-btn .ico{font-size:.85rem;line-height:1;}
+
+/* FONT SIZE SLIDER */
+.fs-control{display:inline-flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:6px 14px;}
+.fs-label{font-family:inherit;font-weight:600;color:var(--text3);line-height:1;user-select:none;}
+.fs-label.small{font-size:.78rem;}
+.fs-label.large{font-size:1.1rem;}
+.fs-slider{-webkit-appearance:none;appearance:none;width:100px;height:4px;background:var(--border-strong);border-radius:2px;outline:none;cursor:pointer;accent-color:var(--primary);}
+.fs-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);transition:transform var(--t-fast) var(--ease);}
+.fs-slider::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.fs-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);}
+.fs-value{font-size:.72rem;font-weight:600;color:var(--text3);min-width:32px;text-align:right;}
+
+/* SECTION (collapsible) */
+.section{margin-bottom:14px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow var(--t-base) var(--ease);}
+.section:hover{box-shadow:var(--shadow);}
+.section-header{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;user-select:none;transition:background var(--t-base) var(--ease);background:transparent;}
+.section-header:hover{background:var(--bg-elevated);}
+.section:not(.collapsed) .section-header{border-bottom:1px solid var(--border);}
+.section-icon{width:38px;height:38px;border-radius:var(--radius-sm);display:inline-flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;background:transparent!important;border:2px solid var(--section-c,var(--primary));color:var(--section-c,var(--primary));}
+.section-title{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--text);line-height:1.2;}
+.section-desc{font-size:.78rem;color:var(--text3);margin-top:2px;line-height:1.45;}
+.section-header > div:not(.section-icon){flex:1;}
+.section-header::after{content:"▾";font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease);margin-left:8px;flex-shrink:0;font-weight:600;}
+.section.collapsed .section-header::after{transform:rotate(-90deg);}
+.section.collapsed .section-header:hover::after{color:var(--primary);}
+.section-count{font-size:.7rem;font-weight:600;color:var(--text3);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px 10px;margin-left:auto;flex-shrink:0;transition:all var(--t-base) var(--ease);}
+.section-header:hover .section-count{border-color:var(--primary-mid);color:var(--primary);}
+.section > .grid, .section > .stack, .section > .papers, .section > .tips-list, .section > .blueprint, .section > .table-wrap{padding:18px 20px 20px;}
+.section.collapsed > *:not(.section-header){display:none!important;}
+
+/* GRID + ITEM */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.item{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 30%,transparent)!important;border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-xs);transition:transform var(--t-base) var(--ease),box-shadow var(--t-base) var(--ease),border-color var(--t-base) var(--ease);border-left:4px solid var(--section-c,var(--primary))!important;}
+.item:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--section-c,var(--primary-mid))!important;}
+.item-head{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.item-term{font-family:'Manrope','Inter',sans-serif;font-size:1.02rem;font-weight:700;letter-spacing:-0.005em;color:var(--section-c,var(--text));line-height:1.3;}
+.item-trans{font-size:.76rem;color:var(--text3);font-style:italic;}
+.item-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;}
+.item-list li{font-size:.88rem;color:var(--text2);line-height:1.5;padding:5px 0 5px 12px;border-left:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);}
+.item-list li strong{color:var(--text);font-weight:600;}
+
+/* STACK (single-column phrase list, for A/C/D sections) */
+.stack{display:flex;flex-direction:column;gap:8px;}
+.phrase{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-sm);padding:10px 14px;font-size:.92rem;color:var(--text2);line-height:1.5;transition:all var(--t-base) var(--ease);}
+.phrase:hover{transform:translateX(2px);border-color:var(--section-c,var(--primary));box-shadow:var(--shadow-xs);}
+.phrase strong{color:var(--text);font-weight:600;}
+.phrase .hint{font-size:.74rem;color:var(--text3);font-style:italic;margin-left:6px;}
+
+/* PAPER (model examples) */
+.papers{display:flex;flex-direction:column;gap:14px;}
+.paper{background:var(--paper);border:1px solid var(--paper-border);border-radius:var(--radius-md);padding:22px 26px;box-shadow:var(--shadow-sm);position:relative;transition:box-shadow var(--t-base) var(--ease);}
+.paper:hover{box-shadow:var(--shadow);}
+.paper::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--tab-c,var(--primary)),transparent);border-radius:var(--radius-md) var(--radius-md) 0 0;}
+.paper-header{display:flex;align-items:flex-start;gap:14px;cursor:pointer;user-select:none;}
+.paper-header > div:first-child{flex:1;min-width:0;}
+.paper-header .paper-meta{margin-bottom:0;}
+.paper-toggle{font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease),color var(--t-base) var(--ease);flex-shrink:0;font-weight:700;line-height:1.4;}
+.paper-header:hover .paper-toggle,.paper-header:hover .paper-title{color:var(--tab-c,var(--primary));}
+.paper.collapsed .paper-toggle{transform:rotate(-90deg);}
+.paper.collapsed .paper-body{display:none;}
+.paper:not(.collapsed) .paper-body{margin-top:18px;}
+.paper-title{font-family:'Fraunces',Georgia,serif;font-size:1.05rem;font-weight:600;color:var(--tab-c,var(--primary));margin-bottom:6px;letter-spacing:-0.01em;transition:color var(--t-base) var(--ease);}
+.paper-meta{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:18px;}
+.paper-body{font-family:'Inter',sans-serif;font-size:.94rem;line-height:1.8;color:var(--text);}
+.paper-body p{margin-bottom:12px;}
+.paper-body p:last-child{margin-bottom:0;}
+.paper-body em{font-style:italic;color:var(--text2);}
+
+/* COLOR-CODED INLINE PHRASES IN MODELS */
+.paper-body .k-open    {color:var(--c-greet);    font-weight:600;}
+.paper-body .k-add     {color:var(--c-add);      font-weight:600;}
+.paper-body .k-contrast{color:var(--c-contrast); font-weight:600;}
+.paper-body .k-cause   {color:var(--c-cause);    font-weight:600;}
+.paper-body .k-concess {color:var(--c-purpose);  font-weight:600;}
+.paper-body .k-purpose {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-seq     {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-time    {color:var(--c-time);     font-weight:600;}
+.paper-body .k-emph    {color:var(--c-emph);     font-weight:600;}
+.paper-body .k-summ    {color:var(--c-summ);     font-weight:600;}
+.paper-body .k-key     {color:var(--c-key);      font-weight:600;}
+.paper-body .k-close   {color:var(--c-close);    font-weight:600;}
+
+/* STRUCTURE BLUEPRINT (vertical timeline) */
+.blueprint{display:flex;flex-direction:column;gap:0;position:relative;}
+.step{display:flex;gap:14px;align-items:flex-start;position:relative;padding:6px 0 14px 0;}
+.step::before{content:"";position:absolute;left:18px;top:42px;bottom:-4px;width:2px;background:color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);}
+.step:last-of-type::before{display:none;}
+.step-num{width:38px;height:38px;border-radius:50%;background:var(--card);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--section-c,var(--primary));position:relative;z-index:1;}
+.step-body{flex:1;min-width:0;padding-top:6px;}
+.step-body h5{font-family:'Manrope',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-0.005em;}
+.step-body .step-meta{font-size:.72rem;color:var(--text3);font-style:italic;margin-bottom:6px;font-weight:500;}
+.step-body > p{font-size:.86rem;color:var(--text2);line-height:1.55;margin-bottom:9px;}
+.step-phrases{display:flex;flex-wrap:wrap;gap:5px;}
+.step-phrases span{font-size:.76rem;color:var(--section-c,var(--primary));background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);padding:4px 11px;border-radius:var(--radius-pill);font-weight:600;line-height:1.4;transition:all var(--t-base) var(--ease);}
+.step-phrases span:hover{background:color-mix(in srgb,var(--section-c,var(--primary)) 24%,transparent);border-color:var(--section-c,var(--primary));}
+.blueprint-footer{margin-top:6px;padding:12px 16px;background:color-mix(in srgb,var(--section-c,var(--primary)) 10%,transparent);border-radius:var(--radius-md);font-size:.86rem;color:var(--text2);display:flex;align-items:center;gap:10px;border:1px dashed color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);}
+.blueprint-footer strong{color:var(--section-c,var(--primary));font-weight:600;}
+.blueprint-footer .footer-ico{font-size:1rem;flex-shrink:0;}
+
+/* TIPS SECTION */
+.tips-list{display:flex;flex-direction:column;gap:10px;}
+.tip{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-md);padding:14px 16px;display:flex;gap:14px;align-items:flex-start;transition:all var(--t-base) var(--ease);}
+.tip:hover{transform:translateX(2px);box-shadow:var(--shadow-xs);border-color:var(--section-c,var(--primary));}
+.tip.warn{--section-c:var(--c-emph);}
+.tip-icon{font-size:.9rem;flex-shrink:0;line-height:1;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);color:var(--section-c,var(--primary));font-weight:800;margin-top:1px;}
+.tip-body{flex:1;min-width:0;}
+.tip-body h5{font-family:'Manrope',sans-serif;font-size:.95rem;font-weight:700;color:var(--section-c,var(--primary));margin-bottom:4px;letter-spacing:-0.005em;line-height:1.3;}
+.tip-body p{font-size:.86rem;color:var(--text2);line-height:1.55;}
+.tip-body p em{color:var(--text);font-style:normal;background:var(--bg-elevated);padding:1px 5px;border-radius:var(--radius-xs);font-size:.92em;font-weight:500;}
+
+/* INLINE STRUCTURAL LABELS */
+.label{display:inline-block;font-family:'JetBrains Mono','Manrope',sans-serif;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:var(--radius-xs);background:var(--tab-c-soft,var(--primary-soft));color:var(--tab-c,var(--primary));margin-right:6px;vertical-align:middle;border:1px solid color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+
+/* CALLOUT */
+.callout{background:var(--tab-c-soft,var(--primary-soft));border-radius:var(--radius-md);padding:14px 16px;margin:0 0 24px;font-size:.88rem;color:var(--text2);line-height:1.6;border-left:3px solid var(--tab-c,var(--primary));}
+.callout strong{color:var(--tab-c,var(--primary));font-weight:600;}
+.callout .ico{font-size:1rem;margin-right:5px;}
+
+/* Set tab-c-soft based on active panel */
+.tab-panel[data-tab="real"]{--tab-c:var(--tab-real);--tab-c-soft:var(--tab-real-soft);}
+.tab-panel[data-tab="irreal"]{--tab-c:var(--tab-irreal);--tab-c-soft:var(--tab-irreal-soft);}
+.tab-panel[data-tab="mixto"]{--tab-c:var(--tab-mixto);--tab-c-soft:var(--tab-mixto-soft);}
+
+@media (max-width: 600px){
+  .paper{padding:20px 18px;}
+  .paper-body{font-size:.88rem;}
+  .grid{grid-template-columns:1fr;}
+}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-xs);margin:0 0 4px;}
+.gram-table{width:100%;border-collapse:collapse;background:var(--card);font-size:.88rem;}
+.gram-table caption{caption-side:top;text-align:left;font-family:'Manrope',sans-serif;font-weight:700;color:var(--section-c,var(--primary));padding:0 0 8px;font-size:.9rem;}
+.gram-table th{background:color-mix(in srgb,var(--section-c,var(--primary)) 12%,transparent);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;text-align:left;padding:10px 14px;border-bottom:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;}
+.gram-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);line-height:1.5;vertical-align:top;}
+.gram-table tr:last-child td{border-bottom:none;}
+.gram-table tbody tr{transition:background var(--t-fast) var(--ease);}
+.gram-table tbody tr:hover{background:var(--bg-elevated);}
+.gram-table td strong,.gram-table .en{color:var(--text);font-weight:600;}
+.gram-table .es{font-style:italic;color:var(--text3);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-actions">
+    <a class="back-btn" href="index.html" title="Volver al índice">
+      <span class="arrow">←</span><span>Inicio</span>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>🔀 Conditionals · Condicionales</h1>
+      <span class="header-tag">Linguaskill B2 · B2–C1</span>
+    </div>
+    <p class="header-sub">
+      Las cuatro estructuras condicionales del inglés — <strong>real</strong> (verdad general y futuro probable), <strong>irreal</strong> (hipótesis presente y pasada) y <strong>mixto</strong> (causa pasada · consecuencia presente) — con conectores alternativos.
+    </p>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" data-tab="real" onclick="showTab('real', this)">
+      <span class="ico">🟢</span><span>Reales (Tipo 0 · 1)</span>
+    </button>
+    <button class="tab" data-tab="irreal" onclick="showTab('irreal', this)">
+      <span class="ico">🔵</span><span>Irreales (Tipo 2 · 3)</span>
+    </button>
+    <button class="tab" data-tab="mixto" onclick="showTab('mixto', this)">
+      <span class="ico">🟣</span><span>Mixto · Conectores</span>
+    </button>
+  </div>
+</div>
+
+<main class="main">
+
+<div class="toolbar">
+  <div class="fs-control" title="Tamaño del texto">
+    <span class="fs-label small">A</span>
+    <input type="range" class="fs-slider" id="fs-slider" min="85" max="140" step="5" value="100" oninput="updateFontSize(this.value)">
+    <span class="fs-label large">A</span>
+    <span class="fs-value" id="fs-value">100%</span>
+  </div>
+  <div class="toolbar-actions">
+    <button class="tool-btn" onclick="expandAll()"><span class="ico">▾</span>Expandir todos</button>
+    <button class="tool-btn" onclick="collapseAll()"><span class="ico">▸</span>Colapsar todos</button>
+  </div>
+</div>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 1: REAL CONDITIONALS ==================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel active" id="real" data-tab="real">
+
+  <div class="intro">
+    <h3>Condicionales reales · Real Conditionals</h3>
+    <p>Cubren situaciones que <strong>son ciertas, posibles o probables</strong>. El <strong>Tipo 0</strong> expresa verdades generales y leyes científicas; el <strong>Tipo 1</strong> habla de un futuro real y específico. En ambos, la <em>if-clause</em> va en presente y la principal en presente o con <em>will / can / may / imperativo</em>.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Linguaskill:</strong> núcleo de los huecos de <strong>Reading · Use of English</strong> y de las advertencias/promesas en <strong>Writing P1 (email)</strong>. Si fallas la concordancia <em>if + present / will</em>, perderás los puntos más fáciles del examen.
+  </div>
+
+  <!-- A. FORMA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">🔧</div>
+      <div>
+        <div class="section-title">A. Forma · Form</div>
+        <div class="section-desc">Estructura canónica de los condicionales reales</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>If-clause</th>
+            <th>Main clause</th>
+            <th>Ejemplo</th>
+            <th>Glosa ES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Tipo 0</strong><br><span class="es">verdad general</span></td>
+            <td>If + <strong>present simple</strong></td>
+            <td><strong>present simple</strong></td>
+            <td class="en">If you <strong>heat</strong> ice, it <strong>melts</strong>.</td>
+            <td class="es">Si calientas el hielo, se derrite.</td>
+          </tr>
+          <tr>
+            <td><strong>Tipo 1</strong><br><span class="es">futuro real</span></td>
+            <td>If + <strong>present simple</strong></td>
+            <td><strong>will</strong> + infinitive</td>
+            <td class="en">If it <strong>rains</strong>, we <strong>'ll cancel</strong> the picnic.</td>
+            <td class="es">Si llueve, cancelaremos el pícnic.</td>
+          </tr>
+          <tr>
+            <td><strong>Tipo 1 (modal)</strong><br><span class="es">matiz</span></td>
+            <td>If + <strong>present simple</strong></td>
+            <td><strong>can / may / might / should</strong> + inf.</td>
+            <td class="en">If you <strong>finish</strong> early, you <strong>can leave</strong>.</td>
+            <td class="es">Si terminas pronto, puedes irte.</td>
+          </tr>
+          <tr>
+            <td><strong>Tipo 1 (imperativo)</strong><br><span class="es">instrucción</span></td>
+            <td>If + <strong>present simple</strong></td>
+            <td><strong>imperative</strong></td>
+            <td class="en">If you <strong>see</strong> John, <strong>tell</strong> him to call me.</td>
+            <td class="es">Si ves a John, dile que me llame.</td>
+          </tr>
+          <tr>
+            <td><strong>Variante</strong><br><span class="es">orden inverso</span></td>
+            <td colspan="2">main clause + if-clause (sin coma)</td>
+            <td class="en">We <strong>'ll cancel</strong> the picnic if it <strong>rains</strong>.</td>
+            <td class="es">Cancelaremos el pícnic si llueve.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- B. USOS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-tip)">⭐</div>
+      <div>
+        <div class="section-title">B. Usos · Uses</div>
+        <div class="section-desc">Cuándo elegir Tipo 0 o Tipo 1</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">Tipo 0 · Verdades generales</span><span class="item-trans">leyes universales</span></div>
+        <ul class="item-list">
+          <li><strong>Ciencia:</strong> If water reaches 100 °C, it boils.</li>
+          <li><strong>Hábitos:</strong> If I drink coffee at night, I can't sleep.</li>
+          <li><strong>Instrucciones:</strong> If the alarm rings, leave the building.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">Tipo 1 · Futuro real</span><span class="item-trans">predicción concreta</span></div>
+        <ul class="item-list">
+          <li><strong>Predicción:</strong> If you train every day, you'll improve fast.</li>
+          <li><strong>Plan condicional:</strong> If the meeting ends early, we'll go for lunch.</li>
+          <li><strong>Advertencia:</strong> If you don't book now, you'll lose the seat.</li>
+          <li><strong>Promesa:</strong> If you help me, I'll cook dinner.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">Modales en la principal</span><span class="item-trans">matiz / probabilidad</span></div>
+        <ul class="item-list">
+          <li><strong>may / might:</strong> incertidumbre — If she calls, I may pick up.</li>
+          <li><strong>should:</strong> consejo — If you feel sick, you should rest.</li>
+          <li><strong>can:</strong> permiso/capacidad — If you're 18, you can vote.</li>
+          <li><strong>must:</strong> obligación — If you're driving, you must wear a seatbelt.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-seq)">
+        <div class="item-head"><span class="item-term">Imperativo en la principal</span><span class="item-trans">instrucciones · órdenes</span></div>
+        <ul class="item-list">
+          <li>If you have any questions, <strong>ask</strong> me.</li>
+          <li>If it's raining, <strong>take</strong> an umbrella.</li>
+          <li>If in doubt, <strong>don't click</strong> the link.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- C. EJEMPLOS REALES -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">💬</div>
+      <div>
+        <div class="section-title">C. Ejemplos reales · Real-life examples</div>
+        <div class="section-desc">Frases naturales en contexto</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>If you mix yellow and blue,</strong> you get green. <span class="hint">Si mezclas amarillo y azul, obtienes verde.</span></div>
+      <div class="phrase"><strong>If it's sunny tomorrow,</strong> we'll go to the beach. <span class="hint">Si mañana hace sol, iremos a la playa.</span></div>
+      <div class="phrase"><strong>If you don't hurry up,</strong> you'll miss the train. <span class="hint">Si no te das prisa, perderás el tren.</span></div>
+      <div class="phrase"><strong>You should book early</strong> if you want a good seat. <span class="hint">Deberías reservar pronto si quieres un buen asiento.</span></div>
+      <div class="phrase">[coloquial] <strong>If you're hungry,</strong> there's pizza in the fridge — help yourself! <span class="hint">Si tienes hambre, hay pizza en la nevera — sírvete.</span></div>
+      <div class="phrase">[coloquial] <strong>If anything comes up,</strong> just give me a shout. <span class="hint">Si surge algo, dame un toque.</span></div>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS HISPANO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Errores típicos por interferencia del español</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Nunca "will" en la if-clause</h5>
+          <p>El error más penalizado del Tipo 1: <em>*If it will rain, we'll stay home</em> → <em>If it rains, we'll stay home</em>. Tras <em>if</em> el futuro se expresa con presente simple, como en español con <em>si</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"If" vs "when": probable vs seguro</h5>
+          <p>Usa <em>when</em> si el evento es seguro (<em>When I arrive, I'll call you</em> — voy a llegar), y <em>if</em> si solo es posible (<em>If I arrive on time, I'll call you</em> — quizá no llegue). En español ambos se traducen como <em>cuando / si</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Coma sí · coma no</h5>
+          <p>Cuando la <em>if-clause</em> va primero, lleva coma: <em>If it rains<strong>,</strong> we'll stay</em>. Si va al final, <strong>no</strong> lleva coma: <em>We'll stay if it rains</em>. Los hispanohablantes tienden a omitir la coma inicial.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Confundir Tipo 0 con Tipo 1</h5>
+          <p>Tipo 0 = ley universal (<em>If you heat ice, it melts</em>). Tipo 1 = un evento concreto futuro (<em>If you heat the soup, it'll be ready</em>). No traduzcas el español <em>"se derrite / se derretirá"</em> mecánicamente.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Si no" no siempre es "if … not"</h5>
+          <p>El español <em>si no</em> equivale a <em>if … not</em> o, más elegantemente, a <em>unless</em>: <em>Si no te apuras, perderás el tren</em> = <em>If you don't hurry, you'll miss the train</em> = <em>Unless you hurry, you'll miss the train</em>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 2: IRREAL CONDITIONALS ================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="irreal" data-tab="irreal">
+
+  <div class="intro">
+    <h3>Condicionales irreales · Unreal Conditionals</h3>
+    <p>Hablan de situaciones <strong>contrafactuales o improbables</strong>: lo que pasaría si las cosas fueran distintas. El <strong>Tipo 2</strong> (hipótesis presente o futura irreal) y el <strong>Tipo 3</strong> (hipótesis pasada contrafactual) usan el <em>past simple</em> y el <em>past perfect</em> con valor de subjuntivo — no son tiempos pasados reales.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Linguaskill:</strong> imprescindibles para el matiz argumental en <strong>Writing P2 (essay)</strong> — <em>If governments invested more, …</em> — y para responder a hipótesis en <strong>Speaking P4</strong> — <em>What would you do if you were in charge?</em>
+  </div>
+
+  <!-- A. FORMA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">🔧</div>
+      <div>
+        <div class="section-title">A. Forma · Form</div>
+        <div class="section-desc">Estructura canónica de los condicionales irreales</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>If-clause</th>
+            <th>Main clause</th>
+            <th>Ejemplo</th>
+            <th>Glosa ES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Tipo 2</strong><br><span class="es">presente irreal</span></td>
+            <td>If + <strong>past simple</strong></td>
+            <td><strong>would</strong> + infinitive</td>
+            <td class="en">If I <strong>had</strong> more time, I <strong>would travel</strong> more.</td>
+            <td class="es">Si tuviera más tiempo, viajaría más.</td>
+          </tr>
+          <tr>
+            <td><strong>Tipo 2 (were)</strong><br><span class="es">subjuntivo formal</span></td>
+            <td>If + <strong>were</strong> (todas las personas)</td>
+            <td><strong>would</strong> + infinitive</td>
+            <td class="en">If I <strong>were</strong> you, I <strong>would apologise</strong>.</td>
+            <td class="es">Si yo fuera tú, me disculparía.</td>
+          </tr>
+          <tr>
+            <td><strong>Tipo 2 (modal)</strong><br><span class="es">matiz</span></td>
+            <td>If + <strong>past simple</strong></td>
+            <td><strong>could / might</strong> + inf.</td>
+            <td class="en">If we <strong>left</strong> now, we <strong>could catch</strong> the 5 o'clock train.</td>
+            <td class="es">Si saliéramos ahora, podríamos coger el tren de las 5.</td>
+          </tr>
+          <tr>
+            <td><strong>Tipo 3</strong><br><span class="es">pasado irreal</span></td>
+            <td>If + <strong>past perfect</strong></td>
+            <td><strong>would have</strong> + past participle</td>
+            <td class="en">If I <strong>had studied</strong> harder, I <strong>would have passed</strong>.</td>
+            <td class="es">Si hubiera estudiado más, habría aprobado.</td>
+          </tr>
+          <tr>
+            <td><strong>Tipo 3 (modal)</strong><br><span class="es">matiz</span></td>
+            <td>If + <strong>past perfect</strong></td>
+            <td><strong>could / might have</strong> + p.p.</td>
+            <td class="en">If you <strong>had told</strong> me, I <strong>could have helped</strong>.</td>
+            <td class="es">Si me lo hubieras dicho, habría podido ayudar.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- B. USOS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-tip)">⭐</div>
+      <div>
+        <div class="section-title">B. Usos · Uses</div>
+        <div class="section-desc">Qué expresa cada tipo irreal</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">Tipo 2 · Presente irreal</span><span class="item-trans">hipótesis improbable</span></div>
+        <ul class="item-list">
+          <li><strong>Hipótesis improbable:</strong> If I won the lottery, I'd buy a house by the sea.</li>
+          <li><strong>Situación contraria a la realidad:</strong> If I were taller, basketball would be easier.</li>
+          <li><strong>Consejo:</strong> If I were you, I'd see a doctor.</li>
+          <li><strong>Deseo disfrazado:</strong> If only I had a free weekend.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">Tipo 3 · Pasado irreal</span><span class="item-trans">contrafactual</span></div>
+        <ul class="item-list">
+          <li><strong>Arrepentimiento:</strong> If I had saved more, I wouldn't be in debt.</li>
+          <li><strong>Reproche:</strong> If you had listened, we wouldn't be lost.</li>
+          <li><strong>Análisis de lo no ocurrido:</strong> If the goalkeeper had stayed central, they'd have won.</li>
+          <li><strong>Especulación histórica:</strong> If Napoleon had won at Waterloo, Europe would have changed.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">Modales (could · might)</span><span class="item-trans">posibilidad</span></div>
+        <ul class="item-list">
+          <li><strong>could:</strong> habilidad/posibilidad — If she trained, she could win gold.</li>
+          <li><strong>might:</strong> incertidumbre — If they invested in R&amp;D, profits might rise.</li>
+          <li><strong>Tipo 3 con could/might have:</strong> resultado posible no ocurrido — If we'd arrived on time, we might have caught the show.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-seq)">
+        <div class="item-head"><span class="item-term">Formal vs neutro</span><span class="item-trans">registro</span></div>
+        <ul class="item-list">
+          <li><strong>Formal (essay):</strong> Were governments to act sooner, … (inversión)</li>
+          <li><strong>Formal (essay):</strong> Had we acted then, the outcome would have differed.</li>
+          <li><strong>Neutro:</strong> If governments acted sooner, …</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- C. EJEMPLOS REALES -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">💬</div>
+      <div>
+        <div class="section-title">C. Ejemplos reales · Real-life examples</div>
+        <div class="section-desc">Frases naturales en contexto</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>If I were you,</strong> I would apologise straight away. <span class="hint">Si yo fuera tú, me disculparía enseguida.</span></div>
+      <div class="phrase"><strong>If she spoke German,</strong> she'd get the job easily. <span class="hint">Si hablara alemán, conseguiría el trabajo fácilmente.</span></div>
+      <div class="phrase"><strong>What would you do</strong> if your boss asked you to lie? <span class="hint">¿Qué harías si tu jefe te pidiera mentir?</span></div>
+      <div class="phrase"><strong>If we had left earlier,</strong> we wouldn't have missed the flight. <span class="hint">Si hubiéramos salido antes, no habríamos perdido el vuelo.</span></div>
+      <div class="phrase"><strong>She would have called you</strong> if she had known. <span class="hint">Te habría llamado si lo hubiera sabido.</span></div>
+      <div class="phrase">[coloquial] <strong>If I had a quid</strong> for every time he said that, I'd be rich! <span class="hint">Si me dieran una libra cada vez que dice eso, sería rico.</span></div>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS HISPANO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Errores típicos por interferencia del español</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"If I were" (no "If I was") en el examen</h5>
+          <p><em>If I were you</em> es el subjuntivo correcto y el que el examinador espera en <strong>Writing</strong>. <em>If I was you</em> existe en habla muy informal británica, pero baja registro y se considera incorrecto en escritura académica. <strong>Regla:</strong> en condicionales irreales, usa <em>were</em> con todas las personas (I/he/she/it/we/they).</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Would" jamás en la if-clause</h5>
+          <p><em>*If I would have time, I would travel</em> → <em>If I had time, I would travel</em>. (Excepción única: peticiones corteses tipo <em>If you would be so kind as to…</em>, que no son condicionales sino fórmulas de cortesía.)</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>El "pasado" del Tipo 2/3 no es pasado real</h5>
+          <p><em>If I had a car, I would drive</em> = <strong>ahora</strong> no tengo coche (presente irreal). No traduzcas mecánicamente <em>"si tuve un coche"</em>: el inglés usa el <em>past simple</em> como subjuntivo, igual que el español usa <em>"si tuviera"</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Tipo 3: pluscuamperfecto obligatorio</h5>
+          <p>Para pasado contrafactual no basta con <em>If I knew</em>: hay que usar <em>If I <strong>had known</strong>, I would have called</em>. El español <em>"si lo hubiera sabido"</em> exige <em>past perfect</em> en inglés, no <em>past simple</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Would" no equivale al condicional español puro</h5>
+          <p>El español <em>"viajaría"</em> es ambiguo: presente irreal (<em>If I had time, I'd travel</em>) o pasado pospuesto (<em>He said he would travel</em>). Identifica primero la cláusula <em>if</em>: si hay una, es condicional; si no, es <em>reported speech</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Contracciones: 'd ambiguo</h5>
+          <p><em>I'd</em> puede ser <em>I had</em> o <em>I would</em>. En el Tipo 3 conviven los dos: <em>If I'd known, I'd have called</em> = <em>If I had known, I would have called</em>. Cuidado al desambiguar en lectura y dictado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 3: MIXTO · CONECTORES =================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="mixto" data-tab="mixto">
+
+  <div class="intro">
+    <h3>Condicional mixto y conectores · Mixed Conditional &amp; Connectors</h3>
+    <p>El <strong>condicional mixto</strong> combina los tiempos del Tipo 3 y del Tipo 2 para expresar una <strong>causa pasada con consecuencia presente</strong>. Además, varios conectores (<em>unless, provided that, as long as, suppose…</em>) permiten matizar la condición sin recurrir a <em>if</em>.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Linguaskill:</strong> el condicional mixto y los conectores alternativos son <strong>marcadores de C1</strong> — aparecen en huecos avanzados de <strong>Reading</strong> y suben la nota en <strong>Writing P2</strong> al permitir argumentación matizada.
+  </div>
+
+  <!-- A. FORMA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">🔧</div>
+      <div>
+        <div class="section-title">A. Forma · Form</div>
+        <div class="section-desc">Estructura del condicional mixto (3 → 2 y 2 → 3)</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>If-clause</th>
+            <th>Main clause</th>
+            <th>Ejemplo</th>
+            <th>Glosa ES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Mixto 3 → 2</strong><br><span class="es">causa pasada · consecuencia presente</span></td>
+            <td>If + <strong>past perfect</strong></td>
+            <td><strong>would</strong> + infinitive</td>
+            <td class="en">If I <strong>had studied</strong> medicine, I <strong>would be</strong> a doctor <strong>now</strong>.</td>
+            <td class="es">Si hubiera estudiado medicina, ahora sería médico.</td>
+          </tr>
+          <tr>
+            <td><strong>Mixto 3 → 2</strong><br><span class="es">marcador presente</span></td>
+            <td>If + <strong>past perfect</strong></td>
+            <td><strong>would</strong> + infinitive (+ <em>now / today / still</em>)</td>
+            <td class="en">If we <strong>had taken</strong> that flight, we <strong>'d be</strong> in Tokyo <strong>by now</strong>.</td>
+            <td class="es">Si hubiéramos cogido ese vuelo, ya estaríamos en Tokio.</td>
+          </tr>
+          <tr>
+            <td><strong>Mixto 2 → 3</strong><br><span class="es">estado presente · consecuencia pasada</span></td>
+            <td>If + <strong>past simple / were</strong></td>
+            <td><strong>would have</strong> + past participle</td>
+            <td class="en">If she <strong>were</strong> more cautious, she <strong>wouldn't have crashed</strong>.</td>
+            <td class="es">Si fuera más prudente, no habría chocado.</td>
+          </tr>
+          <tr>
+            <td><strong>Mixto 2 → 3</strong><br><span class="es">característica permanente</span></td>
+            <td>If + <strong>past simple</strong></td>
+            <td><strong>would have</strong> + p.p.</td>
+            <td class="en">If he <strong>spoke</strong> English, he <strong>would have got</strong> the job last week.</td>
+            <td class="es">Si hablara inglés, habría conseguido el trabajo la semana pasada.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- B. USOS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-tip)">⭐</div>
+      <div>
+        <div class="section-title">B. Usos · Uses</div>
+        <div class="section-desc">Cuándo elegir el mixto en lugar del Tipo 2 o 3 puros</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">3 → 2 · Lo que cambiaría hoy</span><span class="item-trans">causa antigua · efecto actual</span></div>
+        <ul class="item-list">
+          <li><strong>Arrepentimientos con efecto presente:</strong> If I hadn't quit my job, I'd be richer now.</li>
+          <li><strong>Análisis biográfico:</strong> If she had accepted the offer, she'd be CEO today.</li>
+          <li><strong>Marcadores típicos:</strong> now, today, still, by now, at the moment.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">2 → 3 · Carácter que explica el pasado</span><span class="item-trans">rasgo presente · resultado pasado</span></div>
+        <ul class="item-list">
+          <li><strong>Carácter / rasgo permanente:</strong> If he weren't so impulsive, he wouldn't have lost his job.</li>
+          <li><strong>Habilidad/idioma:</strong> If I spoke French, I would have understood the speech.</li>
+          <li><strong>Hábitos generales:</strong> If she didn't smoke, she wouldn't have got ill.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">Inversión formal</span><span class="item-trans">registro C1 · essay</span></div>
+        <ul class="item-list">
+          <li><strong>Had + S + p.p.</strong> = <em>If…had…</em>: Had we invested then, we'd be ahead now.</li>
+          <li><strong>Were + S + to-inf.</strong> = <em>If…were to…</em>: Were she to apply, she'd stand a real chance.</li>
+          <li>Estas inversiones <strong>omiten</strong> el <em>if</em> y suben el registro.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-seq)">
+        <div class="item-head"><span class="item-term">Cuándo NO usar el mixto</span><span class="item-trans">coherencia temporal</span></div>
+        <ul class="item-list">
+          <li>Si causa y consecuencia ocurren <strong>en el mismo plano temporal</strong>, usa Tipo 2 o Tipo 3 puro.</li>
+          <li>Si no hay marcador presente o pasado claro, el mixto puede sonar forzado.</li>
+          <li>El mixto exige siempre un <strong>contraste temporal explícito</strong>.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- C. EJEMPLOS REALES -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">💬</div>
+      <div>
+        <div class="section-title">C. Ejemplos reales · Real-life examples</div>
+        <div class="section-desc">Frases naturales con el mixto en contexto</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>If I had taken that job in London,</strong> I would be earning more now. <span class="hint">Si hubiera aceptado ese trabajo en Londres, ahora ganaría más.</span></div>
+      <div class="phrase"><strong>She would still be alive</strong> if the doctors had acted faster. <span class="hint">Aún estaría viva si los médicos hubieran actuado más rápido.</span></div>
+      <div class="phrase"><strong>If he weren't so impulsive,</strong> he wouldn't have lost his job. <span class="hint">Si no fuera tan impulsivo, no habría perdido el trabajo.</span></div>
+      <div class="phrase"><strong>Had we invested in renewables earlier,</strong> the country would be self-sufficient by now. <span class="hint">[formal · essay] De haber invertido antes en renovables, el país ya sería autosuficiente.</span></div>
+      <div class="phrase">[coloquial] <strong>We wouldn't be lost</strong> if you'd brought the map. <span class="hint">No estaríamos perdidos si hubieras traído el mapa.</span></div>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS HISPANO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Errores típicos con mixto y conectores</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Unless" = "if not": no añadas otra negación</h5>
+          <p><em>*Unless you don't come, I won't go</em> → <em>Unless you come, I won't go</em> (= <em>If you don't come, I won't go</em>). El español <em>"a menos que no…"</em> sí admite doble negación; en inglés es agramatical.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Provided that" / "As long as": presente, no condicional</h5>
+          <p><em>*Provided you would arrive on time</em> → <em>Provided you arrive on time</em>. Funcionan como sustitutos de <em>if</em> en condicionales reales: <em>if-clause</em> en presente, principal con <em>will / can / imperativo</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Marcadores temporales obligatorios en el mixto</h5>
+          <p>Sin marcador (<em>now, today, still, by now, anymore</em>) la frase puede sonar a Tipo 3 mal hecho. <em>If I had studied medicine, I would be a doctor</em> mejora con <em>now</em>: <em>If I had studied medicine, I would be a doctor <strong>now</strong></em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Suppose / supposing" + past simple</h5>
+          <p>Igual que un Tipo 2: <em>Suppose you <strong>won</strong> the lottery, what would you do?</em> No uses presente (<em>*Suppose you win the lottery, what would you do?</em>) salvo que sea claramente futuro real (entonces usa <em>if</em>, no <em>suppose</em>).</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"But for" lleva sustantivo, no oración</h5>
+          <p><em>But for <strong>your help</strong>, I would have failed</em> (= <em>If it hadn't been for your help…</em>). El error frecuente es traducir <em>"de no ser por que me ayudaste"</em> como <em>*But for you helped me</em>. <em>But for</em> exige nombre o gerundio.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Otherwise" no es un conector condicional puro</h5>
+          <p><em>Otherwise</em> = <em>si no, de lo contrario</em>, pero conecta dos oraciones independientes: <em>Hurry up; otherwise we'll be late</em> (no <em>*Hurry up otherwise we are late</em>). Lleva idealmente punto y coma o punto antes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E. CONECTORES ALTERNATIVOS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-purpose)">📐</div>
+      <div>
+        <div class="section-title">E. Conectores alternativos · Beyond "if"</div>
+        <div class="section-desc">Unless, provided that, as long as, suppose, but for, otherwise</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-emph)">
+        <div class="item-head"><span class="item-term">unless</span><span class="item-trans">= if not</span></div>
+        <ul class="item-list">
+          <li><strong>Excepción única:</strong> I won't go <strong>unless</strong> you come.</li>
+          <li>= If you don't come, I won't go.</li>
+          <li><strong>Nunca</strong> con doble negación.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">provided / providing (that)</span><span class="item-trans">si y solo si</span></div>
+        <ul class="item-list">
+          <li><strong>Condición estricta:</strong> You can borrow the car <strong>provided (that)</strong> you return it tonight.</li>
+          <li>Más formal que <em>as long as</em>; típico en contratos.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">as long as / so long as</span><span class="item-trans">siempre que · mientras</span></div>
+        <ul class="item-list">
+          <li><strong>Condición flexible:</strong> I'll help you <strong>as long as</strong> you're honest.</li>
+          <li>Tono neutro; vale para escrito y hablado.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-struct)">
+        <div class="item-head"><span class="item-term">on (the) condition that</span><span class="item-trans">con la condición de que</span></div>
+        <ul class="item-list">
+          <li><strong>Muy formal:</strong> I'll lend you the money <strong>on condition that</strong> you pay it back next month.</li>
+          <li>Registro legal/administrativo; útil en <em>Writing P2</em>.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">suppose / supposing</span><span class="item-trans">supón que · imagina que</span></div>
+        <ul class="item-list">
+          <li><strong>Hipótesis:</strong> <strong>Suppose</strong> you won the lottery, what would you do?</li>
+          <li>Equivale a un Tipo 2: <em>past simple</em> tras <em>suppose</em>.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-contrast)">
+        <div class="item-head"><span class="item-term">but for + N</span><span class="item-trans">de no ser por</span></div>
+        <ul class="item-list">
+          <li><strong>Formal:</strong> <strong>But for</strong> your help, I would have failed.</li>
+          <li>= If it hadn't been for your help, …</li>
+          <li>Siempre con <strong>sustantivo o gerundio</strong>, nunca oración.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-seq)">
+        <div class="item-head"><span class="item-term">otherwise</span><span class="item-trans">si no · de lo contrario</span></div>
+        <ul class="item-list">
+          <li><strong>Conexión entre oraciones:</strong> Hurry up; <strong>otherwise</strong> we'll be late.</li>
+          <li>Lleva idealmente punto y coma o punto delante.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-time)">
+        <div class="item-head"><span class="item-term">in case (of)</span><span class="item-trans">por si acaso</span></div>
+        <ul class="item-list">
+          <li><strong>Precaución:</strong> Take an umbrella <strong>in case</strong> it rains.</li>
+          <li>≠ <em>if</em>: no expresa condición sino prevención.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- F. BLUEPRINT DEL MIXTO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">🧭</div>
+      <div>
+        <div class="section-title">F. Cómo construir un mixto paso a paso</div>
+        <div class="section-desc">Esquema rápido para no confundir tiempos</div>
+      </div>
+    </div>
+    <div class="blueprint">
+      <div class="step">
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <h5>Identifica el contraste temporal</h5>
+          <p>Decide si la <strong>causa</strong> es pasada y la <strong>consecuencia</strong> presente (3 → 2), o al revés: característica/estado presente con consecuencia pasada (2 → 3).</p>
+          <div class="step-phrases">
+            <span>causa pasada → efecto hoy</span>
+            <span>rasgo presente → efecto pasado</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <h5>Aplica el tiempo correcto a la if-clause</h5>
+          <p>Si la causa es pasada → <em>past perfect</em>. Si es un rasgo o estado presente → <em>past simple</em> (o <em>were</em>).</p>
+          <div class="step-phrases">
+            <span>If I had studied…</span>
+            <span>If she were more cautious…</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <h5>Aplica el tiempo correcto a la principal</h5>
+          <p>Consecuencia presente → <em>would + infinitive</em>. Consecuencia pasada → <em>would have + p.p.</em></p>
+          <div class="step-phrases">
+            <span>I would be a doctor</span>
+            <span>she wouldn't have crashed</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">4</span>
+        <div class="step-body">
+          <h5>Añade un marcador temporal explícito</h5>
+          <p>Sin <em>now / today / still / by now / last week</em> el mixto puede confundirse con un Tipo 3 erróneo. El marcador es la <strong>señal</strong> que justifica el cambio de tiempo.</p>
+          <div class="step-phrases">
+            <span>… now</span>
+            <span>… today</span>
+            <span>… by now</span>
+            <span>… last week</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">5</span>
+        <div class="step-body">
+          <h5>Considera la inversión formal (C1)</h5>
+          <p>Para <em>Writing P2</em> sube el registro con <em>Had + S + p.p.</em> en lugar de <em>If…had…</em>: <em>Had we acted then, we would be ahead now.</em></p>
+          <div class="step-phrases">
+            <span>Had we acted, …</span>
+            <span>Were she to apply, …</span>
+            <span>Should you need…</span>
+          </div>
+        </div>
+      </div>
+      <div class="blueprint-footer">
+        <span class="footer-ico">📏</span>
+        <span><strong>Test rápido:</strong> ¿puedes añadir <em>now</em> o <em>last week</em> sin que la frase chirríe? Si sí, el mixto funciona. Si no, vuelve a Tipo 2 o 3 puro.</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+/* THEME — shared key "theme" across the whole site */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("theme",t);}catch(e){}}
+function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme")||"light";applyTheme(cur==="dark"?"light":"dark");}
+(function initTheme(){let saved=null;try{saved=localStorage.getItem("theme");}catch(e){}if(saved==="dark"||saved==="light"){applyTheme(saved);return;}const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;applyTheme(prefersDark?"dark":"light");})();
+
+/* TABS */
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* SECTIONS */
+function toggleSection(header){
+  header.parentElement.classList.toggle('collapsed');
+}
+function getActiveSections(){
+  return document.querySelectorAll('.tab-panel.active .section');
+}
+function getActivePapers(){
+  return document.querySelectorAll('.tab-panel.active .paper');
+}
+function expandAll(){
+  getActiveSections().forEach(s => s.classList.remove('collapsed'));
+  getActivePapers().forEach(p => p.classList.remove('collapsed'));
+}
+function collapseAll(){
+  getActiveSections().forEach(s => s.classList.add('collapsed'));
+  getActivePapers().forEach(p => p.classList.add('collapsed'));
+}
+
+/* MODEL PAPERS — wrap title+meta in a clickable header, collapse by default */
+document.querySelectorAll('.paper').forEach(paper => {
+  const title = paper.querySelector('.paper-title');
+  const meta = paper.querySelector('.paper-meta');
+  if(!title || !meta) return;
+  const header = document.createElement('div');
+  header.className = 'paper-header';
+  const wrap = document.createElement('div');
+  wrap.appendChild(title);
+  wrap.appendChild(meta);
+  const toggle = document.createElement('span');
+  toggle.className = 'paper-toggle';
+  toggle.textContent = '▾';
+  header.appendChild(wrap);
+  header.appendChild(toggle);
+  header.addEventListener('click', () => paper.classList.toggle('collapsed'));
+  paper.insertBefore(header, paper.firstChild);
+  paper.classList.add('collapsed');
+});
+
+/* Set section colors + item counts */
+document.querySelectorAll('.section').forEach(sec => {
+  const icon = sec.querySelector('.section-icon');
+  if (icon) {
+    const m = (icon.getAttribute('style') || '').match(/var\(--c-([a-z]+)\)/);
+    if (m) {
+      sec.style.setProperty('--section-c', `var(--c-${m[1]})`);
+      sec.style.setProperty('--section-c-bg', `var(--c-${m[1]}-bg)`);
+    }
+  }
+  const container = sec.querySelector('.grid, .stack, .papers, .tips-list, .blueprint, .table-wrap');
+  if(!container) return;
+  let count;
+  if (container.matches('.blueprint')) {
+    count = container.querySelectorAll('.step').length;
+  } else if (container.matches('.table-wrap')) {
+    count = container.querySelectorAll('tbody tr').length;
+  } else {
+    count = container.children.length;
+  }
+  const badge = document.createElement('span');
+  badge.className = 'section-count';
+  badge.textContent = count;
+  sec.querySelector('.section-header').appendChild(badge);
+});
+
+/* FONT SIZE SLIDER — shared key "idiomas_font_size" across the whole site */
+const FS_KEY = 'idiomas_font_size';
+function updateFontSize(pct){
+  const scale = pct / 100;
+  document.documentElement.style.fontSize = (16 * scale) + 'px';
+  document.getElementById('fs-value').textContent = pct + '%';
+  localStorage.setItem(FS_KEY, pct);
+}
+(function initFontSize(){
+  const saved = localStorage.getItem(FS_KEY);
+  if(saved){
+    document.getElementById('fs-slider').value = saved;
+    updateFontSize(saved);
+  }
+})();
+</script>
+
+</body>
+</html>

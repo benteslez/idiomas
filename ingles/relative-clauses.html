@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relative Clauses · B2–C1 Linguaskill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Page identity: Relative Clauses → Syntax violet */
+  --primary:#7c3aed; --primary-soft:#f5f3ff; --primary-mid:#8b5cf6; --primary-strong:#5b21b6;
+  --primary-glow:rgba(124,58,237,.14);
+  /* Per-tab identity colors */
+  --tab-defining:#4338ca;     --tab-defining-soft:#eef2ff;     --tab-defining-mid:#6366f1;
+  --tab-nondefining:#0e7490;  --tab-nondefining-soft:#ecfeff;  --tab-nondefining-mid:#06b6d4;
+  --tab-formal:#7e22ce;       --tab-formal-soft:#faf5ff;       --tab-formal-mid:#a855f7;
+  /* Legacy aliases */
+  --accent:var(--primary); --accent-light:var(--primary-soft); --accent-mid:var(--primary-mid);
+  /* Neutrals */
+  --bg:#f7f7f5; --bg-elevated:#fbfbfa; --card:#ffffff;
+  --border:#ececec; --border-strong:#dfdfdf;
+  --text:#18181b; --text2:#52525b; --text3:#71717a;
+  /* Paper (model examples) */
+  --paper:#fefef9; --paper-border:#e7e5d6;
+  /* Shadows */
+  --shadow-xs:0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:0 2px 8px rgba(15,23,42,.04),0 1px 2px rgba(15,23,42,.03);
+  --shadow:0 4px 16px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+  --shadow-primary:0 6px 20px var(--primary-glow);
+  /* Geometry */
+  --radius:18px; --radius-md:14px; --radius-sm:10px; --radius-xs:6px; --radius-pill:999px;
+  /* Motion */
+  --ease:cubic-bezier(0.4,0,0.2,1); --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --t-fast:120ms; --t-base:200ms;
+  /* Section colors (A→E) */
+  --c-greet:#7c3aed;     --c-greet-bg:#f5f3ff;
+  --c-conn:#0e7490;      --c-conn-bg:#ecfeff;
+  --c-key:#1d4ed8;       --c-key-bg:#eff6ff;
+  --c-close:#be185d;     --c-close-bg:#fdf2f8;
+  --c-model:#b45309;     --c-model-bg:#fffbeb;
+  --c-tip:#ca8a04;       --c-tip-bg:#fef9c3;
+  --c-struct:#4338ca;    --c-struct-bg:#e0e7ff;
+  /* Sub-category colors for connectors */
+  --c-add:#0e7490;       --c-contrast:#be185d;
+  --c-cause:#15803d;     --c-purpose:#7c3aed;
+  --c-seq:#1d4ed8;       --c-time:#0369a1;
+  --c-emph:#b91c1c;      --c-summ:#7c3aed;
+}
+[data-theme="dark"]{
+  --primary:#c4b5fd; --primary-soft:rgba(196,181,253,.10); --primary-mid:#a78bfa; --primary-strong:#ddd6fe;
+  --primary-glow:rgba(196,181,253,.18);
+  --tab-defining:#818cf8;     --tab-defining-soft:rgba(129,140,248,.12);    --tab-defining-mid:#6366f1;
+  --tab-nondefining:#67e8f9;  --tab-nondefining-soft:rgba(103,232,249,.12); --tab-nondefining-mid:#22d3ee;
+  --tab-formal:#d8b4fe;       --tab-formal-soft:rgba(216,180,254,.12);      --tab-formal-mid:#c084fc;
+  --bg:#0a0a0b; --bg-elevated:#131316; --card:#18181b;
+  --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --paper:#1e1e24; --paper-border:#3a3a42;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.2);
+  --shadow:0 4px 16px rgba(0,0,0,.30),0 1px 3px rgba(0,0,0,.20);
+  --shadow-primary:0 6px 24px var(--primary-glow);
+  --c-greet:#a78bfa;     --c-greet-bg:rgba(167,139,250,.10);
+  --c-conn:#22d3ee;      --c-conn-bg:rgba(34,211,238,.10);
+  --c-key:#60a5fa;       --c-key-bg:rgba(96,165,250,.10);
+  --c-close:#f472b6;     --c-close-bg:rgba(244,114,182,.10);
+  --c-model:#fbbf24;     --c-model-bg:rgba(251,191,36,.10);
+  --c-tip:#facc15;       --c-tip-bg:rgba(250,204,21,.10);
+  --c-struct:#a5b4fc;    --c-struct-bg:rgba(165,180,252,.10);
+  --c-add:#22d3ee;       --c-contrast:#f472b6;
+  --c-cause:#4ade80;     --c-purpose:#a78bfa;
+  --c-seq:#60a5fa;       --c-time:#38bdf8;
+  --c-emph:#f87171;      --c-summ:#a78bfa;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+*:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-xs);}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
+
+/* HEADER */
+.site-header{background:linear-gradient(180deg,var(--bg-elevated),var(--bg));padding:32px 20px 22px;position:relative;}
+.site-header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-strong) 20%,var(--border-strong) 80%,transparent);}
+.header-inner{max-width:1000px;margin:0 auto;}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.site-header h1{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:600;letter-spacing:-0.02em;color:var(--text);line-height:1.1;}
+.header-tag{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);background:var(--primary-soft);border-radius:var(--radius-pill);padding:4px 11px;}
+.header-sub{font-size:.88rem;color:var(--text3);font-weight:400;margin-top:4px;line-height:1.55;}
+.header-sub strong{color:var(--primary);font-weight:600;}
+
+/* HEADER ACTIONS BAR */
+.header-actions{max-width:1000px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:8px 14px 8px 11px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.back-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateX(-2px);box-shadow:var(--shadow);}
+.back-btn:active{transform:translateX(-2px) scale(.97);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+
+/* THEME TOGGLE */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.theme-toggle:hover{color:var(--primary);border-color:var(--primary-mid);transform:translateY(-1px);box-shadow:var(--shadow);}
+.theme-toggle .icon-sun{display:none;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+
+/* TABS — per-tab colors */
+.tabs-wrap{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-elevated) 85%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--border);padding:14px 20px;}
+.tabs{max-width:1000px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;}
+.tab{border:1px solid var(--border);border-radius:var(--radius-pill);padding:9px 18px;font-family:inherit;font-size:.85rem;font-weight:500;cursor:pointer;background:var(--card);color:var(--text2);transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:7px;}
+.tab:hover{transform:translateY(-1px);box-shadow:var(--shadow-xs);border-color:var(--tab-c,var(--primary-mid));color:var(--tab-c,var(--primary));}
+.tab.active{background:var(--tab-c,var(--primary));color:#fff;border-color:var(--tab-c,var(--primary));font-weight:600;box-shadow:0 6px 20px color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+[data-theme="dark"] .tab.active{color:#0a0a0b;}
+.tab[data-tab="defining"]{--tab-c:var(--tab-defining);}
+.tab[data-tab="nondefining"]{--tab-c:var(--tab-nondefining);}
+.tab[data-tab="formal"]{--tab-c:var(--tab-formal);}
+.tab .ico{font-size:1rem;line-height:1;}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:32px 20px 64px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeSlideIn 360ms var(--ease-out);}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* INTRO */
+.intro{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:28px;box-shadow:var(--shadow-xs);}
+.intro h3{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--tab-c,var(--primary));margin-bottom:10px;}
+.intro p{font-size:.92rem;color:var(--text2);line-height:1.65;}
+.intro p strong{color:var(--tab-c,var(--primary));font-weight:600;}
+
+/* TOOLBAR */
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.tool-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:7px 15px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:6px;}
+.tool-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateY(-1px);box-shadow:var(--shadow-xs);}
+.tool-btn .ico{font-size:.85rem;line-height:1;}
+
+/* FONT SIZE SLIDER */
+.fs-control{display:inline-flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:6px 14px;}
+.fs-label{font-family:inherit;font-weight:600;color:var(--text3);line-height:1;user-select:none;}
+.fs-label.small{font-size:.78rem;}
+.fs-label.large{font-size:1.1rem;}
+.fs-slider{-webkit-appearance:none;appearance:none;width:100px;height:4px;background:var(--border-strong);border-radius:2px;outline:none;cursor:pointer;accent-color:var(--primary);}
+.fs-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);transition:transform var(--t-fast) var(--ease);}
+.fs-slider::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.fs-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);}
+.fs-value{font-size:.72rem;font-weight:600;color:var(--text3);min-width:32px;text-align:right;}
+
+/* SECTION (collapsible) */
+.section{margin-bottom:14px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow var(--t-base) var(--ease);}
+.section:hover{box-shadow:var(--shadow);}
+.section-header{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;user-select:none;transition:background var(--t-base) var(--ease);background:transparent;}
+.section-header:hover{background:var(--bg-elevated);}
+.section:not(.collapsed) .section-header{border-bottom:1px solid var(--border);}
+.section-icon{width:38px;height:38px;border-radius:var(--radius-sm);display:inline-flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;background:transparent!important;border:2px solid var(--section-c,var(--primary));color:var(--section-c,var(--primary));}
+.section-title{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--text);line-height:1.2;}
+.section-desc{font-size:.78rem;color:var(--text3);margin-top:2px;line-height:1.45;}
+.section-header > div:not(.section-icon){flex:1;}
+.section-header::after{content:"▾";font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease);margin-left:8px;flex-shrink:0;font-weight:600;}
+.section.collapsed .section-header::after{transform:rotate(-90deg);}
+.section.collapsed .section-header:hover::after{color:var(--primary);}
+.section-count{font-size:.7rem;font-weight:600;color:var(--text3);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px 10px;margin-left:auto;flex-shrink:0;transition:all var(--t-base) var(--ease);}
+.section-header:hover .section-count{border-color:var(--primary-mid);color:var(--primary);}
+.section > .grid, .section > .stack, .section > .papers, .section > .tips-list, .section > .blueprint{padding:18px 20px 20px;}
+.section.collapsed > *:not(.section-header){display:none!important;}
+
+/* GRID + ITEM */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.item{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 30%,transparent)!important;border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-xs);transition:transform var(--t-base) var(--ease),box-shadow var(--t-base) var(--ease),border-color var(--t-base) var(--ease);border-left:4px solid var(--section-c,var(--primary))!important;}
+.item:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--section-c,var(--primary-mid))!important;}
+.item-head{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.item-term{font-family:'Manrope','Inter',sans-serif;font-size:1.02rem;font-weight:700;letter-spacing:-0.005em;color:var(--section-c,var(--text));line-height:1.3;}
+.item-trans{font-size:.76rem;color:var(--text3);font-style:italic;}
+.item-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;}
+.item-list li{font-size:.88rem;color:var(--text2);line-height:1.5;padding:5px 0 5px 12px;border-left:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);}
+.item-list li strong{color:var(--text);font-weight:600;}
+
+/* STACK (single-column phrase list, for A/C/D sections) */
+.stack{display:flex;flex-direction:column;gap:8px;}
+.phrase{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-sm);padding:10px 14px;font-size:.92rem;color:var(--text2);line-height:1.5;transition:all var(--t-base) var(--ease);}
+.phrase:hover{transform:translateX(2px);border-color:var(--section-c,var(--primary));box-shadow:var(--shadow-xs);}
+.phrase strong{color:var(--text);font-weight:600;}
+.phrase .hint{font-size:.74rem;color:var(--text3);font-style:italic;margin-left:6px;}
+
+/* PAPER (model examples) */
+.papers{display:flex;flex-direction:column;gap:14px;}
+.paper{background:var(--paper);border:1px solid var(--paper-border);border-radius:var(--radius-md);padding:22px 26px;box-shadow:var(--shadow-sm);position:relative;transition:box-shadow var(--t-base) var(--ease);}
+.paper:hover{box-shadow:var(--shadow);}
+.paper::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--tab-c,var(--primary)),transparent);border-radius:var(--radius-md) var(--radius-md) 0 0;}
+.paper-header{display:flex;align-items:flex-start;gap:14px;cursor:pointer;user-select:none;}
+.paper-header > div:first-child{flex:1;min-width:0;}
+.paper-header .paper-meta{margin-bottom:0;}
+.paper-toggle{font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease),color var(--t-base) var(--ease);flex-shrink:0;font-weight:700;line-height:1.4;}
+.paper-header:hover .paper-toggle,.paper-header:hover .paper-title{color:var(--tab-c,var(--primary));}
+.paper.collapsed .paper-toggle{transform:rotate(-90deg);}
+.paper.collapsed .paper-body{display:none;}
+.paper:not(.collapsed) .paper-body{margin-top:18px;}
+.paper-title{font-family:'Fraunces',Georgia,serif;font-size:1.05rem;font-weight:600;color:var(--tab-c,var(--primary));margin-bottom:6px;letter-spacing:-0.01em;transition:color var(--t-base) var(--ease);}
+.paper-meta{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:18px;}
+.paper-body{font-family:'Inter',sans-serif;font-size:.94rem;line-height:1.8;color:var(--text);}
+.paper-body p{margin-bottom:12px;}
+.paper-body p:last-child{margin-bottom:0;}
+.paper-body em{font-style:italic;color:var(--text2);}
+
+/* COLOR-CODED INLINE PHRASES IN MODELS — match theory section colors */
+.paper-body .k-open    {color:var(--c-greet);    font-weight:600;}
+.paper-body .k-add     {color:var(--c-add);      font-weight:600;}
+.paper-body .k-contrast{color:var(--c-contrast); font-weight:600;}
+.paper-body .k-cause   {color:var(--c-cause);    font-weight:600;}
+.paper-body .k-concess {color:var(--c-purpose);  font-weight:600;}
+.paper-body .k-purpose {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-seq     {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-time    {color:var(--c-time);     font-weight:600;}
+.paper-body .k-emph    {color:var(--c-emph);     font-weight:600;}
+.paper-body .k-summ    {color:var(--c-summ);     font-weight:600;}
+.paper-body .k-key     {color:var(--c-key);      font-weight:600;}
+.paper-body .k-close   {color:var(--c-close);    font-weight:600;}
+
+/* STRUCTURE BLUEPRINT (vertical timeline) */
+.blueprint{display:flex;flex-direction:column;gap:0;position:relative;}
+.step{display:flex;gap:14px;align-items:flex-start;position:relative;padding:6px 0 14px 0;}
+.step::before{content:"";position:absolute;left:18px;top:42px;bottom:-4px;width:2px;background:color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);}
+.step:last-of-type::before{display:none;}
+.step-num{width:38px;height:38px;border-radius:50%;background:var(--card);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--section-c,var(--primary));position:relative;z-index:1;}
+.step-body{flex:1;min-width:0;padding-top:6px;}
+.step-body h5{font-family:'Manrope',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-0.005em;}
+.step-body .step-meta{font-size:.72rem;color:var(--text3);font-style:italic;margin-bottom:6px;font-weight:500;}
+.step-body > p{font-size:.86rem;color:var(--text2);line-height:1.55;margin-bottom:9px;}
+.step-phrases{display:flex;flex-wrap:wrap;gap:5px;}
+.step-phrases span{font-size:.76rem;color:var(--section-c,var(--primary));background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);padding:4px 11px;border-radius:var(--radius-pill);font-weight:600;line-height:1.4;transition:all var(--t-base) var(--ease);}
+.step-phrases span:hover{background:color-mix(in srgb,var(--section-c,var(--primary)) 24%,transparent);border-color:var(--section-c,var(--primary));}
+.blueprint-footer{margin-top:6px;padding:12px 16px;background:color-mix(in srgb,var(--section-c,var(--primary)) 10%,transparent);border-radius:var(--radius-md);font-size:.86rem;color:var(--text2);display:flex;align-items:center;gap:10px;border:1px dashed color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);}
+.blueprint-footer strong{color:var(--section-c,var(--primary));font-weight:600;}
+.blueprint-footer .footer-ico{font-size:1rem;flex-shrink:0;}
+
+/* TIPS SECTION */
+.tips-list{display:flex;flex-direction:column;gap:10px;}
+.tip{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-md);padding:14px 16px;display:flex;gap:14px;align-items:flex-start;transition:all var(--t-base) var(--ease);}
+.tip:hover{transform:translateX(2px);box-shadow:var(--shadow-xs);border-color:var(--section-c,var(--primary));}
+.tip.warn{--section-c:var(--c-emph);}
+.tip-icon{font-size:.9rem;flex-shrink:0;line-height:1;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);color:var(--section-c,var(--primary));font-weight:800;margin-top:1px;}
+.tip-body{flex:1;min-width:0;}
+.tip-body h5{font-family:'Manrope',sans-serif;font-size:.95rem;font-weight:700;color:var(--section-c,var(--primary));margin-bottom:4px;letter-spacing:-0.005em;line-height:1.3;}
+.tip-body p{font-size:.86rem;color:var(--text2);line-height:1.55;}
+.tip-body p em{color:var(--text);font-style:normal;background:var(--bg-elevated);padding:1px 5px;border-radius:var(--radius-xs);font-size:.92em;font-weight:500;}
+
+/* INLINE STRUCTURAL LABELS */
+.label{display:inline-block;font-family:'JetBrains Mono','Manrope',sans-serif;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:var(--radius-xs);background:var(--tab-c-soft,var(--primary-soft));color:var(--tab-c,var(--primary));margin-right:6px;vertical-align:middle;border:1px solid color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+
+/* CALLOUT */
+.callout{background:var(--tab-c-soft,var(--primary-soft));border-radius:var(--radius-md);padding:14px 16px;margin:0 0 24px;font-size:.88rem;color:var(--text2);line-height:1.6;border-left:3px solid var(--tab-c,var(--primary));}
+.callout strong{color:var(--tab-c,var(--primary));font-weight:600;}
+.callout .ico{font-size:1rem;margin-right:5px;}
+
+/* Set tab-c-soft based on active panel */
+.tab-panel[data-tab="defining"]{--tab-c:var(--tab-defining);--tab-c-soft:var(--tab-defining-soft);}
+.tab-panel[data-tab="nondefining"]{--tab-c:var(--tab-nondefining);--tab-c-soft:var(--tab-nondefining-soft);}
+.tab-panel[data-tab="formal"]{--tab-c:var(--tab-formal);--tab-c-soft:var(--tab-formal-soft);}
+
+@media (max-width: 600px){
+  .paper{padding:20px 18px;}
+  .paper-body{font-size:.88rem;}
+  .grid{grid-template-columns:1fr;}
+}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-xs);margin:0 0 4px;}
+.gram-table{width:100%;border-collapse:collapse;background:var(--card);font-size:.88rem;}
+.gram-table caption{caption-side:top;text-align:left;font-family:'Manrope',sans-serif;font-weight:700;color:var(--section-c,var(--primary));padding:0 0 8px;font-size:.9rem;}
+.gram-table th{background:color-mix(in srgb,var(--section-c,var(--primary)) 12%,transparent);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;text-align:left;padding:10px 14px;border-bottom:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;}
+.gram-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);line-height:1.5;vertical-align:top;}
+.gram-table tr:last-child td{border-bottom:none;}
+.gram-table tbody tr{transition:background var(--t-fast) var(--ease);}
+.gram-table tbody tr:hover{background:var(--bg-elevated);}
+.gram-table td strong,.gram-table .en{color:var(--text);font-weight:600;}
+.gram-table .es{font-style:italic;color:var(--text3);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-actions">
+    <a class="back-btn" href="index.html" title="Volver al índice">
+      <span class="arrow">←</span><span>Inicio</span>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>🔗 Relative Clauses · Oraciones de relativo</h1>
+      <span class="header-tag">Linguaskill B2–C1 · Syntax</span>
+    </div>
+    <p class="header-sub">
+      Cláusulas relativas <strong>especificativas</strong> (defining), <strong>explicativas</strong> (non-defining) y estructuras formales con <strong>preposición + which / whom</strong>.
+    </p>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" data-tab="defining" onclick="showTab('defining', this)">
+      <span class="ico">🎯</span><span>Especificativas</span>
+    </button>
+    <button class="tab" data-tab="nondefining" onclick="showTab('nondefining', this)">
+      <span class="ico">💬</span><span>Explicativas</span>
+    </button>
+    <button class="tab" data-tab="formal" onclick="showTab('formal', this)">
+      <span class="ico">🎩</span><span>Prep. + which/whom</span>
+    </button>
+  </div>
+</div>
+
+<main class="main">
+
+<div class="toolbar">
+  <div class="fs-control" title="Tamaño del texto">
+    <span class="fs-label small">A</span>
+    <input type="range" class="fs-slider" id="fs-slider" min="85" max="140" step="5" value="100" oninput="updateFontSize(this.value)">
+    <span class="fs-label large">A</span>
+    <span class="fs-value" id="fs-value">100%</span>
+  </div>
+  <div class="toolbar-actions">
+    <button class="tool-btn" onclick="expandAll()"><span class="ico">▾</span>Expandir todos</button>
+    <button class="tool-btn" onclick="collapseAll()"><span class="ico">▸</span>Colapsar todos</button>
+  </div>
+</div>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 1: DEFINING ============================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel active" id="defining" data-tab="defining">
+
+  <div class="intro">
+    <h3>Especificativas · Defining Relative Clauses</h3>
+    <p>Las <strong>defining relative clauses</strong> identifican o restringen el sustantivo al que se refieren: son <strong>esenciales</strong> para el significado de la frase. Si las quitas, el referente queda indeterminado. <strong>No llevan comas</strong>, admiten <em>that</em> y permiten <strong>omitir</strong> el pronombre cuando es objeto.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Linguaskill B2–C1:</strong> dominar las defining clauses es clave en <em>Reading Part 7 (Missing Sentences / Extracts)</em> — los huecos suelen contener cláusulas que conectan referentes — y en el <em>Essay</em>, donde ampliar oraciones con relativas es uno de los marcadores más claros de <em>grammar range</em>.
+  </div>
+
+  <!-- A. Pronombres relativos -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">🔧</div>
+      <div>
+        <div class="section-title">A. Pronombres relativos · Relative pronouns</div>
+        <div class="section-desc">Quién/qué referente, función y ejemplo</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Pronombre</th><th>Función / referente</th><th>Ejemplo</th><th>Traducción</th></tr></thead>
+        <tbody>
+          <tr><td><strong>who</strong></td><td>Personas (sujeto u objeto)</td><td class="en">The woman <strong>who</strong> lives next door is a doctor.</td><td class="es">La mujer que vive al lado es médica.</td></tr>
+          <tr><td><strong>whom</strong></td><td>Personas, objeto (formal)</td><td class="en">The candidate <strong>whom</strong> they hired starts on Monday.</td><td class="es">El candidato al que contrataron empieza el lunes.</td></tr>
+          <tr><td><strong>which</strong></td><td>Cosas / animales</td><td class="en">The book <strong>which</strong> I'm reading is fascinating.</td><td class="es">El libro que estoy leyendo es fascinante.</td></tr>
+          <tr><td><strong>that</strong></td><td>Personas o cosas (más coloquial)</td><td class="en">The film <strong>that</strong> we saw last night was excellent.</td><td class="es">La película que vimos anoche fue excelente.</td></tr>
+          <tr><td><strong>whose</strong></td><td>Posesión (personas, cosas o animales)</td><td class="en">The author <strong>whose</strong> novel won the prize is Spanish.</td><td class="es">El autor cuya novela ganó el premio es español.</td></tr>
+          <tr><td><strong>where</strong></td><td>Lugar</td><td class="en">The café <strong>where</strong> we first met has closed down.</td><td class="es">El café donde nos conocimos ha cerrado.</td></tr>
+          <tr><td><strong>when</strong></td><td>Tiempo</td><td class="en">The day <strong>when</strong> I graduated was unforgettable.</td><td class="es">El día (en) que me gradué fue inolvidable.</td></tr>
+          <tr><td><strong>why</strong></td><td>Razón (solo tras <em>the reason</em>)</td><td class="en">The reason <strong>why</strong> he resigned is still unclear.</td><td class="es">La razón por la que dimitió aún no está clara.</td></tr>
+          <tr><td><strong>∅ (omitido)</strong></td><td>Objeto en defining</td><td class="en">The book <strong>∅</strong> I borrowed was excellent.</td><td class="es">El libro que pedí prestado era excelente.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- B. Reglas -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">⭐</div>
+      <div>
+        <div class="section-title">B. Reglas de las defining clauses</div>
+        <div class="section-desc">Lo que sí · lo que no</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">Sin comas</span><span class="item-trans">no commas</span></div>
+        <ul class="item-list">
+          <li>La cláusula <strong>no</strong> se separa con comas.</li>
+          <li><em>The man who lives here is my uncle.</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-add)">
+        <div class="item-head"><span class="item-term">"That" permitido</span><span class="item-trans">that allowed</span></div>
+        <ul class="item-list">
+          <li>Puede sustituir a <strong>who</strong> o <strong>which</strong>.</li>
+          <li>Tono ligeramente más informal y oral.</li>
+          <li><em>The bus that goes downtown is the 14.</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">Objeto omitible</span><span class="item-trans">object can drop</span></div>
+        <ul class="item-list">
+          <li>Si el pronombre es <strong>objeto</strong> del verbo, se puede omitir.</li>
+          <li><em>The film [that] we saw was great.</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-contrast)">
+        <div class="item-head"><span class="item-term">Sujeto obligatorio</span><span class="item-trans">subject NOT omittable</span></div>
+        <ul class="item-list">
+          <li>Si el pronombre es <strong>sujeto</strong>, debe aparecer.</li>
+          <li>✗ <em>The man lives here is my uncle.</em></li>
+          <li>✓ <em>The man <strong>who</strong> lives here is my uncle.</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">Información esencial</span><span class="item-trans">essential info</span></div>
+        <ul class="item-list">
+          <li>Sin la cláusula, el referente queda indefinido.</li>
+          <li><em>The students who studied passed.</em> (no todos los estudiantes)</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-time)">
+        <div class="item-head"><span class="item-term">"¿Cuál?"</span><span class="item-trans">which one?</span></div>
+        <ul class="item-list">
+          <li>Responde a la pregunta <em>which one?</em>.</li>
+          <li>Distingue al referente de otros candidatos posibles.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- C. Ejemplos reales -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">💬</div>
+      <div>
+        <div class="section-title">C. Ejemplos reales</div>
+        <div class="section-desc">Defining clauses en frases naturales · EN + ES</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>The teacher who taught me French moved to Lyon last year.</strong> <span class="hint">El profesor que me enseñó francés se mudó a Lyon el año pasado.</span></div>
+      <div class="phrase"><strong>This is the song that always reminds me of summer.</strong> <span class="hint">Esta es la canción que siempre me recuerda al verano.</span></div>
+      <div class="phrase"><strong>The package [which] I ordered last Friday hasn't arrived yet.</strong> <span class="hint">El paquete que pedí el viernes pasado aún no ha llegado.</span> <em>(pronombre objeto omitido)</em></div>
+      <div class="phrase"><strong>Anyone whose passport expires within six months should renew it.</strong> <span class="hint">Cualquiera cuyo pasaporte caduque en seis meses debería renovarlo.</span></div>
+      <div class="phrase"><strong>The hotel where we stayed in Berlin had a rooftop pool.</strong> <span class="hint">El hotel donde nos alojamos en Berlín tenía piscina en la azotea.</span></div>
+      <div class="phrase"><strong>The moment when I realised I was lost is still vivid in my mind.</strong> <span class="hint">El momento en que me di cuenta de que estaba perdido sigue muy vivo en mi mente.</span></div>
+      <div class="phrase"><strong>The reason why so many small businesses fail is poor cash flow.</strong> <span class="hint">La razón por la que tantos pequeños negocios fracasan es la mala gestión del flujo de caja.</span></div>
+      <div class="phrase"><strong>Everything [that] she said made perfect sense.</strong> <span class="hint">Todo lo que dijo tenía perfecto sentido.</span></div>
+      <div class="phrase"><strong>The colleague I share an office with has just been promoted.</strong> <span class="hint">El compañero con el que comparto despacho acaba de ser ascendido.</span> <em>(prep. al final, registro neutro)</em></div>
+    </div>
+  </div>
+
+  <!-- D. Trampas hispano -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Errores que el examinador detecta al instante</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>No omitas el pronombre sujeto</h5>
+          <p>En español la elipsis del sujeto es libre. En inglés es agramatical: ✗ <em>The man lives here is my uncle.</em> → ✓ <em>The man <strong>who</strong> lives here is my uncle.</em> El pronombre sujeto de la relativa nunca se omite.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Whose" = cuyo / cuya / cuyos</h5>
+          <p>NO uses <em>of who</em> ni <em>of which</em> donde corresponde <em>whose</em>: ✗ <em>The man of who the dog escaped…</em> → ✓ <em>The man <strong>whose</strong> dog escaped…</em> <em>Whose</em> sirve para personas, animales y cosas.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Where" para lugares; "in which" suena académico</h5>
+          <p>Para lugares físicos, lo natural es <em>where</em>: <em>the house <strong>where</strong> I grew up</em>. <em>in which</em> existe pero pertenece al registro formal (ver pestaña <em>Prep. + which/whom</em>) y suena pomposo en frases cotidianas.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"The reason why" o "the reason (that)"</h5>
+          <p>No traduzcas literalmente <em>la razón por la cual</em> como <em>the reason for which</em> en lenguaje cotidiano. Usa <em>the reason <strong>why</strong></em> o, más natural aún, <em>the reason [that]</em>: <em>The reason [that] I called you was simple.</em></p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>No traduzcas "lo que" como "the what"</h5>
+          <p>El español <em>lo que dijo</em> no se traduce con <em>the what</em>. Usa <em>what</em> a secas (referente neutro) o <em>everything / the thing(s) [that]</em>: ✓ <em>I didn't understand <strong>what</strong> he said.</em> · ✓ <em>Everything [that] he said was true.</em></p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Doble pronombre — error de transferencia</h5>
+          <p>En español decimos coloquialmente <em>"el libro que lo leí ayer"</em>. En inglés está totalmente prohibido: ✗ <em>The book that I read it yesterday…</em> → ✓ <em>The book [that] I read yesterday…</em> Nunca duplicas con un pronombre objeto detrás del verbo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 2: NON-DEFINING ========================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="nondefining" data-tab="nondefining">
+
+  <div class="intro">
+    <h3>Explicativas · Non-Defining Relative Clauses</h3>
+    <p>Las <strong>non-defining relative clauses</strong> añaden información <strong>extra</strong>: el referente ya está identificado y la cláusula no es esencial. <strong>Siempre van entre comas</strong> (o paréntesis / rayas), <strong>no admiten <em>that</em></strong>, no permiten omitir el pronombre y son típicas del registro escrito.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">💬</span><strong>Linguaskill B2–C1:</strong> el uso correcto de las comas en non-defining es uno de los <em>checkpoints</em> de puntuación más valorados en el <em>Writing</em>. En <em>Reading</em>, las cláusulas explicativas suelen contener datos clave (fechas, cifras, definiciones) que el examen pregunta directamente.
+  </div>
+
+  <!-- A. Pronombres relativos -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">🔧</div>
+      <div>
+        <div class="section-title">A. Pronombres relativos · Relative pronouns</div>
+        <div class="section-desc">En non-defining: sin "that", sin omisiones</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Pronombre</th><th>Función / referente</th><th>Ejemplo</th><th>Traducción</th></tr></thead>
+        <tbody>
+          <tr><td><strong>who</strong></td><td>Personas</td><td class="en">My brother, <strong>who</strong> lives in Paris, is a chef.</td><td class="es">Mi hermano, que vive en París, es chef.</td></tr>
+          <tr><td><strong>whom</strong></td><td>Personas, objeto (formal)</td><td class="en">Mr Lee, <strong>whom</strong> I met last year, has retired.</td><td class="es">El Sr. Lee, a quien conocí el año pasado, se ha jubilado.</td></tr>
+          <tr><td><strong>which</strong></td><td>Cosas / animales</td><td class="en">The Eiffel Tower, <strong>which</strong> was built in 1889, attracts millions of visitors.</td><td class="es">La Torre Eiffel, que se construyó en 1889, atrae a millones de visitantes.</td></tr>
+          <tr><td><strong>which</strong> (oración entera)</td><td>Reacción ante toda la frase</td><td class="en">She passed her driving test, <strong>which</strong> surprised everyone.</td><td class="es">Aprobó el examen de conducir, lo cual sorprendió a todos.</td></tr>
+          <tr><td><strong>whose</strong></td><td>Posesión (personas / cosas)</td><td class="en">Sarah, <strong>whose</strong> car was stolen, called the police immediately.</td><td class="es">Sarah, a quien le robaron el coche, llamó a la policía de inmediato.</td></tr>
+          <tr><td><strong>where</strong></td><td>Lugar</td><td class="en">Madrid, <strong>where</strong> I was born, is a vibrant city.</td><td class="es">Madrid, donde nací, es una ciudad vibrante.</td></tr>
+          <tr><td><strong>when</strong></td><td>Tiempo</td><td class="en">In 2020, <strong>when</strong> the pandemic started, everything changed overnight.</td><td class="es">En 2020, cuando empezó la pandemia, todo cambió de un día para otro.</td></tr>
+          <tr><td><strong>that ✗</strong></td><td>Prohibido en non-defining</td><td class="en">✗ My brother, <s>that</s> lives in Paris, is a chef.</td><td class="es">Nunca uses <em>that</em> con comas.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- B. Reglas -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">⭐</div>
+      <div>
+        <div class="section-title">B. Reglas de las non-defining clauses</div>
+        <div class="section-desc">Lo que sí · lo que no</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">Comas obligatorias</span><span class="item-trans">commas required</span></div>
+        <ul class="item-list">
+          <li>Siempre entre <strong>comas</strong> (o paréntesis / rayas).</li>
+          <li><em>My sister, who is a vet, lives in Bilbao.</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-contrast)">
+        <div class="item-head"><span class="item-term">"That" prohibido</span><span class="item-trans">no "that"</span></div>
+        <ul class="item-list">
+          <li>Nunca <strong>that</strong> en non-defining.</li>
+          <li>✗ <em>My car, that I just bought, broke down.</em></li>
+          <li>✓ <em>My car, <strong>which</strong> I just bought, broke down.</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">Pronombre obligatorio</span><span class="item-trans">cannot drop</span></div>
+        <ul class="item-list">
+          <li>El pronombre <strong>nunca</strong> se omite, ni siendo objeto.</li>
+          <li>✗ <em>My brother, I saw yesterday, looks tired.</em></li>
+          <li>✓ <em>My brother, <strong>whom</strong> I saw yesterday, looks tired.</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-add)">
+        <div class="item-head"><span class="item-term">Información extra</span><span class="item-trans">extra info</span></div>
+        <ul class="item-list">
+          <li>Datos no esenciales: si los quitas, la frase sigue funcionando.</li>
+          <li><em>My brother lives in Paris.</em> ← válido sin la cláusula.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">"Which" + oración entera</span><span class="item-trans">sentential which</span></div>
+        <ul class="item-list">
+          <li><strong>Which</strong> puede referirse a <strong>toda la oración previa</strong>.</li>
+          <li><em>He arrived late, which annoyed everyone.</em> = <em>lo cual</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-time)">
+        <div class="item-head"><span class="item-term">Registro escrito</span><span class="item-trans">written register</span></div>
+        <ul class="item-list">
+          <li>Típicas de ensayo, periodismo y redacción formal.</li>
+          <li>En el habla se sustituyen por dos frases cortas.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- C. Ejemplos reales -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">💬</div>
+      <div>
+        <div class="section-title">C. Ejemplos reales</div>
+        <div class="section-desc">Non-defining clauses en frases naturales · EN + ES</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>My grandmother, who is 92, still walks two kilometres every morning.</strong> <span class="hint">Mi abuela, que tiene 92 años, sigue caminando dos kilómetros cada mañana.</span></div>
+      <div class="phrase"><strong>The new iPhone, which costs over €1,500, has already sold out in Spain.</strong> <span class="hint">El nuevo iPhone, que cuesta más de 1.500 €, ya se ha agotado en España.</span></div>
+      <div class="phrase"><strong>Our CEO, whose vision shaped the company, will retire next June.</strong> <span class="hint">Nuestro director general, cuya visión dio forma a la empresa, se jubilará en junio.</span></div>
+      <div class="phrase"><strong>Kyoto, where I spent six months in 2018, is famous for its temples and gardens.</strong> <span class="hint">Kioto, donde pasé seis meses en 2018, es famosa por sus templos y jardines.</span></div>
+      <div class="phrase"><strong>The match was cancelled at the last minute, which disappointed thousands of fans.</strong> <span class="hint">El partido se canceló en el último momento, lo cual decepcionó a miles de aficionados.</span> <em>(which = toda la oración)</em></div>
+      <div class="phrase"><strong>In 1969, when humans first landed on the Moon, television audiences reached record numbers.</strong> <span class="hint">En 1969, cuando el ser humano pisó la Luna por primera vez, las audiencias televisivas alcanzaron cifras récord.</span></div>
+      <div class="phrase"><strong>Ms Khan, whom the committee interviewed last week, has been offered the position.</strong> <span class="hint">A la Sra. Khan, a quien el comité entrevistó la semana pasada, le han ofrecido el puesto.</span></div>
+      <div class="phrase"><strong>The novel, which was translated into thirty languages, made the author a household name.</strong> <span class="hint">La novela, que se tradujo a treinta idiomas, convirtió al autor en una figura reconocida.</span></div>
+    </div>
+  </div>
+
+  <!-- D. Trampas hispano -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Errores que el examinador detecta al instante</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Las comas CAMBIAN el significado</h5>
+          <p>Compara: <em>My sister <strong>who</strong> lives in Paris is a chef.</em> (defining → tengo varias hermanas; la que vive en París es chef) vs <em>My sister, <strong>who</strong> lives in Paris, is a chef.</em> (non-defining → tengo una sola hermana; lo de París es info extra). El examinador puntúa la diferencia.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"That" + comas: nunca</h5>
+          <p>Si pones comas, <strong>NO</strong> uses <em>that</em>. Es el error más típico: ✗ <em>The Tate Modern, that I visited last week, was crowded.</em> → ✓ <em>The Tate Modern, <strong>which</strong> I visited last week, was crowded.</em></p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Which" para toda la oración = "lo cual / lo que"</h5>
+          <p>Cuando en español dices <em>lo cual / lo que</em> refiriéndote a una idea entera, usa <em>which</em> con coma: <em>He forgot his passport, <strong>which</strong> was a disaster.</em> NUNCA ✗ <em>…, what was a disaster.</em></p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>El pronombre no se omite nunca</h5>
+          <p>En defining puedes decir <em>The book [that] I read…</em>; en non-defining NO: ✗ <em>The book, I read last summer, was brilliant.</em> → ✓ <em>The book, <strong>which</strong> I read last summer, was brilliant.</em></p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Whose" sirve también para cosas</h5>
+          <p>El español <em>cuyo</em> se asocia mentalmente a personas, pero en inglés <em>whose</em> funciona también con cosas y animales: <em>The novel, <strong>whose</strong> ending shocked me, became a bestseller.</em> Es muy útil en Writing para evitar la perífrasis <em>of which</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>No traduzcas "donde" siempre por "where"</h5>
+          <p>Para situaciones abstractas el español usa <em>en el que / en el cual</em>: <em>el caso en el que…</em> ≠ <em>where</em>. Usa <em>in which</em>: ✓ <em>a situation <strong>in which</strong> nobody wins</em> (no <em>a situation where nobody wins</em> en registro escrito).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 3: PREP + WHICH/WHOM ===================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="formal" data-tab="formal">
+
+  <div class="intro">
+    <h3>Preposición + which / whom · Formal Register</h3>
+    <p>En registro <strong>formal escrito</strong> (ensayos académicos, cartas oficiales, informes, contratos), la preposición precede al relativo en lugar de quedarse al final: <em>the company <strong>for which</strong> I work</em>, no <em>the company I work for</em>. Aparecen también estructuras con cuantificador: <em>some of which</em>, <em>both of whom</em>. <strong>That</strong> y <strong>who</strong> se sustituyen por <strong>which</strong> y <strong>whom</strong>.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎩</span><strong>Linguaskill B2–C1:</strong> estas estructuras son uno de los <em>signature features</em> que el examinador asocia al nivel C1 en el <em>Essay</em>. Una o dos en un texto de 250 palabras demuestran <em>grammar range</em> sin sonar artificial; cinco o seis suenan a traducción mecánica. Evítalas por completo en email informal — chirrían.
+  </div>
+
+  <!-- A. Estructuras formales -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">🎩</div>
+      <div>
+        <div class="section-title">A. Estructuras formales · Formal patterns</div>
+        <div class="section-desc">Preposición + which / whom · cuantificador + of which / of whom</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Estructura</th><th>Uso / referente</th><th>Ejemplo</th><th>Traducción</th></tr></thead>
+        <tbody>
+          <tr><td><strong>prep. + which</strong></td><td>Cosas (formal)</td><td class="en">The company <strong>for which</strong> I work specialises in renewable energy.</td><td class="es">La empresa para la que trabajo está especializada en energías renovables.</td></tr>
+          <tr><td><strong>prep. + whom</strong></td><td>Personas (formal)</td><td class="en">The professor <strong>to whom</strong> I addressed the question replied immediately.</td><td class="es">El profesor a quien dirigí la pregunta respondió de inmediato.</td></tr>
+          <tr><td><strong>in which</strong></td><td>Lugar abstracto / situación</td><td class="en">a situation <strong>in which</strong> nobody wins</td><td class="es">una situación en la que nadie gana</td></tr>
+          <tr><td><strong>on which</strong></td><td>Fecha, día</td><td class="en">The day <strong>on which</strong> the contract was signed was a Friday.</td><td class="es">El día en el que se firmó el contrato fue un viernes.</td></tr>
+          <tr><td><strong>at which</strong></td><td>Punto, momento</td><td class="en">The moment <strong>at which</strong> she realised her mistake came too late.</td><td class="es">El momento en el que se dio cuenta de su error llegó demasiado tarde.</td></tr>
+          <tr><td><strong>by which</strong></td><td>Plazo, medio</td><td class="en">the deadline <strong>by which</strong> all applications must be submitted</td><td class="es">la fecha límite antes de la cual deben presentarse todas las solicitudes</td></tr>
+          <tr><td><strong>some / many / most / all + of which</strong></td><td>Cuantificación (cosas)</td><td class="en">She wrote ten novels, <strong>most of which</strong> were translated into English.</td><td class="es">Escribió diez novelas, la mayoría de las cuales se tradujeron al inglés.</td></tr>
+          <tr><td><strong>some / both / several / none + of whom</strong></td><td>Cuantificación (personas)</td><td class="en">They have three children, <strong>all of whom</strong> are doctors.</td><td class="es">Tienen tres hijos, todos los cuales son médicos.</td></tr>
+          <tr><td><strong>which</strong> (oración entera)</td><td>Reacción ante toda la frase</td><td class="en">He resigned suddenly, <strong>which</strong> none of us had anticipated.</td><td class="es">Renunció de repente, algo que ninguno de nosotros habíamos previsto.</td></tr>
+          <tr><td><strong>whereby</strong></td><td>Medio formal (= by which)</td><td class="en">a system <strong>whereby</strong> students earn credits for community work</td><td class="es">un sistema mediante el cual los estudiantes obtienen créditos por trabajo comunitario</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- E. Contraste de registro -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">📐</div>
+      <div>
+        <div class="section-title">E. Contraste de registro · Informal vs Formal</div>
+        <div class="section-desc">Misma idea, dos registros — cuándo elegir cada uno</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>Coloquial:</strong> the man <strong>I work for</strong> is very strict.<br><strong>Formal:</strong> the man <strong>for whom</strong> I work is very strict. <span class="hint">CV · carta de recomendación</span></div>
+      <div class="phrase"><strong>Coloquial:</strong> the room <strong>we slept in</strong> was freezing.<br><strong>Formal:</strong> the room <strong>in which</strong> we slept was freezing. <span class="hint">informe · descripción técnica</span></div>
+      <div class="phrase"><strong>Coloquial:</strong> a problem <strong>we don't know the answer to</strong>.<br><strong>Formal:</strong> a problem <strong>to which</strong> we do not know the answer. <span class="hint">ensayo discursivo</span></div>
+      <div class="phrase"><strong>Coloquial:</strong> the day <strong>we met</strong>.<br><strong>Formal:</strong> the day <strong>on which</strong> we met. <span class="hint">contrato · acta oficial</span></div>
+      <div class="phrase"><strong>Coloquial:</strong> the colleagues <strong>I work with</strong>.<br><strong>Formal:</strong> the colleagues <strong>with whom</strong> I work. <span class="hint">carta formal de presentación</span></div>
+      <div class="phrase"><strong>Coloquial:</strong> they have five children, <strong>three of them are</strong> doctors. <em>(comma splice incorrecto en escrito formal)</em><br><strong>Formal:</strong> they have five children, <strong>three of whom</strong> are doctors. <span class="hint">ensayo · biografía</span></div>
+      <div class="phrase"><strong>Coloquial:</strong> she wrote ten books, <strong>most of them</strong> sold well.<br><strong>Formal:</strong> she wrote ten books, <strong>most of which</strong> sold well. <span class="hint">artículo periodístico</span></div>
+      <div class="phrase"><strong>Coloquial / neutro:</strong> the reason <strong>why</strong> he left.<br><strong>Hiperformal:</strong> the reason <strong>for which</strong> he left. <span class="hint">solo en textos académicos muy formales; en general, prefiere <em>the reason why</em></span></div>
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+/* THEME */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("theme",t);}catch(e){}}
+function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme")||"light";applyTheme(cur==="dark"?"light":"dark");}
+(function initTheme(){let saved=null;try{saved=localStorage.getItem("theme");}catch(e){}if(saved==="dark"||saved==="light"){applyTheme(saved);return;}const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;applyTheme(prefersDark?"dark":"light");})();
+
+/* TABS */
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* SECTIONS */
+function toggleSection(header){
+  header.parentElement.classList.toggle('collapsed');
+}
+function getActiveSections(){
+  return document.querySelectorAll('.tab-panel.active .section');
+}
+function getActivePapers(){
+  return document.querySelectorAll('.tab-panel.active .paper');
+}
+function expandAll(){
+  getActiveSections().forEach(s => s.classList.remove('collapsed'));
+  getActivePapers().forEach(p => p.classList.remove('collapsed'));
+}
+function collapseAll(){
+  getActiveSections().forEach(s => s.classList.add('collapsed'));
+  getActivePapers().forEach(p => p.classList.add('collapsed'));
+}
+
+/* MODEL PAPERS — wrap title+meta in a clickable header, collapse by default */
+document.querySelectorAll('.paper').forEach(paper => {
+  const title = paper.querySelector('.paper-title');
+  const meta = paper.querySelector('.paper-meta');
+  if(!title || !meta) return;
+  const header = document.createElement('div');
+  header.className = 'paper-header';
+  const wrap = document.createElement('div');
+  wrap.appendChild(title);
+  wrap.appendChild(meta);
+  const toggle = document.createElement('span');
+  toggle.className = 'paper-toggle';
+  toggle.textContent = '▾';
+  header.appendChild(wrap);
+  header.appendChild(toggle);
+  header.addEventListener('click', () => paper.classList.toggle('collapsed'));
+  paper.insertBefore(header, paper.firstChild);
+  paper.classList.add('collapsed');
+});
+
+/* Set section colors + item counts */
+document.querySelectorAll('.section').forEach(sec => {
+  const icon = sec.querySelector('.section-icon');
+  if (icon) {
+    const m = (icon.getAttribute('style') || '').match(/var\(--c-([a-z]+)\)/);
+    if (m) {
+      sec.style.setProperty('--section-c', `var(--c-${m[1]})`);
+      sec.style.setProperty('--section-c-bg', `var(--c-${m[1]}-bg)`);
+    }
+  }
+  const container = sec.querySelector('.grid, .stack, .papers, .tips-list, .blueprint');
+  if(!container) return;
+  const count = container.matches('.blueprint')
+    ? container.querySelectorAll('.step').length
+    : container.children.length;
+  const badge = document.createElement('span');
+  badge.className = 'section-count';
+  badge.textContent = count;
+  sec.querySelector('.section-header').appendChild(badge);
+});
+
+/* FONT SIZE SLIDER */
+const FS_KEY = 'idiomas_font_size';
+function updateFontSize(pct){
+  const scale = pct / 100;
+  document.documentElement.style.fontSize = (16 * scale) + 'px';
+  document.getElementById('fs-value').textContent = pct + '%';
+  localStorage.setItem(FS_KEY, pct);
+}
+(function initFontSize(){
+  const saved = localStorage.getItem(FS_KEY);
+  if(saved){
+    document.getElementById('fs-slider').value = saved;
+    updateFontSize(saved);
+  }
+})();
+</script>
+
+</body>
+</html>
