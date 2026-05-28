@@ -1903,7 +1903,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 }
 .btn-srs-fs:hover { background: var(--bg); }
 
-/* SRS fullscreen — oculta topbar y barra de progreso, agranda tarjeta */
+/* SRS fullscreen — oculta topbar, agranda tarjeta */
 .srs-fs-bar {
   display: none;
   position: absolute;
@@ -2632,10 +2632,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   </div>
 </header>
 
-<!-- Banner de progreso SRS sin guardar -->
-<div class="srs-unsaved-banner" id="srsUnsavedBanner" role="button" tabindex="0">
-  💾 Progreso sin guardar — pulsa para <span class="lnk">exportar el HTML</span>
-</div>
+<!-- Banner "Progreso sin guardar" eliminado: ahora todo se sincroniza en la nube. -->
 
 <div class="controls">
   <div class="controls-row" id="topicRow">
@@ -43445,9 +43442,9 @@ function initSRSAddon() {
   document.getElementById("btnSrsExit").addEventListener("click", srsExitSession);
   document.getElementById("btnSrsSaveExit").addEventListener("click", srsExitAndSave);
   document.getElementById("btnSrsUndo").addEventListener("click", srsUndo);
+  document.getElementById("btnSrsReveal").addEventListener("click", srsReveal);
   var btnUndoFs = document.getElementById("btnSrsUndoFs");
   if (btnUndoFs) btnUndoFs.addEventListener("click", srsUndo);
-  document.getElementById("btnSrsReveal").addEventListener("click", srsReveal);
 
   function toggleSrsFullscreen() {
     var ov = document.getElementById("srsOverlay");
@@ -43489,23 +43486,7 @@ function initSRSAddon() {
     if (e.target === this) srsCloseStatsModal();
   });
 
-  // Banner sin guardar
-  var banner = document.getElementById("srsUnsavedBanner");
-  if (banner) {
-    banner.addEventListener("click", srsTriggerExport);
-    banner.addEventListener("keydown", function(e) {
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); srsTriggerExport(); }
-    });
-  }
-
-  // beforeunload
-  window.addEventListener("beforeunload", function(e) {
-    if (srsUnsavedProgress) {
-      e.preventDefault();
-      e.returnValue = "Tienes progreso SRS sin guardar. ¿Exportar antes de salir?";
-      return e.returnValue;
-    }
-  });
+  // (Banner "sin guardar" y beforeunload eliminados: la sincronización a Supabase es automática.)
 
   // Atajos de teclado durante la sesión SRS
   // Espacio/Enter = revelar
@@ -43841,6 +43822,18 @@ if (document.readyState === "loading") {
     return payload;
   }
 
+  // "Riqueza" del payload — sirve para decidir qué fuente prevalece en el primer arranque
+  function richness(p){
+    if (!p || typeof p !== 'object') return 0;
+    var k = p.known      ? Object.keys(p.known).length      : 0;
+    var f = p.flipped    ? Object.keys(p.flipped).length    : 0;
+    var e = p.edits      ? Object.keys(p.edits).length      : 0;
+    var c = p.srsCards   ? Object.keys(p.srsCards).length   : 0;
+    var s = (p.srsGlobal && p.srsGlobal.sessions)      ? p.srsGlobal.sessions      : 0;
+    var d = (p.srsGlobal && p.srsGlobal.cardsStudied)  ? p.srsGlobal.cardsStudied  : 0;
+    return k + f + e + c + s * 10 + d;
+  }
+
   function applyPayload(data){
     if (!data || typeof data !== 'object') data = {};
     // Vaciar y rellenar las referencias originales (no reasignar para no romper closures)
@@ -44038,7 +44031,6 @@ if (document.readyState === "loading") {
     wrap('saveKnown');
     wrap('saveFlipped');
     wrap('saveCardEdits');
-    // sm2 muta card.srs por rating
     if (typeof window.sm2 === 'function') {
       var origSm2 = window.sm2;
       window.sm2 = function(){
@@ -44047,7 +44039,6 @@ if (document.readyState === "loading") {
         return r;
       };
     }
-    // srsFinishSession actualiza srsGlobal
     if (typeof window.srsFinishSession === 'function') {
       var origFin = window.srsFinishSession;
       window.srsFinishSession = function(){
@@ -44056,7 +44047,6 @@ if (document.readyState === "loading") {
         return r;
       };
     }
-    // doImport / doImportConfirm sustituyen DATA y/o edits
     if (typeof window.doImportConfirm === 'function') {
       var origImp = window.doImportConfirm;
       window.doImportConfirm = function(){
@@ -44065,7 +44055,6 @@ if (document.readyState === "loading") {
         return r;
       };
     }
-    // Guardado oportunista al ocultar la pestaña
     document.addEventListener('visibilitychange', function(){
       if (document.visibilityState === 'hidden' && saveTimer) {
         clearTimeout(saveTimer);
@@ -44080,34 +44069,60 @@ if (document.readyState === "loading") {
   // ───────────────── SWITCH DE PERFIL ─────────────────
   function loadProfileData(profile){
     setStatus('saving', '☁ Cargando perfil…', 0);
+
+    // El estado embebido del HTML ya está cargado en las globales por bootAddons.
+    // Lo capturamos antes de tocar nada, por si gana al comparar con la nube.
+    var embedded = readGlobals();
+    var hasEmbedded = richness(embedded) > 0;
+
     var localBackup = readLocalBackup(profile);
+
     var finish = function(payload){
       applyPayload(payload || {});
       reRenderAll();
     };
+
     if (!CLOUD_ENABLED || !navigator.onLine) {
-      finish(localBackup);
+      // Sin nube: el backup local del perfil prevalece si existe y es más rico
+      var pick = (localBackup && richness(localBackup) >= richness(embedded)) ? localBackup : embedded;
+      finish(pick);
       if (!CLOUD_ENABLED) setStatus('offline', '⚠ Modo local (sin nube)', 2500);
       else setStatus('offline', '⚠ Sin conexión — local', 2500);
       return;
     }
+
     cloudLoad(profile).then(function(remote){
-      if (remote && Object.keys(remote).length) {
-        finish(remote);
-        persistLocalBackup(profile, remote);
+      var rRemote   = richness(remote);
+      var rEmbedded = richness(embedded);
+      var rBackup   = richness(localBackup);
+
+      // Elegir la fuente más rica entre {remoto, embebido, backup-local}
+      var best = remote || {};
+      var bestR = rRemote;
+      var bestLabel = 'nube';
+      if (rEmbedded > bestR) { best = embedded;    bestR = rEmbedded; bestLabel = 'embebido'; }
+      if (rBackup   > bestR) { best = localBackup; bestR = rBackup;   bestLabel = 'local';    }
+
+      finish(best);
+      persistLocalBackup(profile, best);
+
+      if (bestLabel === 'nube') {
         setStatus('saved', '✓ Perfil cargado', 1800);
-      } else if (localBackup) {
-        finish(localBackup);
-        setStatus('saved', '✓ Perfil cargado (local)', 1800);
-        // Subir backup local al estar vacío en la nube
-        scheduleSave();
+      } else if (bestLabel === 'embebido') {
+        setStatus('saved', '✓ Perfil cargado (subiendo progreso embebido)', 2400);
+        scheduleSave(); // sube el embebido a la nube
       } else {
-        finish({});
+        setStatus('saved', '✓ Perfil cargado (local)', 1800);
+        scheduleSave();
+      }
+
+      if (!remote && !hasEmbedded && !localBackup) {
         setStatus('saved', '✓ Perfil nuevo', 1800);
       }
     }).catch(function(err){
       console.warn('[cloudSync] load error', err);
-      finish(localBackup);
+      var pick = (localBackup && richness(localBackup) >= richness(embedded)) ? localBackup : embedded;
+      finish(pick);
       setStatus('offline', '⚠ Sin conexión — local', 3000);
     });
   }
@@ -44116,7 +44131,6 @@ if (document.readyState === "loading") {
     opts = opts || {};
     if (!profile || PROFILES.indexOf(profile) === -1) profile = 'invitado';
     var prev = activeProfile;
-    // Guardar progreso del perfil anterior antes del cambio
     if (prev && prev !== profile) {
       if (saveTimer) { clearTimeout(saveTimer); saveTimer = null; }
       doSaveNow();
@@ -44131,7 +44145,6 @@ if (document.readyState === "loading") {
   // ───────────────── UI: SELECTOR + CONTRASEÑA ─────────────────
   function getUnlocked(){
     try {
-      // sessionStorage para que se olvide al cerrar el navegador
       var s = sessionStorage.getItem(LS_SESS_UNLOCK);
       return s ? JSON.parse(s) : {};
     } catch(e){ return {}; }
@@ -44237,7 +44250,6 @@ if (document.readyState === "loading") {
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
   } else {
-    // Esperar un tick para que bootAddons / loadStorage hayan corrido
     setTimeout(boot, 0);
   }
 })();
