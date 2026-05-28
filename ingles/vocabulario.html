@@ -711,6 +711,216 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
   </div>
 </div>
 
+<!-- ═══ OVERLAY SESIÓN SRS ═══ -->
+<div id="srsOverlay">
+  <div class="srs-topbar">
+    <button class="btn-srs-undo" id="btnSrsUndo" type="button" title="Volver a la tarjeta anterior (Z o -)" disabled>&#8634; Volver</button>
+    <div class="srs-title">&#129504; Repaso SRS</div>
+    <div class="srs-counter">Tarjeta <strong id="srsCounterCur">1</strong> de <strong id="srsCounterTot">1</strong></div>
+    <div class="srs-tema-chip" id="srsTemaChip">&mdash;</div>
+    <div class="srs-spacer"></div>
+    <button class="btn-srs-save-exit" id="btnSrsSaveExit" type="button" title="Descargar el archivo HTML con todo el progreso acumulado">&#128229; Exportar HTML</button>
+    <button class="btn-srs-fs" id="btnSrsFullscreen" type="button" title="Pantalla completa (F)">&#9166; Pantalla completa</button>
+    <button class="btn-srs-close" id="btnSrsExit" type="button" title="Cerrar la sesión. El progreso se mantiene; podrás exportar más tarde">&#10005; Salir</button>
+  </div>
+  <div class="srs-fs-bar">
+    <span class="srs-fs-counter" id="srsCounterFs"><strong>1</strong>/<strong>1</strong></span>
+    <button class="btn-srs-fs" id="btnSrsUndoFs" type="button" title="Volver a la tarjeta anterior (Z o -)" disabled>&#8634; Volver</button>
+    <button class="btn-srs-fs" id="btnSrsExitFullscreen" type="button" title="Mostrar menú">&#8599; Mostrar menú</button>
+  </div>
+  <div class="srs-progress-bar"><div class="srs-progress-fill" id="srsProgressFill" style="width:0%"></div></div>
+  <div class="srs-stage" id="srsStage">
+    <div class="srs-card" id="srsCard">
+      <div class="srs-card-chips" id="srsCardChips"></div>
+      <div class="srs-word" id="srsWord">&mdash;</div>
+      <div class="srs-word-sub" id="srsWordSub" style="display:none"></div>
+      <div class="srs-reveal-wrap">
+        <button class="srs-reveal-btn" id="btnSrsReveal" type="button" title="Atajo: Espacio / Enter">Revelar</button>
+      </div>
+      <div class="srs-back" id="srsBack">
+        <div class="srs-form-pill" id="srsFormPill" style="display:none"></div>
+        <div class="srs-translation" id="srsTranslation"></div>
+        <div class="srs-ex" id="srsEx" style="display:none"></div>
+      </div>
+    </div>
+    <div class="srs-rating-row" id="srsRatingRow">
+      <button class="btn-srs-rate r-no" data-q="0" type="button" title="Atajo: 1 o &larr;">
+        <span class="srs-rate-icon">&#10007;</span>
+        <span class="srs-rate-label">No lo sé</span>
+        <span class="srs-rate-interval" id="srsIntNo">mañana</span>
+      </button>
+      <button class="btn-srs-rate r-mid" data-q="3" type="button" title="Atajo: 2 o &uarr;">
+        <span class="srs-rate-icon">&#8776;</span>
+        <span class="srs-rate-label">Difícil</span>
+        <span class="srs-rate-interval" id="srsIntMid">mañana</span>
+      </button>
+      <button class="btn-srs-rate r-yes" data-q="5" type="button" title="Atajo: 3 o &rarr;">
+        <span class="srs-rate-icon">&#10003;</span>
+        <span class="srs-rate-label">Fácil</span>
+        <span class="srs-rate-interval" id="srsIntYes">mañana</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL INICIO DE SESIÓN SRS ═══ -->
+<div class="srs-modal-overlay" id="srsStartModal">
+  <div class="srs-modal" role="dialog" aria-label="Inicio de sesión de repaso SRS">
+    <h2>Sesión de repaso</h2>
+    <p class="srs-modal-sub" id="srsStartSub">Elige las categorías que quieres repasar hoy.</p>
+    <p class="srs-modal-sub" style="font-size:11px;opacity:.85">&#128161; Tu progreso se guarda en la nube por perfil. También puedes <strong>exportar el HTML</strong> como copia local.</p>
+
+    <div class="srs-modal-section" id="srsStartSummarySection">
+      <h3>Resumen</h3>
+      <div class="srs-summary-pills" id="srsStartSummary"></div>
+    </div>
+
+    <div class="srs-modal-section" id="srsStartTemasSection">
+      <h3>Categorías a incluir</h3>
+      <div class="srs-tema-list" id="srsStartTemaList"></div>
+      <div class="srs-tema-quick">
+        <button class="btn-srs-quick" id="btnSrsTemaAll" type="button">Todas</button>
+        <button class="btn-srs-quick" id="btnSrsTemaNone" type="button">Ninguna</button>
+      </div>
+    </div>
+
+    <div class="srs-empty-state" id="srsStartEmpty" style="display:none">
+      <div class="ico">&#9989;</div>
+      <div class="msg">¡Al día! No hay tarjetas pendientes hoy.</div>
+      <div class="sub" id="srsStartEmptySub"></div>
+    </div>
+
+    <div class="srs-modal-actions">
+      <button class="btn-srs-secondary" id="btnSrsStartCancel" type="button">Cancelar</button>
+      <button class="btn-srs-primary" id="btnSrsStartGo" type="button">Empezar sesión</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL RESUMEN POST-SESIÓN ═══ -->
+<div class="srs-modal-overlay" id="srsSummaryModal">
+  <div class="srs-modal" role="dialog" aria-label="Resumen de sesión SRS">
+    <h2>¡Sesión completada! &#127881;</h2>
+    <p class="srs-modal-sub" id="srsSummarySub">Buen trabajo. Tu progreso se ha guardado.</p>
+
+    <div class="srs-modal-section">
+      <h3>Resultados</h3>
+      <div class="srs-result-grid">
+        <div class="srs-result-cell"><span class="num" id="srsResTotal">0</span><span class="lbl">Total</span></div>
+        <div class="srs-result-cell yes"><span class="num" id="srsResYes">0</span><span class="lbl">&#10003; Fácil</span></div>
+        <div class="srs-result-cell mid"><span class="num" id="srsResMid">0</span><span class="lbl">&#8776; Difícil</span></div>
+        <div class="srs-result-cell no"><span class="num" id="srsResNo">0</span><span class="lbl">&#10007; No sabía</span></div>
+      </div>
+      <div class="srs-summary-pills" style="margin-top:10px">
+        <div class="srs-summary-pill big">Aciertos: <strong id="srsResPct">0%</strong></div>
+        <div class="srs-summary-pill" id="srsResNext">Mañana: 0 tarjetas pendientes</div>
+      </div>
+    </div>
+
+    <div class="srs-modal-section" id="srsResTemaSection" style="display:none">
+      <h3>Por categoría</h3>
+      <table class="srs-tema-table">
+        <thead><tr><th>Categoría</th><th>Revisadas</th><th>% acierto</th></tr></thead>
+        <tbody id="srsResTemaBody"></tbody>
+      </table>
+    </div>
+
+    <div class="srs-modal-actions">
+      <button class="btn-srs-secondary" id="btnSrsResBack" type="button">Volver a la app</button>
+      <button class="btn-srs-primary" id="btnSrsResExport" type="button">&#128190; Exportar HTML</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL ESTADÍSTICAS SRS ═══ -->
+<div class="srs-modal-overlay" id="srsStatsModal">
+  <div class="srs-modal" role="dialog" aria-label="Estadísticas SRS">
+    <h2>&#128202; Estadísticas SRS</h2>
+
+    <div class="srs-modal-section">
+      <h3>Estado del mazo</h3>
+      <div class="srs-stats-grid">
+        <div class="srs-stats-cell"><div class="lbl">Total</div><div class="num" id="srsStatTotal">0</div></div>
+        <div class="srs-stats-cell"><div class="lbl">&#127381; Nuevas</div><div class="num" id="srsStatNew">0</div></div>
+        <div class="srs-stats-cell"><div class="lbl">&#128214; Aprendiendo</div><div class="num" id="srsStatLearn">0</div></div>
+        <div class="srs-stats-cell"><div class="lbl">&#127942; Maduras</div><div class="num" id="srsStatMature">0</div></div>
+      </div>
+    </div>
+
+    <div class="srs-modal-section">
+      <h3>Actividad</h3>
+      <div class="srs-stats-grid">
+        <div class="srs-stats-cell"><div class="lbl">&#128293; Racha actual</div><div class="num" id="srsStatStreak">0</div></div>
+        <div class="srs-stats-cell"><div class="lbl">Sesiones realizadas</div><div class="num" id="srsStatSessions">0</div></div>
+        <div class="srs-stats-cell"><div class="lbl">Tarjetas estudiadas</div><div class="num" id="srsStatCards">0</div></div>
+        <div class="srs-stats-cell"><div class="lbl">Pendientes hoy</div><div class="num" id="srsStatPending">0</div></div>
+      </div>
+    </div>
+
+    <div class="srs-modal-section">
+      <h3>Próximos 7 días</h3>
+      <div class="srs-bar-chart" id="srsBarChart"></div>
+    </div>
+
+    <div class="srs-modal-section">
+      <h3>Desglose por categoría</h3>
+      <div style="max-height:260px;overflow-y:auto">
+        <table class="srs-stats-table">
+          <thead><tr><th>Cat.</th><th>Total</th><th>&#127381;</th><th>&#128214;</th><th>&#127942;</th><th>Hoy</th></tr></thead>
+          <tbody id="srsStatTemaBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="srs-modal-actions">
+      <button class="btn-srs-primary" id="btnSrsStatsClose" type="button">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SELECTOR DE PERFIL ═══ -->
+<div class="profile-overlay" id="profileOverlay" role="dialog" aria-label="Seleccionar perfil">
+  <div class="profile-modal">
+    <h2>¿Quién está estudiando?</h2>
+    <p class="pm-sub">Tu progreso se guardará en la nube por perfil.</p>
+    <div class="profile-list" id="profileList">
+      <button type="button" class="profile-btn" data-profile="ruben">
+        <span class="pb-avatar">R</span>
+        <span class="pb-name">Rubén</span>
+        <span class="pb-lock">&#128274;</span>
+      </button>
+      <button type="button" class="profile-btn" data-profile="sergio">
+        <span class="pb-avatar">S</span>
+        <span class="pb-name">Sergio</span>
+        <span class="pb-lock">&#128274;</span>
+      </button>
+      <button type="button" class="profile-btn" data-profile="invitado">
+        <span class="pb-avatar">I</span>
+        <span class="pb-name">Invitado</span>
+        <span class="pb-lock"></span>
+      </button>
+    </div>
+    <div class="profile-pwd-row" id="profilePwdRow">
+      <label for="profilePwdInput" id="profilePwdLabel">Contraseña</label>
+      <input type="password" id="profilePwdInput" inputmode="numeric" autocomplete="off" placeholder="••••">
+      <div class="profile-pwd-error" id="profilePwdError">Contraseña incorrecta</div>
+      <div class="pp-actions">
+        <button type="button" id="profilePwdCancel">Volver</button>
+        <button type="button" class="pp-ok" id="profilePwdOk">Entrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ INDICADOR DE SINCRONIZACIÓN ═══ -->
+<div class="cloud-status" id="cloudStatus" role="status" aria-live="polite">
+  <span class="cs-dot"></span>
+  <span class="cs-text">Listo</span>
+</div>
+
+<!-- Estado SRS embebido (poblado al exportar) -->
+<script type="application/json" id="srsState">{"srsGlobal":{"sessions":0,"cardsStudied":0,"lastSessionDate":null,"sessionDates":[]},"srsCards":{}}</script>
+
 <script>
 /* THEME */
 function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("theme",t);}catch(e){}}
@@ -1568,13 +1778,37 @@ document.getElementById('btnViewEs').addEventListener('click',function(){
   document.getElementById('btnViewEng').classList.remove('active');
   exitInitialView();render();
 });
-document.getElementById('btnExport').addEventListener('click',function(){
+function doExport(){
+  /* Cerrar overlays para que el HTML exportado no se abra en estado transitorio */
+  ['srsOverlay','srsStartModal','srsSummaryModal','srsStatsModal','gameOverlay','addOverlay','profileOverlay'].forEach(function(id){
+    var el=document.getElementById(id);if(el)el.classList.remove('active','fullscreen');
+  });
+  var banner=document.getElementById('srsUnsavedBanner');if(banner)banner.classList.remove('visible');
+  /* Vaciar grids para no exportar tarjetas renderizadas */
+  var grid=document.getElementById('grid');var savedGrid=grid?grid.innerHTML:'';if(grid)grid.innerHTML='';
+  /* Persistir estado SRS en el <script id="srsState"> */
+  try{
+    var payload={
+      srsGlobal: (typeof srsGlobal!=='undefined') ? srsGlobal : {sessions:0,cardsStudied:0,lastSessionDate:null,sessionDates:[]},
+      srsCards: {},
+      mastered: (typeof mastered!=='undefined') ? Array.from(mastered) : [],
+      custom: (typeof custom!=='undefined') ? custom : []
+    };
+    if(typeof CARDS!=='undefined' && CARDS && CARDS.length){
+      for(var i=0;i<CARDS.length;i++){var c=CARDS[i];if(c && c.srs)payload.srsCards[c.id]=c.srs;}
+    }
+    var el=document.getElementById('srsState');
+    if(el)el.textContent=JSON.stringify(payload).replace(/</g,'\\u003c');
+  }catch(e){}
   var a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([document.documentElement.outerHTML],{type:'text/html;charset=utf-8'}));
   var d=new Date();
   a.download='english_b2_'+d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+'.html';
   a.click();URL.revokeObjectURL(a.href);
-});
+  if(grid)grid.innerHTML=savedGrid;
+  if(typeof markSaved==='function')markSaved();
+}
+document.getElementById('btnExport').addEventListener('click',doExport);
 
 /* ══ GAME ENGINE ══ */
 var G={cat:'',nodom:false,shuffle:true,showEsp:true,deck:[],cur:0,yes:0,no:0,noList:[],run:false,flip:false};
@@ -1733,6 +1967,973 @@ document.addEventListener('keydown',function(e){
 });
 
 buildCatBtns();render();gUpdateCt();
+
+/* ═══════════════════════════════════════════════════════════════════
+   SRS — Repetición espaciada (algoritmo SM-2)
+   ═══════════════════════════════════════════════════════════════════ */
+
+var srsGlobal = { sessions:0, cardsStudied:0, lastSessionDate:null, sessionDates:[] };
+var srsUnsavedProgress = false;
+var srsSession = { queue:[], idx:0, revealed:false, results:[], selectedCats:null, advancing:false };
+
+var CAT_LABELS = { expr:'Expressions', gi:'Gerunds & Infinitives', pv:'Phrasal Verbs', vp:'Verbs + Prep.', wf:'Word Formation' };
+var CAT_ORDER  = ['expr','gi','pv','vp','wf'];
+
+function srsTodayISO(){ return new Date().toISOString().split('T')[0]; }
+
+function initSRS(card){
+  card.srs = { interval:1, repetitions:0, easeFactor:2.5, nextReview:srsTodayISO(), lastReview:null, history:[] };
+}
+
+function sm2(card, quality){
+  if(!card.srs) initSRS(card);
+  var srs = card.srs;
+  if(quality >= 3){
+    if(srs.repetitions === 0) srs.interval = 1;
+    else if(srs.repetitions === 1) srs.interval = 6;
+    else srs.interval = Math.round(srs.interval * srs.easeFactor);
+    srs.repetitions += 1;
+  } else {
+    srs.repetitions = 0;
+    srs.interval = 1;
+  }
+  srs.easeFactor = Math.max(1.3, srs.easeFactor + 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
+  var today = new Date();
+  srs.lastReview = today.toISOString().split('T')[0];
+  var next = new Date(); next.setDate(next.getDate() + srs.interval);
+  srs.nextReview = next.toISOString().split('T')[0];
+  srs.history.push({ date:srs.lastReview, quality:quality });
+  return srs;
+}
+
+function previewInterval(card, quality){
+  var srs = card.srs;
+  var reps = srs ? srs.repetitions : 0;
+  var interval = srs ? srs.interval : 1;
+  var ease = srs ? srs.easeFactor : 2.5;
+  if(quality >= 3){
+    if(reps === 0) interval = 1;
+    else if(reps === 1) interval = 6;
+    else interval = Math.round(interval * ease);
+  } else interval = 1;
+  return interval;
+}
+
+function formatInterval(days){
+  if(days <= 1) return 'mañana';
+  if(days < 30) return 'en ' + days + ' días';
+  if(days < 365){ var m = Math.round(days / 30); return 'en ' + m + (m === 1 ? ' mes' : ' meses'); }
+  var y = (days / 365).toFixed(1); return 'en ' + y + ' años';
+}
+
+/* Adaptadores por categoría — prompt/answer/sub */
+function srsPrompt(c){
+  if(c.cat==='gi') return c.verb;
+  if(c.cat==='vp') return c.front;
+  if(c.cat==='wf') return c.base;
+  return c.back; // expr, pv → mostrar español
+}
+function srsPromptSub(c){
+  if(c.cat==='gi') return '¿Gerund o Infinitive?';
+  if(c.cat==='vp') return '¿Qué preposición?';
+  if(c.cat==='wf') return (WFT[c.wftype]||c.wftype);
+  return '';
+}
+function srsAnswerMain(c){
+  if(c.cat==='gi') return c.verb;
+  if(c.cat==='vp') return c.back;
+  if(c.cat==='wf') return c.derived;
+  return c.front;
+}
+function srsAnswerForm(c){
+  if(c.cat==='gi') return c.form==='gerund' ? 'Gerund (-ing)' : 'Infinitive (to + verbo)';
+  if(c.cat==='wf') return c.wftype + ' — ' + (WFT[c.wftype]||c.wftype);
+  return '';
+}
+
+function getAllCats(){ return CAT_ORDER.slice(); }
+
+function getPendientesPorCat(){
+  var today = srsTodayISO(); var result = {};
+  CARDS.forEach(function(c){
+    var pendiente = !c.srs || c.srs.nextReview <= today;
+    if(pendiente){ var k = c.cat || 'expr'; result[k] = (result[k] || 0) + 1; }
+  });
+  return result;
+}
+
+function getSRSQueue(catsSelected){
+  var today = srsTodayISO();
+  var due = CARDS.filter(function(c){
+    if(catsSelected && catsSelected.length > 0){ if(catsSelected.indexOf(c.cat) === -1) return false; }
+    if(!c.srs) return true;
+    return c.srs.nextReview <= today;
+  });
+  due.sort(function(a, b){
+    var aNew = !a.srs, bNew = !b.srs;
+    if(aNew && !bNew) return 1;
+    if(!aNew && bNew) return -1;
+    if(aNew && bNew) return 0;
+    return a.srs.nextReview.localeCompare(b.srs.nextReview);
+  });
+  return due;
+}
+
+function countNewVsReview(catsSelected){
+  var today = srsTodayISO(); var n = 0, r = 0;
+  CARDS.forEach(function(c){
+    if(catsSelected && catsSelected.length > 0){ if(catsSelected.indexOf(c.cat) === -1) return; }
+    if(!c.srs) n++;
+    else if(c.srs.nextReview <= today) r++;
+  });
+  return { nuevas:n, repaso:r, total:n + r };
+}
+
+function srsEstimatedMinutes(total){ return Math.max(1, Math.round((total * 10) / 60)); }
+
+/* Banner & beforeunload */
+function markUnsaved(){ srsUnsavedProgress = true; var b = document.getElementById('srsUnsavedBanner'); if(b) b.classList.add('visible'); }
+function markSaved()  { srsUnsavedProgress = false; var b = document.getElementById('srsUnsavedBanner'); if(b) b.classList.remove('visible'); }
+
+/* Badge */
+function updateSrsBadge(){
+  var badge = document.getElementById('srsBadge'); if(!badge) return;
+  var total = 0, today = srsTodayISO();
+  for(var i = 0; i < CARDS.length; i++){ var c = CARDS[i]; if(!c.srs || c.srs.nextReview <= today) total++; }
+  if(total === 0){ badge.textContent = '✓'; badge.classList.add('zero'); }
+  else { badge.textContent = String(total); badge.classList.remove('zero'); }
+}
+
+/* Modal inicio de sesión */
+function srsOpenStartModal(){
+  var modal = document.getElementById('srsStartModal'); if(!modal) return;
+  var pendByCat = getPendientesPorCat();
+  var totalPend = Object.keys(pendByCat).reduce(function(s, k){ return s + pendByCat[k]; }, 0);
+
+  var summarySection = document.getElementById('srsStartSummarySection');
+  var temasSection   = document.getElementById('srsStartTemasSection');
+  var emptyState     = document.getElementById('srsStartEmpty');
+  var startBtn       = document.getElementById('btnSrsStartGo');
+  var cancelBtn      = document.getElementById('btnSrsStartCancel');
+  var subEl          = document.getElementById('srsStartSub');
+
+  if(totalPend === 0){
+    summarySection.style.display = 'none'; temasSection.style.display = 'none';
+    emptyState.style.display = 'block'; startBtn.style.display = 'none';
+    cancelBtn.textContent = 'Cerrar';
+    subEl.textContent = 'Estás al día con tus repasos.';
+    var soonest = null, soonestCount = 0;
+    CARDS.forEach(function(c){ if(c.srs && c.srs.nextReview){ if(!soonest || c.srs.nextReview < soonest) soonest = c.srs.nextReview; } });
+    if(soonest){
+      CARDS.forEach(function(c){ if(c.srs && c.srs.nextReview === soonest) soonestCount++; });
+      document.getElementById('srsStartEmptySub').textContent = 'Vuelve el ' + soonest + ' con ' + soonestCount + ' tarjeta' + (soonestCount === 1 ? '' : 's') + '.';
+    } else document.getElementById('srsStartEmptySub').textContent = 'No hay próximos repasos programados.';
+    modal.classList.add('active'); return;
+  }
+
+  summarySection.style.display = ''; temasSection.style.display = '';
+  emptyState.style.display = 'none'; startBtn.style.display = '';
+  cancelBtn.textContent = 'Cancelar';
+  subEl.textContent = 'Elige las categorías que quieres repasar hoy.';
+
+  var listEl = document.getElementById('srsStartTemaList'); listEl.innerHTML = '';
+  CAT_ORDER.forEach(function(cat){
+    var count = pendByCat[cat] || 0;
+    var disabled = count === 0;
+    var label = document.createElement('label');
+    label.className = 'srs-tema-item' + (disabled ? ' disabled' : '');
+    var chk = document.createElement('input');
+    chk.type = 'checkbox'; chk.value = cat; chk.checked = !disabled; chk.disabled = disabled;
+    chk.addEventListener('change', srsUpdateStartSummary);
+    var name = document.createElement('span'); name.className = 'srs-tema-name'; name.textContent = CAT_LABELS[cat];
+    var ct = document.createElement('span'); ct.className = 'srs-tema-count';
+    ct.textContent = count > 0 ? '(' + count + ' pendiente' + (count === 1 ? '' : 's') + ')' : '(0)';
+    label.appendChild(chk); label.appendChild(name); label.appendChild(ct); listEl.appendChild(label);
+  });
+
+  srsUpdateStartSummary(); modal.classList.add('active');
+}
+
+function srsCloseStartModal(){ var modal = document.getElementById('srsStartModal'); if(modal) modal.classList.remove('active'); }
+
+function srsGetSelectedCats(){
+  var checks = document.querySelectorAll('#srsStartTemaList input[type=checkbox]:not(:disabled)');
+  var out = [];
+  for(var i = 0; i < checks.length; i++){ if(checks[i].checked) out.push(checks[i].value); }
+  return out;
+}
+
+function srsUpdateStartSummary(){
+  var selected = srsGetSelectedCats();
+  var pillsEl = document.getElementById('srsStartSummary');
+  var startBtn = document.getElementById('btnSrsStartGo');
+  var counts = selected.length === 0 ? { nuevas:0, repaso:0, total:0 } : countNewVsReview(selected);
+  var mins = srsEstimatedMinutes(counts.total);
+  pillsEl.innerHTML =
+    '<div class="srs-summary-pill big">Total: <strong>' + counts.total + '</strong></div>'
+    + '<div class="srs-summary-pill">🆕 Nuevas: <strong>' + counts.nuevas + '</strong></div>'
+    + '<div class="srs-summary-pill">🔄 A repasar: <strong>' + counts.repaso + '</strong></div>'
+    + '<div class="srs-summary-pill">⏱ ~' + mins + ' min</div>';
+  if(counts.total === 0){ startBtn.disabled = true; startBtn.textContent = 'Selecciona al menos una categoría con pendientes'; }
+  else { startBtn.disabled = false; startBtn.textContent = 'Empezar sesión'; }
+}
+
+/* Sesión */
+function srsStartSession(){
+  var selected = srsGetSelectedCats(); if(selected.length === 0) return;
+  var queue = getSRSQueue(selected); if(queue.length === 0) return;
+  srsSession.queue = queue; srsSession.idx = 0; srsSession.revealed = false;
+  srsSession.results = []; srsSession.selectedCats = selected.slice(); srsSession.advancing = false;
+  srsCloseStartModal();
+  document.getElementById('srsOverlay').classList.add('active');
+  srsRenderCurrentCard(); srsUpdateUndoBtn();
+}
+
+function srsUpdateUndoBtn(){
+  var disabled = srsSession.results.length === 0 || srsSession.advancing;
+  var btn = document.getElementById('btnSrsUndo'); if(btn) btn.disabled = disabled;
+  var btnFs = document.getElementById('btnSrsUndoFs'); if(btnFs) btnFs.disabled = disabled;
+}
+
+function srsUndo(){
+  if(srsSession.results.length === 0 || srsSession.advancing) return;
+  var last = srsSession.results.pop();
+  if(last.prevSrs == null) delete last.card.srs;
+  else last.card.srs = last.prevSrs;
+  srsSession.idx = Math.max(0, srsSession.idx - 1);
+  srsRenderCurrentCard(); srsReveal(); srsUpdateUndoBtn();
+}
+
+function srsExitAndSave(){ srsExitSession(); srsTriggerExport(); }
+
+function srsExitSession(){
+  document.getElementById('srsOverlay').classList.remove('active');
+  var card = document.getElementById('srsCard');
+  if(card){ card.style.transform=''; card.style.opacity=''; card.classList.remove('swiping','swipe-left','swipe-right','swipe-up'); }
+  updateSrsBadge();
+}
+
+function srsRenderCurrentCard(){
+  var i = srsSession.idx, total = srsSession.queue.length;
+  document.getElementById('srsCounterCur').textContent = String(i + 1);
+  document.getElementById('srsCounterTot').textContent = String(total);
+  var counterFs = document.getElementById('srsCounterFs');
+  if(counterFs) counterFs.innerHTML = '<strong>' + (i + 1) + '</strong>/<strong>' + total + '</strong>';
+  var pct = total > 0 ? (i / total) * 100 : 0;
+  document.getElementById('srsProgressFill').style.width = pct + '%';
+
+  if(i >= total){ srsFinishSession(); return; }
+
+  var card = srsSession.queue[i];
+  document.getElementById('srsWord').textContent = srsPrompt(card) || '—';
+  var sub = srsPromptSub(card);
+  var subEl = document.getElementById('srsWordSub');
+  if(sub){ subEl.textContent = sub; subEl.style.display = ''; }
+  else subEl.style.display = 'none';
+  document.getElementById('srsTemaChip').textContent = CAT_LABELS[card.cat] || '—';
+
+  var chipsEl = document.getElementById('srsCardChips'); chipsEl.innerHTML = '';
+  var c1 = document.createElement('span'); c1.className = 'srs-chip'; c1.textContent = CAT_LABELS[card.cat] || ''; chipsEl.appendChild(c1);
+  if(!card.srs){
+    var c3 = document.createElement('span'); c3.className = 'srs-chip srs-chip-new'; c3.textContent = '🆕 Nueva'; chipsEl.appendChild(c3);
+  } else {
+    var today = srsTodayISO();
+    if(card.srs.nextReview < today){
+      var diffDays = Math.floor((Date.parse(today) - Date.parse(card.srs.nextReview)) / 86400000);
+      if(diffDays >= 2){
+        var c4 = document.createElement('span'); c4.className = 'srs-chip srs-chip-due'; c4.textContent = '⏰ Vencida ' + diffDays + 'd'; chipsEl.appendChild(c4);
+      }
+    }
+  }
+
+  var cardEl = document.getElementById('srsCard');
+  cardEl.classList.remove('revealed','swiping','swipe-left','swipe-right','swipe-up','flash-yes','flash-mid','flash-no');
+  cardEl.style.transform = ''; cardEl.style.opacity = '';
+  document.getElementById('btnSrsReveal').style.display = '';
+  document.getElementById('srsRatingRow').classList.remove('show');
+  srsSession.revealed = false;
+}
+
+function srsReveal(){
+  var i = srsSession.idx, card = srsSession.queue[i]; if(!card) return;
+  document.getElementById('srsTranslation').textContent = srsAnswerMain(card) || '';
+  var form = srsAnswerForm(card);
+  var fp = document.getElementById('srsFormPill');
+  if(form){ fp.textContent = form; fp.style.display = ''; } else fp.style.display = 'none';
+  var ex = document.getElementById('srsEx');
+  if(card.example){ ex.textContent = card.example; ex.style.display = ''; } else ex.style.display = 'none';
+
+  document.getElementById('srsIntNo').textContent  = formatInterval(previewInterval(card, 0));
+  document.getElementById('srsIntMid').textContent = formatInterval(previewInterval(card, 3));
+  document.getElementById('srsIntYes').textContent = formatInterval(previewInterval(card, 5));
+
+  document.getElementById('srsCard').classList.add('revealed');
+  document.getElementById('btnSrsReveal').style.display = 'none';
+  document.getElementById('srsRatingRow').classList.add('show');
+  srsSession.revealed = true;
+}
+
+function srsRate(quality){
+  if(!srsSession.revealed || srsSession.advancing) return;
+  var i = srsSession.idx, card = srsSession.queue[i]; if(!card) return;
+  var prevSrs = card.srs ? JSON.parse(JSON.stringify(card.srs)) : null;
+  sm2(card, quality);
+  srsSession.results.push({ card:card, quality:quality, prevSrs:prevSrs });
+  markUnsaved();
+  var cls = quality === 5 ? 'flash-yes' : (quality === 3 ? 'flash-mid' : 'flash-no');
+  var cardEl = document.getElementById('srsCard');
+  cardEl.classList.add(cls);
+  srsSession.advancing = true; srsUpdateUndoBtn();
+  setTimeout(function(){
+    cardEl.classList.remove('flash-yes','flash-mid','flash-no');
+    srsSession.advancing = false; srsSession.idx++;
+    srsRenderCurrentCard(); srsUpdateUndoBtn();
+  }, 320);
+}
+
+function srsFinishSession(){
+  document.getElementById('srsOverlay').classList.remove('active');
+  srsGlobal.sessions = (srsGlobal.sessions || 0) + 1;
+  srsGlobal.cardsStudied = (srsGlobal.cardsStudied || 0) + srsSession.results.length;
+  var today = srsTodayISO();
+  srsGlobal.lastSessionDate = today;
+  if(!srsGlobal.sessionDates) srsGlobal.sessionDates = [];
+  if(srsGlobal.sessionDates.indexOf(today) === -1) srsGlobal.sessionDates.push(today);
+  srsRenderSummary();
+  document.getElementById('srsSummaryModal').classList.add('active');
+  updateSrsBadge();
+}
+
+function srsRenderSummary(){
+  var res = srsSession.results, total = res.length;
+  var yes = 0, mid = 0, no = 0, byCat = {};
+  res.forEach(function(r){
+    if(r.quality === 5) yes++;
+    else if(r.quality === 3) mid++;
+    else no++;
+    var k = r.card.cat || 'expr';
+    if(!byCat[k]) byCat[k] = { tot:0, ok:0 };
+    byCat[k].tot++; if(r.quality >= 3) byCat[k].ok++;
+  });
+  var pct = total > 0 ? Math.round(((yes + mid) / total) * 100) : 0;
+  document.getElementById('srsResTotal').textContent = total;
+  document.getElementById('srsResYes').textContent = yes;
+  document.getElementById('srsResMid').textContent = mid;
+  document.getElementById('srsResNo').textContent = no;
+  document.getElementById('srsResPct').textContent = pct + '%';
+
+  var tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+  var tStr = tomorrow.toISOString().split('T')[0];
+  var pendMan = 0;
+  CARDS.forEach(function(c){ if(!c.srs || c.srs.nextReview <= tStr) pendMan++; });
+  document.getElementById('srsResNext').textContent = 'Mañana: ' + pendMan + ' tarjeta' + (pendMan === 1 ? '' : 's') + ' pendientes';
+  document.getElementById('srsSummarySub').textContent = 'Buen trabajo. Tu progreso se ha guardado.';
+
+  var cats = Object.keys(byCat);
+  var section = document.getElementById('srsResTemaSection');
+  if(cats.length > 1){
+    section.style.display = '';
+    var body = document.getElementById('srsResTemaBody'); body.innerHTML = '';
+    cats.sort().forEach(function(k){
+      var d = byCat[k];
+      var pctT = d.tot > 0 ? Math.round((d.ok / d.tot) * 100) : 0;
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + esc(CAT_LABELS[k] || k) + '</td><td>' + d.tot + '</td><td>' + pctT + '%</td>';
+      body.appendChild(tr);
+    });
+  } else section.style.display = 'none';
+}
+
+function srsCloseSummary(){ document.getElementById('srsSummaryModal').classList.remove('active'); }
+
+/* Estadísticas */
+function srsComputeStreak(){
+  if(!srsGlobal.sessionDates || srsGlobal.sessionDates.length === 0) return 0;
+  var dates = {}; srsGlobal.sessionDates.forEach(function(d){ dates[d] = true; });
+  var streak = 0; var cur = new Date();
+  var todayStr = cur.toISOString().split('T')[0];
+  if(!dates[todayStr]) cur.setDate(cur.getDate() - 1);
+  while(true){
+    var s = cur.toISOString().split('T')[0];
+    if(dates[s]){ streak++; cur.setDate(cur.getDate() - 1); } else break;
+  }
+  return streak;
+}
+
+function srsOpenStatsModal(){
+  var total = CARDS.length;
+  var nNew = 0, nLearn = 0, nMature = 0;
+  CARDS.forEach(function(c){
+    if(!c.srs || c.srs.repetitions === 0) nNew++;
+    else if(c.srs.interval > 21) nMature++;
+    else nLearn++;
+  });
+  document.getElementById('srsStatTotal').textContent = total;
+  document.getElementById('srsStatNew').innerHTML = nNew + '<span class="pct">' + (total ? Math.round(nNew * 100 / total) + '%' : '0%') + '</span>';
+  document.getElementById('srsStatLearn').innerHTML = nLearn + '<span class="pct">' + (total ? Math.round(nLearn * 100 / total) + '%' : '0%') + '</span>';
+  document.getElementById('srsStatMature').innerHTML = nMature + '<span class="pct">' + (total ? Math.round(nMature * 100 / total) + '%' : '0%') + '</span>';
+  document.getElementById('srsStatStreak').textContent = srsComputeStreak();
+  document.getElementById('srsStatSessions').textContent = srsGlobal.sessions || 0;
+  document.getElementById('srsStatCards').textContent = srsGlobal.cardsStudied || 0;
+
+  var today = srsTodayISO();
+  var pendToday = 0;
+  CARDS.forEach(function(c){ if(!c.srs || c.srs.nextReview <= today) pendToday++; });
+  document.getElementById('srsStatPending').textContent = pendToday;
+
+  var dayNames = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  var counts = [];
+  for(var d = 0; d < 7; d++){
+    var date = new Date(); date.setDate(date.getDate() + d);
+    var iso = date.toISOString().split('T')[0];
+    var cnt = 0;
+    CARDS.forEach(function(c){
+      if(c.srs && c.srs.nextReview === iso) cnt++;
+      else if(!c.srs && d === 0) cnt++;
+    });
+    counts.push({ label:d === 0 ? 'Hoy' : dayNames[date.getDay()], num:cnt, today:d === 0 });
+  }
+  var maxN = Math.max.apply(null, counts.map(function(c){ return c.num; })); if(maxN === 0) maxN = 1;
+  var chartEl = document.getElementById('srsBarChart'); chartEl.innerHTML = '';
+  counts.forEach(function(c){
+    var col = document.createElement('div'); col.className = 'srs-bar-col';
+    var hPct = (c.num / maxN) * 100;
+    col.innerHTML =
+      '<div class="srs-bar-num">' + c.num + '</div>'
+      + '<div class="srs-bar-fill-wrap"><div class="srs-bar-fill' + (c.today ? ' today' : '') + '" style="height:' + hPct + '%"></div></div>'
+      + '<div class="srs-bar-label">' + c.label + '</div>';
+    chartEl.appendChild(col);
+  });
+
+  var temaBody = document.getElementById('srsStatTemaBody'); temaBody.innerHTML = '';
+  var catMap = {};
+  CARDS.forEach(function(c){
+    var k = c.cat || 'expr';
+    if(!catMap[k]) catMap[k] = { tot:0, nuevo:0, learn:0, mature:0, hoy:0 };
+    var x = catMap[k]; x.tot++;
+    if(!c.srs || c.srs.repetitions === 0) x.nuevo++;
+    else if(c.srs.interval > 21) x.mature++;
+    else x.learn++;
+    if(!c.srs || c.srs.nextReview <= today) x.hoy++;
+  });
+  CAT_ORDER.forEach(function(k){
+    if(!catMap[k]) return;
+    var x = catMap[k];
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + esc(CAT_LABELS[k]) + '</td><td>' + x.tot + '</td><td>' + x.nuevo + '</td><td>' + x.learn + '</td><td>' + x.mature + '</td><td>' + x.hoy + '</td>';
+    temaBody.appendChild(tr);
+  });
+
+  document.getElementById('srsStatsModal').classList.add('active');
+}
+
+function srsCloseStatsModal(){ document.getElementById('srsStatsModal').classList.remove('active'); }
+
+/* Swipe en la tarjeta SRS */
+function srsInitSwipe(){
+  var card = document.getElementById('srsCard'); if(!card) return;
+  card.addEventListener('click', function(e){
+    if(srsSession.revealed) return;
+    if(e.target.closest('button')) return;
+    srsReveal();
+  });
+  var startX = 0, startY = 0, curDx = 0, curDy = 0, dragging = false;
+  var THRESHOLD = 80;
+  function onStart(e){
+    if(!srsSession.revealed) return;
+    var t = e.touches ? e.touches[0] : e;
+    startX = t.clientX; startY = t.clientY; curDx = 0; curDy = 0; dragging = true;
+    card.classList.add('swiping'); card.style.transition = 'none';
+  }
+  function onMove(e){
+    if(!dragging) return;
+    var t = e.touches ? e.touches[0] : e;
+    curDx = t.clientX - startX; curDy = t.clientY - startY;
+    var absX = Math.abs(curDx), absY = Math.abs(curDy);
+    card.classList.remove('swipe-left','swipe-right','swipe-up');
+    if(absX > absY && absX > 30){
+      card.style.transform = 'translateX(' + curDx + 'px) rotate(' + (curDx * 0.04) + 'deg)';
+      card.style.opacity = String(Math.max(0.55, 1 - absX / 400));
+      if(curDx < -30) card.classList.add('swipe-left');
+      else if(curDx > 30) card.classList.add('swipe-right');
+      if(e.cancelable) e.preventDefault();
+    } else if(curDy < -30 && absY > absX){
+      card.style.transform = 'translateY(' + curDy + 'px)';
+      card.style.opacity = String(Math.max(0.55, 1 - absY / 400));
+      card.classList.add('swipe-up');
+      if(e.cancelable) e.preventDefault();
+    } else { card.style.transform = ''; card.style.opacity = ''; }
+  }
+  function onEnd(){
+    if(!dragging) return;
+    dragging = false; card.style.transition = '';
+    card.classList.remove('swiping','swipe-left','swipe-right','swipe-up');
+    var absX = Math.abs(curDx), absY = Math.abs(curDy), fired = false;
+    if(absX > absY && absX > THRESHOLD){ fired = true; if(curDx < 0) srsRate(0); else srsRate(5); }
+    else if(curDy < -THRESHOLD && absY > absX){ fired = true; srsRate(3); }
+    if(!fired){ card.style.transform = ''; card.style.opacity = ''; }
+  }
+  card.addEventListener('touchstart', onStart, { passive:true });
+  card.addEventListener('touchmove',  onMove,  { passive:false });
+  card.addEventListener('touchend',   onEnd);
+  card.addEventListener('touchcancel', onEnd);
+}
+
+/* Cargar estado SRS embebido al arrancar */
+function loadSRSState(){
+  try{
+    var el = document.getElementById('srsState'); if(!el) return;
+    var s = JSON.parse(el.textContent || '{}');
+    if(s.srsGlobal && typeof s.srsGlobal === 'object'){
+      srsGlobal.sessions       = s.srsGlobal.sessions || 0;
+      srsGlobal.cardsStudied   = s.srsGlobal.cardsStudied || 0;
+      srsGlobal.lastSessionDate = s.srsGlobal.lastSessionDate || null;
+      srsGlobal.sessionDates   = Array.isArray(s.srsGlobal.sessionDates) ? s.srsGlobal.sessionDates.slice() : [];
+    }
+    if(s.srsCards && typeof s.srsCards === 'object'){
+      for(var i = 0; i < CARDS.length; i++){ var c = CARDS[i]; if(s.srsCards[c.id]) c.srs = s.srsCards[c.id]; }
+    }
+    if(Array.isArray(s.mastered)){
+      s.mastered.forEach(function(id){ mastered.add(id); });
+      try{ localStorage.setItem(MKEY, JSON.stringify(Array.from(mastered))); }catch(e){}
+    }
+    if(Array.isArray(s.custom) && s.custom.length){
+      var have = {}; CARDS.forEach(function(c){ have[c.id] = true; });
+      s.custom.forEach(function(c){ if(!have[c.id]){ CARDS.push(c); custom.push(c); } });
+      try{ localStorage.setItem(CKEY, JSON.stringify(custom)); }catch(e){}
+    }
+  } catch(e){}
+}
+
+/* Trigger export desde botones SRS */
+function srsTriggerExport(){ if(typeof doExport === 'function') doExport(); else { var b = document.getElementById('btnExport'); if(b) b.click(); } }
+
+/* Init / wire-up */
+function initSRSAddon(){
+  loadSRSState();
+  updateSrsBadge();
+  if(typeof render === 'function') try{ render(); }catch(e){}
+  if(typeof buildCatBtns === 'function') try{ buildCatBtns(); }catch(e){}
+
+  document.getElementById('btnOpenSRS').addEventListener('click', srsOpenStartModal);
+  document.getElementById('btnOpenSRSStats').addEventListener('click', srsOpenStatsModal);
+
+  document.getElementById('btnSrsStartCancel').addEventListener('click', srsCloseStartModal);
+  document.getElementById('btnSrsStartGo').addEventListener('click', srsStartSession);
+  document.getElementById('btnSrsTemaAll').addEventListener('click', function(){
+    var checks = document.querySelectorAll('#srsStartTemaList input[type=checkbox]:not(:disabled)');
+    for(var i = 0; i < checks.length; i++) checks[i].checked = true;
+    srsUpdateStartSummary();
+  });
+  document.getElementById('btnSrsTemaNone').addEventListener('click', function(){
+    var checks = document.querySelectorAll('#srsStartTemaList input[type=checkbox]:not(:disabled)');
+    for(var i = 0; i < checks.length; i++) checks[i].checked = false;
+    srsUpdateStartSummary();
+  });
+  document.getElementById('srsStartModal').addEventListener('click', function(e){ if(e.target === this) srsCloseStartModal(); });
+
+  document.getElementById('btnSrsExit').addEventListener('click', srsExitSession);
+  document.getElementById('btnSrsSaveExit').addEventListener('click', srsExitAndSave);
+  document.getElementById('btnSrsUndo').addEventListener('click', srsUndo);
+  document.getElementById('btnSrsReveal').addEventListener('click', srsReveal);
+  var btnUndoFs = document.getElementById('btnSrsUndoFs');
+  if(btnUndoFs) btnUndoFs.addEventListener('click', srsUndo);
+
+  function toggleSrsFullscreen(){
+    var ov = document.getElementById('srsOverlay');
+    ov.classList.toggle('fullscreen');
+    var isFs = ov.classList.contains('fullscreen');
+    document.getElementById('btnSrsFullscreen').textContent = isFs ? '⛶ Menú' : '⛶ Pantalla completa';
+    try{ localStorage.setItem('srsFullscreen_eng', isFs ? '1' : '0'); }catch(e){}
+  }
+  document.getElementById('btnSrsFullscreen').addEventListener('click', toggleSrsFullscreen);
+  document.getElementById('btnSrsExitFullscreen').addEventListener('click', toggleSrsFullscreen);
+
+  var rateBtns = document.querySelectorAll('.btn-srs-rate');
+  for(var i = 0; i < rateBtns.length; i++){
+    rateBtns[i].addEventListener('click', function(){
+      var q = parseInt(this.getAttribute('data-q'), 10);
+      srsRate(q);
+    });
+  }
+  srsInitSwipe();
+
+  document.getElementById('btnSrsResBack').addEventListener('click', srsCloseSummary);
+  document.getElementById('btnSrsResExport').addEventListener('click', function(){ srsCloseSummary(); srsTriggerExport(); });
+  document.getElementById('srsSummaryModal').addEventListener('click', function(e){ if(e.target === this) srsCloseSummary(); });
+
+  document.getElementById('btnSrsStatsClose').addEventListener('click', srsCloseStatsModal);
+  document.getElementById('srsStatsModal').addEventListener('click', function(e){ if(e.target === this) srsCloseStatsModal(); });
+
+  var banner = document.getElementById('srsUnsavedBanner');
+  if(banner){
+    banner.addEventListener('click', srsTriggerExport);
+    banner.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); srsTriggerExport(); } });
+  }
+
+  window.addEventListener('beforeunload', function(e){
+    if(srsUnsavedProgress){ e.preventDefault(); e.returnValue = 'Tienes progreso SRS sin guardar. ¿Exportar antes de salir?'; return e.returnValue; }
+  });
+
+  document.addEventListener('keydown', function(e){
+    var ov = document.getElementById('srsOverlay');
+    if(!ov || !ov.classList.contains('active')) return;
+    var ae = document.activeElement;
+    if(ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.isContentEditable)) return;
+    var k = e.key;
+    if(k === 'z' || k === 'Z' || k === '-'){ e.preventDefault(); srsUndo(); return; }
+    if(k === 'f' || k === 'F'){ e.preventDefault(); document.getElementById('btnSrsFullscreen').click(); return; }
+    if(k === 'Escape'){ e.preventDefault(); if(ov.classList.contains('fullscreen')) toggleSrsFullscreen(); else srsExitSession(); return; }
+    if(!srsSession.revealed){
+      if(k === ' ' || k === 'Enter'){ e.preventDefault(); srsReveal(); }
+      return;
+    }
+    if(k === '1' || k === 'ArrowLeft'){ e.preventDefault(); srsRate(0); }
+    else if(k === '2' || k === 'ArrowUp'){ e.preventDefault(); srsRate(3); }
+    else if(k === '3' || k === 'ArrowRight'){ e.preventDefault(); srsRate(5); }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape') return;
+    var modals = ['srsSummaryModal','srsStatsModal','srsStartModal'];
+    for(var i = 0; i < modals.length; i++){
+      var m = document.getElementById(modals[i]);
+      if(m && m.classList.contains('active')){ m.classList.remove('active'); e.preventDefault(); return; }
+    }
+  });
+}
+initSRSAddon();
 </script>
+
+<!-- ═══ MÓDULO DE SINCRONIZACIÓN EN LA NUBE (Supabase) ═══ -->
+<script id="cloudSyncModule">
+(function(){
+  /* CONFIGURACIÓN — APP_ID propio del inglés; mismo Supabase y mismos perfiles que en francés */
+  var APP_ID        = 'ingles_vocab';
+  var SUPABASE_URL  = 'https://fwnhszukuopcrajfbsab.supabase.co';
+  var SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3bmhzenVrdW9wY3JhamZic2FiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NzU2ODYsImV4cCI6MjA5NTU1MTY4Nn0.FYjkiUQ9kkYtHVCpejB7xX4mG45O1cuTOte5eN6btHk';
+  var PROFILES      = ['ruben', 'sergio', 'invitado'];
+  var PROFILE_LABEL = { ruben:'Rubén', sergio:'Sergio', invitado:'Invitado' };
+  var PROFILE_INIT  = { ruben:'R',     sergio:'S',      invitado:'I' };
+  var PROFILE_PWD   = '1295';
+  var SAVE_DEBOUNCE = 1500;
+
+  var LS_PROFILE     = 'delf_active_profile';                /* compartido con francés/verbos */
+  var LS_SESS_UNLOCK = 'delf_profile_unlocked';              /* idem */
+  function LS_BACKUP(profile){ return 'idiomas_cloud_backup__' + APP_ID + '__' + profile; }
+
+  var CLOUD_ENABLED = !!(SUPABASE_URL && SUPABASE_KEY);
+
+  var activeProfile = null;
+  var pendingProfile = null;
+  var saveTimer = null;
+  var statusEl  = null;
+  var statusTxt = null;
+  var hideTimer = null;
+
+  function readGlobals(){
+    var payload = {
+      srsGlobal: (typeof srsGlobal !== 'undefined') ? srsGlobal : {},
+      srsCards:  {},
+      mastered:  (typeof mastered !== 'undefined') ? Array.from(mastered) : [],
+      custom:    (typeof custom !== 'undefined') ? custom : []
+    };
+    if(typeof CARDS !== 'undefined' && CARDS && CARDS.length){
+      for(var i = 0; i < CARDS.length; i++){ var c = CARDS[i]; if(c && c.srs) payload.srsCards[c.id] = c.srs; }
+    }
+    return payload;
+  }
+
+  function richness(p){
+    if(!p || typeof p !== 'object') return 0;
+    var m = Array.isArray(p.mastered) ? p.mastered.length : 0;
+    var c = p.srsCards ? Object.keys(p.srsCards).length : 0;
+    var cu = Array.isArray(p.custom) ? p.custom.length : 0;
+    var s = (p.srsGlobal && p.srsGlobal.sessions) ? p.srsGlobal.sessions : 0;
+    var d = (p.srsGlobal && p.srsGlobal.cardsStudied) ? p.srsGlobal.cardsStudied : 0;
+    return m + c + cu + s * 10 + d;
+  }
+
+  function applyPayload(data){
+    if(!data || typeof data !== 'object') data = {};
+    /* mastered (Set) */
+    if(typeof mastered !== 'undefined'){
+      mastered.clear();
+      if(Array.isArray(data.mastered)) data.mastered.forEach(function(id){ mastered.add(id); });
+      try{ localStorage.setItem(MKEY, JSON.stringify(Array.from(mastered))); }catch(e){}
+    }
+    /* custom (array) — fusionar sin duplicar; eliminar IDs custom ausentes en el payload */
+    if(typeof custom !== 'undefined' && Array.isArray(data.custom)){
+      /* limpiar custom y CARDS de los anteriores custom */
+      var prevCustomIds = {}; custom.forEach(function(c){ prevCustomIds[c.id] = true; });
+      for(var i = CARDS.length - 1; i >= 0; i--){ if(prevCustomIds[CARDS[i].id]) CARDS.splice(i, 1); }
+      custom.length = 0;
+      data.custom.forEach(function(c){ custom.push(c); CARDS.push(c); });
+      try{ localStorage.setItem(CKEY, JSON.stringify(custom)); }catch(e){}
+    }
+    /* SRS global */
+    if(typeof srsGlobal !== 'undefined'){
+      var defaults = { sessions:0, cardsStudied:0, lastSessionDate:null, sessionDates:[] };
+      Object.keys(srsGlobal).forEach(function(k){ delete srsGlobal[k]; });
+      Object.keys(defaults).forEach(function(k){ srsGlobal[k] = defaults[k]; });
+      if(data.srsGlobal && typeof data.srsGlobal === 'object'){
+        Object.keys(data.srsGlobal).forEach(function(k){ srsGlobal[k] = data.srsGlobal[k]; });
+      }
+    }
+    /* SRS por tarjeta */
+    if(typeof CARDS !== 'undefined' && CARDS && CARDS.length){
+      var srsMap = (data.srsCards && typeof data.srsCards === 'object') ? data.srsCards : {};
+      for(var j = 0; j < CARDS.length; j++){
+        var cc = CARDS[j]; if(!cc) continue;
+        if(srsMap[cc.id]) cc.srs = srsMap[cc.id];
+        else if(cc.srs) delete cc.srs;
+      }
+    }
+  }
+
+  function reRenderAll(){
+    try{ if(typeof render === 'function') render(); }catch(e){}
+    try{ if(typeof buildCatBtns === 'function') buildCatBtns(); }catch(e){}
+    try{ if(typeof updateSrsBadge === 'function') updateSrsBadge(); }catch(e){}
+    try{ if(typeof gUpdateCt === 'function') gUpdateCt(); }catch(e){}
+    var t = document.getElementById('hdrTotal'); if(t) t.textContent = (typeof CARDS !== 'undefined' ? CARDS.length : 0);
+    var m = document.getElementById('hdrMastered'); if(m) m.textContent = (typeof mastered !== 'undefined' ? mastered.size : 0);
+  }
+
+  function setStatus(kind, text, autohide){
+    if(!statusEl){
+      statusEl = document.getElementById('cloudStatus');
+      statusTxt = statusEl ? statusEl.querySelector('.cs-text') : null;
+    }
+    if(!statusEl) return;
+    statusEl.classList.remove('saving','saved','offline','error');
+    if(kind) statusEl.classList.add(kind);
+    if(statusTxt) statusTxt.textContent = text;
+    statusEl.classList.add('visible');
+    if(hideTimer){ clearTimeout(hideTimer); hideTimer = null; }
+    if(autohide){
+      hideTimer = setTimeout(function(){ statusEl.classList.remove('visible'); }, autohide);
+    }
+  }
+
+  function updateProfilePill(){
+    var pill   = document.getElementById('hdrProfilePill');
+    var avatar = document.getElementById('hdrProfileAvatar');
+    var nameEl = document.getElementById('hdrProfileName');
+    if(!pill || !avatar || !nameEl) return;
+    var p = activeProfile || 'invitado';
+    pill.setAttribute('data-profile', p);
+    avatar.textContent = PROFILE_INIT[p] || '?';
+    nameEl.textContent = PROFILE_LABEL[p] || p;
+  }
+
+  function cloudKey(profile){ return APP_ID + '_' + profile; }
+
+  function cloudLoad(profile){
+    if(!CLOUD_ENABLED) return Promise.reject(new Error('cloud-disabled'));
+    var url = SUPABASE_URL.replace(/\/$/, '') +
+              '/rest/v1/progress?user_id=eq.' + encodeURIComponent(cloudKey(profile)) +
+              '&select=data';
+    return fetch(url, {
+      headers: { apikey:SUPABASE_KEY, Authorization:'Bearer ' + SUPABASE_KEY, Accept:'application/json' }
+    }).then(function(r){
+      if(!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function(rows){
+      if(Array.isArray(rows) && rows.length > 0) return rows[0].data || {};
+      return null;
+    });
+  }
+
+  function cloudSave(profile, payload){
+    if(!CLOUD_ENABLED) return Promise.reject(new Error('cloud-disabled'));
+    var url = SUPABASE_URL.replace(/\/$/, '') + '/rest/v1/progress?on_conflict=user_id';
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY,
+        'Content-Type':'application/json',
+        Prefer:'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify({
+        user_id: cloudKey(profile),
+        data: payload,
+        updated_at: new Date().toISOString()
+      })
+    }).then(function(r){ if(!r.ok) throw new Error('HTTP ' + r.status); });
+  }
+
+  function persistLocalBackup(profile, payload){
+    try{ localStorage.setItem(LS_BACKUP(profile), JSON.stringify(payload)); }catch(e){}
+  }
+  function readLocalBackup(profile){
+    try{ var s = localStorage.getItem(LS_BACKUP(profile)); return s ? JSON.parse(s) : null; }catch(e){ return null; }
+  }
+
+  function doSaveNow(){
+    if(!activeProfile) return;
+    var payload = readGlobals();
+    persistLocalBackup(activeProfile, payload);
+    if(!CLOUD_ENABLED){ setStatus('offline', '⚠ Sin nube', 2500); return; }
+    if(!navigator.onLine){ setStatus('offline', '⚠ Sin conexión — guardado local', 3000); return; }
+    setStatus('saving', '☁ Guardando…', 0);
+    cloudSave(activeProfile, payload).then(function(){
+      setStatus('saved', '✓ Guardado', 1800);
+      if(typeof markSaved === 'function') markSaved();
+    }).catch(function(err){
+      console.warn('[cloudSync] save error', err);
+      setStatus('offline', '⚠ Sin conexión — guardado local', 3500);
+    });
+  }
+
+  function scheduleSave(){
+    if(!activeProfile) return;
+    if(saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(function(){ saveTimer = null; doSaveNow(); }, SAVE_DEBOUNCE);
+  }
+
+  function installHooks(){
+    function wrap(name){
+      var orig = window[name];
+      if(typeof orig !== 'function') return;
+      window[name] = function(){ var r = orig.apply(this, arguments); scheduleSave(); return r; };
+    }
+    wrap('savM');
+    wrap('savC');
+    wrap('sm2');
+    wrap('srsFinishSession');
+    document.addEventListener('visibilitychange', function(){
+      if(document.visibilityState === 'hidden' && saveTimer){
+        clearTimeout(saveTimer); saveTimer = null; doSaveNow();
+      }
+    });
+    window.addEventListener('online',  function(){ setStatus('saved', '✓ Conectado', 1800); doSaveNow(); });
+    window.addEventListener('offline', function(){ setStatus('offline', '⚠ Sin conexión', 0); });
+  }
+
+  function loadProfileData(profile){
+    setStatus('saving', '☁ Cargando perfil…', 0);
+    var embedded = readGlobals();
+    var localBackup = readLocalBackup(profile);
+    var finish = function(payload){ applyPayload(payload || {}); reRenderAll(); };
+
+    if(!CLOUD_ENABLED || !navigator.onLine){
+      var pick = (localBackup && richness(localBackup) >= richness(embedded)) ? localBackup : embedded;
+      finish(pick);
+      setStatus('offline', CLOUD_ENABLED ? '⚠ Sin conexión — local' : '⚠ Modo local', 2500);
+      return;
+    }
+
+    cloudLoad(profile).then(function(remote){
+      var rRemote = richness(remote), rEmbedded = richness(embedded), rBackup = richness(localBackup);
+      var best = remote || {}, bestR = rRemote, label = 'nube';
+      if(rEmbedded > bestR){ best = embedded;    bestR = rEmbedded; label = 'embebido'; }
+      if(rBackup   > bestR){ best = localBackup; bestR = rBackup;   label = 'local';    }
+      finish(best);
+      persistLocalBackup(profile, best);
+      if(label === 'nube') setStatus('saved', '✓ Perfil cargado', 1800);
+      else if(label === 'embebido'){ setStatus('saved', '✓ Cargado (subiendo embebido)', 2400); scheduleSave(); }
+      else { setStatus('saved', '✓ Perfil cargado (local)', 1800); scheduleSave(); }
+      if(!remote && richness(embedded) === 0 && !localBackup) setStatus('saved', '✓ Perfil nuevo', 1800);
+    }).catch(function(err){
+      console.warn('[cloudSync] load error', err);
+      var pick = (localBackup && richness(localBackup) >= richness(embedded)) ? localBackup : embedded;
+      finish(pick);
+      setStatus('offline', '⚠ Sin conexión — local', 3000);
+    });
+  }
+
+  function setActiveProfile(profile, opts){
+    opts = opts || {};
+    if(!profile || PROFILES.indexOf(profile) === -1) profile = 'invitado';
+    var prev = activeProfile;
+    if(prev && prev !== profile){
+      if(saveTimer){ clearTimeout(saveTimer); saveTimer = null; }
+      doSaveNow();
+    }
+    activeProfile = profile;
+    try{ localStorage.setItem(LS_PROFILE, profile); }catch(e){}
+    updateProfilePill();
+    if(opts.skipLoad) return;
+    loadProfileData(profile);
+  }
+
+  function getUnlocked(){
+    try{ var s = sessionStorage.getItem(LS_SESS_UNLOCK); return s ? JSON.parse(s) : {}; }catch(e){ return {}; }
+  }
+  function markUnlocked(profile){
+    var u = getUnlocked(); u[profile] = true;
+    try{ sessionStorage.setItem(LS_SESS_UNLOCK, JSON.stringify(u)); }catch(e){}
+  }
+
+  function showOverlay(){ var ov = document.getElementById('profileOverlay'); if(ov) ov.classList.add('active'); hidePwdRow(); }
+  function hideOverlay(){ var ov = document.getElementById('profileOverlay'); if(ov) ov.classList.remove('active'); }
+  function showPwdRow(profile){
+    pendingProfile = profile;
+    var row = document.getElementById('profilePwdRow');
+    var lbl = document.getElementById('profilePwdLabel');
+    var inp = document.getElementById('profilePwdInput');
+    var err = document.getElementById('profilePwdError');
+    if(lbl) lbl.textContent = 'Contraseña para ' + (PROFILE_LABEL[profile] || profile);
+    if(inp){ inp.value = ''; setTimeout(function(){ inp.focus(); }, 50); }
+    if(err) err.classList.remove('active');
+    if(row) row.classList.add('active');
+  }
+  function hidePwdRow(){
+    pendingProfile = null;
+    var row = document.getElementById('profilePwdRow');
+    if(row) row.classList.remove('active');
+  }
+  function tryPwd(){
+    if(!pendingProfile) return;
+    var inp = document.getElementById('profilePwdInput');
+    var err = document.getElementById('profilePwdError');
+    if(!inp) return;
+    if(inp.value === PROFILE_PWD){
+      markUnlocked(pendingProfile);
+      var p = pendingProfile;
+      hidePwdRow(); hideOverlay();
+      setActiveProfile(p);
+    } else { if(err) err.classList.add('active'); inp.value = ''; inp.focus(); }
+  }
+  function pickProfile(profile){
+    if(profile === 'invitado'){ hideOverlay(); setActiveProfile('invitado'); return; }
+    if(getUnlocked()[profile]){ hideOverlay(); setActiveProfile(profile); return; }
+    showPwdRow(profile);
+  }
+
+  function wireOverlay(){
+    var list = document.getElementById('profileList');
+    if(list){
+      list.addEventListener('click', function(e){
+        var btn = e.target.closest('.profile-btn'); if(!btn) return;
+        pickProfile(btn.getAttribute('data-profile'));
+      });
+    }
+    var inp = document.getElementById('profilePwdInput');
+    var ok  = document.getElementById('profilePwdOk');
+    var cancel = document.getElementById('profilePwdCancel');
+    if(ok)     ok.addEventListener('click', tryPwd);
+    if(cancel) cancel.addEventListener('click', hidePwdRow);
+    if(inp)    inp.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); tryPwd(); } });
+
+    var pill = document.getElementById('hdrProfilePill');
+    if(pill) pill.addEventListener('click', function(){ showOverlay(); });
+  }
+
+  function boot(){
+    wireOverlay();
+    installHooks();
+    var saved = null;
+    try{ saved = localStorage.getItem(LS_PROFILE); }catch(e){}
+    if(saved && PROFILES.indexOf(saved) !== -1) setActiveProfile(saved);
+    else { activeProfile = null; updateProfilePill(); showOverlay(); }
+  }
+
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else setTimeout(boot, 0);
+})();
+</script>
+
 </body>
 </html>

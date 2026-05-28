@@ -43822,16 +43822,36 @@ if (document.readyState === "loading") {
     return payload;
   }
 
-  // "Riqueza" del payload — sirve para decidir qué fuente prevalece en el primer arranque
-  function richness(p){
-    if (!p || typeof p !== 'object') return 0;
-    var k = p.known      ? Object.keys(p.known).length      : 0;
-    var f = p.flipped    ? Object.keys(p.flipped).length    : 0;
-    var e = p.edits      ? Object.keys(p.edits).length      : 0;
-    var c = p.srsCards   ? Object.keys(p.srsCards).length   : 0;
-    var s = (p.srsGlobal && p.srsGlobal.sessions)      ? p.srsGlobal.sessions      : 0;
-    var d = (p.srsGlobal && p.srsGlobal.cardsStudied)  ? p.srsGlobal.cardsStudied  : 0;
-    return k + f + e + c + s * 10 + d;
+  // Cuenta señales reales (no contadores) para detectar si un payload está "vacío"
+  function isEmpty(p){
+    if (!p || typeof p !== 'object') return true;
+    if (Object.keys(p.known    || {}).length) return false;
+    if (Object.keys(p.flipped  || {}).length) return false;
+    if (Object.keys(p.edits    || {}).length) return false;
+    if (Object.keys(p.srsCards || {}).length) return false;
+    if (((p.srsGlobal||{}).sessions||0) > 0)  return false;
+    return true;
+  }
+
+  // Fusiona srsGlobal: contadores al máximo, fechas en unión.
+  // Evita perder los históricos del HTML embebido cuando la nube los trae a 0.
+  function mergeSrsGlobal(a, b){
+    a = a || {}; b = b || {};
+    var sessions     = Math.max(a.sessions     || 0, b.sessions     || 0);
+    var cardsStudied = Math.max(a.cardsStudied || 0, b.cardsStudied || 0);
+    var lastA = a.lastSessionDate || null;
+    var lastB = b.lastSessionDate || null;
+    var lastSessionDate = lastA;
+    if (lastB && (!lastA || lastB > lastA)) lastSessionDate = lastB;
+    var setDates = {};
+    (a.sessionDates || []).forEach(function(d){ if (d) setDates[d] = true; });
+    (b.sessionDates || []).forEach(function(d){ if (d) setDates[d] = true; });
+    return {
+      sessions: sessions,
+      cardsStudied: cardsStudied,
+      lastSessionDate: lastSessionDate,
+      sessionDates: Object.keys(setDates).sort()
+    };
   }
 
   function applyPayload(data){
@@ -44067,62 +44087,87 @@ if (document.readyState === "loading") {
   }
 
   // ───────────────── SWITCH DE PERFIL ─────────────────
+  // Política:
+  //   - La nube es la FUENTE DE LA VERDAD para known / flipped / edits / srsCards.
+  //   - srsGlobal se fusiona (max contadores, unión de fechas) para no perder
+  //     contadores históricos que sólo viven en el HTML embebido.
+  //   - El embebido SOLO se usa como semilla cuando la fila de la nube no existe.
+  //   - El backup local sólo entra en juego si no hay conexión.
   function loadProfileData(profile){
     setStatus('saving', '☁ Cargando perfil…', 0);
 
-    // El estado embebido del HTML ya está cargado en las globales por bootAddons.
-    // Lo capturamos antes de tocar nada, por si gana al comparar con la nube.
-    var embedded = readGlobals();
-    var hasEmbedded = richness(embedded) > 0;
+    // Asegurar que las globales reflejan el embedded del HTML antes de leerlo.
+    try { if (typeof loadStorage    === 'function') loadStorage();    } catch(e){}
+    try { if (typeof loadCardEdits  === 'function') loadCardEdits();  } catch(e){}
+    try { if (typeof loadSRSGlobal  === 'function') loadSRSGlobal();  } catch(e){}
 
+    var embedded    = readGlobals();
     var localBackup = readLocalBackup(profile);
 
-    var finish = function(payload){
+    function applyAndRender(payload){
       applyPayload(payload || {});
       reRenderAll();
-    };
+    }
 
-    if (!CLOUD_ENABLED || !navigator.onLine) {
-      // Sin nube: el backup local del perfil prevalece si existe y es más rico
-      var pick = (localBackup && richness(localBackup) >= richness(embedded)) ? localBackup : embedded;
-      finish(pick);
-      if (!CLOUD_ENABLED) setStatus('offline', '⚠ Modo local (sin nube)', 2500);
-      else setStatus('offline', '⚠ Sin conexión — local', 2500);
+    function offlineFallback(){
+      // Sin nube: preferimos backup local (más reciente que el HTML estático);
+      // si no hay backup, usamos el embebido.
+      var pick = (localBackup && !isEmpty(localBackup)) ? localBackup : embedded;
+      applyAndRender(pick);
+    }
+
+    if (!CLOUD_ENABLED) {
+      offlineFallback();
+      setStatus('offline', '⚠ Modo local (sin nube)', 2500);
+      return;
+    }
+    if (!navigator.onLine) {
+      offlineFallback();
+      setStatus('offline', '⚠ Sin conexión — local', 2500);
       return;
     }
 
     cloudLoad(profile).then(function(remote){
-      var rRemote   = richness(remote);
-      var rEmbedded = richness(embedded);
-      var rBackup   = richness(localBackup);
-
-      // Elegir la fuente más rica entre {remoto, embebido, backup-local}
-      var best = remote || {};
-      var bestR = rRemote;
-      var bestLabel = 'nube';
-      if (rEmbedded > bestR) { best = embedded;    bestR = rEmbedded; bestLabel = 'embebido'; }
-      if (rBackup   > bestR) { best = localBackup; bestR = rBackup;   bestLabel = 'local';    }
-
-      finish(best);
-      persistLocalBackup(profile, best);
-
-      if (bestLabel === 'nube') {
-        setStatus('saved', '✓ Perfil cargado', 1800);
-      } else if (bestLabel === 'embebido') {
-        setStatus('saved', '✓ Perfil cargado (subiendo progreso embebido)', 2400);
-        scheduleSave(); // sube el embebido a la nube
-      } else {
-        setStatus('saved', '✓ Perfil cargado (local)', 1800);
+      if (remote === null) {
+        // Primera vez para este perfil: subir el embebido como semilla.
+        applyAndRender(embedded);
+        persistLocalBackup(profile, embedded);
+        setStatus('saved', '✓ Perfil nuevo (subiendo embebido)', 2400);
         scheduleSave();
+        return;
       }
 
-      if (!remote && !hasEmbedded && !localBackup) {
-        setStatus('saved', '✓ Perfil nuevo', 1800);
+      // Hay fila en la nube → mandan known/flipped/edits/srsCards de la nube.
+      // srsGlobal: merge con el embebido y con el backup local, para no perder
+      // contadores históricos.
+      var mergedSrs = mergeSrsGlobal(
+        embedded.srsGlobal,
+        mergeSrsGlobal((localBackup||{}).srsGlobal, remote.srsGlobal)
+      );
+
+      var merged = {
+        known:     remote.known    || {},
+        flipped:   remote.flipped  || {},
+        edits:     remote.edits    || {},
+        srsCards:  remote.srsCards || {},
+        srsGlobal: mergedSrs
+      };
+
+      applyAndRender(merged);
+      persistLocalBackup(profile, readGlobals());
+      setStatus('saved', '✓ Perfil cargado', 1800);
+
+      // Si el merge ha enriquecido srsGlobal por encima de lo que había en la nube,
+      // sube el estado consolidado (sólo una vez tras el load).
+      var rs = remote.srsGlobal || {};
+      if ((mergedSrs.sessions     || 0) > (rs.sessions     || 0) ||
+          (mergedSrs.cardsStudied || 0) > (rs.cardsStudied || 0) ||
+          (mergedSrs.sessionDates || []).length > ((rs.sessionDates || []).length)) {
+        scheduleSave();
       }
     }).catch(function(err){
       console.warn('[cloudSync] load error', err);
-      var pick = (localBackup && richness(localBackup) >= richness(embedded)) ? localBackup : embedded;
-      finish(pick);
+      offlineFallback();
       setStatus('offline', '⚠ Sin conexión — local', 3000);
     });
   }
