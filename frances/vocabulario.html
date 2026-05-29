@@ -2393,6 +2393,10 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   cursor: pointer; background: var(--bg); color: var(--text2);
 }
 .btn-srs-quick:hover { background: var(--border); }
+.btn-srs-quick.active {
+  background: var(--text); color: var(--bg); border-color: var(--text);
+}
+.btn-srs-quick.active:hover { background: var(--text); filter: brightness(1.1); }
 
 .srs-modal-actions {
   display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap;
@@ -3126,6 +3130,14 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
       <div class="srs-tema-quick">
         <button class="btn-srs-quick" id="btnSrsTemaAll" type="button">Todos</button>
         <button class="btn-srs-quick" id="btnSrsTemaNone" type="button">Ninguno</button>
+      </div>
+    </div>
+
+    <div class="srs-modal-section" id="srsStartOrderSection">
+      <h3>Orden</h3>
+      <div class="srs-tema-quick">
+        <button class="btn-srs-quick active" id="btnSrsOrderDefault" type="button" title="Vencidas primero, luego nuevas">Recomendado</button>
+        <button class="btn-srs-quick" id="btnSrsOrderShuffle" type="button" title="Mezcla todas las tarjetas seleccionadas">🔀 Aleatorio</button>
       </div>
     </div>
 
@@ -43281,12 +43293,25 @@ function srsUpdateStartSummary() {
   }
 }
 
+// ── Orden de la cola (shuffle opcional) ──
+function srsGetShuffleMode() {
+  try { return localStorage.getItem("srs_shuffle") === "1"; } catch (e) { return false; }
+}
+function srsSetShuffleMode(on) {
+  try { localStorage.setItem("srs_shuffle", on ? "1" : "0"); } catch (e) {}
+  var btnD = document.getElementById("btnSrsOrderDefault");
+  var btnS = document.getElementById("btnSrsOrderShuffle");
+  if (btnD) btnD.classList.toggle("active", !on);
+  if (btnS) btnS.classList.toggle("active",  on);
+}
+
 // ── Sesión ──
 function srsStartSession() {
   var selected = srsGetSelectedTemas();
   if (selected.length === 0) return;
   var queue = getSRSQueue(selected);
   if (queue.length === 0) return;
+  if (srsGetShuffleMode()) queue = shuffle(queue);
   srsSession.queue = queue;
   srsSession.idx = 0;
   srsSession.revealed = false;
@@ -43765,6 +43790,12 @@ function initSRSAddon() {
     for (var i = 0; i < checks.length; i++) checks[i].checked = false;
     srsUpdateStartSummary();
   });
+  // Orden de la cola: Recomendado / Aleatorio
+  var btnOrdDef = document.getElementById("btnSrsOrderDefault");
+  var btnOrdShf = document.getElementById("btnSrsOrderShuffle");
+  if (btnOrdDef) btnOrdDef.addEventListener("click", function() { srsSetShuffleMode(false); });
+  if (btnOrdShf) btnOrdShf.addEventListener("click", function() { srsSetShuffleMode(true);  });
+  srsSetShuffleMode(srsGetShuffleMode()); // pinta el estado inicial
   // Click fuera cierra modal
   document.getElementById("srsStartModal").addEventListener("click", function(e) {
     if (e.target === this) srsCloseStartModal();

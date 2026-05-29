@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hedging & Academic Tone · C1 Linguaskill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Page identity: Hedging → Discourse cyan */
+  --primary:#0e7490; --primary-soft:#ecfeff; --primary-mid:#06b6d4; --primary-strong:#155e75;
+  --primary-glow:rgba(14,116,144,.14);
+  /* Per-tab identity colors */
+  --tab-intro:#0e7490;     --tab-intro-soft:#ecfeff;     --tab-intro-mid:#06b6d4;
+  --tab-tools:#b45309;     --tab-tools-soft:#fffbeb;     --tab-tools-mid:#f59e0b;
+  --tab-caution:#5b21b6;   --tab-caution-soft:#f5f3ff;   --tab-caution-mid:#7c3aed;
+  /* Legacy aliases */
+  --accent:var(--primary); --accent-light:var(--primary-soft); --accent-mid:var(--primary-mid);
+  /* Neutrals */
+  --bg:#f7f7f5; --bg-elevated:#fbfbfa; --card:#ffffff;
+  --border:#ececec; --border-strong:#dfdfdf;
+  --text:#18181b; --text2:#52525b; --text3:#71717a;
+  /* Paper (model examples) */
+  --paper:#fefef9; --paper-border:#e7e5d6;
+  /* Shadows */
+  --shadow-xs:0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:0 2px 8px rgba(15,23,42,.04),0 1px 2px rgba(15,23,42,.03);
+  --shadow:0 4px 16px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+  --shadow-primary:0 6px 20px var(--primary-glow);
+  /* Geometry */
+  --radius:18px; --radius-md:14px; --radius-sm:10px; --radius-xs:6px; --radius-pill:999px;
+  /* Motion */
+  --ease:cubic-bezier(0.4,0,0.2,1); --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --t-fast:120ms; --t-base:200ms;
+  /* Section colors (A→E) */
+  --c-greet:#7c3aed;     --c-greet-bg:#f5f3ff;
+  --c-conn:#0e7490;      --c-conn-bg:#ecfeff;
+  --c-key:#1d4ed8;       --c-key-bg:#eff6ff;
+  --c-close:#be185d;     --c-close-bg:#fdf2f8;
+  --c-model:#b45309;     --c-model-bg:#fffbeb;
+  --c-tip:#ca8a04;       --c-tip-bg:#fef9c3;
+  --c-struct:#4338ca;    --c-struct-bg:#e0e7ff;
+  /* Sub-category colors for connectors */
+  --c-add:#0e7490;       --c-contrast:#be185d;
+  --c-cause:#15803d;     --c-purpose:#7c3aed;
+  --c-seq:#1d4ed8;       --c-time:#0369a1;
+  --c-emph:#b91c1c;      --c-summ:#7c3aed;
+}
+[data-theme="dark"]{
+  --primary:#67e8f9; --primary-soft:rgba(103,232,249,.10); --primary-mid:#22d3ee; --primary-strong:#a5f3fc;
+  --primary-glow:rgba(103,232,249,.18);
+  --tab-intro:#67e8f9;     --tab-intro-soft:rgba(103,232,249,.12);   --tab-intro-mid:#22d3ee;
+  --tab-tools:#fcd34d;     --tab-tools-soft:rgba(252,211,77,.12);    --tab-tools-mid:#f59e0b;
+  --tab-caution:#c4b5fd;   --tab-caution-soft:rgba(196,181,253,.12); --tab-caution-mid:#a78bfa;
+  --bg:#0a0a0b; --bg-elevated:#131316; --card:#18181b;
+  --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --paper:#1e1e24; --paper-border:#3a3a42;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.2);
+  --shadow:0 4px 16px rgba(0,0,0,.30),0 1px 3px rgba(0,0,0,.20);
+  --shadow-primary:0 6px 24px var(--primary-glow);
+  --c-greet:#a78bfa;     --c-greet-bg:rgba(167,139,250,.10);
+  --c-conn:#22d3ee;      --c-conn-bg:rgba(34,211,238,.10);
+  --c-key:#60a5fa;       --c-key-bg:rgba(96,165,250,.10);
+  --c-close:#f472b6;     --c-close-bg:rgba(244,114,182,.10);
+  --c-model:#fbbf24;     --c-model-bg:rgba(251,191,36,.10);
+  --c-tip:#facc15;       --c-tip-bg:rgba(250,204,21,.10);
+  --c-struct:#a5b4fc;    --c-struct-bg:rgba(165,180,252,.10);
+  --c-add:#22d3ee;       --c-contrast:#f472b6;
+  --c-cause:#4ade80;     --c-purpose:#a78bfa;
+  --c-seq:#60a5fa;       --c-time:#38bdf8;
+  --c-emph:#f87171;      --c-summ:#a78bfa;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+*:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-xs);}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
+
+/* HEADER */
+.site-header{background:linear-gradient(180deg,var(--bg-elevated),var(--bg));padding:32px 20px 22px;position:relative;}
+.site-header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-strong) 20%,var(--border-strong) 80%,transparent);}
+.header-inner{max-width:1000px;margin:0 auto;}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.site-header h1{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:600;letter-spacing:-0.02em;color:var(--text);line-height:1.1;}
+.header-tag{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);background:var(--primary-soft);border-radius:var(--radius-pill);padding:4px 11px;}
+.header-sub{font-size:.88rem;color:var(--text3);font-weight:400;margin-top:4px;line-height:1.55;}
+.header-sub strong{color:var(--primary);font-weight:600;}
+
+/* HEADER ACTIONS BAR */
+.header-actions{max-width:1000px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:8px 14px 8px 11px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.back-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateX(-2px);box-shadow:var(--shadow);}
+.back-btn:active{transform:translateX(-2px) scale(.97);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+
+/* THEME TOGGLE */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.theme-toggle:hover{color:var(--primary);border-color:var(--primary-mid);transform:translateY(-1px);box-shadow:var(--shadow);}
+.theme-toggle .icon-sun{display:none;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+
+/* TABS — per-tab colors */
+.tabs-wrap{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-elevated) 85%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--border);padding:14px 20px;}
+.tabs{max-width:1000px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;}
+.tab{border:1px solid var(--border);border-radius:var(--radius-pill);padding:9px 18px;font-family:inherit;font-size:.85rem;font-weight:500;cursor:pointer;background:var(--card);color:var(--text2);transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:7px;}
+.tab:hover{transform:translateY(-1px);box-shadow:var(--shadow-xs);border-color:var(--tab-c,var(--primary-mid));color:var(--tab-c,var(--primary));}
+.tab.active{background:var(--tab-c,var(--primary));color:#fff;border-color:var(--tab-c,var(--primary));font-weight:600;box-shadow:0 6px 20px color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+[data-theme="dark"] .tab.active{color:#0a0a0b;}
+.tab[data-tab="intro"]{--tab-c:var(--tab-intro);}
+.tab[data-tab="tools"]{--tab-c:var(--tab-tools);}
+.tab[data-tab="caution"]{--tab-c:var(--tab-caution);}
+.tab .ico{font-size:1rem;line-height:1;}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:32px 20px 64px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeSlideIn 360ms var(--ease-out);}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* INTRO */
+.intro{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:28px;box-shadow:var(--shadow-xs);}
+.intro h3{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--tab-c,var(--primary));margin-bottom:10px;}
+.intro p{font-size:.92rem;color:var(--text2);line-height:1.65;}
+.intro p strong{color:var(--tab-c,var(--primary));font-weight:600;}
+
+/* TOOLBAR */
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.tool-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:7px 15px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:6px;}
+.tool-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateY(-1px);box-shadow:var(--shadow-xs);}
+.tool-btn .ico{font-size:.85rem;line-height:1;}
+
+/* FONT SIZE SLIDER */
+.fs-control{display:inline-flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:6px 14px;}
+.fs-label{font-family:inherit;font-weight:600;color:var(--text3);line-height:1;user-select:none;}
+.fs-label.small{font-size:.78rem;}
+.fs-label.large{font-size:1.1rem;}
+.fs-slider{-webkit-appearance:none;appearance:none;width:100px;height:4px;background:var(--border-strong);border-radius:2px;outline:none;cursor:pointer;accent-color:var(--primary);}
+.fs-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);transition:transform var(--t-fast) var(--ease);}
+.fs-slider::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.fs-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);}
+.fs-value{font-size:.72rem;font-weight:600;color:var(--text3);min-width:32px;text-align:right;}
+
+/* SECTION (collapsible) */
+.section{margin-bottom:14px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow var(--t-base) var(--ease);}
+.section:hover{box-shadow:var(--shadow);}
+.section-header{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;user-select:none;transition:background var(--t-base) var(--ease);background:transparent;}
+.section-header:hover{background:var(--bg-elevated);}
+.section:not(.collapsed) .section-header{border-bottom:1px solid var(--border);}
+.section-icon{width:38px;height:38px;border-radius:var(--radius-sm);display:inline-flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;background:transparent!important;border:2px solid var(--section-c,var(--primary));color:var(--section-c,var(--primary));}
+.section-title{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--text);line-height:1.2;}
+.section-desc{font-size:.78rem;color:var(--text3);margin-top:2px;line-height:1.45;}
+.section-header > div:not(.section-icon){flex:1;}
+.section-header::after{content:"▾";font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease);margin-left:8px;flex-shrink:0;font-weight:600;}
+.section.collapsed .section-header::after{transform:rotate(-90deg);}
+.section.collapsed .section-header:hover::after{color:var(--primary);}
+.section-count{font-size:.7rem;font-weight:600;color:var(--text3);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px 10px;margin-left:auto;flex-shrink:0;transition:all var(--t-base) var(--ease);}
+.section-header:hover .section-count{border-color:var(--primary-mid);color:var(--primary);}
+.section > .grid, .section > .stack, .section > .papers, .section > .tips-list, .section > .blueprint{padding:18px 20px 20px;}
+.section.collapsed > *:not(.section-header){display:none!important;}
+
+/* GRID + ITEM */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.item{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 30%,transparent)!important;border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-xs);transition:transform var(--t-base) var(--ease),box-shadow var(--t-base) var(--ease),border-color var(--t-base) var(--ease);border-left:4px solid var(--section-c,var(--primary))!important;}
+.item:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--section-c,var(--primary-mid))!important;}
+.item-head{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.item-term{font-family:'Manrope','Inter',sans-serif;font-size:1.02rem;font-weight:700;letter-spacing:-0.005em;color:var(--section-c,var(--text));line-height:1.3;}
+.item-trans{font-size:.76rem;color:var(--text3);font-style:italic;}
+.item-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;}
+.item-list li{font-size:.88rem;color:var(--text2);line-height:1.5;padding:5px 0 5px 12px;border-left:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);}
+.item-list li strong{color:var(--text);font-weight:600;}
+
+/* STACK (single-column phrase list, for A/C/D sections) */
+.stack{display:flex;flex-direction:column;gap:8px;}
+.phrase{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-sm);padding:10px 14px;font-size:.92rem;color:var(--text2);line-height:1.5;transition:all var(--t-base) var(--ease);}
+.phrase:hover{transform:translateX(2px);border-color:var(--section-c,var(--primary));box-shadow:var(--shadow-xs);}
+.phrase strong{color:var(--text);font-weight:600;}
+.phrase .hint{font-size:.74rem;color:var(--text3);font-style:italic;margin-left:6px;}
+
+/* PAPER (model examples) */
+.papers{display:flex;flex-direction:column;gap:14px;}
+.paper{background:var(--paper);border:1px solid var(--paper-border);border-radius:var(--radius-md);padding:22px 26px;box-shadow:var(--shadow-sm);position:relative;transition:box-shadow var(--t-base) var(--ease);}
+.paper:hover{box-shadow:var(--shadow);}
+.paper::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--tab-c,var(--primary)),transparent);border-radius:var(--radius-md) var(--radius-md) 0 0;}
+.paper-header{display:flex;align-items:flex-start;gap:14px;cursor:pointer;user-select:none;}
+.paper-header > div:first-child{flex:1;min-width:0;}
+.paper-header .paper-meta{margin-bottom:0;}
+.paper-toggle{font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease),color var(--t-base) var(--ease);flex-shrink:0;font-weight:700;line-height:1.4;}
+.paper-header:hover .paper-toggle,.paper-header:hover .paper-title{color:var(--tab-c,var(--primary));}
+.paper.collapsed .paper-toggle{transform:rotate(-90deg);}
+.paper.collapsed .paper-body{display:none;}
+.paper:not(.collapsed) .paper-body{margin-top:18px;}
+.paper-title{font-family:'Fraunces',Georgia,serif;font-size:1.05rem;font-weight:600;color:var(--tab-c,var(--primary));margin-bottom:6px;letter-spacing:-0.01em;transition:color var(--t-base) var(--ease);}
+.paper-meta{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:18px;}
+.paper-body{font-family:'Inter',sans-serif;font-size:.94rem;line-height:1.8;color:var(--text);}
+.paper-body p{margin-bottom:12px;}
+.paper-body p:last-child{margin-bottom:0;}
+.paper-body em{font-style:italic;color:var(--text2);}
+
+/* COLOR-CODED INLINE PHRASES IN MODELS — match theory section colors */
+.paper-body .k-open    {color:var(--c-greet);    font-weight:600;}
+.paper-body .k-add     {color:var(--c-add);      font-weight:600;}
+.paper-body .k-contrast{color:var(--c-contrast); font-weight:600;}
+.paper-body .k-cause   {color:var(--c-cause);    font-weight:600;}
+.paper-body .k-concess {color:var(--c-purpose);  font-weight:600;}
+.paper-body .k-purpose {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-seq     {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-time    {color:var(--c-time);     font-weight:600;}
+.paper-body .k-emph    {color:var(--c-emph);     font-weight:600;}
+.paper-body .k-summ    {color:var(--c-summ);     font-weight:600;}
+.paper-body .k-key     {color:var(--c-key);      font-weight:600;}
+.paper-body .k-close   {color:var(--c-close);    font-weight:600;}
+
+/* STRUCTURE BLUEPRINT (vertical timeline) */
+.blueprint{display:flex;flex-direction:column;gap:0;position:relative;}
+.step{display:flex;gap:14px;align-items:flex-start;position:relative;padding:6px 0 14px 0;}
+.step::before{content:"";position:absolute;left:18px;top:42px;bottom:-4px;width:2px;background:color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);}
+.step:last-of-type::before{display:none;}
+.step-num{width:38px;height:38px;border-radius:50%;background:var(--card);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--section-c,var(--primary));position:relative;z-index:1;}
+.step-body{flex:1;min-width:0;padding-top:6px;}
+.step-body h5{font-family:'Manrope',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-0.005em;}
+.step-body .step-meta{font-size:.72rem;color:var(--text3);font-style:italic;margin-bottom:6px;font-weight:500;}
+.step-body > p{font-size:.86rem;color:var(--text2);line-height:1.55;margin-bottom:9px;}
+.step-phrases{display:flex;flex-wrap:wrap;gap:5px;}
+.step-phrases span{font-size:.76rem;color:var(--section-c,var(--primary));background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);padding:4px 11px;border-radius:var(--radius-pill);font-weight:600;line-height:1.4;transition:all var(--t-base) var(--ease);}
+.step-phrases span:hover{background:color-mix(in srgb,var(--section-c,var(--primary)) 24%,transparent);border-color:var(--section-c,var(--primary));}
+.blueprint-footer{margin-top:6px;padding:12px 16px;background:color-mix(in srgb,var(--section-c,var(--primary)) 10%,transparent);border-radius:var(--radius-md);font-size:.86rem;color:var(--text2);display:flex;align-items:center;gap:10px;border:1px dashed color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);}
+.blueprint-footer strong{color:var(--section-c,var(--primary));font-weight:600;}
+.blueprint-footer .footer-ico{font-size:1rem;flex-shrink:0;}
+
+/* TIPS SECTION */
+.tips-list{display:flex;flex-direction:column;gap:10px;}
+.tip{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-md);padding:14px 16px;display:flex;gap:14px;align-items:flex-start;transition:all var(--t-base) var(--ease);}
+.tip:hover{transform:translateX(2px);box-shadow:var(--shadow-xs);border-color:var(--section-c,var(--primary));}
+.tip.warn{--section-c:var(--c-emph);}
+.tip-icon{font-size:.9rem;flex-shrink:0;line-height:1;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);color:var(--section-c,var(--primary));font-weight:800;margin-top:1px;}
+.tip-body{flex:1;min-width:0;}
+.tip-body h5{font-family:'Manrope',sans-serif;font-size:.95rem;font-weight:700;color:var(--section-c,var(--primary));margin-bottom:4px;letter-spacing:-0.005em;line-height:1.3;}
+.tip-body p{font-size:.86rem;color:var(--text2);line-height:1.55;}
+.tip-body p em{color:var(--text);font-style:normal;background:var(--bg-elevated);padding:1px 5px;border-radius:var(--radius-xs);font-size:.92em;font-weight:500;}
+
+/* INLINE STRUCTURAL LABELS */
+.label{display:inline-block;font-family:'JetBrains Mono','Manrope',sans-serif;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:var(--radius-xs);background:var(--tab-c-soft,var(--primary-soft));color:var(--tab-c,var(--primary));margin-right:6px;vertical-align:middle;border:1px solid color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+
+/* CALLOUT */
+.callout{background:var(--tab-c-soft,var(--primary-soft));border-radius:var(--radius-md);padding:14px 16px;margin:0 0 24px;font-size:.88rem;color:var(--text2);line-height:1.6;border-left:3px solid var(--tab-c,var(--primary));}
+.callout strong{color:var(--tab-c,var(--primary));font-weight:600;}
+.callout .ico{font-size:1rem;margin-right:5px;}
+
+/* Set tab-c-soft based on active panel */
+.tab-panel[data-tab="intro"]{--tab-c:var(--tab-intro);--tab-c-soft:var(--tab-intro-soft);}
+.tab-panel[data-tab="tools"]{--tab-c:var(--tab-tools);--tab-c-soft:var(--tab-tools-soft);}
+.tab-panel[data-tab="caution"]{--tab-c:var(--tab-caution);--tab-c-soft:var(--tab-caution-soft);}
+
+@media (max-width: 600px){
+  .paper{padding:20px 18px;}
+  .paper-body{font-size:.88rem;}
+  .grid{grid-template-columns:1fr;}
+}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-xs);margin:0 0 4px;}
+.gram-table{width:100%;border-collapse:collapse;background:var(--card);font-size:.88rem;}
+.gram-table caption{caption-side:top;text-align:left;font-family:'Manrope',sans-serif;font-weight:700;color:var(--section-c,var(--primary));padding:0 0 8px;font-size:.9rem;}
+.gram-table th{background:color-mix(in srgb,var(--section-c,var(--primary)) 12%,transparent);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;text-align:left;padding:10px 14px;border-bottom:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;}
+.gram-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);line-height:1.5;vertical-align:top;}
+.gram-table tr:last-child td{border-bottom:none;}
+.gram-table tbody tr{transition:background var(--t-fast) var(--ease);}
+.gram-table tbody tr:hover{background:var(--bg-elevated);}
+.gram-table td strong,.gram-table .en{color:var(--text);font-weight:600;}
+.gram-table .es{font-style:italic;color:var(--text3);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-actions">
+    <a class="back-btn" href="index.html" title="Volver al índice">
+      <span class="arrow">←</span><span>Inicio</span>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>🎓 Hedging &amp; Academic Tone · Matización y tono académico</h1>
+      <span class="header-tag">Linguaskill C1 · Discourse</span>
+    </div>
+    <p class="header-sub">
+      Suavizar afirmaciones con <strong>modales</strong>, <strong>adverbios</strong> y <strong>verbos</strong> específicos · despersonalizar la voz · equilibrar postura y cautela en el essay académico.
+    </p>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" data-tab="intro" onclick="showTab('intro', this)">
+      <span class="ico">🎓</span><span>Qué es el hedging</span>
+    </button>
+    <button class="tab" data-tab="tools" onclick="showTab('tools', this)">
+      <span class="ico">🧰</span><span>Recursos para matizar</span>
+    </button>
+    <button class="tab" data-tab="caution" onclick="showTab('caution', this)">
+      <span class="ico">⚖️</span><span>Cautela y objetividad</span>
+    </button>
+  </div>
+</div>
+
+<main class="main">
+
+<div class="toolbar">
+  <div class="fs-control" title="Tamaño del texto">
+    <span class="fs-label small">A</span>
+    <input type="range" class="fs-slider" id="fs-slider" min="85" max="140" step="5" value="100" oninput="updateFontSize(this.value)">
+    <span class="fs-label large">A</span>
+    <span class="fs-value" id="fs-value">100%</span>
+  </div>
+  <div class="toolbar-actions">
+    <button class="tool-btn" onclick="expandAll()"><span class="ico">▾</span>Expandir todos</button>
+    <button class="tool-btn" onclick="collapseAll()"><span class="ico">▸</span>Colapsar todos</button>
+  </div>
+</div>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 1: INTRO ================================ -->
+<!-- ==================================================================== -->
+<section class="tab-panel active" id="intro" data-tab="intro">
+
+  <div class="intro">
+    <h3>Qué es el hedging · What is hedging?</h3>
+    <p>El <strong>hedging</strong> consiste en <strong>suavizar afirmaciones</strong> con modales, adverbios y verbos específicos para sonar <strong>mesurado, objetivo y académico</strong>. Un texto C1 toma postura clara, pero rara vez formula sus tesis como verdades absolutas: las matiza para reconocer la complejidad del tema y la posibilidad de excepciones.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎓</span><strong>Linguaskill C1:</strong> el hedging es el rasgo nº 1 que el examinador asocia al <em>academic tone</em> en el <em>Essay (Writing Part 2)</em>. En el <em>Speaking Part 4</em> (evaluación de argumentos), un par de matizadores bien colocados (<em>tend to</em>, <em>may</em>, <em>is likely to</em>) elevan la nota de <em>range</em> sin que el discurso pierda fuerza.
+  </div>
+
+  <!-- A. Concepto -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">⭐</div>
+      <div>
+        <div class="section-title">A. Concepto · La misma idea, con y sin hedging</div>
+        <div class="section-desc">Afirmación tajante vs versión matizada — el cambio de tono lo dice todo</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>Tajante:</strong> Technology has destroyed face-to-face communication.<br><strong>Matizado:</strong> Technology <strong>may</strong> have weakened face-to-face communication <strong>in some contexts</strong>. <span class="hint">de absoluto a tendencia</span></div>
+      <div class="phrase"><strong>Tajante:</strong> All teenagers are addicted to social media.<br><strong>Matizado:</strong> <strong>Many</strong> teenagers <strong>appear to</strong> spend considerable time on social media. <span class="hint">cuantificador acotado + verbo de apariencia</span></div>
+      <div class="phrase"><strong>Tajante:</strong> Working from home is better than the office.<br><strong>Matizado:</strong> Working from home <strong>tends to</strong> offer significant advantages <strong>for many</strong> employees. <span class="hint">tend to + cuantificador</span></div>
+      <div class="phrase"><strong>Tajante:</strong> Climate change will destroy the planet.<br><strong>Matizado:</strong> Climate change <strong>is likely to</strong> have severe consequences <strong>if current trends continue</strong>. <span class="hint">probabilidad + condicionalidad</span></div>
+      <div class="phrase"><strong>Tajante:</strong> Nobody reads books anymore.<br><strong>Matizado:</strong> <strong>There appears to be</strong> a decline in reading habits <strong>among younger generations</strong>. <span class="hint">there appears to be + restricción del alcance</span></div>
+      <div class="phrase"><strong>Tajante:</strong> Capitalism causes inequality.<br><strong>Matizado:</strong> <strong>It could be argued that</strong> capitalism <strong>contributes significantly to</strong> economic inequality. <span class="hint">expresión impersonal + contribución parcial</span></div>
+      <div class="phrase"><strong>Tajante:</strong> Everyone agrees that exercise is essential.<br><strong>Matizado:</strong> <strong>It is widely acknowledged that</strong> regular exercise <strong>tends to</strong> be beneficial. <span class="hint">consenso descrito, no postulado</span></div>
+      <div class="phrase"><strong>Tajante:</strong> AI will replace all jobs.<br><strong>Matizado:</strong> AI <strong>is likely to</strong> transform <strong>many</strong> sectors, <strong>though the extent of</strong> job replacement <strong>remains uncertain</strong>. <span class="hint">reconoce el desacuerdo</span></div>
+    </div>
+  </div>
+
+  <!-- D. Trampas hispano -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Calcos del español que delatan B1/B2 cuando apuntas a C1</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Evita los absolutos categóricos</h5>
+          <p>Adverbios como <em>always</em>, <em>never</em>, <em>everyone</em>, <em>nobody</em>, <em>all</em> y <em>none</em> son verdaderos imanes para el lector crítico: una sola excepción tira abajo tu argumento. Sustitúyelos por <em>tend to</em>, <em>many</em>, <em>most</em>, <em>few</em>, <em>in most cases</em>, <em>generally</em>, <em>typically</em>. En un essay C1, una afirmación absoluta sin matizar suena ingenua.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>No abuses de "I think" / "In my opinion"</h5>
+          <p>El español académico permite <em>"creo que / pienso que"</em>; el inglés académico C1 prefiere mover el yo al fondo: <em>It could be argued that…</em>, <em>It seems that…</em>, <em>The evidence suggests that…</em>, <em>There is a strong case for…</em>. Reserva <em>I would argue</em> para uno o dos momentos clave del essay.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Tend to" + infinitivo, no gerundio</h5>
+          <p>Calcado del español <em>"tienden a hacer"</em>: ✗ <em>Students tend to studying online.</em> → ✓ <em>Students <strong>tend to study</strong> online.</em> Es el verbo de generalización académica por excelencia y conviene tenerlo automatizado.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>El español también matiza, pero con otras herramientas</h5>
+          <p>En español usamos <em>"podría"</em>, <em>"parece que"</em>, <em>"en cierta medida"</em>. El inglés académico añade un repertorio léxico específico (<em>appear to</em>, <em>suggest</em>, <em>indicate</em>, <em>is likely to</em>) y formas impersonales (<em>it is widely acknowledged</em>) que conviene transferir conscientemente, no traducir literalmente.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Matizar ≠ diluir la tesis</h5>
+          <p>Un essay C1 <strong>toma postura</strong> con claridad — el hedging la viste de cautela, no la borra. Si todas las frases dicen <em>"perhaps", "to some extent", "in some cases"</em>, el examinador pensará que no sabes qué defender. Receta sana: 1-2 matizadores por párrafo + una afirmación nítida que sostenga la tesis.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Probably" frente a "is likely to"</h5>
+          <p>En conversación, <em>probably</em> funciona. En un essay, <em>is likely to + infinitivo</em> suena más académico: ✓ <em>Remote work <strong>is likely to</strong> remain widespread.</em> &gt; <em>Remote work will probably remain widespread.</em> Cambio mínimo, salto inmediato de registro.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 2: TOOLS ================================ -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="tools" data-tab="tools">
+
+  <div class="intro">
+    <h3>Recursos para matizar · The Hedging Toolkit</h3>
+    <p>El kit del hedging académico se organiza en cuatro categorías: <strong>modales</strong> (may, might, could), <strong>adverbios</strong> (perhaps, possibly, arguably), <strong>verbos</strong> (suggest, indicate, appear, tend to) y <strong>expresiones</strong> prefabricadas (it could be argued that, there is a tendency to, to some extent). Combinar dos categorías en una misma frase es la firma del tono C1.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🧰</span><strong>Linguaskill C1:</strong> en un essay de 250 palabras, intenta incluir <em>al menos un elemento de cada categoría</em> (modal + adverbio + verbo + expresión). Demuestra <em>grammar range</em> y vocabulario académico sin sonar artificial. Eso sí: no repitas dos veces el mismo matizador.
+  </div>
+
+  <!-- A. Por categoría -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">🧰</div>
+      <div>
+        <div class="section-title">A. Por categoría · Four toolkits</div>
+        <div class="section-desc">Modales · adverbios · verbos · expresiones</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">Modales</span><span class="item-trans">modal verbs</span></div>
+        <ul class="item-list">
+          <li><strong>may / might / could</strong> — posibilidad</li>
+          <li><strong>can</strong> — capacidad teórica, no compromiso</li>
+          <li><strong>would</strong> — hipótesis cortés</li>
+          <li><em>This <strong>may</strong> explain the rise in inequality.</em></li>
+          <li><em>Such a policy <strong>could</strong> backfire.</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-add)">
+        <div class="item-head"><span class="item-term">Adverbios</span><span class="item-trans">adverbs</span></div>
+        <ul class="item-list">
+          <li><strong>perhaps / possibly / arguably</strong> — duda razonable</li>
+          <li><strong>presumably / seemingly / apparently</strong> — apariencia</li>
+          <li><strong>allegedly</strong> — atribución no verificada</li>
+          <li><strong>generally / typically / in some cases / to some extent</strong> — cuantificación cauta</li>
+          <li><em><strong>Arguably</strong>, the most pressing issue is housing.</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">Verbos</span><span class="item-trans">verbs</span></div>
+        <ul class="item-list">
+          <li><strong>suggest / indicate / imply / point to</strong> — evidencia parcial</li>
+          <li><strong>appear / seem</strong> — apariencia, no certeza</li>
+          <li><strong>tend to + infinitivo</strong> — generalización</li>
+          <li><strong>is likely / unlikely to</strong> — probabilidad</li>
+          <li><em>The data <strong>suggest that</strong> reform is overdue.</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">Expresiones</span><span class="item-trans">prefab phrases</span></div>
+        <ul class="item-list">
+          <li><strong>It could be argued that…</strong></li>
+          <li><strong>There is a tendency to / for…</strong></li>
+          <li><strong>The evidence suggests that…</strong></li>
+          <li><strong>This would imply that…</strong></li>
+          <li><strong>To some extent / In some respects…</strong></li>
+          <li><strong>It is widely acknowledged that…</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- C. Ejemplos en frase -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">💬</div>
+      <div>
+        <div class="section-title">C. Ejemplos en frase · Hedging in real sentences</div>
+        <div class="section-desc">Cada frase combina al menos una categoría · EN + ES</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>Heavy use of social media <em>may</em> contribute to anxiety in adolescents.</strong> <span class="hint">El uso intensivo de redes sociales puede contribuir a la ansiedad en adolescentes.</span></div>
+      <div class="phrase"><strong><em>Perhaps</em> the most striking finding is the sharp rise in remote work since 2020.</strong> <span class="hint">Quizás el hallazgo más llamativo sea el fuerte aumento del teletrabajo desde 2020.</span></div>
+      <div class="phrase"><strong><em>It could be argued that</em> higher taxes discourage entrepreneurship.</strong> <span class="hint">Podría sostenerse que los impuestos altos desincentivan el emprendimiento.</span></div>
+      <div class="phrase"><strong>Critics <em>tend to</em> focus on the short-term costs of the policy.</strong> <span class="hint">Los críticos suelen centrarse en los costes a corto plazo de la política.</span></div>
+      <div class="phrase"><strong>The data <em>suggest that</em> there is a strong correlation between exercise and mental wellbeing.</strong> <span class="hint">Los datos sugieren una fuerte correlación entre el ejercicio y el bienestar mental.</span></div>
+      <div class="phrase"><strong>Universities <em>appear to</em> be adapting more slowly than employers to the AI revolution.</strong> <span class="hint">Las universidades parecen estar adaptándose más despacio que los empleadores a la revolución de la IA.</span></div>
+      <div class="phrase"><strong><em>Arguably</em>, public transport should be subsidised in order to reduce urban pollution.</strong> <span class="hint">Podría argumentarse que el transporte público debería subvencionarse para reducir la contaminación urbana.</span></div>
+      <div class="phrase"><strong><em>There is a tendency</em> for first-time voters to favour smaller parties.</strong> <span class="hint">Existe una tendencia entre los votantes primerizos a inclinarse por partidos minoritarios.</span></div>
+      <div class="phrase"><strong>The decline in birth rates <em>is likely to</em> strain public pension systems.</strong> <span class="hint">Es probable que la caída de la natalidad ponga bajo presión los sistemas públicos de pensiones.</span></div>
+      <div class="phrase"><strong><em>To some extent</em>, this problem can be addressed through education and public-awareness campaigns.</strong> <span class="hint">Hasta cierto punto, este problema puede abordarse mediante la educación y las campañas de concienciación.</span></div>
+      <div class="phrase"><strong>Recent studies <em>indicate that</em> hybrid work models <em>may</em> outperform fully remote arrangements.</strong> <span class="hint">Estudios recientes indican que los modelos híbridos podrían superar al teletrabajo total.</span> <em>(verbo + modal en la misma frase)</em></div>
+      <div class="phrase"><strong><em>It is widely acknowledged that</em> early childhood education <em>tends to</em> yield long-term benefits.</strong> <span class="hint">Se reconoce ampliamente que la educación temprana tiende a generar beneficios a largo plazo.</span> <em>(expresión + verbo)</em></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 3: CAUTION ============================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="caution" data-tab="caution">
+
+  <div class="intro">
+    <h3>Cautela y objetividad · Distanced Stance</h3>
+    <p>Dos movimientos separan un essay C1 de uno B2: <strong>despersonalizar</strong> la voz (mover el yo al fondo con <em>it could be argued</em>, <em>it seems</em>, <em>the evidence suggests</em>) y <strong>cuantificar con cautela</strong> (sustituir absolutos como <em>always / never / everyone</em> por <em>many</em>, <em>several</em>, <em>in some cases</em>, <em>to a certain extent</em>). El resultado: una voz mesurada que el examinador asocia a nivel C1.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">⚖️</span><strong>Linguaskill C1:</strong> el examinador busca pruebas de <em>distanced stance</em>. Una sola estructura impersonal por párrafo suele bastar para enviar la señal correcta; cuatro o cinco suenan a plantilla aprendida. El objetivo es <em>parecer académico, no rígido</em>.
+  </div>
+
+  <!-- A. Despersonalizar -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">⭐</div>
+      <div>
+        <div class="section-title">A. Despersonalizar · From "I" to "It"</div>
+        <div class="section-desc">Reescritura sistemática de estructuras personales y absolutas</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Coloquial / categórico</th><th>Académico / matizado</th><th>Función</th></tr></thead>
+        <tbody>
+          <tr><td class="en">I think social media is bad for teenagers.</td><td class="en"><strong>It could be argued that</strong> social media <strong>may</strong> have <strong>adverse effects on</strong> adolescents.</td><td class="es">opinión personal → análisis académico</td></tr>
+          <tr><td class="en">Everyone knows that climate change is real.</td><td class="en"><strong>It is widely acknowledged that</strong> climate change <strong>poses</strong> a significant challenge.</td><td class="es">generalización absoluta → consenso descrito</td></tr>
+          <tr><td class="en">We all agree that pollution is a problem.</td><td class="en"><strong>There appears to be</strong> broad consensus that pollution <strong>represents</strong> a pressing concern.</td><td class="es">afirmación grupal → consenso descrito impersonalmente</td></tr>
+          <tr><td class="en">Studies show that exercise works.</td><td class="en">Studies <strong>tend to indicate</strong> that exercise <strong>has measurable</strong> benefits.</td><td class="es">verbo tajante → tendencia descrita</td></tr>
+          <tr><td class="en">Nobody can deny that AI is changing the world.</td><td class="en"><strong>Few would deny that</strong> AI <strong>is reshaping</strong> many areas of contemporary life.</td><td class="es">absoluto retórico → cautela explícita</td></tr>
+          <tr><td class="en">I believe remote work is the future.</td><td class="en"><strong>It seems that / It would appear that</strong> remote work <strong>is likely to</strong> play a growing role in the labour market.</td><td class="es">yo personal → voz impersonal + probabilidad</td></tr>
+          <tr><td class="en">All teenagers are addicted to their phones.</td><td class="en"><strong>Many</strong> teenagers <strong>tend to spend</strong> considerable time on their phones.</td><td class="es">universal → cuantificación matizada</td></tr>
+          <tr><td class="en">This is the best solution.</td><td class="en">This <strong>may well be</strong> the <strong>most effective</strong> solution available.</td><td class="es">superlativo absoluto → superlativo matizado</td></tr>
+          <tr><td class="en">It always fails.</td><td class="en">It <strong>frequently</strong> fails / It <strong>tends to</strong> fail <strong>under such conditions</strong>.</td><td class="es">adverbio absoluto → adverbio matizado</td></tr>
+          <tr><td class="en">The government must act now.</td><td class="en"><strong>There is a strong case for</strong> government action / The government <strong>should arguably</strong> consider intervening.</td><td class="es">imperativo categórico → recomendación matizada</td></tr>
+          <tr><td class="en">This proves that the system is broken.</td><td class="en">This <strong>would suggest that</strong> the system <strong>may be</strong> in need of reform.</td><td class="es">prueba → evidencia parcial</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- E. En contexto -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-model)">📄</div>
+      <div>
+        <div class="section-title">E. En contexto · Before / After hedging</div>
+        <div class="section-desc">Párrafos de essay tajantes reescritos con hedging · matizadores resaltados en azul</div>
+      </div>
+    </div>
+    <div class="papers">
+
+      <!-- MODEL 1 -->
+      <article class="paper">
+        <h4 class="paper-title">Model 1 · Social Media &amp; Mental Health</h4>
+        <div class="paper-meta">Body paragraph · before vs after hedging · ~130 words</div>
+        <div class="paper-body">
+          <p><span class="label">Before</span>Social media <span class="k-emph">is destroying</span> the mental health of <span class="k-emph">an entire generation</span>. <span class="k-emph">Teenagers are addicted</span> to their phones, scroll <span class="k-emph">all day</span> and <span class="k-emph">never</span> interact face-to-face. This <span class="k-emph">explains</span> why anxiety rates <span class="k-emph">have exploded</span>. The <span class="k-emph">only</span> solution is to ban social media for under-16s. <span class="k-emph">Anyone who disagrees</span> is ignoring the evidence.</p>
+          <p><span class="label">After</span>Social media <span class="k-key">may</span> <span class="k-key">be contributing to</span> a decline in adolescent wellbeing. <span class="k-key">It is widely acknowledged that</span> <span class="k-key">many</span> young people <span class="k-key">tend to</span> spend considerable time on these platforms, and this <span class="k-key">could partly explain</span> the marked rise in anxiety reported in recent years. <span class="k-key">It could be argued that</span> restricting access for under-16s <span class="k-key">would help to</span> mitigate these effects, although <span class="k-key">it remains uncertain</span> whether such measures <span class="k-key">would prove</span> effective in practice.</p>
+        </div>
+      </article>
+
+      <!-- MODEL 2 -->
+      <article class="paper">
+        <h4 class="paper-title">Model 2 · Working from Home</h4>
+        <div class="paper-meta">Body paragraph · before vs after hedging · ~125 words</div>
+        <div class="paper-body">
+          <p><span class="label">Before</span>Working from home is <span class="k-emph">always</span> better than going to the office. <span class="k-emph">Everyone</span> is more productive at home, <span class="k-emph">saves a fortune</span> on commuting and enjoys <span class="k-emph">a far better</span> quality of life. <span class="k-emph">Anyone</span> who still prefers the office is <span class="k-emph">clearly out of touch</span> with modern work culture.</p>
+          <p><span class="label">After</span>Working from home <span class="k-key">appears to</span> offer significant advantages for <span class="k-key">many</span> employees, particularly in terms of flexibility and reduced commuting costs. <span class="k-key">The evidence suggests that</span> <span class="k-key">a considerable proportion</span> of workers report higher productivity, although <span class="k-key">this may not apply</span> uniformly across sectors. <span class="k-key">It could be argued that</span> hybrid models, which combine the benefits of both, <span class="k-key">represent a more sustainable</span> long-term solution for <span class="k-key">most</span> organisations.</p>
+        </div>
+      </article>
+
+      <!-- MODEL 3 -->
+      <article class="paper">
+        <h4 class="paper-title">Model 3 · AI &amp; Employment</h4>
+        <div class="paper-meta">Body paragraph · before vs after hedging · ~140 words</div>
+        <div class="paper-body">
+          <p><span class="label">Before</span>AI <span class="k-emph">will destroy</span> millions of jobs. Workers in <span class="k-emph">every sector</span> are <span class="k-emph">doomed</span>. Governments <span class="k-emph">must</span> ban AI <span class="k-emph">immediately</span> or the consequences <span class="k-emph">will be catastrophic</span>. <span class="k-emph">Anyone</span> who claims otherwise is in denial.</p>
+          <p><span class="label">After</span>Recent advances in artificial intelligence <span class="k-key">are likely to</span> transform <span class="k-key">many</span> sectors of the labour market. The extent to which these changes <span class="k-key">will displace</span> human workers <span class="k-key">remains a matter of debate</span>, although <span class="k-key">some studies suggest</span> that roles involving routine cognitive tasks <span class="k-key">appear to</span> be particularly exposed. <span class="k-key">Arguably</span>, the most effective response <span class="k-key">would involve</span> a combination of regulation, reskilling and social safety nets, <span class="k-key">rather than</span> outright prohibition, since blanket bans <span class="k-key">tend to</span> stifle innovation without addressing the underlying labour-market shifts.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+/* THEME */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("theme",t);}catch(e){}}
+function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme")||"light";applyTheme(cur==="dark"?"light":"dark");}
+(function initTheme(){let saved=null;try{saved=localStorage.getItem("theme");}catch(e){}if(saved==="dark"||saved==="light"){applyTheme(saved);return;}const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;applyTheme(prefersDark?"dark":"light");})();
+
+/* TABS */
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* SECTIONS */
+function toggleSection(header){
+  header.parentElement.classList.toggle('collapsed');
+}
+function getActiveSections(){
+  return document.querySelectorAll('.tab-panel.active .section');
+}
+function getActivePapers(){
+  return document.querySelectorAll('.tab-panel.active .paper');
+}
+function expandAll(){
+  getActiveSections().forEach(s => s.classList.remove('collapsed'));
+  getActivePapers().forEach(p => p.classList.remove('collapsed'));
+}
+function collapseAll(){
+  getActiveSections().forEach(s => s.classList.add('collapsed'));
+  getActivePapers().forEach(p => p.classList.add('collapsed'));
+}
+
+/* MODEL PAPERS — wrap title+meta in a clickable header, collapse by default */
+document.querySelectorAll('.paper').forEach(paper => {
+  const title = paper.querySelector('.paper-title');
+  const meta = paper.querySelector('.paper-meta');
+  if(!title || !meta) return;
+  const header = document.createElement('div');
+  header.className = 'paper-header';
+  const wrap = document.createElement('div');
+  wrap.appendChild(title);
+  wrap.appendChild(meta);
+  const toggle = document.createElement('span');
+  toggle.className = 'paper-toggle';
+  toggle.textContent = '▾';
+  header.appendChild(wrap);
+  header.appendChild(toggle);
+  header.addEventListener('click', () => paper.classList.toggle('collapsed'));
+  paper.insertBefore(header, paper.firstChild);
+  paper.classList.add('collapsed');
+});
+
+/* Set section colors + item counts */
+document.querySelectorAll('.section').forEach(sec => {
+  const icon = sec.querySelector('.section-icon');
+  if (icon) {
+    const m = (icon.getAttribute('style') || '').match(/var\(--c-([a-z]+)\)/);
+    if (m) {
+      sec.style.setProperty('--section-c', `var(--c-${m[1]})`);
+      sec.style.setProperty('--section-c-bg', `var(--c-${m[1]}-bg)`);
+    }
+  }
+  const container = sec.querySelector('.grid, .stack, .papers, .tips-list, .blueprint');
+  if(!container) return;
+  const count = container.matches('.blueprint')
+    ? container.querySelectorAll('.step').length
+    : container.children.length;
+  const badge = document.createElement('span');
+  badge.className = 'section-count';
+  badge.textContent = count;
+  sec.querySelector('.section-header').appendChild(badge);
+});
+
+/* FONT SIZE SLIDER */
+const FS_KEY = 'idiomas_font_size';
+function updateFontSize(pct){
+  const scale = pct / 100;
+  document.documentElement.style.fontSize = (16 * scale) + 'px';
+  document.getElementById('fs-value').textContent = pct + '%';
+  localStorage.setItem(FS_KEY, pct);
+}
+(function initFontSize(){
+  const saved = localStorage.getItem(FS_KEY);
+  if(saved){
+    document.getElementById('fs-slider').value = saved;
+    updateFontSize(saved);
+  }
+})();
+</script>
+
+</body>
+</html>
