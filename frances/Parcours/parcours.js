@@ -11,7 +11,78 @@
   const DRAFTS_KEY    = 'parcours_b1_drafts';
   const PE_KEY        = 'parcours_b1_pe_done';
   const CHECKLIST_KEY = 'parcours_b1_checklist';
+  const ERRORS_KEY    = 'parcours_b1_errors';
   const leconId       = document.body.dataset.lecon;
+
+  // ─────────────── Carnet d'erreurs ───────────────
+  function loadErrors(){
+    try { return JSON.parse(localStorage.getItem(ERRORS_KEY) || '{}'); }
+    catch (e) { return {}; }
+  }
+  function saveErrors(obj){ localStorage.setItem(ERRORS_KEY, JSON.stringify(obj)); }
+  function sanitize(s){
+    return (s || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 250);
+  }
+  /**
+   * Registra un error en el carnet d'erreurs.
+   * @param {Element} q  - el .qcm-q, .tf-q, .gap-q
+   * @param {string} type - 'qcm', 'tf', 'gap'
+   * @param {string} yourAnswer - la respuesta del usuario
+   * @param {string} correctAnswer - la respuesta correcta
+   */
+  function logError(q, type, yourAnswer, correctAnswer){
+    if (!leconId) return;
+    try {
+      const stemEl = q.querySelector('.stem, .tf-stem');
+      const stem = stemEl ? sanitize(stemEl.textContent) : sanitize(q.textContent);
+      const exo = q.closest('.exo');
+      const exoId = exo ? exo.dataset.exo : 'unknown';
+      // Identificador único: lecon + exo + slug del stem
+      const slug = stem.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 60);
+      const id = 'L' + leconId + '|' + exoId + '|' + slug;
+      const errors = loadErrors();
+      const prev = errors[id];
+      errors[id] = {
+        lecon: +leconId,
+        exo: exoId,
+        type: type,
+        stem: stem,
+        correctAnswer: sanitize(correctAnswer),
+        yourAnswer: sanitize(yourAnswer || '(sin respuesta)'),
+        failCount: prev ? prev.failCount + 1 : 1,
+        successCount: prev ? prev.successCount : 0,
+        firstSeen: prev ? prev.firstSeen : Date.now(),
+        lastSeen: Date.now()
+      };
+      saveErrors(errors);
+      if (window.parcoursCloud) window.parcoursCloud.notify();
+    } catch (e) { /* fail silently */ }
+  }
+  /**
+   * Registra acierto: si el error existe, incrementa successCount.
+   * Si successCount >= 2, elimina el error del carnet.
+   */
+  function logSuccess(q, type){
+    if (!leconId) return;
+    try {
+      const stemEl = q.querySelector('.stem, .tf-stem');
+      const stem = stemEl ? sanitize(stemEl.textContent) : sanitize(q.textContent);
+      const exo = q.closest('.exo');
+      const exoId = exo ? exo.dataset.exo : 'unknown';
+      const slug = stem.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 60);
+      const id = 'L' + leconId + '|' + exoId + '|' + slug;
+      const errors = loadErrors();
+      if (errors[id]) {
+        errors[id].successCount++;
+        errors[id].lastSeen = Date.now();
+        if (errors[id].successCount >= 2) {
+          delete errors[id];  // erradicado
+        }
+        saveErrors(errors);
+        if (window.parcoursCloud) window.parcoursCloud.notify();
+      }
+    } catch (e) { /* fail silently */ }
+  }
 
   // ─────────────── Storage helpers ───────────────
   function loadJSON(key){
@@ -194,8 +265,14 @@
       const fbKo = q.querySelector('.feedback.ko');
       if (sel && +sel.dataset.i === correct) {
         score++; fbOk && (fbOk.style.display = 'block'); fbKo && (fbKo.style.display = 'none');
+        logSuccess(q, 'qcm');
       } else {
         fbOk && (fbOk.style.display = 'none'); fbKo && (fbKo.style.display = 'block');
+        const correctOpt = q.querySelectorAll('.opt')[correct];
+        logError(q, 'qcm',
+          sel ? sel.textContent : '(sin respuesta)',
+          correctOpt ? correctOpt.textContent : '(opción ' + correct + ')'
+        );
       }
     });
     updateScoreDisplay(exo, score, total);
@@ -221,8 +298,8 @@
       const val      = normGap(input.value);
       q.classList.add('checked');
       input.disabled = true;
-      if (val === expected) { input.classList.add('ok'); score++; }
-      else input.classList.add('ko');
+      if (val === expected) { input.classList.add('ok'); score++; logSuccess(q, 'gap'); }
+      else { input.classList.add('ko'); logError(q, 'gap', input.value, q.dataset.answer); }
     });
     updateScoreDisplay(exo, score, total);
     saveExoScore(exo.dataset.exo, score, total);
@@ -257,7 +334,8 @@
         if (b.dataset.v === correct) b.classList.add('correct');
         else if (b === sel) b.classList.add('incorrect');
       });
-      if (sel && sel.dataset.v === correct) score++;
+      if (sel && sel.dataset.v === correct) { score++; logSuccess(q, 'tf'); }
+      else { logError(q, 'tf', sel ? sel.textContent : '(sin respuesta)', correct === 'V' ? 'Vrai' : 'Faux'); }
     });
     updateScoreDisplay(exo, score, total);
     saveExoScore(exo.dataset.exo, score, total);
@@ -713,6 +791,7 @@
   const LS_CHECKLIST = 'parcours_b1_checklist';
   const LS_ACTIVITY  = 'parcours_b1_activity';
   const LS_SRS       = 'parcours_b1_srs';
+  const LS_ERRORS    = 'parcours_b1_errors';
   function LS_BACKUP(p){ return 'parcours_cloud_backup__' + APP_ID + '__' + p; }
 
   const CLOUD_ENABLED = !!(SUPABASE_URL && SUPABASE_KEY);
@@ -735,7 +814,8 @@
       peDone:    loadKey(LS_PE),
       checklist: loadKey(LS_CHECKLIST),
       activity:  loadKey(LS_ACTIVITY),
-      srs:       loadKey(LS_SRS)
+      srs:       loadKey(LS_SRS),
+      errors:    loadKey(LS_ERRORS)
     };
   }
   function applyPayload(data){
@@ -747,12 +827,14 @@
     try { localStorage.setItem(LS_CHECKLIST, JSON.stringify(data.checklist || {})); } catch (e){}
     try { localStorage.setItem(LS_ACTIVITY,  JSON.stringify(data.activity  || {})); } catch (e){}
     try { localStorage.setItem(LS_SRS,       JSON.stringify(data.srs       || {})); } catch (e){}
+    try { localStorage.setItem(LS_ERRORS,    JSON.stringify(data.errors    || {})); } catch (e){}
     window.dispatchEvent(new CustomEvent('parcours:cloud-loaded', { detail: data }));
   }
   function isEmpty(p){
     if (!p) return true;
     const s  = p.state || {}, sc = p.scores || {}, d = p.drafts || {},
-          pe = p.peDone || {}, cl = p.checklist || {}, ac = p.activity || {}, sr = p.srs || {};
+          pe = p.peDone || {}, cl = p.checklist || {}, ac = p.activity || {}, sr = p.srs || {},
+          er = p.errors || {};
     if (Array.isArray(s.done) && s.done.length) return false;
     if (Object.keys(sc).length) return false;
     if (Object.keys(d).length)  return false;
@@ -760,6 +842,7 @@
     if (Object.keys(cl).length) return false;
     if (Object.keys(ac).length) return false;
     if (Object.keys(sr).length) return false;
+    if (Object.keys(er).length) return false;
     return true;
   }
 

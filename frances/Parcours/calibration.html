@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz de calibración · ¿qué priorizar?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="parcours.css">
+<style>
+.calibration-result {
+  margin: 24px 0;
+  padding: 20px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: 14px;
+  display: none;
+}
+.calibration-result.visible { display: block; }
+.calibration-result h3 { margin: 0 0 16px 0; color: var(--accent); }
+.calibration-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+  padding: 6px 0;
+  font-size: .85rem;
+}
+.calibration-bar .label { flex: 0 0 200px; font-weight: 600; }
+.calibration-bar .track { flex: 1; height: 12px; background: var(--border); border-radius: 100px; overflow: hidden; }
+.calibration-bar .fill { height: 100%; background: var(--accent); border-radius: 100px; transition: width .6s ease; }
+.calibration-bar .fill.weak { background: #dc2626; }
+.calibration-bar .fill.medium { background: #d97706; }
+.calibration-bar .fill.good { background: #16a34a; }
+.calibration-bar .pct { flex: 0 0 50px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
+.priority-list { margin-top: 20px; }
+.priority-list .pri-item {
+  display: block;
+  padding: 12px 16px;
+  margin: 8px 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all .15s;
+}
+.priority-list .pri-item:hover { border-color: var(--accent); transform: translateX(2px); }
+.priority-list .pri-item .pri-rank {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  font-weight: 800;
+  font-size: .78rem;
+  margin-right: 10px;
+}
+.priority-list .pri-item .pri-reason {
+  display: block;
+  margin-top: 4px;
+  font-size: .78rem;
+  color: var(--text3);
+}
+</style>
+</head>
+<body data-lecon="0">
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="back-btn" href="index.html"><span class="arrow">‹</span><span>Parcours B1</span></a>
+    <div class="header-top"><span class="header-num">Para llegar al 90+ · diagnostic</span></div>
+    <h1>Quiz de calibración</h1>
+    <p class="header-sub">45 preguntas mezcladas que <strong>diagnostican tus debilidades</strong>. Al final, te dirá qué temas priorizar para subir nota rápido.</p>
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="exo"><span class="tdot"></span>Quiz</button>
+      <button class="tab" data-tab="lec"><span class="tdot"></span>Diagnostic</button>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+  <section class="panel active" data-panel="exo">
+
+    <div class="callout warn">
+      <div class="ct"><strong>Antes de empezar:</strong> hazlo del tirón sin pausa (~20 min). NO consultes. La idea es ver dónde estás <em>realmente</em>, no dónde podrías estar con apuntes.</div>
+    </div>
+
+    <div class="exo" data-exo="qcm-vocab" id="calibration-quiz">
+      <div class="exo-h"><span class="num">Q</span><h3>45 preguntas mezcladas</h3><span class="h-tag">Diagnostic</span></div>
+
+      <!-- VOCAB SANTÉ -->
+      <div class="qcm-q" data-correct="2" data-tags="vocab_santé"><div class="stem"><span class="num">1.</span> "Tener dolor de garganta" es…</div><div class="opts"><button class="opt" data-i="0">avoir mal au ventre</button><button class="opt" data-i="1">avoir mal au cœur</button><button class="opt" data-i="2">avoir mal à la gorge</button><button class="opt" data-i="3">avoir mal aux yeux</button></div><div class="feedback ok">✓ « avoir mal à la gorge »</div><div class="feedback ko">✗ Es « avoir mal à la gorge ».</div></div>
+
+      <div class="qcm-q" data-correct="1" data-tags="vocab_santé"><div class="stem"><span class="num">2.</span> Una receta médica en francés es…</div><div class="opts"><button class="opt" data-i="0">une recette</button><button class="opt" data-i="1">une ordonnance</button><button class="opt" data-i="2">un médicament</button><button class="opt" data-i="3">une carte</button></div><div class="feedback ok">✓ « une ordonnance ».</div><div class="feedback ko">✗ Faux ami: « une recette » = receta de cocina. La médica = « une ordonnance ».</div></div>
+
+      <!-- GRAM MARQUEURS TEMPS -->
+      <div class="qcm-q" data-correct="0" data-tags="gram_marqueurs_temps"><div class="stem"><span class="num">3.</span> "Hace tres días que estoy enfermo" es…</div><div class="opts"><button class="opt" data-i="0">Ça fait trois jours que je suis malade</button><button class="opt" data-i="1">Il y a trois jours que je suis malade</button><button class="opt" data-i="2">Pendant trois jours, je suis malade</button><button class="opt" data-i="3">En trois jours, je suis malade</button></div><div class="feedback ok">✓ « ça fait… que » + présent (acción que continúa).</div><div class="feedback ko">✗ « il y a » es para acciones pasadas terminadas.</div></div>
+
+      <div class="qcm-q" data-correct="1" data-tags="gram_marqueurs_temps"><div class="stem"><span class="num">4.</span> "Llegué hace dos días" es…</div><div class="opts"><button class="opt" data-i="0">J'arrive il y a deux jours</button><button class="opt" data-i="1">Je suis arrivé il y a deux jours</button><button class="opt" data-i="2">Depuis deux jours, je suis arrivé</button><button class="opt" data-i="3">Ça fait deux jours que je suis arrivé</button></div><div class="feedback ok">✓ « il y a » + passé composé.</div><div class="feedback ko">✗ Pasado terminado = passé composé + « il y a ».</div></div>
+
+      <!-- VOCAB VOYAGE -->
+      <div class="qcm-q" data-correct="0" data-tags="vocab_voyage"><div class="stem"><span class="num">5.</span> "Hacer senderismo" se traduce…</div><div class="opts"><button class="opt" data-i="0">faire de la randonnée</button><button class="opt" data-i="1">faire un voyage</button><button class="opt" data-i="2">marcher dans la nature</button><button class="opt" data-i="3">faire un trajet</button></div><div class="feedback ok">✓ « faire de la randonnée ».</div><div class="feedback ko">✗ « randonnée » es senderismo específicamente.</div></div>
+
+      <!-- GRAM RELATIFS -->
+      <div class="qcm-q" data-correct="2" data-tags="gram_relatifs"><div class="stem"><span class="num">6.</span> "El libro del que te hablo" es…</div><div class="opts"><button class="opt" data-i="0">Le livre que je te parle</button><button class="opt" data-i="1">Le livre qui je te parle</button><button class="opt" data-i="2">Le livre dont je te parle</button><button class="opt" data-i="3">Le livre où je te parle</button></div><div class="feedback ok">✓ « parler de » → dont.</div><div class="feedback ko">✗ « parler de » exige « dont ».</div></div>
+
+      <div class="qcm-q" data-correct="0" data-tags="gram_relatifs"><div class="stem"><span class="num">7.</span> "El día en que llegué" es…</div><div class="opts"><button class="opt" data-i="0">Le jour où je suis arrivé</button><button class="opt" data-i="1">Le jour que je suis arrivé</button><button class="opt" data-i="2">Le jour dont je suis arrivé</button><button class="opt" data-i="3">Le jour quand je suis arrivé</button></div><div class="feedback ok">✓ « où » también para tiempo.</div><div class="feedback ko">✗ « où » para lugar Y tiempo.</div></div>
+
+      <!-- GRAM INDÉFINIS -->
+      <div class="qcm-q" data-correct="0" data-tags="gram_indéfinis"><div class="stem"><span class="num">8.</span> "Cada matin estudio" es…</div><div class="opts"><button class="opt" data-i="0">Chaque matin, j'étudie</button><button class="opt" data-i="1">Chaques matins, j'étudie</button><button class="opt" data-i="2">Tous matins, j'étudie</button><button class="opt" data-i="3">Quelques matin, j'étudie</button></div><div class="feedback ok">✓ « chaque + singulier ».</div><div class="feedback ko">✗ « chaque » siempre con SINGULAR. « Tous les matins » es alternativa.</div></div>
+
+      <!-- VOCAB ARTS -->
+      <div class="qcm-q" data-correct="1" data-tags="vocab_arts"><div class="stem"><span class="num">9.</span> El director de cine es…</div><div class="opts"><button class="opt" data-i="0">le metteur en scène</button><button class="opt" data-i="1">le réalisateur</button><button class="opt" data-i="2">le directeur</button><button class="opt" data-i="3">le chef</button></div><div class="feedback ok">✓ « le réalisateur » (cine). En teatro: « le metteur en scène ».</div><div class="feedback ko">✗ Cine = réalisateur.</div></div>
+
+      <!-- GRAM MISE EN RELIEF -->
+      <div class="qcm-q" data-correct="0" data-tags="gram_mise_en_relief"><div class="stem"><span class="num">10.</span> "Lo que me gustó es la música" es…</div><div class="opts"><button class="opt" data-i="0">Ce qui m'a plu, c'est la musique</button><button class="opt" data-i="1">Ce que m'a plu, c'est la musique</button><button class="opt" data-i="2">Ce dont m'a plu, c'est la musique</button><button class="opt" data-i="3">Celle qui m'a plu, c'est la musique</button></div><div class="feedback ok">✓ « plaire » con sujet = ce qui.</div><div class="feedback ko">✗ « plaire » es intransitivo con sujet → ce qui.</div></div>
+
+      <div class="qcm-q" data-correct="2" data-tags="gram_mise_en_relief"><div class="stem"><span class="num">11.</span> "Lo que prefiero es el cine" es…</div><div class="opts"><button class="opt" data-i="0">Ce qui je préfère, c'est le cinéma</button><button class="opt" data-i="1">Ce dont je préfère, c'est le cinéma</button><button class="opt" data-i="2">Ce que je préfère, c'est le cinéma</button><button class="opt" data-i="3">Celui qui je préfère, c'est le cinéma</button></div><div class="feedback ok">✓ « préférer » + COD = ce que.</div><div class="feedback ko">✗ « préférer qqch » = COD → ce que.</div></div>
+
+      <!-- GRAM CONCORDANCE PP -->
+      <div class="qcm-q" data-correct="1" data-tags="gram_concordance_pp"><div class="stem"><span class="num">12.</span> "Las películas que he visto eran buenas" es…</div><div class="opts"><button class="opt" data-i="0">Les films que j'ai vu étaient bons</button><button class="opt" data-i="1">Les films que j'ai vus étaient bons</button><button class="opt" data-i="2">Les films que j'ai vue étaient bons</button><button class="opt" data-i="3">Les films que j'ai vues étaient bons</button></div><div class="feedback ok">✓ « que » = COD antepuesto masc. plur. → vus.</div><div class="feedback ko">✗ COD antepuesto → concordancia. « que les films » masc. plur. → vus.</div></div>
+
+      <!-- VOCAB TÉLÉPHONE -->
+      <div class="qcm-q" data-correct="2" data-tags="vocab_téléphone"><div class="stem"><span class="num">13.</span> "Llamar de vuelta" en francés es…</div><div class="opts"><button class="opt" data-i="0">téléphoner encore</button><button class="opt" data-i="1">appeler à nouveau</button><button class="opt" data-i="2">rappeler</button><button class="opt" data-i="3">re-téléphoner</button></div><div class="feedback ok">✓ « rappeler » (verbo unipalabra).</div><div class="feedback ko">✗ El verbo francés es « rappeler ».</div></div>
+
+      <!-- GRAM SUBJONCTIF -->
+      <div class="qcm-q" data-correct="1" data-tags="gram_subjonctif"><div class="stem"><span class="num">14.</span> "Quiero que vengas" es…</div><div class="opts"><button class="opt" data-i="0">Je veux que tu viens</button><button class="opt" data-i="1">Je veux que tu viennes</button><button class="opt" data-i="2">Je veux que tu venir</button><button class="opt" data-i="3">Je veux tu viens</button></div><div class="feedback ok">✓ « vouloir que » + subj.</div><div class="feedback ko">✗ Vouloir que + subjonctif → vienne.</div></div>
+
+      <div class="qcm-q" data-correct="2" data-tags="gram_subjonctif"><div class="stem"><span class="num">15.</span> "Es necesario que estés a las 8" es…</div><div class="opts"><button class="opt" data-i="0">Il faut que tu es à 8 h</button><button class="opt" data-i="1">Il faut que tu seras à 8 h</button><button class="opt" data-i="2">Il faut que tu sois à 8 h</button><button class="opt" data-i="3">Il faut tu sois à 8 h</button></div><div class="feedback ok">✓ « il faut que » + subj.</div><div class="feedback ko">✗ « il faut que » + subjonctif. Être au subj. = sois.</div></div>
+
+      <div class="qcm-q" data-correct="0" data-tags="gram_subjonctif"><div class="stem"><span class="num">16.</span> "Espero que vengas" es…</div><div class="opts"><button class="opt" data-i="0">J'espère que tu viendras</button><button class="opt" data-i="1">J'espère que tu viennes</button><button class="opt" data-i="2">J'espère que tu vienne</button><button class="opt" data-i="3">J'espère tu venir</button></div><div class="feedback ok">✓ « Espérer que » + indicatif (futur).</div><div class="feedback ko">✗ « Espérer » es la excepción: + INDICATIF (futur).</div></div>
+
+      <!-- VOCAB VILLE -->
+      <div class="qcm-q" data-correct="2" data-tags="vocab_ville"><div class="stem"><span class="num">17.</span> Una zona peatonal es…</div><div class="opts"><button class="opt" data-i="0">une zone de marche</button><button class="opt" data-i="1">une route piétonne</button><button class="opt" data-i="2">une zone piétonne</button><button class="opt" data-i="3">une zone tranquille</button></div><div class="feedback ok">✓ « zone piétonne ».</div><div class="feedback ko">✗ « zone piétonne ».</div></div>
+
+      <!-- VOCAB LYCÉE -->
+      <div class="qcm-q" data-correct="1" data-tags="vocab_lycée"><div class="stem"><span class="num">18.</span> El bachillerato francés es…</div><div class="opts"><button class="opt" data-i="0">le brevet</button><button class="opt" data-i="1">le baccalauréat (BAC)</button><button class="opt" data-i="2">le diplôme</button><button class="opt" data-i="3">la formation</button></div><div class="feedback ok">✓ « le BAC = baccalauréat ».</div><div class="feedback ko">✗ El BAC al final del lycée.</div></div>
+
+      <!-- GRAM DISCOURS RAPPORTÉ -->
+      <div class="qcm-q" data-correct="0" data-tags="gram_discours_rapporté"><div class="stem"><span class="num">19.</span> Indirecto: "Il a dit: 'Je suis fatigué'." →</div><div class="opts"><button class="opt" data-i="0">Il a dit qu'il était fatigué</button><button class="opt" data-i="1">Il a dit qu'il est fatigué</button><button class="opt" data-i="2">Il a dit qu'il soit fatigué</button><button class="opt" data-i="3">Il a dit qu'il sera fatigué</button></div><div class="feedback ok">✓ Présent directo → imparfait al pasado.</div><div class="feedback ko">✗ Concordance des temps: présent → imparfait.</div></div>
+
+      <!-- GRAM PRONOMS DOUBLES -->
+      <div class="qcm-q" data-correct="2" data-tags="gram_pronoms_doubles"><div class="stem"><span class="num">20.</span> "Je donne le livre à Pierre" con pronoms es…</div><div class="opts"><button class="opt" data-i="0">Je lui le donne</button><button class="opt" data-i="1">Je le lui donne pas</button><button class="opt" data-i="2">Je le lui donne</button><button class="opt" data-i="3">Je donne le lui</button></div><div class="feedback ok">✓ « le » (COD) + « lui » (COI 3ª).</div><div class="feedback ko">✗ Orden: le/la/les + lui/leur.</div></div>
+
+      <div class="qcm-q" data-correct="1" data-tags="gram_pronoms_doubles"><div class="stem"><span class="num">21.</span> Imperativo: "¡Dámelo!" en francés es…</div><div class="opts"><button class="opt" data-i="0">Donne-me-le</button><button class="opt" data-i="1">Donne-le-moi</button><button class="opt" data-i="2">Me-le-donne</button><button class="opt" data-i="3">Donne-le-me</button></div><div class="feedback ok">✓ Imperativo afirmativo: COD + moi.</div><div class="feedback ko">✗ « le » antes de « moi » con guion.</div></div>
+
+      <!-- VOCAB ARGENT -->
+      <div class="qcm-q" data-correct="0" data-tags="vocab_argent"><div class="stem"><span class="num">22.</span> "Pedir prestado" es…</div><div class="opts"><button class="opt" data-i="0">emprunter</button><button class="opt" data-i="1">prêter</button><button class="opt" data-i="2">payer</button><button class="opt" data-i="3">demander</button></div><div class="feedback ok">✓ « emprunter » = pedir prestado.</div><div class="feedback ko">✗ Emprunter (recibe) ≠ prêter (da).</div></div>
+
+      <!-- GRAM ALTERNATIVE -->
+      <div class="qcm-q" data-correct="2" data-tags="gram_alternative"><div class="stem"><span class="num">23.</span> "En lugar de gastar, ahorro" es…</div><div class="opts"><button class="opt" data-i="0">Plutôt que de dépenser, j'épargne</button><button class="opt" data-i="1">À la place de dépenser, j'épargne</button><button class="opt" data-i="2">Au lieu de dépenser, j'épargne</button><button class="opt" data-i="3">Tous son correctos</button></div><div class="feedback ok">✓ « Au lieu de + inf. » es la fórmula clásica. « Plutôt que de » también es válido.</div><div class="feedback ko">✗ Tanto « au lieu de » como « plutôt que de » funcionan. Pero la opción C es la más simple y directa.</div></div>
+
+      <!-- VOCAB ALLURE -->
+      <div class="qcm-q" data-correct="3" data-tags="vocab_allure"><div class="stem"><span class="num">24.</span> "Tener estilo" es…</div><div class="opts"><button class="opt" data-i="0">être beau</button><button class="opt" data-i="1">être à la mode</button><button class="opt" data-i="2">être élégant</button><button class="opt" data-i="3">avoir du style / avoir de l'allure</button></div><div class="feedback ok">✓ « avoir du style ».</div><div class="feedback ko">✗ « avoir du style » o « avoir de l'allure ».</div></div>
+
+      <!-- GRAM COMPARATIF -->
+      <div class="qcm-q" data-correct="0" data-tags="gram_comparatif"><div class="stem"><span class="num">25.</span> "Va cada vez mejor" es…</div><div class="opts"><button class="opt" data-i="0">Il va de mieux en mieux</button><button class="opt" data-i="1">Il va plus bien</button><button class="opt" data-i="2">Il va le mieux</button><button class="opt" data-i="3">Il va meilleur</button></div><div class="feedback ok">✓ « de mieux en mieux » (progresión).</div><div class="feedback ko">✗ Para progresión « de + adv. + en + adv. ».</div></div>
+
+      <div class="qcm-q" data-correct="1" data-tags="gram_comparatif"><div class="stem"><span class="num">26.</span> "Esta es mi mejor pieza" es…</div><div class="opts"><button class="opt" data-i="0">C'est ma mieux pièce</button><button class="opt" data-i="1">C'est ma meilleure pièce</button><button class="opt" data-i="2">C'est ma plus bonne pièce</button><button class="opt" data-i="3">C'est ma pièce bien</button></div><div class="feedback ok">✓ « meilleure » (adjetivo fém.).</div><div class="feedback ko">✗ bon → meilleur. Bien → mieux. Acuérdate de no decir « plus bon ».</div></div>
+
+      <!-- VOCAB TRAVAIL -->
+      <div class="qcm-q" data-correct="1" data-tags="vocab_travail"><div class="stem"><span class="num">27.</span> Un CDI es…</div><div class="opts"><button class="opt" data-i="0">Contrat à Durée Déterminée</button><button class="opt" data-i="1">Contrat à Durée Indéterminée (fijo)</button><button class="opt" data-i="2">Contrat d'Intérim</button><button class="opt" data-i="3">Convention de Stage</button></div><div class="feedback ok">✓ CDI = fijo / indefinido.</div><div class="feedback ko">✗ CDI = indéterminée (fijo). CDD = déterminée (temporal).</div></div>
+
+      <!-- LEXIQUE DIGITAL -->
+      <div class="qcm-q" data-correct="2" data-tags="lexique_digital"><div class="stem"><span class="num">28.</span> "Una noticia falsa" es…</div><div class="opts"><button class="opt" data-i="0">une infox</button><button class="opt" data-i="1">une fake news</button><button class="opt" data-i="2">une fake news / une infox / une fausse information</button><button class="opt" data-i="3">une mauvaise nouvelle</button></div><div class="feedback ok">✓ Las 3 son válidas. « infox » es el término oficial francés.</div><div class="feedback ko">✗ Las 3 primeras opciones son sinónimos válidos en B1+.</div></div>
+
+      <div class="qcm-q" data-correct="0" data-tags="lexique_digital"><div class="stem"><span class="num">29.</span> "Scrollear" en francés se dice…</div><div class="opts"><button class="opt" data-i="0">scroller / faire défiler</button><button class="opt" data-i="1">tirer en bas</button><button class="opt" data-i="2">rouler</button><button class="opt" data-i="3">descendre l'écran</button></div><div class="feedback ok">✓ « scroller » o « faire défiler ».</div><div class="feedback ko">✗ « scroller » (anglicismo) o « faire défiler » (formal).</div></div>
+
+      <!-- LEXIQUE ÉMOTIONS -->
+      <div class="qcm-q" data-correct="2" data-tags="lexique_emotions"><div class="stem"><span class="num">30.</span> Estar "decepcionado" es…</div><div class="opts"><button class="opt" data-i="0">être en désillusion</button><button class="opt" data-i="1">être désolé</button><button class="opt" data-i="2">être déçu(e)</button><button class="opt" data-i="3">être triste</button></div><div class="feedback ok">✓ « déçu(e) » (la déception = decepción).</div><div class="feedback ko">✗ Es « déçu(e) ». « désolé » = perdón.</div></div>
+
+      <!-- REGISTRES -->
+      <div class="qcm-q" data-correct="1" data-tags="registres_formel"><div class="stem"><span class="num">31.</span> En lettre formelle, ¿cuál cabe?</div><div class="opts"><button class="opt" data-i="0">Du coup, je préfère annuler</button><button class="opt" data-i="1">Par conséquent, je préfère annuler</button><button class="opt" data-i="2">Bah, j'annule alors</button><button class="opt" data-i="3">En vrai, j'annule</button></div><div class="feedback ok">✓ « par conséquent » es formal.</div><div class="feedback ko">✗ « du coup », « bah », « en vrai » son oral familier. NO en lettre formelle.</div></div>
+
+      <!-- FAUX AMIS -->
+      <div class="qcm-q" data-correct="1" data-tags="faux_amis"><div class="stem"><span class="num">32.</span> "Asistí al concierto" es…</div><div class="opts"><button class="opt" data-i="0">J'ai aidé au concert</button><button class="opt" data-i="1">J'ai assisté au concert</button><button class="opt" data-i="2">Je suis venu au concert</button><button class="opt" data-i="3">J'ai participé au concert</button></div><div class="feedback ok">✓ « assister à » = asistir como espectador.</div><div class="feedback ko">✗ « assister à » sí significa asistir/presenciar. NO ayudar.</div></div>
+
+      <div class="qcm-q" data-correct="2" data-tags="faux_amis"><div class="stem"><span class="num">33.</span> "Voy a visitar a mi abuela" es…</div><div class="opts"><button class="opt" data-i="0">Je vais visiter ma grand-mère</button><button class="opt" data-i="1">Je vais voir ma grand-mère</button><button class="opt" data-i="2">Je vais rendre visite à ma grand-mère</button><button class="opt" data-i="3">Je vais arriver chez ma grand-mère</button></div><div class="feedback ok">✓ « rendre visite à » para personas. « voir » también es coloquial OK.</div><div class="feedback ko">✗ « visiter » + persona NO. Para personas: « rendre visite à ».</div></div>
+
+      <!-- CALCOS -->
+      <div class="qcm-q" data-correct="1" data-tags="calcos"><div class="stem"><span class="num">34.</span> "Tengo 28 años" es…</div><div class="opts"><button class="opt" data-i="0">J'ai 28 années</button><button class="opt" data-i="1">J'ai 28 ans</button><button class="opt" data-i="2">Je suis 28 ans</button><button class="opt" data-i="3">J'ai 28 années d'âge</button></div><div class="feedback ok">✓ « avoir + N + ans » siempre.</div><div class="feedback ko">✗ Edad: SIEMPRE « avoir + N + ans » (no années).</div></div>
+
+      <div class="qcm-q" data-correct="2" data-tags="calcos"><div class="stem"><span class="num">35.</span> "Hay mucha gente" es…</div><div class="opts"><button class="opt" data-i="0">Il y a beaucoup gens</button><button class="opt" data-i="1">Il y a beaucoup les gens</button><button class="opt" data-i="2">Il y a beaucoup de gens / de monde</button><button class="opt" data-i="3">Il y a très de gens</button></div><div class="feedback ok">✓ « beaucoup DE + nom ».</div><div class="feedback ko">✗ « beaucoup » + DE + nom siempre.</div></div>
+
+      <!-- GENRE -->
+      <div class="qcm-q" data-correct="2" data-tags="genre"><div class="stem"><span class="num">36.</span> El "agua" en francés:</div><div class="opts"><button class="opt" data-i="0">Es masculino: l'eau frais</button><button class="opt" data-i="1">Es femenino: la eau fraîche</button><button class="opt" data-i="2">Es femenino: l'eau fraîche</button><button class="opt" data-i="3">No tiene género</button></div><div class="feedback ok">✓ « l'eau » es FEMENINO en francés.</div><div class="feedback ko">✗ « l'eau » siempre femenino. → « l'eau fraîche ».</div></div>
+
+      <!-- VOCAB ÉCOLOGIE -->
+      <div class="qcm-q" data-correct="2" data-tags="vocab_ecologie"><div class="stem"><span class="num">37.</span> "El calentamiento climático" es…</div><div class="opts"><button class="opt" data-i="0">la chaleur climatique</button><button class="opt" data-i="1">la planète chaude</button><button class="opt" data-i="2">le réchauffement climatique</button><button class="opt" data-i="3">le climat brûlant</button></div><div class="feedback ok">✓ « réchauffement climatique ».</div><div class="feedback ko">✗ La fórmula exacta es « réchauffement climatique ».</div></div>
+
+      <!-- VOCAB SOLIDAIRE -->
+      <div class="qcm-q" data-correct="0" data-tags="vocab_solidaire"><div class="stem"><span class="num">38.</span> Un voluntario es…</div><div class="opts"><button class="opt" data-i="0">un bénévole / un volontaire</button><button class="opt" data-i="1">un acteur</button><button class="opt" data-i="2">un employé</button><button class="opt" data-i="3">un syndicaliste</button></div><div class="feedback ok">✓ « bénévole » o « volontaire ».</div><div class="feedback ko">✗ Bénévole o volontaire.</div></div>
+
+      <!-- GRAM HYPOTHÈSE SI -->
+      <div class="qcm-q" data-correct="1" data-tags="gram_hypothèse_si"><div class="stem"><span class="num">39.</span> "Si tuviera tiempo, vendría" es…</div><div class="opts"><button class="opt" data-i="0">Si j'aurais le temps, je viendrais</button><button class="opt" data-i="1">Si j'avais le temps, je viendrais</button><button class="opt" data-i="2">Si j'ai le temps, je viendrais</button><button class="opt" data-i="3">Si je serai libre, je viendrais</button></div><div class="feedback ok">✓ Sistema 2: Si + imparfait + cond. présent.</div><div class="feedback ko">✗ JAMAIS cond. después de « si ». Si + imparfait + cond.</div></div>
+
+      <div class="qcm-q" data-correct="0" data-tags="gram_hypothèse_si"><div class="stem"><span class="num">40.</span> "Si hubiera sabido, habría venido" es…</div><div class="opts"><button class="opt" data-i="0">Si j'avais su, je serais venu(e)</button><button class="opt" data-i="1">Si j'aurais su, je viendrais</button><button class="opt" data-i="2">Si j'avais su, je viendrais</button><button class="opt" data-i="3">Si je sais, je viendrai</button></div><div class="feedback ok">✓ Sistema 3: Si + PQP + cond. passé.</div><div class="feedback ko">✗ Sistema 3 (irréel passé) → Si + PQP + cond. passé.</div></div>
+
+      <!-- GRAM VOIX PASSIVE -->
+      <div class="qcm-q" data-correct="2" data-tags="gram_voix_passive"><div class="stem"><span class="num">41.</span> Pasiva de "La police arrête le voleur" es…</div><div class="opts"><button class="opt" data-i="0">Le voleur arrête la police</button><button class="opt" data-i="1">Le voleur est arrêter par la police</button><button class="opt" data-i="2">Le voleur est arrêté par la police</button><button class="opt" data-i="3">Le voleur sera arrêté</button></div><div class="feedback ok">✓ être + PP + par.</div><div class="feedback ko">✗ Voix passive: être conjugué + PP accordé + par + agent.</div></div>
+
+      <!-- GRAM PQP -->
+      <div class="qcm-q" data-correct="1" data-tags="gram_pqp"><div class="stem"><span class="num">42.</span> "Cuando llegué, ya habían comido" es…</div><div class="opts"><button class="opt" data-i="0">Quand je suis arrivé, ils ont mangé</button><button class="opt" data-i="1">Quand je suis arrivé, ils avaient déjà mangé</button><button class="opt" data-i="2">Quand j'arrivais, ils mangeaient</button><button class="opt" data-i="3">Quand j'arrive, ils mangent</button></div><div class="feedback ok">✓ PQP para acción anterior al passé composé.</div><div class="feedback ko">✗ PQP es el tiempo del pasado anterior a otro pasado.</div></div>
+
+      <!-- CE INFÉRENCE -->
+      <div class="qcm-q" data-correct="2" data-tags="ce_inférence"><div class="stem"><span class="num">43.</span> Si un texto dice « Je ne pense pas que ce projet soit viable », el autor está…</div><div class="opts"><button class="opt" data-i="0">A favor del proyecto</button><button class="opt" data-i="1">Sin opinión</button><button class="opt" data-i="2">En contra del proyecto</button><button class="opt" data-i="3">Promoviendo el proyecto</button></div><div class="feedback ok">✓ Negación → opinión contraria.</div><div class="feedback ko">✗ « Je ne pense pas que » = en contra. La doble negación es importante.</div></div>
+
+      <!-- GRAM CONCESSION -->
+      <div class="qcm-q" data-correct="0" data-tags="gram_concession"><div class="stem"><span class="num">44.</span> "Aunque haya muchas dificultades, continuo" es…</div><div class="opts"><button class="opt" data-i="0">Bien qu'il y ait beaucoup de difficultés, je continue</button><button class="opt" data-i="1">Bien qu'il y a beaucoup de difficultés, je continue</button><button class="opt" data-i="2">Même si beaucoup de difficultés, je continue</button><button class="opt" data-i="3">Malgré qu'il y ait, je continue</button></div><div class="feedback ok">✓ « bien que » + subj.</div><div class="feedback ko">✗ « bien que » + subjonctif. « avoir » → ait.</div></div>
+
+      <!-- GRAM PARTICIPE PRÉSENT -->
+      <div class="qcm-q" data-correct="2" data-tags="gram_participe_present"><div class="stem"><span class="num">45.</span> "Ayudando a los demás, uno se siente útil" es…</div><div class="opts"><button class="opt" data-i="0">À aider les autres, on se sent utile</button><button class="opt" data-i="1">Pour aider les autres, on se sent utile</button><button class="opt" data-i="2">En aidant les autres, on se sent utile</button><button class="opt" data-i="3">Aider les autres, on se sent utile</button></div><div class="feedback ok">✓ Gérondif: en + V-ant.</div><div class="feedback ko">✗ Gérondif: « en + participe présent » = en aidant.</div></div>
+
+      <div class="exo-actions">
+        <span class="score" data-score>0 / 45</span>
+        <button class="btn btn-ghost" data-reset>Reiniciar</button>
+        <button class="btn btn-primary" data-check id="diagnose">Diagnosticar mis débiles</button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ DIAGNOSTIC ============ -->
+  <section class="panel" data-panel="lec">
+    <div id="diagnosticPanel" class="calibration-result">
+      <h3>📊 Tu diagnóstico</h3>
+      <p id="overall-score" style="font-size: 1.1rem; font-weight: 600;"></p>
+      <div id="bars"></div>
+      <div class="priority-list">
+        <h4 style="margin-top: 20px; margin-bottom: 12px;">🎯 Plan de acción priorizado (top 5 débiles):</h4>
+        <div id="priorities"></div>
+      </div>
+    </div>
+    <div id="noResults" class="calibration-result visible" style="background: var(--surface); border-color: var(--border);">
+      <h3>🤔 Aún no has hecho el quiz</h3>
+      <p>Ve a la pestaña « Quiz », contesta las 45 preguntas, haz clic en « Diagnosticar mis débiles ». Vuelve aquí para ver el análisis.</p>
+    </div>
+  </section>
+
+</main>
+
+<div class="cloud-status" id="cloudStatus" role="status" aria-live="polite">
+  <span class="cs-dot"></span>
+  <span class="cs-text">Listo</span>
+</div>
+
+<script src="parcours.js"></script>
+<script>
+/* Recomendaciones por tag */
+const TAG_RECO = {
+  vocab_santé:       { label: 'Vocab · santé',          link: 'lecon_01.html',       reason: 'Repasa cuerpo, maladies, médecin.' },
+  vocab_voyage:      { label: 'Vocab · voyager',        link: 'lecon_02.html',       reason: 'Refuerza lieux, hébergements, randonnée.' },
+  vocab_arts:        { label: 'Vocab · arts',           link: 'lecon_03.html',       reason: 'Repasa spectacles, métiers, expressions de critique.' },
+  vocab_téléphone:   { label: 'Vocab · téléphone',      link: 'lecon_04.html',       reason: 'Refuerza appeler, rappeler, laisser un message.' },
+  vocab_ville:       { label: 'Vocab · ville',          link: 'lecon_05.html',       reason: 'Trabaja aménagements, urbanisme, mairie.' },
+  vocab_lycée:       { label: 'Vocab · lycée',          link: 'lecon_06.html',       reason: 'Repasa BAC, classes, vocabulaire scolaire.' },
+  vocab_argent:      { label: 'Vocab · argent',         link: 'lecon_09.html',       reason: 'Refuerza emprunter, prêter, mensualité.' },
+  vocab_allure:      { label: 'Vocab · style',          link: 'lecon_10.html',       reason: 'Trabaja vêtements, comparatifs, à la mode.' },
+  vocab_travail:     { label: 'Vocab · travail',        link: 'lecon_12.html',       reason: 'Refuerza CDI/CDD, entretien, SMIC.' },
+  vocab_ecologie:    { label: 'Vocab · écologie',       link: 'lecon_16.html',       reason: 'Repasa réchauffement, polluer, recycler.' },
+  vocab_solidaire:   { label: 'Vocab · solidaire',      link: 'lecon_17.html',       reason: 'Refuerza bénévole, don, accueillir.' },
+  gram_marqueurs_temps: { label: 'Marqueurs temporels', link: 'lecon_01.html',       reason: 'Distinguir depuis / il y a / ça fait / pendant / en.' },
+  gram_relatifs:        { label: 'Relatifs où/dont',    link: 'lecon_02.html',       reason: 'Trabaja où (lugar/tiempo) y dont (verbe + de).' },
+  gram_indéfinis:       { label: 'Indéfinis',           link: 'lecon_02.html',       reason: 'Distinguir quelques/chaque/plusieurs/aucun.' },
+  gram_mise_en_relief:  { label: 'Mise en relief',      link: 'lecon_03.html',       reason: 'Distinguir ce qui (sujet) / ce que (COD) / ce dont (de).' },
+  gram_concordance_pp:  { label: 'Concordance PP',      link: 'lecon_03.html',       reason: 'Acuerdo PP con avoir (COD antepuesto) y être (sujet).' },
+  gram_subjonctif:      { label: 'Subjonctif',          link: 'lecon_04.html',       reason: 'Refuerza vouloir/falloir + subj. Ojo: espérer + indic.' },
+  gram_discours_rapporté: { label: 'Discours rapporté', link: 'lecon_07.html',       reason: 'Concordance: présent→imparfait, PC→PQP, futur→cond.' },
+  gram_pronoms_doubles: { label: 'Doubles pronoms',     link: 'lecon_09.html',       reason: 'Orden me/te+le/la+lui/leur+y+en. Imperatif: donne-le-moi.' },
+  gram_alternative:     { label: 'Alternative',         link: 'lecon_09.html',       reason: 'Au lieu de + inf. / Plutôt que de + inf. / Soit…soit.' },
+  gram_comparatif:      { label: 'Comparatifs',         link: 'lecon_10.html',       reason: 'plus/moins/aussi + adj + que. Bon→meilleur. Bien→mieux.' },
+  gram_concession:      { label: 'Concession',          link: 'lecon_17.html',       reason: 'Bien que + subj. Malgré + nom. Certes…mais…' },
+  gram_participe_present: { label: 'Participe présent', link: 'lecon_17.html',       reason: 'Gérondif (en + V-ant) — siempre mismo sujet.' },
+  gram_hypothèse_si:    { label: 'Hypothèse avec si',   link: 'bonus_si.html',       reason: 'Sistemas 1/2/3 con si. JAMAIS cond. après si.' },
+  gram_voix_passive:    { label: 'Voix passive',        link: 'bonus_passif.html',   reason: 'être + PP accordé + par + agent. Frecuente en prensa.' },
+  gram_pqp:             { label: 'Plus-que-parfait',    link: 'bonus_pqp.html',      reason: 'Pasado anterior a otro pasado. Concordance des temps.' },
+  lexique_digital:      { label: 'Lexique digital',     link: 'lexique_essentiel.html', reason: 'Refuerza réseaux sociaux, infox, scroller…' },
+  lexique_emotions:     { label: 'Émotions nuancées',   link: 'lexique_essentiel.html', reason: 'déçu, frustré, ému, ravi… (DELF B1 pregunta inferencias)' },
+  registres_formel:     { label: 'Registres formels',   link: 'lexique_essentiel.html', reason: 'Distinguir oral familier / écrit formel.' },
+  faux_amis:            { label: 'Faux amis hispanos',  link: 'erreurs_hispano.html', reason: 'assister, attendre, visiter, emprunter, déception…' },
+  calcos:               { label: 'Calcos del español',  link: 'erreurs_hispano.html', reason: 'à France→en France, beaucoup gens→beaucoup DE gens…' },
+  genre:                { label: 'Género en francés',   link: 'erreurs_hispano.html', reason: 'l\'eau (fém.), le problème (masc.), -ème → masculin…' },
+  ce_inférence:         { label: 'CE inférence',        link: 'methodologie.html',   reason: 'Reconocer negaciones implícitas, tono del autor, paráfrasis.' }
+};
+
+document.getElementById('diagnose').addEventListener('click', () => {
+  /* Esperar a que parcours.js haya pintado correct/incorrect */
+  setTimeout(() => {
+    const tagStats = {};  // tag → { ok: n, total: n }
+    document.querySelectorAll('.qcm-q').forEach(q => {
+      const tags = (q.dataset.tags || '').split(',').map(t => t.trim()).filter(Boolean);
+      const correct = +q.dataset.correct;
+      const sel = q.querySelector('.opt.selected');
+      const isOk = sel && +sel.dataset.i === correct;
+      tags.forEach(t => {
+        if (!tagStats[t]) tagStats[t] = { ok: 0, total: 0 };
+        tagStats[t].total++;
+        if (isOk) tagStats[t].ok++;
+      });
+    });
+
+    /* Calcular % */
+    const arr = Object.entries(tagStats).map(([tag, s]) => ({
+      tag, pct: Math.round(100 * s.ok / s.total), ok: s.ok, total: s.total
+    }));
+
+    /* Score global */
+    const totalOk = arr.reduce((s, x) => s + x.ok, 0);
+    const totalTotal = arr.reduce((s, x) => s + x.total, 0);
+    const globalPct = Math.round(100 * totalOk / totalTotal);
+
+    /* Pintar resultados */
+    const panel = document.getElementById('diagnosticPanel');
+    const noResults = document.getElementById('noResults');
+    panel.classList.add('visible');
+    noResults.classList.remove('visible');
+
+    let label = '';
+    if (globalPct >= 85) label = ' — Excelente nivel B1+';
+    else if (globalPct >= 70) label = ' — Buen nivel B1, refuerza los puntos débiles';
+    else if (globalPct >= 55) label = ' — Nivel A2+/B1 en construcción, prioriza los débiles';
+    else label = ' — Nivel A2, hace falta consolidar mucho antes del DELF';
+
+    document.getElementById('overall-score').innerHTML =
+      '<strong>Score global: ' + totalOk + ' / ' + totalTotal + ' (' + globalPct + '%)</strong>' + label;
+
+    /* Pintar barras ordenadas por % (más débil primero) */
+    arr.sort((a, b) => a.pct - b.pct);
+    const barsEl = document.getElementById('bars');
+    barsEl.innerHTML = '';
+    arr.forEach(x => {
+      const reco = TAG_RECO[x.tag] || { label: x.tag };
+      const cls = x.pct < 50 ? 'weak' : (x.pct < 75 ? 'medium' : 'good');
+      barsEl.innerHTML += '<div class="calibration-bar"><span class="label">' + reco.label + '</span>' +
+        '<div class="track"><div class="fill ' + cls + '" style="width:' + x.pct + '%"></div></div>' +
+        '<span class="pct">' + x.pct + '%</span></div>';
+    });
+
+    /* Top 5 priorities */
+    const priorities = arr.slice(0, 5).filter(x => x.pct < 100);
+    const priEl = document.getElementById('priorities');
+    priEl.innerHTML = '';
+    priorities.forEach((x, i) => {
+      const reco = TAG_RECO[x.tag] || { label: x.tag, link: 'index.html', reason: 'Refuerza este tema.' };
+      priEl.innerHTML += '<a class="pri-item" href="' + reco.link + '">' +
+        '<span class="pri-rank">' + (i + 1) + '</span>' +
+        '<strong>' + reco.label + '</strong> · ' + x.ok + '/' + x.total + ' (' + x.pct + '%)' +
+        '<span class="pri-reason">→ ' + reco.reason + '</span></a>';
+    });
+
+    if (priorities.length === 0) {
+      priEl.innerHTML = '<p style="padding: 12px; background: var(--surface); border-radius: 8px;">🎉 Has acertado todo. ¡Presentate al DELF, estás listo/a!</p>';
+    }
+
+    /* Mover a la pestaña Diagnostic */
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelector('.tab[data-tab="lec"]').classList.add('active');
+    document.querySelector('.panel[data-panel="lec"]').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 400);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carnet d'erreurs · tus fallos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="parcours.css">
+<style>
+.carnet-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;
+  margin: 24px 0;
+}
+.carnet-stat {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+  padding: 16px 20px; text-align: center;
+}
+.carnet-stat .stat-num {
+  font-size: 2.2rem; font-weight: 800; color: var(--accent); line-height: 1;
+}
+.carnet-stat .stat-label {
+  font-size: .78rem; color: var(--text3); font-weight: 600; margin-top: 6px; text-transform: uppercase; letter-spacing: .04em;
+}
+.carnet-stat.weak .stat-num { color: #dc2626; }
+.carnet-stat.good .stat-num { color: #16a34a; }
+.error-list { margin: 24px 0; }
+.error-item {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 16px 20px; margin: 10px 0;
+}
+.error-item.persistent { border-left: 4px solid #dc2626; }
+.error-item.improving { border-left: 4px solid #d97706; }
+.error-item .err-meta {
+  font-size: .72rem; color: var(--text3); font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: .04em;
+}
+.error-item .err-stem {
+  font-weight: 600; margin: 8px 0;
+}
+.error-item .err-answers {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0;
+  font-size: .85rem;
+}
+.error-item .err-your, .error-item .err-correct {
+  padding: 8px 12px; border-radius: 8px;
+}
+.error-item .err-your { background: rgba(220,38,38,.08); }
+.error-item .err-correct { background: rgba(22,163,74,.08); }
+.error-item .err-actions {
+  margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.error-item .err-btn {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 100px;
+  padding: 6px 14px; font-size: .78rem; font-weight: 600; cursor: pointer;
+  color: var(--text2); font-family: inherit;
+}
+.error-item .err-btn:hover { border-color: var(--accent); color: var(--accent); }
+.error-item .err-btn.success { background: var(--done); color: #fff; border-color: var(--done); }
+.error-item .err-link { font-size: .78rem; color: var(--accent); text-decoration: none; }
+.error-item .err-link:hover { text-decoration: underline; }
+.filter-bar {
+  display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0;
+}
+.filter-bar button {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 100px;
+  padding: 7px 14px; font-size: .78rem; font-weight: 600; cursor: pointer;
+  color: var(--text2); font-family: inherit;
+}
+.filter-bar button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.empty-state {
+  text-align: center; padding: 40px 20px; background: var(--surface); border-radius: 14px;
+  border: 1px dashed var(--border); color: var(--text3);
+}
+</style>
+</head>
+<body data-lecon="0">
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="back-btn" href="index.html"><span class="arrow">‹</span><span>Parcours B1</span></a>
+    <div class="header-top"><span class="header-num">Para llegar al 90+ · sistema adaptativo</span></div>
+    <h1>Carnet d'erreurs</h1>
+    <p class="header-sub">Cada error que cometes en cualquier ejercicio del Parcours queda registrado aquí. Repásalos hasta que los aciertes <strong>2 veces seguidas</strong> — entonces desaparecen.</p>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="carnet-stats" id="carnetStats">
+    <!-- llenado por JS -->
+  </div>
+
+  <div class="filter-bar">
+    <button data-filter="all" class="active">Todos</button>
+    <button data-filter="persistent">Persistentes (fallados 3+)</button>
+    <button data-filter="recent">Recientes (7 días)</button>
+    <button data-filter="qcm">QCM</button>
+    <button data-filter="tf">V/F</button>
+    <button data-filter="gap">Gap-fill</button>
+  </div>
+
+  <div class="error-list" id="errorList">
+    <!-- llenado por JS -->
+  </div>
+
+  <div style="margin: 24px 0;">
+    <button class="btn btn-danger" id="clearAll" style="background: #dc2626; color: #fff; border: none; padding: 10px 20px; border-radius: 100px; font-weight: 600; cursor: pointer;">🗑 Vaciar carnet (no recomendado)</button>
+  </div>
+
+  <details class="ficha-resume">
+    <summary>¿Cómo funciona el carnet d'erreurs?</summary>
+    <div class="fr-body">
+      <div class="fr-block gram">
+        <h4>Sistema simple</h4>
+        <p>1. Cada vez que fallas un QCM, V/F o gap-fill en cualquier leçon, queda registrado aquí con: pregunta, tu respuesta, respuesta correcta, número de fallos.</p>
+        <p>2. Cuando vuelves a la leçon y aciertas la misma pregunta <strong>2 veces seguidas</strong>, el error se borra automáticamente del carnet.</p>
+        <p>3. Los errores con 3+ fallos se marcan como <strong>persistentes</strong> (borde rojo) — son tus puntos críticos.</p>
+        <p>4. Cada item incluye un enlace directo a la leçon donde apareció — vuelve, vuelve a estudiar, vuelve a intentarlo.</p>
+      </div>
+    </div>
+  </details>
+
+</main>
+
+<div class="cloud-status" id="cloudStatus" role="status" aria-live="polite">
+  <span class="cs-dot"></span>
+  <span class="cs-text">Listo</span>
+</div>
+
+<script src="parcours.js"></script>
+<script>
+const ERRORS_KEY = 'parcours_b1_errors';
+let currentFilter = 'all';
+
+function loadErrors(){
+  try { return JSON.parse(localStorage.getItem(ERRORS_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+function saveErrors(obj){ localStorage.setItem(ERRORS_KEY, JSON.stringify(obj)); }
+
+function fmtDate(ts){
+  const d = new Date(ts);
+  const days = Math.round((Date.now() - ts) / (1000 * 60 * 60 * 24));
+  if (days === 0) return 'hoy';
+  if (days === 1) return 'ayer';
+  if (days < 7) return 'hace ' + days + ' días';
+  if (days < 30) return 'hace ' + Math.round(days/7) + ' semanas';
+  return 'hace ' + Math.round(days/30) + ' meses';
+}
+
+function leconLink(lecon){
+  return 'lecon_' + String(lecon).padStart(2, '0') + '.html#exo-' + lecon;
+}
+
+function passesFilter(err){
+  if (currentFilter === 'all') return true;
+  if (currentFilter === 'persistent') return err.failCount >= 3;
+  if (currentFilter === 'recent') return (Date.now() - err.lastSeen) < (7 * 24 * 60 * 60 * 1000);
+  if (currentFilter === 'qcm') return err.type === 'qcm';
+  if (currentFilter === 'tf')  return err.type === 'tf';
+  if (currentFilter === 'gap') return err.type === 'gap';
+  return true;
+}
+
+function render(){
+  const errors = loadErrors();
+  const arr = Object.entries(errors).map(([id, err]) => ({ id, ...err }));
+
+  // Stats
+  const total = arr.length;
+  const persistent = arr.filter(e => e.failCount >= 3).length;
+  const recent = arr.filter(e => (Date.now() - e.lastSeen) < (7*24*60*60*1000)).length;
+  const byLecon = {};
+  arr.forEach(e => { byLecon[e.lecon] = (byLecon[e.lecon] || 0) + 1; });
+  const worstLecon = Object.entries(byLecon).sort((a,b) => b[1] - a[1])[0];
+
+  const statsEl = document.getElementById('carnetStats');
+  statsEl.innerHTML = `
+    <div class="carnet-stat ${total === 0 ? 'good' : ''}"><div class="stat-num">${total}</div><div class="stat-label">errores activos</div></div>
+    <div class="carnet-stat ${persistent > 0 ? 'weak' : ''}"><div class="stat-num">${persistent}</div><div class="stat-label">persistentes (3+ fallos)</div></div>
+    <div class="carnet-stat"><div class="stat-num">${recent}</div><div class="stat-label">recientes (7 días)</div></div>
+    <div class="carnet-stat"><div class="stat-num">${worstLecon ? 'L' + worstLecon[0] : '—'}</div><div class="stat-label">leçon más débil${worstLecon ? ' (' + worstLecon[1] + ')' : ''}</div></div>
+  `;
+
+  // Lista
+  const filtered = arr.filter(passesFilter)
+    .sort((a, b) => b.failCount - a.failCount || b.lastSeen - a.lastSeen);
+
+  const listEl = document.getElementById('errorList');
+  if (filtered.length === 0) {
+    if (total === 0) {
+      listEl.innerHTML = '<div class="empty-state">🎉 <strong>Sin errores registrados.</strong> O bien acabas de empezar el Parcours, o eres muy bueno (o ambas cosas). Si has hecho ejercicios y no aparece nada aquí, vuelve a hacer alguno fallando a propósito para verificar que el sistema funcione.</div>';
+    } else {
+      listEl.innerHTML = '<div class="empty-state">Ningún error con este filtro. Prueba con « Todos ».</div>';
+    }
+    return;
+  }
+
+  listEl.innerHTML = filtered.map(err => {
+    const cls = err.failCount >= 3 ? 'persistent' : (err.successCount > 0 ? 'improving' : '');
+    const typeLabel = err.type === 'qcm' ? 'QCM' : err.type === 'tf' ? 'Vrai/Faux' : 'Gap-fill';
+    return `
+      <div class="error-item ${cls}" data-id="${err.id}">
+        <div class="err-meta">L${err.lecon} · ${err.exo} · ${typeLabel} · ${err.failCount} fallo${err.failCount > 1 ? 's' : ''}${err.successCount > 0 ? ' · ' + err.successCount + ' acierto' + (err.successCount > 1 ? 's' : '') : ''} · ${fmtDate(err.lastSeen)}</div>
+        <div class="err-stem">${err.stem}</div>
+        <div class="err-answers">
+          <div class="err-your"><strong>Tu respuesta:</strong><br>${err.yourAnswer || '(sin respuesta)'}</div>
+          <div class="err-correct"><strong>Respuesta correcta:</strong><br>${err.correctAnswer}</div>
+        </div>
+        <div class="err-actions">
+          <a class="err-link" href="${leconLink(err.lecon)}">→ Ir a la leçon ${err.lecon}</a>
+          <button class="err-btn" data-action="success" data-id="${err.id}">✓ Lo he acertado ahora</button>
+          <button class="err-btn" data-action="delete" data-id="${err.id}">🗑 Eliminar</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Bind buttons
+  listEl.querySelectorAll('.err-btn[data-action="success"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      const all = loadErrors();
+      if (!all[id]) return;
+      all[id].successCount++;
+      all[id].lastSeen = Date.now();
+      if (all[id].successCount >= 2) {
+        delete all[id];
+        btn.classList.add('success');
+        btn.textContent = '✓ Erradicado';
+      }
+      saveErrors(all);
+      if (window.parcoursCloud) window.parcoursCloud.notify();
+      setTimeout(render, 300);
+    });
+  });
+  listEl.querySelectorAll('.err-btn[data-action="delete"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!confirm('¿Eliminar este error del carnet?')) return;
+      const id = btn.dataset.id;
+      const all = loadErrors();
+      delete all[id];
+      saveErrors(all);
+      if (window.parcoursCloud) window.parcoursCloud.notify();
+      render();
+    });
+  });
+}
+
+document.querySelectorAll('.filter-bar button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-bar button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+document.getElementById('clearAll').addEventListener('click', () => {
+  if (!confirm('¿Vaciar todos los errores del carnet? Esto no se puede deshacer.')) return;
+  localStorage.removeItem(ERRORS_KEY);
+  if (window.parcoursCloud) window.parcoursCloud.notify();
+  render();
+});
+
+render();
+window.addEventListener('parcours:cloud-loaded', render);
+</script>
+</body>
+</html>
