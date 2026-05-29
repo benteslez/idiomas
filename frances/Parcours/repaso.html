@@ -177,6 +177,30 @@ document.getElementById('themeToggle').addEventListener('click', ()=>{
 // Load SRS state + settings
 function loadSrs(){ try{ SRS = JSON.parse(localStorage.getItem(SRS_KEY)||'{}'); }catch(e){ SRS={}; } }
 function saveSrs(){ try{ localStorage.setItem(SRS_KEY, JSON.stringify(SRS)); }catch(e){} if(window.parcoursCloud) window.parcoursCloud.notify(); }
+
+// ID estable basado en contenido (fr + leçon) — sobrevive a regeneraciones de vocab.json
+function cardKey(card){
+  if (!card) return '';
+  return (card.fr || '') + '|L' + (card.lecon || '0');
+}
+
+// Migración silenciosa: borra entradas del SRS con keys numéricas (formato legacy basado en índice).
+// Esas entradas apuntan a posiciones desplazadas en DATA y son inválidas.
+function migrateLegacySrs(){
+  let legacyCount = 0;
+  let totalKeys = Object.keys(SRS).length;
+  for (const k of Object.keys(SRS)) {
+    if (/^\d+$/.test(k)) {   // solo dígitos = formato legacy
+      delete SRS[k];
+      legacyCount++;
+    }
+  }
+  if (legacyCount > 0) {
+    saveSrs();
+    console.info('[repaso SRS] Migración: eliminadas ' + legacyCount + ' entradas legacy de ' + totalKeys + ' totales. El progreso de SRS se reinicia para reflejar el vocabulario actual.');
+  }
+  return legacyCount;
+}
 function loadSettings(){
   try{ Object.assign(SETTINGS, JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}')); }catch(e){}
   document.getElementById('newPerDay').value = SETTINGS.newPerDay;
@@ -224,9 +248,10 @@ function delayLabel(interval){
 }
 
 function buildSession(){
+  if (!DATA.length) return [];   // guard: aún no se ha cargado vocab.json
   const now = Date.now();
   const filter = SETTINGS.filterLecon;
-  const pool = DATA.map((c,i) => ({...c, _id: String(i)}))
+  const pool = DATA.map(c => ({...c, _id: cardKey(c)}))
                    .filter(c => !filter || String(c.lecon) === filter);
   const due = [], newer = [];
   for (const c of pool){
@@ -239,10 +264,14 @@ function buildSession(){
   }
   // Mezclar nuevas (límite del día)
   const today = new Date().toISOString().slice(0,10);
-  const seenToday = Object.values(SRS).filter(s => s.lastReview && new Date(s.lastReview).toISOString().slice(0,10)===today && s.reps===1).length;
+  // seenToday se calcula solo sobre cards del pool (no entradas huérfanas)
+  const poolIds = new Set(pool.map(c => c._id));
+  const seenToday = Object.entries(SRS).filter(([k, s]) =>
+    poolIds.has(k) && s.lastReview &&
+    new Date(s.lastReview).toISOString().slice(0,10)===today && s.reps===1
+  ).length;
   const newLimit = Math.max(0, +SETTINGS.newPerDay - seenToday);
   const newSlice = newer.sort(() => Math.random()-.5).slice(0, newLimit);
-  // Resultado
   return [...due, ...newSlice].map(c => c._id);
 }
 
@@ -250,9 +279,9 @@ function refreshStats(){
   const now = Date.now();
   let due=0, newC=0, learning=0, known=0;
   const filter = SETTINGS.filterLecon;
-  DATA.forEach((c, i) => {
+  DATA.forEach(c => {
     if (filter && String(c.lecon) !== filter) return;
-    const s = SRS[String(i)];
+    const s = SRS[cardKey(c)];
     if (!s) { newC++; }
     else if (s.due <= now) { due++; if (s.reps>=2) known++; else learning++; }
     else if (s.reps >= 2) { known++; }
@@ -278,7 +307,13 @@ function renderCard(){
     return;
   }
   const id = session[currentIdx];
-  const card = DATA[+id];
+  const card = DATA.find(c => cardKey(c) === id);
+  if (!card) {
+    // ID huérfano (raro): saltar al siguiente
+    currentIdx++;
+    renderCard();
+    return;
+  }
   const previewIntervals = [
     gradePreview(id, 1),
     gradePreview(id, 2),
@@ -328,7 +363,8 @@ function flipCard(){
   if (flipped) return;
   flipped = true;
   const id = session[currentIdx];
-  const card = DATA[+id];
+  const card = DATA.find(c => cardKey(c) === id);
+  if (!card) return;
   const el = document.getElementById('cardEl');
   el.innerHTML = `
     <span class="lid">L${card.lecon}</span>
@@ -373,10 +409,11 @@ document.getElementById('resetSrs').addEventListener('click', () => {
 });
 
 // Init
-fetch('vocab.json').then(r => r.json()).then(data => {
+fetch('vocab.json?v=2').then(r => r.json()).then(data => {
   DATA = data;
   loadSettings();
   loadSrs();
+  const migrated = migrateLegacySrs();   // limpia entradas legacy (índices)
 
   // Populate filterLecon options
   const sel = document.getElementById('filterLecon');
@@ -384,7 +421,7 @@ fetch('vocab.json').then(r => r.json()).then(data => {
   lecons.forEach(n => {
     const opt = document.createElement('option');
     opt.value = String(n);
-    opt.textContent = 'Leçon ' + n;
+    opt.textContent = (n >= 18) ? ('Bonus ' + (n-17)) : ('Leçon ' + n);
     sel.appendChild(opt);
   });
   sel.value = SETTINGS.filterLecon;
@@ -392,11 +429,34 @@ fetch('vocab.json').then(r => r.json()).then(data => {
   session = buildSession();
   currentIdx = 0;
   refreshStats();
-  renderCard();
+
+  if (migrated > 0) {
+    // Mensaje al usuario explicando la migración
+    document.getElementById('sessionArea').innerHTML = `
+      <div class="empty-state">
+        <h2>🔄 SRS actualizado</h2>
+        <p>Se han limpiado <strong>${migrated} entradas</strong> del SRS antiguo que apuntaban a posiciones obsoletas del vocabulario (regeneramos vocab.json para añadir leçons bonus y reescribir 5 leçons).</p>
+        <p>A partir de ahora el SRS usa <strong>identificadores estables</strong> basados en el contenido, así que el progreso ya no se perderá con futuras actualizaciones.</p>
+        <button class="btn-primary" onclick="document.getElementById('sessionArea').innerHTML=''; session = buildSession(); currentIdx = 0; refreshStats(); renderCard();">Empezar nueva sesión →</button>
+      </div>
+    `;
+  } else {
+    renderCard();
+  }
+}).catch(err => {
+  console.error('[repaso SRS] Error cargando vocab.json:', err);
+  document.getElementById('sessionArea').innerHTML = `
+    <div class="empty-state">
+      <h2>⚠️ Error cargando vocabulario</h2>
+      <p>No se pudo leer <code>vocab.json</code>. Esto puede pasar si abres el archivo directamente desde el sistema (<code>file://</code>) en algunos navegadores. Usa un servidor local o el navegador de GitHub Pages.</p>
+    </div>
+  `;
 });
 
 window.addEventListener('parcours:cloud-loaded', () => {
+  if (!DATA.length) return;   // guard: el fetch aún no ha terminado
   loadSrs();
+  migrateLegacySrs();
   session = buildSession();
   currentIdx = 0;
   refreshStats();

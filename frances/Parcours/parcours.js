@@ -699,24 +699,80 @@
   const markBtn = document.getElementById('mark-done');
   if (markBtn && leconId) {
     const id = +leconId;
+    const originalText = markBtn.textContent || 'Marcar como completada';
+    // Asegurar que el botón siempre sea clickeable
+    markBtn.removeAttribute('disabled');
+    markBtn.style.pointerEvents = 'auto';
+    markBtn.style.cursor = 'pointer';
+
     function paintMark(){
       const state = loadState();
       const done  = state.done || [];
+      // Siempre clickeable
+      markBtn.disabled = false;
+      markBtn.removeAttribute('disabled');
+      markBtn.style.pointerEvents = 'auto';
+      markBtn.style.cursor = 'pointer';
       if (done.includes(id)) {
-        markBtn.textContent = '✓ Marcada como completada';
-        markBtn.disabled    = true;
-        markBtn.style.opacity = '.85';
+        markBtn.innerHTML  = '✓ Completada · click para desmarcar';
+        markBtn.style.opacity = '1';
+        markBtn.style.background = '#10b981';
+        markBtn.style.borderColor = '#10b981';
+        markBtn.style.color = '#fff';
+        markBtn.title = 'Click para desmarcar como completada';
+      } else {
+        markBtn.textContent = originalText;
+        markBtn.style.opacity = '';
+        markBtn.style.background = '';
+        markBtn.style.borderColor = '';
+        markBtn.style.color = '';
+        markBtn.title = '';
       }
     }
     paintMark();
-    markBtn.addEventListener('click', () => {
+
+    markBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      e.stopPropagation();
       const state = loadState();
       state.done = state.done || [];
-      if (!state.done.includes(id)) state.done.push(id);
+      const idx = state.done.indexOf(id);
+      let toastText = '';
+      if (idx === -1) {
+        state.done.push(id);
+        toastText = '✓ Leçon ' + id + ' marcada como completada';
+      } else {
+        state.done.splice(idx, 1);
+        toastText = '↺ Leçon ' + id + ' desmarcada';
+      }
       saveState(state);
       paintMark();
       if (window.parcoursCloud) window.parcoursCloud.notify();
+      // Toast visual ligero
+      showMarkToast(toastText);
     });
+  }
+
+  function showMarkToast(text){
+    let toast = document.getElementById('markToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'markToast';
+      toast.style.cssText = 'position:fixed; bottom:80px; left:50%; transform:translateX(-50%); ' +
+        'background:#0a0a0a; color:#fff; padding:10px 20px; border-radius:100px; ' +
+        'font-weight:600; font-size:.85rem; box-shadow:0 8px 24px rgba(0,0,0,.25); ' +
+        'z-index:9999; opacity:0; transition:opacity .25s ease, transform .25s ease;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = text;
+    requestAnimationFrame(() => {
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+    });
+    clearTimeout(toast._hideTimer);
+    toast._hideTimer = setTimeout(() => {
+      toast.style.opacity = '0';
+    }, 2500);
   }
 
   // Re-paint everything when cloud finishes loading remote state
@@ -792,6 +848,7 @@
   const LS_ACTIVITY  = 'parcours_b1_activity';
   const LS_SRS       = 'parcours_b1_srs';
   const LS_ERRORS    = 'parcours_b1_errors';
+  const LS_CALIB     = 'parcours_b1_calibration';
   function LS_BACKUP(p){ return 'parcours_cloud_backup__' + APP_ID + '__' + p; }
 
   const CLOUD_ENABLED = !!(SUPABASE_URL && SUPABASE_KEY);
@@ -808,14 +865,15 @@
   }
   function readGlobals(){
     return {
-      state:     loadKey(LS_STATE),
-      scores:    loadKey(LS_SCORES),
-      drafts:    loadKey(LS_DRAFTS),
-      peDone:    loadKey(LS_PE),
-      checklist: loadKey(LS_CHECKLIST),
-      activity:  loadKey(LS_ACTIVITY),
-      srs:       loadKey(LS_SRS),
-      errors:    loadKey(LS_ERRORS)
+      state:       loadKey(LS_STATE),
+      scores:      loadKey(LS_SCORES),
+      drafts:      loadKey(LS_DRAFTS),
+      peDone:      loadKey(LS_PE),
+      checklist:   loadKey(LS_CHECKLIST),
+      activity:    loadKey(LS_ACTIVITY),
+      srs:         loadKey(LS_SRS),
+      errors:      loadKey(LS_ERRORS),
+      calibration: loadKey(LS_CALIB)
     };
   }
   function applyPayload(data){
@@ -828,13 +886,14 @@
     try { localStorage.setItem(LS_ACTIVITY,  JSON.stringify(data.activity  || {})); } catch (e){}
     try { localStorage.setItem(LS_SRS,       JSON.stringify(data.srs       || {})); } catch (e){}
     try { localStorage.setItem(LS_ERRORS,    JSON.stringify(data.errors    || {})); } catch (e){}
+    try { localStorage.setItem(LS_CALIB,     JSON.stringify(data.calibration || {})); } catch (e){}
     window.dispatchEvent(new CustomEvent('parcours:cloud-loaded', { detail: data }));
   }
   function isEmpty(p){
     if (!p) return true;
     const s  = p.state || {}, sc = p.scores || {}, d = p.drafts || {},
           pe = p.peDone || {}, cl = p.checklist || {}, ac = p.activity || {}, sr = p.srs || {},
-          er = p.errors || {};
+          er = p.errors || {}, ca = p.calibration || {};
     if (Array.isArray(s.done) && s.done.length) return false;
     if (Object.keys(sc).length) return false;
     if (Object.keys(d).length)  return false;
@@ -843,6 +902,7 @@
     if (Object.keys(ac).length) return false;
     if (Object.keys(sr).length) return false;
     if (Object.keys(er).length) return false;
+    if (Object.keys(ca).length) return false;
     return true;
   }
 

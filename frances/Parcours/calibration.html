@@ -289,10 +289,72 @@ const TAG_RECO = {
   ce_inférence:         { label: 'CE inférence',        link: 'methodologie.html',   reason: 'Reconocer negaciones implícitas, tono del autor, paráfrasis.' }
 };
 
+const STORAGE_KEY = 'parcours_b1_calibration';
+
+function fmtTimestamp(ts){
+  const d = new Date(ts);
+  const days = Math.round((Date.now() - ts) / (1000*60*60*24));
+  let when;
+  if (days === 0) when = 'hoy';
+  else if (days === 1) when = 'ayer';
+  else if (days < 30) when = 'hace ' + days + ' días';
+  else when = 'hace ' + Math.round(days/30) + ' meses';
+  return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }) +
+         ' · ' + d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) +
+         ' (' + when + ')';
+}
+
+function renderDiagnostic(data){
+  const panel = document.getElementById('diagnosticPanel');
+  const noResults = document.getElementById('noResults');
+  panel.classList.add('visible');
+  noResults.classList.remove('visible');
+
+  const { globalPct, totalOk, totalTotal, byTag, timestamp } = data;
+
+  let label = '';
+  if (globalPct >= 85) label = ' — Excelente nivel B1+';
+  else if (globalPct >= 70) label = ' — Buen nivel B1, refuerza los puntos débiles';
+  else if (globalPct >= 55) label = ' — Nivel A2+/B1 en construcción, prioriza los débiles';
+  else label = ' — Nivel A2, hace falta consolidar mucho antes del DELF';
+
+  document.getElementById('overall-score').innerHTML =
+    '<strong>Score global: ' + totalOk + ' / ' + totalTotal + ' (' + globalPct + '%)</strong>' + label +
+    (timestamp ? '<br><span style="font-size:.78rem; color:var(--text3); font-weight:500;">Diagnóstico del ' + fmtTimestamp(timestamp) + '</span>' : '');
+
+  /* Pintar barras ordenadas por % (más débil primero) */
+  const arr = byTag.slice().sort((a, b) => a.pct - b.pct);
+  const barsEl = document.getElementById('bars');
+  barsEl.innerHTML = '';
+  arr.forEach(x => {
+    const reco = TAG_RECO[x.tag] || { label: x.tag };
+    const cls = x.pct < 50 ? 'weak' : (x.pct < 75 ? 'medium' : 'good');
+    barsEl.innerHTML += '<div class="calibration-bar"><span class="label">' + reco.label + '</span>' +
+      '<div class="track"><div class="fill ' + cls + '" style="width:' + x.pct + '%"></div></div>' +
+      '<span class="pct">' + x.pct + '%</span></div>';
+  });
+
+  /* Top 5 priorities */
+  const priorities = arr.slice(0, 5).filter(x => x.pct < 100);
+  const priEl = document.getElementById('priorities');
+  priEl.innerHTML = '';
+  priorities.forEach((x, i) => {
+    const reco = TAG_RECO[x.tag] || { label: x.tag, link: 'index.html', reason: 'Refuerza este tema.' };
+    priEl.innerHTML += '<a class="pri-item" href="' + reco.link + '">' +
+      '<span class="pri-rank">' + (i + 1) + '</span>' +
+      '<strong>' + reco.label + '</strong> · ' + x.ok + '/' + x.total + ' (' + x.pct + '%)' +
+      '<span class="pri-reason">→ ' + reco.reason + '</span></a>';
+  });
+
+  if (priorities.length === 0) {
+    priEl.innerHTML = '<p style="padding: 12px; background: var(--surface); border-radius: 8px;">🎉 Has acertado todo. ¡Presentate al DELF, estás listo/a!</p>';
+  }
+}
+
 document.getElementById('diagnose').addEventListener('click', () => {
   /* Esperar a que parcours.js haya pintado correct/incorrect */
   setTimeout(() => {
-    const tagStats = {};  // tag → { ok: n, total: n }
+    const tagStats = {};
     document.querySelectorAll('.qcm-q').forEach(q => {
       const tags = (q.dataset.tags || '').split(',').map(t => t.trim()).filter(Boolean);
       const correct = +q.dataset.correct;
@@ -305,58 +367,23 @@ document.getElementById('diagnose').addEventListener('click', () => {
       });
     });
 
-    /* Calcular % */
-    const arr = Object.entries(tagStats).map(([tag, s]) => ({
+    const byTag = Object.entries(tagStats).map(([tag, s]) => ({
       tag, pct: Math.round(100 * s.ok / s.total), ok: s.ok, total: s.total
     }));
 
-    /* Score global */
-    const totalOk = arr.reduce((s, x) => s + x.ok, 0);
-    const totalTotal = arr.reduce((s, x) => s + x.total, 0);
+    const totalOk = byTag.reduce((s, x) => s + x.ok, 0);
+    const totalTotal = byTag.reduce((s, x) => s + x.total, 0);
     const globalPct = Math.round(100 * totalOk / totalTotal);
 
-    /* Pintar resultados */
-    const panel = document.getElementById('diagnosticPanel');
-    const noResults = document.getElementById('noResults');
-    panel.classList.add('visible');
-    noResults.classList.remove('visible');
+    const data = { globalPct, totalOk, totalTotal, byTag, timestamp: Date.now() };
 
-    let label = '';
-    if (globalPct >= 85) label = ' — Excelente nivel B1+';
-    else if (globalPct >= 70) label = ' — Buen nivel B1, refuerza los puntos débiles';
-    else if (globalPct >= 55) label = ' — Nivel A2+/B1 en construcción, prioriza los débiles';
-    else label = ' — Nivel A2, hace falta consolidar mucho antes del DELF';
+    /* Persistir en localStorage + notificar cloud */
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      if (window.parcoursCloud) window.parcoursCloud.notify();
+    } catch (e) { /* fail silently */ }
 
-    document.getElementById('overall-score').innerHTML =
-      '<strong>Score global: ' + totalOk + ' / ' + totalTotal + ' (' + globalPct + '%)</strong>' + label;
-
-    /* Pintar barras ordenadas por % (más débil primero) */
-    arr.sort((a, b) => a.pct - b.pct);
-    const barsEl = document.getElementById('bars');
-    barsEl.innerHTML = '';
-    arr.forEach(x => {
-      const reco = TAG_RECO[x.tag] || { label: x.tag };
-      const cls = x.pct < 50 ? 'weak' : (x.pct < 75 ? 'medium' : 'good');
-      barsEl.innerHTML += '<div class="calibration-bar"><span class="label">' + reco.label + '</span>' +
-        '<div class="track"><div class="fill ' + cls + '" style="width:' + x.pct + '%"></div></div>' +
-        '<span class="pct">' + x.pct + '%</span></div>';
-    });
-
-    /* Top 5 priorities */
-    const priorities = arr.slice(0, 5).filter(x => x.pct < 100);
-    const priEl = document.getElementById('priorities');
-    priEl.innerHTML = '';
-    priorities.forEach((x, i) => {
-      const reco = TAG_RECO[x.tag] || { label: x.tag, link: 'index.html', reason: 'Refuerza este tema.' };
-      priEl.innerHTML += '<a class="pri-item" href="' + reco.link + '">' +
-        '<span class="pri-rank">' + (i + 1) + '</span>' +
-        '<strong>' + reco.label + '</strong> · ' + x.ok + '/' + x.total + ' (' + x.pct + '%)' +
-        '<span class="pri-reason">→ ' + reco.reason + '</span></a>';
-    });
-
-    if (priorities.length === 0) {
-      priEl.innerHTML = '<p style="padding: 12px; background: var(--surface); border-radius: 8px;">🎉 Has acertado todo. ¡Presentate al DELF, estás listo/a!</p>';
-    }
+    renderDiagnostic(data);
 
     /* Mover a la pestaña Diagnostic */
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -365,6 +392,27 @@ document.getElementById('diagnose').addEventListener('click', () => {
     document.querySelector('.panel[data-panel="lec"]').classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, 400);
+});
+
+/* Al cargar la página, restaurar diagnóstico previo si existe */
+(function restorePreviousDiagnostic(){
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+    const data = JSON.parse(saved);
+    if (!data || !data.byTag || !data.byTag.length) return;
+    renderDiagnostic(data);
+  } catch (e) { /* fail silently */ }
+})();
+
+window.addEventListener('parcours:cloud-loaded', () => {
+  /* Restaurar después de cargar el cloud */
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+    const data = JSON.parse(saved);
+    if (data && data.byTag && data.byTag.length) renderDiagnostic(data);
+  } catch (e) {}
 });
 </script>
 </body>

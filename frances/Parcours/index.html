@@ -227,10 +227,20 @@ mark{background:var(--accent-soft);color:var(--accent-deep);padding:0 2px;border
           <span class="dot-sep">·</span>
           <a href="repaso.html" class="quick-link">🔁 Repaso SRS</a>
           <span class="dot-sep">·</span>
+          <button id="manage-btn" style="background:none;border:none;color:var(--accent);font-family:inherit;font-size:.72rem;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;padding:0;">✏️ Gestionar leçons</button>
+          <span class="dot-sep">·</span>
           <button id="reset-btn">Reiniciar progreso</button>
         </span>
       </div>
     </div>
+
+    <!-- Panel de gestión de progreso -->
+    <details id="manage-panel" style="margin-top:12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:0 14px;">
+      <summary style="cursor:pointer;font-size:.78rem;font-weight:600;color:var(--accent);padding:10px 0;">✏️ Marcar / desmarcar leçons individualmente</summary>
+      <div id="manage-list" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;padding:8px 0 14px 0;">
+        <!-- generado por JS -->
+      </div>
+    </details>
 
     <!-- Buscador de vocabulario -->
     <div class="vocab-search">
@@ -813,12 +823,69 @@ document.getElementById('confirm-reset').addEventListener('click', ()=>{
 });
 confirmEl.addEventListener('click', e=>{ if(e.target===confirmEl) confirmEl.classList.remove('show'); });
 
+// ─────────────── PANEL GESTIÓN DE PROGRESO ───────────────
+const LECON_TITLES_INDEX = {
+  1:"L1 · Santé", 2:"L2 · Voyager", 3:"L3 · Arts",
+  4:"L4 · Téléphone", 5:"L5 · Ville", 6:"L6 · Lycée",
+  7:"L7 · Discours rapporté", 8:"L8 · Pouvoir d'achat", 9:"L9 · Argent",
+  10:"L10 · Style", 11:"L11 · Personnalité", 12:"L12 · Travail",
+  13:"L13 · Lettre formelle", 14:"L14 · Catastrophes", 15:"L15 · Société",
+  16:"L16 · Écologie", 17:"L17 · Action solidaire"
+};
+function renderManagePanel(){
+  const list = document.getElementById('manage-list');
+  if(!list) return;
+  const state = loadState();
+  const done = state.done || [];
+  list.innerHTML = '';
+  for(let i = 1; i <= TOTAL; i++){
+    const isDone = done.includes(i);
+    const label = document.createElement('label');
+    label.style.cssText = 'display:flex;align-items:center;gap:8px;padding:8px 12px;background:' + (isDone ? 'rgba(16,185,129,.12)' : 'var(--bg)') + ';border:1px solid ' + (isDone ? '#10b981' : 'var(--border)') + ';border-radius:8px;cursor:pointer;font-size:.82rem;font-weight:500;transition:all .15s;user-select:none;';
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = isDone;
+    cb.dataset.lecon = i;
+    cb.style.cssText = 'width:16px;height:16px;accent-color:#10b981;cursor:pointer;';
+    cb.addEventListener('change', () => {
+      const s = loadState();
+      s.done = s.done || [];
+      const idx = s.done.indexOf(i);
+      if (cb.checked && idx === -1) s.done.push(i);
+      else if (!cb.checked && idx !== -1) s.done.splice(idx, 1);
+      saveState(s);
+      if(window.parcoursCloud) window.parcoursCloud.notify();
+      // Re-render visual de los nodos del camino + del panel
+      document.querySelectorAll('.node-prog').forEach(t=>t.remove());
+      document.querySelectorAll('.node').forEach(n=>{ n.dataset.state=''; n.removeAttribute('aria-disabled'); });
+      render();
+      renderManagePanel();
+    });
+    label.appendChild(cb);
+    const span = document.createElement('span');
+    span.textContent = LECON_TITLES_INDEX[i] || ('Leçon ' + i);
+    if (isDone) span.innerHTML = '✓ ' + span.textContent;
+    label.appendChild(span);
+    list.appendChild(label);
+  }
+}
+document.getElementById('manage-btn').addEventListener('click', () => {
+  const panel = document.getElementById('manage-panel');
+  panel.open = !panel.open;
+  renderManagePanel();
+  if (panel.open) {
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+  }
+});
+renderManagePanel();
+
 // Re-render when cloud finishes loading remote data
 window.addEventListener('parcours:cloud-loaded', ()=>{
   document.querySelectorAll('.node-prog').forEach(t=>t.remove());
   // Reset state classes
   document.querySelectorAll('.node').forEach(n=>{ n.dataset.state=''; n.removeAttribute('aria-disabled'); });
   render();
+  renderManagePanel();
 });
 
 render();
