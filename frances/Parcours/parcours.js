@@ -50,8 +50,11 @@
       'qcm-vocab': '.qcm-q',
       'qcm-read':  '.qcm-q',
       'qcm-read2': '.qcm-q',
+      'qcm-co':    '.qcm-q',
       'gap-rel':   '.gap-q',
       'tf':        '.tf-q',
+      'tf-delf':   '.tf-q',
+      'tf-quiz':   '.tf-q',
       'match':     '.match-item[data-side="L"]',
       'trans':     '.trans-q',
       'order':     '.order-q',
@@ -166,7 +169,7 @@
   }
 
   // ─────────────── QCM ───────────────
-  document.querySelectorAll('.exo[data-exo="qcm-vocab"] .qcm-q, .exo[data-exo="qcm-read"] .qcm-q').forEach(q => {
+  document.querySelectorAll('.exo[data-exo="qcm-vocab"] .qcm-q, .exo[data-exo="qcm-read"] .qcm-q, .exo[data-exo="qcm-read2"] .qcm-q, .exo[data-exo="qcm-co"] .qcm-q').forEach(q => {
     q.querySelectorAll('.opt').forEach(opt => {
       opt.addEventListener('click', () => {
         if (q.classList.contains('checked')) return;
@@ -234,7 +237,7 @@
   }
 
   // ─────────────── T/F ───────────────
-  document.querySelectorAll('.exo[data-exo="tf"] .tf-q').forEach(q => {
+  document.querySelectorAll('.exo[data-exo="tf"] .tf-q, .exo[data-exo="tf-delf"] .tf-q, .exo[data-exo="tf-quiz"] .tf-q').forEach(q => {
     q.querySelectorAll('.tf-btn').forEach(b => {
       b.addEventListener('click', () => {
         if (q.classList.contains('checked')) return;
@@ -583,11 +586,13 @@
 
   // ─────────────── Wire all exercises ───────────────
   const checkers = {
-    'qcm-vocab': checkQCM, 'qcm-read': checkQCM, 'gap-rel': checkGap, 'tf': checkTF,
+    'qcm-vocab': checkQCM, 'qcm-read': checkQCM, 'qcm-read2': checkQCM, 'qcm-co': checkQCM,
+    'gap-rel': checkGap, 'tf': checkTF, 'tf-delf': checkTF, 'tf-quiz': checkTF,
     'trans': checkTrans, 'order': checkOrder, 'type': checkType, 'prod': checkProd
   };
   const resetters = {
-    'qcm-vocab': resetQCM, 'qcm-read': resetQCM, 'gap-rel': resetGap, 'tf': resetTF,
+    'qcm-vocab': resetQCM, 'qcm-read': resetQCM, 'qcm-read2': resetQCM, 'qcm-co': resetQCM,
+    'gap-rel': resetGap, 'tf': resetTF, 'tf-delf': resetTF, 'tf-quiz': resetTF,
     'trans': resetTrans, 'order': resetOrder, 'type': resetType, 'prod': resetProd
   };
 
