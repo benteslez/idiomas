@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parcours B1 · Estadísticas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafafa; --surface:#ffffff; --border:#e5e5e5; --border-strong:#d4d4d4;
+  --text:#0a0a0a; --text2:#525252; --text3:#737373;
+  --accent:#2563eb; --accent-soft:#dbeafe; --accent-deep:#1d4ed8;
+  --done:#10b981; --done-bg:#d1fae5;
+  --green:#15803d; --amber:#b45309; --red:#b91c1c;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.04);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.05),0 1px 2px rgba(0,0,0,.04);
+  --header-bg-rgb:255,255,255;
+}
+[data-theme="dark"]{
+  --bg:#0a0a0b; --surface:#18181b; --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --accent:#60a5fa; --accent-soft:rgba(96,165,250,.15);
+  --done:#4ade80; --done-bg:rgba(74,222,128,.15);
+  --green:#4ade80; --amber:#fbbf24; --red:#f87171;
+  --header-bg-rgb:18,18,27;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.55;}
+
+.site-header{background:rgba(var(--header-bg-rgb),.88);backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--border);padding:20px 20px 18px;position:sticky;top:0;z-index:50;}
+.header-inner{max-width:880px;margin:0 auto;position:relative;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:5px 12px 5px 9px;font-size:.78rem;font-weight:600;color:var(--text2);text-decoration:none;transition:all .15s;box-shadow:var(--shadow-xs);margin-bottom:10px;}
+.back-btn:hover{background:var(--bg);border-color:var(--border-strong);color:var(--text);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
+.header-tag{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:100px;padding:3px 10px;margin-left:10px;}
+.header-sub{font-size:.82rem;color:var(--text3);font-weight:500;margin-top:6px;}
+
+.theme-toggle{position:absolute;top:0;right:0;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--text2);cursor:pointer;font-size:.95rem;}
+.theme-toggle:hover{background:var(--bg);border-color:var(--border-strong);color:var(--text);}
+.theme-toggle::before{content:"◐";line-height:1;}
+[data-theme="dark"] .theme-toggle::before{content:"☼";}
+
+.main{max-width:880px;margin:0 auto;padding:32px 20px 64px;}
+
+/* HERO PROGRESS */
+.hero{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;box-shadow:var(--shadow-xs);margin-bottom:22px;}
+.hero-h{display:flex;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.hero-h .pct{font-size:3rem;font-weight:800;letter-spacing:-.03em;color:var(--accent);font-variant-numeric:tabular-nums;}
+.hero-h .pct .pc{font-size:1.2rem;color:var(--text3);font-weight:600;}
+.hero-h .label{font-size:.92rem;color:var(--text2);font-weight:600;}
+.bar{height:8px;background:var(--border);border-radius:100px;overflow:hidden;margin:14px 0 18px;}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--done));border-radius:100px;transition:width .6s cubic-bezier(.22,1,.36,1);}
+.hero-meta{display:flex;gap:18px;font-size:.84rem;color:var(--text3);flex-wrap:wrap;}
+.hero-meta strong{color:var(--text);font-variant-numeric:tabular-nums;}
+
+.cta{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
+.btn{font-family:inherit;font-size:.86rem;font-weight:700;border-radius:10px;padding:9px 16px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .15s;}
+.btn:hover{background:var(--bg);}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+.btn.primary:hover{filter:brightness(.92);}
+
+/* GRID DE STATS */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:22px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 18px 16px;box-shadow:var(--shadow-xs);}
+.stat-card .num{font-size:1.9rem;font-weight:800;letter-spacing:-.025em;font-variant-numeric:tabular-nums;color:var(--accent);line-height:1;}
+.stat-card .label{font-size:.78rem;color:var(--text3);font-weight:600;margin-top:4px;}
+.stat-card .detail{font-size:.74rem;color:var(--text2);margin-top:8px;}
+.stat-card.green .num{color:var(--green);}
+.stat-card.amber .num{color:var(--amber);}
+.stat-card.red .num{color:var(--red);}
+
+/* LISTAS DE NOTAS */
+.section{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px 22px;margin-bottom:18px;box-shadow:var(--shadow-xs);}
+.section h2{font-size:1.02rem;font-weight:700;letter-spacing:-.012em;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.section h2 .badge{font-size:.7rem;font-weight:700;background:var(--accent-soft);color:var(--accent-deep);padding:2px 9px;border-radius:100px;letter-spacing:.04em;}
+
+.score-list{display:flex;flex-direction:column;gap:6px;}
+.score-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--border);border-radius:9px;font-size:.84rem;background:var(--bg);}
+.score-row .name{flex:1;font-weight:500;}
+.score-row .lecon{font-size:.7rem;color:var(--text3);font-weight:600;background:var(--surface);padding:1px 8px;border-radius:100px;border:1px solid var(--border);}
+.score-row .pct{font-weight:700;font-variant-numeric:tabular-nums;}
+.score-row.good .pct{color:var(--green);}
+.score-row.mid .pct{color:var(--amber);}
+.score-row.bad .pct{color:var(--red);}
+.empty{font-size:.84rem;color:var(--text3);font-style:italic;}
+
+/* STREAK */
+.streak{display:flex;align-items:center;gap:14px;font-size:.92rem;}
+.streak .flame{font-size:2rem;}
+.streak .num{font-size:2rem;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums;}
+.streak .lbl{color:var(--text2);}
+
+@media (max-width:520px){
+  .hero{padding:22px 18px;}
+  .hero-h .pct{font-size:2.4rem;}
+  .main{padding:24px 16px 60px;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <button type="button" class="theme-toggle" id="themeToggle" title="Cambiar tema" aria-label="Cambiar tema"></button>
+    <a class="back-btn" href="index.html"><span class="arrow">‹</span><span>Parcours B1</span></a>
+    <div style="display:flex;align-items:baseline;flex-wrap:wrap;">
+      <h1>Estadísticas</h1>
+      <span class="header-tag">Tu progreso</span>
+    </div>
+    <p class="header-sub">Resumen completo de tu camino DELF B1 — guardado en Supabase.</p>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-h">
+      <span class="pct" id="globalPct">0<span class="pc">%</span></span>
+      <span class="label">del Parcours completado</span>
+    </div>
+    <div class="bar"><div class="bar-fill" id="globalBar" style="width:0%"></div></div>
+    <div class="hero-meta">
+      <span><strong id="leconsDone">0</strong> / 17 leçons completadas</span>
+      <span><strong id="exosDone">0</strong> ejercicios resueltos</span>
+      <span><strong id="peDoneTotal">0</strong> producciones marcadas</span>
+      <span><strong id="checkTotal">0</strong> competencias dominadas</span>
+    </div>
+    <div class="cta">
+      <a class="btn primary" id="resumeBtn" href="lecon_01.html">▶ Reanudar donde lo dejaste</a>
+      <a class="btn" href="index.html">Volver al camino</a>
+    </div>
+  </div>
+
+  <!-- KPI GRID -->
+  <div class="grid">
+    <div class="stat-card">
+      <div class="num" id="kpiAvances">0 / 374</div>
+      <div class="label">Avances totales</div>
+      <div class="detail">Ejercicios + PE + checklist</div>
+    </div>
+    <div class="stat-card green">
+      <div class="num" id="kpiAvg">—</div>
+      <div class="label">Media de notas</div>
+      <div class="detail">Sobre ejercicios con score</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="num" id="kpiStreak">0</div>
+      <div class="label">Días seguidos</div>
+      <div class="detail">Streak de estudio</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="kpiLastDay">—</div>
+      <div class="label">Último día activo</div>
+      <div class="detail" id="kpiLastDayDate">—</div>
+    </div>
+  </div>
+
+  <!-- TOP 3 SCORES -->
+  <div class="section">
+    <h2>🥇 Tus 3 mejores ejercicios <span class="badge">Top scores</span></h2>
+    <div class="score-list" id="topScores">
+      <div class="empty">Empieza a hacer ejercicios para ver tus mejores notas aquí.</div>
+    </div>
+  </div>
+
+  <!-- 3 PEORES (para repasar) -->
+  <div class="section">
+    <h2>🎯 A reforzar · 3 ejercicios con peor puntuación <span class="badge">Repaso</span></h2>
+    <div class="score-list" id="worstScores">
+      <div class="empty">Cuando hayas hecho varios ejercicios, aquí aparecerán los que más conviene repasar.</div>
+    </div>
+  </div>
+
+  <!-- POR LEÇON -->
+  <div class="section">
+    <h2>📚 Progreso por Leçon</h2>
+    <div class="score-list" id="leconList"></div>
+  </div>
+
+</main>
+
+<script>
+const SCORES_KEY = 'parcours_b1_scores';
+const STATE_KEY  = 'parcours_b1_state';
+const DRAFTS_KEY = 'parcours_b1_drafts';
+const PE_KEY     = 'parcours_b1_pe_done';
+const CHECK_KEY  = 'parcours_b1_checklist';
+const ACTIVITY_KEY = 'parcours_b1_activity';   // {YYYY-MM-DD: true}
+
+const EXO_LABEL = {
+  'qcm-vocab': 'QCM léxico',
+  'qcm-read':  'CE1 · comprensión literal',
+  'qcm-read2': 'CE2 · inferencia',
+  'gap-rel':   'Gap-fill',
+  'tf':        'Verdadero / Falso',
+  'match':     'Match',
+  'trans':     'Transformación',
+  'order':     'Ordenar palabras',
+  'type':      'Memoria typing',
+  'prod':      'Mini-texto',
+  'prod-libre':'Producción libre'
+};
+const LECON_TITLE = {
+  1:"Études", 2:"Animaux", 3:"Arts & spectacles", 4:"Téléphone",
+  5:"Aménagements urbains", 6:"Vie au lycée", 7:"Discours rapporté", 8:"Pouvoir d'achat",
+  9:"L'argent", 10:"Allure & style", 11:"Personnalité", 12:"Travail",
+  13:"Lettre formelle", 14:"Catastrophes & politique", 15:"Société", 16:"Écologie", 17:"Action militante"
+};
+
+function load(k){ try{return JSON.parse(localStorage.getItem(k)||'{}');}catch(e){return {};} }
+
+// Theme
+const LS_THEME = 'parcours_theme';
+function applyTheme(t){ document.documentElement.setAttribute('data-theme', t==='dark'?'dark':''); }
+let savedTheme = 'light';
+try { savedTheme = localStorage.getItem(LS_THEME) || 'light'; } catch(e){}
+applyTheme(savedTheme);
+document.getElementById('themeToggle').addEventListener('click', ()=>{
+  const cur = document.documentElement.getAttribute('data-theme')==='dark'?'dark':'light';
+  const next = cur==='dark'?'light':'dark';
+  applyTheme(next);
+  try{ localStorage.setItem(LS_THEME, next); }catch(e){}
+});
+
+// Marca actividad de hoy (cualquier visita)
+(function(){
+  try{
+    const today = new Date().toISOString().slice(0,10);
+    const act = load(ACTIVITY_KEY);
+    if(!act[today]){
+      act[today] = true;
+      localStorage.setItem(ACTIVITY_KEY, JSON.stringify(act));
+      if(window.parcoursCloud) window.parcoursCloud.notify();
+    }
+  }catch(e){}
+})();
+
+function computeStreak(){
+  const act = load(ACTIVITY_KEY);
+  const days = Object.keys(act).sort().reverse();
+  if(!days.length) return 0;
+  let streak = 0;
+  const today = new Date();
+  for(let i=0;i<365;i++){
+    const d = new Date(today); d.setDate(today.getDate()-i);
+    const key = d.toISOString().slice(0,10);
+    if(act[key]) streak++;
+    else if(i>0) break;  // permite no haber abierto hoy
+  }
+  return streak;
+}
+
+function lastActiveDate(){
+  const act = load(ACTIVITY_KEY);
+  const days = Object.keys(act).sort().reverse();
+  return days[0] || null;
+}
+
+function relativeDate(iso){
+  if(!iso) return '—';
+  const today = new Date(); today.setHours(0,0,0,0);
+  const d = new Date(iso); d.setHours(0,0,0,0);
+  const diff = Math.round((today - d)/(1000*60*60*24));
+  if(diff===0) return 'Hoy';
+  if(diff===1) return 'Ayer';
+  if(diff<7) return `Hace ${diff} días`;
+  return iso;
+}
+
+function lastVisitedLecon(){
+  // Heurística: leçon con score más reciente (ts más alto)
+  const scores = load(SCORES_KEY);
+  let bestTs = 0, bestId = 1;
+  for(const lid in scores){
+    for(const exo in scores[lid]){
+      const ts = scores[lid][exo].ts || 0;
+      if(ts > bestTs){ bestTs = ts; bestId = +lid; }
+    }
+  }
+  // Si tiene leçons completadas pero ninguna con score, ofrece la siguiente
+  const state = load(STATE_KEY);
+  const done = state.done || [];
+  if(!bestTs && done.length){
+    const next = done.sort((a,b)=>b-a)[0] + 1;
+    return Math.min(next, 17);
+  }
+  return bestId;
+}
+
+function render(){
+  const scores  = load(SCORES_KEY);
+  const state   = load(STATE_KEY);
+  const drafts  = load(DRAFTS_KEY);
+  const peDone  = load(PE_KEY);
+  const checks  = load(CHECK_KEY);
+
+  const done = state.done || [];
+
+  // Total avances
+  let sCount=0, dCount=0, peCount=0, ckCount=0;
+  for(let i=1;i<=17;i++){
+    sCount  += scores[i] ? Object.keys(scores[i]).length : 0;
+    dCount  += drafts[i] ? Object.values(drafts[i]).filter(v=>v&&v.trim().length>0).length : 0;
+    peCount += (peDone[i] || []).length;
+    ckCount += (checks[i] || []).length;
+  }
+  const totalAvances = sCount + dCount + peCount + ckCount;
+  const totalMax     = 17 * 22;
+  const pct = Math.round(totalAvances / totalMax * 100);
+
+  document.getElementById('globalPct').innerHTML = pct + '<span class="pc">%</span>';
+  document.getElementById('globalBar').style.width = pct + '%';
+  document.getElementById('leconsDone').textContent = done.length;
+  document.getElementById('exosDone').textContent = sCount;
+  document.getElementById('peDoneTotal').textContent = peCount;
+  document.getElementById('checkTotal').textContent = ckCount;
+
+  document.getElementById('kpiAvances').textContent = totalAvances + ' / ' + totalMax;
+
+  // Media de notas
+  const flat = [];
+  for(const lid in scores){
+    for(const exo in scores[lid]){
+      const s = scores[lid][exo];
+      if(s.total>0){
+        flat.push({lecon:+lid, exo, score:s.score, total:s.total, pct:s.score/s.total, ts:s.ts});
+      }
+    }
+  }
+  if(flat.length){
+    const avg = flat.reduce((a,c)=>a+c.pct,0)/flat.length;
+    const avgPct = Math.round(avg*100);
+    document.getElementById('kpiAvg').textContent = avgPct + '%';
+    document.querySelector('.stat-card.green').classList.toggle('amber', avgPct<75);
+    document.querySelector('.stat-card.green').classList.toggle('red', avgPct<50);
+  }
+
+  // Streak
+  const streak = computeStreak();
+  document.getElementById('kpiStreak').textContent = streak;
+  const last = lastActiveDate();
+  document.getElementById('kpiLastDay').textContent = relativeDate(last);
+  document.getElementById('kpiLastDayDate').textContent = last || '—';
+
+  // Resume button
+  const lastL = lastVisitedLecon();
+  document.getElementById('resumeBtn').href = 'lecon_' + String(lastL).padStart(2,'0') + '.html';
+  document.getElementById('resumeBtn').textContent = '▶ Reanudar — Leçon ' + lastL;
+
+  // Top 3 & worst 3
+  const sorted = [...flat].sort((a,b)=>b.pct-a.pct);
+  const top3 = sorted.slice(0, 3);
+  const worst3 = sorted.slice().reverse().slice(0, 3);
+
+  function row(item){
+    const cls = item.pct>=0.8?'good':(item.pct>=0.5?'mid':'bad');
+    const label = EXO_LABEL[item.exo] || item.exo;
+    return `<div class="score-row ${cls}">
+      <span class="lecon">L${item.lecon}</span>
+      <span class="name">${label}</span>
+      <span class="pct">${item.score}/${item.total} · ${Math.round(item.pct*100)}%</span>
+    </div>`;
+  }
+  if(top3.length){
+    document.getElementById('topScores').innerHTML = top3.map(row).join('');
+  }
+  if(worst3.length){
+    document.getElementById('worstScores').innerHTML = worst3.map(row).join('');
+  }
+
+  // Por leçon
+  const list = document.getElementById('leconList');
+  const rows = [];
+  for(let i=1;i<=17;i++){
+    const lScores = scores[i] || {};
+    const lDrafts = drafts[i] || {};
+    const lPE = peDone[i] || [];
+    const lCk = checks[i] || [];
+    const exoN = Object.keys(lScores).length;
+    const dN   = Object.values(lDrafts).filter(v=>v&&v.trim().length>0).length;
+    const sum  = exoN + dN + lPE.length + lCk.length;
+    const lpct = Math.round(sum/22*100);
+    const isDone = done.includes(i);
+    const cls = isDone ? 'good' : (lpct>0 ? 'mid' : '');
+    rows.push(`<div class="score-row ${cls}">
+      <span class="lecon">L${i}</span>
+      <span class="name">${LECON_TITLE[i]}</span>
+      <span class="pct">${sum}/22 · ${lpct}%${isDone?' ✓':''}</span>
+    </div>`);
+  }
+  list.innerHTML = rows.join('');
+}
+
+window.addEventListener('parcours:cloud-loaded', render);
+render();
+</script>
+
+<script src="parcours.js"></script>
+</body>
+</html>

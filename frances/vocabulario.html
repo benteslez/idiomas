@@ -41409,6 +41409,54 @@ initFilters();
 buildTopicUI();
 reRender(true);
 
+/* ════════════════════════════════════════════════════════════════
+   INYECCIÓN DEL VOCABULARIO DEL PARCOURS B1 (Parcours/vocab.json)
+   Hace que las 574 flashcards de las 17 leçons aparezcan también
+   aquí, con tema "Parcours B1 · Leçon N". No duplica al re-cargar.
+   ════════════════════════════════════════════════════════════════ */
+(function injectParcoursVocab(){
+  if (typeof DATA === 'undefined') return;
+  fetch('Parcours/vocab.json')
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(cards){
+      if (!Array.isArray(cards) || !cards.length) return;
+      var nextId = 0;
+      for (var i=0; i<DATA.length; i++) if (DATA[i].id > nextId) nextId = DATA[i].id;
+      nextId += 1;
+      var seen = {};
+      for (var j=0; j<DATA.length; j++){
+        var k = (DATA[j].w||'').toLowerCase() + '|' + (DATA[j].tema||'').toLowerCase();
+        seen[k] = true;
+      }
+      var added = 0;
+      cards.forEach(function(c){
+        var tema = 'Parcours B1 · Leçon ' + c.lecon;
+        var key  = (c.fr||'').toLowerCase() + '|' + tema.toLowerCase();
+        if (seen[key]) return;
+        seen[key] = true;
+        DATA.push({
+          id: nextId++,
+          w:  c.fr,
+          t:  c.es + (c.hint ? ' (' + c.hint + ')' : ''),
+          tema: tema,
+          cat:  'Otros',
+          gen:  null,
+          ex_fr: '', ex_es: '', syn: null, warn: null,
+          subtema: c.lecon_title || null,
+          flags: { top:false, oral:false, escrito:false, parcours:true },
+          nivel: 'B1'
+        });
+        added++;
+      });
+      if (added) {
+        try { rebuildSearchIndex(); } catch(e){}
+        try { updateStats(); reRender(true); buildTopicUI(); } catch(e){}
+        console.info('[Parcours] ' + added + ' tarjetas inyectadas en vocabulario');
+      }
+    })
+    .catch(function(err){ console.warn('[Parcours] no vocab.json', err); });
+})();
+
 /* ═══════════════════════════════════════════
    MODO JUEGO — lógica completa
    ═══════════════════════════════════════════ */

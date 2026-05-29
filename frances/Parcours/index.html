@@ -10,19 +10,19 @@
 <style>
 /* Profile pill + cloud status (shared visual lang) */
 .hdr-profile-row{position:absolute;top:0;right:0;display:flex;align-items:center;}
-.hdr-profile-pill{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:100px;padding:4px 11px 4px 4px;font-family:inherit;font-size:.75rem;font-weight:600;color:var(--text2);box-shadow:var(--shadow-xs);cursor:pointer;transition:all .15s;}
+.hdr-profile-pill{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:4px 11px 4px 4px;font-family:inherit;font-size:.75rem;font-weight:600;color:var(--text2);box-shadow:var(--shadow-xs);cursor:pointer;transition:all .15s;}
 .hdr-profile-pill:hover{background:var(--bg);border-color:var(--border-strong);color:var(--text);}
 .hdr-profile-pill .pp-avatar{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem;}
 .hdr-profile-pill[data-profile="ruben"] .pp-avatar{background:var(--accent);}
 .hdr-profile-pill[data-profile="sergio"] .pp-avatar{background:#7c3aed;}
 .hdr-profile-pill[data-profile="invitado"] .pp-avatar{background:var(--text3);}
 .hdr-profile-pill .pp-switch{font-size:.6rem;color:var(--text3);margin-left:2px;}
-.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:#fff;border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .15s;margin-right:6px;font-size:.95rem;}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .15s;margin-right:6px;font-size:.95rem;}
 .theme-toggle:hover{background:var(--bg);border-color:var(--border-strong);color:var(--text);}
 .theme-toggle::before{content:"◐";line-height:1;}
 [data-theme="dark"] .theme-toggle{background:var(--surface);}
 [data-theme="dark"] .theme-toggle::before{content:"☼";}
-.cloud-status{position:fixed;bottom:14px;right:14px;display:inline-flex;align-items:center;gap:7px;padding:7px 13px;background:#fff;border:1px solid var(--border);border-radius:100px;font-family:inherit;font-size:.74rem;font-weight:600;color:var(--text2);box-shadow:var(--shadow);opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .25s ease, transform .25s ease;z-index:8000;}
+.cloud-status{position:fixed;bottom:14px;right:14px;display:inline-flex;align-items:center;gap:7px;padding:7px 13px;background:var(--surface);border:1px solid var(--border);border-radius:100px;font-family:inherit;font-size:.74rem;font-weight:600;color:var(--text2);box-shadow:var(--shadow);opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .25s ease, transform .25s ease;z-index:8000;}
 .cloud-status.visible{opacity:1;transform:translateY(0);}
 .cloud-status .cs-dot{width:8px;height:8px;border-radius:50%;background:var(--text3);flex-shrink:0;}
 .cloud-status.saving  .cs-dot{background:#d97706;animation:cs-pulse 1s ease-in-out infinite;}
@@ -95,8 +95,28 @@ h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
 .progress-bar{height:6px;background:var(--border);border-radius:100px;overflow:hidden;}
 .progress-fill{height:100%;background:var(--accent);border-radius:100px;transition:width .4s cubic-bezier(.22,1,.36,1);}
 .progress-meta{display:flex;justify-content:space-between;font-size:.72rem;color:var(--text3);margin-top:6px;font-variant-numeric:tabular-nums;}
-.progress-meta button{background:none;border:none;color:var(--accent);font-family:inherit;font-size:.72rem;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;}
+.progress-meta button{background:none;border:none;color:var(--accent);font-family:inherit;font-size:.72rem;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;padding:0;}
 .progress-meta button:hover{color:var(--accent-deep);}
+.progress-meta .quick-link{color:var(--accent);text-decoration:none;font-weight:600;}
+.progress-meta .quick-link:hover{text-decoration:underline;text-underline-offset:2px;color:var(--accent-deep);}
+.progress-meta .dot-sep{color:var(--text3);margin:0 6px;}
+
+/* SEARCH BAR DE VOCABULARIO */
+.vocab-search{position:relative;margin-top:14px;}
+.vocab-search input{width:100%;font-family:inherit;font-size:.84rem;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:9px 14px;outline:none;transition:border-color .15s, box-shadow .15s;}
+.vocab-search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.vocab-results{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);max-height:340px;overflow-y:auto;z-index:30;}
+.vocab-results-meta{padding:8px 14px;font-size:.74rem;color:var(--text3);font-weight:600;border-bottom:1px solid var(--border);}
+.vocab-result{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);font-size:.85rem;text-decoration:none;color:var(--text);transition:background .12s;}
+.vocab-result:last-child{border-bottom:none;}
+.vocab-result:hover{background:var(--bg);}
+.vocab-result .fr{font-weight:700;color:var(--text);}
+.vocab-result .arr{color:var(--text3);}
+.vocab-result .es{color:var(--text2);flex:1;}
+.vocab-result .lid{font-size:.7rem;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:2px 9px;border-radius:100px;letter-spacing:.04em;}
+.vocab-result .hint{font-size:.72rem;color:var(--text3);font-style:italic;margin-left:6px;}
+.vocab-empty{padding:14px;font-size:.82rem;color:var(--text3);text-align:center;}
+mark{background:var(--accent-soft);color:var(--accent-deep);padding:0 2px;border-radius:3px;font-weight:600;}
 
 /* MAIN */
 .main{max-width:880px;margin:0 auto;padding:36px 20px 80px;}
@@ -138,7 +158,7 @@ h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
 .node:hover .node-card{border-color:var(--d-color);transform:translateY(-1px);box-shadow:var(--shadow-sm);}
 .node[data-state="locked"]{pointer-events:none;}
 .node[data-state="locked"] .node-card{opacity:.5;background:var(--locked-bg);border-color:var(--border);}
-.node[data-state="current"] .node-card{border-color:var(--d-color);box-shadow:0 0 0 3px var(--d-bg),var(--shadow-sm);background:#fff;}
+.node[data-state="current"] .node-card{border-color:var(--d-color);box-shadow:0 0 0 3px var(--d-bg),var(--shadow-sm);background:var(--surface);}
 .node[data-state="done"] .node-card{background:var(--done-bg);border-color:var(--done);}
 
 .node-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
@@ -147,9 +167,9 @@ h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
 .node-badge.done-badge{color:#fff;background:var(--done);}
 .node-title{font-size:1rem;font-weight:700;letter-spacing:-.012em;color:var(--text);margin-bottom:8px;line-height:1.35;}
 .node-meta{display:flex;flex-wrap:wrap;gap:6px;}
-.meta-tag{font-size:.7rem;font-weight:500;color:var(--text2);background:#fff;border:1px solid var(--border);border-radius:100px;padding:2px 9px;}
+.meta-tag{font-size:.7rem;font-weight:500;color:var(--text2);background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:2px 9px;}
 .meta-tag.gram{color:var(--d-color);background:var(--d-bg);border-color:transparent;font-weight:600;}
-.node-prog{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:600;color:var(--text2);background:#fff;border:1px solid var(--border);border-radius:100px;padding:2px 9px 2px 4px;margin-top:8px;}
+.node-prog{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:600;color:var(--text2);background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:2px 9px 2px 4px;margin-top:8px;}
 .node-prog .prog-dot{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--d-bg);color:var(--d-color);font-size:.62rem;font-weight:700;}
 .node-prog.full{color:var(--done);background:var(--done-bg);border-color:var(--done);}
 .node-prog.full .prog-dot{background:var(--done);color:#fff;}
@@ -195,8 +215,20 @@ h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
       <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
       <div class="progress-meta">
         <span id="progress-pct">0% completado</span>
-        <button id="reset-btn">Reiniciar progreso</button>
+        <span>
+          <a href="stats.html" class="quick-link">📊 Estadísticas</a>
+          <span class="dot-sep">·</span>
+          <a href="repaso.html" class="quick-link">🔁 Repaso SRS</a>
+          <span class="dot-sep">·</span>
+          <button id="reset-btn">Reiniciar progreso</button>
+        </span>
       </div>
+    </div>
+
+    <!-- Buscador de vocabulario -->
+    <div class="vocab-search">
+      <input type="search" id="vocabQ" placeholder="🔍 Buscar palabra (es o fr): ‹épanouie›, ‹huelga›, ‹dont›…" autocomplete="off">
+      <div class="vocab-results" id="vocabResults" hidden></div>
     </div>
   </div>
 </header>
@@ -612,6 +644,67 @@ window.addEventListener('parcours:cloud-loaded', ()=>{
 });
 
 render();
+
+// Buscador de vocabulario (574 flashcards)
+(function(){
+  const input = document.getElementById('vocabQ');
+  const out   = document.getElementById('vocabResults');
+  let DATA = null;
+
+  function fetchData(){
+    if (DATA) return Promise.resolve(DATA);
+    return fetch('vocab.json').then(r => r.json()).then(j => { DATA = j; return j; });
+  }
+  function norm(s){
+    return (s || '').toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9\s']/g, ' ').trim();
+  }
+  function hl(text, q){
+    if(!q) return text;
+    const re = new RegExp('(' + q.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&') + ')', 'gi');
+    return text.replace(re, '<mark>$1</mark>');
+  }
+
+  let to = null;
+  input.addEventListener('input', () => {
+    const q = input.value.trim();
+    clearTimeout(to);
+    to = setTimeout(() => {
+      if (q.length < 2) { out.hidden = true; out.innerHTML = ''; return; }
+      fetchData().then(data => {
+        const nq = norm(q);
+        const matches = data.filter(c =>
+          norm(c.es).includes(nq) || norm(c.fr).includes(nq) ||
+          (c.hint && norm(c.hint).includes(nq))
+        ).slice(0, 25);
+        if (!matches.length) {
+          out.innerHTML = '<div class="vocab-empty">Sin coincidencias para «' + q + '»</div>';
+        } else {
+          const meta = '<div class="vocab-results-meta">' + matches.length + ' coincidencia(s) — toca para ir a la leçon</div>';
+          out.innerHTML = meta + matches.map(c => `
+            <a class="vocab-result" href="lecon_${String(c.lecon).padStart(2,'0')}.html">
+              <span class="lid">L${c.lecon}</span>
+              <span class="fr">${hl(c.fr, q)}</span>
+              <span class="arr">·</span>
+              <span class="es">${hl(c.es, q)}</span>
+              ${c.hint ? '<span class="hint">' + hl(c.hint, q) + '</span>' : ''}
+            </a>
+          `).join('');
+        }
+        out.hidden = false;
+      }).catch(err => {
+        console.warn('[vocab] load error', err);
+        out.innerHTML = '<div class="vocab-empty">Error cargando vocab.json</div>';
+        out.hidden = false;
+      });
+    }, 180);
+  });
+  document.addEventListener('click', e => {
+    if (e.target !== input && !out.contains(e.target)) out.hidden = true;
+  });
+  input.addEventListener('focus', () => { if (input.value.trim().length >= 2) out.hidden = false; });
+})();
 
 // Theme toggle (persistente)
 const LS_THEME = 'parcours_theme';

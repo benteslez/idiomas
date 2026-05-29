@@ -706,6 +706,8 @@
   const LS_DRAFTS    = 'parcours_b1_drafts';
   const LS_PE        = 'parcours_b1_pe_done';
   const LS_CHECKLIST = 'parcours_b1_checklist';
+  const LS_ACTIVITY  = 'parcours_b1_activity';
+  const LS_SRS       = 'parcours_b1_srs';
   function LS_BACKUP(p){ return 'parcours_cloud_backup__' + APP_ID + '__' + p; }
 
   const CLOUD_ENABLED = !!(SUPABASE_URL && SUPABASE_KEY);
@@ -726,7 +728,9 @@
       scores:    loadKey(LS_SCORES),
       drafts:    loadKey(LS_DRAFTS),
       peDone:    loadKey(LS_PE),
-      checklist: loadKey(LS_CHECKLIST)
+      checklist: loadKey(LS_CHECKLIST),
+      activity:  loadKey(LS_ACTIVITY),
+      srs:       loadKey(LS_SRS)
     };
   }
   function applyPayload(data){
@@ -736,17 +740,21 @@
     try { localStorage.setItem(LS_DRAFTS,    JSON.stringify(data.drafts    || {})); } catch (e){}
     try { localStorage.setItem(LS_PE,        JSON.stringify(data.peDone    || {})); } catch (e){}
     try { localStorage.setItem(LS_CHECKLIST, JSON.stringify(data.checklist || {})); } catch (e){}
+    try { localStorage.setItem(LS_ACTIVITY,  JSON.stringify(data.activity  || {})); } catch (e){}
+    try { localStorage.setItem(LS_SRS,       JSON.stringify(data.srs       || {})); } catch (e){}
     window.dispatchEvent(new CustomEvent('parcours:cloud-loaded', { detail: data }));
   }
   function isEmpty(p){
     if (!p) return true;
     const s  = p.state || {}, sc = p.scores || {}, d = p.drafts || {},
-          pe = p.peDone || {}, cl = p.checklist || {};
+          pe = p.peDone || {}, cl = p.checklist || {}, ac = p.activity || {}, sr = p.srs || {};
     if (Array.isArray(s.done) && s.done.length) return false;
     if (Object.keys(sc).length) return false;
     if (Object.keys(d).length)  return false;
     if (Object.keys(pe).length) return false;
     if (Object.keys(cl).length) return false;
+    if (Object.keys(ac).length) return false;
+    if (Object.keys(sr).length) return false;
     return true;
   }
 
