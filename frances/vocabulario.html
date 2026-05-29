@@ -39783,11 +39783,19 @@ buildTopicUI();
 reRender(true);
 
 /* ════════════════════════════════════════════════════════════════
-   INYECCIÓN DEL VOCABULARIO DEL PARCOURS B1 (Parcours/vocab.json)
-   Hace que las ~588 flashcards de las 17 leçons aparezcan también
-   aquí, con tema "Parcours B1 · Leçon N". No duplica al re-cargar.
+   INYECCIÓN DEL VOCABULARIO DEL PARCOURS B1 — DESACTIVADA
+   ────────────────────────────────────────────────────────────────
+   El Parcours mantiene su propio sistema de Repaso SRS
+   independiente (Parcours/repaso.html), por lo que NO inyectamos
+   sus ~680 flashcards aquí para evitar duplicados.
+
+   Si quieres reactivar la inyección en el futuro, descomenta el
+   bloque siguiente (cambia el "false &&" por "true ||"):
    ════════════════════════════════════════════════════════════════ */
 (function injectParcoursVocab(){
+  // Desactivado: salir inmediatamente
+  return;
+  /* eslint-disable */
   if (typeof DATA === 'undefined') return;
   fetch('Parcours/vocab.json')
     .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
@@ -39828,6 +39836,7 @@ reRender(true);
       }
     })
     .catch(function(err){ console.warn('[Parcours] no vocab.json', err); });
+  /* eslint-enable */
 })();
 
 /* ═══════════════════════════════════════════
