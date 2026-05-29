@@ -931,3 +931,39 @@
     setTimeout(boot, 0);
   }
 })();
+
+/* ═══════════════════════════════════════════════════════════════
+   THEME TOGGLE — modo oscuro persistente
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  const LS_THEME = 'parcours_theme';
+  function applyTheme(t){
+    document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : '');
+  }
+  let saved = 'light';
+  try { saved = localStorage.getItem(LS_THEME) || 'light'; } catch(e){}
+  applyTheme(saved);
+
+  function ensureToggle(){
+    // Insertar el botón dentro de hdr-profile-row, antes de la pill
+    const row = document.querySelector('.hdr-profile-row');
+    if (!row || row.querySelector('.theme-toggle')) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'theme-toggle';
+    btn.title = 'Cambiar tema (claro / oscuro)';
+    btn.setAttribute('aria-label', 'Cambiar tema');
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      try { localStorage.setItem(LS_THEME, next); } catch(e){}
+    });
+    row.insertBefore(btn, row.firstChild);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ensureToggle);
+  } else {
+    ensureToggle();
+  }
+})();

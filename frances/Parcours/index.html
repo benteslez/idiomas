@@ -17,6 +17,11 @@
 .hdr-profile-pill[data-profile="sergio"] .pp-avatar{background:#7c3aed;}
 .hdr-profile-pill[data-profile="invitado"] .pp-avatar{background:var(--text3);}
 .hdr-profile-pill .pp-switch{font-size:.6rem;color:var(--text3);margin-left:2px;}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:#fff;border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .15s;margin-right:6px;font-size:.95rem;}
+.theme-toggle:hover{background:var(--bg);border-color:var(--border-strong);color:var(--text);}
+.theme-toggle::before{content:"◐";line-height:1;}
+[data-theme="dark"] .theme-toggle{background:var(--surface);}
+[data-theme="dark"] .theme-toggle::before{content:"☼";}
 .cloud-status{position:fixed;bottom:14px;right:14px;display:inline-flex;align-items:center;gap:7px;padding:7px 13px;background:#fff;border:1px solid var(--border);border-radius:100px;font-family:inherit;font-size:.74rem;font-weight:600;color:var(--text2);box-shadow:var(--shadow);opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .25s ease, transform .25s ease;z-index:8000;}
 .cloud-status.visible{opacity:1;transform:translateY(0);}
 .cloud-status .cs-dot{width:8px;height:8px;border-radius:50%;background:var(--text3);flex-shrink:0;}
@@ -34,6 +39,7 @@
   --accent:#2563eb; --accent-soft:#dbeafe; --accent-deep:#1d4ed8;
   --done:#10b981; --done-bg:#d1fae5;
   --locked:#a3a3a3; --locked-bg:#f5f5f5;
+  --header-bg-rgb:255,255,255;
   /* Dossier palette */
   --d1:#2563eb; --d1-bg:#dbeafe; --d1-soft:#eff6ff;
   --d2:#7c3aed; --d2-bg:#ede9fe; --d2-soft:#faf5ff;
@@ -45,12 +51,35 @@
   --shadow-sm:0 2px 8px rgba(0,0,0,.05),0 1px 2px rgba(0,0,0,.04);
   --shadow:0 4px 16px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
 }
+[data-theme="dark"]{
+  --bg:#0a0a0b; --surface:#18181b; --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --accent:#60a5fa; --accent-soft:rgba(96,165,250,.15); --accent-deep:#3b82f6;
+  --done:#4ade80; --done-bg:rgba(74,222,128,.15);
+  --locked:#52525b; --locked-bg:rgba(82,82,91,.20);
+  --header-bg-rgb:18,18,27;
+  --d1:#60a5fa; --d1-bg:rgba(96,165,250,.20); --d1-soft:rgba(96,165,250,.08);
+  --d2:#a78bfa; --d2-bg:rgba(167,139,250,.20); --d2-soft:rgba(167,139,250,.08);
+  --d3:#fbbf24; --d3-bg:rgba(251,191,36,.20); --d3-soft:rgba(251,191,36,.08);
+  --d4:#2dd4bf; --d4-bg:rgba(45,212,191,.20); --d4-soft:rgba(45,212,191,.08);
+  --d5:#4ade80; --d5-bg:rgba(74,222,128,.20); --d5-soft:rgba(74,222,128,.08);
+  --d6:#fb7185; --d6-bg:rgba(251,113,133,.20); --d6-soft:rgba(251,113,133,.08);
+}
+[data-theme="dark"] .node-card{color:var(--text);}
+[data-theme="dark"] .meta-tag{background:var(--surface);color:var(--text2);}
+[data-theme="dark"] .progress-bar{background:var(--border);}
+[data-theme="dark"] .confirm-box{background:var(--surface);}
+[data-theme="dark"] .node-card{background:var(--surface);}
+[data-theme="dark"] .dossier{background:var(--surface);}
+[data-theme="dark"] .site-header{background:rgba(18,18,27,.88);}
+[data-theme="dark"] .cloud-status{background:var(--surface);color:var(--text2);}
+[data-theme="dark"] .hdr-profile-pill{background:var(--surface);color:var(--text2);}
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;font-feature-settings:"cv02","cv03","cv04","cv11";}
 
 /* HEADER */
-.site-header{background:var(--surface);border-bottom:1px solid var(--border);padding:24px 20px 22px;position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(10px);background:rgba(255,255,255,.85);}
+.site-header{background:rgba(var(--header-bg-rgb),.85);border-bottom:1px solid var(--border);padding:24px 20px 22px;position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(10px);}
 .header-inner{max-width:880px;margin:0 auto;}
 .back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:5px 12px 5px 9px;font-size:.78rem;font-weight:600;color:var(--text2);text-decoration:none;transition:all .15s;box-shadow:var(--shadow-xs);margin-bottom:12px;}
 .back-btn:hover{background:var(--bg);border-color:var(--border-strong);color:var(--text);}
@@ -149,6 +178,7 @@ h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
 <header class="site-header">
   <div class="header-inner">
     <div class="hdr-profile-row">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Cambiar tema (claro/oscuro)" aria-label="Cambiar tema"></button>
       <button type="button" class="hdr-profile-pill" id="hdrProfilePill" data-profile="invitado" title="Cambiar de perfil">
         <span class="pp-avatar" id="hdrProfileAvatar">I</span>
         <span class="pp-name" id="hdrProfileName">Invitado</span>
@@ -190,7 +220,7 @@ h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
       <a class="node" data-id="1" href="lecon_01.html">
         <span class="node-dot">1</span>
         <div class="node-card">
-          <div class="node-top"><span class="node-label">Leçon 1</span><span class="node-badge">Empieza aquí</span></div>
+          <div class="node-top"><span class="node-label">Leçon 1</span></div>
           <div class="node-title">Parler de ses études</div>
           <div class="node-meta">
             <span class="meta-tag">Vocabulario · études, disciplines</span>
@@ -330,7 +360,7 @@ h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
           </div>
         </div>
       </a>
-      <a class="node" data-id="11" href="#">
+      <a class="node" data-id="11" href="lecon_11.html">
         <span class="node-dot">11</span>
         <div class="node-card">
           <div class="node-top"><span class="node-label">Leçon 11</span></div>
@@ -341,7 +371,7 @@ h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
           </div>
         </div>
       </a>
-      <a class="node" data-id="12" href="#">
+      <a class="node" data-id="12" href="lecon_12.html">
         <span class="node-dot">12</span>
         <div class="node-card">
           <div class="node-top"><span class="node-label">Leçon 12</span></div>
@@ -363,7 +393,7 @@ h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
       <span class="dossier-desc">· formal, política, actualidad</span>
     </div>
     <div class="camino">
-      <a class="node" data-id="13" href="#">
+      <a class="node" data-id="13" href="lecon_13.html">
         <span class="node-dot">13</span>
         <div class="node-card">
           <div class="node-top"><span class="node-label">Leçon 13</span></div>
@@ -374,7 +404,7 @@ h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
           </div>
         </div>
       </a>
-      <a class="node" data-id="14" href="#">
+      <a class="node" data-id="14" href="lecon_14.html">
         <span class="node-dot">14</span>
         <div class="node-card">
           <div class="node-top"><span class="node-label">Leçon 14</span></div>
@@ -385,7 +415,7 @@ h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
           </div>
         </div>
       </a>
-      <a class="node" data-id="15" href="#">
+      <a class="node" data-id="15" href="lecon_15.html">
         <span class="node-dot">15</span>
         <div class="node-card">
           <div class="node-top"><span class="node-label">Leçon 15</span></div>
@@ -407,7 +437,7 @@ h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
       <span class="dossier-desc">· ecología, militancia</span>
     </div>
     <div class="camino">
-      <a class="node" data-id="16" href="#">
+      <a class="node" data-id="16" href="lecon_16.html">
         <span class="node-dot">16</span>
         <div class="node-card">
           <div class="node-top"><span class="node-label">Leçon 16</span></div>
@@ -418,7 +448,7 @@ h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
           </div>
         </div>
       </a>
-      <a class="node" data-id="17" href="#">
+      <a class="node" data-id="17" href="lecon_17.html">
         <span class="node-dot">17</span>
         <div class="node-card">
           <div class="node-top"><span class="node-label">Leçon 17</span></div>
@@ -452,20 +482,19 @@ const DRAFTS_KEY    = 'parcours_b1_drafts';
 const PE_KEY        = 'parcours_b1_pe_done';
 const CHECKLIST_KEY = 'parcours_b1_checklist';
 const TOTAL = 17;
-// Por leçon: {exos, pe, check} — total ítems trackables
+// Por leçon: {exos, pe, check} — total ítems trackables (22 por leçon)
 const ITEMS_PER_LECON = {
-  1:  { exos: 10, pe: 4, check: 8 },  // 22 avances
-  2:  { exos: 10, pe: 4, check: 8 },
-  3:  { exos: 10, pe: 4, check: 8 },
-  4:  { exos: 10, pe: 4, check: 8 },
-  5:  { exos: 10, pe: 4, check: 8 },
-  6:  { exos: 10, pe: 4, check: 8 },
-  7:  { exos: 10, pe: 4, check: 8 },
-  8:  { exos: 10, pe: 4, check: 8 },
-  9:  { exos: 10, pe: 4, check: 8 },
-  10: { exos: 10, pe: 4, check: 8 }
+  1:  { exos: 10, pe: 4, check: 8 },  2:  { exos: 10, pe: 4, check: 8 },
+  3:  { exos: 10, pe: 4, check: 8 },  4:  { exos: 10, pe: 4, check: 8 },
+  5:  { exos: 10, pe: 4, check: 8 },  6:  { exos: 10, pe: 4, check: 8 },
+  7:  { exos: 10, pe: 4, check: 8 },  8:  { exos: 10, pe: 4, check: 8 },
+  9:  { exos: 10, pe: 4, check: 8 },  10: { exos: 10, pe: 4, check: 8 },
+  11: { exos: 10, pe: 4, check: 8 },  12: { exos: 10, pe: 4, check: 8 },
+  13: { exos: 10, pe: 4, check: 8 },  14: { exos: 10, pe: 4, check: 8 },
+  15: { exos: 10, pe: 4, check: 8 },  16: { exos: 10, pe: 4, check: 8 },
+  17: { exos: 10, pe: 4, check: 8 }
 };
-const AVAILABLE = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const AVAILABLE = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
 
 function loadJSON(key){
   try{ return JSON.parse(localStorage.getItem(key) || '{}'); }
@@ -518,24 +547,30 @@ function render(){
   const nodes = document.querySelectorAll('.node');
   let current = null;
 
+  // Limpia badges antiguas (excepto las que rehidrataremos)
+  nodes.forEach(n=>{
+    const b = n.querySelector('.node-badge');
+    if (b) b.remove();
+  });
+
   nodes.forEach(n=>{
     const id = +n.dataset.id;
     const isAvailable = AVAILABLE.includes(id);
+    const top = n.querySelector('.node-top');
     if(done.includes(id)){
       n.dataset.state = 'done';
-      const badge = n.querySelector('.node-badge');
-      if(badge){ badge.textContent='Completado'; badge.classList.add('done-badge'); }
-      else{
-        const top = n.querySelector('.node-top');
-        const span = document.createElement('span'); span.className='node-badge done-badge'; span.textContent='Completado';
-        top.appendChild(span);
-      }
+      const span = document.createElement('span'); span.className='node-badge done-badge'; span.textContent='Completado';
+      top.appendChild(span);
     } else if(isAvailable && !current){
       n.dataset.state='current';
       current = id;
+      const span = document.createElement('span'); span.className='node-badge'; span.textContent = id===1?'Empieza aquí':'Sigue aquí';
+      top.appendChild(span);
     } else if(!isAvailable){
       n.dataset.state='locked';
       n.setAttribute('aria-disabled','true');
+    } else {
+      n.dataset.state='';
     }
     if(isAvailable) paintProgressTag(n, id);
   });
@@ -577,6 +612,19 @@ window.addEventListener('parcours:cloud-loaded', ()=>{
 });
 
 render();
+
+// Theme toggle (persistente)
+const LS_THEME = 'parcours_theme';
+function applyTheme(t){ document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : ''); }
+let savedTheme = 'light';
+try { savedTheme = localStorage.getItem(LS_THEME) || 'light'; } catch(e){}
+applyTheme(savedTheme);
+document.getElementById('themeToggle').addEventListener('click', ()=>{
+  const cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  const next = cur === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  try { localStorage.setItem(LS_THEME, next); } catch(e){}
+});
 </script>
 
 <div class="cloud-status" id="cloudStatus" role="status" aria-live="polite">

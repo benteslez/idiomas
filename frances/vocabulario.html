@@ -43021,51 +43021,60 @@ function initSRS(card) {
   };
 }
 
+// SRS estilo Anki (3 botones, q = 0 / 3 / 5)
+//   No lo sé (0): lapse → mañana, ease −0.20
+//   Difícil  (3): nuevas → 3 días; review → max(prev+1, interval × 1.2), ease −0.15
+//   Fácil    (5): nuevas → 7 días; review → max(prev+1, interval × ease × 1.3), ease +0.15
+// Ease se mantiene en [1.3, 2.8]. Intervalo máximo: 1825 días (≈5 años).
+function computeNextSrs(srs, quality) {
+  var reps     = srs ? srs.repetitions : 0;
+  var interval = srs ? srs.interval    : 1;
+  var ease     = srs ? srs.easeFactor  : 2.5;
+  var newReps, newInterval, newEase;
+
+  if (quality === 0) {
+    newReps = 0;
+    newInterval = 1;
+    newEase = Math.max(1.3, ease - 0.20);
+  } else if (quality <= 3) {
+    newReps = reps + 1;
+    newInterval = (reps === 0)
+      ? 3
+      : Math.max(interval + 1, Math.round(interval * 1.2));
+    newEase = Math.max(1.3, ease - 0.15);
+  } else {
+    newReps = reps + 1;
+    newInterval = (reps === 0)
+      ? 7
+      : Math.max(interval + 1, Math.round(interval * ease * 1.3));
+    newEase = Math.min(2.8, ease + 0.15);
+  }
+
+  if (newInterval > 1825) newInterval = 1825;
+  return { repetitions: newReps, interval: newInterval, easeFactor: newEase };
+}
+
 function sm2(card, quality) {
   if (!card.srs) initSRS(card);
   var srs = card.srs;
-
-  if (quality >= 3) {
-    if (srs.repetitions === 0) srs.interval = 1;
-    else if (srs.repetitions === 1) srs.interval = 6;
-    else srs.interval = Math.round(srs.interval * srs.easeFactor);
-    srs.repetitions += 1;
-  } else {
-    srs.repetitions = 0;
-    srs.interval = 1;
-  }
-
-  srs.easeFactor = Math.max(
-    1.3,
-    srs.easeFactor + 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)
-  );
+  var next = computeNextSrs(srs, quality);
+  srs.repetitions = next.repetitions;
+  srs.interval    = next.interval;
+  srs.easeFactor  = next.easeFactor;
 
   var today = new Date();
   srs.lastReview = today.toISOString().split("T")[0];
-  var next = new Date();
-  next.setDate(next.getDate() + srs.interval);
-  srs.nextReview = next.toISOString().split("T")[0];
+  var nextDate = new Date();
+  nextDate.setDate(nextDate.getDate() + srs.interval);
+  srs.nextReview = nextDate.toISOString().split("T")[0];
 
   srs.history.push({ date: srs.lastReview, quality: quality });
-
   return srs;
 }
 
 // Simulación pura: calcula qué intervalo resultaría sin mutar nada
 function previewInterval(card, quality) {
-  var srs = card.srs;
-  var reps = srs ? srs.repetitions : 0;
-  var interval = srs ? srs.interval : 1;
-  var ease = srs ? srs.easeFactor : 2.5;
-
-  if (quality >= 3) {
-    if (reps === 0) interval = 1;
-    else if (reps === 1) interval = 6;
-    else interval = Math.round(interval * ease);
-  } else {
-    interval = 1;
-  }
-  return interval;
+  return computeNextSrs(card.srs, quality).interval;
 }
 
 function formatInterval(days) {
