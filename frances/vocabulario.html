@@ -40036,8 +40036,18 @@ function buildSwipeCard(d, isTop, peekIdx) {
   var oralBadge = d.flags.oral ? "<span class=\"badge badge-oral\">&#128483; Oral</span>" : "";
   var escritoBadge = d.flags.escrito ? "<span class=\"badge badge-escrito\">&#9997; Escrito</span>" : "";
 
-  var warnHtml = d.warn
+  // Falsos amigos: la explicación va SOLO en el lado español (reverso) junto
+  // con la traducción "limpia". El lado francés (palabra-trampa) no debe
+  // spoilearse con el warn ni con el hint "(NO: ...)".
+  var isFalsoAmigo = d.tema === "Falsos amigos";
+  var tDisplay = isFalsoAmigo
+    ? ((d.t || "").replace(/\s*\(NO[.:][^)]*\)/gi, "").trim() || d.t || "")
+    : (d.t || "");
+  var warnFrontHtml = (d.warn && !isFalsoAmigo)
     ? "<div class=\"card-warn\" style=\"margin:0 0 0 0;border-radius:6px;\">" + gEscHtml(d.warn) + "</div>"
+    : "";
+  var warnBackHtml = (d.warn && isFalsoAmigo)
+    ? "<div class=\"card-warn\" style=\"margin:14px 0 0 0;border-radius:6px;background:#fffbeb;border-left:3px solid #d97706;color:#5c4200;\">" + gEscHtml(d.warn) + "</div>"
     : "";
 
   var frontHtml =
@@ -40052,7 +40062,7 @@ function buildSwipeCard(d, isTop, peekIdx) {
           "</div>" +
         "</div>" +
         "<div class=\"swipe-example-fr\">" + gEscHtml(d.ex_fr) + "</div>" +
-        warnHtml +
+        warnFrontHtml +
       "</div>" +
       "<div class=\"swipe-label swipe-label-yes\">&#10003; YA SE</div>" +
       "<div class=\"swipe-label swipe-label-no\">REPASAR</div>" +
@@ -40061,8 +40071,9 @@ function buildSwipeCard(d, isTop, peekIdx) {
   var backHtml =
     "<div class=\"swipe-back\" style=\"background:" + bgColor + ";\">" +
       "<div class=\"swipe-back-label\">Traduccion</div>" +
-      "<div class=\"swipe-back-translation\">" + gEscHtml(d.t) + "</div>" +
+      "<div class=\"swipe-back-translation\">" + gEscHtml(tDisplay) + "</div>" +
       "<div class=\"swipe-back-tema\">" + gEscHtml(d.tema) + "</div>" +
+      warnBackHtml +
       "<div class=\"swipe-tap-hint\">&#8635; toca para ver el frances</div>" +
     "</div>";
 
@@ -41827,7 +41838,13 @@ function srsRenderCurrentCard() {
 
   var card = srsSession.queue[i];
   // Frente: español (traducción). Al revelar se muestra el francés.
-  document.getElementById("srsWord").textContent = card.t || "—";
+  // Falsos amigos: ocultar el hint "(NO: ...)" del frente — la explicación
+  // completa va en el warn-box del reverso, no debe spoilearse antes.
+  var srsFrontText = card.t || "—";
+  if (card.tema === "Falsos amigos") {
+    srsFrontText = srsFrontText.replace(/\s*\(NO[.:][^)]*\)/gi, "").trim() || "—";
+  }
+  document.getElementById("srsWord").textContent = srsFrontText;
   document.getElementById("srsTemaChip").textContent = card.tema || "—";
 
   // Chips
