@@ -2289,6 +2289,48 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 .btn-srs-rate.r-mid { background: linear-gradient(135deg, #c46b2d, #8b4513); }
 .btn-srs-rate.r-yes { background: linear-gradient(135deg, #2d7a3a, #1a5a22); }
 
+/* Modo difícil: input obligatorio cuando se pulsa "No lo sé" */
+.srs-hard-input-row {
+  display: none; flex-direction: column; align-items: stretch; gap: 10px;
+  width: min(540px, 96vw); margin: 0 auto;
+}
+.srs-hard-input-row.show { display: flex; }
+.srs-hard-prompt {
+  font-size: 0.88rem; font-weight: 600; color: var(--text2);
+  text-align: center; letter-spacing: 0.01em;
+}
+.srs-hard-input-wrap { display: flex; gap: 8px; }
+.srs-hard-input {
+  flex: 1; min-width: 0;
+  background: var(--card); border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 12px 14px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.05rem; font-weight: 600; color: var(--text);
+  outline: none;
+}
+.srs-hard-input:focus { border-color: var(--accent); }
+.srs-hard-input.shake { animation: srsHardShake 0.35s; border-color: #c42d4a; }
+@keyframes srsHardShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+.btn-srs-hard-check {
+  background: linear-gradient(135deg, #2d7a3a, #1a5a22); color: #fff;
+  border: none; border-radius: 12px;
+  padding: 0 18px; font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; font-weight: 700; cursor: pointer;
+  min-height: 44px; white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+}
+.btn-srs-hard-check:hover { filter: brightness(1.08); }
+.srs-hard-feedback {
+  text-align: center; font-size: 0.82rem; min-height: 1.2em;
+  color: var(--text3); font-weight: 500;
+}
+.srs-hard-feedback.err { color: #c42d4a; font-weight: 600; }
+.srs-hard-feedback.ok  { color: #2d7a3a; font-weight: 600; }
+
 /* Indicadores de swipe */
 .srs-swipe-hints {
   position: absolute;
@@ -3109,6 +3151,14 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
         <span class="srs-rate-interval" id="srsIntYes">mañana</span>
       </button>
     </div>
+    <div class="srs-hard-input-row" id="srsHardInputRow">
+      <div class="srs-hard-prompt">✍️ Escribe la palabra en francés para continuar (con acentos)</div>
+      <div class="srs-hard-input-wrap">
+        <input type="text" class="srs-hard-input" id="srsHardInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <button class="btn-srs-hard-check" id="btnSrsHardCheck" type="button">Comprobar</button>
+      </div>
+      <div class="srs-hard-feedback" id="srsHardFeedback"></div>
+    </div>
   </div>
 </div>
 
@@ -3138,6 +3188,14 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
       <div class="srs-tema-quick">
         <button class="btn-srs-quick active" id="btnSrsOrderDefault" type="button" title="Vencidas primero, luego nuevas">Recomendado</button>
         <button class="btn-srs-quick" id="btnSrsOrderShuffle" type="button" title="Mezcla todas las tarjetas seleccionadas">🔀 Aleatorio</button>
+      </div>
+    </div>
+
+    <div class="srs-modal-section" id="srsStartModeSection">
+      <h3>Modo</h3>
+      <div class="srs-tema-quick">
+        <button class="btn-srs-quick active" id="btnSrsModeNormal" type="button" title="Calificas con los 3 botones tras revelar">Normal</button>
+        <button class="btn-srs-quick" id="btnSrsModeHard" type="button" title="Si pulsas 'No lo sé', deberás escribir la palabra correcta en francés (con acentos) antes de continuar">💪 Difícil</button>
       </div>
     </div>
 
@@ -41755,6 +41813,94 @@ function srsSetShuffleMode(on) {
   if (btnS) btnS.classList.toggle("active",  on);
 }
 
+// ── Modo difícil: al pulsar "No lo sé" hay que escribir la respuesta correcta ──
+function srsGetHardMode() {
+  try { return localStorage.getItem("srs_hard_mode") === "1"; } catch (e) { return false; }
+}
+function srsSetHardMode(on) {
+  try { localStorage.setItem("srs_hard_mode", on ? "1" : "0"); } catch (e) {}
+  var btnN = document.getElementById("btnSrsModeNormal");
+  var btnH = document.getElementById("btnSrsModeHard");
+  if (btnN) btnN.classList.toggle("active", !on);
+  if (btnH) btnH.classList.toggle("active",  on);
+}
+function srsHardNormalize(s) {
+  return (s || "").trim().toLowerCase().replace(/\s+/g, " ");
+}
+// Devuelve la lista de respuestas aceptables a partir de card.w:
+//  - separadas por " / " (alternativas)
+//  - paréntesis opcionales como "marqué(e)" → acepta también "marqué" y "marquée"
+//  - elipsis finales (", …" / "...") se aceptan con y sin la elipsis
+function srsHardAcceptedAnswers(w) {
+  var alts = (w || "").split(/\s*\/\s*/);
+  var out = [];
+  alts.forEach(function(a) {
+    var n = srsHardNormalize(a);
+    if (!n) return;
+    out.push(n);
+    if (/\([^)]+\)/.test(n)) {
+      out.push(srsHardNormalize(n.replace(/\([^)]*\)/g, "")));
+      out.push(srsHardNormalize(n.replace(/[()]/g, "")));
+    }
+    var noEllipsis = n.replace(/[\s.,;:]*(?:…|\.{3})\s*$/u, "").trim();
+    if (noEllipsis && noEllipsis !== n) out.push(srsHardNormalize(noEllipsis));
+  });
+  // Filtrar vacíos y deduplicar
+  var seen = {};
+  return out.filter(function(x) {
+    if (!x || seen[x]) return false;
+    seen[x] = true;
+    return true;
+  });
+}
+function srsShowHardInput() {
+  var rating = document.getElementById("srsRatingRow");
+  var row    = document.getElementById("srsHardInputRow");
+  var input  = document.getElementById("srsHardInput");
+  var fb     = document.getElementById("srsHardFeedback");
+  if (rating) rating.classList.remove("show");
+  if (row)    row.classList.add("show");
+  if (fb)     { fb.textContent = ""; fb.className = "srs-hard-feedback"; }
+  if (input)  {
+    input.value = "";
+    input.classList.remove("shake");
+    setTimeout(function(){ try { input.focus(); } catch (e) {} }, 30);
+  }
+}
+function srsHideHardInput() {
+  var row   = document.getElementById("srsHardInputRow");
+  var input = document.getElementById("srsHardInput");
+  var fb    = document.getElementById("srsHardFeedback");
+  if (row)   row.classList.remove("show");
+  if (input) { input.value = ""; input.classList.remove("shake"); input.blur(); }
+  if (fb)    { fb.textContent = ""; fb.className = "srs-hard-feedback"; }
+}
+function srsHardCheck() {
+  var card = srsSession.queue[srsSession.idx];
+  if (!card) return;
+  var input = document.getElementById("srsHardInput");
+  var fb    = document.getElementById("srsHardFeedback");
+  var actual   = srsHardNormalize(input ? input.value : "");
+  var accepted = srsHardAcceptedAnswers(card.w || "");
+  if (actual.length > 0 && accepted.indexOf(actual) !== -1) {
+    if (fb) { fb.textContent = "✓ Correcto"; fb.className = "srs-hard-feedback ok"; }
+    srsHideHardInput();
+    srsRate(0, true);
+  } else {
+    if (input) {
+      input.classList.remove("shake");
+      void input.offsetWidth;
+      input.classList.add("shake");
+    }
+    if (fb) {
+      fb.textContent = actual.length === 0
+        ? "✗ Escribe la palabra en francés"
+        : "✗ No coincide — revisa acentos y ortografía";
+      fb.className = "srs-hard-feedback err";
+    }
+  }
+}
+
 // ── Sesión ──
 function srsStartSession() {
   var selected = srsGetSelectedTemas();
@@ -41891,6 +42037,7 @@ function srsRenderCurrentCard() {
   cardEl.style.opacity = "";
   document.getElementById("btnSrsReveal").style.display = "";
   document.getElementById("srsRatingRow").classList.remove("show");
+  srsHideHardInput();
   srsSession.revealed = false;
 }
 
@@ -41929,11 +42076,16 @@ function srsReveal() {
   srsSession.revealed = true;
 }
 
-function srsRate(quality) {
+function srsRate(quality, hardBypass) {
   if (!srsSession.revealed || srsSession.advancing) return;
   var i = srsSession.idx;
   var card = srsSession.queue[i];
   if (!card) return;
+  // Modo difícil: al pulsar "No lo sé" hay que escribir la palabra antes de continuar
+  if (quality === 0 && !hardBypass && srsGetHardMode()) {
+    srsShowHardInput();
+    return;
+  }
   // Snapshot profundo del srs previo para permitir deshacer
   var prevSrs = card.srs ? JSON.parse(JSON.stringify(card.srs)) : null;
   sm2(card, quality);
@@ -42252,6 +42404,21 @@ function initSRSAddon() {
   if (btnOrdDef) btnOrdDef.addEventListener("click", function() { srsSetShuffleMode(false); });
   if (btnOrdShf) btnOrdShf.addEventListener("click", function() { srsSetShuffleMode(true);  });
   srsSetShuffleMode(srsGetShuffleMode()); // pinta el estado inicial
+
+  // Modo: Normal / Difícil
+  var btnModN = document.getElementById("btnSrsModeNormal");
+  var btnModH = document.getElementById("btnSrsModeHard");
+  if (btnModN) btnModN.addEventListener("click", function() { srsSetHardMode(false); });
+  if (btnModH) btnModH.addEventListener("click", function() { srsSetHardMode(true);  });
+  srsSetHardMode(srsGetHardMode()); // pinta el estado inicial
+
+  // Modo difícil: comprobar respuesta (botón + Enter)
+  var btnHC = document.getElementById("btnSrsHardCheck");
+  if (btnHC) btnHC.addEventListener("click", srsHardCheck);
+  var inpHC = document.getElementById("srsHardInput");
+  if (inpHC) inpHC.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") { e.preventDefault(); srsHardCheck(); }
+  });
   // Click fuera cierra modal
   document.getElementById("srsStartModal").addEventListener("click", function(e) {
     if (e.target === this) srsCloseStartModal();
