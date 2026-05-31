@@ -2167,6 +2167,27 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   position: absolute; top: 14px; right: 16px;
   font-size: 1.05rem; opacity: 0.7;
 }
+.srs-star-corner {
+  position: absolute; top: 10px; left: 12px;
+  background: transparent; border: none;
+  font-size: 1.35rem; line-height: 1;
+  color: var(--text3); cursor: pointer;
+  padding: 4px 6px; border-radius: 8px;
+  user-select: none;
+  transition: color 0.15s, transform 0.12s, background 0.15s;
+}
+.srs-star-corner:hover { color: var(--text2); background: var(--bg); transform: scale(1.08); }
+.srs-star-corner.active { color: #e8b900; }
+.srs-star-corner.active:hover { color: #d99c00; }
+
+/* Item "★ Importantes" en la lista de temas del modal SRS */
+.srs-tema-item.srs-tema-item-important {
+  background: linear-gradient(90deg, rgba(232,185,0,0.10), transparent 60%);
+  border: 1px solid rgba(232,185,0,0.35);
+  border-radius: 8px;
+  margin-bottom: 4px;
+}
+.srs-tema-item.srs-tema-item-important .srs-tema-name { color: var(--text); font-weight: 600; }
 
 .srs-reveal-btn {
   display: inline-flex; align-items: center; gap: 6px;
@@ -3115,6 +3136,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   <div class="srs-progress-bar"><div class="srs-progress-fill" id="srsProgressFill" style="width: 0%;"></div></div>
   <div class="srs-stage" id="srsStage">
     <div class="srs-card revealed" id="srsCard">
+      <button class="srs-star-corner" id="srsStarBtn" type="button" aria-label="Marcar como importante" title="Marcar como importante (añade a tema ★ Importantes)">☆</button>
       <div class="srs-warn-icon-corner" id="srsWarnCorner" style="">⚠️</div>
       <div class="srs-card-chips" id="srsCardChips"><span class="srs-chip">Falsos amigos</span><span class="srs-chip">B2</span><span class="srs-chip srs-chip-new">🆕 Nueva</span></div>
       <div class="srs-word" id="srsWord">actualmente, ahora mismo (NO: actualmente = en este momento)</div>
@@ -38868,8 +38890,9 @@ var state = {
   initialView: true
 };
 var initialPreviewCache = null;
-var knownIds   = {};
-var flippedIds = {};
+var knownIds     = {};
+var flippedIds   = {};
+var importantIds = {}; // ⭐ Tarjetas marcadas como "Importantes" en SRS
 
 function getEmbeddedState() {
   try {
@@ -38892,6 +38915,13 @@ function loadStorage() {
     }
     var fl = localStorage.getItem("delf_flipped");
     if (fl) flippedIds = JSON.parse(fl);
+    var imp = localStorage.getItem("delf_important");
+    if (imp) {
+      try { importantIds = JSON.parse(imp) || {}; } catch (_) { importantIds = {}; }
+    } else if (emb.important && typeof emb.important === "object") {
+      importantIds = emb.important;
+      try { localStorage.setItem("delf_important", JSON.stringify(importantIds)); } catch(_){}
+    }
     var fs = localStorage.getItem("delf_fs");
     if (fs) {
       document.getElementById("fsSlider").value = fs;
@@ -38901,7 +38931,8 @@ function loadStorage() {
     if (dv === "front" || dv === "back") state.defaultView = dv;
   } catch(e) {}
 }
-function saveKnown()   { try { localStorage.setItem("delf_known",   JSON.stringify(knownIds));   } catch(e){} }
+function saveKnown()     { try { localStorage.setItem("delf_known",     JSON.stringify(knownIds));     } catch(e){} }
+function saveImportant() { try { localStorage.setItem("delf_important", JSON.stringify(importantIds)); } catch(e){} }
 function saveFlipped() { try { localStorage.setItem("delf_flipped", JSON.stringify(flippedIds)); } catch(e){} }
 function saveView(v)   { try { localStorage.setItem("delf_view", v); } catch(e){} }
 
@@ -41587,12 +41618,23 @@ function formatInterval(days) {
   return "en " + y + " años";
 }
 
+// Tema virtual: agrupa todas las tarjetas marcadas con la estrella
+var SRS_IMPORTANT_KEY = "★ Importantes";
+function srsHasImportant() {
+  for (var k in importantIds) { if (importantIds[k]) return true; }
+  return false;
+}
+function srsMatchTemas(card, temasSeleccionados) {
+  if (!temasSeleccionados || temasSeleccionados.length === 0) return true;
+  var wantImportant = temasSeleccionados.indexOf(SRS_IMPORTANT_KEY) !== -1;
+  if (wantImportant && importantIds[card.id]) return true;
+  return temasSeleccionados.indexOf(card.tema) !== -1;
+}
+
 function getSRSQueue(temasSeleccionados) {
   var today = srsTodayISO();
   var due = DATA.filter(function(card) {
-    if (temasSeleccionados && temasSeleccionados.length > 0) {
-      if (temasSeleccionados.indexOf(card.tema) === -1) return false;
-    }
+    if (!srsMatchTemas(card, temasSeleccionados)) return false;
     if (!card.srs) return true;
     return card.srs.nextReview <= today;
   });
@@ -41610,13 +41652,16 @@ function getSRSQueue(temasSeleccionados) {
 function getPendientesPorTema() {
   var today = srsTodayISO();
   var result = {};
+  var importantPend = 0;
   DATA.forEach(function(card) {
     var pendiente = !card.srs || card.srs.nextReview <= today;
     if (pendiente) {
       var tema = card.tema || "Sin tema";
       result[tema] = (result[tema] || 0) + 1;
+      if (importantIds[card.id]) importantPend++;
     }
   });
+  if (srsHasImportant()) result[SRS_IMPORTANT_KEY] = importantPend;
   return result;
 }
 
@@ -41628,6 +41673,8 @@ function getAllTemasOrdered() {
     if (!seen[t]) { seen[t] = true; out.push(t); }
   });
   out.sort(function(a, b) { return a.localeCompare(b, "es"); });
+  // El tema virtual "★ Importantes" se muestra siempre el primero si hay tarjetas marcadas
+  if (srsHasImportant()) out.unshift(SRS_IMPORTANT_KEY);
   return out;
 }
 
@@ -41635,9 +41682,7 @@ function countNewVsReview(temasSeleccionados) {
   var today = srsTodayISO();
   var n = 0, r = 0;
   DATA.forEach(function(card) {
-    if (temasSeleccionados && temasSeleccionados.length > 0) {
-      if (temasSeleccionados.indexOf(card.tema) === -1) return;
-    }
+    if (!srsMatchTemas(card, temasSeleccionados)) return;
     if (!card.srs) n++;
     else if (card.srs.nextReview <= today) r++;
   });
@@ -41686,7 +41731,10 @@ function srsOpenStartModal() {
   var modal = document.getElementById("srsStartModal");
   if (!modal) return;
   var pendByTema = getPendientesPorTema();
-  var totalPend = Object.keys(pendByTema).reduce(function(s, k) { return s + pendByTema[k]; }, 0);
+  // No contar el tema virtual "★ Importantes" en el total (las tarjetas ya cuentan en su tema real)
+  var totalPend = Object.keys(pendByTema).reduce(function(s, k) {
+    return k === SRS_IMPORTANT_KEY ? s : s + pendByTema[k];
+  }, 0);
 
   var summarySection = document.getElementById("srsStartSummarySection");
   var temasSection   = document.getElementById("srsStartTemasSection");
@@ -41736,12 +41784,15 @@ function srsOpenStartModal() {
   allTemas.forEach(function(tema) {
     var count = pendByTema[tema] || 0;
     var disabled = count === 0;
+    var isImportant = (tema === SRS_IMPORTANT_KEY);
     var label = document.createElement("label");
-    label.className = "srs-tema-item" + (disabled ? " disabled" : "");
+    label.className = "srs-tema-item" + (disabled ? " disabled" : "") + (isImportant ? " srs-tema-item-important" : "");
     var chk = document.createElement("input");
     chk.type = "checkbox";
     chk.value = tema;
-    chk.checked = !disabled;
+    // El tema "★ Importantes" empieza desmarcado: es un subconjunto curado.
+    // Los temas reales se marcan por defecto como antes.
+    chk.checked = !disabled && !isImportant;
     chk.disabled = disabled;
     chk.addEventListener("change", srsUpdateStartSummary);
     var name = document.createElement("span");
@@ -42030,6 +42081,18 @@ function srsRenderCurrentCard() {
   var warnCorner = document.getElementById("srsWarnCorner");
   warnCorner.style.display = card.warn ? "" : "none";
 
+  // Star corner: refleja si la tarjeta está marcada como Importante
+  var starBtn = document.getElementById("srsStarBtn");
+  if (starBtn) {
+    var isImp = !!importantIds[card.id];
+    starBtn.classList.toggle("active", isImp);
+    starBtn.textContent = isImp ? "★" : "☆";
+    starBtn.setAttribute("aria-pressed", isImp ? "true" : "false");
+    starBtn.title = isImp
+      ? "Quitar de ★ Importantes"
+      : "Marcar como importante (añade a tema ★ Importantes)";
+  }
+
   // Reset reveal state
   var cardEl = document.getElementById("srsCard");
   cardEl.classList.remove("revealed", "swiping", "swipe-left", "swipe-right", "swipe-up");
@@ -42074,6 +42137,27 @@ function srsReveal() {
   document.getElementById("btnSrsReveal").style.display = "none";
   document.getElementById("srsRatingRow").classList.add("show");
   srsSession.revealed = true;
+}
+
+// Toggle ⭐ Importante para la tarjeta actual de la sesión SRS
+function srsToggleImportant() {
+  var i = srsSession.idx;
+  var card = srsSession.queue[i];
+  if (!card || card.id == null) return;
+  if (importantIds[card.id]) delete importantIds[card.id];
+  else importantIds[card.id] = true;
+  saveImportant();
+  // Refrescar el botón estrella en el render actual
+  var starBtn = document.getElementById("srsStarBtn");
+  if (starBtn) {
+    var isImp = !!importantIds[card.id];
+    starBtn.classList.toggle("active", isImp);
+    starBtn.textContent = isImp ? "★" : "☆";
+    starBtn.setAttribute("aria-pressed", isImp ? "true" : "false");
+    starBtn.title = isImp
+      ? "Quitar de ★ Importantes"
+      : "Marcar como importante (añade a tema ★ Importantes)";
+  }
 }
 
 function srsRate(quality, hardBypass) {
@@ -42419,6 +42503,13 @@ function initSRSAddon() {
   if (inpHC) inpHC.addEventListener("keydown", function(e) {
     if (e.key === "Enter") { e.preventDefault(); srsHardCheck(); }
   });
+
+  // Estrella: marcar/desmarcar como Importante
+  var starBtn = document.getElementById("srsStarBtn");
+  if (starBtn) starBtn.addEventListener("click", function(e) {
+    e.stopPropagation();
+    srsToggleImportant();
+  });
   // Click fuera cierra modal
   document.getElementById("srsStartModal").addEventListener("click", function(e) {
     if (e.target === this) srsCloseStartModal();
@@ -42485,6 +42576,7 @@ function initSRSAddon() {
     var k = e.key;
     if (k === "z" || k === "Z" || k === "-") { e.preventDefault(); srsUndo(); return; }
     if (k === "f" || k === "F") { e.preventDefault(); document.getElementById("btnSrsFullscreen").click(); return; }
+    if (k === "s" || k === "S") { e.preventDefault(); srsToggleImportant(); return; }
     if (!srsSession.revealed) {
       if (k === " " || k === "Enter") {
         e.preventDefault();
@@ -42761,10 +42853,11 @@ if (document.readyState === "loading") {
   // ───────────────── UTILIDADES STATE ─────────────────
   function readGlobals(){
     var payload = {
-      known:     (typeof knownIds   !== 'undefined') ? knownIds   : {},
-      flipped:   (typeof flippedIds !== 'undefined') ? flippedIds : {},
-      edits:     (typeof cardEdits  !== 'undefined') ? cardEdits  : {},
-      srsGlobal: (typeof srsGlobal  !== 'undefined') ? srsGlobal  : {},
+      known:     (typeof knownIds     !== 'undefined') ? knownIds     : {},
+      flipped:   (typeof flippedIds   !== 'undefined') ? flippedIds   : {},
+      important: (typeof importantIds !== 'undefined') ? importantIds : {},
+      edits:     (typeof cardEdits    !== 'undefined') ? cardEdits    : {},
+      srsGlobal: (typeof srsGlobal    !== 'undefined') ? srsGlobal    : {},
       srsCards:  {}
     };
     if (typeof DATA !== 'undefined' && DATA && DATA.length) {
@@ -42779,11 +42872,12 @@ if (document.readyState === "loading") {
   // Cuenta señales reales (no contadores) para detectar si un payload está "vacío"
   function isEmpty(p){
     if (!p || typeof p !== 'object') return true;
-    if (Object.keys(p.known    || {}).length) return false;
-    if (Object.keys(p.flipped  || {}).length) return false;
-    if (Object.keys(p.edits    || {}).length) return false;
-    if (Object.keys(p.srsCards || {}).length) return false;
-    if (((p.srsGlobal||{}).sessions||0) > 0)  return false;
+    if (Object.keys(p.known     || {}).length) return false;
+    if (Object.keys(p.flipped   || {}).length) return false;
+    if (Object.keys(p.important || {}).length) return false;
+    if (Object.keys(p.edits     || {}).length) return false;
+    if (Object.keys(p.srsCards  || {}).length) return false;
+    if (((p.srsGlobal||{}).sessions||0) > 0)   return false;
     return true;
   }
 
@@ -42821,6 +42915,12 @@ if (document.readyState === "loading") {
       Object.keys(flippedIds).forEach(function(k){ delete flippedIds[k]; });
       if (data.flipped && typeof data.flipped === 'object') {
         Object.keys(data.flipped).forEach(function(k){ flippedIds[k] = data.flipped[k]; });
+      }
+    }
+    if (typeof importantIds !== 'undefined') {
+      Object.keys(importantIds).forEach(function(k){ delete importantIds[k]; });
+      if (data.important && typeof data.important === 'object') {
+        Object.keys(data.important).forEach(function(k){ importantIds[k] = data.important[k]; });
       }
     }
     if (typeof cardEdits !== 'undefined') {
@@ -42863,9 +42963,10 @@ if (document.readyState === "loading") {
       if (typeof rebuildSearchIndex === 'function') rebuildSearchIndex();
     }
     // Persistir copia a localStorage clásico para que las funciones existentes encuentren el estado
-    try { localStorage.setItem('delf_known',       JSON.stringify(knownIds));   } catch(e){}
-    try { localStorage.setItem('delf_flipped',     JSON.stringify(flippedIds)); } catch(e){}
-    try { localStorage.setItem('delf_card_edits',  JSON.stringify(cardEdits));  } catch(e){}
+    try { localStorage.setItem('delf_known',       JSON.stringify(knownIds));     } catch(e){}
+    try { localStorage.setItem('delf_flipped',     JSON.stringify(flippedIds));   } catch(e){}
+    try { localStorage.setItem('delf_important',   JSON.stringify(importantIds)); } catch(e){}
+    try { localStorage.setItem('delf_card_edits',  JSON.stringify(cardEdits));    } catch(e){}
   }
 
   function reRenderAll(){
@@ -43004,6 +43105,7 @@ if (document.readyState === "loading") {
     }
     wrap('saveKnown');
     wrap('saveFlipped');
+    wrap('saveImportant');
     wrap('saveCardEdits');
     if (typeof window.sm2 === 'function') {
       var origSm2 = window.sm2;
