@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Idioms &amp; Fixed Expressions · C1 Linguaskill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Page identity: Idioms → amber (léxico) */
+  --primary:#b45309; --primary-soft:#fffbeb; --primary-mid:#f59e0b; --primary-strong:#78350f;
+  --primary-glow:rgba(180,83,9,.14);
+  /* Per-tab identity colors */
+  --tab-thematic:#b45309;    --tab-thematic-soft:#fffbeb;   --tab-thematic-mid:#f59e0b;
+  --tab-binomials:#c2410c;   --tab-binomials-soft:#fff7ed;  --tab-binomials-mid:#f97316;
+  --tab-register:#b91c1c;    --tab-register-soft:#fef2f2;   --tab-register-mid:#dc2626;
+  /* Legacy aliases */
+  --accent:var(--primary); --accent-light:var(--primary-soft); --accent-mid:var(--primary-mid);
+  /* Neutrals */
+  --bg:#f7f7f5; --bg-elevated:#fbfbfa; --card:#ffffff;
+  --border:#ececec; --border-strong:#dfdfdf;
+  --text:#18181b; --text2:#52525b; --text3:#71717a;
+  /* Paper (model examples) */
+  --paper:#fefef9; --paper-border:#e7e5d6;
+  /* Shadows */
+  --shadow-xs:0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:0 2px 8px rgba(15,23,42,.04),0 1px 2px rgba(15,23,42,.03);
+  --shadow:0 4px 16px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+  --shadow-primary:0 6px 20px var(--primary-glow);
+  /* Geometry */
+  --radius:18px; --radius-md:14px; --radius-sm:10px; --radius-xs:6px; --radius-pill:999px;
+  /* Motion */
+  --ease:cubic-bezier(0.4,0,0.2,1); --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --t-fast:120ms; --t-base:200ms;
+  /* Section colors (A→E) */
+  --c-greet:#7c3aed;     --c-greet-bg:#f5f3ff;
+  --c-conn:#0e7490;      --c-conn-bg:#ecfeff;
+  --c-key:#1d4ed8;       --c-key-bg:#eff6ff;
+  --c-close:#be185d;     --c-close-bg:#fdf2f8;
+  --c-model:#b45309;     --c-model-bg:#fffbeb;
+  --c-tip:#ca8a04;       --c-tip-bg:#fef9c3;
+  --c-struct:#4338ca;    --c-struct-bg:#e0e7ff;
+  /* Sub-category colors for connectors */
+  --c-add:#0e7490;       --c-contrast:#be185d;
+  --c-cause:#15803d;     --c-purpose:#7c3aed;
+  --c-seq:#1d4ed8;       --c-time:#0369a1;
+  --c-emph:#b91c1c;      --c-summ:#7c3aed;
+}
+[data-theme="dark"]{
+  --primary:#fcd34d; --primary-soft:#2a1f05; --primary-mid:#fbbf24; --primary-strong:#fde68a;
+  --primary-glow:rgba(252,211,77,.18);
+  --tab-thematic:#fcd34d;    --tab-thematic-soft:rgba(252,211,77,.12);   --tab-thematic-mid:#fbbf24;
+  --tab-binomials:#fdba74;   --tab-binomials-soft:rgba(253,186,116,.12); --tab-binomials-mid:#fb923c;
+  --tab-register:#fca5a5;    --tab-register-soft:rgba(252,165,165,.12); --tab-register-mid:#f87171;
+  --bg:#0a0a0b; --bg-elevated:#131316; --card:#18181b;
+  --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --paper:#1e1e24; --paper-border:#3a3a42;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.2);
+  --shadow:0 4px 16px rgba(0,0,0,.30),0 1px 3px rgba(0,0,0,.20);
+  --shadow-primary:0 6px 24px var(--primary-glow);
+  --c-greet:#a78bfa;     --c-greet-bg:rgba(167,139,250,.10);
+  --c-conn:#22d3ee;      --c-conn-bg:rgba(34,211,238,.10);
+  --c-key:#60a5fa;       --c-key-bg:rgba(96,165,250,.10);
+  --c-close:#f472b6;     --c-close-bg:rgba(244,114,182,.10);
+  --c-model:#fbbf24;     --c-model-bg:rgba(251,191,36,.10);
+  --c-tip:#facc15;       --c-tip-bg:rgba(250,204,21,.10);
+  --c-struct:#a5b4fc;    --c-struct-bg:rgba(165,180,252,.10);
+  --c-add:#22d3ee;       --c-contrast:#f472b6;
+  --c-cause:#4ade80;     --c-purpose:#a78bfa;
+  --c-seq:#60a5fa;       --c-time:#38bdf8;
+  --c-emph:#f87171;      --c-summ:#a78bfa;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+*:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-xs);}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
+
+/* HEADER */
+.site-header{background:linear-gradient(180deg,var(--bg-elevated),var(--bg));padding:32px 20px 22px;position:relative;}
+.site-header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-strong) 20%,var(--border-strong) 80%,transparent);}
+.header-inner{max-width:1000px;margin:0 auto;}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.site-header h1{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:600;letter-spacing:-0.02em;color:var(--text);line-height:1.1;}
+.header-tag{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);background:var(--primary-soft);border-radius:var(--radius-pill);padding:4px 11px;}
+.header-sub{font-size:.88rem;color:var(--text3);font-weight:400;margin-top:4px;line-height:1.55;}
+.header-sub strong{color:var(--primary);font-weight:600;}
+
+/* HEADER ACTIONS BAR */
+.header-actions{max-width:1000px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:8px 14px 8px 11px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.back-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateX(-2px);box-shadow:var(--shadow);}
+.back-btn:active{transform:translateX(-2px) scale(.97);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+
+/* THEME TOGGLE */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.theme-toggle:hover{color:var(--primary);border-color:var(--primary-mid);transform:translateY(-1px);box-shadow:var(--shadow);}
+.theme-toggle .icon-sun{display:none;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+
+/* TABS — per-tab colors */
+.tabs-wrap{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-elevated) 85%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--border);padding:14px 20px;}
+.tabs{max-width:1000px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;}
+.tab{border:1px solid var(--border);border-radius:var(--radius-pill);padding:9px 18px;font-family:inherit;font-size:.85rem;font-weight:500;cursor:pointer;background:var(--card);color:var(--text2);transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:7px;}
+.tab:hover{transform:translateY(-1px);box-shadow:var(--shadow-xs);border-color:var(--tab-c,var(--primary-mid));color:var(--tab-c,var(--primary));}
+.tab.active{background:var(--tab-c,var(--primary));color:#fff;border-color:var(--tab-c,var(--primary));font-weight:600;box-shadow:0 6px 20px color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+[data-theme="dark"] .tab.active{color:#0a0a0b;}
+.tab[data-tab="thematic"]{--tab-c:var(--tab-thematic);}
+.tab[data-tab="binomials"]{--tab-c:var(--tab-binomials);}
+.tab[data-tab="register"]{--tab-c:var(--tab-register);}
+.tab .ico{font-size:1rem;line-height:1;}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:32px 20px 64px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeSlideIn 360ms var(--ease-out);}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* INTRO */
+.intro{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:28px;box-shadow:var(--shadow-xs);}
+.intro h3{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--tab-c,var(--primary));margin-bottom:10px;}
+.intro p{font-size:.92rem;color:var(--text2);line-height:1.65;}
+.intro p strong{color:var(--tab-c,var(--primary));font-weight:600;}
+
+/* TOOLBAR */
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.tool-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:7px 15px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:6px;}
+.tool-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateY(-1px);box-shadow:var(--shadow-xs);}
+.tool-btn .ico{font-size:.85rem;line-height:1;}
+
+/* FONT SIZE SLIDER */
+.fs-control{display:inline-flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:6px 14px;}
+.fs-label{font-family:inherit;font-weight:600;color:var(--text3);line-height:1;user-select:none;}
+.fs-label.small{font-size:.78rem;}
+.fs-label.large{font-size:1.1rem;}
+.fs-slider{-webkit-appearance:none;appearance:none;width:100px;height:4px;background:var(--border-strong);border-radius:2px;outline:none;cursor:pointer;accent-color:var(--primary);}
+.fs-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);transition:transform var(--t-fast) var(--ease);}
+.fs-slider::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.fs-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);}
+.fs-value{font-size:.72rem;font-weight:600;color:var(--text3);min-width:32px;text-align:right;}
+
+/* SECTION (collapsible) */
+.section{margin-bottom:14px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow var(--t-base) var(--ease);}
+.section:hover{box-shadow:var(--shadow);}
+.section-header{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;user-select:none;transition:background var(--t-base) var(--ease);background:transparent;}
+.section-header:hover{background:var(--bg-elevated);}
+.section:not(.collapsed) .section-header{border-bottom:1px solid var(--border);}
+.section-icon{width:38px;height:38px;border-radius:var(--radius-sm);display:inline-flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;background:transparent!important;border:2px solid var(--section-c,var(--primary));color:var(--section-c,var(--primary));}
+.section-title{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--text);line-height:1.2;}
+.section-desc{font-size:.78rem;color:var(--text3);margin-top:2px;line-height:1.45;}
+.section-header > div:not(.section-icon){flex:1;}
+.section-header::after{content:"▾";font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease);margin-left:8px;flex-shrink:0;font-weight:600;}
+.section.collapsed .section-header::after{transform:rotate(-90deg);}
+.section.collapsed .section-header:hover::after{color:var(--primary);}
+.section-count{font-size:.7rem;font-weight:600;color:var(--text3);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px 10px;margin-left:auto;flex-shrink:0;transition:all var(--t-base) var(--ease);}
+.section-header:hover .section-count{border-color:var(--primary-mid);color:var(--primary);}
+.section > .grid, .section > .stack, .section > .papers, .section > .tips-list, .section > .blueprint, .section > .table-wrap{padding:18px 20px 20px;}
+.section.collapsed > *:not(.section-header){display:none!important;}
+
+/* GRID + ITEM */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.item{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 30%,transparent)!important;border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-xs);transition:transform var(--t-base) var(--ease),box-shadow var(--t-base) var(--ease),border-color var(--t-base) var(--ease);border-left:4px solid var(--section-c,var(--primary))!important;}
+.item:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--section-c,var(--primary-mid))!important;}
+.item-head{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.item-term{font-family:'Manrope','Inter',sans-serif;font-size:1.02rem;font-weight:700;letter-spacing:-0.005em;color:var(--section-c,var(--text));line-height:1.3;}
+.item-trans{font-size:.76rem;color:var(--text3);font-style:italic;}
+.item-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;}
+.item-list li{font-size:.88rem;color:var(--text2);line-height:1.5;padding:5px 0 5px 12px;border-left:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);}
+.item-list li strong{color:var(--text);font-weight:600;}
+.item-list li em{font-style:italic;color:var(--text3);}
+
+/* STACK (single-column phrase list, for A/C/D sections) */
+.stack{display:flex;flex-direction:column;gap:8px;}
+.phrase{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-sm);padding:10px 14px;font-size:.92rem;color:var(--text2);line-height:1.5;transition:all var(--t-base) var(--ease);}
+.phrase:hover{transform:translateX(2px);border-color:var(--section-c,var(--primary));box-shadow:var(--shadow-xs);}
+.phrase strong{color:var(--text);font-weight:600;}
+.phrase .hint{font-size:.74rem;color:var(--text3);font-style:italic;margin-left:6px;}
+
+/* PAPER (model examples) */
+.papers{display:flex;flex-direction:column;gap:14px;}
+.paper{background:var(--paper);border:1px solid var(--paper-border);border-radius:var(--radius-md);padding:22px 26px;box-shadow:var(--shadow-sm);position:relative;transition:box-shadow var(--t-base) var(--ease);}
+.paper:hover{box-shadow:var(--shadow);}
+.paper::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--tab-c,var(--primary)),transparent);border-radius:var(--radius-md) var(--radius-md) 0 0;}
+.paper-header{display:flex;align-items:flex-start;gap:14px;cursor:pointer;user-select:none;}
+.paper-header > div:first-child{flex:1;min-width:0;}
+.paper-header .paper-meta{margin-bottom:0;}
+.paper-toggle{font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease),color var(--t-base) var(--ease);flex-shrink:0;font-weight:700;line-height:1.4;}
+.paper-header:hover .paper-toggle,.paper-header:hover .paper-title{color:var(--tab-c,var(--primary));}
+.paper.collapsed .paper-toggle{transform:rotate(-90deg);}
+.paper.collapsed .paper-body{display:none;}
+.paper:not(.collapsed) .paper-body{margin-top:18px;}
+.paper-title{font-family:'Fraunces',Georgia,serif;font-size:1.05rem;font-weight:600;color:var(--tab-c,var(--primary));margin-bottom:6px;letter-spacing:-0.01em;transition:color var(--t-base) var(--ease);}
+.paper-meta{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:18px;}
+.paper-body{font-family:'Inter',sans-serif;font-size:.94rem;line-height:1.8;color:var(--text);}
+.paper-body p{margin-bottom:12px;}
+.paper-body p:last-child{margin-bottom:0;}
+.paper-body em{font-style:italic;color:var(--text2);}
+
+/* COLOR-CODED INLINE PHRASES IN MODELS — match theory section colors */
+.paper-body .k-open    {color:var(--c-greet);    font-weight:600;}
+.paper-body .k-add     {color:var(--c-add);      font-weight:600;}
+.paper-body .k-contrast{color:var(--c-contrast); font-weight:600;}
+.paper-body .k-cause   {color:var(--c-cause);    font-weight:600;}
+.paper-body .k-concess {color:var(--c-purpose);  font-weight:600;}
+.paper-body .k-purpose {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-seq     {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-time    {color:var(--c-time);     font-weight:600;}
+.paper-body .k-emph    {color:var(--c-emph);     font-weight:600;}
+.paper-body .k-summ    {color:var(--c-summ);     font-weight:600;}
+.paper-body .k-key     {color:var(--c-key);      font-weight:600;}
+.paper-body .k-close   {color:var(--c-close);    font-weight:600;}
+
+/* STRUCTURE BLUEPRINT (vertical timeline) */
+.blueprint{display:flex;flex-direction:column;gap:0;position:relative;}
+.step{display:flex;gap:14px;align-items:flex-start;position:relative;padding:6px 0 14px 0;}
+.step::before{content:"";position:absolute;left:18px;top:42px;bottom:-4px;width:2px;background:color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);}
+.step:last-of-type::before{display:none;}
+.step-num{width:38px;height:38px;border-radius:50%;background:var(--card);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--section-c,var(--primary));position:relative;z-index:1;}
+.step-body{flex:1;min-width:0;padding-top:6px;}
+.step-body h5{font-family:'Manrope',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-0.005em;}
+.step-body .step-meta{font-size:.72rem;color:var(--text3);font-style:italic;margin-bottom:6px;font-weight:500;}
+.step-body > p{font-size:.86rem;color:var(--text2);line-height:1.55;margin-bottom:9px;}
+.step-phrases{display:flex;flex-wrap:wrap;gap:5px;}
+.step-phrases span{font-size:.76rem;color:var(--section-c,var(--primary));background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);padding:4px 11px;border-radius:var(--radius-pill);font-weight:600;line-height:1.4;transition:all var(--t-base) var(--ease);}
+.step-phrases span:hover{background:color-mix(in srgb,var(--section-c,var(--primary)) 24%,transparent);border-color:var(--section-c,var(--primary));}
+.blueprint-footer{margin-top:6px;padding:12px 16px;background:color-mix(in srgb,var(--section-c,var(--primary)) 10%,transparent);border-radius:var(--radius-md);font-size:.86rem;color:var(--text2);display:flex;align-items:center;gap:10px;border:1px dashed color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);}
+.blueprint-footer strong{color:var(--section-c,var(--primary));font-weight:600;}
+.blueprint-footer .footer-ico{font-size:1rem;flex-shrink:0;}
+
+/* TIPS SECTION */
+.tips-list{display:flex;flex-direction:column;gap:10px;}
+.tip{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-md);padding:14px 16px;display:flex;gap:14px;align-items:flex-start;transition:all var(--t-base) var(--ease);}
+.tip:hover{transform:translateX(2px);box-shadow:var(--shadow-xs);border-color:var(--section-c,var(--primary));}
+.tip.warn{--section-c:var(--c-emph);}
+.tip-icon{font-size:.9rem;flex-shrink:0;line-height:1;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);color:var(--section-c,var(--primary));font-weight:800;margin-top:1px;}
+.tip-body{flex:1;min-width:0;}
+.tip-body h5{font-family:'Manrope',sans-serif;font-size:.95rem;font-weight:700;color:var(--section-c,var(--primary));margin-bottom:4px;letter-spacing:-0.005em;line-height:1.3;}
+.tip-body p{font-size:.86rem;color:var(--text2);line-height:1.55;}
+.tip-body p em{color:var(--text);font-style:normal;background:var(--bg-elevated);padding:1px 5px;border-radius:var(--radius-xs);font-size:.92em;font-weight:500;}
+
+/* INLINE STRUCTURAL LABELS */
+.label{display:inline-block;font-family:'JetBrains Mono','Manrope',sans-serif;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:var(--radius-xs);background:var(--tab-c-soft,var(--primary-soft));color:var(--tab-c,var(--primary));margin-right:6px;vertical-align:middle;border:1px solid color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+
+/* CALLOUT */
+.callout{background:var(--tab-c-soft,var(--primary-soft));border-radius:var(--radius-md);padding:14px 16px;margin:0 0 24px;font-size:.88rem;color:var(--text2);line-height:1.6;border-left:3px solid var(--tab-c,var(--primary));}
+.callout strong{color:var(--tab-c,var(--primary));font-weight:600;}
+.callout .ico{font-size:1rem;margin-right:5px;}
+
+/* Set tab-c-soft based on active panel */
+.tab-panel[data-tab="thematic"]{--tab-c:var(--tab-thematic);--tab-c-soft:var(--tab-thematic-soft);}
+.tab-panel[data-tab="binomials"]{--tab-c:var(--tab-binomials);--tab-c-soft:var(--tab-binomials-soft);}
+.tab-panel[data-tab="register"]{--tab-c:var(--tab-register);--tab-c-soft:var(--tab-register-soft);}
+
+@media (max-width: 600px){
+  .paper{padding:20px 18px;}
+  .paper-body{font-size:.88rem;}
+  .grid{grid-template-columns:1fr;}
+}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-xs);margin:0 0 4px;}
+.gram-table{width:100%;border-collapse:collapse;background:var(--card);font-size:.88rem;}
+.gram-table caption{caption-side:top;text-align:left;font-family:'Manrope',sans-serif;font-weight:700;color:var(--section-c,var(--primary));padding:0 0 8px;font-size:.9rem;}
+.gram-table th{background:color-mix(in srgb,var(--section-c,var(--primary)) 12%,transparent);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;text-align:left;padding:10px 14px;border-bottom:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;}
+.gram-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);line-height:1.5;vertical-align:top;}
+.gram-table tr:last-child td{border-bottom:none;}
+.gram-table tbody tr{transition:background var(--t-fast) var(--ease);}
+.gram-table tbody tr:hover{background:var(--bg-elevated);}
+.gram-table td strong,.gram-table .en{color:var(--text);font-weight:600;}
+.gram-table .es{font-style:italic;color:var(--text3);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-actions">
+    <a class="back-btn" href="index.html" title="Volver al índice">
+      <span class="arrow">←</span><span>Inicio</span>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>🎭 Idioms &amp; Fixed Expressions · Modismos y expresiones fijas</h1>
+      <span class="header-tag">Linguaskill · C1</span>
+    </div>
+    <p class="header-sub">
+      Léxico no composicional del inglés: <strong>idioms temáticos</strong> · <strong>binomials &amp; similes</strong> · <strong>registro y uso seguro</strong>
+    </p>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" data-tab="thematic" onclick="showTab('thematic', this)">
+      <span class="ico">🧩</span><span>Idioms por tema</span>
+    </button>
+    <button class="tab" data-tab="binomials" onclick="showTab('binomials', this)">
+      <span class="ico">🔗</span><span>Binomials &amp; similes</span>
+    </button>
+    <button class="tab" data-tab="register" onclick="showTab('register', this)">
+      <span class="ico">⚠️</span><span>Registro y uso seguro</span>
+    </button>
+  </div>
+</div>
+
+<main class="main">
+
+<div class="toolbar">
+  <div class="fs-control" title="Tamaño del texto">
+    <span class="fs-label small">A</span>
+    <input type="range" class="fs-slider" id="fs-slider" min="85" max="140" step="5" value="100" oninput="updateFontSize(this.value)">
+    <span class="fs-label large">A</span>
+    <span class="fs-value" id="fs-value">100%</span>
+  </div>
+  <div class="toolbar-actions">
+    <button class="tool-btn" onclick="expandAll()"><span class="ico">▾</span>Expandir todos</button>
+    <button class="tool-btn" onclick="collapseAll()"><span class="ico">▸</span>Colapsar todos</button>
+  </div>
+</div>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 1: THEMATIC IDIOMS ====================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel active" id="thematic" data-tab="thematic">
+
+  <div class="intro">
+    <h3>Idioms por tema · léxico no composicional</h3>
+    <p>Los <strong>idioms</strong> son expresiones cuyo significado NO se deduce de las palabras que las componen: <em>"it's raining cats and dogs"</em> no tiene nada que ver con animales. Suelen ser de <strong>forma fija</strong> (cambiar una sola palabra los rompe) y casi siempre <strong>informales</strong>. Agruparlos por campo léxico (cuerpo, animales, colores, comida) ayuda a memorizar.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Relevancia Linguaskill:</strong> Tier 5 (C1). Su valor principal está en la <em>comprensión</em>: aparecen como distractores en <em>Reading &amp; Listening</em>, y en <em>Speaking</em> dan naturalidad. En <em>Writing</em> académico, uso muy cauto: un idiom mal recordado penaliza más que ayuda. No es núcleo del aprobado B2.
+  </div>
+
+  <!-- A. POR CAMPO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">🧩</div>
+      <div>
+        <div class="section-title">A. Idioms por campo · 4 familias de uso muy frecuente</div>
+        <div class="section-desc">Partes del cuerpo, animales, colores y comida — con significado y glosa ES</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">🫀 Partes del cuerpo</span><span class="item-trans">body parts</span></div>
+        <ul class="item-list">
+          <li><strong>pull someone's leg</strong> · tomarle el pelo a alguien (broma)</li>
+          <li><strong>off the top of my head</strong> · a bote pronto</li>
+          <li><strong>cost an arm and a leg</strong> · costar un ojo de la cara</li>
+          <li><strong>get cold feet</strong> · echarse atrás en el último momento</li>
+          <li><strong>keep an eye on</strong> · vigilar, no perder de vista</li>
+          <li><strong>have a sweet tooth</strong> · ser muy goloso</li>
+          <li><strong>give someone the cold shoulder</strong> · hacerle el vacío</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">🐾 Animales</span><span class="item-trans">animals</span></div>
+        <ul class="item-list">
+          <li><strong>let the cat out of the bag</strong> · irse de la lengua / revelar un secreto</li>
+          <li><strong>a dark horse</strong> · candidato sorpresa, tapado</li>
+          <li><strong>the elephant in the room</strong> · el tema que nadie menciona</li>
+          <li><strong>kill two birds with one stone</strong> · matar dos pájaros de un tiro</li>
+          <li><strong>when pigs fly</strong> · cuando las ranas críen pelo (nunca)</li>
+          <li><strong>a wild goose chase</strong> · búsqueda inútil</li>
+          <li><strong>the lion's share</strong> · la mejor parte / la mayor parte</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-contrast)">
+        <div class="item-head"><span class="item-term">🎨 Colores</span><span class="item-trans">colours</span></div>
+        <ul class="item-list">
+          <li><strong>once in a blue moon</strong> · de Pascuas a Ramos</li>
+          <li><strong>red tape</strong> · burocracia, papeleo</li>
+          <li><strong>a grey area</strong> · zona ambigua, asunto delicado</li>
+          <li><strong>a white lie</strong> · mentira piadosa</li>
+          <li><strong>green with envy</strong> · muerto de envidia</li>
+          <li><strong>caught red-handed</strong> · pillado con las manos en la masa</li>
+          <li><strong>out of the blue</strong> · de repente, sin previo aviso</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">🍰 Comida</span><span class="item-trans">food</span></div>
+        <ul class="item-list">
+          <li><strong>a piece of cake</strong> · pan comido, facilísimo</li>
+          <li><strong>spill the beans</strong> · irse de la lengua</li>
+          <li><strong>in a nutshell</strong> · en pocas palabras, en resumen</li>
+          <li><strong>bring home the bacon</strong> · ganarse el pan</li>
+          <li><strong>have bigger fish to fry</strong> · tener cosas más importantes</li>
+          <li><strong>the apple of someone's eye</strong> · la niña de los ojos</li>
+          <li><strong>not my cup of tea</strong> · no es lo mío</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- C. EJEMPLOS EN FRASE -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">💬</div>
+      <div>
+        <div class="section-title">C. Ejemplos en frase</div>
+        <div class="section-desc">Los mismos idioms en contexto natural</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase">Don't worry about the test — for someone like you, it'll be <strong>a piece of cake</strong>. <span class="hint">facilísimo</span></div>
+      <div class="phrase">She <strong>let the cat out of the bag</strong> about Tom's surprise party at lunch yesterday. <span class="hint">reveló el secreto</span></div>
+      <div class="phrase">We only see each other <strong>once in a blue moon</strong> now that he's moved abroad. <span class="hint">muy rara vez</span></div>
+      <div class="phrase">The repairs <strong>cost me an arm and a leg</strong>, but the car runs perfectly now. <span class="hint">una fortuna</span></div>
+      <div class="phrase">The minister was <strong>caught red-handed</strong> accepting a bribe from a contractor. <span class="hint">in fraganti</span></div>
+      <div class="phrase">Let's address <strong>the elephant in the room</strong>: the proposed budget cuts. <span class="hint">el tema evitado</span></div>
+      <div class="phrase">I can't answer that <strong>off the top of my head</strong> — let me check the figures. <span class="hint">a bote pronto</span></div>
+      <div class="phrase">Classical music isn't really <strong>my cup of tea</strong>; I prefer jazz. <span class="hint">no es lo mío</span></div>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Traducción literal, forma fija y equivalentes engañosos</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>NUNCA traduzcas un idiom literalmente</h5>
+          <p>Los idioms son cápsulas culturales: <em>"costar un ojo de la cara"</em> NO es <em>*to cost an eye of the face</em>, sino <em>to cost an arm and a leg</em>. <em>"Tomar el pelo"</em> NO es <em>*to take someone's hair</em>, sino <em>to pull someone's leg</em>. Memorízalos como bloques cerrados, no como suma de palabras.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Forma FIJA · cambiar una palabra los rompe</h5>
+          <p><em>a piece of cake</em>, no <em>*a slice of cake</em> (= un trozo de pastel literal). <em>spill the beans</em>, no <em>*spill the seeds</em>. <em>once in a blue moon</em>, no <em>*once in a red moon</em>. El error más típico de B2 alto es modificar el idiom: el resultado deja de ser idiomático y suena raro.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Matar dos pájaros de un tiro" se traduce CASI literal</h5>
+          <p>Algunos sí coinciden: <em>kill two birds with one stone</em>. PERO no es <em>*kill two birds with one shot</em>. La palabra clave es <em>stone</em> (piedra), no shot (disparo). Para una expresión cercana al español, la forma exacta sigue siendo crítica.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Pillar in fraganti" → caught red-handed</h5>
+          <p>El inglés usa COLORES donde el español usa latinismos o frases descriptivas: <em>caught red-handed</em> (con las manos rojas, de sangre). Otros: <em>green with envy</em> (verde de envidia, sí coincide), <em>once in a blue moon</em> (luna azul, una luna llena rara).</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Conjugación correcta del verbo dentro del idiom</h5>
+          <p>El verbo del idiom se conjuga normalmente: <em>I spilled the beans yesterday</em>, <em>She has let the cat out of the bag</em>. NO inmovilices el verbo: <em>*Yesterday I spill the beans</em> es error. El idiom es la combinación, pero el verbo sigue las reglas de tiempo.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Falsos amigos idiomáticos</h5>
+          <p>El idiom español <em>"estar en su salsa"</em> NO es <em>*to be in one's sauce</em>: el equivalente es <em>to be in one's element</em>. <em>"Hablar por los codos"</em> NO es <em>*to talk through the elbows</em>: es <em>to talk a mile a minute</em>. La intuición no funciona; consulta siempre el equivalente.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 2: BINOMIALS & SIMILES ================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="binomials" data-tab="binomials">
+
+  <div class="intro">
+    <h3>Binomials &amp; similes · pares fijos y comparaciones cerradas</h3>
+    <p>Los <strong>binomials</strong> son pares de palabras unidas por <em>and</em> u <em>or</em> en orden invariable (<em>back and forth, pros and cons, sooner or later</em>). Los <strong>similes</strong> son comparaciones fijas con la estructura <strong>as + adjetivo + as + sustantivo</strong> (<em>as cool as a cucumber, as good as gold</em>). Ambos son bloques fonéticamente cómodos que el oído nativo reconoce al instante; cambiar el orden o sustituir el sustantivo delata al estudiante.</p>
+  </div>
+
+  <!-- A. BINOMIALS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">🔗</div>
+      <div>
+        <div class="section-title">A. Binomials · 16 pares en orden invariable</div>
+        <div class="section-desc">El orden NO se intercambia: black and white, no white and black</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <caption>Binomials · pares fijos con significado idiomático</caption>
+        <thead>
+          <tr>
+            <th>Binomial</th>
+            <th>Significado</th>
+            <th>Ejemplo</th>
+            <th>Glosa ES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>now and then</strong></td><td>de vez en cuando</td><td>I visit my parents now and then.</td><td><span class="es">de vez en cuando</span></td></tr>
+          <tr><td><strong>pros and cons</strong></td><td>ventajas e inconvenientes</td><td>Let's weigh the pros and cons.</td><td><span class="es">ventajas y desventajas</span></td></tr>
+          <tr><td><strong>sooner or later</strong></td><td>antes o después</td><td>Sooner or later, the truth will come out.</td><td><span class="es">tarde o temprano</span></td></tr>
+          <tr><td><strong>back and forth</strong></td><td>de un lado a otro</td><td>She paced back and forth in the waiting room.</td><td><span class="es">de un lado a otro</span></td></tr>
+          <tr><td><strong>safe and sound</strong></td><td>sin daño alguno</td><td>We arrived safe and sound at midnight.</td><td><span class="es">sano y salvo</span></td></tr>
+          <tr><td><strong>sick and tired</strong></td><td>hartísimo</td><td>I'm sick and tired of this noise.</td><td><span class="es">harto</span></td></tr>
+          <tr><td><strong>up and down</strong></td><td>arriba y abajo</td><td>He looked her up and down.</td><td><span class="es">de arriba abajo</span></td></tr>
+          <tr><td><strong>odds and ends</strong></td><td>cosas sueltas variadas</td><td>I packed all the odds and ends in one box.</td><td><span class="es">trastos sueltos</span></td></tr>
+          <tr><td><strong>black and white</strong></td><td>claro y por escrito</td><td>The contract terms are in black and white.</td><td><span class="es">por escrito, sin matices</span></td></tr>
+          <tr><td><strong>give and take</strong></td><td>concesiones mutuas</td><td>Marriage requires give and take.</td><td><span class="es">dar y recibir</span></td></tr>
+          <tr><td><strong>bread and butter</strong></td><td>sustento básico / lo esencial</td><td>This client is our bread and butter.</td><td><span class="es">el pan de cada día</span></td></tr>
+          <tr><td><strong>flesh and blood</strong></td><td>de carne y hueso / pariente</td><td>He's my own flesh and blood.</td><td><span class="es">carne y hueso</span></td></tr>
+          <tr><td><strong>by and large</strong></td><td>en líneas generales</td><td>By and large, the plan worked well.</td><td><span class="es">en general</span></td></tr>
+          <tr><td><strong>more or less</strong></td><td>aproximadamente</td><td>The result is more or less the same.</td><td><span class="es">más o menos</span></td></tr>
+          <tr><td><strong>neat and tidy</strong></td><td>bien ordenado</td><td>Keep the office neat and tidy.</td><td><span class="es">recogido</span></td></tr>
+          <tr><td><strong>do's and don'ts</strong></td><td>lo que sí y lo que no</td><td>Read the do's and don'ts before applying.</td><td><span class="es">normas básicas</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- B. SIMILES -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">⭐</div>
+      <div>
+        <div class="section-title">B. Similes · as + adjetivo + as + sustantivo</div>
+        <div class="section-desc">Comparaciones fijas en orden cerrado — el sustantivo no se sustituye</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <caption>Similes · comparaciones idiomáticas con <em>as … as …</em> o <em>like</em></caption>
+        <thead>
+          <tr>
+            <th>Simile</th>
+            <th>Significado</th>
+            <th>Ejemplo</th>
+            <th>Glosa ES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>as cool as a cucumber</strong></td><td>imperturbable, sereno</td><td>She remained as cool as a cucumber during the interview.</td><td><span class="es">tranquilísima</span></td></tr>
+          <tr><td><strong>as good as gold</strong></td><td>que se porta excelentemente (niños)</td><td>The kids were as good as gold all afternoon.</td><td><span class="es">como un angelito</span></td></tr>
+          <tr><td><strong>as easy as pie</strong></td><td>facilísimo</td><td>The grammar exam was as easy as pie.</td><td><span class="es">tirado, facilísimo</span></td></tr>
+          <tr><td><strong>as quick as a flash</strong></td><td>rapidísimo</td><td>He answered as quick as a flash.</td><td><span class="es">como un rayo</span></td></tr>
+          <tr><td><strong>as quiet as a mouse</strong></td><td>silencioso</td><td>The boy sat as quiet as a mouse.</td><td><span class="es">callado como un ratón</span></td></tr>
+          <tr><td><strong>as bright as a button</strong></td><td>listísimo / despierto</td><td>Their daughter is as bright as a button.</td><td><span class="es">muy despierta</span></td></tr>
+          <tr><td><strong>as blind as a bat</strong></td><td>cegato</td><td>Without my glasses, I'm as blind as a bat.</td><td><span class="es">ciego como un topo</span></td></tr>
+          <tr><td><strong>as light as a feather</strong></td><td>ligerísimo</td><td>The new laptop is as light as a feather.</td><td><span class="es">ligero como una pluma</span></td></tr>
+          <tr><td><strong>as strong as an ox</strong></td><td>fuertísimo</td><td>At 70, he's still as strong as an ox.</td><td><span class="es">fuerte como un toro</span></td></tr>
+          <tr><td><strong>as white as a sheet</strong></td><td>blanco (de susto)</td><td>She went as white as a sheet at the news.</td><td><span class="es">pálida como la cera</span></td></tr>
+          <tr><td><strong>as old as the hills</strong></td><td>viejísimo</td><td>That joke is as old as the hills.</td><td><span class="es">más viejo que Matusalén</span></td></tr>
+          <tr><td><strong>as busy as a bee</strong></td><td>ocupadísimo</td><td>Mum's been as busy as a bee all morning.</td><td><span class="es">atareada</span></td></tr>
+          <tr><td><strong>like a fish out of water</strong></td><td>fuera de su elemento</td><td>At the formal dinner he felt like a fish out of water.</td><td><span class="es">un pez fuera del agua</span></td></tr>
+          <tr><td><strong>like a bull in a china shop</strong></td><td>torpe en sitio delicado</td><td>He moved through the antiques shop like a bull in a china shop.</td><td><span class="es">como elefante en cacharrería</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Orden invariable, sustantivos no intercambiables, equivalentes engañosos</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Orden FIJO en los binomials · no se intercambia</h5>
+          <p><em>black and white</em>, NO <em>*white and black</em>. <em>pros and cons</em>, NO <em>*cons and pros</em>. <em>bread and butter</em>, NO <em>*butter and bread</em>. El orden es ritmo fonético cristalizado; invertirlo suena como decir <em>"sal y pan"</em> en español. Memorízalos como bloques cerrados.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"More or less" — mismo orden que español</h5>
+          <p>Por suerte algunos binomials coinciden con el español: <em>more or less</em> = "más o menos", <em>sooner or later</em> = "tarde o temprano", <em>flesh and blood</em> = "carne y hueso". OJO: <em>safe and sound</em> = "sano y salvo" parece coincidir pero el orden inglés pone <em>safe</em> (sano) primero — en español va al revés. No te fíes.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Similes: el sustantivo NO se sustituye libremente</h5>
+          <p><em>as easy as pie</em>, NO <em>*as easy as cake</em>. <em>as cool as a cucumber</em>, NO <em>*as cool as a fridge</em>. El sustantivo es parte del idiom. <em>*as light as paper</em> (que tendría sentido lógico) no es idiomático: lo correcto es <em>as light as a feather</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Like" se usa cuando el sustantivo va sin adjetivo</h5>
+          <p>Estructura <em>as + adj + as + noun</em> (<em>as cool as a cucumber</em>), pero <em>like + noun phrase</em> sin adjetivo (<em>like a fish out of water</em>, <em>like a bull in a china shop</em>). No confundas: <em>*as a fish out of water</em> es error; lo correcto es <em>like</em>.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Cuando las ranas críen pelo" tiene equivalentes ingleses raros</h5>
+          <p>El binomio español de "nunca" tiene varios equivalentes en inglés: <em>when pigs fly</em>, <em>when hell freezes over</em>, <em>not in a million years</em>. Todos son fijos y muy informales. NO traduzcas el animal/imagen — selecciona el bloque inglés que prefieras y memorízalo.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"By and large" y "more or less" SÍ son académicos</h5>
+          <p>Algunos binomials encajan en Writing formal: <em>by and large</em> = en general, <em>more or less</em> = aproximadamente, <em>pros and cons</em>, <em>do's and don'ts</em>, <em>trial and error</em>. Otros (<em>sick and tired, odds and ends, neat and tidy</em>) son coloquiales y bajan el registro. Sé selectivo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 3: REGISTER & SAFE USE ================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="register" data-tab="register">
+
+  <div class="intro">
+    <h3>Registro y uso seguro · cuándo dispara y cuándo dispara contra ti</h3>
+    <p>La mayoría de idioms son <strong>informales</strong> y orales. En un essay académico de Linguaskill, un idiom mal colocado o mal recordado penaliza MÁS que ayuda. <strong>Regla de oro:</strong> úsalo solo si dominas su forma exacta al 100 % y encaja en el registro del texto. La lista segura para Writing es muy corta; la útil para Speaking, más amplia. Selectividad &gt; ostentación.</p>
+  </div>
+
+  <!-- A. CUÁNDO USARLOS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">A. Cuándo usarlos · zonas seguras y zonas minadas</div>
+        <div class="section-desc">Por contexto: essay, email informal, speaking, exam B2 a evitar</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">✅ Seguros en essay académico</span><span class="item-trans">registro formal</span></div>
+        <ul class="item-list">
+          <li><strong>by and large</strong> · en general</li>
+          <li><strong>on the other hand</strong> · por otro lado</li>
+          <li><strong>in the long run</strong> · a largo plazo</li>
+          <li><strong>more or less</strong> · aproximadamente</li>
+          <li><strong>all things considered</strong> · considerando todo</li>
+          <li><strong>at the end of the day</strong> · en última instancia (cuidado)</li>
+          <li><strong>to a large extent</strong> · en gran medida</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-add)">
+        <div class="item-head"><span class="item-term">📧 Seguros en email informal</span><span class="item-trans">registro neutro-amistoso</span></div>
+        <ul class="item-list">
+          <li><strong>in a nutshell</strong> · en resumen</li>
+          <li><strong>out of the blue</strong> · de repente</li>
+          <li><strong>once in a blue moon</strong> · muy rara vez</li>
+          <li><strong>to be honest</strong> · sinceramente</li>
+          <li><strong>by the way</strong> · por cierto</li>
+          <li><strong>a piece of cake</strong> · facilísimo (con moderación)</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">🗣️ Solo Speaking / conversación</span><span class="item-trans">registro coloquial</span></div>
+        <ul class="item-list">
+          <li><strong>to spill the beans</strong> · irse de la lengua</li>
+          <li><strong>to pull someone's leg</strong> · tomar el pelo</li>
+          <li><strong>to cost an arm and a leg</strong> · costar un ojo</li>
+          <li><strong>to give the cold shoulder</strong> · hacer el vacío</li>
+          <li><strong>when pigs fly</strong> · nunca</li>
+          <li><strong>to have bigger fish to fry</strong> · cosas más urgentes</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-emph)">
+        <div class="item-head"><span class="item-term">⛔ Evitar en B2 exam</span><span class="item-trans">zona de penalización</span></div>
+        <ul class="item-list">
+          <li>Cualquier idiom del que <strong>dudes la forma exacta</strong></li>
+          <li>Idioms con <strong>conjugación compleja</strong> (kick the bucket, bite the dust)</li>
+          <li>Idioms <strong>regionales o muy juveniles</strong> (slang reciente)</li>
+          <li>Mezclas <strong>US vs UK</strong> (table a discussion / table = aplazar UK = poner sobre la mesa US)</li>
+          <li>Idioms <strong>políticamente sensibles</strong> u ofensivos</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-seq)">
+        <div class="item-head"><span class="item-term">📐 Binomials seguros para Writing</span><span class="item-trans">elegantes y neutros</span></div>
+        <ul class="item-list">
+          <li><strong>by and large</strong> · en general</li>
+          <li><strong>trial and error</strong> · ensayo y error</li>
+          <li><strong>pros and cons</strong> · ventajas y desventajas</li>
+          <li><strong>give and take</strong> · concesiones mutuas</li>
+          <li><strong>more or less</strong> · aproximadamente</li>
+          <li><strong>do's and don'ts</strong> · normas básicas</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-time)">
+        <div class="item-head"><span class="item-term">⚠️ Arriesgados · forma compleja</span><span class="item-trans">fáciles de romper</span></div>
+        <ul class="item-list">
+          <li><strong>let the cat out of the bag</strong> · 6 palabras, fácil de mutilar</li>
+          <li><strong>the elephant in the room</strong> · the obligatorio</li>
+          <li><strong>kill two birds with one stone</strong> · stone, no shot</li>
+          <li><strong>bring home the bacon</strong> · home sin "to"</li>
+          <li><strong>a fish out of water</strong> · "like a", no "as a"</li>
+          <li><strong>spill the beans</strong> · plural "beans" obligatorio</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- D. TRAMPAS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Calques, registro inapropiado y preposiciones del idiom</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Idiom en registro inadecuado = penalización doble</h5>
+          <p>Meter <em>to spill the beans</em> en un essay sobre cambio climático suena ridículo. Un solo idiom mal colocado puede bajar el criterio <em>Discourse Management</em> y el de <em>Lexical Resource</em> a la vez. Si dudas del registro, no lo uses: en B2 / C1, la naturalidad es preferible a la pirotecnia léxica.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Mezclar idiomas: la trampa del híbrido</h5>
+          <p>El estudiante que conoce el equivalente español tiende a "fusionar": <em>*it's raining cats and dogs in my head</em> mezcla literal y idiomático. Decide: o usas el idiom inglés completo, o reformulas en lenguaje neutro (<em>it's pouring down outside</em>). Nunca mezcles.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Cambio de palabra clave · idiom desactivado</h5>
+          <p><em>a piece of cake</em> → <em>*a slice of cake</em> (= un trozo de pastel literal). <em>spill the beans</em> → <em>*spill the bean</em> (sin plural, deja de ser idiom). <em>out of the blue</em> → <em>*out from the blue</em> (preposición incorrecta). Si no recuerdas la forma EXACTA, no lo uses.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Estar en su salsa" → in one's element (NO sauce)</h5>
+          <p>Los idioms españoles tienen equivalentes ingleses que NO comparten imágenes. <em>"Estar en su salsa"</em> → <em>to be in one's element</em>. <em>"Tirar la casa por la ventana"</em> → <em>to spare no expense</em>. <em>"Dar la lata"</em> → <em>to be a pain in the neck</em>. Sin diccionario de equivalencias, NO improvises.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Preposiciones del idiom · de memoria</h5>
+          <p>Muchos idioms incorporan preposiciones fijas que no se pueden cambiar: <em>out OF the blue</em> (no <em>*out the blue</em>), <em>in a nutshell</em> (no <em>*on a nutshell</em>), <em>on the other hand</em> (no <em>*in the other hand</em>). Apréndelos como bloques completos con su preposición pegada.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Uno o dos por texto · más es contraproducente</h5>
+          <p>Aunque sea C1, atiborrar un texto de idioms no demuestra dominio: demuestra ostentación. Un essay de 250 palabras con 6 idioms suena artificial. Lo natural: 1–2 idioms bien colocados en momentos clave (introducción o conclusión), y léxico neutro en el cuerpo. Dosificación, no abundancia.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E. EN CONTEXTO -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-model)">📄</div>
+      <div>
+        <div class="section-title">E. En contexto · idioms en uso real informal</div>
+        <div class="section-desc">Email entre amigos y diálogo · idioms resaltados en azul</div>
+      </div>
+    </div>
+    <div class="papers">
+
+      <!-- PAPER 1 -->
+      <article class="paper">
+        <h4 class="paper-title">Pair 1 · Email informal · Sarah's surprise party</h4>
+        <div class="paper-meta">~140 palabras · 7 idioms marcados</div>
+        <div class="paper-body">
+          <p>Hi Mike,</p>
+          <p>Hope you're doing well! Just a quick heads-up about Sarah's birthday next Saturday. We're throwing her a surprise party, so please <span class="k-key">keep it under your hat</span> — last year, Tom <span class="k-key">let the cat out of the bag</span> and ruined everything.</p>
+          <p>I know organising this <span class="k-key">will cost an arm and a leg</span>, but it'll be worth it. We see each other <span class="k-key">once in a blue moon</span> these days, so let's make it special.</p>
+          <p>Could you bring a cake? I'm <span class="k-key">up to my eyes</span> with work this week — preparing the presentation has been <span class="k-key">anything but a piece of cake</span>. And remember: if Sarah asks anything weird, just play it <span class="k-key">as cool as a cucumber</span>.</p>
+          <p>Let me know if you're in!</p>
+          <p>Cheers,<br>Anna</p>
+        </div>
+      </article>
+
+      <!-- PAPER 2 -->
+      <article class="paper">
+        <h4 class="paper-title">Pair 2 · Diálogo informal · Post-interview chat</h4>
+        <div class="paper-meta">~130 palabras · 9 idioms / binomials / similes marcados</div>
+        <div class="paper-body">
+          <p>— Hey, how did the job interview go yesterday?</p>
+          <p>— <span class="k-key">A piece of cake</span>, actually! I was nervous at first, but the interviewer was really friendly. I <span class="k-key">kept my cool</span> the whole time — <span class="k-key">as cool as a cucumber</span>!</p>
+          <p>— Lucky you. I always <span class="k-key">get cold feet</span> before interviews.</p>
+          <p>— Tell me about it. <span class="k-key">By the way</span>, did you hear the news <span class="k-key">out of the blue</span> about Lisa quitting?</p>
+          <p>— No way! She didn't say a word last week.</p>
+          <p>— Yeah, completely <span class="k-key">out of the blue</span>. Apparently she's got <span class="k-key">bigger fish to fry</span> — starting her own business.</p>
+          <p>— Well, <span class="k-key">sooner or later</span> these things happen. Wish her <span class="k-key">the best of luck</span>.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+/* THEME */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("theme",t);}catch(e){}}
+function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme")||"light";applyTheme(cur==="dark"?"light":"dark");}
+(function initTheme(){let saved=null;try{saved=localStorage.getItem("theme");}catch(e){}if(saved==="dark"||saved==="light"){applyTheme(saved);return;}const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;applyTheme(prefersDark?"dark":"light");})();
+
+/* TABS */
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* SECTIONS */
+function toggleSection(header){
+  header.parentElement.classList.toggle('collapsed');
+}
+function getActiveSections(){
+  return document.querySelectorAll('.tab-panel.active .section');
+}
+function getActivePapers(){
+  return document.querySelectorAll('.tab-panel.active .paper');
+}
+function expandAll(){
+  getActiveSections().forEach(s => s.classList.remove('collapsed'));
+  getActivePapers().forEach(p => p.classList.remove('collapsed'));
+}
+function collapseAll(){
+  getActiveSections().forEach(s => s.classList.add('collapsed'));
+  getActivePapers().forEach(p => p.classList.add('collapsed'));
+}
+
+/* MODEL PAPERS — wrap title+meta in a clickable header, collapse by default */
+document.querySelectorAll('.paper').forEach(paper => {
+  const title = paper.querySelector('.paper-title');
+  const meta = paper.querySelector('.paper-meta');
+  if(!title || !meta) return;
+  const header = document.createElement('div');
+  header.className = 'paper-header';
+  const wrap = document.createElement('div');
+  wrap.appendChild(title);
+  wrap.appendChild(meta);
+  const toggle = document.createElement('span');
+  toggle.className = 'paper-toggle';
+  toggle.textContent = '▾';
+  header.appendChild(wrap);
+  header.appendChild(toggle);
+  header.addEventListener('click', () => paper.classList.toggle('collapsed'));
+  paper.insertBefore(header, paper.firstChild);
+  paper.classList.add('collapsed');
+});
+
+/* Set section colors + item counts */
+document.querySelectorAll('.section').forEach(sec => {
+  const icon = sec.querySelector('.section-icon');
+  if (icon) {
+    const m = (icon.getAttribute('style') || '').match(/var\(--c-([a-z]+)\)/);
+    if (m) {
+      sec.style.setProperty('--section-c', `var(--c-${m[1]})`);
+      sec.style.setProperty('--section-c-bg', `var(--c-${m[1]}-bg)`);
+    }
+  }
+  const container = sec.querySelector('.grid, .stack, .papers, .tips-list, .blueprint, .table-wrap');
+  if(!container) return;
+  let count;
+  if (container.matches('.blueprint')) {
+    count = container.querySelectorAll('.step').length;
+  } else if (container.matches('.table-wrap')) {
+    count = container.querySelectorAll('tbody tr').length;
+  } else {
+    count = container.children.length;
+  }
+  const badge = document.createElement('span');
+  badge.className = 'section-count';
+  badge.textContent = count;
+  sec.querySelector('.section-header').appendChild(badge);
+});
+
+/* FONT SIZE SLIDER */
+const FS_KEY = 'idiomas_font_size';
+function updateFontSize(pct){
+  const scale = pct / 100;
+  document.documentElement.style.fontSize = (16 * scale) + 'px';
+  document.getElementById('fs-value').textContent = pct + '%';
+  localStorage.setItem(FS_KEY, pct);
+}
+(function initFontSize(){
+  const saved = localStorage.getItem(FS_KEY);
+  if(saved){
+    document.getElementById('fs-slider').value = saved;
+    updateFontSize(saved);
+  }
+})();
+</script>
+
+</body>
+</html>

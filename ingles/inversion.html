@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inversion · C1 Linguaskill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Page identity: Inversion → violet (Syntax) */
+  --primary:#7c3aed; --primary-soft:#f5f3ff; --primary-mid:#8b5cf6; --primary-strong:#4c1d95;
+  --primary-glow:rgba(124,58,237,.14);
+  /* Per-tab identity colors */
+  --tab-negative:#1d4ed8;     --tab-negative-soft:#eff6ff;     --tab-negative-mid:#3b82f6;
+  --tab-temporal:#0e7490;     --tab-temporal-soft:#ecfeff;     --tab-temporal-mid:#06b6d4;
+  --tab-conditional:#b45309;  --tab-conditional-soft:#fffbeb;  --tab-conditional-mid:#f59e0b;
+  /* Legacy aliases */
+  --accent:var(--primary); --accent-light:var(--primary-soft); --accent-mid:var(--primary-mid);
+  /* Neutrals */
+  --bg:#f7f7f5; --bg-elevated:#fbfbfa; --card:#ffffff;
+  --border:#ececec; --border-strong:#dfdfdf;
+  --text:#18181b; --text2:#52525b; --text3:#71717a;
+  /* Paper (model examples) */
+  --paper:#fefef9; --paper-border:#e7e5d6;
+  /* Shadows */
+  --shadow-xs:0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:0 2px 8px rgba(15,23,42,.04),0 1px 2px rgba(15,23,42,.03);
+  --shadow:0 4px 16px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+  --shadow-primary:0 6px 20px var(--primary-glow);
+  /* Geometry */
+  --radius:18px; --radius-md:14px; --radius-sm:10px; --radius-xs:6px; --radius-pill:999px;
+  /* Motion */
+  --ease:cubic-bezier(0.4,0,0.2,1); --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --t-fast:120ms; --t-base:200ms;
+  /* Section colors (A→E) */
+  --c-greet:#7c3aed;     --c-greet-bg:#f5f3ff;
+  --c-conn:#0e7490;      --c-conn-bg:#ecfeff;
+  --c-key:#1d4ed8;       --c-key-bg:#eff6ff;
+  --c-close:#be185d;     --c-close-bg:#fdf2f8;
+  --c-model:#b45309;     --c-model-bg:#fffbeb;
+  --c-tip:#ca8a04;       --c-tip-bg:#fef9c3;
+  --c-struct:#4338ca;    --c-struct-bg:#e0e7ff;
+  /* Sub-category colors for connectors */
+  --c-add:#0e7490;       --c-contrast:#be185d;
+  --c-cause:#15803d;     --c-purpose:#7c3aed;
+  --c-seq:#1d4ed8;       --c-time:#0369a1;
+  --c-emph:#b91c1c;      --c-summ:#7c3aed;
+}
+[data-theme="dark"]{
+  --primary:#c4b5fd; --primary-soft:#2e1065; --primary-mid:#a78bfa; --primary-strong:#ddd6fe;
+  --primary-glow:rgba(196,181,253,.18);
+  --tab-negative:#60a5fa;     --tab-negative-soft:rgba(96,165,250,.12);     --tab-negative-mid:#3b82f6;
+  --tab-temporal:#22d3ee;     --tab-temporal-soft:rgba(34,211,238,.12);     --tab-temporal-mid:#06b6d4;
+  --tab-conditional:#fbbf24;  --tab-conditional-soft:rgba(251,191,36,.12);  --tab-conditional-mid:#f59e0b;
+  --bg:#0a0a0b; --bg-elevated:#131316; --card:#18181b;
+  --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --paper:#1e1e24; --paper-border:#3a3a42;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.2);
+  --shadow:0 4px 16px rgba(0,0,0,.30),0 1px 3px rgba(0,0,0,.20);
+  --shadow-primary:0 6px 24px var(--primary-glow);
+  --c-greet:#a78bfa;     --c-greet-bg:rgba(167,139,250,.10);
+  --c-conn:#22d3ee;      --c-conn-bg:rgba(34,211,238,.10);
+  --c-key:#60a5fa;       --c-key-bg:rgba(96,165,250,.10);
+  --c-close:#f472b6;     --c-close-bg:rgba(244,114,182,.10);
+  --c-model:#fbbf24;     --c-model-bg:rgba(251,191,36,.10);
+  --c-tip:#facc15;       --c-tip-bg:rgba(250,204,21,.10);
+  --c-struct:#a5b4fc;    --c-struct-bg:rgba(165,180,252,.10);
+  --c-add:#22d3ee;       --c-contrast:#f472b6;
+  --c-cause:#4ade80;     --c-purpose:#a78bfa;
+  --c-seq:#60a5fa;       --c-time:#38bdf8;
+  --c-emph:#f87171;      --c-summ:#a78bfa;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+*:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-xs);}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
+
+/* HEADER */
+.site-header{background:linear-gradient(180deg,var(--bg-elevated),var(--bg));padding:32px 20px 22px;position:relative;}
+.site-header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-strong) 20%,var(--border-strong) 80%,transparent);}
+.header-inner{max-width:1000px;margin:0 auto;}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.site-header h1{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:600;letter-spacing:-0.02em;color:var(--text);line-height:1.1;}
+.header-tag{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);background:var(--primary-soft);border-radius:var(--radius-pill);padding:4px 11px;}
+.header-sub{font-size:.88rem;color:var(--text3);font-weight:400;margin-top:4px;line-height:1.55;}
+.header-sub strong{color:var(--primary);font-weight:600;}
+
+/* HEADER ACTIONS BAR */
+.header-actions{max-width:1000px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:8px 14px 8px 11px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.back-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateX(-2px);box-shadow:var(--shadow);}
+.back-btn:active{transform:translateX(-2px) scale(.97);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+
+/* THEME TOGGLE */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.theme-toggle:hover{color:var(--primary);border-color:var(--primary-mid);transform:translateY(-1px);box-shadow:var(--shadow);}
+.theme-toggle .icon-sun{display:none;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+
+/* TABS — per-tab colors */
+.tabs-wrap{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-elevated) 85%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--border);padding:14px 20px;}
+.tabs{max-width:1000px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;}
+.tab{border:1px solid var(--border);border-radius:var(--radius-pill);padding:9px 18px;font-family:inherit;font-size:.85rem;font-weight:500;cursor:pointer;background:var(--card);color:var(--text2);transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:7px;}
+.tab:hover{transform:translateY(-1px);box-shadow:var(--shadow-xs);border-color:var(--tab-c,var(--primary-mid));color:var(--tab-c,var(--primary));}
+.tab.active{background:var(--tab-c,var(--primary));color:#fff;border-color:var(--tab-c,var(--primary));font-weight:600;box-shadow:0 6px 20px color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+[data-theme="dark"] .tab.active{color:#0a0a0b;}
+.tab[data-tab="negative"]{--tab-c:var(--tab-negative);}
+.tab[data-tab="temporal"]{--tab-c:var(--tab-temporal);}
+.tab[data-tab="conditional"]{--tab-c:var(--tab-conditional);}
+.tab .ico{font-size:1rem;line-height:1;}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:32px 20px 64px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeSlideIn 360ms var(--ease-out);}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* INTRO */
+.intro{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:28px;box-shadow:var(--shadow-xs);}
+.intro h3{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--tab-c,var(--primary));margin-bottom:10px;}
+.intro p{font-size:.92rem;color:var(--text2);line-height:1.65;}
+.intro p strong{color:var(--tab-c,var(--primary));font-weight:600;}
+
+/* TOOLBAR */
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.tool-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:7px 15px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:6px;}
+.tool-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateY(-1px);box-shadow:var(--shadow-xs);}
+.tool-btn .ico{font-size:.85rem;line-height:1;}
+
+/* FONT SIZE SLIDER */
+.fs-control{display:inline-flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:6px 14px;}
+.fs-label{font-family:inherit;font-weight:600;color:var(--text3);line-height:1;user-select:none;}
+.fs-label.small{font-size:.78rem;}
+.fs-label.large{font-size:1.1rem;}
+.fs-slider{-webkit-appearance:none;appearance:none;width:100px;height:4px;background:var(--border-strong);border-radius:2px;outline:none;cursor:pointer;accent-color:var(--primary);}
+.fs-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);transition:transform var(--t-fast) var(--ease);}
+.fs-slider::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.fs-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);}
+.fs-value{font-size:.72rem;font-weight:600;color:var(--text3);min-width:32px;text-align:right;}
+
+/* SECTION (collapsible) */
+.section{margin-bottom:14px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow var(--t-base) var(--ease);}
+.section:hover{box-shadow:var(--shadow);}
+.section-header{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;user-select:none;transition:background var(--t-base) var(--ease);background:transparent;}
+.section-header:hover{background:var(--bg-elevated);}
+.section:not(.collapsed) .section-header{border-bottom:1px solid var(--border);}
+.section-icon{width:38px;height:38px;border-radius:var(--radius-sm);display:inline-flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;background:transparent!important;border:2px solid var(--section-c,var(--primary));color:var(--section-c,var(--primary));}
+.section-title{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--text);line-height:1.2;}
+.section-desc{font-size:.78rem;color:var(--text3);margin-top:2px;line-height:1.45;}
+.section-header > div:not(.section-icon){flex:1;}
+.section-header::after{content:"▾";font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease);margin-left:8px;flex-shrink:0;font-weight:600;}
+.section.collapsed .section-header::after{transform:rotate(-90deg);}
+.section.collapsed .section-header:hover::after{color:var(--primary);}
+.section-count{font-size:.7rem;font-weight:600;color:var(--text3);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px 10px;margin-left:auto;flex-shrink:0;transition:all var(--t-base) var(--ease);}
+.section-header:hover .section-count{border-color:var(--primary-mid);color:var(--primary);}
+.section > .grid, .section > .stack, .section > .papers, .section > .tips-list, .section > .blueprint, .section > .table-wrap{padding:18px 20px 20px;}
+.section.collapsed > *:not(.section-header){display:none!important;}
+
+/* GRID + ITEM */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.item{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 30%,transparent)!important;border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-xs);transition:transform var(--t-base) var(--ease),box-shadow var(--t-base) var(--ease),border-color var(--t-base) var(--ease);border-left:4px solid var(--section-c,var(--primary))!important;}
+.item:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--section-c,var(--primary-mid))!important;}
+.item-head{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.item-term{font-family:'Manrope','Inter',sans-serif;font-size:1.02rem;font-weight:700;letter-spacing:-0.005em;color:var(--section-c,var(--text));line-height:1.3;}
+.item-trans{font-size:.76rem;color:var(--text3);font-style:italic;}
+.item-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;}
+.item-list li{font-size:.88rem;color:var(--text2);line-height:1.5;padding:5px 0 5px 12px;border-left:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);}
+.item-list li strong{color:var(--text);font-weight:600;}
+
+/* STACK (single-column phrase list, for A/C/D sections) */
+.stack{display:flex;flex-direction:column;gap:8px;}
+.phrase{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--border)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-sm);padding:10px 14px;font-size:.92rem;color:var(--text2);line-height:1.5;transition:all var(--t-base) var(--ease);}
+.phrase:hover{transform:translateX(2px);border-color:var(--section-c,var(--primary));box-shadow:var(--shadow-xs);}
+.phrase strong{color:var(--text);font-weight:600;}
+.phrase .hint{font-size:.74rem;color:var(--text3);font-style:italic;margin-left:6px;}
+
+/* PAPER (model examples) */
+.papers{display:flex;flex-direction:column;gap:14px;}
+.paper{background:var(--paper);border:1px solid var(--paper-border);border-radius:var(--radius-md);padding:22px 26px;box-shadow:var(--shadow-sm);position:relative;transition:box-shadow var(--t-base) var(--ease);}
+.paper:hover{box-shadow:var(--shadow);}
+.paper::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--tab-c,var(--primary)),transparent);border-radius:var(--radius-md) var(--radius-md) 0 0;}
+.paper-header{display:flex;align-items:flex-start;gap:14px;cursor:pointer;user-select:none;}
+.paper-header > div:first-child{flex:1;min-width:0;}
+.paper-header .paper-meta{margin-bottom:0;}
+.paper-toggle{font-size:1rem;color:var(--text3);transition:transform var(--t-base) var(--ease),color var(--t-base) var(--ease);flex-shrink:0;font-weight:700;line-height:1.4;}
+.paper-header:hover .paper-toggle,.paper-header:hover .paper-title{color:var(--tab-c,var(--primary));}
+.paper.collapsed .paper-toggle{transform:rotate(-90deg);}
+.paper.collapsed .paper-body{display:none;}
+.paper:not(.collapsed) .paper-body{margin-top:18px;}
+.paper-title{font-family:'Fraunces',Georgia,serif;font-size:1.05rem;font-weight:600;color:var(--tab-c,var(--primary));margin-bottom:6px;letter-spacing:-0.01em;transition:color var(--t-base) var(--ease);}
+.paper-meta{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:18px;}
+.paper-body{font-family:'Inter',sans-serif;font-size:.94rem;line-height:1.8;color:var(--text);}
+.paper-body p{margin-bottom:12px;}
+.paper-body p:last-child{margin-bottom:0;}
+.paper-body em{font-style:italic;color:var(--text2);}
+
+/* COLOR-CODED INLINE PHRASES IN MODELS — match theory section colors */
+.paper-body .k-open    {color:var(--c-greet);    font-weight:600;}
+.paper-body .k-add     {color:var(--c-add);      font-weight:600;}
+.paper-body .k-contrast{color:var(--c-contrast); font-weight:600;}
+.paper-body .k-cause   {color:var(--c-cause);    font-weight:600;}
+.paper-body .k-concess {color:var(--c-purpose);  font-weight:600;}
+.paper-body .k-purpose {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-seq     {color:var(--c-seq);      font-weight:600;}
+.paper-body .k-time    {color:var(--c-time);     font-weight:600;}
+.paper-body .k-emph    {color:var(--c-emph);     font-weight:600;}
+.paper-body .k-summ    {color:var(--c-summ);     font-weight:600;}
+.paper-body .k-key     {color:var(--c-key);      font-weight:600;}
+.paper-body .k-close   {color:var(--c-close);    font-weight:600;}
+
+/* STRUCTURE BLUEPRINT (vertical timeline) */
+.blueprint{display:flex;flex-direction:column;gap:0;position:relative;}
+.step{display:flex;gap:14px;align-items:flex-start;position:relative;padding:6px 0 14px 0;}
+.step::before{content:"";position:absolute;left:18px;top:42px;bottom:-4px;width:2px;background:color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);}
+.step:last-of-type::before{display:none;}
+.step-num{width:38px;height:38px;border-radius:50%;background:var(--card);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--section-c,var(--primary));position:relative;z-index:1;}
+.step-body{flex:1;min-width:0;padding-top:6px;}
+.step-body h5{font-family:'Manrope',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-0.005em;}
+.step-body .step-meta{font-size:.72rem;color:var(--text3);font-style:italic;margin-bottom:6px;font-weight:500;}
+.step-body > p{font-size:.86rem;color:var(--text2);line-height:1.55;margin-bottom:9px;}
+.step-phrases{display:flex;flex-wrap:wrap;gap:5px;}
+.step-phrases span{font-size:.76rem;color:var(--section-c,var(--primary));background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 40%,transparent);padding:4px 11px;border-radius:var(--radius-pill);font-weight:600;line-height:1.4;transition:all var(--t-base) var(--ease);}
+.step-phrases span:hover{background:color-mix(in srgb,var(--section-c,var(--primary)) 24%,transparent);border-color:var(--section-c,var(--primary));}
+.blueprint-footer{margin-top:6px;padding:12px 16px;background:color-mix(in srgb,var(--section-c,var(--primary)) 10%,transparent);border-radius:var(--radius-md);font-size:.86rem;color:var(--text2);display:flex;align-items:center;gap:10px;border:1px dashed color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);}
+.blueprint-footer strong{color:var(--section-c,var(--primary));font-weight:600;}
+.blueprint-footer .footer-ico{font-size:1rem;flex-shrink:0;}
+
+/* TIPS SECTION */
+.tips-list{display:flex;flex-direction:column;gap:10px;}
+.tip{background:var(--card);border:1px solid color-mix(in srgb,var(--section-c,var(--primary)) 25%,transparent);border-left:4px solid var(--section-c,var(--primary));border-radius:var(--radius-md);padding:14px 16px;display:flex;gap:14px;align-items:flex-start;transition:all var(--t-base) var(--ease);}
+.tip:hover{transform:translateX(2px);box-shadow:var(--shadow-xs);border-color:var(--section-c,var(--primary));}
+.tip.warn{--section-c:var(--c-emph);}
+.tip-icon{font-size:.9rem;flex-shrink:0;line-height:1;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:color-mix(in srgb,var(--section-c,var(--primary)) 16%,transparent);color:var(--section-c,var(--primary));font-weight:800;margin-top:1px;}
+.tip-body{flex:1;min-width:0;}
+.tip-body h5{font-family:'Manrope',sans-serif;font-size:.95rem;font-weight:700;color:var(--section-c,var(--primary));margin-bottom:4px;letter-spacing:-0.005em;line-height:1.3;}
+.tip-body p{font-size:.86rem;color:var(--text2);line-height:1.55;}
+.tip-body p em{color:var(--text);font-style:normal;background:var(--bg-elevated);padding:1px 5px;border-radius:var(--radius-xs);font-size:.92em;font-weight:500;}
+
+/* INLINE STRUCTURAL LABELS */
+.label{display:inline-block;font-family:'JetBrains Mono','Manrope',sans-serif;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:var(--radius-xs);background:var(--tab-c-soft,var(--primary-soft));color:var(--tab-c,var(--primary));margin-right:6px;vertical-align:middle;border:1px solid color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+
+/* CALLOUT */
+.callout{background:var(--tab-c-soft,var(--primary-soft));border-radius:var(--radius-md);padding:14px 16px;margin:0 0 24px;font-size:.88rem;color:var(--text2);line-height:1.6;border-left:3px solid var(--tab-c,var(--primary));}
+.callout strong{color:var(--tab-c,var(--primary));font-weight:600;}
+.callout .ico{font-size:1rem;margin-right:5px;}
+
+/* Set tab-c-soft based on active panel */
+.tab-panel[data-tab="negative"]{--tab-c:var(--tab-negative);--tab-c-soft:var(--tab-negative-soft);}
+.tab-panel[data-tab="temporal"]{--tab-c:var(--tab-temporal);--tab-c-soft:var(--tab-temporal-soft);}
+.tab-panel[data-tab="conditional"]{--tab-c:var(--tab-conditional);--tab-c-soft:var(--tab-conditional-soft);}
+
+@media (max-width: 600px){
+  .paper{padding:20px 18px;}
+  .paper-body{font-size:.88rem;}
+  .grid{grid-template-columns:1fr;}
+}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-xs);margin:0 0 4px;}
+.gram-table{width:100%;border-collapse:collapse;background:var(--card);font-size:.88rem;}
+.gram-table caption{caption-side:top;text-align:left;font-family:'Manrope',sans-serif;font-weight:700;color:var(--section-c,var(--primary));padding:0 0 8px;font-size:.9rem;}
+.gram-table th{background:color-mix(in srgb,var(--section-c,var(--primary)) 12%,transparent);color:var(--section-c,var(--primary));font-family:'Manrope',sans-serif;font-weight:700;text-align:left;padding:10px 14px;border-bottom:2px solid color-mix(in srgb,var(--section-c,var(--primary)) 35%,transparent);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;}
+.gram-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);line-height:1.5;vertical-align:top;}
+.gram-table tr:last-child td{border-bottom:none;}
+.gram-table tbody tr{transition:background var(--t-fast) var(--ease);}
+.gram-table tbody tr:hover{background:var(--bg-elevated);}
+.gram-table td strong,.gram-table .en{color:var(--text);font-weight:600;}
+.gram-table .es{font-style:italic;color:var(--text3);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-actions">
+    <a class="back-btn" href="index.html" title="Volver al índice">
+      <span class="arrow">←</span><span>Inicio</span>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>🔃 Inversion · Inversión con adverbios negativos</h1>
+      <span class="header-tag">Linguaskill C1</span>
+    </div>
+    <p class="header-sub">
+      Recurso de <strong>énfasis formal y literario</strong>: anteponer un adverbio negativo o restrictivo al inicio de la oración fuerza la <strong>inversión sujeto-auxiliar</strong> (como en preguntas). <em>Never have I seen…</em>, <em>Hardly had I arrived…</em>, <em>Had I known…</em> Estructura de exhibición para subir nota hacia C1.
+    </p>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" data-tab="negative" onclick="showTab('negative', this)">
+      <span class="ico">🔃</span><span>Adverbios negativos al inicio</span>
+    </button>
+    <button class="tab" data-tab="temporal" onclick="showTab('temporal', this)">
+      <span class="ico">⏱️</span><span>Estructuras temporales</span>
+    </button>
+    <button class="tab" data-tab="conditional" onclick="showTab('conditional', this)">
+      <span class="ico">🔀</span><span>Inversión condicional</span>
+    </button>
+  </div>
+</div>
+
+<main class="main">
+
+<div class="toolbar">
+  <div class="fs-control" title="Tamaño del texto">
+    <span class="fs-label small">A</span>
+    <input type="range" class="fs-slider" id="fs-slider" min="85" max="140" step="5" value="100" oninput="updateFontSize(this.value)">
+    <span class="fs-label large">A</span>
+    <span class="fs-value" id="fs-value">100%</span>
+  </div>
+  <div class="toolbar-actions">
+    <button class="tool-btn" onclick="expandAll()"><span class="ico">▾</span>Expandir todos</button>
+    <button class="tool-btn" onclick="collapseAll()"><span class="ico">▸</span>Colapsar todos</button>
+  </div>
+</div>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 1: NEGATIVE ADVERBIALS ================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel active" id="negative" data-tab="negative">
+
+  <div class="intro">
+    <h3>Adverbios negativos al inicio · Negative-fronting inversion</h3>
+    <p>Cuando colocas un <strong>adverbio negativo o restrictivo</strong> al inicio de la oración, el inglés exige <strong>inversión sujeto-auxiliar</strong> (orden de pregunta). Es un recurso <strong>enfático</strong> propio del registro formal, literario o periodístico. No es necesario para B2, pero sí marca C1 y aparece en Reading C1-C2.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Linguaskill:</strong> Tier 5 (C1). Aparece en <strong>Reading C1-C2</strong> como elemento de comprensión. En <strong>Writing</strong>, usarla bien (una o dos veces, no más) puede subir tu nota hacia C1; usarla mal o de más sonará pedante.
+  </div>
+
+  <!-- A. REGLA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">🔧</div>
+      <div>
+        <div class="section-title">A. Regla · The rule</div>
+        <div class="section-desc">Lista de los disparadores de inversión más frecuentes en C1</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <caption>Adverbios y expresiones que disparan inversión al inicio de oración</caption>
+        <thead>
+          <tr><th>Adverbio / expresión</th><th>Significado (ES)</th><th>Ejemplo invertido</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Never</strong></td>
+            <td>Nunca</td>
+            <td><span class="en">Never have I seen such beauty.</span><br><span class="es">Nunca había visto tanta belleza.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Rarely / Seldom</strong></td>
+            <td>Raramente / Pocas veces</td>
+            <td><span class="en">Rarely do we encounter such honesty.</span><br><span class="es">Pocas veces encontramos tanta honestidad.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Hardly / Scarcely / Barely</strong></td>
+            <td>Apenas</td>
+            <td><span class="en">Hardly had he arrived when the phone rang.</span><br><span class="es">Apenas había llegado cuando sonó el teléfono.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Little</strong> (= not at all / scarcely)</td>
+            <td>Poco / muy lejos de</td>
+            <td><span class="en">Little did he know that he would never return.</span><br><span class="es">Lejos estaba de imaginar que nunca volvería.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Not only… but also…</strong></td>
+            <td>No solo… sino también…</td>
+            <td><span class="en">Not only did she sing, but she also danced beautifully.</span><br><span class="es">No solo cantó, sino que también bailó maravillosamente.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Only then / later / after / by / when / if</strong></td>
+            <td>Solo entonces / más tarde / después de…</td>
+            <td><span class="en">Only then did I realise the truth.</span><br><span class="es">Solo entonces me di cuenta de la verdad.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Under no circumstances</strong></td>
+            <td>Bajo ninguna circunstancia</td>
+            <td><span class="en">Under no circumstances should you open the door.</span><br><span class="es">Bajo ninguna circunstancia debes abrir la puerta.</span></td>
+          </tr>
+          <tr>
+            <td><strong>On no account</strong></td>
+            <td>De ninguna manera</td>
+            <td><span class="en">On no account must you tell her the truth.</span><br><span class="es">De ninguna manera debes contarle la verdad.</span></td>
+          </tr>
+          <tr>
+            <td><strong>At no time / In no way / By no means</strong></td>
+            <td>En ningún momento / De ninguna forma</td>
+            <td><span class="en">At no time did he admit any wrongdoing.</span><br><span class="es">En ningún momento admitió culpa alguna.</span></td>
+          </tr>
+          <tr>
+            <td><strong>No sooner… than</strong></td>
+            <td>No bien… cuando</td>
+            <td><span class="en">No sooner had we left than it started raining.</span><br><span class="es">No bien salimos cuando empezó a llover.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Not until + tiempo/cláusula</strong></td>
+            <td>No fue hasta… que</td>
+            <td><span class="en">Not until 1990 did the wall finally fall.</span><br><span class="es">No fue hasta 1990 que el muro finalmente cayó.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Nowhere</strong></td>
+            <td>En ningún sitio</td>
+            <td><span class="en">Nowhere have I seen such dedication.</span><br><span class="es">En ningún sitio he visto semejante entrega.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Not since</strong> + tiempo</td>
+            <td>No desde… (hace mucho que no)</td>
+            <td><span class="en">Not since 2008 had we seen such a crisis.</span><br><span class="es">No habíamos visto una crisis así desde 2008.</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- B. CÓMO SE FORMA -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">⭐</div>
+      <div>
+        <div class="section-title">B. Cómo se forma · How to build it</div>
+        <div class="section-desc">El mecanismo en 6 reglas operativas</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">1. Aux + sujeto (como en pregunta)</span><span class="item-trans">regla nuclear</span></div>
+        <ul class="item-list">
+          <li>Tras el adverbio negativo: <strong>auxiliar + sujeto</strong>.</li>
+          <li>Same word order as a yes/no question.</li>
+          <li><em>Never <strong>have I</strong> seen…</em> (= <em>Have I seen?</em>)</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">2. Sin auxiliar → do/does/did</span><span class="item-trans">present/past simple</span></div>
+        <ul class="item-list">
+          <li>Si la frase original no tiene auxiliar, se añade <em>do / does / did</em>.</li>
+          <li><em>I rarely see…</em> → <em>Rarely <strong>do I</strong> see…</em></li>
+          <li><em>He little knew…</em> → <em>Little <strong>did he</strong> know…</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">3. Tiempos perfectos</span><span class="item-trans">have/has/had + suj + pp</span></div>
+        <ul class="item-list">
+          <li><em>I have never met…</em> → <em>Never <strong>have I</strong> met…</em></li>
+          <li><em>He had hardly arrived…</em> → <em>Hardly <strong>had he</strong> arrived…</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">4. Modales</span><span class="item-trans">modal + suj + inf</span></div>
+        <ul class="item-list">
+          <li><em>You should under no circumstances…</em> → <em>Under no circumstances <strong>should you</strong>…</em></li>
+          <li><em>You must on no account…</em> → <em>On no account <strong>must you</strong>…</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">5. Verbo "be"</span><span class="item-trans">be + sujeto</span></div>
+        <ul class="item-list">
+          <li><em>He is not only handsome…</em> → <em>Not only <strong>is he</strong> handsome, but…</em></li>
+          <li><em>The results were rarely so clear…</em> → <em>Rarely <strong>were the results</strong> so clear…</em></li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">6. Solo la cláusula con el adverbio</span><span class="item-trans">scope</span></div>
+        <ul class="item-list">
+          <li>En <em>Not only… but also…</em>, la inversión va SOLO en la primera parte.</li>
+          <li><em>Not only <strong>did she sing</strong>, but she also danced.</em> ✓</li>
+          <li>NO: <em>…but also did she dance.</em> ✗</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- C. EJEMPLOS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-conn)">💬</div>
+      <div>
+        <div class="section-title">C. Ejemplos reales · Real examples</div>
+        <div class="section-desc">Frase neutra → frase invertida, con glosa ES</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="phrase"><strong>Neutral:</strong> I have never seen such beauty. → <strong>Inverted:</strong> Never <strong>have I</strong> seen such beauty. <span class="hint">Nunca he visto semejante belleza.</span></div>
+      <div class="phrase"><strong>Neutral:</strong> We rarely encounter such honesty. → <strong>Inverted:</strong> Rarely <strong>do we</strong> encounter such honesty. <span class="hint">Pocas veces nos encontramos con tanta honestidad.</span></div>
+      <div class="phrase"><strong>Neutral:</strong> He little knew the consequences. → <strong>Inverted:</strong> Little <strong>did he</strong> know the consequences. <span class="hint">Lejos estaba de saber las consecuencias.</span></div>
+      <div class="phrase"><strong>Neutral:</strong> She not only sings, but also writes songs. → <strong>Inverted:</strong> Not only <strong>does she</strong> sing, but she also writes songs. <span class="hint">No solo canta, sino que también escribe canciones.</span></div>
+      <div class="phrase"><strong>Neutral:</strong> You should under no circumstances reveal the password. → <strong>Inverted:</strong> Under no circumstances <strong>should you</strong> reveal the password. <span class="hint">Bajo ninguna circunstancia debes revelar la contraseña.</span></div>
+      <div class="phrase"><strong>Neutral:</strong> I only then understood the warning. → <strong>Inverted:</strong> Only then <strong>did I</strong> understand the warning. <span class="hint">Solo entonces entendí el aviso.</span></div>
+      <div class="phrase"><strong>Neutral:</strong> The wall did not fall until 1990. → <strong>Inverted:</strong> Not until 1990 <strong>did the wall</strong> fall. <span class="hint">El muro no cayó hasta 1990.</span></div>
+      <div class="phrase"><strong>Neutral:</strong> He had no sooner sat down than the bell rang. → <strong>Inverted:</strong> No sooner <strong>had he</strong> sat down than the bell rang. <span class="hint">Apenas se había sentado cuando sonó el timbre.</span></div>
+      <div class="phrase"><strong>Neutral:</strong> He at no time admitted any guilt. → <strong>Inverted:</strong> At no time <strong>did he</strong> admit any guilt. <span class="hint">En ningún momento admitió culpa alguna.</span></div>
+      <div class="phrase"><strong>Neutral:</strong> The country had not seen such a storm since 1953. → <strong>Inverted:</strong> Not since 1953 <strong>had the country</strong> seen such a storm. <span class="hint">El país no había visto una tormenta así desde 1953.</span></div>
+    </div>
+  </div>
+
+  <!-- D. TRAPS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-emph)">⚠️</div>
+      <div>
+        <div class="section-title">D. Trampas para hispanohablantes</div>
+        <div class="section-desc">Errores frecuentes — el español no tiene este mecanismo</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Never I have seen…" ✗ → "Never have I seen…" ✓</h5>
+          <p>El español <em>"Nunca he visto…"</em> mantiene sujeto-verbo. El inglés invierte: <strong>auxiliar + sujeto</strong>, exactamente como en una pregunta. Sin esa inversión, suena agramatical y delata B1-B2 en alguien que intenta sonar formal.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Rarely we see…" ✗ → "Rarely do we see…" ✓</h5>
+          <p>Si la oración original NO tiene auxiliar (present simple / past simple), añade <strong>do / does / did</strong>. Igual que en preguntas: <em>Do you see?</em> → <em>Rarely do we see…</em></p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"No sooner… <em>that / when</em>" ✗ → "No sooner… <strong>than</strong>" ✓</h5>
+          <p>Es la trampa léxica más frecuente. <em>No sooner had I arrived <strong>than</strong> the phone rang.</em> NUNCA <em>that</em> ni <em>when</em>. En cambio, <em>Hardly / Scarcely</em> sí pide <strong>when</strong>: <em>Hardly had I arrived <strong>when</strong> the phone rang.</em></p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Not only… but also" — solo la 1ª parte invierte</h5>
+          <p><em>Not only <strong>is she</strong> clever, but she is also kind.</em> ✓ Solo la cláusula del <em>Not only</em> invierte. La 2ª (tras <em>but also</em>) mantiene orden normal (<em>sujeto + verbo</em>).</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>"Only" + tiempo invierte; "only" + sujeto NO invierte</h5>
+          <p><em>Only then did I understand…</em> ✓ (only + adverbio temporal) · <em>Only Maria knows the truth.</em> ✓ (only + sujeto: sin inversión, only modifica al sujeto). La inversión solo se activa cuando <em>only</em> precede a un adverbio, complemento o cláusula, no al sujeto.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Es un recurso DE EXHIBICIÓN — no abuses</h5>
+          <p>Una o dos inversiones por texto de 150-200 palabras: suena culta y formal. Más de eso suena pomposo o forzado. Y NUNCA es necesaria para aprobar B2. Resérvala para el párrafo introductorio o de cierre del essay, donde más impacto causa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 2: TEMPORAL STRUCTURES ================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="temporal" data-tab="temporal">
+
+  <div class="intro">
+    <h3>Estructuras temporales · Temporal inversion</h3>
+    <p>Las inversiones temporales tienen su propio patrón: <strong>past perfect + cuando…</strong>. Sirven para expresar que dos sucesos pasados ocurrieron casi a la vez — primero uno y, justo después, el otro. Son la forma elegante y literaria del español <em>"apenas… cuando…"</em> o <em>"no bien… cuando…"</em>.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">⏱️</span><strong>Patrón temporal:</strong> la cláusula del adverbio va en <strong>past perfect</strong>; la 2ª cláusula (tras <em>than/when</em>), en <strong>past simple</strong>. <em>No sooner <strong>had I sat</strong> down than the phone <strong>rang</strong>.</em>
+  </div>
+
+  <!-- A. PATTERNS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">🔧</div>
+      <div>
+        <div class="section-title">A. Patrones temporales · Time patterns</div>
+        <div class="section-desc">Los pares fijos y los tiempos verbales asociados</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <caption>Estructuras temporales con inversión: pares fijos y tiempos verbales</caption>
+        <thead>
+          <tr><th>Patrón</th><th>Significado (ES)</th><th>Ejemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Hardly / Scarcely / Barely + had + suj + pp …WHEN + past simple</strong></td>
+            <td>Apenas… cuando…</td>
+            <td><span class="en">Hardly had I sat down <strong>when</strong> the phone rang.</span><br><span class="es">Apenas me había sentado cuando sonó el teléfono.</span></td>
+          </tr>
+          <tr>
+            <td><strong>No sooner + had + suj + pp …THAN + past simple</strong></td>
+            <td>No bien… cuando…</td>
+            <td><span class="en">No sooner had we left <strong>than</strong> it started to rain.</span><br><span class="es">No bien salimos cuando empezó a llover.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Not until + tiempo/cláusula + did/had + suj + verbo</strong></td>
+            <td>No fue hasta… que…</td>
+            <td><span class="en">Not until midnight did the guests finally leave.</span><br><span class="es">No fue hasta medianoche que los invitados por fin se fueron.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Only when + cláusula, + aux + suj + verbo</strong></td>
+            <td>Solo cuando…</td>
+            <td><span class="en">Only when she apologised did he forgive her.</span><br><span class="es">Solo cuando ella se disculpó la perdonó él.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Only after + sustantivo / -ing</strong></td>
+            <td>Solo después de…</td>
+            <td><span class="en">Only after years of training did he succeed.</span><br><span class="es">Solo tras años de entrenamiento lo logró.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Only later / then</strong></td>
+            <td>Solo más tarde / entonces</td>
+            <td><span class="en">Only later did I understand the implications.</span><br><span class="es">Solo más tarde entendí las implicaciones.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Not since + tiempo + had + suj + pp</strong></td>
+            <td>No desde… (hacía mucho que no)</td>
+            <td><span class="en">Not since 2008 had we seen such a financial crisis.</span><br><span class="es">No habíamos visto una crisis así desde 2008.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Variante en presente: No sooner + suj + verb + than</strong> (raro)</td>
+            <td>En general se prefiere el past perfect; el presente es residual y muy literario.</td>
+            <td><span class="en">No sooner does spring arrive than the birds return.</span><br><span class="es">No bien llega la primavera, vuelven los pájaros. (uso literario)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 3: CONDITIONAL INVERSION ================ -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="conditional" data-tab="conditional">
+
+  <div class="intro">
+    <h3>Inversión condicional · Conditional inversion</h3>
+    <p>En registro <strong>formal y escrito</strong>, el inglés puede suprimir <em>if</em> y reemplazarlo por inversión sujeto-auxiliar. <em>Had I known…</em> = <em>If I had known…</em> Es típico de documentos oficiales, cartas formales, ensayos académicos y textos literarios. Conecta directamente con los condicionales del tema 08.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🔀</span><strong>Tres patrones que recordar:</strong> <em>If I were…</em> → <strong>Were I…</strong> · <em>If I had…</em> → <strong>Had I…</strong> · <em>If you should…</em> → <strong>Should you…</strong>. En negativa, NO se contrae: <em>Had I not known</em> ✓, nunca <em>Hadn't I known</em>.
+  </div>
+
+  <!-- A. WITHOUT "IF" -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">🔀</div>
+      <div>
+        <div class="section-title">A. Sin "if" · Conditional inversion patterns</div>
+        <div class="section-desc">Las tres equivalencias y sus matices de registro</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="gram-table">
+        <caption>Cada condicional con if tiene su equivalente sin if mediante inversión</caption>
+        <thead>
+          <tr><th>Tipo de condicional</th><th>Inversión equivalente</th><th>Ejemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>2º condicional</strong> · If I were you, …</td>
+            <td><strong>Were I you, …</strong></td>
+            <td><span class="en">Were I you, I would apologise immediately.</span><br><span class="es">Yo en tu lugar me disculparía inmediatamente.</span></td>
+          </tr>
+          <tr>
+            <td><strong>3º condicional</strong> · If I had known, …</td>
+            <td><strong>Had I known, …</strong></td>
+            <td><span class="en">Had I known, I would have helped you sooner.</span><br><span class="es">Si lo hubiera sabido, te habría ayudado antes.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Mixto</strong> · If I had studied, I would be…</td>
+            <td><strong>Had I studied, I would be…</strong></td>
+            <td><span class="en">Had I studied medicine, I would be a doctor now.</span><br><span class="es">Si hubiera estudiado medicina, ahora sería médico.</span></td>
+          </tr>
+          <tr>
+            <td><strong>1º condicional</strong> · If you should need help, …</td>
+            <td><strong>Should you need help, …</strong></td>
+            <td><span class="en">Should you need any assistance, please contact us.</span><br><span class="es">Si necesita ayuda, contáctenos. (registro de servicio al cliente)</span></td>
+          </tr>
+          <tr>
+            <td><strong>Should + sujeto + …</strong> (improbable futuro)</td>
+            <td>Para hipótesis poco probables / cortesía formal.</td>
+            <td><span class="en">Should there be any problem, the manager will respond.</span><br><span class="es">En caso de que surja algún problema, el gerente responderá.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Were + sujeto + to-infinitive</strong></td>
+            <td>2º condicional muy formal, sentido futuro hipotético.</td>
+            <td><span class="en">Were the company to fail, thousands of jobs would be lost.</span><br><span class="es">Si la empresa quebrara, se perderían miles de empleos.</span></td>
+          </tr>
+          <tr>
+            <td><strong>Negación: NO contraer</strong></td>
+            <td>En la inversión condicional, el negativo va separado.</td>
+            <td><span class="en">Had I not seen it myself, I would never have believed it.</span> ✓<br><span class="en">Hadn't I seen it myself…</span> ✗ (muy mal en registro formal)</td>
+          </tr>
+          <tr>
+            <td><strong>NO con "if" + would / could</strong></td>
+            <td>La inversión solo funciona con <em>were / had / should</em>. Otros casos no aceptan inversión.</td>
+            <td><span class="en">If I could help, I would.</span> → NO existe <em>"Could I help, I would"</em>. Solo los 3 patrones citados.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- E. IN CONTEXT -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-model)">📄</div>
+      <div>
+        <div class="section-title">E. En contexto · In context</div>
+        <div class="section-desc">Textos formales y literarios con las inversiones resaltadas</div>
+      </div>
+    </div>
+    <div class="papers">
+
+      <article class="paper">
+        <h4 class="paper-title">Text 1 · A financial crisis editorial</h4>
+        <div class="paper-meta">Negative-fronting + temporal inversion · ~120 words</div>
+        <div class="paper-body">
+          <p><span class="k-emph">Rarely in our recent history</span> have we faced a challenge of this magnitude. <span class="k-emph">Never before</span> had the markets shown such volatility, and <span class="k-emph">not since</span> 2008 had analysts predicted such a sharp downturn.</p>
+          <p><span class="k-emph">Hardly</span> had the central bank announced the rate hike <span class="k-emph">when</span> investors began withdrawing their funds en masse. <span class="k-emph">No sooner</span> had the news reached the trading floor <span class="k-emph">than</span> share prices plummeted across all sectors. <span class="k-emph">Not only</span> did the banking industry suffer immediate losses, but the wider economy also began to feel the strain almost overnight.</p>
+          <p><span class="k-emph">Only later</span> would the full extent of the crisis become apparent. <span class="k-emph">Little did anyone</span> suspect that the worst was yet to come.</p>
+        </div>
+      </article>
+
+      <article class="paper">
+        <h4 class="paper-title">Text 2 · A formal corporate notice</h4>
+        <div class="paper-meta">Conditional inversion + restrictive adverbials · ~110 words</div>
+        <div class="paper-body">
+          <p>Dear valued client,</p>
+          <p><span class="k-emph">Should</span> you require any further information regarding your account, please do not hesitate to contact our customer service department. <span class="k-emph">Were</span> we to extend the consultation deadline, all stakeholders would be notified in writing within forty-eight hours.</p>
+          <p><span class="k-emph">Had</span> we anticipated the volume of recent enquiries, additional staff would have been allocated to handle them. <span class="k-emph">Under no circumstances</span> should confidential documents be shared with third parties, and <span class="k-emph">at no time</span> did our company authorise such disclosure.</p>
+          <p>Yours sincerely,<br>The Compliance Office</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+/* THEME */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("theme",t);}catch(e){}}
+function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme")||"light";applyTheme(cur==="dark"?"light":"dark");}
+(function initTheme(){let saved=null;try{saved=localStorage.getItem("theme");}catch(e){}if(saved==="dark"||saved==="light"){applyTheme(saved);return;}const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;applyTheme(prefersDark?"dark":"light");})();
+
+/* TABS */
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* SECTIONS */
+function toggleSection(header){
+  header.parentElement.classList.toggle('collapsed');
+}
+function getActiveSections(){
+  return document.querySelectorAll('.tab-panel.active .section');
+}
+function getActivePapers(){
+  return document.querySelectorAll('.tab-panel.active .paper');
+}
+function expandAll(){
+  getActiveSections().forEach(s => s.classList.remove('collapsed'));
+  getActivePapers().forEach(p => p.classList.remove('collapsed'));
+}
+function collapseAll(){
+  getActiveSections().forEach(s => s.classList.add('collapsed'));
+  getActivePapers().forEach(p => p.classList.add('collapsed'));
+}
+
+/* MODEL PAPERS — wrap title+meta in a clickable header, collapse by default */
+document.querySelectorAll('.paper').forEach(paper => {
+  const title = paper.querySelector('.paper-title');
+  const meta = paper.querySelector('.paper-meta');
+  if(!title || !meta) return;
+  const header = document.createElement('div');
+  header.className = 'paper-header';
+  const wrap = document.createElement('div');
+  wrap.appendChild(title);
+  wrap.appendChild(meta);
+  const toggle = document.createElement('span');
+  toggle.className = 'paper-toggle';
+  toggle.textContent = '▾';
+  header.appendChild(wrap);
+  header.appendChild(toggle);
+  header.addEventListener('click', () => paper.classList.toggle('collapsed'));
+  paper.insertBefore(header, paper.firstChild);
+  paper.classList.add('collapsed');
+});
+
+/* Set section colors + item counts */
+document.querySelectorAll('.section').forEach(sec => {
+  const icon = sec.querySelector('.section-icon');
+  if (icon) {
+    const m = (icon.getAttribute('style') || '').match(/var\(--c-([a-z]+)\)/);
+    if (m) {
+      sec.style.setProperty('--section-c', `var(--c-${m[1]})`);
+      sec.style.setProperty('--section-c-bg', `var(--c-${m[1]}-bg)`);
+    }
+  }
+  const container = sec.querySelector('.grid, .stack, .papers, .tips-list, .blueprint, .table-wrap');
+  if(!container) return;
+  let count = 0;
+  if (container.matches('.blueprint')) {
+    count = container.querySelectorAll('.step').length;
+  } else if (container.matches('.table-wrap')) {
+    count = container.querySelectorAll('tbody tr').length;
+  } else {
+    count = container.children.length;
+  }
+  const badge = document.createElement('span');
+  badge.className = 'section-count';
+  badge.textContent = count;
+  sec.querySelector('.section-header').appendChild(badge);
+});
+
+/* FONT SIZE SLIDER */
+const FS_KEY = 'idiomas_font_size';
+function updateFontSize(pct){
+  const scale = pct / 100;
+  document.documentElement.style.fontSize = (16 * scale) + 'px';
+  document.getElementById('fs-value').textContent = pct + '%';
+  localStorage.setItem(FS_KEY, pct);
+}
+(function initFontSize(){
+  const saved = localStorage.getItem(FS_KEY);
+  if(saved){
+    document.getElementById('fs-slider').value = saved;
+    updateFontSize(saved);
+  }
+})();
+</script>
+
+</body>
+</html>
