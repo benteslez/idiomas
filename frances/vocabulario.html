@@ -2708,6 +2708,16 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   letter-spacing: 0.04em;
 }
 
+/* Perfil "invitado": ocultar gestión (importar/exportar) y export del SRS.
+   Las exportaciones/importaciones quedan reservadas a perfiles personales
+   (Rubén / Sergio) para evitar que un invitado modifique datos compartidos. */
+body.profile-guest .manage-menu-wrap,
+body.profile-guest #btnManage,
+body.profile-guest #btnSrsSaveExit,
+body.profile-guest #btnSrsResExport {
+  display: none !important;
+}
+
 /* Indicador de sync en la esquina inferior derecha */
 .cloud-status {
   position: fixed;
@@ -43558,6 +43568,9 @@ if (document.readyState === "loading") {
     activeProfile = profile;
     try { localStorage.setItem(LS_PROFILE, profile); } catch(e){}
     updateProfilePill();
+    // Visibilidad por perfil: el invitado no ve los botones de gestión
+    // (importar/exportar JSON o HTML). Solo Rubén/Sergio pueden hacerlo.
+    if (document.body) document.body.classList.toggle('profile-guest', profile === 'invitado');
     if (opts.skipLoad) return;
     loadProfileData(profile);
   }
