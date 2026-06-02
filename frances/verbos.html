@@ -322,6 +322,59 @@ body.study-mode .card.mastered .tb .form:not(.dash):not(.revealed){
 .form.dash{color:var(--text3)}
 .tb.imp .form{color:var(--tc);font-weight:500}
 
+/* ── TTS speaker button ── */
+.tts-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:11px;padding:1px 4px;margin-left:5px;border-radius:4px;line-height:1;opacity:.55;transition:opacity .15s,background .15s,color .15s;vertical-align:middle}
+.tts-btn:hover{opacity:1;background:var(--bg2);color:var(--accent)}
+.tts-btn.speaking{opacity:1;color:var(--accent);animation:tts-pulse 1s ease-in-out infinite}
+@keyframes tts-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.tts-row{background:none;border:none;cursor:pointer;color:var(--text3);font-size:11px;padding:0 4px;border-radius:4px;line-height:1;opacity:0;transition:opacity .15s,color .15s;flex-shrink:0;margin-left:auto}
+.tf .row:hover .tts-row{opacity:.55}
+.tts-row:hover{opacity:1!important;color:var(--accent)}
+
+/* ── TYPING MODE — el alumno teclea la forma ── */
+body.study-mode .tb .form-input{
+  flex:1;min-width:0;
+  background:var(--bg);
+  border:none;border-bottom:1.5px solid var(--border2);
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:calc(12px * var(--fs));color:var(--text);
+  padding:1px 4px 1px 4px;outline:none;border-radius:3px 3px 0 0;
+  transition:border-color .15s,background .15s;
+}
+body.study-mode .tb .form-input:focus{border-bottom-color:var(--tc,var(--accent));background:var(--surface)}
+body.study-mode .tb .form-input.correct{border-bottom-color:#10b981;background:rgba(16,185,129,.08);color:#0a7a52}
+body.study-mode .tb .form-input.partial{border-bottom-color:#f59e0b;background:rgba(245,158,11,.06)}
+body.study-mode .tb .form-input.incorrect{border-bottom-color:#dc2626;background:rgba(220,38,38,.06);color:#991b1b}
+body.study-mode .tb .form-input.revealed{border-bottom-color:var(--tc,var(--accent));background:color-mix(in srgb,var(--tc,var(--accent)) 8%,transparent);font-style:italic;color:var(--text2)}
+
+/* ── REVERSE DIRECTION (ES → FR) — esconde el infinitivo francés en estudio ── */
+body.study-mode.reverse-mode .card:not(.cv-revealed) .cv{
+  background:color-mix(in srgb,var(--text) 18%,#fff);
+  color:transparent;
+  text-shadow:none;
+  border-radius:4px;
+  cursor:pointer;
+  user-select:none;
+  transition:background .15s,color .15s;
+}
+body.study-mode.reverse-mode .card:not(.cv-revealed) .cv .top-badge,
+body.study-mode.reverse-mode .card:not(.cv-revealed) .cv .custom-badge{visibility:hidden}
+body.study-mode.reverse-mode .card.cv-revealed .cv{background:transparent;color:var(--text)}
+body.study-mode.reverse-mode .card .ct{font-style:normal;font-weight:600;color:var(--text);font-size:calc(15px * var(--fs))}
+body.study-mode.reverse-mode .card:not(.cv-revealed) .ct::before{content:"💭 ";opacity:.6}
+
+/* ── STUDY-BAR variant + reverse toggles ── */
+.sb-group{display:inline-flex;align-items:center;gap:4px;background:rgba(42,114,181,.10);border:1px solid rgba(42,114,181,.18);border-radius:100px;padding:2px;margin-left:6px}
+.sb-tog{background:transparent;border:none;color:#2a72b5;font-family:inherit;font-size:11px;font-weight:600;padding:3px 9px;border-radius:100px;cursor:pointer;transition:background .15s,color .15s;line-height:1}
+.sb-tog:hover{background:rgba(42,114,181,.12)}
+.sb-tog.active{background:#2a72b5;color:#fff}
+.sb-rev{background:transparent;border:1px solid rgba(42,114,181,.3);color:#2a72b5;font-family:inherit;font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;cursor:pointer;transition:all .15s;line-height:1;margin-left:6px}
+.sb-rev:hover{background:rgba(42,114,181,.10)}
+.sb-rev.active{background:#2a72b5;color:#fff;border-color:#2a72b5}
+.sb-stats{font-size:11px;color:#2a72b5;font-weight:600;margin-left:6px;font-variant-numeric:tabular-nums}
+.sb-stats .ok{color:#0a7a52}
+.sb-stats .ko{color:#991b1b}
+
 /* WARNING */
 .cw{margin:2px 16px 12px;padding:7px 11px;background:var(--accent-bg);border:1px solid var(--accent-b);border-left:3px solid var(--accent);border-radius:0 var(--rsm) var(--rsm) 0;font-size:calc(11.5px * var(--fs));color:var(--accent);line-height:1.5}
 
@@ -702,6 +755,12 @@ mark{background:rgba(255,200,0,.4);color:inherit;border-radius:2px;padding:0 1px
   </div>
   <div class="study-bar" id="study-bar">
     <span id="study-txt">📖 <strong>Modo estudio</strong> · Toca una forma para revelarla</span>
+    <span class="sb-group" role="group" aria-label="Modo de estudio">
+      <button type="button" class="sb-tog" id="sb-reveal" title="Revelar al tocar">👁 Revelar</button>
+      <button type="button" class="sb-tog" id="sb-type" title="Teclear la forma (Enter = revelar)">⌨ Teclear</button>
+    </span>
+    <button type="button" class="sb-rev" id="sb-reverse" title="Esconder el infinitivo francés (modo producción ES→FR)">🔄 ES→FR</button>
+    <span class="sb-stats" id="sb-stats" hidden></span>
     <button id="reset-btn" style="background:none;border:none;color:#2a72b5;font-family:'Inter',system-ui,sans-serif;font-size:12px;cursor:pointer;text-decoration:underline">Reiniciar</button>
   </div>
   <div class="study-prog" id="study-prog"><div class="study-prog-fill" id="prog-fill" style="width:0%"></div></div>
@@ -1448,6 +1507,7 @@ document.getElementById('addVerbOverlay').addEventListener('click', function(e) 
           <button class="g-filter-btn g-toggle-btn" id="gBtnIrreg">Irregulares</button>
           <button class="g-filter-btn g-toggle-btn" id="gBtnNodomino">✗ No dominados</button>
           <button class="g-filter-btn g-toggle-btn active" id="gBtnShuffle">🔀 Barajar</button>
+          <button class="g-filter-btn g-toggle-btn" id="gBtnReverse" title="Ver primero la traducción en español y producir la forma francesa">🔄 ES→FR</button>
         </div>
       </div>
 
@@ -2040,6 +2100,7 @@ var gState = {
   irreg:    !!_savedGameCfg.irreg,
   nodomino: !!_savedGameCfg.nodomino,
   shuffle:  (typeof _savedGameCfg.shuffle === 'boolean') ? _savedGameCfg.shuffle : true,
+  reverse:  (function(){ try { return localStorage.getItem('delf_game_reverse') === '1'; } catch(e){ return false; } })(),
   deck:     [],
   cursor:   0,
   scoreYes: 0,
@@ -2165,13 +2226,17 @@ function gBuildCard(entry, isTop, peekIdx) {
       + '</div>';
   }).join('');
 
+  // Modo inverso (ES→FR): se muestra la traducción como prompt y se oculta el infinitivo
+  // hasta voltear la carta. Esto entrena producción activa en lugar de reconocimiento.
+  var primary   = gState.reverse ? v.t : v.v;
+  var secondary = gState.reverse ? '💭 ¿qué verbo en francés?' : v.t;
   var frontHtml =
     '<div class="g-card-front">'
     + '<div class="g-swipe-label g-swipe-label-no">REPASAR</div>'
     + '<div class="g-swipe-label g-swipe-label-yes">YA LO SÉ</div>'
     + '<span class="g-front-tense" style="background:' + tm.color + '">' + gEsc(tm.label) + '</span>'
-    + '<div class="g-front-verb">' + gEsc(v.v) + '</div>'
-    + '<div class="g-front-translation">' + gEsc(v.t) + '</div>'
+    + '<div class="g-front-verb">' + gEsc(primary) + '</div>'
+    + '<div class="g-front-translation">' + gEsc(secondary) + '</div>'
     + (badges ? '<div class="g-front-badges">' + badges + '</div>' : '')
     + '<div class="g-tap-hint">↻ toca para ver la conjugación</div>'
     + '</div>';
@@ -2440,6 +2505,8 @@ function gApplyConfigToUI(){
   if(bIrr) bIrr.classList.toggle('active', gState.irreg);
   if(bNd)  bNd.classList.toggle('active',  gState.nodomino);
   if(bSh)  bSh.classList.toggle('active',  gState.shuffle);
+  var bRev = document.getElementById('gBtnReverse');
+  if(bRev) bRev.classList.toggle('active', gState.reverse);
 }
 
 function gCloseGame() {
@@ -2501,6 +2568,12 @@ function initGameMode() {
     gState.shuffle = !gState.shuffle;
     this.classList.toggle('active', gState.shuffle);
     saveGameConfig();
+  });
+  var bRev = document.getElementById('gBtnReverse');
+  if(bRev) bRev.addEventListener('click', function() {
+    gState.reverse = !gState.reverse;
+    this.classList.toggle('active', gState.reverse);
+    try { localStorage.setItem('delf_game_reverse', gState.reverse ? '1' : '0'); } catch(e){}
   });
 
   // Start
@@ -2932,13 +3005,48 @@ const FLAG_META = {
 var UI_STATE_KEY = 'delf_ui_state';
 var _savedUI = {"searchTerm":"","sortMode":"rel","activeBloc":"Todos","activeFlags":[],"knowFilter":null,"studyMode":false};
 
-let searchTerm  = '';
+let searchTerm  = (typeof _savedUI.searchTerm === 'string') ? _savedUI.searchTerm : '';
 let sortMode    = (typeof _savedUI.sortMode === 'string') ? _savedUI.sortMode : 'rel';
 let activeBloc  = (typeof _savedUI.activeBloc === 'string') ? _savedUI.activeBloc : 'Todos';
 let activeFlags = new Set(Array.isArray(_savedUI.activeFlags) ? _savedUI.activeFlags : []);
 let knowFilter  = (_savedUI.knowFilter === 'know' || _savedUI.knowFilter === 'noknow') ? _savedUI.knowFilter : null;
 let studyMode   = !!_savedUI.studyMode;
 let mastered    = new Set([]);
+
+// ── Nuevos modos de estudio (persistencia independiente; no se exportan en _savedUI) ──
+let studyVariant = (function(){
+  try { var s = localStorage.getItem('delf_study_variant'); return (s === 'type') ? 'type' : 'reveal'; }
+  catch(e){ return 'reveal'; }
+})();
+let reverseDir = (function(){
+  try { return localStorage.getItem('delf_reverse_dir') === '1'; }
+  catch(e){ return false; }
+})();
+// Stats de la sesión actual de teclado (no persisten)
+var typeStats = { ok: 0, ko: 0, revealed: 0 };
+
+// ── TTS (Web Speech API): pronuncia formas en francés ──
+var TTS_OK = (typeof window !== 'undefined') && ('speechSynthesis' in window);
+function ttsSpeak(text, btn){
+  if(!TTS_OK || !text) return;
+  try {
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = 'fr-FR'; u.rate = 0.92; u.pitch = 1;
+    if(btn){
+      btn.classList.add('speaking');
+      u.onend = u.onerror = function(){ btn.classList.remove('speaking'); };
+    }
+    window.speechSynthesis.speak(u);
+  } catch(e){}
+}
+function ttsTenseText(rows){
+  // Concatena "pronombre + forma" saltando los guiones (—)
+  if(!Array.isArray(rows)) return '';
+  return rows.filter(function(r){ return r && r[1] && r[1] !== '—'; })
+             .map(function(r){ return r[0] + ' ' + r[1]; })
+             .join(', ');
+}
 
 function saveUIState(){
   try {
@@ -2989,13 +3097,29 @@ function highlight(text, q){
 }
 
 function renderForms(rows, q){
+  var typing = studyMode && studyVariant === 'type';
   return rows.map(function(row){
     const p = row[0], f = row[1];
     const dash = (f === '—');
+    if(typing && !dash){
+      // Input para teclear: el data-answer guarda la forma esperada (con acentos).
+      // No añadimos la clase .form al input porque la regla `body.study-mode .tb .form:not(.dash)`
+      // pinta texto = fondo (la máscara que esconde la forma en modo revelar) y haría invisible
+      // lo que se teclea.
+      return '<div class="row"><span class="pron">' + esc(p) + '</span>'
+           + '<input type="text" class="form-input" data-answer="' + esc(f) + '" '
+           + 'autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" '
+           + 'placeholder="…" aria-label="Conjugación para ' + esc(p) + '">'
+           + (TTS_OK ? '<button type="button" class="tts-row" data-tts="' + esc(p + ' ' + f) + '" title="Escuchar" tabindex="-1">🔊</button>' : '')
+           + '</div>';
+    }
     const fHtml = q ? highlight(f, q) : esc(f);
     const cls   = 'form' + (dash ? ' dash' : '');
+    var ttsBtn = (!dash && TTS_OK)
+      ? '<button type="button" class="tts-row" data-tts="' + esc(p + ' ' + f) + '" title="Escuchar" tabindex="-1">🔊</button>'
+      : '';
     return '<div class="row"><span class="pron">' + esc(p) + '</span>'
-         + '<span class="' + cls + '">' + fHtml + '</span></div>';
+         + '<span class="' + cls + '">' + fHtml + '</span>' + ttsBtn + '</div>';
   }).join('');
 }
 
@@ -3079,7 +3203,54 @@ function toggleStudy(){
     document.querySelectorAll('.form.revealed').forEach(function(el){ el.classList.remove('revealed'); });
   }
   saveUIState();
+  syncStudyBarUI();
+  render(); // re-render para alternar reveal/typing y aplicar reverseDir si toca
   updateProgress();
+}
+
+// ── Variante de estudio (revelar / teclear) ────────────────────────────────
+function setStudyVariant(v){
+  studyVariant = (v === 'type') ? 'type' : 'reveal';
+  try { localStorage.setItem('delf_study_variant', studyVariant); } catch(e){}
+  if(studyVariant === 'reveal') typeStats = { ok: 0, ko: 0, revealed: 0 };
+  syncStudyBarUI();
+  if(studyMode) render();
+}
+function toggleReverseDir(){
+  reverseDir = !reverseDir;
+  try { localStorage.setItem('delf_reverse_dir', reverseDir ? '1' : '0'); } catch(e){}
+  document.body.classList.toggle('reverse-mode', reverseDir);
+  syncStudyBarUI();
+}
+function syncStudyBarUI(){
+  var rB = document.getElementById('sb-reveal');
+  var tB = document.getElementById('sb-type');
+  var revB = document.getElementById('sb-reverse');
+  var txt = document.getElementById('study-txt');
+  var statsEl = document.getElementById('sb-stats');
+  if(rB) rB.classList.toggle('active', studyVariant === 'reveal');
+  if(tB) tB.classList.toggle('active', studyVariant === 'type');
+  if(revB) revB.classList.toggle('active', reverseDir);
+  if(txt){
+    if(studyVariant === 'type'){
+      txt.innerHTML = '⌨ <strong>Modo escritura</strong> · Teclea la conjugación · Enter = revelar';
+    } else {
+      txt.innerHTML = '📖 <strong>Modo estudio</strong> · Toca una forma para revelarla';
+    }
+  }
+  if(statsEl){
+    if(studyVariant === 'type' && (typeStats.ok + typeStats.ko + typeStats.revealed) > 0){
+      statsEl.hidden = false;
+      statsEl.innerHTML =
+        '<span class="ok">✓ ' + typeStats.ok + '</span> · ' +
+        '<span class="ko">✗ ' + typeStats.ko + '</span> · ' +
+        '👁 ' + typeStats.revealed;
+    } else {
+      statsEl.hidden = true;
+      statsEl.innerHTML = '';
+    }
+  }
+  document.body.classList.toggle('reverse-mode', reverseDir);
 }
 
 function updateProgress(){
@@ -3223,7 +3394,8 @@ function render(){
         : knowBtn;
       var tensesHtml = TENSES.map(function(t){
         var cls = 'tb tb-' + t.key + (t.hl ? ' hl' : '') + (t.imp ? ' imp' : '');
-        return '<div class="' + cls + '"><div class="tl">' + t.label + '</div>'
+        var ttsAll = TTS_OK ? '<button type="button" class="tts-btn" data-tts="' + esc(ttsTenseText(v[t.key])) + '" title="Escuchar todo el tiempo">🔊</button>' : '';
+        return '<div class="' + cls + '"><div class="tl">' + t.label + ttsAll + '</div>'
              + '<div class="tf">' + renderForms(v[t.key], q) + '</div></div>';
       }).join('');
       var warnHtml = v.warn ? '<div class="cw">' + esc(v.warn) + '</div>' : '';
@@ -3364,6 +3536,16 @@ document.getElementById('f-noknow').addEventListener('click', function(){ setKno
 document.getElementById('f-study').addEventListener('click',  function(){ toggleStudy(); });
 document.getElementById('reset-btn').addEventListener('click', function(){ resetMastered(); });
 
+// Nuevos toggles del study-bar
+(function wireStudyBarToggles(){
+  var rB = document.getElementById('sb-reveal');
+  var tB = document.getElementById('sb-type');
+  var revB = document.getElementById('sb-reverse');
+  if(rB) rB.addEventListener('click', function(){ setStudyVariant('reveal'); });
+  if(tB) tB.addEventListener('click', function(){ setStudyVariant('type'); });
+  if(revB) revB.addEventListener('click', function(){ toggleReverseDir(); });
+})();
+
 // ── Dropdown open/close ────────────────────────────────────────────────────
 document.querySelectorAll('.dd-trig').forEach(function(trig){
   trig.addEventListener('click', function(e){
@@ -3419,10 +3601,85 @@ document.getElementById('grid').addEventListener('click', function(e){
 
 // ── Study mode: reveal forms on click ─────────────────────────────────────
 document.getElementById('grid').addEventListener('click', function(e){
+  // TTS delegation: cualquier botón con data-tts en el grid
+  var ttsB = e.target.closest('[data-tts]');
+  if(ttsB){
+    e.stopPropagation();
+    ttsSpeak(ttsB.getAttribute('data-tts'), ttsB);
+    return;
+  }
+  // Reverse: tap en el infinitivo lo revela
+  if(studyMode && reverseDir){
+    var cv = e.target.closest('.cv');
+    if(cv){
+      var cardEl = cv.closest('.card');
+      if(cardEl) cardEl.classList.toggle('cv-revealed');
+      return;
+    }
+  }
   if(!studyMode) return;
+  // En modo typing no aplica el reveal por click (gestionado por keydown)
+  if(studyVariant === 'type') return;
   var form = e.target.closest('.form');
-  if(!form || form.classList.contains('dash')) return;
+  if(!form || form.classList.contains('dash') || form.classList.contains('form-input')) return;
   form.classList.toggle('revealed');
+});
+
+// ── Typing mode: validación en vivo + Enter para revelar ──────────────────
+document.getElementById('grid').addEventListener('input', function(e){
+  if(!studyMode || studyVariant !== 'type') return;
+  var inp = e.target.closest('.form-input');
+  if(!inp) return;
+  if(inp.classList.contains('revealed')) inp.classList.remove('revealed');
+  var expected = stripAccents(inp.dataset.answer || '');
+  var typed = stripAccents((inp.value || '').trim());
+  inp.classList.remove('correct','partial','incorrect');
+  if(!typed) return;
+  if(typed === expected){
+    if(!inp.dataset.scored){
+      inp.dataset.scored = '1';
+      typeStats.ok += 1;
+      syncStudyBarUI();
+    }
+    inp.classList.add('correct');
+  } else if(expected.indexOf(typed) === 0){
+    inp.classList.add('partial');
+  } else {
+    inp.classList.add('incorrect');
+  }
+});
+document.getElementById('grid').addEventListener('keydown', function(e){
+  if(!studyMode || studyVariant !== 'type') return;
+  var inp = e.target.closest && e.target.closest('.form-input');
+  if(!inp) return;
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    var expected = inp.dataset.answer || '';
+    var typed = stripAccents((inp.value || '').trim());
+    var ok = typed === stripAccents(expected);
+    if(!inp.dataset.scored){
+      inp.dataset.scored = '1';
+      if(ok) typeStats.ok += 1;
+      else { typeStats.ko += 1; typeStats.revealed += 1; }
+      syncStudyBarUI();
+    }
+    inp.value = expected;
+    inp.classList.remove('partial','incorrect');
+    inp.classList.add(ok ? 'correct' : 'revealed');
+    // Saltar al siguiente input del grid
+    var inputs = Array.from(document.querySelectorAll('.form-input'));
+    var idx = inputs.indexOf(inp);
+    if(idx >= 0 && idx + 1 < inputs.length){
+      var next = inputs[idx + 1];
+      next.focus(); next.select();
+    } else {
+      inp.blur();
+    }
+  } else if(e.key === 'Escape'){
+    inp.value = '';
+    inp.classList.remove('correct','partial','incorrect','revealed');
+    delete inp.dataset.scored;
+  }
 });
 
 // ── Init ───────────────────────────────────────────────────────────────────
@@ -3467,6 +3724,9 @@ function applyRestoredUIState(){
     bar.classList.add('vis');
     prog.classList.add('vis');
   }
+  // Sincronizar nuevos toggles (variante de estudio + dirección inversa)
+  if(reverseDir) document.body.classList.add('reverse-mode');
+  syncStudyBarUI();
 }
 
 applyRestoredUIState();
@@ -4154,10 +4414,13 @@ function srsRenderCard(){
     }
     var warnBox = v.warn ? '<div class="srs-rev-warn">' + esc(v.warn) + '</div>' : '';
     var iv0 = previewInterval(v, tKey, 0), iv3 = previewInterval(v, tKey, 3), iv5 = previewInterval(v, tKey, 5);
+    var srsTts = TTS_OK
+      ? '<button type="button" class="tts-btn" id="srs-tts-btn" data-tts="' + esc(ttsTenseText(forms)) + '" title="Escuchar conjugación (atajo: S)">🔊</button>'
+      : '';
     html = '<div class="srs-card" id="srs-card-el">' + warnIcon +
       '<div class="srs-chips-row">' + tensePill + newPill + duePill + '</div>' +
       '<div class="srs-reveal">' +
-        '<div class="srs-rev-verb">' + esc(v.v) + '</div>' +
+        '<div class="srs-rev-verb">' + esc(v.v) + ' ' + srsTts + '</div>' +
         '<div class="srs-rev-trans">' + esc(v.t) + '</div>' +
         '<div class="srs-rev-table">' + rows + '</div>' +
         warnBox +
@@ -4183,6 +4446,11 @@ function srsRenderCard(){
   } else {
     document.querySelectorAll('#srs-arena .srs-rate-btn').forEach(function(b){
       b.addEventListener('click', function(){ srsRate(parseInt(b.dataset.q, 10)); });
+    });
+    var ttsBtn = document.getElementById('srs-tts-btn');
+    if(ttsBtn) ttsBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      ttsSpeak(ttsBtn.getAttribute('data-tts'), ttsBtn);
     });
     srsAttachSwipe();
   }
@@ -4551,6 +4819,10 @@ document.addEventListener('keydown', function(e){
   }
   if(e.key === 'z' || e.key === 'Z' || e.key === '-'){ e.preventDefault(); srsUndo(); return; }
   if(e.key === 'f' || e.key === 'F'){ e.preventDefault(); toggleSrsFullscreen(); return; }
+  if(e.key === 's' || e.key === 'S'){
+    var ttsBtn = document.getElementById('srs-tts-btn');
+    if(ttsBtn){ e.preventDefault(); ttsSpeak(ttsBtn.getAttribute('data-tts'), ttsBtn); return; }
+  }
   if(!s.revealed){
     if(e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); s.revealed = true; srsRenderCard(); }
     return;
