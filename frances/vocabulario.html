@@ -2490,6 +2490,20 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 .srs-tema-quick {
   display: flex; gap: 8px; margin-top: 8px;
 }
+.srs-filter-row {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+  margin-top: 8px;
+}
+.srs-filter-row .srs-tema-quick { margin-top: 0; }
+.srs-filter-label {
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--text2);
+  min-width: 50px;
+}
+.srs-filter-hint {
+  font-size: 0.7rem; color: var(--text3);
+  font-style: italic;
+}
 .btn-srs-quick {
   border: 1px solid var(--border); border-radius: 100px;
   padding: 4px 11px; font-size: 0.74rem; font-weight: 600;
@@ -3243,6 +3257,19 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
       <div class="srs-tema-quick">
         <button class="btn-srs-quick" id="btnSrsTemaAll" type="button">Todos</button>
         <button class="btn-srs-quick" id="btnSrsTemaNone" type="button">Ninguno</button>
+      </div>
+    </div>
+
+    <div class="srs-modal-section" id="srsStartFiltersSection">
+      <h3>Filtros</h3>
+      <div class="srs-filter-row">
+        <span class="srs-filter-label">Nivel:</span>
+        <div class="srs-tema-quick" id="srsNivelPills"></div>
+        <span class="srs-filter-hint">(sin selección = todos)</span>
+      </div>
+      <div class="srs-filter-row">
+        <span class="srs-filter-label">Otros:</span>
+        <button class="btn-srs-quick" id="btnSrsTopOnly" type="button" title="Solo tarjetas marcadas como Top B1 (las imprescindibles del nivel)">★ Solo Top B1</button>
       </div>
     </div>
 
@@ -41698,6 +41725,7 @@ function getSRSQueue(temasSeleccionados) {
   var due = DATA.filter(function(card) {
     if (pausedIds[card.id]) return false; // Las pausadas nunca entran a la cola
     if (!srsMatchTemas(card, temasSeleccionados)) return false;
+    if (!srsMatchFilters(card)) return false; // Nivel + Top B1
     // Si "★ Importantes" está seleccionado y la tarjeta es importante,
     // se incluye SIEMPRE (ignora la fecha de próxima revisión)
     if (wantImportant && importantIds[card.id]) return true;
@@ -41754,6 +41782,7 @@ function countNewVsReview(temasSeleccionados) {
   DATA.forEach(function(card) {
     if (pausedIds[card.id]) return;
     if (!srsMatchTemas(card, temasSeleccionados)) return;
+    if (!srsMatchFilters(card)) return; // Nivel + Top B1
     // Importantes: ignorar fecha, contar todas como nuevas/repaso según tengan srs
     if (wantImportant && importantIds[card.id]) {
       if (!card.srs) n++; else r++;
@@ -41899,6 +41928,7 @@ function srsOpenStartModal() {
     listEl.appendChild(label);
   });
 
+  srsRenderFiltersSection();
   srsUpdateStartSummary();
   srsRenderPausedSection();
   modal.classList.add("active");
@@ -41943,6 +41973,74 @@ function srsUpdateStartSummary() {
     startBtn.disabled = false;
     startBtn.textContent = "Empezar sesión";
   }
+}
+
+// ── Filtros: Nivel (multi-select) y Top B1 (toggle) ──
+function srsAllNivels() {
+  var seen = {};
+  var out = [];
+  DATA.forEach(function(c) {
+    if (c.nivel && !seen[c.nivel]) { seen[c.nivel] = true; out.push(c.nivel); }
+  });
+  // Orden estable: B1, B2, C1, C2 primero; el resto al final alfabético
+  var rank = { "B1": 0, "B2": 1, "C1": 2, "C2": 3 };
+  out.sort(function(a, b) {
+    var ra = rank.hasOwnProperty(a) ? rank[a] : 99;
+    var rb = rank.hasOwnProperty(b) ? rank[b] : 99;
+    if (ra !== rb) return ra - rb;
+    return a.localeCompare(b);
+  });
+  return out;
+}
+function srsGetSelectedNivels() {
+  try {
+    var s = localStorage.getItem("srs_nivels");
+    if (!s) return [];
+    var arr = JSON.parse(s);
+    return Array.isArray(arr) ? arr : [];
+  } catch (e) { return []; }
+}
+function srsSetSelectedNivels(arr) {
+  try { localStorage.setItem("srs_nivels", JSON.stringify(arr || [])); } catch (e) {}
+}
+function srsGetTopOnly() {
+  try { return localStorage.getItem("srs_top_only") === "1"; } catch (e) { return false; }
+}
+function srsSetTopOnly(on) {
+  try { localStorage.setItem("srs_top_only", on ? "1" : "0"); } catch (e) {}
+}
+function srsMatchFilters(card) {
+  if (srsGetTopOnly() && !(card.flags && card.flags.top)) return false;
+  var nivels = srsGetSelectedNivels();
+  if (nivels.length > 0 && (!card.nivel || nivels.indexOf(card.nivel) === -1)) return false;
+  return true;
+}
+// Render dinámico de los pills de Nivel y estado del toggle Top B1
+function srsRenderFiltersSection() {
+  var pillsEl = document.getElementById("srsNivelPills");
+  if (pillsEl) {
+    var nivels = srsAllNivels();
+    var sel = srsGetSelectedNivels();
+    pillsEl.innerHTML = "";
+    nivels.forEach(function(n) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "btn-srs-quick" + (sel.indexOf(n) !== -1 ? " active" : "");
+      b.setAttribute("data-nivel", n);
+      b.textContent = n;
+      b.addEventListener("click", function() {
+        var cur = srsGetSelectedNivels();
+        var ix = cur.indexOf(n);
+        if (ix === -1) cur.push(n); else cur.splice(ix, 1);
+        srsSetSelectedNivels(cur);
+        b.classList.toggle("active");
+        srsUpdateStartSummary();
+      });
+      pillsEl.appendChild(b);
+    });
+  }
+  var topBtn = document.getElementById("btnSrsTopOnly");
+  if (topBtn) topBtn.classList.toggle("active", srsGetTopOnly());
 }
 
 // ── Orden de la cola (shuffle opcional) ──
@@ -42663,6 +42761,15 @@ function initSRSAddon() {
   if (btnModN) btnModN.addEventListener("click", function() { srsSetHardMode(false); });
   if (btnModH) btnModH.addEventListener("click", function() { srsSetHardMode(true);  });
   srsSetHardMode(srsGetHardMode()); // pinta el estado inicial
+
+  // Toggle "★ Solo Top B1" — se persiste y refresca el resumen
+  var topBtn = document.getElementById("btnSrsTopOnly");
+  if (topBtn) topBtn.addEventListener("click", function() {
+    var newVal = !srsGetTopOnly();
+    srsSetTopOnly(newVal);
+    topBtn.classList.toggle("active", newVal);
+    srsUpdateStartSummary();
+  });
 
   // Modo difícil: comprobar respuesta (botón + Enter)
   var btnHC = document.getElementById("btnSrsHardCheck");
