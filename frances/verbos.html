@@ -3102,9 +3102,12 @@ function renderForms(rows, q){
     const p = row[0], f = row[1];
     const dash = (f === '—');
     if(typing && !dash){
-      // Input para teclear: el data-answer guarda la forma esperada (con acentos)
+      // Input para teclear: el data-answer guarda la forma esperada (con acentos).
+      // No añadimos la clase .form al input porque la regla `body.study-mode .tb .form:not(.dash)`
+      // pinta texto = fondo (la máscara que esconde la forma en modo revelar) y haría invisible
+      // lo que se teclea.
       return '<div class="row"><span class="pron">' + esc(p) + '</span>'
-           + '<input type="text" class="form form-input" data-answer="' + esc(f) + '" '
+           + '<input type="text" class="form-input" data-answer="' + esc(f) + '" '
            + 'autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" '
            + 'placeholder="…" aria-label="Conjugación para ' + esc(p) + '">'
            + (TTS_OK ? '<button type="button" class="tts-row" data-tts="' + esc(p + ' ' + f) + '" title="Escuchar" tabindex="-1">🔊</button>' : '')
