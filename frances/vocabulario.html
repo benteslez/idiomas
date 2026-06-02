@@ -2164,8 +2164,22 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   word-break: break-word;
 }
 .srs-warn-icon-corner {
-  position: absolute; top: 14px; right: 16px;
+  position: absolute; top: 14px; right: 50px; /* desplazado para dejar sitio al botón de pausa */
   font-size: 1.05rem; opacity: 0.7;
+}
+.srs-pause-corner {
+  position: absolute; top: 10px; right: 12px;
+  background: transparent; border: none;
+  font-size: 1.15rem; line-height: 1;
+  color: var(--text3); cursor: pointer;
+  padding: 4px 7px; border-radius: 8px;
+  user-select: none; opacity: 0.7;
+  transition: opacity 0.15s, background 0.15s, transform 0.12s;
+}
+.srs-pause-corner:hover { opacity: 1; background: var(--bg); transform: scale(1.08); }
+.srs-card.flash-paused {
+  background: #e8e8eb; border-color: #a1a1aa;
+  box-shadow: 0 0 0 3px rgba(113,113,122,0.18), var(--shadow);
 }
 .srs-star-corner {
   position: absolute; top: 10px; left: 12px;
@@ -2188,6 +2202,32 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   margin-bottom: 4px;
 }
 .srs-tema-item.srs-tema-item-important .srs-tema-name { color: var(--text); font-weight: 600; }
+
+/* Sección "Hibernación" del modal SRS */
+.srs-paused-info {
+  margin: 0 0 10px;
+  font-size: 0.82rem; color: var(--text2); line-height: 1.4;
+}
+.btn-srs-reactivate {
+  background: var(--bg); color: var(--text2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem; font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-srs-reactivate:hover { background: var(--border); }
+.btn-srs-reactivate.armed {
+  background: #c42d4a; color: #fff; border-color: #c42d4a;
+  animation: srsReactivatePulse 1s ease-in-out infinite;
+}
+.btn-srs-reactivate.armed:hover { background: #a51e3b; }
+@keyframes srsReactivatePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(196,45,74,0.45); }
+  50%      { box-shadow: 0 0 0 6px rgba(196,45,74,0); }
+}
 
 .srs-reveal-btn {
   display: inline-flex; align-items: center; gap: 6px;
@@ -3137,6 +3177,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   <div class="srs-stage" id="srsStage">
     <div class="srs-card revealed" id="srsCard">
       <button class="srs-star-corner" id="srsStarBtn" type="button" aria-label="Marcar como importante" title="Marcar como importante (añade a tema ★ Importantes)">☆</button>
+      <button class="srs-pause-corner" id="srsPauseBtn" type="button" aria-label="Pausar tarjeta" title="Pausar esta tarjeta (la oculta de las sesiones hasta que la reactives) — atajo: P">💤</button>
       <div class="srs-warn-icon-corner" id="srsWarnCorner" style="">⚠️</div>
       <div class="srs-card-chips" id="srsCardChips"><span class="srs-chip">Falsos amigos</span><span class="srs-chip">B2</span><span class="srs-chip srs-chip-new">🆕 Nueva</span></div>
       <div class="srs-word" id="srsWord">actualmente, ahora mismo (NO: actualmente = en este momento)</div>
@@ -3219,6 +3260,12 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
         <button class="btn-srs-quick active" id="btnSrsModeNormal" type="button" title="Calificas con los 3 botones tras revelar">Normal</button>
         <button class="btn-srs-quick" id="btnSrsModeHard" type="button" title="Si pulsas 'No lo sé', deberás escribir la palabra correcta en francés (con acentos) antes de continuar">💪 Difícil</button>
       </div>
+    </div>
+
+    <div class="srs-modal-section" id="srsStartPausedSection" style="display:none;">
+      <h3>Hibernación</h3>
+      <p class="srs-paused-info" id="srsPausedInfo">No hay tarjetas pausadas.</p>
+      <button class="btn-srs-reactivate" id="btnSrsReactivateAll" type="button">💤 Reactivar todas (0)</button>
     </div>
 
     <div class="srs-empty-state" id="srsStartEmpty" style="display:none;">
@@ -38893,6 +38940,7 @@ var initialPreviewCache = null;
 var knownIds     = {};
 var flippedIds   = {};
 var importantIds = {}; // ⭐ Tarjetas marcadas como "Importantes" en SRS
+var pausedIds    = {}; // 💤 Tarjetas pausadas (hibernadas, fuera de la cola SRS)
 
 function getEmbeddedState() {
   try {
@@ -38922,6 +38970,13 @@ function loadStorage() {
       importantIds = emb.important;
       try { localStorage.setItem("delf_important", JSON.stringify(importantIds)); } catch(_){}
     }
+    var pau = localStorage.getItem("delf_paused");
+    if (pau) {
+      try { pausedIds = JSON.parse(pau) || {}; } catch (_) { pausedIds = {}; }
+    } else if (emb.paused && typeof emb.paused === "object") {
+      pausedIds = emb.paused;
+      try { localStorage.setItem("delf_paused", JSON.stringify(pausedIds)); } catch(_){}
+    }
     var fs = localStorage.getItem("delf_fs");
     if (fs) {
       document.getElementById("fsSlider").value = fs;
@@ -38933,6 +38988,7 @@ function loadStorage() {
 }
 function saveKnown()     { try { localStorage.setItem("delf_known",     JSON.stringify(knownIds));     } catch(e){} }
 function saveImportant() { try { localStorage.setItem("delf_important", JSON.stringify(importantIds)); } catch(e){} }
+function savePaused()    { try { localStorage.setItem("delf_paused",    JSON.stringify(pausedIds));    } catch(e){} }
 function saveFlipped() { try { localStorage.setItem("delf_flipped", JSON.stringify(flippedIds)); } catch(e){} }
 function saveView(v)   { try { localStorage.setItem("delf_view", v); } catch(e){} }
 
@@ -41624,6 +41680,11 @@ function srsHasImportant() {
   for (var k in importantIds) { if (importantIds[k]) return true; }
   return false;
 }
+function srsCountPaused() {
+  var n = 0;
+  for (var k in pausedIds) { if (pausedIds[k]) n++; }
+  return n;
+}
 function srsMatchTemas(card, temasSeleccionados) {
   if (!temasSeleccionados || temasSeleccionados.length === 0) return true;
   var wantImportant = temasSeleccionados.indexOf(SRS_IMPORTANT_KEY) !== -1;
@@ -41633,8 +41694,13 @@ function srsMatchTemas(card, temasSeleccionados) {
 
 function getSRSQueue(temasSeleccionados) {
   var today = srsTodayISO();
+  var wantImportant = !!(temasSeleccionados && temasSeleccionados.indexOf(SRS_IMPORTANT_KEY) !== -1);
   var due = DATA.filter(function(card) {
+    if (pausedIds[card.id]) return false; // Las pausadas nunca entran a la cola
     if (!srsMatchTemas(card, temasSeleccionados)) return false;
+    // Si "★ Importantes" está seleccionado y la tarjeta es importante,
+    // se incluye SIEMPRE (ignora la fecha de próxima revisión)
+    if (wantImportant && importantIds[card.id]) return true;
     if (!card.srs) return true;
     return card.srs.nextReview <= today;
   });
@@ -41652,16 +41718,19 @@ function getSRSQueue(temasSeleccionados) {
 function getPendientesPorTema() {
   var today = srsTodayISO();
   var result = {};
-  var importantPend = 0;
+  var importantTotal = 0; // total de importantes NO pausadas (no solo vencidas)
   DATA.forEach(function(card) {
+    if (pausedIds[card.id]) return; // pausadas no cuentan en ningún sitio
     var pendiente = !card.srs || card.srs.nextReview <= today;
     if (pendiente) {
       var tema = card.tema || "Sin tema";
       result[tema] = (result[tema] || 0) + 1;
-      if (importantIds[card.id]) importantPend++;
     }
+    if (importantIds[card.id]) importantTotal++;
   });
-  if (srsHasImportant()) result[SRS_IMPORTANT_KEY] = importantPend;
+  // Importantes mostramos TOTAL (no solo vencidas) — porque la selección
+  // del tema fuerza a verlas todas, vencidas o no.
+  if (srsHasImportant()) result[SRS_IMPORTANT_KEY] = importantTotal;
   return result;
 }
 
@@ -41680,9 +41749,16 @@ function getAllTemasOrdered() {
 
 function countNewVsReview(temasSeleccionados) {
   var today = srsTodayISO();
+  var wantImportant = !!(temasSeleccionados && temasSeleccionados.indexOf(SRS_IMPORTANT_KEY) !== -1);
   var n = 0, r = 0;
   DATA.forEach(function(card) {
+    if (pausedIds[card.id]) return;
     if (!srsMatchTemas(card, temasSeleccionados)) return;
+    // Importantes: ignorar fecha, contar todas como nuevas/repaso según tengan srs
+    if (wantImportant && importantIds[card.id]) {
+      if (!card.srs) n++; else r++;
+      return;
+    }
     if (!card.srs) n++;
     else if (card.srs.nextReview <= today) r++;
   });
@@ -41715,6 +41791,7 @@ function updateSrsBadge() {
   var today = srsTodayISO();
   for (var i = 0; i < DATA.length; i++) {
     var c = DATA[i];
+    if (pausedIds[c.id]) continue; // pausadas no cuentan
     if (!c.srs || c.srs.nextReview <= today) total++;
   }
   if (total === 0) {
@@ -41750,22 +41827,32 @@ function srsOpenStartModal() {
     startBtn.style.display = "none";
     cancelBtn.textContent = "Cerrar";
     subEl.textContent = "Estás al día con tus repasos.";
-    // Próximo repaso más cercano
+    // Próximo repaso más cercano (ignorando pausadas)
     var soonest = null, soonestCount = 0;
     DATA.forEach(function(c) {
+      if (pausedIds[c.id]) return;
       if (c.srs && c.srs.nextReview) {
         if (!soonest || c.srs.nextReview < soonest) soonest = c.srs.nextReview;
       }
     });
     if (soonest) {
       DATA.forEach(function(c) {
+        if (pausedIds[c.id]) return;
         if (c.srs && c.srs.nextReview === soonest) soonestCount++;
       });
       document.getElementById("srsStartEmptySub").textContent =
         "Vuelve el " + soonest + " con " + soonestCount + " tarjeta" + (soonestCount === 1 ? "" : "s") + ".";
     } else {
-      document.getElementById("srsStartEmptySub").textContent = "No hay próximos repasos programados.";
+      var pausedN = srsCountPaused();
+      if (pausedN > 0) {
+        document.getElementById("srsStartEmptySub").textContent =
+          "💤 Tienes " + pausedN + " tarjeta" + (pausedN === 1 ? "" : "s") +
+          " pausada" + (pausedN === 1 ? "" : "s") + ". Reactívalas desde abajo si quieres volver a estudiarlas.";
+      } else {
+        document.getElementById("srsStartEmptySub").textContent = "No hay próximos repasos programados.";
+      }
     }
+    srsRenderPausedSection(); // mostrar el botón reactivar incluso en estado "al día"
     modal.classList.add("active");
     return;
   }
@@ -41800,7 +41887,12 @@ function srsOpenStartModal() {
     name.textContent = tema;
     var ct = document.createElement("span");
     ct.className = "srs-tema-count";
-    ct.textContent = count > 0 ? "(" + count + " pendiente" + (count === 1 ? "" : "s") + ")" : "(0)";
+    if (isImportant) {
+      // Para "★ Importantes" mostramos TOTAL (la selección fuerza a verlas todas)
+      ct.textContent = count > 0 ? "(" + count + " total)" : "(0)";
+    } else {
+      ct.textContent = count > 0 ? "(" + count + " pendiente" + (count === 1 ? "" : "s") + ")" : "(0)";
+    }
     label.appendChild(chk);
     label.appendChild(name);
     label.appendChild(ct);
@@ -41808,6 +41900,7 @@ function srsOpenStartModal() {
   });
 
   srsUpdateStartSummary();
+  srsRenderPausedSection();
   modal.classList.add("active");
 }
 
@@ -42137,6 +42230,81 @@ function srsReveal() {
   document.getElementById("btnSrsReveal").style.display = "none";
   document.getElementById("srsRatingRow").classList.add("show");
   srsSession.revealed = true;
+}
+
+// Refresca la sección "Hibernación" del modal de inicio
+function srsRenderPausedSection() {
+  var section = document.getElementById("srsStartPausedSection");
+  var info    = document.getElementById("srsPausedInfo");
+  var btn     = document.getElementById("btnSrsReactivateAll");
+  if (!section || !info || !btn) return;
+  var count = srsCountPaused();
+  if (count === 0) {
+    section.style.display = "none";
+    return;
+  }
+  section.style.display = "";
+  info.textContent = "💤 Tienes " + count + " tarjeta" + (count === 1 ? "" : "s") +
+                     " pausada" + (count === 1 ? "" : "s") +
+                     " (ocultas de las sesiones SRS).";
+  // Resetear el estado armado al refrescar
+  btn.classList.remove("armed");
+  btn.textContent = "💤 Reactivar todas (" + count + ")";
+  btn.dataset.armed = "0";
+}
+
+// Reactivar todas las tarjetas pausadas con confirmación en dos clicks.
+var srsReactivateTimer = null;
+function srsReactivateAllPaused() {
+  var btn = document.getElementById("btnSrsReactivateAll");
+  if (!btn) return;
+  var count = srsCountPaused();
+  if (count === 0) { srsRenderPausedSection(); return; }
+  if (btn.dataset.armed !== "1") {
+    // Primer click → armar (4s para confirmar)
+    btn.dataset.armed = "1";
+    btn.classList.add("armed");
+    btn.textContent = "⚠️ Confirmar reactivar " + count + " — pulsa de nuevo";
+    if (srsReactivateTimer) clearTimeout(srsReactivateTimer);
+    srsReactivateTimer = setTimeout(function() {
+      btn.dataset.armed = "0";
+      btn.classList.remove("armed");
+      btn.textContent = "💤 Reactivar todas (" + count + ")";
+      srsReactivateTimer = null;
+    }, 4000);
+    return;
+  }
+  // Segundo click → ejecutar
+  if (srsReactivateTimer) { clearTimeout(srsReactivateTimer); srsReactivateTimer = null; }
+  // Limpiar sin reasignar la referencia (cloud sync hace tracking del objeto)
+  Object.keys(pausedIds).forEach(function(k){ delete pausedIds[k]; });
+  savePaused();
+  // Refrescar todo el modal: ahora aparecen los temas con sus nuevas cuentas
+  srsOpenStartModal();
+}
+
+// Pausar la tarjeta actual: la saca de la cola actual y de futuras sesiones
+// hasta que el usuario la reactive desde el modal de inicio.
+function srsPauseCurrent() {
+  var i = srsSession.idx;
+  var card = srsSession.queue[i];
+  if (!card || card.id == null || srsSession.advancing) return;
+  if (pausedIds[card.id]) return; // ya pausada (defensivo)
+  pausedIds[card.id] = true;
+  savePaused();
+  // Flash + avanzar a la siguiente, sin registrar rating
+  srsSession.advancing = true;
+  var cardEl = document.getElementById("srsCard");
+  cardEl.classList.add("flash-paused");
+  setTimeout(function() {
+    cardEl.classList.remove("flash-paused");
+    srsSession.advancing = false;
+    // Sacar la tarjeta pausada de la cola actual para no volver a verla en
+    // esta sesión (sin esto, idx++ podría saltarla pero quedarse desfasado)
+    srsSession.queue.splice(i, 1);
+    // No incrementamos idx: la siguiente tarjeta ya está en la posición i
+    srsRenderCurrentCard();
+  }, 320);
 }
 
 // Toggle ⭐ Importante para la tarjeta actual de la sesión SRS
@@ -42510,6 +42678,16 @@ function initSRSAddon() {
     e.stopPropagation();
     srsToggleImportant();
   });
+  // Pausar tarjeta actual
+  var pauseBtn = document.getElementById("srsPauseBtn");
+  if (pauseBtn) pauseBtn.addEventListener("click", function(e) {
+    e.stopPropagation();
+    srsPauseCurrent();
+  });
+
+  // Reactivar todas las tarjetas pausadas (doble click para confirmar)
+  var reactBtn = document.getElementById("btnSrsReactivateAll");
+  if (reactBtn) reactBtn.addEventListener("click", srsReactivateAllPaused);
   // Click fuera cierra modal
   document.getElementById("srsStartModal").addEventListener("click", function(e) {
     if (e.target === this) srsCloseStartModal();
@@ -42577,6 +42755,7 @@ function initSRSAddon() {
     if (k === "z" || k === "Z" || k === "-") { e.preventDefault(); srsUndo(); return; }
     if (k === "f" || k === "F") { e.preventDefault(); document.getElementById("btnSrsFullscreen").click(); return; }
     if (k === "s" || k === "S") { e.preventDefault(); srsToggleImportant(); return; }
+    if (k === "p" || k === "P") { e.preventDefault(); srsPauseCurrent(); return; }
     if (!srsSession.revealed) {
       if (k === " " || k === "Enter") {
         e.preventDefault();
@@ -42856,6 +43035,7 @@ if (document.readyState === "loading") {
       known:     (typeof knownIds     !== 'undefined') ? knownIds     : {},
       flipped:   (typeof flippedIds   !== 'undefined') ? flippedIds   : {},
       important: (typeof importantIds !== 'undefined') ? importantIds : {},
+      paused:    (typeof pausedIds    !== 'undefined') ? pausedIds    : {},
       edits:     (typeof cardEdits    !== 'undefined') ? cardEdits    : {},
       srsGlobal: (typeof srsGlobal    !== 'undefined') ? srsGlobal    : {},
       srsCards:  {}
@@ -42875,6 +43055,7 @@ if (document.readyState === "loading") {
     if (Object.keys(p.known     || {}).length) return false;
     if (Object.keys(p.flipped   || {}).length) return false;
     if (Object.keys(p.important || {}).length) return false;
+    if (Object.keys(p.paused    || {}).length) return false;
     if (Object.keys(p.edits     || {}).length) return false;
     if (Object.keys(p.srsCards  || {}).length) return false;
     if (((p.srsGlobal||{}).sessions||0) > 0)   return false;
@@ -42917,11 +43098,22 @@ if (document.readyState === "loading") {
         Object.keys(data.flipped).forEach(function(k){ flippedIds[k] = data.flipped[k]; });
       }
     }
-    if (typeof importantIds !== 'undefined') {
+    // Defensivo: si el payload NO trae la clave `important` (HTML antiguo,
+    // importación legacy, etc.) preservamos las estrellas locales. Solo
+    // sustituimos cuando el campo viene presente — entonces sí sustituimos
+    // completamente (la nube es fuente de la verdad cuando aporta el campo).
+    if (typeof importantIds !== 'undefined' &&
+        data && Object.prototype.hasOwnProperty.call(data, 'important') &&
+        data.important && typeof data.important === 'object') {
       Object.keys(importantIds).forEach(function(k){ delete importantIds[k]; });
-      if (data.important && typeof data.important === 'object') {
-        Object.keys(data.important).forEach(function(k){ importantIds[k] = data.important[k]; });
-      }
+      Object.keys(data.important).forEach(function(k){ importantIds[k] = data.important[k]; });
+    }
+    // Mismo patrón defensivo para `paused`.
+    if (typeof pausedIds !== 'undefined' &&
+        data && Object.prototype.hasOwnProperty.call(data, 'paused') &&
+        data.paused && typeof data.paused === 'object') {
+      Object.keys(pausedIds).forEach(function(k){ delete pausedIds[k]; });
+      Object.keys(data.paused).forEach(function(k){ pausedIds[k] = data.paused[k]; });
     }
     if (typeof cardEdits !== 'undefined') {
       Object.keys(cardEdits).forEach(function(k){ delete cardEdits[k]; });
@@ -42966,6 +43158,7 @@ if (document.readyState === "loading") {
     try { localStorage.setItem('delf_known',       JSON.stringify(knownIds));     } catch(e){}
     try { localStorage.setItem('delf_flipped',     JSON.stringify(flippedIds));   } catch(e){}
     try { localStorage.setItem('delf_important',   JSON.stringify(importantIds)); } catch(e){}
+    try { localStorage.setItem('delf_paused',      JSON.stringify(pausedIds));    } catch(e){}
     try { localStorage.setItem('delf_card_edits',  JSON.stringify(cardEdits));    } catch(e){}
   }
 
@@ -43106,6 +43299,7 @@ if (document.readyState === "loading") {
     wrap('saveKnown');
     wrap('saveFlipped');
     wrap('saveImportant');
+    wrap('savePaused');
     wrap('saveCardEdits');
     if (typeof window.sm2 === 'function') {
       var origSm2 = window.sm2;
@@ -43201,9 +43395,27 @@ if (document.readyState === "loading") {
         mergeSrsGlobal((localBackup||{}).srsGlobal, remote.srsGlobal)
       );
 
+      // Para `important` y `paused`: si la fila de la nube es anterior a estas
+      // features (campo ausente), no debemos borrar el estado local. Caemos al
+      // backup local o al embebido cuando el remoto no incluye el campo.
+      var importantFromRemote;
+      if (remote && Object.prototype.hasOwnProperty.call(remote, 'important')) {
+        importantFromRemote = remote.important || {};
+      } else {
+        importantFromRemote = (localBackup && localBackup.important) || embedded.important || {};
+      }
+      var pausedFromRemote;
+      if (remote && Object.prototype.hasOwnProperty.call(remote, 'paused')) {
+        pausedFromRemote = remote.paused || {};
+      } else {
+        pausedFromRemote = (localBackup && localBackup.paused) || embedded.paused || {};
+      }
+
       var merged = {
         known:     remote.known    || {},
         flipped:   remote.flipped  || {},
+        important: importantFromRemote,
+        paused:    pausedFromRemote,
         edits:     remote.edits    || {},
         srsCards:  remote.srsCards || {},
         srsGlobal: mergedSrs
