@@ -25,6 +25,7 @@
   --dk-blue:#2a3a5e; --dk-green:#1f4634; --dk-purple:#3f2456;
   --dk-wine:#5e2842; --dk-teal:#1c4258; --dk-orange:#6e521f;
   --dk-rose:#6e2848;
+  --dk-slate:#33384a;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{
@@ -341,6 +342,7 @@ body > *{position:relative;z-index:1;}
       <button class="ftab" data-cat="discurso" onclick="setFilter('discurso',this)">Discurso <span class="count"></span></button>
       <button class="ftab" data-cat="lexico" onclick="setFilter('lexico',this)">Léxico gramatical <span class="count"></span></button>
       <button class="ftab" data-cat="produccion" onclick="setFilter('produccion',this)">Producción <span class="count"></span></button>
+      <button class="ftab" data-cat="estilo" onclick="setFilter('estilo',this)">Ortografía y estilo <span class="count"></span></button>
     </div>
   </div>
 </div>
@@ -715,6 +717,56 @@ const TOPICS = [
     cat:"produccion", level:"B1–B2",
     color:"var(--dk-purple)", colorbg:"var(--dk-purple)"
   },
+
+  /* ============ ORTOGRAFÍA, FONÉTICA Y ESTILO ============ */
+  {
+    num:"44", file:"grammaire_orthographe.html",
+    title:"Orthographe et ponctuation",
+    desc:"Acentos (aigu/grave/circonflexe/tréma), cédille, élision, majuscules (lenguas y gentilicios), puntuación francesa (espacio antes de ; : ! ?, guillemets « »).",
+    tags:["orthographe","accents","cédille","élision","majuscules","ponctuation","guillemets","typographie"],
+    cat:"estilo", level:"B1–C2",
+    color:"var(--dk-slate)", colorbg:"var(--dk-slate)"
+  },
+  {
+    num:"45", file:"grammaire_phonetique.html",
+    title:"Phonétique et prosodie",
+    desc:"Liaisons (obligatorias/prohibidas/facultativas), enchaînement, e muet, h aspiré vs muet, intonation y accent tonique francés vs español.",
+    tags:["phonétique","liaison","enchaînement","e muet","h aspiré","intonation","accent","prononciation"],
+    cat:"estilo", level:"B1–C2",
+    color:"var(--dk-slate)", colorbg:"var(--dk-slate)"
+  },
+  {
+    num:"46", file:"grammaire_registres.html",
+    title:"Les Registres de langue",
+    desc:"Familier / courant / soutenu. Marcas gramaticales (chute du ne, on = nous, dislocación). Léxico (argot, verlan) y marqueurs oraux (du coup, quoi, genre, ben).",
+    tags:["registres","familier","soutenu","argot","verlan","ne","marqueurs oraux","du coup"],
+    cat:"estilo", level:"B2–C2",
+    color:"var(--dk-slate)", colorbg:"var(--dk-slate)"
+  },
+  {
+    num:"47", file:"grammaire_style_indirect_libre.html",
+    title:"Le Style indirect libre",
+    desc:"Discurso indirecto libre: pensamientos del personaje sin verbo introductor ni comillas. Marcas, efectos (ironía flaubertiana) y reconocimiento en lectura.",
+    tags:["style indirect libre","discours","narration","littéraire","Flaubert","imparfait","C2"],
+    cat:"estilo", level:"C1–C2",
+    color:"var(--dk-slate)", colorbg:"var(--dk-slate)"
+  },
+  {
+    num:"48", file:"grammaire_expressions_idiomatiques.html",
+    title:"Expressions avec avoir, être, faire",
+    desc:"Locuciones idiomáticas: avoir l'air, avoir beau, avoir du mal à; être en train de, être sur le point de; faire semblant de, faire mine de, s'en faire.",
+    tags:["expressions","idiomatiques","avoir beau","avoir l'air","être en train de","faire semblant","locutions"],
+    cat:"estilo", level:"B1–C1",
+    color:"var(--dk-slate)", colorbg:"var(--dk-slate)"
+  },
+  {
+    num:"49", file:"grammaire_verbes_defectifs.html",
+    title:"Verbes défectifs et formes rares",
+    desc:"Curiosidades morfológicas (gésir/ci-gît, ouïr, quérir, choir, clore, frire). Locuciones fósiles (vaille que vaille, advienne que pourra). Nota diacrónica.",
+    tags:["défectifs","gésir","ouïr","quérir","clore","vaille que vaille","diachronie","C2","curiosité"],
+    cat:"estilo", level:"C2",
+    color:"var(--dk-slate)", colorbg:"var(--dk-slate)"
+  },
 ];
 
 const CAT_LABELS = {
@@ -723,7 +775,8 @@ const CAT_LABELS = {
   sintaxis:"Sintaxis",
   discurso:"Discurso",
   lexico:"Léxico gramatical",
-  produccion:"Producción"
+  produccion:"Producción",
+  estilo:"Ortografía, fonética y estilo"
 };
 
 let activeFilter = "all";
@@ -746,7 +799,7 @@ function buildCards(items){
   empty.classList.add("hidden");
 
   // Group by category
-  const cats = ["nominal","verbos","sintaxis","discurso","lexico","produccion"];
+  const cats = ["nominal","verbos","sintaxis","discurso","lexico","produccion","estilo"];
   let html = "";
   cats.forEach(cat => {
     const filtered = items.filter(t => t.cat === cat);
