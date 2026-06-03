@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Pretérito Perfeito Simples e Imperfeito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Pretérito PPS/Imperfeito → Verbos · dk-teal */
+:root {
+  --primary: #1c4258;
+  --primary-soft: #e8f0f4;
+  --primary-mid: #5887a0;
+  --primary-strong: #0f2a3a;
+  --primary-glow: rgba(28, 66, 88, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fb5cf;
+  --primary-soft: #1a2a35;
+  --primary-mid: #4a8aa5;
+  --primary-strong: #b8d4e2;
+  --primary-glow: rgba(127, 181, 207, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.irreg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px; margin-bottom: 16px;
+}
+.irreg-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all var(--t-base) var(--ease);
+}
+.irreg-card:hover {
+  border-color: var(--primary-mid);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+.irreg-card-head {
+  background: var(--primary);
+  color: #fff;
+  padding: 8px 14px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: -0.005em;
+}
+.irreg-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 14px;
+  font-size: 0.82em;
+  border-bottom: 1px solid var(--border);
+}
+.irreg-row:last-child { border-bottom: none; }
+.irreg-pron { color: var(--text3); }
+.irreg-form { color: var(--primary); font-weight: 700; }
+
+.def-box {
+  background: var(--primary-strong);
+  color: #ffffff;
+  border-color: var(--primary-strong);
+}
+.def-box strong,
+.def-box em {
+  color: #ffffff;
+}
+
+/* Comparison split for contrast PPS vs Imperfeito */
+.split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+@media (max-width: 600px) {
+  .split-grid { grid-template-columns: 1fr; }
+}
+.split-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+.split-card h4 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.split-card p {
+  font-size: 0.86em;
+  color: var(--text2);
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Pretérito Perfeito Simples e Imperfeito</h1>
+    <span class="header-tag">Gramática</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR A2–B1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Pretéritos del Indicativo</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. O que son</button>
+    <button class="snav-btn"        onclick="showSection('s-pps-reg',this)">2. PPS regular</button>
+    <button class="snav-btn"        onclick="showSection('s-pps-irreg',this)">3. PPS irregular</button>
+    <button class="snav-btn"        onclick="showSection('s-imperfeito',this)">4. Imperfeito</button>
+    <button class="snav-btn"        onclick="showSection('s-contraste',this)">5. Contraste PPS/Imperfeito</button>
+    <button class="snav-btn"        onclick="showSection('s-cortes',this)">6. Imperfeito cortés</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El portugués usa dos tiempos del pasado del indicativo de forma complementaria: el <strong>pretérito perfeito simples</strong> (PPS) y el <strong>pretérito imperfeito</strong>. La distinción se asemeja a la del español <em>pretérito indefinido (canté)</em> vs <em>pretérito imperfecto (cantaba)</em>, pero con matices y usos específicos del portugués.
+      </div>
+
+      <div class="split-grid">
+        <div class="split-card">
+          <h4>Pretérito Perfeito Simples</h4>
+          <p>Acción <strong>terminada</strong>, puntual, delimitada en el tiempo. Foco en el evento como un hecho cerrado. Equivale al español <em>canté, comí, salí</em>.</p>
+          <p style="margin-top:8px"><em>Ontem eu falei com ela.</em> → Ayer hablé con ella.</p>
+        </div>
+        <div class="split-card">
+          <h4>Pretérito Imperfeito</h4>
+          <p>Acción <strong>en proceso</strong> en el pasado, hábito, descripción, contexto. Equivale al español <em>cantaba, comía, salía</em>.</p>
+          <p style="margin-top:8px"><em>Quando eu era criança, falava muito.</em> → Cuando era niño, hablaba mucho.</p>
+        </div>
+      </div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Diferencia con el español:</strong> el portugués no tiene equivalente real del <em>pretérito perfecto compuesto</em> español "he hablado". El portugués usa el PPS donde el español usa <em>he hablado</em>: <em>Hoje eu falei com ela</em> = "Hoy he hablado con ella". El "pretérito perfeito composto" portugués (<em>tenho falado</em>) tiene un valor totalmente distinto (iterativo/durativo).</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. PPS REGULAR -->
+  <div class="sec-block" id="s-pps-reg">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las terminaciones del <strong>pretérito perfeito simples</strong> regular varían por conjugación. Conviene memorizar bien la 1ª pers. sing. (-ei/-i) y la 3ª pers. sing. (-ou/-eu/-iu).
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('reg',0)">-AR</button>
+        <button class="chip pr"        onclick="selectChip('reg',1)">-ER</button>
+        <button class="chip pr"        onclick="selectChip('reg',2)">-IR</button>
+        <button class="chip pr"        onclick="selectChip('reg',3)">Cambios -CAR/-GAR/-ÇAR</button>
+      </div>
+      <div id="reg-panels">
+
+        <div class="chip-panel active" id="reg-p-0">
+          <div class="def-box">Terminaciones -AR: <strong>-ei · -aste · -ou · -amos · -aram</strong>.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Pronombre</th><th>FALAR</th><th>MORAR</th><th>ESTUDAR</th><th>Term.</th></tr></thead>
+            <tbody>
+              <tr><td><strong>eu</strong></td><td class="hl-pr">falei</td><td class="hl-pr">morei</td><td class="hl-pr">estudei</td><td class="hl-pr">-ei</td></tr>
+              <tr><td><strong>tu</strong></td><td class="hl-pr">falaste</td><td class="hl-pr">moraste</td><td class="hl-pr">estudaste</td><td class="hl-pr">-aste</td></tr>
+              <tr><td><strong>você/ele</strong></td><td class="hl-pr">falou</td><td class="hl-pr">morou</td><td class="hl-pr">estudou</td><td class="hl-pr">-ou</td></tr>
+              <tr><td><strong>nós</strong></td><td class="hl-pr">falamos</td><td class="hl-pr">moramos</td><td class="hl-pr">estudamos</td><td class="hl-pr">-amos</td></tr>
+              <tr><td><strong>vocês/eles</strong></td><td class="hl-pr">falaram</td><td class="hl-pr">moraram</td><td class="hl-pr">estudaram</td><td class="hl-pr">-aram</td></tr>
+            </tbody>
+          </table></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text"><strong>Falamos / Falámos:</strong> En PB, <em>nós falamos</em> se escribe igual en presente y en PPS (la distinción contextual). En PE clásico se acentúa <em>falámos</em> en PPS para diferenciarlo, pero el Acordo Ortográfico de 1990 ha facultativizado este acento.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="reg-p-1">
+          <div class="def-box">Terminaciones -ER: <strong>-i · -este · -eu · -emos · -eram</strong>.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Pronombre</th><th>COMER</th><th>BEBER</th><th>VENDER</th><th>Term.</th></tr></thead>
+            <tbody>
+              <tr><td><strong>eu</strong></td><td class="hl-pr">comi</td><td class="hl-pr">bebi</td><td class="hl-pr">vendi</td><td class="hl-pr">-i</td></tr>
+              <tr><td><strong>tu</strong></td><td class="hl-pr">comeste</td><td class="hl-pr">bebeste</td><td class="hl-pr">vendeste</td><td class="hl-pr">-este</td></tr>
+              <tr><td><strong>você/ele</strong></td><td class="hl-pr">comeu</td><td class="hl-pr">bebeu</td><td class="hl-pr">vendeu</td><td class="hl-pr">-eu</td></tr>
+              <tr><td><strong>nós</strong></td><td class="hl-pr">comemos</td><td class="hl-pr">bebemos</td><td class="hl-pr">vendemos</td><td class="hl-pr">-emos</td></tr>
+              <tr><td><strong>vocês/eles</strong></td><td class="hl-pr">comeram</td><td class="hl-pr">beberam</td><td class="hl-pr">venderam</td><td class="hl-pr">-eram</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="chip-panel" id="reg-p-2">
+          <div class="def-box">Terminaciones -IR: <strong>-i · -iste · -iu · -imos · -iram</strong>.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Pronombre</th><th>PARTIR</th><th>ABRIR</th><th>DECIDIR</th><th>Term.</th></tr></thead>
+            <tbody>
+              <tr><td><strong>eu</strong></td><td class="hl-pr">parti</td><td class="hl-pr">abri</td><td class="hl-pr">decidi</td><td class="hl-pr">-i</td></tr>
+              <tr><td><strong>tu</strong></td><td class="hl-pr">partiste</td><td class="hl-pr">abriste</td><td class="hl-pr">decidiste</td><td class="hl-pr">-iste</td></tr>
+              <tr><td><strong>você/ele</strong></td><td class="hl-pr">partiu</td><td class="hl-pr">abriu</td><td class="hl-pr">decidiu</td><td class="hl-pr">-iu</td></tr>
+              <tr><td><strong>nós</strong></td><td class="hl-pr">partimos</td><td class="hl-pr">abrimos</td><td class="hl-pr">decidimos</td><td class="hl-pr">-imos</td></tr>
+              <tr><td><strong>vocês/eles</strong></td><td class="hl-pr">partiram</td><td class="hl-pr">abriram</td><td class="hl-pr">decidiram</td><td class="hl-pr">-iram</td></tr>
+            </tbody>
+          </table></div>
+          <div class="note-box"><strong>Atención:</strong> los verbos -IR con alternancia vocálica en el presente (sirvo, durmo) <strong>NO</strong> alternan en el pretérito perfeito: <em>servi, dormi, vesti, senti, pedi</em>.</div>
+        </div>
+
+        <div class="chip-panel" id="reg-p-3">
+          <div class="def-box">En la <strong>1ª persona singular</strong>, los verbos -CAR/-GAR/-ÇAR sufren cambio ortográfico para mantener la pronunciación.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Cambio</th><th>Infinitivo</th><th>eu (PPS)</th><th>Resto</th></tr></thead>
+            <tbody>
+              <tr><td><strong>-CAR → -QUEI</strong></td><td>ficar</td><td class="hl-pr">fiquei</td><td class="dim">ficou / ficamos / ficaram</td></tr>
+              <tr><td><strong>-CAR → -QUEI</strong></td><td>brincar</td><td class="hl-pr">brinquei</td><td class="dim">brincou / brincamos / brincaram</td></tr>
+              <tr><td><strong>-GAR → -GUEI</strong></td><td>chegar</td><td class="hl-pr">cheguei</td><td class="dim">chegou / chegamos / chegaram</td></tr>
+              <tr><td><strong>-GAR → -GUEI</strong></td><td>pagar</td><td class="hl-pr">paguei</td><td class="dim">pagou / pagamos / pagaram</td></tr>
+              <tr><td><strong>-ÇAR → -CEI</strong></td><td>começar</td><td class="hl-pr">comecei</td><td class="dim">começou / começamos / começaram</td></tr>
+              <tr><td><strong>-ÇAR → -CEI</strong></td><td>almoçar</td><td class="hl-pr">almocei</td><td class="dim">almoçou / almoçamos / almoçaram</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3. PPS IRREGULARES -->
+  <div class="sec-block" id="s-pps-irreg">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los verbos más frecuentes tienen pretérito perfeito irregular. Compartem un patrón "fuerte" que conviene reconocer: la 1ª pers. sing. suele terminar en <strong>-e</strong> (no -i) y la 3ª pers. sing. en <strong>-e</strong> (no -ou/-eu/-iu). Hay que memorizarlos.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('ppsi',0)">Ser/Ir, estar, ter</button>
+        <button class="chip pr"        onclick="selectChip('ppsi',1)">Fazer, dizer, trazer</button>
+        <button class="chip pr"        onclick="selectChip('ppsi',2)">Ver, vir, pôr, dar</button>
+        <button class="chip pr"        onclick="selectChip('ppsi',3)">Poder, querer, saber, haver</button>
+      </div>
+      <div id="ppsi-panels">
+
+        <div class="chip-panel active" id="ppsi-p-0">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">ser / ir</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">fui</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">foste</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">foi</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">fomos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">foram</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">estar</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">estive</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">estiveste</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">esteve</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">estivemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">estiveram</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">ter</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">tive</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">tiveste</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">teve</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">tivemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">tiveram</span></div>
+            </div>
+          </div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text"><strong>Ser e Ir comparten exactamente el mismo PPS:</strong> <em>fui, foste, foi, fomos, foram</em>. El contexto desambigua: <em>Fui ao Rio</em> (= ir) vs <em>Fui presidente</em> (= ser).</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="ppsi-p-1">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">fazer</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">fiz</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">fizeste</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">fez</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">fizemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">fizeram</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">dizer</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">disse</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">disseste</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">disse</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">dissemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">disseram</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">trazer</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">trouxe</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">trouxeste</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">trouxe</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">trouxemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">trouxeram</span></div>
+            </div>
+          </div>
+          <div class="green-box"><strong>Patrón:</strong> eu y ele tienen la <em>misma forma</em> en <em>dizer</em> (disse) y <em>trazer</em> (trouxe). En <em>fazer</em> el cambio es regular fonéticamente: fiz / fez.</div>
+        </div>
+
+        <div class="chip-panel" id="ppsi-p-2">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">ver</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">vi</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">viste</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">viu</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">vimos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">viram</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">vir</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">vim</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">vieste</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">veio</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">viemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">vieram</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">pôr</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">pus</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">puseste</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">pôs</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">pusemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">puseram</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">dar</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">dei</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">deste</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">deu</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">demos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">deram</span></div>
+            </div>
+          </div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text"><strong>Trampa famosa:</strong> <em>eu vim</em> (vir, PPS, "vine") vs <em>eu venho</em> (vir, presente, "vengo"). Y <em>eu vi</em> (ver, PPS, "vi") vs <em>eu vejo</em> (ver, presente, "veo"). Confusión muy frecuente.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="ppsi-p-3">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">poder</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">pude</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">pudeste</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">pôde</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">pudemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">puderam</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">querer</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">quis</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">quiseste</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">quis</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">quisemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">quiseram</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">saber</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">soube</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">soubeste</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">soube</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">soubemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">souberam</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">haver</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">houve</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">houveste</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">houve</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">houvemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">houveram</span></div>
+            </div>
+          </div>
+          <div class="note-box"><strong>Cambio semántico:</strong> <em>soube</em> = "supe / me enteré (de un hecho)" — el PPS de <em>saber</em> tiene valor incoativo. <em>Pôde</em> (con acento) en 3ª sing. = "pudo", distinto del presente <em>pode</em> (sin acento) = "puede". <em>Houve</em> = "hubo / ocurrió".</div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. IMPERFEITO -->
+  <div class="sec-block" id="s-imperfeito">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>pretérito imperfeito</strong> describe acciones en curso, hábitos, descripciones, contextos. Tiene un paradigma muy regular y solo <strong>cuatro verbos irregulares</strong>: <em>ser, ter, vir, pôr</em>.
+      </div>
+
+      <div class="sec-label">Formación regular</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Pronombre</th><th>FALAR (-ar)</th><th>COMER (-er)</th><th>PARTIR (-ir)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>eu</strong></td><td class="hl-pr">falava</td><td class="hl-pr">comia</td><td class="hl-pr">partia</td></tr>
+          <tr><td><strong>tu</strong></td><td class="hl-pr">falavas</td><td class="hl-pr">comias</td><td class="hl-pr">partias</td></tr>
+          <tr><td><strong>você/ele</strong></td><td class="hl-pr">falava</td><td class="hl-pr">comia</td><td class="hl-pr">partia</td></tr>
+          <tr><td><strong>nós</strong></td><td class="hl-pr">falávamos</td><td class="hl-pr">comíamos</td><td class="hl-pr">partíamos</td></tr>
+          <tr><td><strong>vocês/eles</strong></td><td class="hl-pr">falavam</td><td class="hl-pr">comiam</td><td class="hl-pr">partiam</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="note-box"><strong>Patrón fácil:</strong> -AR usa <em>-ava</em>, -ER e -IR usan <em>-ia</em>. Mucho más sencillo que el presente.</div>
+
+      <div class="sec-label">Los cuatro irregulares</div>
+      <div class="irreg-grid">
+        <div class="irreg-card">
+          <div class="irreg-card-head">ser</div>
+          <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">era</span></div>
+          <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">eras</span></div>
+          <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">era</span></div>
+          <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">éramos</span></div>
+          <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">eram</span></div>
+        </div>
+        <div class="irreg-card">
+          <div class="irreg-card-head">ter</div>
+          <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">tinha</span></div>
+          <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">tinhas</span></div>
+          <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">tinha</span></div>
+          <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">tínhamos</span></div>
+          <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">tinham</span></div>
+        </div>
+        <div class="irreg-card">
+          <div class="irreg-card-head">vir</div>
+          <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">vinha</span></div>
+          <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">vinhas</span></div>
+          <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">vinha</span></div>
+          <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">vínhamos</span></div>
+          <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">vinham</span></div>
+        </div>
+        <div class="irreg-card">
+          <div class="irreg-card-head">pôr</div>
+          <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">punha</span></div>
+          <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">punhas</span></div>
+          <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">punha</span></div>
+          <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">púnhamos</span></div>
+          <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">punham</span></div>
+        </div>
+      </div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Estar, ver, dar, saber</strong> son regulares en imperfeito: <em>estava, via, dava, sabia</em>. Solo <em>ser, ter, vir, pôr</em> (y sus derivados: <em>compor → compunha</em>) son irregulares.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 5. CONTRASTE PPS / IMPERFEITO -->
+  <div class="sec-block" id="s-contraste">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El contraste PPS vs Imperfeito es el corazón del sistema verbal en pasado. Misma lógica que en español, con algunos verbos de cambio de significado.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('cont',0)">Acción puntual vs proceso</button>
+        <button class="chip pr"        onclick="selectChip('cont',1)">Hábito y descripción</button>
+        <button class="chip pr"        onclick="selectChip('cont',2)">Narración con ambos</button>
+        <button class="chip pr"        onclick="selectChip('cont',3)">Cambio de significado</button>
+      </div>
+      <div id="cont-panels">
+
+        <div class="chip-panel active" id="cont-p-0">
+          <div class="def-box">El PPS marca el evento como cerrado, completo, con principio y fin. El Imperfeito muestra la acción en su transcurso, sin foco en los límites.</div>
+          <div class="example-block pr"><div class="ex-fr">Ontem eu <span class="epr">trabalhei</span> oito horas.</div><div class="ex-es">Ayer trabajé ocho horas.</div><div class="ex-note">PPS: jornada completa, hecho cerrado.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ontem, enquanto eu <span class="epr">trabalhava</span>, choveu muito.</div><div class="ex-es">Ayer, mientras (yo) trabajaba, llovió mucho.</div><div class="ex-note">Imperfeito: acción en proceso como marco.</div></div>
+          <div class="example-block pr"><div class="ex-fr">A reunião <span class="epr">começou</span> às nove.</div><div class="ex-es">La reunión empezó a las nueve.</div><div class="ex-note">PPS: momento puntual del inicio.</div></div>
+          <div class="example-block pr"><div class="ex-fr">A reunião <span class="epr">começava</span> sempre às nove.</div><div class="ex-es">La reunión empezaba siempre a las nueve.</div><div class="ex-note">Imperfeito: hábito repetido.</div></div>
+        </div>
+
+        <div class="chip-panel" id="cont-p-1">
+          <div class="def-box">El Imperfeito es el tiempo del hábito en el pasado y de la descripción (físico, anímico, ambiental).</div>
+          <div class="example-block pr"><div class="ex-fr">Quando eu <span class="epr">era</span> criança, <span class="epr">jogava</span> futebol todos os dias.</div><div class="ex-es">Cuando era niño, jugaba al fútbol todos los días.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ela <span class="epr">tinha</span> cabelos longos e <span class="epr">usava</span> óculos.</div><div class="ex-es">Tenía el pelo largo y llevaba gafas.</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Fazia</span> frio e <span class="epr">chovia</span> sem parar.</div><div class="ex-es">Hacía frío y llovía sin parar.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">estava</span> cansado e <span class="epr">tinha</span> muita fome.</div><div class="ex-es">Estaba cansado y tenía mucha hambre.</div></div>
+        </div>
+
+        <div class="chip-panel" id="cont-p-2">
+          <div class="def-box">La narración combina ambos: el imperfeito da el fondo descriptivo y los hábitos; el PPS marca los hechos que hacen avanzar la historia.</div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Era</span> domingo de manhã. O sol <span class="epr">brilhava</span> e os pássaros <span class="epr">cantavam</span>. De repente, o telefone <span class="epr">tocou</span>.</div><div class="ex-es">Era domingo por la mañana. El sol brillaba y los pájaros cantaban. De pronto, sonó el teléfono.</div><div class="ex-note">Imperfeito = fondo / PPS = ruptura, evento.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Quando eu <span class="epr">cheguei</span> em casa, ela já <span class="epr">dormia</span>.</div><div class="ex-es">Cuando llegué a casa, ella ya dormía.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">ia</span> sair quando <span class="epr">começou</span> a chover.</div><div class="ex-es">Iba a salir cuando empezó a llover.</div></div>
+        </div>
+
+        <div class="chip-panel" id="cont-p-3">
+          <div class="def-box">Algunos verbos cambian de matiz semántico según se usen en PPS o en Imperfeito. Es un patrón paralelo al español.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Verbo</th><th>Imperfeito</th><th>PPS (incoativo / puntual)</th></tr></thead>
+            <tbody>
+              <tr><td><strong>saber</strong></td><td><em>sabia</em> (lo sabía)</td><td><em>soube</em> (me enteré)</td></tr>
+              <tr><td><strong>conhecer</strong></td><td><em>conhecia</em> (lo conocía)</td><td><em>conheci</em> (lo conocí, primer encuentro)</td></tr>
+              <tr><td><strong>poder</strong></td><td><em>podia</em> (tenía la capacidad)</td><td><em>pude</em> (conseguí, logré)</td></tr>
+              <tr><td><strong>querer</strong></td><td><em>queria</em> (deseaba)</td><td><em>quis</em> (intenté, hice por)</td></tr>
+              <tr><td><strong>ter</strong></td><td><em>tinha</em> (poseía)</td><td><em>tive</em> (recibí, conseguí)</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">sabia</span> que ele estava doente.</div><div class="ex-es">Yo sabía que estaba enfermo. (información ya poseída)</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">soube</span> ontem que ele está doente.</div><div class="ex-es">Me enteré ayer de que está enfermo. (descubrimiento puntual)</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">conhecia</span> bem aquela cidade.</div><div class="ex-es">Conocía bien aquella ciudad.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">conheci</span> minha esposa em 2010.</div><div class="ex-es">Conocí a mi esposa en 2010. (primer encuentro)</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. IMPERFEITO CORTÉS -->
+  <div class="sec-block" id="s-cortes">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El imperfeito tiene un valor <strong>modal de cortesía e hipótesis</strong> que va más allá del simple pasado. Es muy frecuente en PB hablado y reemplaza al condicional (futuro do pretérito) en contextos coloquiales.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('cort',0)">Cortesía</button>
+        <button class="chip pr"        onclick="selectChip('cort',1)">Sustitución del condicional</button>
+        <button class="chip pr"        onclick="selectChip('cort',2)">Sugerencia / hipótesis</button>
+      </div>
+      <div id="cort-panels">
+
+        <div class="chip-panel active" id="cort-p-0">
+          <div class="def-box">El imperfeito atenúa peticiones y deseos: equivale a "querría" en español.</div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">queria</span> pedir um café, por favor.</div><div class="ex-es">Querría / quisiera pedir un café, por favor.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Você <span class="epr">podia</span> me ajudar?</div><div class="ex-es">¿Podrías ayudarme?</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">precisava</span> falar com você um momento.</div><div class="ex-es">Necesitaría hablar contigo un momento.</div></div>
+          <div class="example-block pr"><div class="ex-fr">A senhora <span class="epr">desejava</span>?</div><div class="ex-es">¿Qué desea, señora? (fórmula de atención)</div></div>
+        </div>
+
+        <div class="chip-panel" id="cort-p-1">
+          <div class="def-box">En PB coloquial, el imperfeito sustituye con frecuencia al <em>futuro do pretérito</em> (forma condicional <em>faria, comeria</em>). Esto es altamente característico del registro hablado.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Forma normativa (escrita)</th><th>PB hablado (imperfeito)</th></tr></thead>
+            <tbody>
+              <tr><td>Eu <span class="hl-pr">faria</span> tudo por você.</td><td>Eu <span class="hl-pr">fazia</span> tudo por você.</td></tr>
+              <tr><td>Eu <span class="hl-pr">gostaria</span> de viajar.</td><td>Eu <span class="hl-pr">gostava</span> / <span class="hl-pr">queria</span> viajar.</td></tr>
+              <tr><td>Se eu pudesse, eu <span class="hl-pr">iria</span>.</td><td>Se eu pudesse, eu <span class="hl-pr">ia</span>.</td></tr>
+              <tr><td>Você <span class="hl-pr">poderia</span> me ajudar?</td><td>Você <span class="hl-pr">podia</span> me ajudar?</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="chip-panel" id="cort-p-2">
+          <div class="def-box">El imperfeito sirve para introducir hipótesis, sugerencias o escenarios imaginarios. Muy frecuente en juegos infantiles ("vamos a hacer como si…").</div>
+          <div class="example-block pr"><div class="ex-fr">E se a gente <span class="epr">ia</span> ao cinema hoje?</div><div class="ex-es">¿Y si fuéramos al cine hoy?</div></div>
+          <div class="example-block pr"><div class="ex-fr">Vamos brincar de quê? — Eu <span class="epr">era</span> a princesa e você <span class="epr">era</span> o dragão!</div><div class="ex-es">¿A qué jugamos? — ¡Yo era la princesa y tú el dragón!</div><div class="ex-note">Imperfeito lúdico, en juegos infantiles.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Se eu <span class="epr">tivesse</span> dinheiro, <span class="epr">comprava</span> uma casa.</div><div class="ex-es">Si tuviera dinero, compraría una casa.</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes de hispanohablantes con PPS e Imperfeito en portugués.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Ser e Ir comparten PPS (fui)',
+   wrong:"Distinguir formas de ser y ir en PPS",
+   right:"Ambos: fui, foste, foi, fomos, foram",
+   expl:'<strong>Eu fui ao Rio</strong> (ir) e <strong>eu fui presidente</strong> (ser) usan exactamente la misma forma. El contexto desambigua. Es una de las simplificaciones más útiles del portugués.'},
+  {name:'PPS portugués cubre "he hablado" español',
+   wrong:"Hoje eu tenho falado com ela.",
+   right:"Hoje eu falei com ela.",
+   expl:'El español <em>he hablado hoy</em> se traduce con <strong>PPS</strong> en portugués: <em>falei hoje</em>. El "pretérito perfeito composto" (<em>tenho falado</em>) NO equivale al "he hablado": tiene un valor iterativo/durativo muy distinto. Ver tarjeta 04.'},
+  {name:'Eu vim (PPS de vir) vs eu venho (presente)',
+   wrong:"Eu venho de chegar agora (= acabo de llegar)",
+   right:"Eu vim (= vine) — para "acabo de llegar": Eu acabei de chegar",
+   expl:'<strong>Eu vim</strong> = vine (PPS de <em>vir</em>). <strong>Eu venho</strong> = vengo (presente). Y "acabar de + inf." es la perífrasis correcta para "acabar de hacer algo": <em>acabei de chegar</em>.'},
+  {name:'Pôde (con acento) vs pode (sin acento)',
+   wrong:"Ontem ele pode vir.",
+   right:"Ontem ele pôde vir.",
+   expl:'<strong>Ele pôde</strong> (con circunflejo) = "pudo" (PPS, 3ª sing.). <strong>Ele pode</strong> (sin acento) = "puede" (presente, 3ª sing.). El acento distingue dos tiempos distintos.'},
+  {name:'Cambio ortográfico -CAR/-GAR/-ÇAR',
+   wrong:"Eu ficei / eu chegei / eu começei",
+   right:"Eu fiquei / eu cheguei / eu comecei",
+   expl:'En la 1ª persona singular del PPS: <strong>ficar → fiquei</strong> (no <em>ficei</em>), <strong>chegar → cheguei</strong>, <strong>começar → comecei</strong>. Es un cambio gráfico para mantener el sonido del radical ante -EI.'},
+  {name:'Imperfeito con valor de condicional',
+   wrong:"Eu gostaria... (siempre obligatorio)",
+   right:"Eu queria / eu gostava (en PB hablado)",
+   expl:'En PB hablado, el imperfeito <strong>sustituye</strong> al condicional con frecuencia. <em>Eu queria um café</em> (= querría un café), <em>se eu pudesse, eu ia</em> (= si pudiera, iría). Es muy natural y educado.'},
+  {name:'Soube = me enteré, no "supe siempre"',
+   wrong:"Eu sempre soube a verdade.",
+   right:"Eu sempre soube/sabia: ambos posibles, pero matiz diferente",
+   expl:'El PPS <strong>soube</strong> tiene valor incoativo: "me enteré" o "supe por primera vez". El imperfeito <strong>sabia</strong> = "ya sabía / poseía la información". <em>Eu soube ontem</em> = me enteré ayer; <em>eu sabia desde sempre</em> = lo sabía desde siempre.'},
+  {name:'Conhecer en PPS = primer encuentro',
+   wrong:"Eu conhecia a Maria em 2020.",
+   right:"Eu conheci a Maria em 2020.",
+   expl:'Con fecha concreta de "primer encuentro" hay que usar PPS: <strong>eu conheci</strong>. El imperfeito <em>eu conhecia</em> describe un conocimiento ya establecido en el pasado: <em>eu conhecia bem o bairro</em>.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

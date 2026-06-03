@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Presente do Indicativo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Presente do Indicativo → Verbos y tiempos · dk-teal */
+:root {
+  --primary: #1c4258;
+  --primary-soft: #e8f0f4;
+  --primary-mid: #5887a0;
+  --primary-strong: #0f2a3a;
+  --primary-glow: rgba(28, 66, 88, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fb5cf;
+  --primary-soft: #1a2a35;
+  --primary-mid: #4a8aa5;
+  --primary-strong: #b8d4e2;
+  --primary-glow: rgba(127, 181, 207, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.irreg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px; margin-bottom: 16px;
+}
+.irreg-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all var(--t-base) var(--ease);
+}
+.irreg-card:hover {
+  border-color: var(--primary-mid);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+.irreg-card-head {
+  background: var(--primary);
+  color: #fff;
+  padding: 8px 14px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: -0.005em;
+}
+.irreg-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 14px;
+  font-size: 0.82em;
+  border-bottom: 1px solid var(--border);
+}
+.irreg-row:last-child { border-bottom: none; }
+.irreg-pron { color: var(--text3); }
+.irreg-form { color: var(--primary); font-weight: 700; }
+
+.def-box {
+  background: var(--primary-strong);
+  color: #ffffff;
+  border-color: var(--primary-strong);
+}
+.def-box strong,
+.def-box em {
+  color: #ffffff;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Presente do Indicativo</h1>
+    <span class="header-tag">Gramática</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR A1–B1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Presente do Indicativo</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. O que é</button>
+    <button class="snav-btn"        onclick="showSection('s-formacion',this)">2. Formação regular</button>
+    <button class="snav-btn"        onclick="showSection('s-irreg',this)">3. Irregulares</button>
+    <button class="snav-btn"        onclick="showSection('s-altern',this)">4. Alternâncias vocálicas</button>
+    <button class="snav-btn"        onclick="showSection('s-usos',this)">5. Usos</button>
+    <button class="snav-btn"        onclick="showSection('s-neginter',this)">6. Negação e interrogação</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. QUÉ ES -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>presente do indicativo</strong> es el tiempo base de la comunicación oral y escrita en portugués brasileño. Expresa acciones que ocurren ahora, estados, hábitos, verdades generales y — con marcadores adecuados — futuro próximo o pasado histórico. Es el pilar sobre el que se construyen el imperativo, el subjuntivo presente y casi todas las perífrasis verbales.
+      </div>
+
+      <div class="sec-label">Usos de un vistazo</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Uso</th><th>Ejemplo</th><th>Equivalente español</th></tr></thead>
+        <tbody>
+          <tr><td>Acción simultánea al habla</td><td>Eu <span class="hl-pr">falo</span> ao telefone.</td><td>Estoy hablando por teléfono.</td></tr>
+          <tr><td>Estado actual</td><td>Ele <span class="hl-pr">está</span> cansado.</td><td>Está cansado.</td></tr>
+          <tr><td>Hábito / rutina</td><td>Ela <span class="hl-pr">pega</span> o ônibus toda manhã.</td><td>Coge el bus cada mañana.</td></tr>
+          <tr><td>Verdad general / científica</td><td>A Terra <span class="hl-pr">gira</span> em torno do Sol.</td><td>La Tierra gira alrededor del Sol.</td></tr>
+          <tr><td>Futuro próximo planeado</td><td>Amanhã eu <span class="hl-pr">viajo</span> para São Paulo.</td><td>Mañana viajo a São Paulo.</td></tr>
+          <tr><td>Pasado reciente (acabar de)</td><td>Ele <span class="hl-pr">acaba de</span> sair.</td><td>Acaba de salir.</td></tr>
+          <tr><td>Presente histórico</td><td>Em 1822, Pedro I <span class="hl-pr">proclama</span> a Independência.</td><td>En 1822, Pedro I proclama la Independencia.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Diferencia clave con el español:</strong> el portugués sí dispone de progresivo (<em>estou falando</em>), pero el presente simple también cubre el matiz progresivo en muchos contextos. La elección entre <em>falo</em> y <em>estou falando</em> depende del énfasis durativo.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. FORMACIÓN -->
+  <div class="sec-block" id="s-formacion">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los verbos portugueses se agrupan en <strong>tres conjugaciones</strong> según la terminación del infinitivo: <strong>-AR</strong>, <strong>-ER</strong>, <strong>-IR</strong>. Cada conjugación tiene sus terminaciones propias en presente.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('forma',0)">1ª conj. -AR</button>
+        <button class="chip pr"        onclick="selectChip('forma',1)">2ª conj. -ER</button>
+        <button class="chip pr"        onclick="selectChip('forma',2)">3ª conj. -IR</button>
+        <button class="chip pr"        onclick="selectChip('forma',3)">Cambios ortográficos</button>
+      </div>
+      <div id="forma-panels">
+
+        <div class="chip-panel active" id="forma-p-0">
+          <div class="def-box">El grupo más numeroso (~75% de los verbos). Terminaciones: <strong>-o · -a · -a · -amos · -ais · -am</strong> (PB usa <em>vocês</em> en lugar de <em>vós</em>, así que <strong>-ais</strong> aparece muy raramente).</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Pronombre</th><th>FALAR</th><th>MORAR</th><th>TRABALHAR</th><th>Term.</th></tr></thead>
+            <tbody>
+              <tr><td><strong>eu</strong></td><td class="hl-pr">falo</td><td class="hl-pr">moro</td><td class="hl-pr">trabalho</td><td class="hl-pr">-o</td></tr>
+              <tr><td><strong>tu</strong></td><td class="hl-pr">falas</td><td class="hl-pr">moras</td><td class="hl-pr">trabalhas</td><td class="hl-pr">-as</td></tr>
+              <tr><td><strong>você/ele/ela</strong></td><td class="hl-pr">fala</td><td class="hl-pr">mora</td><td class="hl-pr">trabalha</td><td class="hl-pr">-a</td></tr>
+              <tr><td><strong>nós</strong></td><td class="hl-pr">falamos</td><td class="hl-pr">moramos</td><td class="hl-pr">trabalhamos</td><td class="hl-pr">-amos</td></tr>
+              <tr><td><strong>vocês/eles/elas</strong></td><td class="hl-pr">falam</td><td class="hl-pr">moram</td><td class="hl-pr">trabalham</td><td class="hl-pr">-am</td></tr>
+            </tbody>
+          </table></div>
+          <div class="note-box"><strong>PB hablado:</strong> <em>a gente</em> (= <em>nós</em>) se conjuga en 3ª persona singular: <em>a gente fala, a gente mora, a gente trabalha</em>. <em>Vocês</em> es el plural universal en PB.</div>
+        </div>
+
+        <div class="chip-panel" id="forma-p-1">
+          <div class="def-box">Terminaciones: <strong>-o · -es · -e · -emos · -eis · -em</strong>. Pertenecen aquí los verbos en -ER regulares.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Pronombre</th><th>COMER</th><th>BEBER</th><th>VENDER</th><th>Term.</th></tr></thead>
+            <tbody>
+              <tr><td><strong>eu</strong></td><td class="hl-pr">como</td><td class="hl-pr">bebo</td><td class="hl-pr">vendo</td><td class="hl-pr">-o</td></tr>
+              <tr><td><strong>tu</strong></td><td class="hl-pr">comes</td><td class="hl-pr">bebes</td><td class="hl-pr">vendes</td><td class="hl-pr">-es</td></tr>
+              <tr><td><strong>você/ele/ela</strong></td><td class="hl-pr">come</td><td class="hl-pr">bebe</td><td class="hl-pr">vende</td><td class="hl-pr">-e</td></tr>
+              <tr><td><strong>nós</strong></td><td class="hl-pr">comemos</td><td class="hl-pr">bebemos</td><td class="hl-pr">vendemos</td><td class="hl-pr">-emos</td></tr>
+              <tr><td><strong>vocês/eles/elas</strong></td><td class="hl-pr">comem</td><td class="hl-pr">bebem</td><td class="hl-pr">vendem</td><td class="hl-pr">-em</td></tr>
+            </tbody>
+          </table></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text">Cuidado con <strong>poder</strong>, <strong>querer</strong>, <strong>saber</strong>, <strong>fazer</strong>, <strong>dizer</strong>, <strong>trazer</strong>, <strong>ver</strong>: aunque terminan en -ER, son <strong>irregulares</strong> y se tratan en la sección de Irregulares.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="forma-p-2">
+          <div class="def-box">Terminaciones: <strong>-o · -es · -e · -imos · -is · -em</strong>. Atención: la 3ª persona plural de -IR coincide con la de -ER (<em>partem · comem</em>).</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Pronombre</th><th>PARTIR</th><th>ABRIR</th><th>DECIDIR</th><th>Term.</th></tr></thead>
+            <tbody>
+              <tr><td><strong>eu</strong></td><td class="hl-pr">parto</td><td class="hl-pr">abro</td><td class="hl-pr">decido</td><td class="hl-pr">-o</td></tr>
+              <tr><td><strong>tu</strong></td><td class="hl-pr">partes</td><td class="hl-pr">abres</td><td class="hl-pr">decides</td><td class="hl-pr">-es</td></tr>
+              <tr><td><strong>você/ele/ela</strong></td><td class="hl-pr">parte</td><td class="hl-pr">abre</td><td class="hl-pr">decide</td><td class="hl-pr">-e</td></tr>
+              <tr><td><strong>nós</strong></td><td class="hl-pr">partimos</td><td class="hl-pr">abrimos</td><td class="hl-pr">decidimos</td><td class="hl-pr">-imos</td></tr>
+              <tr><td><strong>vocês/eles/elas</strong></td><td class="hl-pr">partem</td><td class="hl-pr">abrem</td><td class="hl-pr">decidem</td><td class="hl-pr">-em</td></tr>
+            </tbody>
+          </table></div>
+          <div class="green-box"><strong>Atención:</strong> los verbos en -IR pueden sufrir <strong>alternancia vocálica</strong> en 1ª persona singular (eu sirvo, eu durmo, eu sinto, eu visto). Ver sección dedicada.</div>
+        </div>
+
+        <div class="chip-panel" id="forma-p-3">
+          <div class="def-box">Algunos verbos sufren cambios ortográficos en la 1ª persona singular para preservar la pronunciación del radical.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Cambio</th><th>Verbo</th><th>eu</th><th>Resto</th></tr></thead>
+            <tbody>
+              <tr><td><strong>-CER → -ÇO</strong></td><td>conhecer</td><td class="hl-pr">conheço</td><td class="dim">conheces / conhece / conhecemos / conhecem</td></tr>
+              <tr><td><strong>-GER → -JO</strong></td><td>proteger</td><td class="hl-pr">protejo</td><td class="dim">proteges / protege / protegemos / protegem</td></tr>
+              <tr><td><strong>-GIR → -JO</strong></td><td>dirigir</td><td class="hl-pr">dirijo</td><td class="dim">diriges / dirige / dirigimos / dirigem</td></tr>
+              <tr><td><strong>-GUIR → -GO</strong></td><td>seguir</td><td class="hl-pr">sigo</td><td class="dim">segues / segue / seguimos / seguem</td></tr>
+              <tr><td><strong>-CAR → -CO</strong></td><td>brincar</td><td class="hl-pr">brinco</td><td class="dim">brincas / brinca / brincamos / brincam</td></tr>
+              <tr><td><strong>-GAR</strong> (sin cambio en pres.)</td><td>chegar</td><td class="hl-pr">chego</td><td class="dim">chegas / chega / chegamos / chegam</td></tr>
+            </tbody>
+          </table></div>
+          <div class="note-box"><strong>Nota:</strong> los cambios -CAR/-GAR/-ÇAR sí aparecen en pretérito perfeito 1ª pers. sing. (fiquei, cheguei, comecei) y en subjuntivo, no en el presente del indicativo.</div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3. IRREGULARES -->
+  <div class="sec-block" id="s-irreg">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los verbos más frecuentes del portugués son irregulares. Hay que memorizarlos por su altísima frecuencia. Pulsa cada grupo para ver las conjugaciones completas.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('irreg',0)">Ser, estar, ter, haver</button>
+        <button class="chip pr"        onclick="selectChip('irreg',1)">Ir, vir, pôr, ver, vir</button>
+        <button class="chip pr"        onclick="selectChip('irreg',2)">Poder, querer, saber, dever</button>
+        <button class="chip pr"        onclick="selectChip('irreg',3)">Fazer, dizer, trazer, dar</button>
+        <button class="chip pr"        onclick="selectChip('irreg',4)">Ler, perder, ouvir, pedir</button>
+      </div>
+      <div id="irreg-panels">
+
+        <div class="chip-panel active" id="irreg-p-0">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">ser</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">sou</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">és</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">é</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">somos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">são</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">estar</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">estou</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">estás</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">está</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">estamos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">estão</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">ter</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">tenho</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">tens</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">tem</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">temos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">têm</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">haver</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">hei</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">hás</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">há</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">havemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">hão</span></div>
+            </div>
+          </div>
+          <div class="warn-box"><span class="warn-icon">💡</span>
+            <div class="warn-text"><em>Ser</em> y <em>estar</em>: misma distinción que en español. <em>Ter</em> = tener / haber (auxiliar de tiempos compuestos: <em>tenho falado</em>). <em>Haver</em>: en PB se usa solo en expresiones existenciales en 3ª pers. sing. (<em>há / havia</em> = hay/había) y casi nunca como auxiliar; en habla coloquial <em>ter</em> reemplaza a <em>haver</em>: <strong>tem muita gente aqui</strong> (= hay mucha gente).</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="irreg-p-1">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">ir</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">vou</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">vais</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">vai</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">vamos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">vão</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">vir</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">venho</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">vens</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">vem</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">vimos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">vêm</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">pôr</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">ponho</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">pões</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">põe</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">pomos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">põem</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">ver</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">vejo</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">vês</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">vê</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">vemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">veem</span></div>
+            </div>
+          </div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text"><strong>Trampa crítica:</strong> <em>ele vem</em> (presente, sin acento, 1 sílaba) vs <em>eles vêm</em> (3ª pl., con acento circunflejo). Lo mismo: <em>ele tem / eles têm</em>, <em>ele põe / eles põem</em>.</div>
+          </div>
+          <div class="green-box"><strong>Familia VIR/PÔR:</strong> contar (compor, supor, dispor, propor → ponho, põe, põem), <em>vir</em> (intervir, provir, convir → mismas formas), <em>ver</em> (rever, prever → revejo, prevejo).</div>
+        </div>
+
+        <div class="chip-panel" id="irreg-p-2">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">poder</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">posso</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">podes</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">pode</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">podemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">podem</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">querer</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">quero</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">queres</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">quer</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">queremos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">querem</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">saber</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">sei</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">sabes</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">sabe</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">sabemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">sabem</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">dever</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">devo</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">deves</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">deve</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">devemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">devem</span></div>
+            </div>
+          </div>
+          <div class="note-box"><strong>Atención:</strong> <em>querer</em> 3ª pers. sing. es <strong>quer</strong> (sin -e final) — única irregularidad notable de su paradigma en presente.</div>
+        </div>
+
+        <div class="chip-panel" id="irreg-p-3">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">fazer</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">faço</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">fazes</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">faz</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">fazemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">fazem</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">dizer</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">digo</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">dizes</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">diz</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">dizemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">dizem</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">trazer</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">trago</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">trazes</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">traz</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">trazemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">trazem</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">dar</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">dou</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">dás</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">dá</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">damos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">dão</span></div>
+            </div>
+          </div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text">Patrón <strong>-Ç- en 1ª sing.</strong> con cambio del radical: <em>faço, digo, trago</em>. La 3ª pers. sing. pierde la -e final: <em>faz, diz, traz</em>. No confundas con el español <em>hace/dice/trae</em>.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="irreg-p-4">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">ler</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">leio</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">lês</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">lê</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">lemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">leem</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">perder</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">perco</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">perdes</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">perde</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">perdemos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">perdem</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">ouvir</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">ouço</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">ouves</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">ouve</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">ouvimos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">ouvem</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">pedir</div>
+              <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">peço</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">pedes</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você/ele</span><span class="irreg-form">pede</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">pedimos</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês/eles</span><span class="irreg-form">pedem</span></div>
+            </div>
+          </div>
+          <div class="green-box"><strong>Patrón irregular en 1ª sing.:</strong> <em>perco, peço, ouço, meço</em> (medir), <em>impeço</em> (impedir) — pierden la última consonante del radical y añaden -ço/-co.</div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. ALTERNANCIAS VOCÁLICAS -->
+  <div class="sec-block" id="s-altern">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Algunos verbos en <strong>-IR</strong> sufren alternancia vocálica en la <strong>1ª persona singular</strong> del presente del indicativo, donde la <strong>e</strong> tónica del radical se transforma en <strong>i</strong>, y la <strong>o</strong> tónica en <strong>u</strong>. Es un fenómeno típicamente portugués sin equivalente en español.
+      </div>
+
+      <div class="sec-label">e → i en 1ª persona singular</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Infinitivo</th><th>eu</th><th>tu</th><th>ele</th><th>nós</th><th>eles</th></tr></thead>
+        <tbody>
+          <tr><td><strong>sentir</strong></td><td class="hl-pr">sinto</td><td>sentes</td><td>sente</td><td>sentimos</td><td>sentem</td></tr>
+          <tr><td><strong>mentir</strong></td><td class="hl-pr">minto</td><td>mentes</td><td>mente</td><td>mentimos</td><td>mentem</td></tr>
+          <tr><td><strong>servir</strong></td><td class="hl-pr">sirvo</td><td>serves</td><td>serve</td><td>servimos</td><td>servem</td></tr>
+          <tr><td><strong>vestir</strong></td><td class="hl-pr">visto</td><td>vestes</td><td>veste</td><td>vestimos</td><td>vestem</td></tr>
+          <tr><td><strong>despir</strong></td><td class="hl-pr">dispo</td><td>despes</td><td>despe</td><td>despimos</td><td>despem</td></tr>
+          <tr><td><strong>repetir</strong></td><td class="hl-pr">repito</td><td>repetes</td><td>repete</td><td>repetimos</td><td>repetem</td></tr>
+          <tr><td><strong>preferir</strong></td><td class="hl-pr">prefiro</td><td>preferes</td><td>prefere</td><td>preferimos</td><td>preferem</td></tr>
+          <tr><td><strong>seguir</strong></td><td class="hl-pr">sigo</td><td>segues</td><td>segue</td><td>seguimos</td><td>seguem</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">o → u en 1ª persona singular</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Infinitivo</th><th>eu</th><th>tu</th><th>ele</th><th>nós</th><th>eles</th></tr></thead>
+        <tbody>
+          <tr><td><strong>dormir</strong></td><td class="hl-pr">durmo</td><td>dormes</td><td>dorme</td><td>dormimos</td><td>dormem</td></tr>
+          <tr><td><strong>tossir</strong></td><td class="hl-pr">tusso</td><td>tosses</td><td>tosse</td><td>tossimos</td><td>tossem</td></tr>
+          <tr><td><strong>cobrir</strong></td><td class="hl-pr">cubro</td><td>cobres</td><td>cobre</td><td>cobrimos</td><td>cobrem</td></tr>
+          <tr><td><strong>descobrir</strong></td><td class="hl-pr">descubro</td><td>descobres</td><td>descobre</td><td>descobrimos</td><td>descobrem</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Crucial:</strong> esta alternancia ocurre <strong>solo en 1ª persona singular</strong> del presente del indicativo. En el presente del subjuntivo, la alternancia se propaga a todas las personas (durma, durmas, durma, durmamos, durmam).</div>
+      </div>
+
+      <div class="note-box"><strong>Importante:</strong> no todos los verbos -IR alternan. Verbos como <em>partir, abrir, decidir, dividir, conferir, residir, existir</em> son regulares y mantienen la vocal del radical: <em>parto, abro, decido</em>.</div>
+    </div></div>
+  </div>
+
+  <!-- 5. USOS -->
+  <div class="sec-block" id="s-usos">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El presente do indicativo cubre un abanico amplio de funciones, algunas coincidentes con el español y otras propias del portugués. Dominar sus usos es básico para A1–B1.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('usos',0)">Acción actual / estado</button>
+        <button class="chip pr"        onclick="selectChip('usos',1)">Hábito / rutina</button>
+        <button class="chip pr"        onclick="selectChip('usos',2)">Verdad general</button>
+        <button class="chip pr"        onclick="selectChip('usos',3)">Futuro planeado</button>
+        <button class="chip pr"        onclick="selectChip('usos',4)">Presente histórico</button>
+        <button class="chip pr"        onclick="selectChip('usos',5)">Estou + gerúndio</button>
+      </div>
+      <div id="usos-panels">
+
+        <div class="chip-panel active" id="usos-p-0">
+          <div class="def-box">Acción que ocurre en el momento del habla o estado actual del sujeto.</div>
+          <div class="example-block pr"><div class="ex-fr">Está chovendo. / <span class="epr">Chove</span> muito hoje.</div><div class="ex-es">Está lloviendo. / Llueve mucho hoy.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Onde você <span class="epr">está</span>? — <span class="epr">Estou</span> na biblioteca.</div><div class="ex-es">¿Dónde estás? — Estoy en la biblioteca.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eu não <span class="epr">entendo</span> esta frase.</div><div class="ex-es">No entiendo esta frase.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eles <span class="epr">moram</span> em Lisboa há dois anos.</div><div class="ex-es">Viven en Lisboa desde hace dos años.</div><div class="ex-note">Con <em>há</em> o <em>desde</em> + presente para acciones que empezaron en el pasado y continúan.</div></div>
+        </div>
+
+        <div class="chip-panel" id="usos-p-1">
+          <div class="def-box">Acciones repetidas regularmente. Con marcadores: <em>todos os dias, sempre, geralmente, normalmente, às vezes, nunca, frequentemente</em>.</div>
+          <div class="example-block pr"><div class="ex-fr">Ela <span class="epr">pega</span> o metrô toda manhã.</div><div class="ex-es">Coge el metro cada mañana.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Nós <span class="epr">almoçamos</span> juntos todo domingo.</div><div class="ex-es">Comemos juntos todos los domingos.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Normalmente, ele <span class="epr">acorda</span> às 7h.</div><div class="ex-es">Normalmente se despierta a las 7h.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Vocês <span class="epr">fazem</span> esporte no fim de semana?</div><div class="ex-es">¿Hacéis deporte el fin de semana?</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eu nunca <span class="epr">vejo</span> televisão de manhã.</div><div class="ex-es">Nunca veo la tele por la mañana.</div></div>
+        </div>
+
+        <div class="chip-panel" id="usos-p-2">
+          <div class="def-box">Hechos permanentes, leyes científicas, verdades universales.</div>
+          <div class="example-block pr"><div class="ex-fr">A Terra <span class="epr">gira</span> em torno do Sol.</div><div class="ex-es">La Tierra gira alrededor del Sol.</div></div>
+          <div class="example-block pr"><div class="ex-fr">A água <span class="epr">ferve</span> a 100°C.</div><div class="ex-es">El agua hierve a 100°C.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Os gatos <span class="epr">enxergam</span> no escuro.</div><div class="ex-es">Los gatos ven en la oscuridad.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Brasília <span class="epr">é</span> a capital do Brasil.</div><div class="ex-es">Brasilia es la capital de Brasil.</div></div>
+          <div class="example-block pr"><div class="ex-fr">A luz <span class="epr">viaja</span> mais rápido que o som.</div><div class="ex-es">La luz viaja más rápido que el sonido.</div></div>
+        </div>
+
+        <div class="chip-panel" id="usos-p-3">
+          <div class="def-box">Con marcadores temporales futuros (<em>amanhã, depois, semana que vem</em>), el presente expresa futuro planeado/decidido. Muy frecuente en PB.</div>
+          <div class="example-block pr"><div class="ex-fr">Amanhã eu <span class="epr">viajo</span> para o Rio.</div><div class="ex-es">Mañana viajo a Río.</div></div>
+          <div class="example-block pr"><div class="ex-fr">O trem <span class="epr">sai</span> às 18h30.</div><div class="ex-es">El tren sale a las 18h30.</div></div>
+          <div class="example-block pr"><div class="ex-fr">A gente se <span class="epr">encontra</span> hoje à noite?</div><div class="ex-es">¿Quedamos esta noche?</div></div>
+          <div class="example-block pr"><div class="ex-fr">Semana que vem, ela <span class="epr">começa</span> o trabalho novo.</div><div class="ex-es">La semana que viene empieza el trabajo nuevo.</div></div>
+          <div class="note-box"><strong>Alternativa muy PB:</strong> <em>ir + infinitivo</em> es la forma más común para futuro en PB hablado: <em>vou viajar amanhã / vou começar semana que vem</em>.</div>
+        </div>
+
+        <div class="chip-panel" id="usos-p-4">
+          <div class="def-box">El presente histórico (presente narrativo) revive el pasado como si ocurriera ahora. Frecuente en relatos, crónicas y noticias.</div>
+          <div class="example-block pr"><div class="ex-fr">Em 1500, Pedro Álvares Cabral <span class="epr">chega</span> ao Brasil.</div><div class="ex-es">En 1500, Pedro Álvares Cabral llega a Brasil.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Camões <span class="epr">nasce</span> em 1524 e <span class="epr">escreve</span> Os Lusíadas em 1572.</div><div class="ex-es">Camões nace en 1524 y escribe Los Lusíadas en 1572.</div></div>
+          <div class="example-block pr"><div class="ex-fr">O presidente <span class="epr">anuncia</span> ontem novas medidas econômicas.</div><div class="ex-es">El presidente anuncia (anunció) ayer nuevas medidas económicas.</div><div class="ex-note">Típico de titulares periodísticos.</div></div>
+        </div>
+
+        <div class="chip-panel" id="usos-p-5">
+          <div class="def-box"><strong>Estar + gerúndio</strong> es la forma progresiva en PB (equivalente al <em>estoy + -ando/-iendo</em> español). En PE se usa <em>estar a + infinitivo</em> (<em>estou a falar</em>).</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Estructura</th><th>Ejemplo</th><th>Traducción</th></tr></thead>
+            <tbody>
+              <tr><td>estar + gerúndio</td><td>Eu <span class="hl-pr">estou trabalhando</span>.</td><td>Estoy trabajando.</td></tr>
+              <tr><td>estar + gerúndio</td><td>Ele <span class="hl-pr">está dormindo</span>.</td><td>Está durmiendo.</td></tr>
+              <tr><td>estar + gerúndio</td><td>A gente <span class="hl-pr">está conversando</span>.</td><td>Estamos conversando.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block pr"><div class="ex-fr">Shhh! O bebê <span class="epr">está dormindo</span>.</div><div class="ex-es">¡Chist! El bebé está durmiendo.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Não me atrapalha, <span class="epr">estou estudando</span>.</div><div class="ex-es">No me molestes, estoy estudiando.</div></div>
+          <div class="example-block pr"><div class="ex-fr">O que vocês <span class="epr">estão fazendo</span>?</div><div class="ex-es">¿Qué estáis haciendo?</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. NEGACIÓN E INTERROGACIÓN -->
+  <div class="sec-block" id="s-neginter">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        En PB, la negación e interrogación con presente sigue patrones simples, pero con algunas características propias que conviene aprender bien.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('negint',0)">Negación básica</button>
+        <button class="chip pr"        onclick="selectChip('negint',1)">Doble negación</button>
+        <button class="chip pr"        onclick="selectChip('negint',2)">Interrogación</button>
+        <button class="chip pr"        onclick="selectChip('negint',3)">Palabras interrogativas</button>
+      </div>
+      <div id="negint-panels">
+
+        <div class="chip-panel active" id="negint-p-0">
+          <div class="def-box">La negación se hace con <strong>não</strong> antes del verbo conjugado. En PB se duplica frecuentemente al final (énfasis o registro coloquial): <em>eu não sei não</em>.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Afirmativo</th><th>Negativo</th><th>PB con duplicación</th></tr></thead>
+            <tbody>
+              <tr><td>Eu <span class="hl-pr">falo</span> português.</td><td>Eu <span class="hl-pr">não falo</span> inglês.</td><td>Eu <span class="hl-pr">não falo</span> inglês <span class="hl-pr">não</span>.</td></tr>
+              <tr><td>Ele <span class="hl-pr">gosta</span> de café.</td><td>Ele <span class="hl-pr">não gosta</span> de chá.</td><td>Ele <span class="hl-pr">não gosta</span> de chá <span class="hl-pr">não</span>.</td></tr>
+              <tr><td>Nós <span class="hl-pr">temos</span> tempo.</td><td>Nós <span class="hl-pr">não temos</span> tempo.</td><td>A gente <span class="hl-pr">não tem</span> tempo <span class="hl-pr">não</span>.</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="chip-panel" id="negint-p-1">
+          <div class="def-box">A diferencia del español culto, el PB acepta y prefiere la doble negación: el <em>não</em> aparece antes del verbo aunque también haya <em>ninguém, nada, nunca</em>.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Construcción</th><th>Ejemplo</th><th>Traducción</th></tr></thead>
+            <tbody>
+              <tr><td>não + ninguém</td><td>Eu <span class="hl-pr">não vejo ninguém</span>.</td><td>No veo a nadie.</td></tr>
+              <tr><td>não + nada</td><td>Ela <span class="hl-pr">não come nada</span>.</td><td>Ella no come nada.</td></tr>
+              <tr><td>não + nunca</td><td>Eles <span class="hl-pr">não vão nunca</span>.</td><td>No van nunca.</td></tr>
+              <tr><td>não + nem...nem</td><td>Ele <span class="hl-pr">não fala nem</span> inglês <span class="hl-pr">nem</span> francês.</td><td>No habla ni inglés ni francés.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text">Si <em>ninguém / nada / nunca</em> van delante del verbo, se omite el <em>não</em>: <em>Ninguém sabe / Nada acontece / Nunca vou</em>.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="negint-p-2">
+          <div class="def-box">El PB usa principalmente la <strong>entonación ascendente</strong> sin inversión sujeto-verbo. La inversión es rarísima en PB hablado (PE la usa más).</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Tipo</th><th>Estructura</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Entonación</strong></td><td>Frase afirmativa + ↑</td><td>Você <span class="hl-pr">fala</span> português?</td></tr>
+              <tr><td><strong>Con é que</strong></td><td>Palabra-Q + é que + frase</td><td>O que <span class="hl-pr">é que</span> você quer?</td></tr>
+              <tr><td><strong>Confirmación</strong></td><td>… né? / não é?</td><td>Você fala português, <span class="hl-pr">né</span>?</td></tr>
+            </tbody>
+          </table></div>
+          <div class="note-box"><strong>Marcador PB universal:</strong> <em>né</em> (contracción de <em>não é</em>) cierra preguntas confirmativas con altísima frecuencia en habla.</div>
+        </div>
+
+        <div class="chip-panel" id="negint-p-3">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Palabra</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><strong>quem</strong></td><td>quién</td><td>Quem <span class="hl-pr">é</span> essa pessoa?</td></tr>
+              <tr><td><strong>o que / o que é que</strong></td><td>qué</td><td>O que você <span class="hl-pr">faz</span>?</td></tr>
+              <tr><td><strong>onde</strong></td><td>dónde</td><td>Onde vocês <span class="hl-pr">moram</span>?</td></tr>
+              <tr><td><strong>quando</strong></td><td>cuándo</td><td>Quando ele <span class="hl-pr">chega</span>?</td></tr>
+              <tr><td><strong>como</strong></td><td>cómo</td><td>Como você <span class="hl-pr">se chama</span>?</td></tr>
+              <tr><td><strong>por que / por quê</strong></td><td>por qué</td><td>Por que você <span class="hl-pr">sai</span> tão cedo?</td></tr>
+              <tr><td><strong>quanto(s)/quanta(s)</strong></td><td>cuánto(s)/cuánta(s)</td><td>Quanto <span class="hl-pr">custa</span>?</td></tr>
+              <tr><td><strong>qual / quais</strong></td><td>cuál / cuáles</td><td>Qual filme você <span class="hl-pr">prefere</span>?</td></tr>
+            </tbody>
+          </table></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text"><strong>Trampa ortográfica:</strong> <em>por que</em> (interrogativa al inicio), <em>por quê</em> (al final, antes de punto: <em>Você sai por quê?</em>), <em>porque</em> (causal, respuesta: <em>porque sim</em>), <em>porquê</em> (sustantivo: <em>o porquê de tudo isso</em>).</div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes de hispanohablantes con el presente do indicativo en portugués.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Alternancia vocálica de -IR (eu durmo, eu sirvo)',
+   wrong:"Eu dormo / eu servo / eu sento (de sentir)",
+   right:"Eu durmo / eu sirvo / eu sinto",
+   expl:'En 1ª persona singular del presente, los verbos -IR con <em>e</em> o <em>o</em> tónica alternan: <strong>sentir → sinto, dormir → durmo, servir → sirvo</strong>. No ocurre en las demás personas (tu sentes, ele sente).'},
+  {name:'Ter vs haber (auxiliar y existencial)',
+   wrong:"Há muita gente aqui (en PB hablado)",
+   right:"Tem muita gente aqui",
+   expl:'En PB hablado, <strong>ter</strong> reemplaza a <em>haver</em> en construcciones existenciales: <em>tem, tinha, vai ter</em>. Como auxiliar de tiempos compuestos: <em>tenho falado</em> (no <em>hei falado</em>). El verbo <em>haver</em> queda casi solo en lengua escrita formal.'},
+  {name:'Ele vem / eles vêm — la trampa del acento',
+   wrong:"Eles vem / ele vêm",
+   right:"Ele vem (sin acento) / eles vêm (con circunflejo)",
+   expl:'Distinción crítica: <strong>ele vem, ele tem, ele põe</strong> (singular, sin acento) vs <strong>eles vêm, eles têm, eles põem</strong> (plural, con acento). En oralidad suenan casi iguales; en escritura formal el acento es obligatorio.'},
+  {name:'Você se conjuga en 3ª persona singular',
+   wrong:"Você falas / você comes / você vais",
+   right:"Você fala / você come / você vai",
+   expl:'<strong>Você</strong> es semánticamente "tú" pero gramaticalmente lleva la forma de 3ª persona singular. Lo mismo con <em>a gente</em> (= <em>nós</em>): <strong>a gente vai</strong> (no <em>a gente vamos</em>).'},
+  {name:'Cambio ortográfico en -CER / -GER / -GIR',
+   wrong:"Eu conheco / eu protego / eu dirigo (de dirigir)",
+   right:"Eu conheço / eu protejo / eu dirijo",
+   expl:'En 1ª singular se mantiene el sonido del radical: <strong>conhecer → conheço</strong>, <strong>proteger → protejo</strong>, <strong>dirigir → dirijo</strong>, <strong>seguir → sigo</strong>. El cambio gráfico responde a las reglas de C/Ç y G/J ante O/U.'},
+  {name:'Estar + gerúndio (PB) vs estar a + inf. (PE)',
+   wrong:"Estou a falar (en PB)",
+   right:"Estou falando",
+   expl:'En PB la forma progresiva es <strong>estar + gerúndio</strong> (estou falando, está chegando). La estructura <em>estar a + infinitivo</em> es del PE, suena extraña en Brasil. Por eso "estoy hablando" → <em>estou falando</em>.'},
+  {name:'Saber vs conhecer: dos verbos distintos',
+   wrong:"Eu sei João",
+   right:"Eu conheço o João",
+   expl:'Como en español: <strong>saber</strong> = poseer información o habilidad (<em>sei nadar, sei a resposta</em>); <strong>conhecer</strong> = tener familiaridad con persona/lugar (<em>conheço o João, conheço São Paulo</em>). En portugués, <em>conhecer</em> exige <em>artigo definido</em> ante nombres propios.'},
+  {name:'Quer (3ª sing.) sin -e final',
+   wrong:"Ele quere falar com você",
+   right:"Ele quer falar com você",
+   expl:'<em>Querer</em> en 3ª persona singular pierde la -e: <strong>ele quer</strong> (no <em>quere</em>). Es la única forma del paradigma con esta irregularidad. En plural reaparece la -e: <em>eles querem</em>.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>
