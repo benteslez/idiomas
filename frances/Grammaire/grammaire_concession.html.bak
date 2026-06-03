@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammaire · La Concession et l'Opposition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ede9df;
+  --card: #faf7f1;
+  --border: #c4bead;
+  --text: #1a1814;
+  --text2: #44413a;
+  --text3: #706c64;
+  --accent: #7a5a0a;
+  --accent-light: #f0e0c0;
+  --accent-mid: #b89050;
+  --warn-bg: #fdf0cc;
+  --shadow: 0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm: 0 1px 6px rgba(0,0,0,0.08);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --green: #1a6028;   --green-bg: #e4f2e8;
+  --red: #a81e2e;     --red-bg: #fce6e8;
+  --blue: #163494;    --blue-bg: #e6ebf8;
+  --purple: #6a1a8a;  --purple-bg: #f2e6f8;
+  --conc-color: #0a5a6a;   --conc-bg:   #e2f2f4;
+  --opp-color:  #8a3a1a;   --opp-bg:    #f4e8e2;
+  --av-color:   #6a1a8a;   --av-bg:     #f2e6f8;
+  --fs: 15px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: var(--fs); line-height: 1.55; }
+
+.site-header { background: var(--card); border-bottom: 2px solid var(--border); padding: 20px 20px 14px; }
+.header-top { display: flex; align-items: baseline; gap: 10px; margin-bottom: 3px; flex-wrap: wrap; }
+.site-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem,5vw,1.85rem); font-weight: 700; color: var(--text); }
+.header-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent-mid); border-radius: 20px; padding: 3px 10px; }
+.subtitle { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
+.stats-row { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+.stat-pill { border-radius: 20px; padding: 4px 11px; font-size: 0.76rem; font-weight: 600; border: 1px solid; }
+.stat-pill.conc { background: var(--conc-bg); color: var(--conc-color); border-color: var(--conc-color); }
+.stat-pill.opp  { background: var(--opp-bg);  color: var(--opp-color);  border-color: var(--opp-color); }
+.stat-pill.av   { background: var(--av-bg);   color: var(--av-color);   border-color: var(--av-color); }
+.stat-pill.neu { background: var(--bg); color: var(--text2); border-color: var(--border); font-weight: 500; }
+.fs-wrap { display: flex; align-items: center; gap: 7px; margin-left: auto; }
+.fs-slider { width: 76px; accent-color: var(--accent); cursor: pointer; }
+.fs-sz { color: var(--text3); font-weight: 700; }
+
+.section-nav { position: sticky; top: 0; z-index: 200; background: var(--card); border-bottom: 2px solid var(--border); box-shadow: var(--shadow-sm); }
+.section-nav-inner { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.section-nav-inner::-webkit-scrollbar { display: none; }
+.snav-btn { flex-shrink: 0; padding: 11px 16px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; color: var(--text3); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.snav-btn:hover { color: var(--text2); }
+.snav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.main-layout { max-width: 860px; margin: 0 auto; padding: 16px 16px 40px; }
+.sec-block { display: none; } .sec-block.active { display: block; }
+.gram-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden; }
+.gram-card-body { padding: 18px; }
+
+.def-box { background: var(--warn-bg); border-left: 4px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 15px; margin-bottom: 14px; line-height: 1.65; }
+.def-box strong { color: var(--accent); font-weight: 700; }
+
+.warn-box { background: #fff4e0; border: 1px solid #c8900a; border-radius: var(--radius-sm); padding: 10px 13px; margin: 10px 0; font-size: 0.9em; display: flex; gap: 8px; align-items: flex-start; }
+.warn-icon { flex-shrink: 0; margin-top: 1px; }
+.warn-text { color: var(--text2); line-height: 1.55; }
+.warn-text strong { color: #7a4400; font-weight: 700; }
+
+.note-box { background: var(--purple-bg); border-left: 4px solid var(--purple); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 10px 0; font-size: 0.9em; color: var(--text2); line-height: 1.6; }
+.note-box strong { color: var(--purple); font-weight: 700; }
+
+.example-block { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 8px 0; }
+.example-block.conc { background: var(--conc-bg); border-left: 4px solid var(--conc-color); }
+.example-block.opp  { background: var(--opp-bg);  border-left: 4px solid var(--opp-color); }
+.example-block.av   { background: var(--av-bg);   border-left: 4px solid var(--av-color); }
+.example-block.neu  { background: var(--blue-bg); border-left: 4px solid var(--blue); }
+.example-block.mix  { background: var(--blue-bg); border-left: 4px solid var(--text2); }
+.ex-fr { font-weight: 600; margin-bottom: 3px; color: var(--text); }
+.econc { color: var(--conc-color); font-weight: 700; }
+.eopp  { color: var(--opp-color);  font-weight: 700; }
+.eav   { color: var(--av-color);   font-weight: 700; }
+.ex-es { color: var(--text2); font-size: 0.88em; font-style: italic; }
+.ex-note { font-size: 0.78em; color: var(--text3); margin-top: 3px; font-weight: 500; }
+
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.gram-table { width: 100%; border-collapse: collapse; min-width: 280px; }
+.gram-table th { background: var(--bg); border-bottom: 2px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; text-align: left; font-size: 0.72em; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+.gram-table td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; vertical-align: top; }
+.gram-table tr:last-child td { border-bottom: none; }
+.gram-table tr:nth-child(even) td { background: #f4f0e6; }
+.gram-table td:last-child, .gram-table th:last-child { border-right: none; }
+.gram-table em { font-style: italic; color: var(--text); }
+.hl-conc { color: var(--conc-color); font-weight: 700; }
+.hl-opp  { color: var(--opp-color);  font-weight: 700; }
+.hl-av   { color: var(--av-color);   font-weight: 700; }
+.hl      { color: var(--accent);     font-weight: 700; }
+.dim     { color: var(--text3); font-size: 0.88em; }
+.ok-cell  { color: var(--green); font-weight: 700; }
+.err-cell { color: var(--red);   font-weight: 600; font-style: italic; }
+
+.chip-bar { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.chip { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; white-space: nowrap; }
+.chip:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+.chip.active     { background: var(--accent);    color: #fff; border-color: var(--accent); }
+.chip.conc.active { background: var(--conc-color); border-color: var(--conc-color); color: #fff; }
+.chip.opp.active  { background: var(--opp-color);  border-color: var(--opp-color);  color: #fff; }
+.chip.av.active   { background: var(--av-color);   border-color: var(--av-color);   color: #fff; }
+.chip-panel { display: none; } .chip-panel.active { display: block; }
+
+.sec-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin: 14px 0 7px; }
+
+.legend-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.legend-pill { font-size: 0.78em; font-weight: 600; border-radius: 20px; padding: 4px 12px; border: 1.5px solid; }
+.legend-pill.conc { background: var(--conc-bg); color: var(--conc-color); border-color: var(--conc-color); }
+.legend-pill.opp  { background: var(--opp-bg);  color: var(--opp-color);  border-color: var(--opp-color); }
+.legend-pill.av   { background: var(--av-bg);   color: var(--av-color);   border-color: var(--av-color); }
+
+.formula-box {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.05em;
+  text-align: center;
+  margin: 12px 0;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  line-height: 1.7;
+}
+.formula-box .f-conc { color: var(--conc-color); }
+.formula-box .f-opp  { color: var(--opp-color); }
+.formula-box .f-av   { color: var(--av-color); }
+.formula-box .f-dim  { color: var(--text3); font-weight: 400; }
+.formula-box .f-opt  { color: var(--text3); font-style: italic; font-weight: 400; }
+
+.trap-cards { display: flex; flex-direction: column; gap: 10px; }
+.trap-card { border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.trap-card-header { padding: 11px 14px; background: var(--bg); }
+.trap-name { font-weight: 700; font-size: 0.9em; color: var(--text); margin-bottom: 7px; }
+.trap-vs { display: flex; gap: 8px; flex-wrap: wrap; }
+.trap-wrong { background: var(--red-bg);   border: 1.5px solid #d09098; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--red);   font-weight: 500; }
+.trap-right { background: var(--green-bg); border: 1.5px solid #80b890; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--green); font-weight: 500; }
+.trap-expl { padding: 10px 14px 12px; font-size: 0.86em; color: var(--text2); line-height: 1.6; border-top: 1px solid var(--border); background: var(--card); }
+.trap-expl strong { color: var(--text); font-weight: 700; }
+.trap-expl em { font-style: italic; color: var(--text); }
+
+@media (max-width: 600px) {
+  .formula-box { font-size: 0.95em; padding: 12px 14px; }
+  .site-header { padding: 16px 14px 12px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <h1>La Concession et l'Opposition</h1>
+    <span class="header-tag">Grammaire</span>
+  </div>
+  <div class="subtitle">Gramática francesa · B2–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill conc">Concession</div>
+    <div class="stat-pill opp">Opposition</div>
+    <div class="stat-pill av">Formes avancées</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+    </div>
+  </div>
+</header>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Visión general</button>
+    <button class="snav-btn"        onclick="showSection('s-bienque',this)">2. Bien que / Quoique</button>
+    <button class="snav-btn"        onclick="showSection('s-memesi',this)">3. Même si</button>
+    <button class="snav-btn"        onclick="showSection('s-pourtant',this)">4. Pourtant · Cependant · Néanmoins</button>
+    <button class="snav-btn"        onclick="showSection('s-or',this)">5. Or</button>
+    <button class="snav-btn"        onclick="showSection('s-malgre',this)">6. Malgré / En dépit de</button>
+    <button class="snav-btn"        onclick="showSection('s-avancees',this)">7. Formes avancées</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">8. Trampas</button>
+  </div>
+</div>
+
+<div class="main-layout">
+
+<!-- ============================================================
+     SECTION 1 — VISIÓN GENERAL
+============================================================ -->
+<div class="sec-block active" id="s-intro">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      La concesión en francés se expresa mediante estructuras gramaticalmente diversas:
+      <strong>conjunciones subordinantes</strong> (que rigen subjuntivo o indicativo),
+      <strong>adverbios conectores</strong> (que unen proposiciones independientes) y
+      <strong>preposiciones</strong> (seguidas de un nombre, nunca de un verbo conjugado).
+      Identificar el tipo de elemento es fundamental porque el modo verbal y la sintaxis cambian
+      radicalmente según el caso.
+    </div>
+
+    <div class="legend-row">
+      <span class="legend-pill conc">Concession — bien que · quoique · même si</span>
+      <span class="legend-pill opp">Opposition — pourtant · cependant · néanmoins · or</span>
+      <span class="legend-pill av">Prépositions &amp; formes avancées — malgré · avoir beau · quand bien même</span>
+    </div>
+
+    <div class="sec-label">Cuadro sinóptico del sistema</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Estructura</th><th>Tipo</th><th>Modo / Régimen</th><th>Registro</th></tr></thead>
+      <tbody>
+        <tr><td><span class="hl-conc">bien que</span> + subj.</td><td>Conjonction</td><td>Subjonctif (présent / passé)</td><td>Formal / corriente</td></tr>
+        <tr><td><span class="hl-conc">quoique</span> + subj.</td><td>Conjonction</td><td>Subjonctif</td><td>Ligeramente formal</td></tr>
+        <tr><td><span class="hl-conc">même si</span> + ind.</td><td>Conjonction</td><td>Indicatif (todos los tiempos)</td><td>Todos</td></tr>
+        <tr><td><span class="hl-opp">pourtant</span></td><td>Adverbe connecteur</td><td>— (dos proposiciones independientes)</td><td>Corriente</td></tr>
+        <tr><td><span class="hl-opp">cependant</span></td><td>Adverbe connecteur</td><td>—</td><td>Formal</td></tr>
+        <tr><td><span class="hl-opp">néanmoins</span></td><td>Adverbe connecteur</td><td>—</td><td>Formal / culto</td></tr>
+        <tr><td><span class="hl-opp">or</span></td><td>Connecteur logique</td><td>—</td><td>Formal / escrito</td></tr>
+        <tr><td><span class="hl-av">malgré</span> + nom</td><td>Préposition</td><td>Nom / GN / pronom (jamais verbe)</td><td>Todos</td></tr>
+        <tr><td><span class="hl-av">en dépit de</span> + nom</td><td>Préposition</td><td>Nom / GN / pronom</td><td>Formal</td></tr>
+        <tr><td><span class="hl-av">avoir beau</span> + inf.</td><td>Construction verbale</td><td>Infinitif (sin preposición)</td><td>Corriente / lit.</td></tr>
+        <tr><td><span class="hl-av">quand bien même</span> + cond.</td><td>Conjonction</td><td>Conditionnel présent / passé</td><td>Formal / literario</td></tr>
+        <tr><td><span class="hl-av">encore que</span> + subj.</td><td>Conjonction (incise)</td><td>Subjonctif — siempre en posición final</td><td>Literario / culto</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="warn-box">
+      <span class="warn-icon">⚠️</span>
+      <div class="warn-text">
+        La diferencia más importante para hispanohablantes: <strong>bien que</strong> exige SIEMPRE
+        subjuntivo; <strong>même si</strong> exige SIEMPRE indicativo. Son las dos estructuras más
+        confundidas y su régimen modal es absolutamente diferente y no intercambiable.
+      </div>
+    </div>
+
+    <div class="sec-label">Concesión vs. Oposición — distinción conceptual</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Concepto</th><th>Definición</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="hl-conc">Concesión</span></td>
+          <td>Se admite un obstáculo y se afirma que la conclusión se cumple igualmente</td>
+          <td><em>Bien qu'il soit fatigué, il travaille.</em></td>
+        </tr>
+        <tr>
+          <td><span class="hl-opp">Opposition</span></td>
+          <td>Se señala una contradicción entre dos hechos o ideas independientes</td>
+          <td><em>Il est fatigué ; pourtant, il travaille.</em></td>
+        </tr>
+      </tbody>
+    </table></div>
+
+    <div class="note-box">
+      Concesión y oposición expresan contraste, pero se diferencian <strong>sintácticamente</strong>:
+      la concesión es una relación <strong>subordinada</strong> (una proposición depende de la otra);
+      la oposición es una relación <strong>coordinada o conectada</strong> (dos proposiciones
+      independientes). Esta distinción determina toda la gramática de cada estructura.
+    </div>
+  </div></div>
+</div>
+
+<!-- ============================================================
+     SECTION 2 — BIEN QUE / QUOIQUE + SUBJONCTIF
+============================================================ -->
+<div class="sec-block" id="s-bienque">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      <strong>Bien que</strong> y <strong>quoique</strong> son conjunciones subordinantes de
+      concesión que introducen una proposición con verbo en <strong>subjuntivo</strong>. El
+      subjuntivo es obligatorio sin excepción en francés escrito estándar. La proposición
+      concesiva puede aparecer antes o después de la principal.
+    </div>
+
+    <div class="formula-box">
+      <span class="f-conc">Bien que / Quoique</span> + <span class="f-dim">[subjonctif présent ou passé],</span> <span class="f-dim">[proposition principale]</span><br>
+      <span class="f-dim">[proposition principale] +</span> <span class="f-conc">bien que / quoique</span> + <span class="f-dim">[subjonctif]</span>
+    </div>
+
+    <div class="sec-label">Concordancia de tiempos con bien que / quoique</div>
+
+    <div class="chip-bar">
+      <button class="chip conc active" onclick="selectChip('bq',0)">Subjonctif présent</button>
+      <button class="chip conc"        onclick="selectChip('bq',1)">Subjonctif passé</button>
+      <button class="chip conc"        onclick="selectChip('bq',2)">Quoique vs. Bien que</button>
+      <button class="chip conc"        onclick="selectChip('bq',3)">Quoique en incise</button>
+    </div>
+
+    <div id="bq-panels">
+
+      <!-- Chip 0 — subjonctif présent -->
+      <div class="chip-panel active">
+        <p>El <strong>subjonctif présent</strong> se usa cuando la acción de la subordinada es
+        <strong>simultánea o posterior</strong> a la de la principal.</p>
+
+        <div class="sec-label">Formas irregulares de alta frecuencia con bien que</div>
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Infinitif</th><th>Subjonctif présent</th><th>Exemple avec bien que</th></tr></thead>
+          <tbody>
+            <tr><td>être</td><td><span class="hl-conc">soit / soient</span></td><td><em>Bien qu'<span class="econc">il soit</span> malade, il est venu.</em></td></tr>
+            <tr><td>avoir</td><td><span class="hl-conc">ait / aient</span></td><td><em>Bien qu'<span class="econc">elle ait</span> peur, elle avance.</em></td></tr>
+            <tr><td>faire</td><td><span class="hl-conc">fasse / fassent</span></td><td><em>Bien qu'<span class="econc">il fasse</span> froid, ils sortent.</em></td></tr>
+            <tr><td>pouvoir</td><td><span class="hl-conc">puisse / puissent</span></td><td><em>Bien qu'<span class="econc">il puisse</span> partir, il reste.</em></td></tr>
+            <tr><td>savoir</td><td><span class="hl-conc">sache / sachent</span></td><td><em>Bien qu'<span class="econc">il sache</span> la vérité, il se tait.</em></td></tr>
+            <tr><td>aller</td><td><span class="hl-conc">aille / aillent</span></td><td><em>Bien qu'<span class="econc">elle aille</span> mieux, elle se repose.</em></td></tr>
+            <tr><td>vouloir</td><td><span class="hl-conc">veuille / veuillent</span></td><td><em>Bien qu'<span class="econc">il veuille</span> aider, il ne peut pas.</em></td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="note-box">
+          La elisión de <em>que</em> ante vocal es obligatoria en ambas conjunciones:
+          <em>bien qu'il</em> <span class="ok-cell">✓</span> / <em>bien que il</em> <span class="err-cell">✗</span> ;
+          <em>quoiqu'elle</em> <span class="ok-cell">✓</span> / <em>quoique elle</em> <span class="err-cell">✗</span>.
+        </div>
+
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Bien qu'<span class="econc">il soit</span> épuisé, il a terminé son rapport.</em></div>
+          <div class="ex-es">Aunque está agotado, terminó su informe.</div>
+        </div>
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Bien qu'<span class="econc">elle ait</span> peu d'expérience, elle a été embauchée.</em></div>
+          <div class="ex-es">Aunque tiene poca experiencia, fue contratada.</div>
+        </div>
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Quoique <span class="econc">la situation soit</span> difficile, nous restons optimistes.</em></div>
+          <div class="ex-es">Aunque la situación sea difícil, seguimos siendo optimistas.</div>
+        </div>
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Il a accepté <span class="econc">bien qu'il ne soit</span> pas convaincu.</em></div>
+          <div class="ex-es">Aceptó aunque no estuviera convencido.</div>
+        </div>
+      </div>
+
+      <!-- Chip 1 — subjonctif passé -->
+      <div class="chip-panel">
+        <p>El <strong>subjonctif passé</strong> (auxiliaire subj. présent + participe passé)
+        expresa que la acción de la subordinada es <strong>anterior</strong> a la de la principal.</p>
+
+        <div class="formula-box">
+          <span class="f-conc">bien que</span> + <span class="f-dim">[avoir/être au subj. présent] + [participe passé]</span><br>
+          <span class="f-dim">→</span> <span class="f-conc">bien qu'il ait fait</span> · <span class="f-conc">bien qu'elle soit partie</span> · <span class="f-conc">bien qu'il se soit trompé</span>
+        </div>
+
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Tipo de verbo</th><th>Auxiliaire subj.</th><th>Exemple</th></tr></thead>
+          <tbody>
+            <tr><td>Verbos con avoir</td><td><span class="hl-conc">ait / aient</span> + p.p.</td><td><em>bien qu'il <span class="econc">ait</span> travaillé dur</em></td></tr>
+            <tr><td>Verbos con être</td><td><span class="hl-conc">soit / soient</span> + p.p.</td><td><em>bien qu'elle <span class="econc">soit</span> arrivée tard</em></td></tr>
+            <tr><td>Pronominaux</td><td><span class="hl-conc">se soit</span> + p.p.</td><td><em>bien qu'il <span class="econc">se soit</span> trompé</em></td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Bien qu'<span class="econc">il ait</span> fait de son mieux, le résultat est décevant.</em></div>
+          <div class="ex-es">Aunque hizo todo lo posible, el resultado es decepcionante.</div>
+        </div>
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Quoiqu'<span class="econc">elle soit</span> arrivée la première, elle n'a pas eu le poste.</em></div>
+          <div class="ex-es">Aunque llegó la primera, no obtuvo el puesto.</div>
+        </div>
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Bien qu'<span class="econc">ils se soient</span> préparés sérieusement, ils ont échoué.</em></div>
+          <div class="ex-es">Aunque se prepararon seriamente, fracasaron.</div>
+        </div>
+      </div>
+
+      <!-- Chip 2 — quoique vs bien que -->
+      <div class="chip-panel">
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Conjonction</th><th>Registro</th><th>Particularidad</th></tr></thead>
+          <tbody>
+            <tr><td><span class="hl-conc">bien que</span></td><td>Formal y corriente</td><td>La más frecuente. Neutra y versátil.</td></tr>
+            <tr><td><span class="hl-conc">quoique</span></td><td>Ligeramente más formal</td><td>Mayor cohesión discursiva. Preferida en écrit soigné.</td></tr>
+            <tr><td><span class="hl-conc">quoique</span></td><td>Literario (en incise)</td><td>Puede usarse sola como inciso final: ver Chip 3.</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="note-box">
+          En la práctica escrita de nivel B2–C1, <strong>bien que</strong> y <strong>quoique</strong>
+          son intercambiables en casi todos los contextos. <em>Bien que</em> es más versátil;
+          <em>quoique</em> aporta mayor cohesión discursiva y es marca de estilo cuidado. La
+          elección es estilística, no gramatical.
+        </div>
+      </div>
+
+      <!-- Chip 3 — quoique en incise -->
+      <div class="chip-panel">
+        <p><em>Quoique</em> puede usarse como <strong>conector de inciso final</strong> para
+        introducir una matización o reserva sobre lo ya afirmado, sin abrir una nueva proposición
+        principal.</p>
+
+        <div class="formula-box">
+          <span class="f-dim">[Proposition principale],</span> <span class="f-conc">quoique</span> + <span class="f-dim">[subjonctif]</span> — <span class="f-opt">[suite optionnelle]</span>
+        </div>
+
+        <div class="example-block conc">
+          <div class="ex-fr"><em>C'est une bonne idée — <span class="econc">quoiqu'</span>on puisse en discuter.</em></div>
+          <div class="ex-es">Es una buena idea, aunque podría discutirse.</div>
+        </div>
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Il a bien travaillé, <span class="econc">quoique</span> les résultats soient perfectibles.</em></div>
+          <div class="ex-es">Trabajó bien, aunque los resultados son mejorables.</div>
+        </div>
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Sa décision est compréhensible, <span class="econc">quoiqu'</span>elle m'ait surpris.</em></div>
+          <div class="ex-es">Su decisión es comprensible, aunque me sorprendió.</div>
+        </div>
+
+        <div class="note-box">
+          Este uso de <em>quoique</em> como inciso equivale a «aunque hay que reconocer que...».
+          Es marca de registro culto y aparece con frecuencia en ensayos y textos académicos
+          franceses. Confundirlo con un <em>quoique</em> de inicio de frase es error de estructura
+          textual.
+        </div>
+      </div>
+
+    </div><!-- /bq-panels -->
+
+    <div class="sec-label">Error crítico con bien que / quoique</div>
+    <div class="warn-box">
+      <span class="warn-icon">⚠️</span>
+      <div class="warn-text">
+        <strong>CRÍTICO</strong>: <em>Bien que</em> y <em>quoique</em> exigen SIEMPRE subjuntivo.
+        El indicativo es incorrecto en francés estándar escrito. <em>Bien qu'il <span class="err-cell">est</span></em>
+        ✗ → <em>Bien qu'il <span class="ok-cell">soit</span></em> ✓. Esta confusión es sistemática
+        en hispanohablantes porque «aunque» en español admite tanto indicativo como subjuntivo. En
+        francés esa distinción no existe con esta conjunción: modo único, siempre subjonctif.
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ============================================================
+     SECTION 3 — MÊME SI + INDICATIF
+============================================================ -->
+<div class="sec-block" id="s-memesi">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      <strong>Même si</strong> es una conjunción concesiva que rige siempre <strong>indicativo</strong>
+      — en todos los tiempos. A diferencia de <em>bien que</em>, no admite subjuntivo. Introduce una
+      condición que, incluso siendo real, posible o hipotética, no modifica el resultado expresado
+      en la proposición principal. Funciona como «aunque» en español, pero el modo es siempre el
+      indicativo.
+    </div>
+
+    <div class="formula-box">
+      <span class="f-conc">Même si</span> + <span class="f-dim">[indicatif : présent / imparfait / plus-que-parfait / futur…],</span><br>
+      <span class="f-dim">[proposition principale (temps variable)]</span>
+    </div>
+
+    <div class="sec-label">Correlaciones de tiempos con même si</div>
+
+    <div class="chip-bar">
+      <button class="chip conc active" onclick="selectChip('ms',0)">Présent — fait réel</button>
+      <button class="chip conc"        onclick="selectChip('ms',1)">Imparfait — hypothèse</button>
+      <button class="chip conc"        onclick="selectChip('ms',2)">Plus-que-parfait — contrefactuel</button>
+      <button class="chip conc"        onclick="selectChip('ms',3)">Même si vs. Bien que</button>
+    </div>
+
+    <div id="ms-panels">
+
+      <!-- Chip 0 — présent -->
+      <div class="chip-panel active">
+        <p><em>Même si</em> + <strong>présent</strong> expresa un hecho real, habitual o aceptado
+        como verdadero.</p>
+
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Même s'<span class="econc">il est</span> fatigué, il ne se plaint jamais.</em></div>
+          <div class="ex-es">Aunque esté cansado, nunca se queja.</div>
+        </div>
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Même si <span class="econc">tu as</span> raison, je maintiens mon point de vue.</em></div>
+          <div class="ex-es">Aunque tengas razón, mantengo mi punto de vista.</div>
+        </div>
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Même si <span class="econc">c'est</span> difficile, ce n'est pas impossible.</em></div>
+          <div class="ex-es">Aunque sea difícil, no es imposible.</div>
+        </div>
+
+        <div class="note-box">
+          El español distingue «aunque es difícil» (indicativo: hecho real) de «aunque sea
+          difícil» (subjuntivo: hipótesis). El francés <strong>no hace esa distinción</strong> con
+          <em>même si</em>: ambos sentidos se expresan con indicativo. <em>Même si c'est difficile</em>
+          cubre los dos matices del español.
+        </div>
+      </div>
+
+      <!-- Chip 1 — imparfait -->
+      <div class="chip-panel">
+        <p>El <strong>imparfait</strong> indica una condición <strong>hipotética, eventual o
+        contrafactual en el presente o futuro</strong>. La proposición principal lleva
+        <strong>conditionnel présent</strong>.</p>
+
+        <div class="sec-label">Tabla de correlación</div>
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Même si (subord.)</th><th>Principal</th><th>Tipo de hipótesis</th></tr></thead>
+          <tbody>
+            <tr><td><span class="hl-conc">imparfait</span></td><td><span class="hl-conc">conditionnel présent</span></td><td>Hipótesis en el presente</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Même s'<span class="econc">il le voulait</span>, il ne <span class="econc">pourrait</span> pas partir.</em></div>
+          <div class="ex-es">Aunque quisiera, no podría irse.</div>
+        </div>
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Même si <span class="econc">j'avais</span> le temps, je ne <span class="econc">saurais</span> pas par où commencer.</em></div>
+          <div class="ex-es">Aunque tuviese tiempo, no sabría por dónde empezar.</div>
+        </div>
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Même si <span class="econc">c'était</span> possible, ce ne <span class="econc">serait</span> pas souhaitable.</em></div>
+          <div class="ex-es">Aunque fuera posible, no sería deseable.</div>
+        </div>
+
+        <div class="note-box">
+          La combinación <em>même si + imparfait → conditionnel présent</em> es paralela al
+          período hipotético español: «aunque + imperfecto subjuntivo → condicional».
+        </div>
+      </div>
+
+      <!-- Chip 2 — plus-que-parfait -->
+      <div class="chip-panel">
+        <p>El <strong>plus-que-parfait</strong> expresa una condición <strong>irrealizable en el
+        pasado</strong>. La proposición principal lleva <strong>conditionnel passé</strong>.</p>
+
+        <div class="sec-label">Tabla de correlación</div>
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Même si (subord.)</th><th>Principal</th><th>Tipo de hipótesis</th></tr></thead>
+          <tbody>
+            <tr><td><span class="hl-conc">plus-que-parfait</span></td><td><span class="hl-conc">conditionnel passé</span></td><td>Contrafactual en el pasado</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Même s'<span class="econc">il avait</span> su la vérité, il n'<span class="econc">aurait</span> rien dit.</em></div>
+          <div class="ex-es">Aunque hubiera sabido la verdad, no habría dicho nada.</div>
+        </div>
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Même si <span class="econc">nous avions</span> eu plus de temps, nous n'<span class="econc">aurions</span> pas fini.</em></div>
+          <div class="ex-es">Aunque hubiéramos tenido más tiempo, no habríamos terminado.</div>
+        </div>
+        <div class="example-block conc">
+          <div class="ex-fr"><em>Même s'<span class="econc">elle avait</span> essayé, elle n'<span class="econc">aurait</span> pas réussi.</em></div>
+          <div class="ex-es">Aunque lo hubiera intentado, no habría tenido éxito.</div>
+        </div>
+      </div>
+
+      <!-- Chip 3 — même si vs bien que -->
+      <div class="chip-panel">
+        <div class="sec-label">Contraste fundamental</div>
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Criterio</th><th>même si</th><th>bien que / quoique</th></tr></thead>
+          <tbody>
+            <tr><td>Modo</td><td><span class="hl-conc">Indicatif</span> (siempre)</td><td><span class="hl-conc">Subjonctif</span> (siempre)</td></tr>
+            <tr><td>Matiz</td><td>Concesión condicional</td><td>Concesión pura</td></tr>
+            <tr><td>Registro</td><td>Todos los registros</td><td>Formal / corriente</td></tr>
+            <tr><td>Negación</td><td>même si… ne… pas</td><td>bien que… ne… pas</td></tr>
+            <tr><td>Equivalencia español</td><td>«aunque» (indic. o subj.)</td><td>«aunque», «si bien», «a pesar de que»</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="sec-label">Ejemplos paralelos</div>
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Même si (indicatif)</th><th>Bien que (subjonctif)</th><th>Observación</th></tr></thead>
+          <tbody>
+            <tr><td><em>Même s'il est malade, il travaille.</em></td><td><em>Bien qu'il soit malade, il travaille.</em></td><td>Prácticamente equivalentes</td></tr>
+            <tr><td><em>Même si tu as raison, je refuse.</em></td><td><em>Bien que tu aies raison, je refuse.</em></td><td>Bien que más formal</td></tr>
+            <tr><td><em>Même s'il faisait beau, je resterais.</em></td><td><span class="dim">—</span></td><td>Solo même si para hipótesis</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="warn-box">
+          <span class="warn-icon">⚠️</span>
+          <div class="warn-text">
+            <strong>CRÍTICO — regla mnemotécnica absoluta</strong>:<br>
+            BIEN QUE = SUBJONCTIF (siempre) / MÊME SI = INDICATIF (siempre).<br>
+            <em>Bien qu'il <span class="err-cell">est</span></em> ✗ · <em>Bien qu'il <span class="ok-cell">soit</span></em> ✓<br>
+            <em>Même s'il <span class="err-cell">soit</span></em> ✗ · <em>Même s'il <span class="ok-cell">est</span></em> ✓<br>
+            El modo es la marca gramatical definitoria. No son intercambiables en su régimen modal.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /ms-panels -->
+  </div></div>
+</div>
+
+<!-- ============================================================
+     SECTION 4 — POURTANT / CEPENDANT / NÉANMOINS
+============================================================ -->
+<div class="sec-block" id="s-pourtant">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      <strong>Pourtant</strong>, <strong>cependant</strong> y <strong>néanmoins</strong> son
+      <strong>adverbios conectores</strong> (connecteurs logiques) de oposición y concesión. No son
+      conjunciones: no subordinan una oración a otra, sino que conectan dos <strong>proposiciones
+      independientes</strong>. Su uso implica separar las dos ideas con punto o punto y coma, e
+      introducir la segunda con el conector.
+    </div>
+
+    <div class="formula-box">
+      <span class="f-dim">[Proposition A].</span> <span class="f-opp">Pourtant</span> / <span class="f-opp">Cependant</span> / <span class="f-opp">Néanmoins</span><span class="f-dim">, [Proposition B]</span>
+    </div>
+
+    <div class="sec-label">Los tres conectores — usos individuales</div>
+
+    <div class="chip-bar">
+      <button class="chip opp active" onclick="selectChip('pcn',0)">Pourtant</button>
+      <button class="chip opp"        onclick="selectChip('pcn',1)">Cependant</button>
+      <button class="chip opp"        onclick="selectChip('pcn',2)">Néanmoins</button>
+      <button class="chip opp"        onclick="selectChip('pcn',3)">Posición y puntuación</button>
+    </div>
+
+    <div id="pcn-panels">
+
+      <!-- Chip 0 — pourtant -->
+      <div class="chip-panel active">
+        <p><strong>Significado</strong>: sin embargo, y aun así, con todo.<br>
+        <strong>Registro</strong>: corriente y neutro, oral y escrito.<br>
+        <strong>Función</strong>: introduce una idea inesperada o contraria a lo que cabía esperar.</p>
+
+        <div class="example-block opp">
+          <div class="ex-fr"><em>Il a beaucoup travaillé. <span class="eopp">Pourtant</span>, il a échoué.</em></div>
+          <div class="ex-es">Trabajó mucho. Sin embargo, fracasó.</div>
+        </div>
+        <div class="example-block opp">
+          <div class="ex-fr"><em>Ce n'est pas facile. <span class="eopp">Pourtant</span>, nous devons essayer.</em></div>
+          <div class="ex-es">No es fácil. Sin embargo, debemos intentarlo.</div>
+        </div>
+        <div class="example-block opp">
+          <div class="ex-fr"><em>Elle semblait confiante. <span class="eopp">Pourtant</span>, elle était nerveuse.</em></div>
+          <div class="ex-es">Parecía segura. Sin embargo, estaba nerviosa.</div>
+        </div>
+        <div class="example-block opp">
+          <div class="ex-fr"><em>Il a <span class="eopp">pourtant</span> bien travaillé.</em></div>
+          <div class="ex-es">Trabajó bien, y sin embargo…</div>
+          <div class="ex-note">Posición medial — entre sujeto y verbo principal.</div>
+        </div>
+
+        <div class="note-box">
+          <em>Pourtant</em> es el conector más frecuente en registro oral y corriente. Es el único
+          de los tres que admite con naturalidad la <strong>posición medial</strong> (entre sujeto
+          y verbo): <em>Il a <strong>pourtant</strong> bien travaillé</em>. Esta posición no es
+          característica de <em>cependant</em> ni <em>néanmoins</em>.
+        </div>
+      </div>
+
+      <!-- Chip 1 — cependant -->
+      <div class="chip-panel">
+        <p><strong>Significado</strong>: sin embargo, no obstante.<br>
+        <strong>Registro</strong>: formal, preferentemente escrito.<br>
+        <strong>Función</strong>: introduce una restricción, matización o contradicción en un
+        razonamiento formal.</p>
+
+        <div class="example-block opp">
+          <div class="ex-fr"><em>Les résultats sont encourageants. <span class="eopp">Cependant</span>, des efforts supplémentaires sont nécessaires.</em></div>
+          <div class="ex-es">Los resultados son alentadores. No obstante, se necesitan esfuerzos adicionales.</div>
+        </div>
+        <div class="example-block opp">
+          <div class="ex-fr"><em>La solution proposée est efficace. <span class="eopp">Cependant</span>, son coût reste élevé.</em></div>
+          <div class="ex-es">La solución propuesta es eficaz. No obstante, su coste sigue siendo elevado.</div>
+        </div>
+        <div class="example-block opp">
+          <div class="ex-fr"><em>Il est compétent. <span class="eopp">Cependant</span>, il manque d'expérience.</em></div>
+          <div class="ex-es">Es competente. Sin embargo, le falta experiencia.</div>
+        </div>
+
+        <div class="note-box">
+          <em>Cependant</em> es marcador de registro formal y aparece con frecuencia en ensayos,
+          informes y textos académicos. Puede ir a inicio de frase o, con menor frecuencia, en
+          posición medial (registro literario). En producción escrita B2–C1, su uso apropiado añade
+          cohesión discursiva.
+        </div>
+      </div>
+
+      <!-- Chip 2 — néanmoins -->
+      <div class="chip-panel">
+        <p><strong>Significado</strong>: no obstante, a pesar de ello, con todo.<br>
+        <strong>Registro</strong>: formal-culto, casi exclusivamente escrito.<br>
+        <strong>Función</strong>: concede la validez de la primera idea antes de contraponerle la
+        segunda. Más marcado y formal que <em>cependant</em>.</p>
+
+        <div class="example-block opp">
+          <div class="ex-fr"><em>Les risques sont réels. <span class="eopp">Néanmoins</span>, nous devons agir.</em></div>
+          <div class="ex-es">Los riesgos son reales. No obstante, debemos actuar.</div>
+        </div>
+        <div class="example-block opp">
+          <div class="ex-fr"><em>Votre argumentation est solide. <span class="eopp">Néanmoins</span>, quelques points méritent d'être précisés.</em></div>
+          <div class="ex-es">Su argumentación es sólida. No obstante, algunos puntos merecen ser precisados.</div>
+        </div>
+        <div class="example-block opp">
+          <div class="ex-fr"><em>La démarche est longue. <span class="eopp">Néanmoins</span>, elle reste indispensable.</em></div>
+          <div class="ex-es">El proceso es largo. No obstante, sigue siendo indispensable.</div>
+        </div>
+
+        <div class="note-box">
+          <em>Néanmoins</em> es el más culto de los tres. Es prácticamente exclusivo del registro
+          escrito: en conversación oral sería muy poco natural salvo en contextos muy formales.
+          Funciona mejor como concesión global («a pesar de todo lo dicho»). El DALF premia su
+          uso apropiado.
+        </div>
+      </div>
+
+      <!-- Chip 3 — posición y puntuación -->
+      <div class="chip-panel">
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Posición</th><th>Puntuación</th><th>Ejemplo</th><th>Válido para</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Inicio de frase (nuevo período)</td>
+              <td>[.] antes, [,] desp.</td>
+              <td><em>Il a échoué. Pourtant, il avait travaillé.</em></td>
+              <td>Los tres</td>
+            </tr>
+            <tr>
+              <td>Inicio de proposición (una frase)</td>
+              <td>[;] antes, [,] desp.</td>
+              <td><em>Il avait travaillé ; cependant, il a échoué.</em></td>
+              <td>Los tres</td>
+            </tr>
+            <tr>
+              <td>Posición medial (suj. ^ vb.)</td>
+              <td>sin coma o entre comas</td>
+              <td><em>Il a <span class="eopp">pourtant</span> bien travaillé.</em></td>
+              <td><span class="hl-opp">Solo pourtant</span></td>
+            </tr>
+            <tr>
+              <td>Final de frase</td>
+              <td>raro, literario</td>
+              <td><em>Il n'a pas réussi, pourtant.</em></td>
+              <td><span class="hl-opp">Solo pourtant</span></td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <div class="warn-box">
+          <span class="warn-icon">⚠️</span>
+          <div class="warn-text">
+            <strong>Cependant</strong> y <strong>néanmoins</strong> van casi exclusivamente a
+            <strong>inicio de proposición</strong>. La posición medial es característica de
+            <em>pourtant</em>, no de los otros dos. Usar <em>cependant</em> o <em>néanmoins</em>
+            en posición medial es incorrecto o muy forzado en registro estándar.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /pcn-panels -->
+
+    <div class="sec-label">Cuadro comparativo global</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Conector</th><th>Registro</th><th>Posición habitual</th><th>Equivalente español</th><th>Frecuencia</th></tr></thead>
+      <tbody>
+        <tr><td><span class="hl-opp">pourtant</span></td><td>Neutro / corriente</td><td>Inicio (también medial)</td><td>sin embargo, y aun así</td><td>★★★★★</td></tr>
+        <tr><td><span class="hl-opp">cependant</span></td><td>Formal / escrito</td><td>Inicio</td><td>sin embargo, no obstante</td><td>★★★★☆</td></tr>
+        <tr><td><span class="hl-opp">néanmoins</span></td><td>Formal-culto</td><td>Inicio</td><td>no obstante, a pesar de ello</td><td>★★★☆☆</td></tr>
+      </tbody>
+    </table></div>
+  </div></div>
+</div>
+
+<!-- ============================================================
+     SECTION 5 — OR
+============================================================ -->
+<div class="sec-block" id="s-or">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      <strong>Or</strong> es un conector lógico-argumentativo que introduce en un razonamiento un
+      dato nuevo que <strong>contradice, complica o reorienta</strong> la premisa anterior. No es
+      simplemente «sin embargo»: señala que el argumento avanza hacia una conclusión mediante un
+      hecho inesperado. Es exclusivo del <strong>registro formal y escrito</strong>.
+    </div>
+
+    <div class="formula-box">
+      <span class="f-dim">[Affirmation / prémisse].</span> <span class="f-opp">Or</span><span class="f-dim">, [fait qui contredit ou complique]. [Conclusion]</span>
+    </div>
+
+    <div class="sec-label">Or — función y estructura</div>
+
+    <div class="chip-bar">
+      <button class="chip opp active" onclick="selectChip('or',0)">Función argumentativa</button>
+      <button class="chip opp"        onclick="selectChip('or',1)">Or vs. Mais / Pourtant</button>
+      <button class="chip opp"        onclick="selectChip('or',2)">Or en texto formal</button>
+    </div>
+
+    <div id="or-panels">
+
+      <!-- Chip 0 — función argumentativa -->
+      <div class="chip-panel active">
+        <p>Esquema típico de <em>or</em>:</p>
+        <ol style="margin: 8px 0 12px 22px; line-height: 1.7;">
+          <li>Premisa general o suposición aceptada</li>
+          <li><strong>Or</strong> + hecho particular que la contradice o complica</li>
+          <li>Conclusión derivada del contraste</li>
+        </ol>
+
+        <div class="example-block opp">
+          <div class="ex-fr"><em>On pensait que le projet était viable. <span class="eopp">Or</span>, les études de marché révèlent le contraire. Il faut donc le revoir.</em></div>
+          <div class="ex-es">Se pensaba que el proyecto era viable. Ahora bien, los estudios de mercado revelan lo contrario. Hay que revisarlo.</div>
+        </div>
+        <div class="example-block opp">
+          <div class="ex-fr"><em>Tout le monde était supposé être présent. <span class="eopp">Or</span>, la moitié des membres était absente.</em></div>
+          <div class="ex-es">Se suponía que todos estarían presentes. Ahora bien, la mitad de los miembros estaba ausente.</div>
+        </div>
+        <div class="example-block opp">
+          <div class="ex-fr"><em>La règle interdit toute exception. <span class="eopp">Or</span>, ce cas précis constitue justement une exception.</em></div>
+          <div class="ex-es">La norma prohíbe toda excepción. Ahora bien, este caso preciso constituye exactamente una excepción.</div>
+        </div>
+
+        <div class="note-box">
+          La traducción más precisa de <em>or</em> en contexto argumentativo es <strong>«ahora
+          bien»</strong> o <strong>«pues bien»</strong>, no «sin embargo» ni «pero». <em>Or</em>
+          no solo opone: introduce el dato que «cambia el paso» del razonamiento y orienta hacia
+          la conclusión.
+        </div>
+      </div>
+
+      <!-- Chip 1 — or vs mais/pourtant -->
+      <div class="chip-panel">
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Conector</th><th>Función</th><th>Registro</th><th>Traducción habitual</th></tr></thead>
+          <tbody>
+            <tr><td><span class="hl-opp">or</span></td><td>Introduce premisa que reorienta el argumento</td><td>Formal / escrito</td><td>ahora bien, pues bien</td></tr>
+            <tr><td>mais</td><td>Oposición simple, coordinación</td><td>Todos</td><td>pero</td></tr>
+            <tr><td><span class="hl-opp">pourtant</span></td><td>Señala contraste inesperado entre dos hechos</td><td>Corriente</td><td>sin embargo, aun así</td></tr>
+            <tr><td><span class="hl-opp">cependant</span></td><td>Restringe o matiza con registro formal</td><td>Formal</td><td>sin embargo, no obstante</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="warn-box">
+          <span class="warn-icon">⚠️</span>
+          <div class="warn-text">
+            <strong>Or ≠ mais, or ≠ pourtant</strong>. <em>Or</em> tiene un valor
+            lógico-argumentativo específico: introduce el hecho que «cambia el paso» del
+            razonamiento. Usarlo como sinónimo de <em>mais</em> o <em>pourtant</em> es un error
+            de registro y de lógica argumentativa. Es el conector más fácil de malinterpretar en
+            este campo.
+          </div>
+        </div>
+      </div>
+
+      <!-- Chip 2 — or en texto formal -->
+      <div class="chip-panel">
+        <p><strong>Esquema tipo</strong> (ensayo / disertación):</p>
+
+        <div class="example-block opp">
+          <div class="ex-fr"><em>Il semblait que la politique économique avait porté ses fruits. <span class="eopp">Or</span>, les statistiques publiées cette semaine montrent une hausse du chômage. On ne peut donc pas parler de succès.</em></div>
+          <div class="ex-es">Parecía que la política económica había dado sus frutos. Ahora bien, las estadísticas publicadas esta semana muestran una subida del paro. No se puede, por tanto, hablar de éxito.</div>
+        </div>
+
+        <div class="note-box">
+          <em>Or</em> es marca de argumentación de nivel C1. Su uso correcto señala dominio del
+          discurso expositivo-argumentativo formal. Aparece con frecuencia en textos académicos,
+          filosofía, derecho y prensa de calidad. En producción escrita DALF C1, su uso apropiado
+          es señal de madurez discursiva. Siempre va a <strong>inicio de frase</strong> y casi
+          siempre seguido de coma.
+        </div>
+      </div>
+
+    </div><!-- /or-panels -->
+  </div></div>
+</div>
+
+<!-- ============================================================
+     SECTION 6 — MALGRÉ / EN DÉPIT DE
+============================================================ -->
+<div class="sec-block" id="s-malgre">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      <strong>Malgré</strong> y <strong>en dépit de</strong> son <strong>preposiciones</strong> de
+      concesión. A diferencia de <em>bien que</em> y <em>même si</em>, no introducen una
+      proposición con verbo conjugado, sino un <strong>nombre, pronombre o grupo nominal</strong>.
+      Es la distinción sintáctica más importante de este capítulo: detrás de estas preposiciones,
+      nunca un verbo conjugado.
+    </div>
+
+    <div class="formula-box">
+      <span class="f-av">Malgré</span> / <span class="f-av">En dépit de</span> + <span class="f-dim">[NOM / GN / PRONOM]</span>  <span class="f-opt">←  jamais + verbe conjugué</span>
+    </div>
+
+    <div class="sec-label">Usos de malgré y en dépit de</div>
+
+    <div class="chip-bar">
+      <button class="chip av active" onclick="selectChip('mg',0)">Malgré + nom</button>
+      <button class="chip av"        onclick="selectChip('mg',1)">En dépit de</button>
+      <button class="chip av"        onclick="selectChip('mg',2)">Malgré que — trampa</button>
+      <button class="chip av"        onclick="selectChip('mg',3)">Equivalencias con bien que</button>
+    </div>
+
+    <div id="mg-panels">
+
+      <!-- Chip 0 — malgré + nom -->
+      <div class="chip-panel active">
+        <p><strong>Regla clave</strong>: después de <em>malgré</em>, siempre un NOMBRE o GRUPO
+        NOMINAL, nunca un verbo conjugado.</p>
+
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Uso</th><th>Exemple</th><th>Traducción</th></tr></thead>
+          <tbody>
+            <tr><td>+ nom sg.</td><td><em>Malgré <span class="eav">la pluie</span>, nous sommes sortis.</em></td><td>A pesar de la lluvia, salimos.</td></tr>
+            <tr><td>+ nom pl.</td><td><em>Malgré <span class="eav">les difficultés</span>, il a réussi.</em></td><td>A pesar de las dificultades, lo logró.</td></tr>
+            <tr><td>+ GN largo</td><td><em>Malgré <span class="eav">tous ses efforts</span>, elle n'a pas convaincu.</em></td><td>A pesar de todos sus esfuerzos, no convenció.</td></tr>
+            <tr><td>+ pronom</td><td><em>Malgré <span class="eav">cela / tout</span>, il sourit.</em></td><td>A pesar de eso/todo, sonríe.</td></tr>
+            <tr><td>+ pronom tonique</td><td><em>Malgré <span class="eav">eux</span>, la décision a été prise.</em></td><td>A pesar de ellos, se tomó la decisión.</td></tr>
+            <tr><td class="err-cell">+ infinitif — ✗</td><td><em>Malgré <span class="err-cell">vouloir</span> aider</em> — INCORRECTO</td><td>Nunca con infinitivo ni verbo</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="example-block av">
+          <div class="ex-fr"><em><span class="eav">Malgré</span> la fatigue, il a terminé la course.</em></div>
+          <div class="ex-es">A pesar del cansancio, terminó la carrera.</div>
+        </div>
+        <div class="example-block av">
+          <div class="ex-fr"><em><span class="eav">Malgré</span> ses nombreux défauts, elle reste appréciée de tous.</em></div>
+          <div class="ex-es">A pesar de sus numerosos defectos, sigue siendo apreciada por todos.</div>
+        </div>
+        <div class="example-block av">
+          <div class="ex-fr"><em><span class="eav">Malgré</span> tout ce qu'on lui a dit, il n'a pas changé d'avis.</em></div>
+          <div class="ex-es">A pesar de todo lo que le dijeron, no cambió de opinión.</div>
+        </div>
+        <div class="example-block av">
+          <div class="ex-fr"><em><span class="eav">Malgré</span> cela, je maintiens ma position.</em></div>
+          <div class="ex-es">A pesar de eso, mantengo mi posición.</div>
+        </div>
+      </div>
+
+      <!-- Chip 1 — en dépit de -->
+      <div class="chip-panel">
+        <p><em>En dépit de</em> es sinónimo de <em>malgré</em> pero de <strong>registro más formal
+        y escrito</strong>. Rige las mismas estructuras (nom, GN, pronom).</p>
+
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Malgré</th><th>En dépit de</th><th>Registro diferencial</th></tr></thead>
+          <tbody>
+            <tr><td><em>Malgré ses efforts</em></td><td><em>En dépit de ses efforts</em></td><td>Más formal</td></tr>
+            <tr><td><em>Malgré les obstacles</em></td><td><em>En dépit des obstacles</em></td><td>Más formal</td></tr>
+            <tr><td><em>Malgré tout</em></td><td><em>En dépit de tout</em></td><td>Más formal</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="example-block av">
+          <div class="ex-fr"><em><span class="eav">En dépit de</span> ses efforts, les résultats sont décevants.</em></div>
+          <div class="ex-es">A pesar de sus esfuerzos, los resultados son decepcionantes.</div>
+        </div>
+        <div class="example-block av">
+          <div class="ex-fr"><em><span class="eav">En dépit des</span> avertissements répétés, la situation n'a pas évolué.</em></div>
+          <div class="ex-es">A pesar de las repetidas advertencias, la situación no ha mejorado.</div>
+        </div>
+        <div class="example-block av">
+          <div class="ex-fr"><em><span class="eav">En dépit de</span> tout, il a gardé sa sérénité.</em></div>
+          <div class="ex-es">A pesar de todo, mantuvo su serenidad.</div>
+        </div>
+
+        <div class="note-box">
+          <em>En dépit de</em> es de uso principalmente escrito y formal. En conversación
+          corriente, <em>malgré</em> es ampliamente preferido. En producción escrita C1 (ensayo,
+          rapport), la alternancia entre ambas formas aporta variedad léxica valorada
+          positivamente.
+        </div>
+      </div>
+
+      <!-- Chip 2 — malgré que trampa -->
+      <div class="chip-panel">
+        <div class="warn-box">
+          <span class="warn-icon">⚠️</span>
+          <div class="warn-text">
+            <strong>CRÍTICO — Malgré que</strong>: <em>Malgré que</em> + subjonctif existe en
+            francés pero está muy restringido. La mayoría de gramáticos lo consideran poco
+            elegante o lo rechazan en registro soigné. La única forma aceptada académicamente es
+            la expresión fija <strong>«malgré qu'il en ait»</strong> (= muy a su pesar). En
+            producción escrita B2–C1: <strong>evitar malgré que</strong> y sustituir por
+            <em>bien que</em> + subjonctif o <em>malgré</em> + nom.
+          </div>
+        </div>
+
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Evitar</th><th>Alternativa correcta</th></tr></thead>
+          <tbody>
+            <tr><td><em>Malgré qu'il soit fatigué…</em> <span class="err-cell">⚠️</span></td><td><em>Bien qu'il soit fatigué…</em> <span class="ok-cell">✓</span></td></tr>
+            <tr><td><em>Malgré qu'elle ait peu d'expérience…</em> <span class="err-cell">⚠️</span></td><td><em>Malgré son manque d'expérience…</em> <span class="ok-cell">✓</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <!-- Chip 3 — equivalencias con bien que -->
+      <div class="chip-panel">
+        <p><strong>Conversión sintáctica bidireccional</strong>: saber transformar una concesión
+        verbal en concesión nominal es habilidad clave a nivel B2–C1.</p>
+
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Bien que + subjonctif</th><th>Malgré + nom</th><th>Estrategia de nominalización</th></tr></thead>
+          <tbody>
+            <tr><td><em>Bien qu'il soit fatigué</em></td><td><em>Malgré sa fatigue</em></td><td>adjectif → nom (fatigué → fatigue)</td></tr>
+            <tr><td><em>Bien qu'elle ait peu d'expérience</em></td><td><em>Malgré son manque d'expérience</em></td><td>perifrástico</td></tr>
+            <tr><td><em>Bien que les résultats soient mauvais</em></td><td><em>Malgré la mauvaise qualité des résultats</em></td><td>reformulación</td></tr>
+            <tr><td><em>Bien qu'il ait fait des efforts</em></td><td><em>Malgré ses efforts</em></td><td>verbal → nom (faire des efforts → efforts)</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="note-box">
+          Saber convertir <em>bien que + subjonctif</em> ↔ <em>malgré + nom</em> es una
+          habilidad clave en producción escrita B2–C1. La transformación exige
+          <strong>nominalizar</strong> el predicado de la subordinada. Esta bidireccionalidad es
+          frecuentemente evaluada en expresión escrita DALF.
+        </div>
+      </div>
+
+    </div><!-- /mg-panels -->
+  </div></div>
+</div>
+
+<!-- ============================================================
+     SECTION 7 — FORMES AVANCÉES
+============================================================ -->
+<div class="sec-block" id="s-avancees">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      Más allá de las formas básicas, el francés dispone de estructuras de concesión de mayor
+      complejidad sintáctica o de uso más marcado (literario, culto, argumentativo). Dominarlas
+      es característica del nivel C1 y resulta determinante en textos como el DALF C1 producción
+      escrita.
+    </div>
+
+    <div class="sec-label">Cuatro estructuras avanzadas</div>
+
+    <div class="chip-bar">
+      <button class="chip av active" onclick="selectChip('av',0)">Avoir beau + infinitif</button>
+      <button class="chip av"        onclick="selectChip('av',1)">Quand bien même + conditionnel</button>
+      <button class="chip av"        onclick="selectChip('av',2)">Encore que + subjonctif</button>
+      <button class="chip av"        onclick="selectChip('av',3)">Pour / Si / Aussi… que + subjonctif</button>
+    </div>
+
+    <div id="av-panels">
+
+      <!-- Chip 0 — avoir beau -->
+      <div class="chip-panel active">
+        <div class="def-box">
+          <em>Avoir beau</em> + infinitif expresa concesión: «por mucho que», «aunque». La
+          construcción es <strong>invariable en la fórmula</strong> (solo varía el tiempo de
+          <em>avoir</em>); la proposición concesiva va siempre al inicio; el infinitivo sigue
+          directamente sin preposición.
+        </div>
+
+        <div class="formula-box">
+          <span class="f-dim">[Sujet] +</span> <span class="f-av">avoir beau</span> + <span class="f-dim">[infinitif — sin preposición], [proposition principale]</span>
+        </div>
+
+        <div class="sec-label">Conjugación de avoir beau</div>
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Tiempo</th><th>Exemple</th></tr></thead>
+          <tbody>
+            <tr><td>Présent</td><td><em>Il <span class="eav">a beau</span> travailler, il n'avance pas.</em></td></tr>
+            <tr><td>Imparfait</td><td><em>Elle <span class="eav">avait beau</span> crier, personne ne l'entendait.</em></td></tr>
+            <tr><td>Passé composé</td><td><em>Il <span class="eav">a eu beau</span> insister, rien n'a changé.</em></td></tr>
+            <tr><td>Futur</td><td><em>Tu <span class="eav">auras beau</span> protester, la décision est prise.</em></td></tr>
+            <tr><td>Conditionnel</td><td><em>Vous <span class="eav">auriez beau</span> essayer, ce serait inutile.</em></td></tr>
+          </tbody>
+        </table></div>
+
+        <p><strong>Reglas críticas</strong>:</p>
+        <ul style="margin: 8px 0 12px 22px; line-height: 1.7;">
+          <li>Infinitif directamente después, <strong>sin <em>de</em> ni <em>à</em></strong>:
+            <em>avoir beau <span class="ok-cell">faire</span></em> ✓ /
+            <em>avoir beau <span class="err-cell">à faire</span></em> ✗</li>
+          <li>Sujeto de <em>avoir beau</em> y de la principal deben ser el <strong>mismo</strong>
+            en uso estándar.</li>
+          <li>No existe <em>avoir beau que + subjonctif</em>.</li>
+        </ul>
+
+        <div class="example-block av">
+          <div class="ex-fr"><em>Il <span class="eav">a beau</span> faire des efforts, ses notes ne s'améliorent pas.</em></div>
+          <div class="ex-es">Por mucho que se esfuerce, sus notas no mejoran.</div>
+        </div>
+        <div class="example-block av">
+          <div class="ex-fr"><em>Elle <span class="eav">avait beau</span> répéter, les enfants ne l'écoutaient pas.</em></div>
+          <div class="ex-es">Por mucho que repitiera, los niños no la escuchaban.</div>
+        </div>
+        <div class="example-block av">
+          <div class="ex-fr"><em>J'<span class="eav">ai eu beau</span> chercher, je n'ai pas trouvé la solution.</em></div>
+          <div class="ex-es">Por mucho que busqué, no encontré la solución.</div>
+        </div>
+        <div class="example-block av">
+          <div class="ex-fr"><em>Vous <span class="eav">aurez beau</span> protester, la décision est finale.</em></div>
+          <div class="ex-es">Por mucho que protestéis, la decisión es definitiva.</div>
+        </div>
+
+        <div class="note-box">
+          <em>Avoir beau</em> es de uso corriente, no exclusivamente literario. Aparece en lengua
+          oral y escrita. Su equivalente más próximo en español es «por mucho que + subjuntivo».
+          Es la única estructura de concesión con infinitivo del francés estándar.
+        </div>
+      </div>
+
+      <!-- Chip 1 — quand bien même -->
+      <div class="chip-panel">
+        <p><strong>Significado</strong>: «aunque», «incluso si», «aun cuando» — con valor
+        hipotético-concesivo muy fuerte.<br>
+        <strong>Registro</strong>: formal, literario, argumentativo.<br>
+        <strong>Modo</strong>: siempre <strong>conditionnel</strong> (présent o passé) — nunca
+        indicatif, nunca subjonctif.</p>
+
+        <div class="formula-box">
+          <span class="f-av">Quand bien même</span> + <span class="f-dim">[conditionnel présent / passé], [proposition principale au conditionnel]</span>
+        </div>
+
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Tiempo subordinada</th><th>Tipo de hipótesis</th><th>Exemple</th></tr></thead>
+          <tbody>
+            <tr><td><span class="hl-av">Conditionnel présent</span></td><td>Hipótesis presente/futura</td><td><em>Quand bien même <span class="eav">il voudrait</span> partir, il ne le pourrait pas.</em></td></tr>
+            <tr><td><span class="hl-av">Conditionnel passé</span></td><td>Contrafactual pasado</td><td><em>Quand bien même <span class="eav">il aurait voulu</span> partir, il n'en aurait pas eu la force.</em></td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="example-block av">
+          <div class="ex-fr"><em><span class="eav">Quand bien même</span> il serait innocent, il aurait du mal à le prouver.</em></div>
+          <div class="ex-es">Aunque fuera inocente, le costaría demostrarlo.</div>
+        </div>
+        <div class="example-block av">
+          <div class="ex-fr"><em><span class="eav">Quand bien même</span> nous aurions gagné, cela n'aurait rien changé.</em></div>
+          <div class="ex-es">Aunque hubiéramos ganado, nada habría cambiado.</div>
+        </div>
+        <div class="example-block av">
+          <div class="ex-fr"><em><span class="eav">Quand bien même</span> tu insisterais, ma décision est prise.</em></div>
+          <div class="ex-es">Aunque insistieras, mi decisión está tomada.</div>
+        </div>
+
+        <div class="note-box">
+          <em>Quand bien même</em> es más enfático que <em>même si</em>. Presenta la concesión
+          como extrema y definitiva: «incluso en el caso más extremo». Es casi exclusivo del
+          registro escrito formal. En argumentación, señala que ni siquiera el caso hipotético
+          más favorable cambiaría la conclusión.
+        </div>
+      </div>
+
+      <!-- Chip 2 — encore que -->
+      <div class="chip-panel">
+        <p><strong>Significado</strong>: «aunque», «si bien», «bien es verdad que».<br>
+        <strong>Registro</strong>: literario, culto, formal escrito.<br>
+        <strong>Posición</strong>: <strong>siempre en posición final o como inciso</strong> —
+        nunca al inicio de párrafo.</p>
+
+        <div class="formula-box">
+          <span class="f-dim">[Proposition principale],</span> <span class="f-av">encore que</span> + <span class="f-dim">[subjonctif présent ou passé]</span>
+        </div>
+
+        <div class="example-block av">
+          <div class="ex-fr"><em>C'est une bonne solution, <span class="eav">encore qu'</span>on puisse en trouver une meilleure.</em></div>
+          <div class="ex-es">Es una buena solución, aunque podría encontrarse una mejor.</div>
+        </div>
+        <div class="example-block av">
+          <div class="ex-fr"><em>Sa décision est compréhensible, <span class="eav">encore qu'</span>elle me surprenne.</em></div>
+          <div class="ex-es">Su decisión es comprensible, aunque me sorprende.</div>
+        </div>
+        <div class="example-block av">
+          <div class="ex-fr"><em>Il a bien travaillé, <span class="eav">encore que</span> les résultats soient perfectibles.</em></div>
+          <div class="ex-es">Trabajó bien, aunque los resultados son mejorables.</div>
+        </div>
+
+        <div class="note-box">
+          <em>Encore que</em> introduce siempre una <strong>matización o reserva</strong> sobre
+          lo que acaba de afirmarse. Equivale a «aunque hay que admitir que...». Nunca aparece al
+          inicio de un párrafo. Es característica del ensayo y la prosa literaria francesa de
+          nivel elevado. Confundirlo con <em>encore si</em> o <em>alors que</em> es error de
+          nivel.
+        </div>
+      </div>
+
+      <!-- Chip 3 — pour/si/aussi…que -->
+      <div class="chip-panel">
+        <p><strong>Pour (si/aussi) + adj + que + subjonctif</strong> expresa concesión intensiva:
+        «por muy… que», «por mucho que».</p>
+
+        <div class="formula-box">
+          <span class="f-av">Pour</span> <span class="f-opt">(si / aussi)</span> + <span class="f-dim">[adj / adv] +</span> <span class="f-av">que</span> + <span class="f-dim">[subjonctif], [proposition principale]</span>
+        </div>
+
+        <div class="table-wrap"><table class="gram-table">
+          <thead><tr><th>Estructura</th><th>Exemple</th><th>Traducción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="hl-av">Pour</span> + adj + que</td><td><em>Pour <span class="eav">intelligente</span> qu'elle <span class="eav">soit</span>, elle peut se tromper.</em></td><td>Por inteligente que sea, puede equivocarse.</td></tr>
+            <tr><td><span class="hl-av">Pour</span> + adv + que</td><td><em>Pour <span class="eav">vite</span> qu'il <span class="eav">aille</span>, il n'arrivera pas à temps.</em></td><td>Por rápido que vaya, no llegará a tiempo.</td></tr>
+            <tr><td><span class="hl-av">Si</span> + adj + que</td><td><em>Si <span class="eav">fatiguée</span> qu'elle <span class="eav">soit</span>, elle continue.</em></td><td>Por cansada que esté, continúa.</td></tr>
+            <tr><td><span class="hl-av">Aussi</span> + adj + que</td><td><em>Aussi <span class="eav">difficile</span> que cela <span class="eav">paraisse</span>, c'est réalisable.</em></td><td>Por difícil que parezca, es realizable.</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="note-box">
+          Las formas <em>pour…que</em>, <em>si…que</em> y <em>aussi…que</em> + subjonctif son
+          marcas de registro literario y culto. En B2 se reconocen; en C1 se producen activamente.
+          Son frecuentes en literatura, ensayo filosófico y prensa de calidad.
+        </div>
+
+        <div class="warn-box">
+          <span class="warn-icon">⚠️</span>
+          <div class="warn-text">
+            No confundir <em>pour…que</em> <strong>concesivo</strong> (+ subjonctif) con
+            <em>pour que</em> <strong>final</strong> (+ subjonctif). Diferencia estructural:
+            <em>pour qu'il <strong>réussisse</strong></em> (para que tenga éxito = finalidad) vs.
+            <em>pour <strong>intelligente</strong> qu'elle <strong>soit</strong></em> (por
+            inteligente que sea = concesión). La posición del adjetivo entre <em>pour</em> y
+            <em>que</em> es la marca inequívoca del uso concesivo.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /av-panels -->
+
+    <div class="sec-label">Cuadro resumen — formes avancées</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Estructura</th><th>Modo requerido</th><th>Posición</th><th>Equivalente español</th><th>Registro</th></tr></thead>
+      <tbody>
+        <tr><td><span class="hl-av">avoir beau</span> + inf.</td><td>Infinitif</td><td>Inicio</td><td>por mucho que + subj.</td><td>Corriente / lit.</td></tr>
+        <tr><td><span class="hl-av">quand bien même</span></td><td>Conditionnel</td><td>Flexible</td><td>aunque (hipótesis extrema)</td><td>Formal / lit.</td></tr>
+        <tr><td><span class="hl-av">encore que</span> + subj.</td><td>Subjonctif</td><td>Final / incise</td><td>aunque (matización)</td><td>Literario</td></tr>
+        <tr><td><span class="hl-av">pour / si / aussi…que</span></td><td>Subjonctif</td><td>Flexible</td><td>por muy… que</td><td>Literario / culto</td></tr>
+      </tbody>
+    </table></div>
+  </div></div>
+</div>
+
+<!-- ============================================================
+     SECTION 8 — TRAMPAS
+============================================================ -->
+<div class="sec-block" id="s-trampas">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      Errores frecuentes en la expresión de la concesión y la oposición en francés, especialmente
+      entre hispanohablantes. Cada trampa muestra la forma incorrecta, la corrección y la
+      explicación gramatical.
+    </div>
+    <div class="trap-cards" id="traps-container"></div>
+  </div></div>
+</div>
+
+</div><!-- /main-layout -->
+
+<script>
+/* DATA — TRAPS */
+const TRAPS = [
+  {
+    name: "Bien que + indicatif — el error más frecuente",
+    wrong: "Bien qu'il est fatigué, il travaille.",
+    right: "Bien qu'il soit fatigué, il travaille.",
+    expl: "<strong>Bien que</strong> y <em>quoique</em> exigen SIEMPRE subjuntivo. El indicativo es incorrecto en francés estándar. Esta confusión es sistemática en hispanohablantes porque «aunque» en español admite tanto indicativo («aunque es tarde») como subjuntivo («aunque sea tarde»). En francés esa distinción no existe con <em>bien que</em>: un único modo, siempre subjonctif."
+  },
+  {
+    name: "Même si + subjonctif — error simétrico al anterior",
+    wrong: "Même s'il soit riche, il n'est pas heureux.",
+    right: "Même s'il est riche, il n'est pas heureux.",
+    expl: "<strong>Même si</strong> rige SIEMPRE indicativo. El subjuntivo es incorrecto. Muchos hispanohablantes, al aprender que <em>bien que</em> lleva subjuntivo, hipercorrijen en dirección equivocada con <em>même si</em>. Regla mnemotécnica absoluta: <strong>BIEN QUE = SUBJONCTIF / MÊME SI = INDICATIF</strong>."
+  },
+  {
+    name: "Malgré + verbe conjugué",
+    wrong: "Malgré qu'il travaille beaucoup, il n'avance pas.",
+    right: "Bien qu'il travaille beaucoup, il n'avance pas. / Malgré son travail acharné, il n'avance pas.",
+    expl: "<strong>Malgré</strong> es una preposición y rige siempre un NOMBRE o GRUPO NOMINAL, nunca un verbo conjugado. <em>Malgré que</em> está desaconsejado en registro formal (solo sobrevive en la expresión fija <em>malgré qu'il en ait</em>). Solución: sustituir por <em>bien que</em> + subjonctif O nominalizar el predicado (<em>travaille</em> → <em>travail</em>)."
+  },
+  {
+    name: "Or = mais / pourtant — confusión de función",
+    wrong: "Il est fatigué, or il sort quand même.",
+    right: "Il est fatigué, mais il sort quand même. / On pensait qu'il était parti. Or, il était encore là.",
+    expl: "<strong>Or</strong> no es sinónimo de <em>mais</em> ni de <em>pourtant</em>. Tiene un valor lógico-argumentativo específico: introduce una premisa que reorienta o contradice un razonamiento previo. Traducción precisa: «ahora bien», «pues bien». Usarlo como simple «sin embargo» es un error de registro y de lógica argumentativa. <em>Or</em> siempre va a inicio de frase y suele ir seguido de coma."
+  },
+  {
+    name: "Avoir beau — preposición incorrecta",
+    wrong: "Il a beau de travailler, il n'avance pas. / Il a beau qu'il travaille.",
+    right: "Il a beau travailler, il n'avance pas.",
+    expl: "Con <strong>avoir beau</strong>, el infinitivo va DIRECTAMENTE después, SIN preposición (ni <em>de</em>, ni <em>à</em>). Tampoco existe <em>avoir beau que + subjonctif</em>. La estructura es indescomponible: sujeto + <em>avoir beau</em> + infinitif (sin ninguna preposición). Error muy frecuente por interferencia del español «por mucho que + subjuntivo»."
+  },
+  {
+    name: "Quand bien même + indicatif o subjonctif",
+    wrong: "Quand bien même il veut partir, il ne peut pas.",
+    right: "Quand bien même il voudrait partir, il ne pourrait pas.",
+    expl: "<strong>Quand bien même</strong> exige SIEMPRE conditionnel (présent o passé), nunca indicativo ni subjuntivo. La correlación con el conditionnel en la proposición principal también es obligatoria en registro formal. Es una estructura hipotético-concesiva de valor extremo: «incluso en el caso más extremo»."
+  },
+  {
+    name: "Cependant / néanmoins en posición medial",
+    wrong: "Il a cependant bien travaillé. / Elle est néanmoins arrivée en retard.",
+    right: "Il a bien travaillé. Cependant, les résultats sont insuffisants. / Il a pourtant bien travaillé.",
+    expl: "<strong>Cependant</strong> y <strong>néanmoins</strong> van casi exclusivamente a INICIO de proposición (tras punto o punto y coma). La posición medial «entre sujeto y verbo» es característica de <em>POURTANT</em>, no de los otros dos. Si se necesita posición medial, usar <em>pourtant</em>. Colocar <em>cependant</em> o <em>néanmoins</em> en posición medial resulta incorrecto o muy forzado en registro estándar."
+  },
+  {
+    name: "Même si — correlación de tiempos incorrecta",
+    wrong: "Même s'il est riche, il ne serait pas heureux.",
+    right: "Même s'il est riche, il n'est pas heureux. (real) / Même s'il était riche, il ne serait pas heureux. (hypothèse)",
+    expl: "La correlación de tiempos con <strong>même si</strong> sigue la misma lógica que los períodos condicionales: <em>présent → présent</em> (hecho real); <em>imparfait → conditionnel présent</em> (hipótesis presente); <em>plus-que-parfait → conditionnel passé</em> (contrafactual pasado). Mezclar los tiempos rompe la coherencia temporal y lógica de la hipótesis."
+  },
+  {
+    name: "Encore que al inicio de párrafo o texto",
+    wrong: "Encore qu'il soit difficile, nous allons essayer.",
+    right: "Nous allons essayer, encore qu'il soit difficile. / Bien qu'il soit difficile, nous allons essayer.",
+    expl: "<strong>Encore que</strong> introduce SIEMPRE una matización posterior sobre algo ya afirmado. Su posición es FINAL o como inciso, NUNCA al inicio de un texto o párrafo. Para concesión al inicio, usar <em>bien que</em> o <em>même si</em>. Usar <em>encore que</em> al inicio es un error de estructura textual que señala desconocimiento del valor pragmático del conector."
+  }
+];
+
+function renderTraps() {
+  document.getElementById("traps-container").innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join("");
+}
+
+/* CHIP SELECT */
+function selectChip(ns, idx) {
+  document.querySelectorAll(".chip-bar").forEach(bar => {
+    const first = bar.querySelector(".chip");
+    if (first && first.getAttribute("onclick") && first.getAttribute("onclick").includes("'" + ns + "'")) {
+      bar.querySelectorAll(".chip").forEach((c, i) => c.classList.toggle("active", i === idx));
+    }
+  });
+  const el = document.getElementById(ns + "-panels");
+  if (el) el.querySelectorAll(":scope > .chip-panel").forEach((p, i) => p.classList.toggle("active", i === idx));
+}
+
+/* NAV */
+function showSection(id, btn) {
+  document.querySelectorAll(".sec-block").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".snav-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  btn.classList.add("active");
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+function setFontSize(v) { document.documentElement.style.setProperty("--fs", v + "px"); }
+
+/* INIT */
+renderTraps();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammaire · Le Présent de l'Indicatif</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ede9df;
+  --card: #faf7f1;
+  --border: #c4bead;
+  --text: #1a1814;
+  --text2: #44413a;
+  --text3: #706c64;
+  --accent: #7a5a0a;
+  --accent-light: #f0e0c0;
+  --accent-mid: #b89050;
+  --warn-bg: #fdf0cc;
+  --shadow: 0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm: 0 1px 6px rgba(0,0,0,0.08);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --green: #1a6028;
+  --green-bg: #e4f2e8;
+  --red: #a81e2e;
+  --red-bg: #fce6e8;
+  --blue: #163494;
+  --blue-bg: #e6ebf8;
+  --purple: #6a1a8a;
+  --purple-bg: #f2e6f8;
+  --teal: #0e6e6e;
+  --teal-bg: #e0f4f4;
+  --pr-color: #0e6e6e;
+  --pr-bg: #e0f4f4;
+  --fs: 15px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: var(--fs); }
+
+.site-header { background: var(--card); border-bottom: 2px solid var(--border); padding: 20px 20px 14px; }
+.header-top { display: flex; align-items: baseline; gap: 10px; margin-bottom: 3px; flex-wrap: wrap; }
+.site-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem,5vw,1.9rem); font-weight: 700; color: var(--text); }
+.header-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent-mid); border-radius: 20px; padding: 3px 10px; }
+.subtitle { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
+.stats-row { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+.stat-pill { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 4px 11px; font-size: 0.76rem; font-weight: 500; color: var(--text2); }
+.stat-pill span { font-weight: 700; color: var(--text); }
+.stat-pill.pr { border-color: var(--pr-color); color: var(--pr-color); background: var(--pr-bg); }
+.fs-wrap { display: flex; align-items: center; gap: 7px; margin-left: auto; }
+.fs-slider { width: 76px; accent-color: var(--accent); cursor: pointer; }
+.fs-sz { color: var(--text3); font-weight: 700; }
+
+.mode-toggle { display: flex; border-bottom: 2px solid var(--border); background: var(--card); }
+.mode-btn { flex: 1; padding: 12px 8px; font-family: 'DM Sans', sans-serif; font-size: 0.84rem; font-weight: 600; color: var(--text3); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.15s; margin-bottom: -2px; }
+.mode-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.section-nav { position: sticky; top: 0; z-index: 200; background: var(--card); border-bottom: 2px solid var(--border); box-shadow: var(--shadow-sm); }
+.section-nav-inner { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.section-nav-inner::-webkit-scrollbar { display: none; }
+.snav-btn { flex-shrink: 0; padding: 11px 16px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; color: var(--text3); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.snav-btn:hover { color: var(--text2); }
+.snav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.main-layout { max-width: 860px; margin: 0 auto; padding: 16px 16px 40px; }
+.panel { display: none; } .panel.active { display: block; }
+.sec-block { display: none; } .sec-block.active { display: block; }
+.gram-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden; }
+.gram-card-body { padding: 18px; }
+
+.def-box { background: var(--warn-bg); border-left: 4px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 15px; margin-bottom: 14px; line-height: 1.65; color: var(--text); }
+.def-box strong { color: var(--accent); font-weight: 700; }
+.warn-box { background: #fff4e0; border: 1px solid #c8900a; border-radius: var(--radius-sm); padding: 10px 13px; margin: 10px 0; font-size: 0.9em; display: flex; gap: 8px; align-items: flex-start; }
+.warn-icon { flex-shrink: 0; margin-top: 1px; }
+.warn-text { color: var(--text2); line-height: 1.55; }
+.warn-text strong { color: #7a4400; font-weight: 700; }
+.note-box { background: var(--purple-bg); border-left: 4px solid var(--purple); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 10px 0; font-size: 0.9em; color: var(--text2); line-height: 1.55; }
+.note-box strong { color: var(--purple); font-weight: 700; }
+.green-box { background: var(--green-bg); border-left: 4px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 10px 0; font-size: 0.9em; color: var(--text2); line-height: 1.55; }
+.green-box strong { color: var(--green); font-weight: 700; }
+
+.example-block { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 8px 0; }
+.example-block.pr  { background: var(--pr-bg);   border-left: 4px solid var(--pr-color); }
+.example-block.neu { background: var(--blue-bg);  border-left: 4px solid var(--blue); }
+.example-block.mix { background: #f0f0f8; border-left: 4px solid #606080; }
+.ex-fr { font-weight: 600; margin-bottom: 3px; color: var(--text); }
+.epr { color: var(--pr-color); font-weight: 700; font-style: normal; }
+.ex-fr em { color: var(--blue); font-style: normal; font-weight: 700; }
+.ex-es { color: var(--text2); font-size: 0.88em; font-style: italic; }
+.ex-note { font-size: 0.78em; color: var(--text3); margin-top: 3px; font-weight: 500; }
+
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.gram-table { width: 100%; border-collapse: collapse; min-width: 280px; }
+.gram-table th { background: var(--bg); border-bottom: 2px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; text-align: left; font-size: 0.72em; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+.gram-table td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; vertical-align: top; color: var(--text); }
+.gram-table tr:last-child td { border-bottom: none; }
+.gram-table tr:nth-child(even) td { background: #f4f0e6; }
+.gram-table td:last-child, .gram-table th:last-child { border-right: none; }
+.hl-pr { color: var(--pr-color); font-weight: 700; }
+.hl    { color: var(--accent);   font-weight: 700; }
+.dim   { color: var(--text3); }
+.ok-cell  { color: var(--green); font-weight: 700; }
+.err-cell { color: var(--red);   font-weight: 600; }
+
+.chip-bar { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.chip { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; white-space: nowrap; }
+.chip:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+.chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.chip.pr.active { background: var(--pr-color); border-color: var(--pr-color); }
+.chip-panel { display: none; } .chip-panel.active { display: block; }
+
+.sec-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin: 14px 0 7px; }
+
+/* Irregular verb mini-cards */
+.irreg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 10px; margin-bottom: 14px; }
+.irreg-card { background: var(--pr-bg); border: 1.5px solid var(--pr-color); border-radius: var(--radius-sm); overflow: hidden; }
+.irreg-card-head { background: var(--pr-color); color: #fff; padding: 6px 12px; font-family: 'Playfair Display', serif; font-size: 0.92rem; font-weight: 600; font-style: italic; }
+.irreg-row { display: flex; justify-content: space-between; padding: 3px 10px; font-size: 0.78em; border-bottom: 1px solid rgba(14,110,110,0.15); }
+.irreg-row:last-child { border-bottom: none; }
+.irreg-pron { color: var(--text3); }
+.irreg-form { color: var(--pr-color); font-weight: 700; }
+
+/* Stem-change highlight */
+.stem-change { display: inline-block; background: #fff3cd; border-radius: 3px; padding: 0 2px; font-weight: 700; color: #7a4400; }
+
+.trap-cards { display: flex; flex-direction: column; gap: 10px; }
+.trap-card { border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.trap-card-header { padding: 11px 14px; background: var(--bg); }
+.trap-name { font-weight: 700; font-size: 0.9em; color: var(--text); margin-bottom: 7px; }
+.trap-vs { display: flex; gap: 8px; flex-wrap: wrap; }
+.trap-wrong { background: var(--red-bg);  border: 1.5px solid #d09098; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--red);   font-weight: 500; }
+.trap-right { background: var(--green-bg); border: 1.5px solid #80b890; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--green); font-weight: 500; }
+.trap-expl { padding: 10px 14px 12px; font-size: 0.86em; color: var(--text2); line-height: 1.6; border-top: 1px solid var(--border); background: var(--card); }
+.trap-expl strong { color: var(--text); font-weight: 700; }
+
+/* EXERCISES */
+.exercise-controls { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.exercise-controls h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+.ctrl-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 7px; display: block; }
+.ex-options { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.ex-opt-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.ex-opt-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+.row-btns { display: flex; gap: 7px; margin-bottom: 14px; flex-wrap: wrap; }
+.pill-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.pill-btn:hover:not(.active) { background: var(--border); }
+.pill-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+.pill-btn.diff.active.A2 { background: var(--green); border-color: var(--green); color: #fff; }
+.pill-btn.diff.active.B1 { background: var(--blue);  border-color: var(--blue);  color: #fff; }
+.pill-btn.diff.active.B2 { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-generate { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; border: none; border-radius: 10px; padding: 13px; font-family: 'DM Sans', sans-serif; font-size: 0.92em; font-weight: 700; cursor: pointer; background: var(--accent); color: white; transition: all 0.18s; margin-top: 4px; }
+.btn-generate:hover:not(:disabled) { filter: brightness(1.1); box-shadow: 0 4px 14px rgba(122,90,10,0.32); }
+.btn-generate:disabled { opacity: 0.5; cursor: not-allowed; }
+.spinner { display: none; animation: spin 0.8s linear infinite; }
+.btn-generate.loading .spinner { display: inline; }
+.btn-generate.loading .btn-icon { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.progress-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 14px; display: none; }
+.progress-wrap.visible { display: block; }
+.progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.progress-label { font-size: 0.78em; color: var(--text3); font-weight: 600; }
+.progress-frac  { font-size: 0.92em; font-weight: 700; color: var(--accent); }
+.progress-track { height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-fill  { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.35s ease; }
+.progress-score { display: flex; gap: 14px; margin-top: 9px; font-size: 0.8em; flex-wrap: wrap; align-items: center; }
+.score-item { display: flex; align-items: center; gap: 5px; font-weight: 500; color: var(--text2); }
+.score-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.score-dot.g { background: var(--green); } .score-dot.r { background: var(--red); }
+.btn-retry { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 13px; font-family: 'DM Sans', sans-serif; font-size: 0.78em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; margin-left: auto; }
+.btn-retry:hover { background: var(--border); }
+.final-score-bar { display: none; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
+.final-score-bar.visible { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.final-num { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+.final-label { font-size: 0.74em; color: var(--text3); }
+.final-track { flex: 1; min-width: 80px; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.final-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+.final-msg { font-size: 0.84em; color: var(--text2); width: 100%; font-weight: 500; }
+.exercise-area { display: none; } .exercise-area.visible { display: block; }
+.exercise-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 12px; overflow: hidden; }
+.exercise-card-header { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--border); }
+.ex-num { font-weight: 700; color: var(--accent); font-size: 0.88em; }
+.ex-type-badge { font-size: 0.68em; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-mid); border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge { font-size: 0.68em; font-weight: 700; border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge.A2 { background: var(--green-bg); color: var(--green); border: 1px solid #80b890; }
+.ex-diff-badge.B1 { background: var(--blue-bg);  color: var(--blue);  border: 1px solid #90a8e0; }
+.ex-diff-badge.B2 { background: var(--warn-bg);  color: var(--accent); border: 1px solid var(--accent-mid); }
+.ex-status { margin-left: auto; }
+.exercise-body { padding: 16px 18px; }
+.exercise-prompt { line-height: 1.7; margin-bottom: 12px; color: var(--text); }
+.exercise-prompt em { color: var(--accent); font-style: italic; font-weight: 600; }
+.fill-input { border: none; border-bottom: 2px solid var(--accent-mid); background: var(--accent-light); padding: 2px 8px; border-radius: 4px 4px 0 0; font-family: 'DM Sans', sans-serif; font-size: 1em; color: var(--text); min-width: 120px; outline: none; transition: border-color 0.15s; }
+.fill-input:focus { border-bottom-color: var(--accent); }
+.fill-input.ok  { background: var(--green-bg); border-bottom-color: var(--green); }
+.fill-input.err { background: var(--red-bg);   border-bottom-color: var(--red); }
+.choices-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 10px; }
+.choice-btn { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.88em; font-weight: 500; cursor: pointer; text-align: left; background: var(--bg); color: var(--text); transition: all 0.15s; }
+.choice-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-light); }
+.choice-btn.ok  { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 700; }
+.choice-btn.err { background: var(--red-bg);   border-color: var(--red);   color: var(--red); }
+.choice-btn:disabled { cursor: default; }
+.transform-input { width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.9em; background: var(--bg); color: var(--text); outline: none; margin-bottom: 8px; transition: border-color 0.15s; }
+.transform-input:focus { border-color: var(--accent); }
+.transform-input.ok  { background: var(--green-bg); border-color: var(--green); }
+.transform-input.err { background: var(--red-bg);   border-color: var(--red); }
+.btn-check { border: 1.5px solid var(--accent); border-radius: 20px; padding: 7px 18px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 700; cursor: pointer; background: transparent; color: var(--accent); transition: all 0.15s; }
+.btn-check:hover:not(:disabled) { background: var(--accent); color: white; }
+.btn-check:disabled { opacity: 0.35; cursor: default; }
+.ex-feedback { display: none; border-radius: var(--radius-sm); padding: 11px 14px; line-height: 1.55; margin-top: 10px; font-size: 0.9em; }
+.ex-feedback.visible { display: block; }
+.ex-feedback.ok  { background: var(--green-bg); border: 1.5px solid #80b890; color: #0e4818; }
+.ex-feedback.err { background: var(--red-bg);   border: 1.5px solid #c08090; color: #700018; }
+.fb-rule-link { display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 0.84em; font-weight: 700; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.skeleton-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 12px; }
+.skel { background: linear-gradient(90deg,var(--border) 25%,#e6e0d4 50%,var(--border) 75%); background-size: 200% 100%; animation: skel 1.4s infinite; border-radius: 4px; height: 13px; margin-bottom: 9px; }
+@keyframes skel { to { background-position: -200% 0; } }
+.state-msg { text-align: center; padding: 40px 20px; color: var(--text3); }
+.state-icon { font-size: 2rem; margin-bottom: 10px; }
+.state-msg p { max-width: 260px; margin: 0 auto; line-height: 1.6; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_grammaire.html" class="back-btn" aria-label="Volver al índice de gramática" title="Volver al índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Le Présent de l'Indicatif</h1>
+    <span class="header-tag">Grammaire</span>
+  </div>
+  <div class="subtitle">Gramática francesa · DELF A2–B2</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Présent indicatif</div>
+    <div class="stat-pill"><span>7</span> secciones</div>
+    <div class="stat-pill" id="score-pill" style="display:none">Resultado: <span id="score-pill-val">—</span></div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referencia</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Qué es</button>
+    <button class="snav-btn"        onclick="showSection('s-formacion',this)">2. Formación</button>
+    <button class="snav-btn"        onclick="showSection('s-irreg',this)">3. Irregulares</button>
+    <button class="snav-btn"        onclick="showSection('s-pron',this)">4. Pronominales</button>
+    <button class="snav-btn"        onclick="showSection('s-usos',this)">5. Usos</button>
+    <button class="snav-btn"        onclick="showSection('s-neginter',this)">6. Negación e interrogación</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Trampas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. QUÉ ES -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>présent de l'indicatif</strong> es el tiempo base de la comunicación oral y escrita en francés. Expresa acciones que ocurren ahora, estados, hábitos, verdades generales y — con ciertos marcadores — acciones futuras o pasadas recientes. Es el punto de partida para entender todos los demás tiempos.
+      </div>
+
+      <div class="sec-label">Usos de un vistazo</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Uso</th><th>Ejemplo</th><th>Equivalente español</th></tr></thead>
+        <tbody>
+          <tr><td>Acción simultánea al habla</td><td><span class="hl-pr">Je parle</span> au téléphone.</td><td>Estoy hablando por teléfono.</td></tr>
+          <tr><td>Estado actual</td><td>Il <span class="hl-pr">est</span> fatigué.</td><td>Está cansado.</td></tr>
+          <tr><td>Hábito / rutina</td><td>Elle <span class="hl-pr">prend</span> le bus chaque matin.</td><td>Coge el autobús cada mañana.</td></tr>
+          <tr><td>Verdad general / científica</td><td>La Terre <span class="hl-pr">tourne</span> autour du Soleil.</td><td>La Tierra gira alrededor del Sol.</td></tr>
+          <tr><td>Futuro próximo planificado</td><td>Demain, je <span class="hl-pr">pars</span> à Lyon.</td><td>Mañana me voy a Lyon.</td></tr>
+          <tr><td>Pasado reciente (venir de)</td><td>Il <span class="hl-pr">vient de</span> partir.</td><td>Acaba de irse.</td></tr>
+          <tr><td>Narración histórica (présent historique)</td><td>En 1789, le peuple <span class="hl-pr">se révolte</span>.</td><td>En 1789, el pueblo se subleva.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Diferencia clave con el español:</strong> el francés no tiene equivalente del gerundio progresivo español (<em>estoy hablando</em>). Tanto "hablo" como "estoy hablando" se traducen por <strong>je parle</strong>. Para enfatizar la duración se puede usar <em>être en train de + inf.</em>: <em>je suis en train de parler</em>.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. FORMACIÓN -->
+  <div class="sec-block" id="s-formacion">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los verbos franceses se agrupan en <strong>tres grupos</strong> según su infinitivo. Cada grupo tiene sus propias terminaciones en présent. El grupo más irregular es el tercero.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('forma',0)">Grupo 1: -ER</button>
+        <button class="chip pr"        onclick="selectChip('forma',1)">Grupo 2: -IR (régulier)</button>
+        <button class="chip pr"        onclick="selectChip('forma',2)">Grupo 3: -RE y -IR irrég.</button>
+        <button class="chip pr"        onclick="selectChip('forma',3)">Cambios ortográficos</button>
+      </div>
+      <div id="forma-panels">
+
+        <div class="chip-panel active" id="forma-p-0">
+          <div class="def-box">El grupo más numeroso (~90% de los verbos). Terminaciones: <strong>-e · -es · -e · -ons · -ez · -ent</strong>. Las formas je/tu/il/ils suenan igual.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Pronombre</th><th>PARLER</th><th>AIMER</th><th>TRAVAILLER</th><th>Term.</th></tr></thead>
+            <tbody>
+              <tr><td><strong>je/j'</strong></td><td class="hl-pr">parle</td><td class="hl-pr">aime</td><td class="hl-pr">travaille</td><td class="hl-pr">-e</td></tr>
+              <tr><td><strong>tu</strong></td><td class="hl-pr">parles</td><td class="hl-pr">aimes</td><td class="hl-pr">travailles</td><td class="hl-pr">-es</td></tr>
+              <tr><td><strong>il/elle/on</strong></td><td class="hl-pr">parle</td><td class="hl-pr">aime</td><td class="hl-pr">travaille</td><td class="hl-pr">-e</td></tr>
+              <tr><td><strong>nous</strong></td><td class="hl-pr">parlons</td><td class="hl-pr">aimons</td><td class="hl-pr">travaillons</td><td class="hl-pr">-ons</td></tr>
+              <tr><td><strong>vous</strong></td><td class="hl-pr">parlez</td><td class="hl-pr">aimez</td><td class="hl-pr">travaillez</td><td class="hl-pr">-ez</td></tr>
+              <tr><td><strong>ils/elles</strong></td><td class="hl-pr">parlent</td><td class="hl-pr">aiment</td><td class="hl-pr">travaillent</td><td class="hl-pr">-ent</td></tr>
+            </tbody>
+          </table></div>
+          <div class="note-box"><strong>Pronunciación:</strong> las terminaciones <em>-e, -es, -ent</em> son todas mudas. Solo <em>-ons</em> y <em>-ez</em> se pronuncian. Por eso je/tu/il/ils suenan idénticos en muchos verbos -ER.</div>
+        </div>
+
+        <div class="chip-panel" id="forma-p-1">
+          <div class="def-box">Los verbos -IR regulares insertan <strong>-iss-</strong> en plural. Terminaciones: <strong>-is · -is · -it · -issons · -issez · -issent</strong>.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Pronombre</th><th>FINIR</th><th>CHOISIR</th><th>RÉUSSIR</th><th>Term.</th></tr></thead>
+            <tbody>
+              <tr><td><strong>je</strong></td><td class="hl-pr">finis</td><td class="hl-pr">choisis</td><td class="hl-pr">réussis</td><td class="hl-pr">-is</td></tr>
+              <tr><td><strong>tu</strong></td><td class="hl-pr">finis</td><td class="hl-pr">choisis</td><td class="hl-pr">réussis</td><td class="hl-pr">-is</td></tr>
+              <tr><td><strong>il/elle</strong></td><td class="hl-pr">finit</td><td class="hl-pr">choisit</td><td class="hl-pr">réussit</td><td class="hl-pr">-it</td></tr>
+              <tr><td><strong>nous</strong></td><td class="hl-pr">finissons</td><td class="hl-pr">choisissons</td><td class="hl-pr">réussissons</td><td class="hl-pr">-issons</td></tr>
+              <tr><td><strong>vous</strong></td><td class="hl-pr">finissez</td><td class="hl-pr">choisissez</td><td class="hl-pr">réussissez</td><td class="hl-pr">-issez</td></tr>
+              <tr><td><strong>ils/elles</strong></td><td class="hl-pr">finissent</td><td class="hl-pr">choisissent</td><td class="hl-pr">réussissent</td><td class="hl-pr">-issent</td></tr>
+            </tbody>
+          </table></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text">No todos los verbos en -IR son regulares. <strong>Partir, sortir, dormir, venir, tenir…</strong> son irregulares (Grupo 3) y <strong>NO</strong> añaden -iss-. Ver sección Irregulares.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="forma-p-2">
+          <div class="def-box">El grupo 3 es heterogéneo. Los verbos <strong>-RE</strong> pierden la -e final; los verbos -IR irregulares pierden las últimas letras del infinitivo. Terminaciones singulares variables.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Pronombre</th><th>PRENDRE (-re)</th><th>PARTIR (-ir irrég.)</th><th>METTRE (-re)</th></tr></thead>
+            <tbody>
+              <tr><td><strong>je</strong></td><td class="hl-pr">prends</td><td class="hl-pr">pars</td><td class="hl-pr">mets</td></tr>
+              <tr><td><strong>tu</strong></td><td class="hl-pr">prends</td><td class="hl-pr">pars</td><td class="hl-pr">mets</td></tr>
+              <tr><td><strong>il/elle</strong></td><td class="hl-pr">prend</td><td class="hl-pr">part</td><td class="hl-pr">met</td></tr>
+              <tr><td><strong>nous</strong></td><td class="hl-pr">prenons</td><td class="hl-pr">partons</td><td class="hl-pr">mettons</td></tr>
+              <tr><td><strong>vous</strong></td><td class="hl-pr">prenez</td><td class="hl-pr">partez</td><td class="hl-pr">mettez</td></tr>
+              <tr><td><strong>ils/elles</strong></td><td class="hl-pr">prennent</td><td class="hl-pr">partent</td><td class="hl-pr">mettent</td></tr>
+            </tbody>
+          </table></div>
+          <div class="green-box"><strong>Familia PRENDRE:</strong> apprendre, comprendre, reprendre, surprendre → misma conjugación que prendre.</div>
+        </div>
+
+        <div class="chip-panel" id="forma-p-3">
+          <div class="def-box">Algunos verbos -ER tienen cambios ortográficos en las personas donde la terminación es muda (je, tu, il, ils) para mantener la pronunciación del radical.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Tipo</th><th>Verbo</th><th>je / tu / il / ils</th><th>nous / vous</th></tr></thead>
+            <tbody>
+              <tr><td><strong>e → è</strong> (e muette → è)</td><td>acheter</td><td class="hl-pr">achète / achètes / achète / achètent</td><td class="dim">achetons / achetez</td></tr>
+              <tr><td><strong>é → è</strong></td><td>préférer</td><td class="hl-pr">préfère / préfères / préfère / préfèrent</td><td class="dim">préférons / préférez</td></tr>
+              <tr><td><strong>l → ll</strong> (appel)</td><td>appeler</td><td class="hl-pr">appelle / appelles / appelle / appellent</td><td class="dim">appelons / appelez</td></tr>
+              <tr><td><strong>g → ge</strong> (ante -ons)</td><td>manger</td><td class="dim">mange / manges / mange / mangent</td><td class="hl-pr">mangeons / mangez</td></tr>
+              <tr><td><strong>c → ç</strong> (ante -ons)</td><td>commencer</td><td class="dim">commence… / commencent</td><td class="hl-pr">commençons / commencez</td></tr>
+              <tr><td><strong>y → i</strong> (devant e muette)</td><td>envoyer</td><td class="hl-pr">envoie / envoies / envoie / envoient</td><td class="dim">envoyons / envoyez</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3. IRREGULARES -->
+  <div class="sec-block" id="s-irreg">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los verbos más frecuentes del francés son irregulares. Hay que memorizarlos directamente porque no siguen ningún patrón predecible. Pulsa cada grupo para ver las conjugaciones.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('irreg',0)">Auxiliares (être, avoir)</button>
+        <button class="chip pr"        onclick="selectChip('irreg',1)">Movimiento (aller, venir, partir, sortir)</button>
+        <button class="chip pr"        onclick="selectChip('irreg',2)">Modales (pouvoir, vouloir, devoir, savoir)</button>
+        <button class="chip pr"        onclick="selectChip('irreg',3)">Faire, dire, lire, écrire, voir</button>
+        <button class="chip pr"        onclick="selectChip('irreg',4)">Tenir, valoir, falloir, pleuvoir</button>
+      </div>
+      <div id="irreg-panels">
+
+        <div class="chip-panel active" id="irreg-p-0">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">être</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">suis</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">es</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">est</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">sommes</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">êtes</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">sont</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">avoir</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">ai</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">as</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">a</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">avons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">avez</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">ont</span></div>
+            </div>
+          </div>
+          <div class="warn-box"><span class="warn-icon">💡</span>
+            <div class="warn-text"><em>Être</em> y <em>avoir</em> son los verbos más importantes del francés: sirven como auxiliares para formar todos los tiempos compuestos.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="irreg-p-1">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">aller</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">vais</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">vas</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">va</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">allons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">allez</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">vont</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">venir</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">viens</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">viens</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">vient</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">venons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">venez</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">viennent</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">partir</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">pars</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">pars</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">part</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">partons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">partez</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">partent</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">sortir</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">sors</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">sors</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">sort</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">sortons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">sortez</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">sortent</span></div>
+            </div>
+          </div>
+          <div class="green-box"><strong>Familia VENIR:</strong> revenir, devenir, se souvenir, tenir, appartenir, obtenir → misma raíz que venir en présent.</div>
+        </div>
+
+        <div class="chip-panel" id="irreg-p-2">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">pouvoir</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">peux</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">peux</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">peut</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">pouvons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">pouvez</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">peuvent</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">vouloir</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">veux</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">veux</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">veut</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">voulons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">voulez</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">veulent</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">devoir</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">dois</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">dois</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">doit</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">devons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">devez</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">doivent</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">savoir</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">sais</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">sais</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">sait</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">savons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">savez</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">savent</span></div>
+            </div>
+          </div>
+          <div class="note-box"><strong>Patrón doble raíz:</strong> pouvoir, vouloir y devoir tienen raíz distinta en singular (peux/peut, veux/veut, dois/doit) y plural (pouv-, voul-, dev-).</div>
+        </div>
+
+        <div class="chip-panel" id="irreg-p-3">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">faire</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">fais</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">fais</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">fait</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">faisons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">faites</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">font</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">dire</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">dis</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">dis</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">dit</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">disons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">dites</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">disent</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">lire</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">lis</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">lis</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">lit</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">lisons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">lisez</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">lisent</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">écrire</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">écris</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">écris</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">écrit</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">écrivons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">écrivez</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">écrivent</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">voir</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">vois</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">vois</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">voit</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">voyons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">voyez</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">voient</span></div>
+            </div>
+          </div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text"><strong>Atención faire:</strong> <em>vous faites</em> (no: <em>vous faisez</em> ✗) y <em>vous dites</em> (no: <em>vous disez</em> ✗) son formas totalmente irregulares.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="irreg-p-4">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">tenir</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">tiens</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">tiens</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">tient</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">tenons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">tenez</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">tiennent</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">valoir</div>
+              <div class="irreg-row"><span class="irreg-pron">je</span><span class="irreg-form">vaux</span></div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">vaux</span></div>
+              <div class="irreg-row"><span class="irreg-pron">il/elle</span><span class="irreg-form">vaut</span></div>
+              <div class="irreg-row"><span class="irreg-pron">nous</span><span class="irreg-form">valons</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vous</span><span class="irreg-form">valez</span></div>
+              <div class="irreg-row"><span class="irreg-pron">ils/elles</span><span class="irreg-form">valent</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">falloir</div>
+              <div class="irreg-row"><span class="irreg-pron">il</span><span class="irreg-form">faut</span></div>
+              <div style="padding:4px 10px;font-size:0.76em;color:var(--text3);font-style:italic">Solo 3ª pers. sing.</div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">pleuvoir</div>
+              <div class="irreg-row"><span class="irreg-pron">il</span><span class="irreg-form">pleut</span></div>
+              <div style="padding:4px 10px;font-size:0.76em;color:var(--text3);font-style:italic">Solo 3ª pers. sing.</div>
+            </div>
+          </div>
+          <div class="green-box"><strong>Familia TENIR:</strong> obtenir, maintenir, appartenir, soutenir → misma conjugación que tenir.</div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. VERBOS PRONOMINALES -->
+  <div class="sec-block" id="s-pron">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los verbos pronominales se conjugan con un <strong>pronombre reflexivo</strong> (me, te, se, nous, vous, se) que concuerda con el sujeto. Se dividen en reflexivos, recíprocos e inherentemente pronominales.
+      </div>
+
+      <div class="sec-label">Formación</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Pronombre</th><th>SE LEVER</th><th>S'HABILLER</th><th>SE SOUVENIR</th></tr></thead>
+        <tbody>
+          <tr><td><strong>je</strong></td><td class="hl-pr">me lève</td><td class="hl-pr">m'habille</td><td class="hl-pr">me souviens</td></tr>
+          <tr><td><strong>tu</strong></td><td class="hl-pr">te lèves</td><td class="hl-pr">t'habilles</td><td class="hl-pr">te souviens</td></tr>
+          <tr><td><strong>il/elle/on</strong></td><td class="hl-pr">se lève</td><td class="hl-pr">s'habille</td><td class="hl-pr">se souvient</td></tr>
+          <tr><td><strong>nous</strong></td><td class="hl-pr">nous levons</td><td class="hl-pr">nous habillons</td><td class="hl-pr">nous souvenons</td></tr>
+          <tr><td><strong>vous</strong></td><td class="hl-pr">vous levez</td><td class="hl-pr">vous habillez</td><td class="hl-pr">vous souvenez</td></tr>
+          <tr><td><strong>ils/elles</strong></td><td class="hl-pr">se lèvent</td><td class="hl-pr">s'habillent</td><td class="hl-pr">se souviennent</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Tipos de verbos pronominales</div>
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('pron',0)">Reflexivos</button>
+        <button class="chip pr"        onclick="selectChip('pron',1)">Recíprocos</button>
+        <button class="chip pr"        onclick="selectChip('pron',2)">Inherentemente pronominales</button>
+      </div>
+      <div id="pron-panels">
+        <div class="chip-panel active" id="pron-p-0">
+          <div class="def-box">La acción recae sobre el propio sujeto. El pronombre equivale a "me", "te", "se"…</div>
+          <div class="example-block pr"><div class="ex-fr">Je <span class="epr">me lave</span> les mains avant de manger.</div><div class="ex-es">Me lavo las manos antes de comer.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Elle <span class="epr">se coiffe</span> devant le miroir.</div><div class="ex-es">Se peina delante del espejo.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Nous <span class="epr">nous levons</span> à 7h chaque matin.</div><div class="ex-es">Nos levantamos a las 7h cada mañana.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Il <span class="epr">se regarde</span> dans la glace.</div><div class="ex-es">Se mira en el espejo.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Tu <span class="epr">t'habilles</span> vite le matin ?</div><div class="ex-es">¿Te vistes rápido por la mañana?</div></div>
+        </div>
+        <div class="chip-panel" id="pron-p-1">
+          <div class="def-box">Dos o más sujetos realizan la acción mutuamente. Solo posible en plural o con <em>on</em>.</div>
+          <div class="example-block pr"><div class="ex-fr">Ils <span class="epr">se téléphonent</span> tous les soirs.</div><div class="ex-es">Se llaman todos los días por teléfono.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Nous <span class="epr">nous voyons</span> chaque semaine.</div><div class="ex-es">Nos vemos cada semana.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Elles <span class="epr">s'écrivent</span> des messages.</div><div class="ex-es">Se escriben mensajes.</div></div>
+          <div class="example-block pr"><div class="ex-fr">On <span class="epr">se retrouve</span> à 18h devant le cinéma.</div><div class="ex-es">Quedamos a las 18h delante del cine.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ils <span class="epr">se disputent</span> souvent mais <span class="epr">s'aiment</span> beaucoup.</div><div class="ex-es">Se pelean a menudo pero se quieren mucho.</div></div>
+        </div>
+        <div class="chip-panel" id="pron-p-2">
+          <div class="def-box">Verbos que siempre van con pronombre reflexivo aunque no haya acción reflexiva ni recíproca. El pronombre es parte del verbo y no tiene valor semántico autónomo.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Verbo</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><strong>se souvenir de</strong></td><td>acordarse de</td><td>Je <span class="hl-pr">me souviens</span> de toi.</td></tr>
+              <tr><td><strong>s'en aller</strong></td><td>irse, marcharse</td><td>Il <span class="hl-pr">s'en va</span> demain.</td></tr>
+              <tr><td><strong>se méfier de</strong></td><td>desconfiar de</td><td>Elle <span class="hl-pr">se méfie</span> des inconnus.</td></tr>
+              <tr><td><strong>se taire</strong></td><td>callarse</td><td>Taisez-vous ! Ils <span class="hl-pr">se taisent</span>.</td></tr>
+              <tr><td><strong>s'évanouir</strong></td><td>desmayarse</td><td>Elle <span class="hl-pr">s'évanouit</span> sous la chaleur.</td></tr>
+              <tr><td><strong>se passer</strong></td><td>ocurrir, pasar</td><td>Qu'est-ce qui <span class="hl-pr">se passe</span> ?</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div class="warn-box" style="margin-top:12px"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Negación:</strong> <em>ne</em> va antes del pronombre reflexivo y <em>pas</em> después del verbo: <em>Je <strong>ne me lève pas</strong> tôt.</em> (no: <em>je me ne lève pas</em> ✗)</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 5. USOS -->
+  <div class="sec-block" id="s-usos">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El présent cubre territorios que en español se reparten entre varios tiempos. Dominar sus usos evita errores de interferencia.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('usos',0)">Acción actual / estado</button>
+        <button class="chip pr"        onclick="selectChip('usos',1)">Hábito / rutina</button>
+        <button class="chip pr"        onclick="selectChip('usos',2)">Verdad general</button>
+        <button class="chip pr"        onclick="selectChip('usos',3)">Futuro planificado</button>
+        <button class="chip pr"        onclick="selectChip('usos',4)">Pasado reciente (venir de)</button>
+        <button class="chip pr"        onclick="selectChip('usos',5)">Être en train de</button>
+      </div>
+      <div id="usos-panels">
+
+        <div class="chip-panel active" id="usos-p-0">
+          <div class="def-box">Lo que ocurre ahora mismo o el estado actual del sujeto. Equivale tanto a presente simple como a presente progresivo español.</div>
+          <div class="example-block pr"><div class="ex-fr">Il <span class="epr">pleut</span>.</div><div class="ex-es">Está lloviendo. / Llueve.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Où <span class="epr">es</span>-tu ? Je <span class="epr">suis</span> à la bibliothèque.</div><div class="ex-es">¿Dónde estás? Estoy en la biblioteca.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Elle <span class="epr">cherche</span> ses clés depuis cinq minutes.</div><div class="ex-es">Lleva cinco minutos buscando sus llaves.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Je <span class="epr">ne comprends</span> pas cette phrase.</div><div class="ex-es">No entiendo esta frase.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ils <span class="epr">habitent</span> à Lyon depuis deux ans.</div><div class="ex-es">Viven en Lyon desde hace dos años.</div><div class="ex-note">Con depuis + présent (no passé composé) para acciones que empezaron en el pasado y continúan.</div></div>
+        </div>
+
+        <div class="chip-panel" id="usos-p-1">
+          <div class="def-box">Acciones repetidas regularmente. Con marcadores como <em>tous les jours, chaque semaine, d'habitude, toujours, souvent, jamais</em>.</div>
+          <div class="example-block pr"><div class="ex-fr">Elle <span class="epr">prend</span> le métro tous les matins.</div><div class="ex-es">Coge el metro cada mañana.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Nous <span class="epr">mangeons</span> ensemble chaque dimanche.</div><div class="ex-es">Comemos juntos cada domingo.</div></div>
+          <div class="example-block pr"><div class="ex-fr">D'habitude, il <span class="epr">se lève</span> à 7h.</div><div class="ex-es">Normalmente se levanta a las 7h.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Vous <span class="epr">faites</span> du sport le week-end ?</div><div class="ex-es">¿Hacéis deporte el fin de semana?</div></div>
+          <div class="example-block pr"><div class="ex-fr">Je ne <span class="epr">regarde</span> jamais la télévision le matin.</div><div class="ex-es">Nunca veo la televisión por la mañana.</div></div>
+        </div>
+
+        <div class="chip-panel" id="usos-p-2">
+          <div class="def-box">Hechos permanentes, científicos o universalmente aceptados.</div>
+          <div class="example-block pr"><div class="ex-fr">La Terre <span class="epr">tourne</span> autour du Soleil.</div><div class="ex-es">La Tierra gira alrededor del Sol.</div></div>
+          <div class="example-block pr"><div class="ex-fr">L'eau <span class="epr">bout</span> à 100°C.</div><div class="ex-es">El agua hierve a 100°C.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Les chats <span class="epr">voient</span> dans le noir.</div><div class="ex-es">Los gatos ven en la oscuridad.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Paris <span class="epr">est</span> la capitale de la France.</div><div class="ex-es">París es la capital de Francia.</div></div>
+          <div class="example-block pr"><div class="ex-fr">La lumière <span class="epr">va</span> plus vite que le son.</div><div class="ex-es">La luz va más rápida que el sonido.</div></div>
+        </div>
+
+        <div class="chip-panel" id="usos-p-3">
+          <div class="def-box">Con marcadores temporales futuros (demain, ce soir, la semaine prochaine…), el présent expresa un futuro planificado o decidido.</div>
+          <div class="example-block pr"><div class="ex-fr">Demain, je <span class="epr">pars</span> en vacances.</div><div class="ex-es">Mañana me voy de vacaciones.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Le train <span class="epr">part</span> à 18h30.</div><div class="ex-es">El tren sale a las 18h30.</div></div>
+          <div class="example-block pr"><div class="ex-fr">On <span class="epr">se retrouve</span> ce soir à 20h ?</div><div class="ex-es">¿Quedamos esta noche a las 20h?</div></div>
+          <div class="example-block pr"><div class="ex-fr">La semaine prochaine, elle <span class="epr">commence</span> son nouveau travail.</div><div class="ex-es">La semana que viene empieza su nuevo trabajo.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Nous <span class="epr">emménageons</span> dans notre nouvel appartement samedi.</div><div class="ex-es">Nos mudamos a nuestro nuevo piso el sábado.</div></div>
+        </div>
+
+        <div class="chip-panel" id="usos-p-4">
+          <div class="def-box"><strong>Venir de + infinitif</strong> expresa una acción ocurrida hace muy poco (equivale al pasado reciente español "acabar de").</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Estructura</th><th>Ejemplo</th><th>Traducción</th></tr></thead>
+            <tbody>
+              <tr><td>venir de + inf.</td><td>Je <span class="hl-pr">viens de</span> manger.</td><td>Acabo de comer.</td></tr>
+              <tr><td>venir de + inf.</td><td>Il <span class="hl-pr">vient d'</span>arriver.</td><td>Acaba de llegar.</td></tr>
+              <tr><td>venir de + inf.</td><td>Nous <span class="hl-pr">venons de</span> terminer.</td><td>Acabamos de terminar.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block pr"><div class="ex-fr">Je <span class="epr">viens de</span> lire cet article — c'est fascinant !</div><div class="ex-es">Acabo de leer ese artículo — ¡es fascinante!</div></div>
+          <div class="example-block pr"><div class="ex-fr">Elle <span class="epr">vient de</span> raccrocher le téléphone.</div><div class="ex-es">Acaba de colgar el teléfono.</div></div>
+          <div class="example-block pr"><div class="ex-fr">On <span class="epr">vient de</span> recevoir votre message.</div><div class="ex-es">Acabamos de recibir su mensaje.</div></div>
+        </div>
+
+        <div class="chip-panel" id="usos-p-5">
+          <div class="def-box"><strong>Être en train de + infinitif</strong> enfatiza que la acción está ocurriendo exactamente en el momento de hablar (equivale al gerundio progresivo español).</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Estructura</th><th>Ejemplo</th><th>Traducción</th></tr></thead>
+            <tbody>
+              <tr><td>être en train de + inf.</td><td>Je <span class="hl-pr">suis en train de</span> travailler.</td><td>Estoy trabajando (ahora mismo).</td></tr>
+              <tr><td>être en train de + inf.</td><td>Il <span class="hl-pr">est en train de</span> dormir.</td><td>Está durmiendo (en este momento).</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block pr"><div class="ex-fr">Chut ! Le bébé <span class="epr">est en train de</span> dormir.</div><div class="ex-es">¡Chist! El bebé está durmiendo.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ne me dérange pas, je <span class="epr">suis en train de</span> préparer mon exposé.</div><div class="ex-es">No me molestes, estoy preparando mi presentación.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ils <span class="epr">sont en train de</span> discuter d'une question importante.</div><div class="ex-es">Están discutiendo una cuestión importante.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Qu'est-ce que tu <span class="epr">es en train de</span> faire ?</div><div class="ex-es">¿Qué estás haciendo?</div></div>
+          <div class="example-block pr"><div class="ex-fr">On <span class="epr">est en train de</span> chercher une solution.</div><div class="ex-es">Estamos buscando una solución.</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. NEGACIÓN E INTERROGACIÓN -->
+  <div class="sec-block" id="s-neginter">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El présent permite múltiples estructuras negativas e interrogativas. Dominarlas es imprescindible para el DELF a todos los niveles.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('negint',0)">Negación básica ne…pas</button>
+        <button class="chip pr"        onclick="selectChip('negint',1)">Otras negaciones</button>
+        <button class="chip pr"        onclick="selectChip('negint',2)">Interrogación (3 formas)</button>
+        <button class="chip pr"        onclick="selectChip('negint',3)">Interrogación con mots interrogatifs</button>
+      </div>
+      <div id="negint-panels">
+
+        <div class="chip-panel active" id="negint-p-0">
+          <div class="def-box">La negación estándar: <strong>ne + verbo + pas</strong>. En oral, el <em>ne</em> a menudo desaparece.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Afirmativo</th><th>Negativo (escrito)</th><th>Negativo (oral)</th></tr></thead>
+            <tbody>
+              <tr><td>Je <span class="hl-pr">parle</span> français.</td><td>Je <span class="hl-pr">ne parle pas</span> anglais.</td><td>(Je) <span class="hl-pr">parle pas</span> anglais.</td></tr>
+              <tr><td>Il <span class="hl-pr">aime</span> le café.</td><td>Il <span class="hl-pr">n'aime pas</span> le thé.</td><td>(Il) <span class="hl-pr">aime pas</span> le thé.</td></tr>
+              <tr><td>Nous <span class="hl-pr">avons</span> le temps.</td><td>Nous <span class="hl-pr">n'avons pas</span> le temps.</td><td>On <span class="hl-pr">a pas</span> le temps.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text">Con verbos pronominales: <em>Je <strong>ne me lève pas</strong></em> — el <em>ne</em> va antes del pronombre reflexivo, y <em>pas</em> después del verbo conjugado.</div>
+          </div>
+          <div class="example-block pr"><div class="ex-fr">Elle <span class="epr">ne comprend pas</span> la question.</div><div class="ex-es">No entiende la pregunta.</div></div>
+          <div class="example-block pr"><div class="ex-fr">On <span class="epr">n'a pas</span> assez de temps.</div><div class="ex-es">No tenemos suficiente tiempo.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Je <span class="epr">ne me souviens pas</span> de son nom.</div><div class="ex-es">No me acuerdo de su nombre.</div></div>
+        </div>
+
+        <div class="chip-panel" id="negint-p-1">
+          <div class="def-box">Además de <em>ne…pas</em>, existen otras locuciones negativas que forman un sistema completo.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Negación</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ne…jamais</strong></td><td>nunca</td><td>Il <span class="hl-pr">ne mange jamais</span> de viande.</td></tr>
+              <tr><td><strong>ne…plus</strong></td><td>ya no</td><td>Elle <span class="hl-pr">ne fume plus</span>.</td></tr>
+              <tr><td><strong>ne…rien</strong></td><td>nada</td><td>Je <span class="hl-pr">ne comprends rien</span>.</td></tr>
+              <tr><td><strong>ne…personne</strong></td><td>nadie</td><td>Il <span class="hl-pr">ne connaît personne</span> ici.</td></tr>
+              <tr><td><strong>ne…que</strong></td><td>solo, solamente</td><td>Elle <span class="hl-pr">ne parle qu'</span>anglais.</td></tr>
+              <tr><td><strong>ne…ni…ni</strong></td><td>ni…ni</td><td>Il <span class="hl-pr">ne mange ni</span> viande <span class="hl-pr">ni</span> poisson.</td></tr>
+              <tr><td><strong>ne…pas encore</strong></td><td>todavía no</td><td>Elle <span class="hl-pr">n'est pas encore</span> arrivée.</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="chip-panel" id="negint-p-2">
+          <div class="def-box">El francés tiene tres estructuras interrogativas. La elección depende del registro.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Tipo</th><th>Estructura</th><th>Registro</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Entonación</strong></td><td>Frase afirmativa + ↑</td><td>Oral / familiar</td><td>Tu <span class="hl-pr">parles</span> français ?</td></tr>
+              <tr><td><strong>Est-ce que</strong></td><td>Est-ce que + frase</td><td>Neutro / oral</td><td><span class="hl-pr">Est-ce que</span> tu parles français ?</td></tr>
+              <tr><td><strong>Inversión</strong></td><td>Verbo-sujet</td><td>Formal / escrito</td><td><span class="hl-pr">Parles-tu</span> français ?</td></tr>
+            </tbody>
+          </table></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text">Con 3ª persona singular en inversión, si el verbo termina en vocal, se añade <strong>-t-</strong>: <em>Parle-<strong>t</strong>-il ?</em> · <em>A-<strong>t</strong>-elle ?</em> · <em>Va-<strong>t</strong>-on ?</em></div>
+          </div>
+          <div class="example-block pr"><div class="ex-fr">Tu <span class="epr">aimes</span> le cinéma ? / Est-ce que tu <span class="epr">aimes</span> le cinéma ? / <span class="epr">Aimes</span>-tu le cinéma ?</div><div class="ex-es">¿Te gusta el cine? (3 formas, misma pregunta)</div></div>
+        </div>
+
+        <div class="chip-panel" id="negint-p-3">
+          <div class="def-box">Los mots interrogatifs se combinan con las tres estructuras. Los más frecuentes en DELF.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Mot interrogatif</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><strong>qui</strong></td><td>quién / a quién</td><td>Qui <span class="hl-pr">est</span> cette personne ?</td></tr>
+              <tr><td><strong>que / qu'est-ce que</strong></td><td>qué (COD)</td><td>Qu'est-ce que tu <span class="hl-pr">fais</span> ?</td></tr>
+              <tr><td><strong>où</strong></td><td>dónde</td><td>Où <span class="hl-pr">habitez</span>-vous ?</td></tr>
+              <tr><td><strong>quand</strong></td><td>cuándo</td><td>Quand est-ce qu'il <span class="hl-pr">arrive</span> ?</td></tr>
+              <tr><td><strong>comment</strong></td><td>cómo</td><td>Comment tu <span class="hl-pr">t'appelles</span> ?</td></tr>
+              <tr><td><strong>pourquoi</strong></td><td>por qué</td><td>Pourquoi tu <span class="hl-pr">pars</span> si tôt ?</td></tr>
+              <tr><td><strong>combien (de)</strong></td><td>cuánto / cuántos</td><td>Combien ça <span class="hl-pr">coûte</span> ?</td></tr>
+              <tr><td><strong>quel(le)(s)</strong></td><td>cuál / qué + sustantivo</td><td>Quel film tu <span class="hl-pr">préfères</span> ?</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 7 errores más frecuentes de hispanohablantes con el présent de l'indicatif.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Volver arriba
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script>
+/* DATA */
+const TRAPS = [
+  {name:'Gerundio progresivo: estoy haciendo',
+   wrong:"Je suis parlant / Je fais parler",
+   right:"Je parle / Je suis en train de parler",
+   expl:'El francés no tiene gerundio progresivo. Para "estoy hablando" se usa el présent simple (<strong>je parle</strong>) o, si se quiere enfatizar la duración exacta, <strong>être en train de + infinitif</strong>.'},
+  {name:'depuis + présent (no passé composé)',
+   wrong:"J'ai habité ici depuis trois ans.",
+   right:"J'habite ici depuis trois ans.",
+   expl:'Con <strong>depuis</strong>, si la acción empezó en el pasado y <strong>continúa en el presente</strong>, se usa présent, no passé composé. El PC con depuis indica que la acción ha terminado.'},
+  {name:'Negación con verbos pronominales',
+   wrong:"Je me ne lève pas tôt.",
+   right:"Je ne me lève pas tôt.",
+   expl:'La estructura correcta es <strong>ne + pronombre reflexivo + verbo + pas</strong>. El <em>ne</em> siempre va antes del pronombre reflexivo, nunca entre el pronombre y el verbo.'},
+  {name:'-t- eufónico en inversión',
+   wrong:"Parle-il français ? / A-elle faim ?",
+   right:"Parle-t-il français ? / A-t-elle faim ?",
+   expl:'Cuando el verbo termina en vocal y el sujeto invertido empieza por vocal, se intercala <strong>-t-</strong> por eufonía: <em>parle-t-il, a-t-elle, va-t-on, aime-t-il</em>…'},
+  {name:'vous faites / vous dites (irregulares)',
+   wrong:"Vous faisez / vous disez",
+   right:"Vous faites / vous dites",
+   expl:'<em>Faire</em> y <em>dire</em> son completamente irregulares en la forma <em>vous</em>: <strong>vous faites, vous dites</strong>. Son las únicas excepciones a la regla -ez del présent.'},
+  {name:'Verbos -IR regulares vs. irregulares',
+   wrong:"Je pars → je partis (añadiendo -iss-)",
+   right:"Je pars (partir es irregular, sin -iss-)",
+   expl:'No todos los verbos -IR son regulares. <strong>Finir, choisir, réussir</strong> añaden -iss- → je <em>finis, choisis, réussis</em>. Pero <strong>partir, sortir, dormir, mentir, sentir</strong> son irregulares y NO añaden -iss-.'},
+  {name:'Cambio ortográfico: manger / commencer',
+   wrong:"Nous mangons / nous commençons",
+   right:"Nous mangeons / nous commençons",
+   expl:'Los verbos en <strong>-ger</strong> añaden una <em>e</em> ante -ons (nous <em>mangeons</em>, nous <em>nageons</em>) para mantener el sonido suave. Los verbos en <strong>-cer</strong> usan ç ante -ons (nous <em>commençons</em>).'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+/* CHIP SELECT */
+function selectChip(ns, idx) {
+  document.querySelectorAll('.chip-bar').forEach(bar => {
+    const first = bar.querySelector('.chip');
+    if (first && first.getAttribute('onclick') && first.getAttribute('onclick').includes("'" + ns + "'")) {
+      bar.querySelectorAll('.chip').forEach((c,i) => c.classList.toggle('active', i===idx));
+    }
+  });
+  const panelsEl = document.getElementById(ns + '-panels');
+  if (panelsEl) panelsEl.querySelectorAll(':scope > .chip-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+}
+
+/* NAV */
+function showSection(id, btn) {
+  document.querySelectorAll('.sec-block').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.snav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function switchMode(mode, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + mode).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('section-nav').style.display = mode==='ref' ? '' : 'none';
+}
+function setFontSize(v) { document.documentElement.style.setProperty('--fs', v+'px'); }
+
+/* EXERCISE STATE */
+let exType='fill', exDiff='B1', exQty=5, exFoco='mix';
+let exTotal=0, exAnswered=0, exCorrect=0, exWrong=0;
+
+document.querySelectorAll('.ex-opt-btn:not(.foco)').forEach(b => b.addEventListener('click', function(){
+  document.querySelectorAll('.ex-opt-btn:not(.foco)').forEach(x => x.classList.remove('active'));
+  this.classList.add('active'); exType = this.dataset.type;
+}));
+document.querySelectorAll('.ex-opt-btn.foco').forEach(b => b.addEventListener('click', function(){
+  document.querySelectorAll('.ex-opt-btn.foco').forEach(x => x.classList.remove('active'));
+  this.classList.add('active'); exFoco = this.dataset.foco;
+}));
+
+function setDiff(d) {
+  exDiff = d;
+  document.querySelectorAll('#diff-btns .pill-btn').forEach(b => {
+    b.classList.remove('active','A2','B1','B2');
+    if (b.textContent.trim()===d) b.classList.add('active',d);
+  });
+}
+function setQty(q) {
+  exQty = q;
+  document.querySelectorAll('#qty-btns .pill-btn').forEach(b =>
+    b.classList.toggle('active', parseInt(b.textContent.trim())===q));
+}
+
+/* GENERATE */
+const FOCO_DESC = {
+  mix:   "general del présent de l'indicatif: conjugación de verbos regulares e irregulares, verbos pronominales, negación, interrogación y usos especiales",
+  irreg: 'verbos irregulares frecuentes: être, avoir, aller, faire, venir, partir, pouvoir, vouloir, devoir, savoir, dire, lire, voir, tenir, falloir',
+  pron:  'verbos pronominales: conjugación correcta con pronombre reflexivo, posición en negación, usos reflexivos y recíprocos',
+  neg:   'estructuras negativas: ne…pas, ne…jamais, ne…plus, ne…rien, ne…personne, ne…que, ne…ni…ni, posición del ne con pronominales',
+  inter: 'interrogación: las tres formas (entonación, est-ce que, inversión), -t- eufónico, mots interrogatifs (qui, que, où, quand, comment, pourquoi, combien, quel)',
+  usos:  'usos especiales del présent: depuis + présent, venir de + inf., être en train de + inf., présent con valor de futuro planificado',
+};
+const TYPE_DESC = {
+  fill:      'completar huecos: el alumno escribe la forma correcta',
+  choice:    'elección múltiple: 4 opciones, solo una correcta',
+  transform: 'transformación: reformular la frase según la instrucción',
+  mix:       'mixto: combina fill, choice y transform',
+};
+
+const RULE_LABELS = {
+  's-intro':'Qué es el présent','s-formacion':'Formación',
+  's-irreg':'Irregulares','s-pron':'Verbos pronominales',
+  's-usos':'Usos','s-neginter':'Negación e interrogación','s-trampas':'Trampas'
+};
+
+function renderExercises(exs) {
+  const area = document.getElementById('exercise-area');
+  const labels = {fill:'Completar', choice:'Elección múltiple', transform:'Transformación'};
+  area.innerHTML = exs.map((ex,i) =>
+    `<div class="exercise-card" id="ex-card-${i}" data-expl="${esc(ex.explanation)}" data-rule="${ex.rule_ref||''}">
+      <div class="exercise-card-header">
+        <span class="ex-num">${i+1}</span>
+        <span class="ex-type-badge">${labels[ex.type]||ex.type}</span>
+        <span class="ex-diff-badge ${ex.diff}">${ex.diff}</span>
+        <span class="ex-status" id="ex-st-${i}"></span>
+      </div>
+      <div class="exercise-body">
+        ${buildBody(ex,i)}
+        <div class="ex-feedback" id="ex-fb-${i}"></div>
+      </div>
+    </div>`).join('');
+  exs.forEach((ex,i) => {
+    const chk = document.getElementById('chk-'+i);
+    if (chk) chk.addEventListener('click', ()=>checkAnswer(ex,i));
+    const inp = document.getElementById('inp-'+i);
+    if (inp) inp.addEventListener('keydown', e => { if(e.key==='Enter') checkAnswer(ex,i); });
+  });
+}
+
+function buildBody(ex,i) {
+  if (ex.type==='fill')
+    return `<div class="exercise-prompt">${ex.prompt_parts[0]}<input class="fill-input" id="inp-${i}" type="text" placeholder="${ex.blank_hint||'…'}" autocomplete="off" spellcheck="false">${ex.prompt_parts[1]||''}</div><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  if (ex.type==='choice')
+    return `<div class="exercise-prompt">${ex.prompt}</div><div class="choices-grid">${ex.options.map((o,j)=>`<button class="choice-btn" id="ch-${i}-${j}" onclick="selectChoice(${i},${j},${ex.correct_index})">${o}</button>`).join('')}</div>`;
+  if (ex.type==='transform')
+    return `<div class="exercise-prompt">${ex.instruction}<br><em>${ex.original}</em></div><input class="transform-input" id="inp-${i}" type="text" placeholder="Tu respuesta…" autocomplete="off" spellcheck="false"><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  return '';
+}
+
+function checkAnswer(ex,i) {
+  const inp = document.getElementById('inp-'+i);
+  if (!inp||inp.disabled) return;
+  const ok = inp.value.trim().toLowerCase() === ex.answer.trim().toLowerCase();
+  inp.classList.add(ok?'ok':'err'); inp.disabled=true;
+  const chk = document.getElementById('chk-'+i); if(chk) chk.disabled=true;
+  showFeedback(i, ok, ex.answer, ex.explanation, ex.rule_ref);
+  recordAnswer(ok);
+}
+
+function selectChoice(idx, chosen, correct) {
+  const c0 = document.getElementById(`ch-${idx}-0`);
+  if (!c0||c0.disabled) return;
+  for(let j=0;j<4;j++){
+    const b=document.getElementById(`ch-${idx}-${j}`);
+    if(!b) continue; b.disabled=true;
+    if(j===correct)b.classList.add('ok'); else if(j===chosen)b.classList.add('err');
+  }
+  const card=document.getElementById('ex-card-'+idx);
+  showFeedback(idx, chosen===correct, null, card.dataset.expl, card.dataset.rule);
+  recordAnswer(chosen===correct);
+}
+
+function showFeedback(i, ok, ans, expl, ruleRef) {
+  document.getElementById('ex-st-'+i).textContent = ok?'✅':'❌';
+  const fb=document.getElementById('ex-fb-'+i);
+  fb.className='ex-feedback visible '+(ok?'ok':'err');
+  const link = RULE_LABELS[ruleRef]
+    ? `<span class="fb-rule-link" onclick="goToRule('${ruleRef}')">📖 Ver: ${RULE_LABELS[ruleRef]}</span>` : '';
+  let html = ok ? `<strong>✓ Correcto</strong>` : `<strong>✗ Incorrecto</strong>${ans?` — Respuesta: <strong>${ans}</strong>`:''}`;
+  if(expl) html += `<br><span style="font-size:0.88em;opacity:0.92;margin-top:3px;display:block">${expl}</span>`;
+  html += link; fb.innerHTML=html;
+}
+
+function goToRule(ref) {
+  switchMode('ref', document.querySelector('.mode-btn'));
+  setTimeout(()=>{
+    showSection(ref, document.querySelector(`.snav-btn[onclick*="${ref}"]`));
+    document.getElementById(ref).scrollIntoView({behavior:'smooth',block:'start'});
+  }, 80);
+}
+
+function recordAnswer(ok) { exAnswered++; if(ok)exCorrect++; else exWrong++; updateProgress(); }
+
+function updateProgress() {
+  const pct = exTotal>0?(exAnswered/exTotal)*100:0;
+  document.getElementById('progress-frac').textContent=`${exAnswered} / ${exTotal}`;
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('score-correct').textContent=`${exCorrect} correcta${exCorrect!==1?'s':''}`;
+  document.getElementById('score-wrong').textContent=`${exWrong} error${exWrong!==1?'es':''}`;
+  if(exAnswered>=exTotal&&exTotal>0) showFinalScore();
+}
+
+function showFinalScore() {
+  const pct = Math.round((exCorrect/exTotal)*100);
+  document.getElementById('final-score-bar').classList.add('visible');
+  document.getElementById('final-num').textContent=`${exCorrect} / ${exTotal}`;
+  const fill=document.getElementById('final-fill');
+  fill.style.width=pct+'%';
+  fill.style.background=pct>=80?'var(--green)':pct>=50?'var(--accent)':'var(--red)';
+  const msgs={100:'¡Parfait! Dominas el présent de l\'indicatif. 🎉',80:'Très bien! Repasa los errores marcados.',50:'Bien, pero refuerza los bloques señalados.',0:'Vuelve a Referencia antes de repetir.'};
+  document.getElementById('final-msg').textContent=msgs[pct===100?100:pct>=80?80:pct>=50?50:0];
+  document.getElementById('score-pill').style.display='';
+  document.getElementById('score-pill-val').textContent=`${exCorrect}/${exTotal}`;
+}
+
+function resetExercises() {
+  document.getElementById('exercise-area').innerHTML=`<div class="state-msg"><div class="state-icon">✏️</div><p>Elige tipo, foco, nivel y cantidad, y pulsa <strong>Generar ejercicios</strong>.</p></div>`;
+  document.getElementById('progress-wrap').classList.remove('visible');
+  document.getElementById('final-score-bar').classList.remove('visible');
+  document.getElementById('score-pill').style.display='none';
+  exAnswered=0; exCorrect=0; exWrong=0;
+}
+
+function esc(s) { return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+/* INIT */
+renderTraps();
+</script>
+</body>
+</html>

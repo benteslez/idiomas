@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammaire · L'Accord du Participe Passé</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ede9df;
+  --card: #faf7f1;
+  --border: #c4bead;
+  --text: #1a1814;
+  --text2: #44413a;
+  --text3: #706c64;
+  --accent: #7a5a0a;
+  --accent-light: #f0e0c0;
+  --accent-mid: #b89050;
+  --warn-bg: #fdf0cc;
+  --shadow: 0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm: 0 1px 6px rgba(0,0,0,0.08);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --green: #1a6028;  --green-bg: #e4f2e8;
+  --red: #a81e2e;    --red-bg: #fce6e8;
+  --blue: #163494;   --blue-bg: #e6ebf8;
+  --purple: #6a1a8a; --purple-bg: #f2e6f8;
+  /* accord colours */
+  --av-color: #163494;  --av-bg: #e6ebf8;   /* avec avoir     — blue   */
+  --et-color: #1a6028;  --et-bg: #e4f2e8;   /* avec être      — green  */
+  --pr-color: #6a1a8a;  --pr-bg: #f2e6f8;   /* pronominaux    — purple */
+  --ac-color: #8b1a4a;  --ac-bg: #f8e6ee;   /* accord form    — wine   */
+  --fs: 15px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: var(--fs); }
+
+.site-header { background: var(--card); border-bottom: 2px solid var(--border); padding: 20px 20px 14px; }
+.header-top { display: flex; align-items: baseline; gap: 10px; margin-bottom: 3px; flex-wrap: wrap; }
+.site-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem,5vw,1.85rem); font-weight: 700; color: var(--text); }
+.header-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent-mid); border-radius: 20px; padding: 3px 10px; }
+.subtitle { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
+.stats-row { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+.stat-pill { border-radius: 20px; padding: 4px 11px; font-size: 0.76rem; font-weight: 600; border: 1px solid; }
+.stat-pill.av { background: var(--av-bg); color: var(--av-color); border-color: var(--av-color); }
+.stat-pill.et { background: var(--et-bg); color: var(--et-color); border-color: var(--et-color); }
+.stat-pill.pr { background: var(--pr-bg); color: var(--pr-color); border-color: var(--pr-color); }
+.stat-pill.neu { background: var(--bg); color: var(--text2); border-color: var(--border); font-weight: 500; }
+.fs-wrap { display: flex; align-items: center; gap: 7px; margin-left: auto; }
+.fs-slider { width: 76px; accent-color: var(--accent); cursor: pointer; }
+.fs-sz { color: var(--text3); font-weight: 700; }
+
+.mode-toggle { display: flex; border-bottom: 2px solid var(--border); background: var(--card); }
+.mode-btn { flex: 1; padding: 12px 8px; font-family: 'DM Sans', sans-serif; font-size: 0.84rem; font-weight: 600; color: var(--text3); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.15s; margin-bottom: -2px; }
+.mode-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.section-nav { position: sticky; top: 0; z-index: 200; background: var(--card); border-bottom: 2px solid var(--border); box-shadow: var(--shadow-sm); }
+.section-nav-inner { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.section-nav-inner::-webkit-scrollbar { display: none; }
+.snav-btn { flex-shrink: 0; padding: 11px 16px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; color: var(--text3); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.snav-btn:hover { color: var(--text2); }
+.snav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.main-layout { max-width: 860px; margin: 0 auto; padding: 16px 16px 40px; }
+.panel { display: none; } .panel.active { display: block; }
+.sec-block { display: none; } .sec-block.active { display: block; }
+.gram-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden; }
+.gram-card-body { padding: 18px; }
+
+.def-box { background: var(--warn-bg); border-left: 4px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 15px; margin-bottom: 14px; line-height: 1.65; }
+.def-box strong { color: var(--accent); font-weight: 700; }
+.warn-box { background: #fff4e0; border: 1px solid #c8900a; border-radius: var(--radius-sm); padding: 10px 13px; margin: 10px 0; font-size: 0.9em; display: flex; gap: 8px; align-items: flex-start; }
+.warn-icon { flex-shrink: 0; margin-top: 1px; }
+.warn-text { color: var(--text2); line-height: 1.55; }
+.warn-text strong { color: #7a4400; font-weight: 700; }
+.note-box { background: var(--purple-bg); border-left: 4px solid var(--purple); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 10px 0; font-size: 0.9em; color: var(--text2); line-height: 1.55; }
+.note-box strong { color: var(--purple); font-weight: 700; }
+.green-box { background: var(--green-bg); border-left: 4px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 10px 0; font-size: 0.9em; color: var(--text2); line-height: 1.55; }
+.green-box strong { color: var(--green); font-weight: 700; }
+
+/* accord demonstration */
+.accord-demo { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
+.acc-base { font-weight: 700; font-size: 0.95em; color: var(--text); }
+.acc-suf { color: var(--ac-color); font-weight: 700; font-size: 0.95em; border-bottom: 2px solid var(--ac-color); }
+.acc-none { color: var(--text3); font-size: 0.82em; }
+.acc-arrow { color: var(--text3); font-size: 0.9em; }
+
+.example-block { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 8px 0; }
+.example-block.av { background: var(--av-bg); border-left: 4px solid var(--av-color); }
+.example-block.et { background: var(--et-bg); border-left: 4px solid var(--et-color); }
+.example-block.pr { background: var(--pr-bg); border-left: 4px solid var(--pr-color); }
+.example-block.neu { background: var(--blue-bg); border-left: 4px solid var(--blue); }
+.example-block.mix { background: #f0f0f8; border-left: 4px solid #606080; }
+.ex-fr { font-weight: 600; margin-bottom: 3px; color: var(--text); }
+.eav { color: var(--av-color); font-weight: 700; }
+.eet { color: var(--et-color); font-weight: 700; }
+.epr { color: var(--pr-color); font-weight: 700; }
+.eac { color: var(--ac-color); font-weight: 700; }  /* the accord ending */
+.ex-fr em { color: var(--blue); font-style: normal; font-weight: 700; }
+.ex-es { color: var(--text2); font-size: 0.88em; font-style: italic; }
+.ex-note { font-size: 0.78em; color: var(--text3); margin-top: 3px; font-weight: 500; }
+
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.gram-table { width: 100%; border-collapse: collapse; min-width: 280px; }
+.gram-table th { background: var(--bg); border-bottom: 2px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; text-align: left; font-size: 0.72em; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+.gram-table td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; vertical-align: top; }
+.gram-table tr:last-child td { border-bottom: none; }
+.gram-table tr:nth-child(even) td { background: #f4f0e6; }
+.gram-table td:last-child, .gram-table th:last-child { border-right: none; }
+.hl-av { color: var(--av-color); font-weight: 700; }
+.hl-et { color: var(--et-color); font-weight: 700; }
+.hl-pr { color: var(--pr-color); font-weight: 700; }
+.hl-ac { color: var(--ac-color); font-weight: 700; }
+.hl    { color: var(--accent);   font-weight: 700; }
+.dim   { color: var(--text3); font-size: 0.88em; }
+.ok-cell  { color: var(--green); font-weight: 700; }
+.err-cell { color: var(--red);   font-weight: 600; font-style: italic; }
+
+/* accord matrix */
+.acc-matrix { display: grid; grid-template-columns: auto 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; margin: 12px 0; font-size: 0.88em; }
+.acc-cell { background: var(--card); padding: 8px 12px; display: flex; align-items: center; justify-content: center; text-align: center; }
+.acc-cell.hdr { background: var(--bg); font-weight: 700; font-size: 0.78em; letter-spacing: 0.05em; color: var(--text3); }
+.acc-cell.row-hdr { background: var(--bg); font-weight: 700; color: var(--text2); justify-content: flex-start; }
+.acc-cell .pp { font-weight: 700; color: var(--text); }
+.acc-cell .suf { color: var(--ac-color); font-weight: 700; border-bottom: 2px solid var(--ac-color); }
+.acc-cell.none-suf .pp { color: var(--text3); }
+
+.chip-bar { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.chip { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; white-space: nowrap; }
+.chip:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+.chip.active    { background: var(--accent);    color: #fff; border-color: var(--accent); }
+.chip.av.active { background: var(--av-color);  border-color: var(--av-color); }
+.chip.et.active { background: var(--et-color);  border-color: var(--et-color); }
+.chip.pr.active { background: var(--pr-color);  border-color: var(--pr-color); }
+.chip-panel { display: none; } .chip-panel.active { display: block; }
+
+.sec-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin: 14px 0 7px; }
+
+.trap-cards { display: flex; flex-direction: column; gap: 10px; }
+.trap-card { border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.trap-card-header { padding: 11px 14px; background: var(--bg); }
+.trap-name { font-weight: 700; font-size: 0.9em; color: var(--text); margin-bottom: 7px; }
+.trap-vs { display: flex; gap: 8px; flex-wrap: wrap; }
+.trap-wrong { background: var(--red-bg);  border: 1.5px solid #d09098; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--red);   font-weight: 500; }
+.trap-right { background: var(--green-bg); border: 1.5px solid #80b890; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--green); font-weight: 500; }
+.trap-expl { padding: 10px 14px 12px; font-size: 0.86em; color: var(--text2); line-height: 1.6; border-top: 1px solid var(--border); background: var(--card); }
+.trap-expl strong { color: var(--text); font-weight: 700; }
+
+.exercise-controls { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.exercise-controls h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+.ctrl-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 7px; display: block; }
+.ex-options { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.ex-opt-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.ex-opt-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+.row-btns { display: flex; gap: 7px; margin-bottom: 14px; flex-wrap: wrap; }
+.pill-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.pill-btn:hover:not(.active) { background: var(--border); }
+.pill-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+.pill-btn.diff.active.A2 { background: var(--green); border-color: var(--green); color: #fff; }
+.pill-btn.diff.active.B1 { background: var(--blue);  border-color: var(--blue);  color: #fff; }
+.pill-btn.diff.active.B2 { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-generate { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; border: none; border-radius: 10px; padding: 13px; font-family: 'DM Sans', sans-serif; font-size: 0.92em; font-weight: 700; cursor: pointer; background: var(--accent); color: white; transition: all 0.18s; margin-top: 4px; }
+.btn-generate:hover:not(:disabled) { filter: brightness(1.1); box-shadow: 0 4px 14px rgba(122,90,10,0.32); }
+.btn-generate:disabled { opacity: 0.5; cursor: not-allowed; }
+.spinner { display: none; animation: spin 0.8s linear infinite; }
+.btn-generate.loading .spinner { display: inline; }
+.btn-generate.loading .btn-icon { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.progress-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 14px; display: none; }
+.progress-wrap.visible { display: block; }
+.progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.progress-label { font-size: 0.78em; color: var(--text3); font-weight: 600; }
+.progress-frac  { font-size: 0.92em; font-weight: 700; color: var(--accent); }
+.progress-track { height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-fill  { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.35s ease; }
+.progress-score { display: flex; gap: 14px; margin-top: 9px; font-size: 0.8em; flex-wrap: wrap; align-items: center; }
+.score-item { display: flex; align-items: center; gap: 5px; font-weight: 500; color: var(--text2); }
+.score-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.score-dot.g { background: var(--green); } .score-dot.r { background: var(--red); }
+.btn-retry { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 13px; font-family: 'DM Sans', sans-serif; font-size: 0.78em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; margin-left: auto; }
+.btn-retry:hover { background: var(--border); }
+.final-score-bar { display: none; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
+.final-score-bar.visible { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.final-num { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+.final-label { font-size: 0.74em; color: var(--text3); }
+.final-track { flex: 1; min-width: 80px; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.final-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+.final-msg { font-size: 0.84em; color: var(--text2); width: 100%; font-weight: 500; }
+.exercise-area { display: none; } .exercise-area.visible { display: block; }
+.exercise-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 12px; overflow: hidden; }
+.exercise-card-header { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--border); }
+.ex-num { font-weight: 700; color: var(--accent); font-size: 0.88em; }
+.ex-type-badge { font-size: 0.68em; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-mid); border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge { font-size: 0.68em; font-weight: 700; border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge.A2 { background: var(--green-bg); color: var(--green); border: 1px solid #80b890; }
+.ex-diff-badge.B1 { background: var(--blue-bg);  color: var(--blue);  border: 1px solid #90a8e0; }
+.ex-diff-badge.B2 { background: var(--warn-bg);  color: var(--accent); border: 1px solid var(--accent-mid); }
+.ex-status { margin-left: auto; }
+.exercise-body { padding: 16px 18px; }
+.exercise-prompt { line-height: 1.7; margin-bottom: 12px; color: var(--text); }
+.exercise-prompt em { color: var(--accent); font-style: italic; font-weight: 600; }
+.fill-input { border: none; border-bottom: 2px solid var(--accent-mid); background: var(--accent-light); padding: 2px 8px; border-radius: 4px 4px 0 0; font-family: 'DM Sans', sans-serif; font-size: 1em; color: var(--text); min-width: 130px; outline: none; transition: border-color 0.15s; }
+.fill-input:focus { border-bottom-color: var(--accent); }
+.fill-input.ok  { background: var(--green-bg); border-bottom-color: var(--green); }
+.fill-input.err { background: var(--red-bg);   border-bottom-color: var(--red); }
+.choices-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 10px; }
+.choice-btn { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.88em; font-weight: 500; cursor: pointer; text-align: left; background: var(--bg); color: var(--text); transition: all 0.15s; }
+.choice-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-light); }
+.choice-btn.ok  { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 700; }
+.choice-btn.err { background: var(--red-bg);   border-color: var(--red);   color: var(--red); }
+.choice-btn:disabled { cursor: default; }
+.transform-input { width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.9em; background: var(--bg); color: var(--text); outline: none; margin-bottom: 8px; transition: border-color 0.15s; }
+.transform-input:focus { border-color: var(--accent); }
+.transform-input.ok  { background: var(--green-bg); border-color: var(--green); }
+.transform-input.err { background: var(--red-bg);   border-color: var(--red); }
+.btn-check { border: 1.5px solid var(--accent); border-radius: 20px; padding: 7px 18px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 700; cursor: pointer; background: transparent; color: var(--accent); transition: all 0.15s; }
+.btn-check:hover:not(:disabled) { background: var(--accent); color: white; }
+.btn-check:disabled { opacity: 0.35; cursor: default; }
+.ex-feedback { display: none; border-radius: var(--radius-sm); padding: 11px 14px; line-height: 1.55; margin-top: 10px; font-size: 0.9em; }
+.ex-feedback.visible { display: block; }
+.ex-feedback.ok  { background: var(--green-bg); border: 1.5px solid #80b890; color: #0e4818; }
+.ex-feedback.err { background: var(--red-bg);   border: 1.5px solid #c08090; color: #700018; }
+.fb-rule-link { display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 0.84em; font-weight: 700; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.skeleton-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 12px; }
+.skel { background: linear-gradient(90deg,var(--border) 25%,#e6e0d4 50%,var(--border) 75%); background-size: 200% 100%; animation: skel 1.4s infinite; border-radius: 4px; height: 13px; margin-bottom: 9px; }
+@keyframes skel { to { background-position: -200% 0; } }
+.state-msg { text-align: center; padding: 40px 20px; color: var(--text3); }
+.state-icon { font-size: 2rem; margin-bottom: 10px; }
+.state-msg p { max-width: 260px; margin: 0 auto; line-height: 1.6; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <h1>L'Accord du Participe Passé</h1>
+    <span class="header-tag">Grammaire</span>
+  </div>
+  <div class="subtitle">Gramática francesa · DELF B1–B2</div>
+  <div class="stats-row">
+    <div class="stat-pill av">avec avoir</div>
+    <div class="stat-pill et">avec être</div>
+    <div class="stat-pill pr">pronominaux</div>
+    <div class="stat-pill neu" id="score-pill" style="display:none">Resultado: <span id="score-pill-val">—</span></div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referencia</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Panorama</button>
+    <button class="snav-btn"        onclick="showSection('s-avoir',this)">2. Avec avoir</button>
+    <button class="snav-btn"        onclick="showSection('s-etre',this)">3. Avec être</button>
+    <button class="snav-btn"        onclick="showSection('s-pron',this)">4. Pronominaux</button>
+    <button class="snav-btn"        onclick="showSection('s-pronoms',this)">5. COD antéposé</button>
+    <button class="snav-btn"        onclick="showSection('s-cas',this)">6. Casos especiales</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Trampas</button>
+  </div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. PANORAMA -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>participe passé</strong> puede o no concordar en género y número según el auxiliar utilizado y la posición del complemento. Hay tres sistemas distintos: con <strong>avoir</strong>, con <strong>être</strong> y con los <strong>verbes pronominaux</strong>. La concordancia afecta tanto al escrito como a la pronunciación cuando el participio acaba en consonante.
+      </div>
+
+      <div class="sec-label">Las terminaciones del acuerdo</div>
+      <div class="acc-matrix">
+        <div class="acc-cell hdr"></div>
+        <div class="acc-cell hdr">Singulier</div>
+        <div class="acc-cell hdr">Pluriel</div>
+        <div class="acc-cell row-hdr">Masculin</div>
+        <div class="acc-cell"><span class="pp">mangé</span> <span class="acc-none">(base)</span></div>
+        <div class="acc-cell"><span class="pp">mangé</span><span class="suf">s</span></div>
+        <div class="acc-cell row-hdr">Féminin</div>
+        <div class="acc-cell"><span class="pp">mangé</span><span class="suf">e</span></div>
+        <div class="acc-cell"><span class="pp">mangé</span><span class="suf">es</span></div>
+      </div>
+
+      <div class="sec-label">Resumen de las tres reglas</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Auxiliar</th><th>¿Con qué concuerda el p.p.?</th><th>Cuándo</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong class="hl-av">Avoir</strong></td>
+            <td>Con el <strong>COD si está antepuesto</strong> al auxiliar</td>
+            <td>Cuando el COD precede al auxiliar (pronombre COD, relative que, interrogativa)</td>
+          </tr>
+          <tr>
+            <td><strong class="hl-et">Être</strong></td>
+            <td>Con el <strong>sujeto</strong> (siempre)</td>
+            <td>14 verbos de movimiento/estado + todos los tiempos compuestos pasivos</td>
+          </tr>
+          <tr>
+            <td><strong class="hl-pr">Être (pronom.)</strong></td>
+            <td>Con el <strong>COD si está antepuesto</strong> al auxiliar</td>
+            <td>Generalmente = concordancia con el sujeto, salvo casos específicos</td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Pronunciación:</strong> el acuerdo es visible en la escritura pero solo audible cuando el participio termina en consonante: <em>pris / pris<strong>e</strong></em> (se oye la s), <em>fait / fait<strong>e</strong></em> (se oye el t), <em>mis / mis<strong>e</strong></em>. Con participios en -é, -i, -u la diferencia es solo escrita.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. AVEC AVOIR -->
+  <div class="sec-block" id="s-avoir">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Con el auxiliar <strong>avoir</strong>, el participio passé <strong>no concuerda con el sujeto</strong>. Solo concuerda con el <strong>COD si este precede al auxiliar</strong>. Si el COD va después del verbo, o no hay COD, el participio es invariable.
+      </div>
+
+      <div class="sec-label">Regla — árbol de decisión</div>
+      <div class="green-box">
+        <strong>1.</strong> ¿Hay COD? → No: participio invariable.<br>
+        <strong>2.</strong> ¿El COD precede al auxiliar? → No (va después): participio invariable.<br>
+        <strong>3.</strong> ¿El COD precede al auxiliar? → Sí: concordancia en género y número con ese COD.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip av active" onclick="selectChip('avoir',0)">COD después → sin acuerdo</button>
+        <button class="chip av"        onclick="selectChip('avoir',1)">COD antes → acuerdo</button>
+        <button class="chip av"        onclick="selectChip('avoir',2)">COI → sin acuerdo nunca</button>
+        <button class="chip av"        onclick="selectChip('avoir',3)">Sin complemento directo → invariable</button>
+      </div>
+      <div id="avoir-panels">
+
+        <div class="chip-panel active" id="avoir-p-0">
+          <div class="def-box">Cuando el COD va <strong>después del auxiliar</strong> (posición normal), el participio es invariable independientemente del género y número del COD.</div>
+          <div class="example-block av">
+            <div class="ex-fr">Elle a <span class="eav">mangé</span> une pizza. <span class="ex-note">(una pizza = COD femenino, pero detrás → sin acuerdo)</span></div>
+            <div class="ex-es">Se ha comido una pizza.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Ils ont <span class="eav">pris</span> les billets. <span class="ex-note">(les billets = masc. pl., pero detrás → invariable)</span></div>
+            <div class="ex-es">Han cogido los billetes.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">J'ai <span class="eav">acheté</span> des fleurs pour toi.</div>
+            <div class="ex-es">He comprado flores para ti.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Nous avons <span class="eav">vu</span> les enfants jouer.</div>
+            <div class="ex-es">Hemos visto a los niños jugar.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Elle a <span class="eav">lu</span> trois livres ce mois-ci.</div>
+            <div class="ex-es">Ha leído tres libros este mes.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="avoir-p-1">
+          <div class="def-box">Cuando el COD precede al auxiliar, el participio concuerda en género y número con ese COD. El COD puede ser un pronombre personal, el pronombre relatif <em>que</em>, o un mot interrogatif.</div>
+
+          <div class="sec-label">Matrice d'accord — avec pronom COD antéposé</div>
+          <div class="acc-matrix">
+            <div class="acc-cell hdr">COD</div>
+            <div class="acc-cell hdr">Genre / Nombre</div>
+            <div class="acc-cell hdr">Participe</div>
+            <div class="acc-cell row-hdr">le livre</div>
+            <div class="acc-cell">masc. sing.</div>
+            <div class="acc-cell"><span class="pp">lu</span> <span class="acc-none">(base)</span></div>
+            <div class="acc-cell row-hdr">la lettre</div>
+            <div class="acc-cell">fém. sing.</div>
+            <div class="acc-cell"><span class="pp">lu</span><span class="suf">e</span></div>
+            <div class="acc-cell row-hdr">les livres</div>
+            <div class="acc-cell">masc. pl.</div>
+            <div class="acc-cell"><span class="pp">lu</span><span class="suf">s</span></div>
+            <div class="acc-cell row-hdr">les lettres</div>
+            <div class="acc-cell">fém. pl.</div>
+            <div class="acc-cell"><span class="pp">lu</span><span class="suf">es</span></div>
+          </div>
+
+          <div class="example-block av">
+            <div class="ex-fr">Ce livre ? Je <em>l'</em>ai <span class="eav">lu</span>. <span class="ex-note">(l' = le livre, masc. sing. → invariable)</span></div>
+            <div class="ex-es">¿Ese libro? Lo he leído.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Cette lettre ? Je <em>l'</em>ai <span class="eav">lu<span class="eac">e</span></span>. <span class="ex-note">(l' = la lettre, fém. sing. → -e)</span></div>
+            <div class="ex-es">¿Esa carta? La he leído.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Ces photos ? Je <em>les</em> ai <span class="eav">pris<span class="eac">es</span></span>. <span class="ex-note">(les = photos, fém. pl. → -es)</span></div>
+            <div class="ex-es">¿Esas fotos? Las he sacado.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Les garçons ? Je <em>les</em> ai <span class="eav">vu<span class="eac">s</span></span>. <span class="ex-note">(les = masc. pl. → -s)</span></div>
+            <div class="ex-es">¿Los chicos? Los he visto.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Les filles ? Il <em>les</em> a <span class="eav">appelé<span class="eac">es</span></span>. <span class="ex-note">(les = filles, fém. pl. → -es)</span></div>
+            <div class="ex-es">¿Las chicas? Las ha llamado.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="avoir-p-2">
+          <div class="def-box">El participio <strong>nunca concuerda con el COI</strong>, aunque esté antepuesto como pronombre. Solo el COD desencadena el acuerdo.</div>
+          <div class="example-block av">
+            <div class="ex-fr">Je <em>lui</em> ai <span class="eav">parlé</span>. <span class="ex-note">(lui = COI → sin acuerdo, aunque sea femenino)</span></div>
+            <div class="ex-es">Le he hablado.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Elle <em>leur</em> a <span class="eav">écrit</span>. <span class="ex-note">(leur = COI, plural → participio invariable)</span></div>
+            <div class="ex-es">Les ha escrito.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Il <em>nous</em> a <span class="eav">téléphoné</span>. <span class="ex-note">(nous = COI de téléphoner à → sin acuerdo)</span></div>
+            <div class="ex-es">Nos ha llamado por teléfono.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">On <em>leur</em> a <span class="eav">donné</span> les documents. <span class="ex-note">(leur = COI de donner à → sin acuerdo)</span></div>
+            <div class="ex-es">Les hemos dado los documentos.</div>
+          </div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text">Trampa clásica: <em>Je les ai appelé<strong>es</strong></em> ✓ (les = filles, COD). <em>Je leur ai téléphoné</em> ✓ (leur = COI, sin acuerdo). <strong>Appeler</strong> es transitivo directo → COD. <strong>Téléphoner à</strong> es indirecto → COI.</div></div>
+        </div>
+
+        <div class="chip-panel" id="avoir-p-3">
+          <div class="def-box">Verbos intransitivos (sin COD) y verbos seguidos de un infinitivo o de que+subjonctif: el participio es siempre invariable.</div>
+          <div class="example-block av">
+            <div class="ex-fr">Elles ont <span class="eav">dormi</span> dix heures. <span class="ex-note">(dormir = intransitivo → invariable)</span></div>
+            <div class="ex-es">Han dormido diez horas.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Nous avons <span class="eav">voyagé</span> pendant un mois.</div>
+            <div class="ex-es">Hemos viajado durante un mes.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Elle a <span class="eav">voulu</span> partir tôt. <span class="ex-note">(COD = partir, infinitif → p.p. invariable)</span></div>
+            <div class="ex-es">Ha querido irse pronto.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Ils ont <span class="eav">espéré</span> que tu viendrais.</div>
+            <div class="ex-es">Habían esperado que vinieras.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">J'ai <span class="eav">couru</span> pendant une heure. <span class="ex-note">(courir = intransitivo)</span></div>
+            <div class="ex-es">He corrido durante una hora.</div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3. AVEC ÊTRE -->
+  <div class="sec-block" id="s-etre">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Con el auxiliar <strong>être</strong>, el participio passé concuerda <strong>siempre con el sujeto</strong>, en género y número. No importa la posición de ningún complemento. Se aplica a los 14 verbos de movimiento/estado clásicos (más sus derivados) y a todos los verbos en voz pasiva.
+      </div>
+
+      <div class="sec-label">Los 14 verbos que se conjugan con être</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Infinitivo</th><th>P.P. masc.</th><th>Fém.</th><th>Pl. masc.</th><th>Pl. fém.</th></tr></thead>
+        <tbody>
+          <tr><td><strong>aller</strong></td><td class="hl-et">allé</td><td class="hl-et">allée</td><td class="hl-et">allés</td><td class="hl-et">allées</td></tr>
+          <tr><td><strong>venir</strong></td><td class="hl-et">venu</td><td class="hl-et">venue</td><td class="hl-et">venus</td><td class="hl-et">venues</td></tr>
+          <tr><td><strong>partir</strong></td><td class="hl-et">parti</td><td class="hl-et">partie</td><td class="hl-et">partis</td><td class="hl-et">parties</td></tr>
+          <tr><td><strong>arriver</strong></td><td class="hl-et">arrivé</td><td class="hl-et">arrivée</td><td class="hl-et">arrivés</td><td class="hl-et">arrivées</td></tr>
+          <tr><td><strong>entrer</strong></td><td class="hl-et">entré</td><td class="hl-et">entrée</td><td class="hl-et">entrés</td><td class="hl-et">entrées</td></tr>
+          <tr><td><strong>sortir</strong></td><td class="hl-et">sorti</td><td class="hl-et">sortie</td><td class="hl-et">sortis</td><td class="hl-et">sorties</td></tr>
+          <tr><td><strong>naître</strong></td><td class="hl-et">né</td><td class="hl-et">née</td><td class="hl-et">nés</td><td class="hl-et">nées</td></tr>
+          <tr><td><strong>mourir</strong></td><td class="hl-et">mort</td><td class="hl-et">morte</td><td class="hl-et">morts</td><td class="hl-et">mortes</td></tr>
+          <tr><td><strong>rester</strong></td><td class="hl-et">resté</td><td class="hl-et">restée</td><td class="hl-et">restés</td><td class="hl-et">restées</td></tr>
+          <tr><td><strong>tomber</strong></td><td class="hl-et">tombé</td><td class="hl-et">tombée</td><td class="hl-et">tombés</td><td class="hl-et">tombées</td></tr>
+          <tr><td><strong>monter</strong></td><td class="hl-et">monté</td><td class="hl-et">montée</td><td class="hl-et">montés</td><td class="hl-et">montées</td></tr>
+          <tr><td><strong>descendre</strong></td><td class="hl-et">descendu</td><td class="hl-et">descendue</td><td class="hl-et">descendus</td><td class="hl-et">descendues</td></tr>
+          <tr><td><strong>passer</strong></td><td class="hl-et">passé</td><td class="hl-et">passée</td><td class="hl-et">passés</td><td class="hl-et">passées</td></tr>
+          <tr><td><strong>rentrer</strong></td><td class="hl-et">rentré</td><td class="hl-et">rentrée</td><td class="hl-et">rentrés</td><td class="hl-et">rentrées</td></tr>
+        </tbody>
+      </table></div>
+      <div class="green-box"><strong>Truco mnemotécnico (maison DR MRS VANDERTRAMP):</strong> Devenir, Revenir · Mourir, Retourner, Sortir · Venir, Aller, Naître, Descendre, Entrer, Rentrer, Tomber, Rester, Arriver, Monter, Partir.</div>
+
+      <div class="chip-bar">
+        <button class="chip et active" onclick="selectChip('etre',0)">Concordancia con sujeto singular</button>
+        <button class="chip et"        onclick="selectChip('etre',1)">Concordancia con sujeto plural</button>
+        <button class="chip et"        onclick="selectChip('etre',2)">Verbos con double auxiliaire</button>
+      </div>
+      <div id="etre-panels">
+
+        <div class="chip-panel active" id="etre-p-0">
+          <div class="example-block et">
+            <div class="ex-fr">Marie est <span class="eet">arrivé<span class="eac">e</span></span> ce matin. <span class="ex-note">(Marie = fém. sing. → -e)</span></div>
+            <div class="ex-es">Marie ha llegado esta mañana.</div>
+          </div>
+          <div class="example-block et">
+            <div class="ex-fr">Paul est <span class="eet">parti</span> hier soir. <span class="ex-note">(Paul = masc. sing. → base)</span></div>
+            <div class="ex-es">Paul se fue anoche.</div>
+          </div>
+          <div class="example-block et">
+            <div class="ex-fr">Elle est <span class="eet">née</span> en 1995. <span class="ex-note">(Elle = fém. → -e)</span></div>
+            <div class="ex-es">Nació en 1995.</div>
+          </div>
+          <div class="example-block et">
+            <div class="ex-fr">Il est <span class="eet">mort</span> il y a dix ans. <span class="ex-note">(Il = masc. → base)</span></div>
+            <div class="ex-es">Murió hace diez años.</div>
+          </div>
+          <div class="example-block et">
+            <div class="ex-fr">La directrice est <span class="eet">resté<span class="eac">e</span></span> au bureau. <span class="ex-note">(fém. sing. → -e)</span></div>
+            <div class="ex-es">La directora se ha quedado en la oficina.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="etre-p-1">
+          <div class="example-block et">
+            <div class="ex-fr">Les filles sont <span class="eet">allé<span class="eac">es</span></span> au cinéma. <span class="ex-note">(fém. pl. → -es)</span></div>
+            <div class="ex-es">Las chicas han ido al cine.</div>
+          </div>
+          <div class="example-block et">
+            <div class="ex-fr">Les garçons sont <span class="eet">sorti<span class="eac">s</span></span> tard. <span class="ex-note">(masc. pl. → -s)</span></div>
+            <div class="ex-es">Los chicos han salido tarde.</div>
+          </div>
+          <div class="example-block et">
+            <div class="ex-fr">Mes parents sont <span class="eet">parti<span class="eac">s</span></span> en voyage. <span class="ex-note">(masc. pl. mixte → -s)</span></div>
+            <div class="ex-es">Mis padres se han ido de viaje.</div>
+          </div>
+          <div class="example-block et">
+            <div class="ex-fr">Elles sont <span class="eet">venu<span class="eac">es</span></span> nous voir. <span class="ex-note">(fém. pl. → -es)</span></div>
+            <div class="ex-es">Han venido a vernos.</div>
+          </div>
+          <div class="note-box"><strong>Género mixto:</strong> si el sujeto incluye al menos un masculino, el participio va en masculino plural: <em>Paul et Marie sont allé<strong>s</strong></em> (no <em>allées</em>).</div>
+        </div>
+
+        <div class="chip-panel" id="etre-p-2">
+          <div class="def-box">Atención: algunos verbos de la lista (monter, descendre, sortir, rentrer, passer…) pueden usarse con avoir cuando tienen un COD explícito. En ese caso, el acuerdo sigue las reglas de avoir.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Avec être (intransitivo)</th><th>Avec avoir (transitivo)</th></tr></thead>
+            <tbody>
+              <tr><td>Elle est <span class="hl-et">montée</span>. (subió = sin COD)</td><td>Elle a <span class="hl-av">monté</span> les valises. (subió las maletas)</td></tr>
+              <tr><td>Il est <span class="hl-et">sorti</span>. (salió)</td><td>Il a <span class="hl-av">sorti</span> le chien. (sacó al perro)</td></tr>
+              <tr><td>Elles sont <span class="hl-et">descendues</span>. (bajaron)</td><td>Elles ont <span class="hl-av">descendu</span> les bagages. (bajaron las maletas)</td></tr>
+              <tr><td>Il est <span class="hl-et">passé</span> ici. (pasó por aquí)</td><td>Elle a <span class="hl-av">passé</span> l'examen. (hizo el examen)</td></tr>
+              <tr><td>Elle est <span class="hl-et">rentrée</span>. (volvió a casa)</td><td>Il a <span class="hl-av">rentré</span> les chaises. (metió las sillas)</td></tr>
+            </tbody>
+          </table></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text">Estos verbos con doble auxiliar son muy preguntados en el DELF B2. La clave: si tienen COD explícito → <strong>avoir</strong> + règle du COD. Si son intransitivos → <strong>être</strong> + accord avec le sujet.</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. PRONOMINAUX -->
+  <div class="sec-block" id="s-pron">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los verbos pronominaux se conjugan siempre con <strong>être</strong>, pero el acuerdo del participio sigue la regla del <strong>COD antéposé</strong> — no siempre con el sujeto. Hay que analizar la función del pronombre reflexivo en cada caso.
+      </div>
+
+      <div class="sec-label">Método de análisis en 3 pasos</div>
+      <div class="green-box">
+        <strong>Paso 1:</strong> ¿El pronombre reflexivo (me/te/se/nous/vous) es COD del verbo?<br>
+        &nbsp;&nbsp;→ Sí → acuerdo con el sujeto (porque el COD precede al auxiliar).<br>
+        &nbsp;&nbsp;→ No (es COI) → sin acuerdo.<br>
+        <strong>Paso 2:</strong> Si hay un COD explícito después del verbo → sin acuerdo.<br>
+        <strong>Paso 3:</strong> Si hay un COD explícito antes del verbo → acuerdo con ese COD.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('pron',0)">Réfléchis (pron. = COD) → acuerdo con sujeto</button>
+        <button class="chip pr"        onclick="selectChip('pron',1)">Réciproques (pron. = COI) → sin acuerdo</button>
+        <button class="chip pr"        onclick="selectChip('pron',2)">Verbe + COD explícito → sin acuerdo</button>
+        <button class="chip pr"        onclick="selectChip('pron',3)">Verbes inhérents → acuerdo con sujeto</button>
+      </div>
+      <div id="pron-panels">
+
+        <div class="chip-panel active" id="pron-p-0">
+          <div class="def-box">El pronombre reflexivo es COD del verbo (el sujeto se hace la acción a sí mismo): <em>se laver, se couper, s'habiller, se lever, se regarder…</em> → acuerdo con el sujeto.</div>
+          <div class="example-block pr">
+            <div class="ex-fr">Elle s'est <span class="epr">lavé<span class="eac">e</span></span>. <span class="ex-note">(se = COD de laver, fém. sing. → -e)</span></div>
+            <div class="ex-es">Se ha lavado.</div>
+          </div>
+          <div class="example-block pr">
+            <div class="ex-fr">Ils se sont <span class="epr">habillé<span class="eac">s</span></span> vite. <span class="ex-note">(se = COD, masc. pl. → -s)</span></div>
+            <div class="ex-es">Se han vestido rápido.</div>
+          </div>
+          <div class="example-block pr">
+            <div class="ex-fr">Elles se sont <span class="epr">levé<span class="eac">es</span></span> tôt. <span class="ex-note">(fém. pl. → -es)</span></div>
+            <div class="ex-es">Se han levantado pronto.</div>
+          </div>
+          <div class="example-block pr">
+            <div class="ex-fr">Elle s'est <span class="epr">coupé<span class="eac">e</span></span>. <span class="ex-note">(se = COD de couper → -e)</span></div>
+            <div class="ex-es">Se ha cortado.</div>
+          </div>
+          <div class="example-block pr">
+            <div class="ex-fr">Il s'est <span class="epr">blessé</span>. <span class="ex-note">(masc. sing. → base)</span></div>
+            <div class="ex-es">Se ha herido.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="pron-p-1">
+          <div class="def-box">Verbos recíprocos donde el pronombre reflexivo es COI (la acción se hace mutuamente <em>a alguien</em>): <em>se parler, se téléphoner, se sourire, se mentir, se nuire, se plaire…</em> → participio invariable.</div>
+          <div class="example-block pr">
+            <div class="ex-fr">Elles se sont <span class="epr">parlé</span>. <span class="ex-note">(se = COI de parler à → invariable, no parlées)</span></div>
+            <div class="ex-es">Han hablado. (se han hablado mutuamente)</div>
+          </div>
+          <div class="example-block pr">
+            <div class="ex-fr">Ils se sont <span class="epr">téléphoné</span>. <span class="ex-note">(se = COI de téléphoner à → invariable)</span></div>
+            <div class="ex-es">Se han llamado por teléfono.</div>
+          </div>
+          <div class="example-block pr">
+            <div class="ex-fr">Elles se sont <span class="epr">écrit</span>. <span class="ex-note">(se = COI de écrire à → invariable, no écrites)</span></div>
+            <div class="ex-es">Se han escrito (cartas).</div>
+          </div>
+          <div class="example-block pr">
+            <div class="ex-fr">Ils se sont <span class="epr">souri</span>. <span class="ex-note">(se = COI de sourire à → invariable)</span></div>
+            <div class="ex-es">Se han sonreído.</div>
+          </div>
+          <div class="example-block pr">
+            <div class="ex-fr">Elles se sont <span class="epr">nui</span>. <span class="ex-note">(nuire à = indirecto → invariable)</span></div>
+            <div class="ex-es">Se han perjudicado mutuamente.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="pron-p-2">
+          <div class="def-box">Si el pronombre reflexivo es COI Y hay un COD explícito que va después del verbo, el participio es invariable. Si el COD va delante, concuerda con él.</div>
+          <div class="example-block pr">
+            <div class="ex-fr">Elle s'est <span class="epr">lavé</span> les mains. <span class="ex-note">(se = COI · les mains = COD después → invariable)</span></div>
+            <div class="ex-es">Se ha lavado las manos.</div>
+          </div>
+          <div class="example-block pr">
+            <div class="ex-fr">Elle s'est <span class="epr">coupé</span> les cheveux. <span class="ex-note">(se = COI · les cheveux = COD después → invariable)</span></div>
+            <div class="ex-es">Se ha cortado el pelo.</div>
+          </div>
+          <div class="example-block pr">
+            <div class="ex-fr">Elles se sont <span class="epr">acheté</span> des vêtements. <span class="ex-note">(se = COI de acheter à · des vêtements = COD después → invariable)</span></div>
+            <div class="ex-es">Se han comprado ropa.</div>
+          </div>
+          <div class="example-block pr">
+            <div class="ex-fr">Les mains qu'elle s'est <span class="epr">lavé<span class="eac">es</span></span>… <span class="ex-note">(que = COD fém. pl. antéposé → -es)</span></div>
+            <div class="ex-es">Las manos que se lavó… (acuerdo con que = les mains)</div>
+          </div>
+          <div class="warn-box"><span class="warn-icon">💡</span><div class="warn-text">Clave: <em>se laver les mains</em> → <em>se</em> es COI (a sí misma) y <em>les mains</em> es el COD → sin acuerdo. <em>Se laver</em> solo → <em>se</em> es COD → acuerdo. La parte del cuerpo cambia todo.</div></div>
+        </div>
+
+        <div class="chip-panel" id="pron-p-3">
+          <div class="def-box">Los verbos inherentemente pronominaux (que solo existen con se: <em>se souvenir, s'en aller, se méfier, s'évanouir, se taire, s'enfuir…</em>) concuerdan siempre con el sujeto, ya que no hay análisis posible del pronombre.</div>
+          <div class="example-block pr">
+            <div class="ex-fr">Elle s'est <span class="epr">souvenu<span class="eac">e</span></span> de lui. <span class="ex-note">(se souvenir = siempre pronominal → -e)</span></div>
+            <div class="ex-es">Se acordó de él.</div>
+          </div>
+          <div class="example-block pr">
+            <div class="ex-fr">Elle s'est <span class="epr">évanoui<span class="eac">e</span></span>. <span class="ex-note">(s'évanouir = siempre pronominal → -e)</span></div>
+            <div class="ex-es">Se ha desmayado.</div>
+          </div>
+          <div class="example-block pr">
+            <div class="ex-fr">Elles se sont <span class="epr">taisé<span class="eac">es</span></span>. <span class="ex-note">(se taire → -es)</span></div>
+            <div class="ex-es">Se han callado.</div>
+          </div>
+          <div class="example-block pr">
+            <div class="ex-fr">Il s'est <span class="epr">enfui</span>. <span class="ex-note">(s'enfuir → masc. sing. base)</span></div>
+            <div class="ex-es">Ha huido.</div>
+          </div>
+          <div class="example-block pr">
+            <div class="ex-fr">Elles s'en sont <span class="epr">allé<span class="eac">es</span></span>. <span class="ex-note">(s'en aller → fém. pl. → -es)</span></div>
+            <div class="ex-es">Se han ido.</div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 5. COD ANTÉPOSÉ (pronoms relatifs + interr.) -->
+  <div class="sec-block" id="s-pronoms">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El COD puede estar antepuesto no solo cuando es un pronombre personal, sino también cuando es el pronombre relatif <strong>que</strong> o una palabra interrogativa. En estos casos también se aplica el acuerdo con avoir.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip av active" onclick="selectChip('ante',0)">Pronom relatif QUE</button>
+        <button class="chip av"        onclick="selectChip('ante',1)">Question directe / indirecte</button>
+        <button class="chip av"        onclick="selectChip('ante',2)">En + participe (cas particulier)</button>
+      </div>
+      <div id="ante-panels">
+
+        <div class="chip-panel active" id="ante-p-0">
+          <div class="def-box">Cuando el pronombre relatif <em>que</em> es COD y antecede al auxiliar avoir, el participio concuerda con el antecedente de <em>que</em>.</div>
+          <div class="example-block av">
+            <div class="ex-fr">La lettre <em>que</em> tu as <span class="eav">écrit<span class="eac">e</span></span> est magnifique. <span class="ex-note">(que = la lettre, fém. sing. → -e)</span></div>
+            <div class="ex-es">La carta que escribiste es magnífica.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Les films <em>que</em> j'ai <span class="eav">vu<span class="eac">s</span></span> étaient excellents. <span class="ex-note">(que = les films, masc. pl. → -s)</span></div>
+            <div class="ex-es">Las películas que vi eran excelentes.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Les chansons <em>qu'</em>il a <span class="eav">chanté<span class="eac">es</span></span> étaient belles. <span class="ex-note">(que = les chansons, fém. pl. → -es)</span></div>
+            <div class="ex-es">Las canciones que cantó eran hermosas.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Voilà la décision <em>que</em> nous avons <span class="eav">pris<span class="eac">e</span></span>. <span class="ex-note">(que = la décision, fém. sing. → -e)</span></div>
+            <div class="ex-es">Esta es la decisión que tomamos.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Les erreurs <em>que</em> tu as <span class="eav">commis<span class="eac">es</span></span> sont graves. <span class="ex-note">(que = les erreurs, fém. pl. → -es)</span></div>
+            <div class="ex-es">Los errores que cometiste son graves.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="ante-p-1">
+          <div class="def-box">En preguntas directas e indirectas donde el COD interrogativo precede al auxiliar, el participio concuerda con ese COD.</div>
+          <div class="example-block av">
+            <div class="ex-fr">Quelles photos a-t-elle <span class="eav">pris<span class="eac">es</span></span> ? <span class="ex-note">(quelles photos = COD fém. pl. antéposé → -es)</span></div>
+            <div class="ex-es">¿Qué fotos sacó?</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Combien de lettres a-t-il <span class="eav">écrit<span class="eac">es</span></span> ? <span class="ex-note">(lettres = fém. pl. → -es)</span></div>
+            <div class="ex-es">¿Cuántas cartas ha escrito?</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Laquelle as-tu <span class="eav">choisie</span> ? <span class="ex-note">(laquelle = COD fém. sing. → -e)</span></div>
+            <div class="ex-es">¿Cuál has elegido?</div>
+          </div>
+          <div class="note-box"><strong>En pregunta indirecta:</strong> <em>Je ne sais pas quelles photos elle a <span class="hl-av">prises</span>.</em> — el acuerdo también aplica.</div>
+        </div>
+
+        <div class="chip-panel" id="ante-p-2">
+          <div class="def-box">El pronombre <em>en</em> sustituye a un partitivo o a <em>de + sustantivo</em>. Cuando precede al auxiliar avoir, el participio es <strong>invariable</strong> — excepción a la regla general del COD antéposé.</div>
+          <div class="example-block av">
+            <div class="ex-fr">Des pommes ? J'<em>en</em> ai <span class="eav">mangé</span>. <span class="ex-note">(en = COD, pero invariable por convención)</span></div>
+            <div class="ex-es">¿Manzanas? He comido.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Des livres ? Elle <em>en</em> a <span class="eav">lu</span> beaucoup. <span class="ex-note">(en → participio invariable siempre)</span></div>
+            <div class="ex-es">¿Libros? Ha leído muchos.</div>
+          </div>
+          <div class="example-block av">
+            <div class="ex-fr">Tu as pris des photos ? — Oui, j'<em>en</em> ai <span class="eav">pris</span>. <span class="ex-note">(no: prises)</span></div>
+            <div class="ex-es">¿Has sacado fotos? — Sí, he sacado.</div>
+          </div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><em>En</em> como pronombre COD antéposé es la <strong>única excepción</strong> a la regla: aunque esté antepuesto, el participio no concuerda. El motivo es que <em>en</em> tiene un referente indefinido (de cantidad indeterminada).</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. CASOS ESPECIALES -->
+  <div class="sec-block" id="s-cas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Algunos casos requieren atención especial porque la regla general no basta o hay ambigüedad. Estos son los más frecuentes en el DELF B2.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip active" onclick="selectChip('cas',0)">Verbe de perception + inf. (voir, entendre, laisser…)</button>
+        <button class="chip"        onclick="selectChip('cas',1)">Fait + infinitif</button>
+        <button class="chip"        onclick="selectChip('cas',2)">Attribut du COD</button>
+        <button class="chip"        onclick="selectChip('cas',3)">Vérité générale → invariable</button>
+      </div>
+      <div id="cas-panels">
+
+        <div class="chip-panel active" id="cas-p-0">
+          <div class="def-box">Con verbos de percepción (<em>voir, entendre, regarder, écouter, sentir</em>) suivis d'un infinitif, le p.p. est <strong>invariable si le COD est sujet de l'infinitif</strong>.</div>
+          <div class="example-block neu">
+            <div class="ex-fr">Les filles que j'ai <span class="eav">vues</span> partir. <span class="ex-note">(que = les filles = COD de voir ET sujet de partir → accord)</span></div>
+            <div class="ex-es">Las chicas a las que vi marcharse.</div>
+          </div>
+          <div class="example-block neu">
+            <div class="ex-fr">Je les ai <span class="eav">vu</span> partir. <span class="ex-note">(les = COD de voir et sujet de partir → invariable car sujet de l'inf.)</span></div>
+            <div class="ex-es">Las vi marcharse.</div>
+          </div>
+          <div class="example-block neu">
+            <div class="ex-fr">La chanson que j'ai <span class="eav">entendu</span> chanter. <span class="ex-note">(la chanson = COD de chanter, pas de voir → invariable)</span></div>
+            <div class="ex-es">La canción que oí cantar.</div>
+          </div>
+          <div class="note-box"><strong>Regla práctica:</strong> si el COD antéposé es también el sujeto del infinitivo → invariable. Si es el objeto del infinitivo → acuerdo. En la práctica oral, ambas formas se usan y el DELF acepta las dos en contexto ambiguo.</div>
+        </div>
+
+        <div class="chip-panel" id="cas-p-1">
+          <div class="def-box"><em>Faire</em> causatif + infinitif: el participe passé de <em>faire</em> est toujours <strong>invariable</strong>, même avec un COD antéposé.</div>
+          <div class="example-block neu">
+            <div class="ex-fr">Elle les a <span class="eav">fait</span> travailler. <span class="ex-note">(fait causatif → toujours invariable, même avec les)</span></div>
+            <div class="ex-es">Los ha puesto a trabajar.</div>
+          </div>
+          <div class="example-block neu">
+            <div class="ex-fr">Les robes qu'elle a <span class="eav">fait</span> coudre. <span class="ex-note">(fait causatif → invariable, pas fait cousues)</span></div>
+            <div class="ex-es">Los vestidos que mandó coser.</div>
+          </div>
+          <div class="example-block neu">
+            <div class="ex-fr">Je les ai <span class="eav">fait</span> venir. <span class="ex-note">(fait → invariable)</span></div>
+            <div class="ex-es">Los hice venir.</div>
+          </div>
+          <div class="green-box"><strong>Regla:</strong> <em>fait</em> causatif est toujours invariable. C'est une exception absolue, aucune ambiguïté possible.</div>
+        </div>
+
+        <div class="chip-panel" id="cas-p-2">
+          <div class="def-box">Cuando el COD antéposé es complementado por un atributo, el participio concuerda igualmente con el COD.</div>
+          <div class="example-block neu">
+            <div class="ex-fr">Je l'ai <span class="eav">cru<span class="eac">e</span></span> honnête. <span class="ex-note">(l' = elle, fém. sing. → -e)</span></div>
+            <div class="ex-es">La creí honesta.</div>
+          </div>
+          <div class="example-block neu">
+            <div class="ex-fr">Je les ai <span class="eav">trouvé<span class="eac">s</span></span> sympathiques. <span class="ex-note">(les = masc. pl. → -s)</span></div>
+            <div class="ex-es">Los encontré simpáticos.</div>
+          </div>
+          <div class="example-block neu">
+            <div class="ex-fr">Elle les a <span class="eav">jugé<span class="eac">es</span></span> coupables. <span class="ex-note">(les = filles, fém. pl. → -es)</span></div>
+            <div class="ex-es">Las consideró culpables.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="cas-p-3">
+          <div class="def-box">Cuando el participio va seguido de un infinitivo y el COD antéposé es el objeto de ese infinitivo (no del verbo conjugado), el participio es invariable.</div>
+          <div class="example-block neu">
+            <div class="ex-fr">La maison que j'avais <span class="eav">voulu</span> acheter. <span class="ex-note">(vouloir = intransitif dans ce sens → invariable)</span></div>
+            <div class="ex-es">La casa que había querido comprar.</div>
+          </div>
+          <div class="example-block neu">
+            <div class="ex-fr">Les livres qu'il a <span class="eav">pu</span> lire. <span class="ex-note">(pouvoir + inf. → invariable)</span></div>
+            <div class="ex-es">Los libros que pudo leer.</div>
+          </div>
+          <div class="example-block neu">
+            <div class="ex-fr">Les efforts qu'elle a <span class="eav">dû</span> faire. <span class="ex-note">(devoir + inf. → invariable)</span></div>
+            <div class="ex-es">Los esfuerzos que tuvo que hacer.</div>
+          </div>
+          <div class="note-box"><strong>Regla:</strong> con verbos modales (pouvoir, vouloir, devoir) + infinitif, el COD antéposé es objeto del infinitivo, no del modal → participio invariable.</div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con el accord du participe passé en el DELF B1–B2.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+</div><!-- /main-layout -->
+
+<script>
+/* DATA */
+const TRAPS = [
+  {name:"Avoir + COD femenino después → sin acuerdo",
+   wrong:"Elle a mangée une pizza. / Ils ont pris es les billets.",
+   right:"Elle a mangé une pizza. / Ils ont pris les billets.",
+   expl:"Con <strong>avoir</strong>, el participio NO concuerda con el sujeto ni con el COD que va detrás del verbo. El participio es invariable cuando el COD está en posición postverbal. El acuerdo solo ocurre cuando el COD está antes del auxiliar."},
+  {name:"COI antéposé confundido con COD → acuerdo incorrecto",
+   wrong:"Je leur ai parlées. / Elle lui a téléphoné e.",
+   right:"Je leur ai parlé. / Elle lui a téléphoné.",
+   expl:"El participio <strong>nunca concuerda con el COI</strong>, aunque esté antepuesto. <em>Leur</em> y <em>lui</em> son COI (de <em>parler à, téléphoner à</em>…). Solo el COD antéposé desencadena el acuerdo con avoir."},
+  {name:"Être: olvidar el acuerdo con el sujeto",
+   wrong:"Marie est parti. / Elles sont allé au cinéma.",
+   right:"Marie est partie. / Elles sont allées au cinéma.",
+   expl:"Con <strong>être</strong>, el participio concuerda <em>siempre</em> con el sujeto: género y número. <em>Marie</em> es femenino → partie. <em>Elles</em> es femenino plural → allées. Error muy frecuente porque los hispanohablantes usan el participio como forma base invariable."},
+  {name:"Verbes pronominaux réciproques: acuerdo incorrecto",
+   wrong:"Elles se sont parlées. / Ils se sont écrit s.",
+   right:"Elles se sont parlé. / Ils se sont écrit.",
+   expl:"Con verbos pronominaux recíprocos donde <em>se</em> es COI (<em>se parler, se téléphoner, se sourire, se nuire, s'écrire…</em>), el participio es <strong>invariable</strong>. Solo los verbos donde <em>se</em> es COD desencadenan el acuerdo."},
+  {name:"Se laver les mains: acuerdo incorrecto",
+   wrong:"Elle s'est lavée les mains.",
+   right:"Elle s'est lavé les mains.",
+   expl:"Cuando el verbo pronominal va seguido de una parte del cuerpo, <em>se</em> es COI y la parte del cuerpo es COD (posverbal). Sin COD antepuesto → participio invariable. <em>Se laver</em> solo → <em>se</em> es COD → acuerdo. Añadir la parte del cuerpo cambia la función del pronombre."},
+  {name:"Pronom relatif que: olvidar el acuerdo",
+   wrong:"La lettre que tu as écrit est magnifique.",
+   right:"La lettre que tu as écrite est magnifique.",
+   expl:"El pronombre relatif <em>que</em> como COD antéposé desencadena el acuerdo con avoir. Hay que identificar el antecedente de <em>que</em> y aplicar el género/número: <em>la lettre</em> (fém. sing.) → <em>écrite</em>."},
+  {name:"Double auxiliaire: monter/sortir con COD",
+   wrong:"Elle a montée les valises. (avec avoir, avec COD)",
+   right:"Elle a monté les valises.",
+   expl:"Cuando verbos como <em>monter, descendre, sortir, rentrer, passer</em> se usan con un COD explícito, usan <strong>avoir</strong> y el participio es invariable si el COD va después. <em>Elle a monté<strong>é</strong></em> (sin -e) porque el COD <em>les valises</em> va detrás."},
+  {name:"Fait causatif: acuerdo incorrecto",
+   wrong:"Je les ai faits travailler. / Les robes qu'elle a faites coudre.",
+   right:"Je les ai fait travailler. / Les robes qu'elle a fait coudre.",
+   expl:"<em>Faire</em> causatif (faire + infinitif) es siempre <strong>invariable</strong>, aunque el COD esté antepuesto. Es una excepción absoluta a la regla del COD antéposé: <em>fait</em> no concuerda nunca en esta construcción."},
+];
+
+function renderTraps() {
+  document.getElementById("trap-cards").innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join("");
+}
+
+/* CHIP SELECT */
+function selectChip(ns, idx) {
+  document.querySelectorAll(".chip-bar").forEach(bar => {
+    const first = bar.querySelector(".chip");
+    if (first && first.getAttribute("onclick") && first.getAttribute("onclick").includes("'" + ns + "'")) {
+      bar.querySelectorAll(".chip").forEach((c, i) => c.classList.toggle("active", i === idx));
+    }
+  });
+  const el = document.getElementById(ns + "-panels");
+  if (el) el.querySelectorAll(":scope > .chip-panel").forEach((p, i) => p.classList.toggle("active", i === idx));
+}
+
+/* NAV */
+function showSection(id, btn) {
+  document.querySelectorAll(".sec-block").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".snav-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  btn.classList.add("active");
+}
+function switchMode(mode, btn) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById("panel-" + mode).classList.add("active");
+  btn.classList.add("active");
+  document.getElementById("section-nav").style.display = mode === "ref" ? "" : "none";
+}
+function setFontSize(v) { document.documentElement.style.setProperty("--fs", v + "px"); }
+
+/* EXERCISE STATE */
+let exType = "fill", exDiff = "B1", exQty = 5, exFoco = "mix";
+let exTotal = 0, exAnswered = 0, exCorrect = 0, exWrong = 0;
+
+document.querySelectorAll(".ex-opt-btn:not(.foco)").forEach(b => b.addEventListener("click", function () {
+  document.querySelectorAll(".ex-opt-btn:not(.foco)").forEach(x => x.classList.remove("active"));
+  this.classList.add("active"); exType = this.dataset.type;
+}));
+document.querySelectorAll(".ex-opt-btn.foco").forEach(b => b.addEventListener("click", function () {
+  document.querySelectorAll(".ex-opt-btn.foco").forEach(x => x.classList.remove("active"));
+  this.classList.add("active"); exFoco = this.dataset.foco;
+}));
+
+function setDiff(d) {
+  exDiff = d;
+  document.querySelectorAll("#diff-btns .pill-btn").forEach(b => {
+    b.classList.remove("active", "A2", "B1", "B2");
+    if (b.textContent.trim() === d) b.classList.add("active", d);
+  });
+}
+function setQty(q) {
+  exQty = q;
+  document.querySelectorAll("#qty-btns .pill-btn").forEach(b =>
+    b.classList.toggle("active", parseInt(b.textContent.trim()) === q));
+}
+
+/* GENERATE */
+const FOCO_DESC = {
+  mix:    "todos los casos de accord du participe passé: avoir sin COD antéposé (invariable), avoir con COD antéposé (pronombres le/la/les/me/te, pronom relatif que), être con los 14 verbos, pronominaux (reflexivos COD vs COI), doble auxiliar",
+  avoir:  "avoir + COD antéposé: el alumno debe escribir el participio con la terminación correcta según el género y número del COD antéposé (pronombre personal le/la/les o pronom relatif que); incluir casos donde el COD va después (participio invariable)",
+  etre:   "être: acuerdo del participio con el sujeto para los 14 verbos de movimiento/estado (aller, venir, partir, arriver, entrer, sortir, naître, mourir, rester, tomber, monter, descendre, passer, rentrer); varía géneros y números",
+  pron:   "verbes pronominaux: distinguir entre se=COD (acuerdo con sujeto), se=COI (invariable), verbo con parte del cuerpo (se laver les mains → invariable), verbos inherentemente pronominaux (se souvenir, s'évanouir → acuerdo)",
+  que:    "pronom relatif que como COD antéposé: el alumno identifica el antecedente de que, determina su género y número, y aplica el acuerdo del participio en passé composé con avoir",
+  double: "double auxiliaire: monter/descendre/sortir/rentrer/passer usados con avoir cuando tienen COD explícito (participio invariable si COD detrás) vs avec être sin COD (acuerdo con sujeto)",
+};
+const TYPE_DESC = {
+  fill:      "completar el participio: se da la frase con el auxiliar conjugado y el verbo en infinitivo entre paréntesis; el alumno escribe la forma correcta del participe passé con o sin acuerdo",
+  choice:    "elección múltiple: 4 formas del participio (base, -e, -s, -es), solo una correcta según el contexto",
+  transform: "corrección: se da una frase con el participio posiblemente incorrecto; el alumno escribe la forma correcta del participio o confirma que ya es correcto",
+  mix:       "mixto: combina fill, choice y transform",
+};
+
+const RULE_LABELS = {
+  "s-intro":   "Panorama general",
+  "s-avoir":   "Avec avoir",
+  "s-etre":    "Avec être",
+  "s-pron":    "Verbes pronominaux",
+  "s-pronoms": "COD antéposé (que / interr.)",
+  "s-cas":     "Casos especiales",
+  "s-trampas": "Trampas"
+};
+
+function renderExercises(exs) {
+  const area = document.getElementById("exercise-area");
+  const labels = { fill: "Completar", choice: "Elección múltiple", transform: "Corrección" };
+  area.innerHTML = exs.map((ex, i) =>
+    `<div class="exercise-card" id="ex-card-${i}" data-expl="${esc(ex.explanation)}" data-rule="${ex.rule_ref || ""}">
+      <div class="exercise-card-header">
+        <span class="ex-num">${i + 1}</span>
+        <span class="ex-type-badge">${labels[ex.type] || ex.type}</span>
+        <span class="ex-diff-badge ${ex.diff}">${ex.diff}</span>
+        <span class="ex-status" id="ex-st-${i}"></span>
+      </div>
+      <div class="exercise-body">
+        ${buildBody(ex, i)}
+        <div class="ex-feedback" id="ex-fb-${i}"></div>
+      </div>
+    </div>`).join("");
+  exs.forEach((ex, i) => {
+    const chk = document.getElementById("chk-" + i);
+    if (chk) chk.addEventListener("click", () => checkAnswer(ex, i));
+    const inp = document.getElementById("inp-" + i);
+    if (inp) inp.addEventListener("keydown", e => { if (e.key === "Enter") checkAnswer(ex, i); });
+  });
+}
+
+function buildBody(ex, i) {
+  if (ex.type === "fill")
+    return `<div class="exercise-prompt">${ex.prompt_parts[0]}<input class="fill-input" id="inp-${i}" type="text" placeholder="${ex.blank_hint || "…"}" autocomplete="off" spellcheck="false">${ex.prompt_parts[1] || ""}</div><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  if (ex.type === "choice")
+    return `<div class="exercise-prompt">${ex.prompt}</div><div class="choices-grid">${ex.options.map((o, j) => `<button class="choice-btn" id="ch-${i}-${j}" onclick="selectChoice(${i},${j},${ex.correct_index})">${o}</button>`).join("")}</div>`;
+  if (ex.type === "transform")
+    return `<div class="exercise-prompt">${ex.instruction}<br><em>${ex.original}</em></div><input class="transform-input" id="inp-${i}" type="text" placeholder="Escribe el participio correcto…" autocomplete="off" spellcheck="false"><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  return "";
+}
+
+function checkAnswer(ex, i) {
+  const inp = document.getElementById("inp-" + i);
+  if (!inp || inp.disabled) return;
+  const ok = inp.value.trim().toLowerCase() === ex.answer.trim().toLowerCase();
+  inp.classList.add(ok ? "ok" : "err"); inp.disabled = true;
+  const chk = document.getElementById("chk-" + i); if (chk) chk.disabled = true;
+  showFeedback(i, ok, ex.answer, ex.explanation, ex.rule_ref);
+  recordAnswer(ok);
+}
+
+function selectChoice(idx, chosen, correct) {
+  const c0 = document.getElementById(`ch-${idx}-0`);
+  if (!c0 || c0.disabled) return;
+  for (let j = 0; j < 4; j++) {
+    const b = document.getElementById(`ch-${idx}-${j}`);
+    if (!b) continue; b.disabled = true;
+    if (j === correct) b.classList.add("ok"); else if (j === chosen) b.classList.add("err");
+  }
+  const card = document.getElementById("ex-card-" + idx);
+  showFeedback(idx, chosen === correct, null, card.dataset.expl, card.dataset.rule);
+  recordAnswer(chosen === correct);
+}
+
+function showFeedback(i, ok, ans, expl, ruleRef) {
+  document.getElementById("ex-st-" + i).textContent = ok ? "✅" : "❌";
+  const fb = document.getElementById("ex-fb-" + i);
+  fb.className = "ex-feedback visible " + (ok ? "ok" : "err");
+  const link = RULE_LABELS[ruleRef]
+    ? `<span class="fb-rule-link" onclick="goToRule('${ruleRef}')">📖 Ver: ${RULE_LABELS[ruleRef]}</span>` : "";
+  let html = ok ? `<strong>✓ Correcto</strong>` : `<strong>✗ Incorrecto</strong>${ans ? ` — Forma correcta: <strong>${ans}</strong>` : ""}`;
+  if (expl) html += `<br><span style="font-size:0.88em;opacity:0.92;margin-top:3px;display:block">${expl}</span>`;
+  html += link; fb.innerHTML = html;
+}
+
+function goToRule(ref) {
+  switchMode("ref", document.querySelector(".mode-btn"));
+  setTimeout(() => {
+    showSection(ref, document.querySelector(`.snav-btn[onclick*="${ref}"]`));
+    document.getElementById(ref).scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 80);
+}
+
+function recordAnswer(ok) { exAnswered++; if (ok) exCorrect++; else exWrong++; updateProgress(); }
+
+function updateProgress() {
+  const pct = exTotal > 0 ? (exAnswered / exTotal) * 100 : 0;
+  document.getElementById("progress-frac").textContent = `${exAnswered} / ${exTotal}`;
+  document.getElementById("progress-fill").style.width = pct + "%";
+  document.getElementById("score-correct").textContent = `${exCorrect} correcta${exCorrect !== 1 ? "s" : ""}`;
+  document.getElementById("score-wrong").textContent = `${exWrong} error${exWrong !== 1 ? "es" : ""}`;
+  if (exAnswered >= exTotal && exTotal > 0) showFinalScore();
+}
+
+function showFinalScore() {
+  const pct = Math.round((exCorrect / exTotal) * 100);
+  document.getElementById("final-score-bar").classList.add("visible");
+  document.getElementById("final-num").textContent = `${exCorrect} / ${exTotal}`;
+  const fill = document.getElementById("final-fill");
+  fill.style.width = pct + "%";
+  fill.style.background = pct >= 80 ? "var(--green)" : pct >= 50 ? "var(--accent)" : "var(--red)";
+  const msgs = {
+    100: "Parfait ! Dominas el accord du participe passé. 🎉",
+    80:  "Très bien ! Repasa los errores marcados.",
+    50:  "Bien, pero refuerza los bloques señalados.",
+    0:   "Vuelve a Referencia antes de repetir."
+  };
+  document.getElementById("final-msg").textContent = msgs[pct === 100 ? 100 : pct >= 80 ? 80 : pct >= 50 ? 50 : 0];
+  document.getElementById("score-pill").style.display = "";
+  document.getElementById("score-pill-val").textContent = `${exCorrect}/${exTotal}`;
+}
+
+function resetExercises() {
+  document.getElementById("exercise-area").innerHTML = `<div class="state-msg"><div class="state-icon">✏️</div><p>Elige tipo, foco, nivel y cantidad, y pulsa <strong>Generar ejercicios</strong>.</p></div>`;
+  document.getElementById("progress-wrap").classList.remove("visible");
+  document.getElementById("final-score-bar").classList.remove("visible");
+  document.getElementById("score-pill").style.display = "none";
+  exAnswered = 0; exCorrect = 0; exWrong = 0;
+}
+
+function esc(s) { return (s || "").replace(/"/g, "&quot;").replace(/</g, "&lt;"); }
+
+renderTraps();
+</script>
+</body>
+</html>

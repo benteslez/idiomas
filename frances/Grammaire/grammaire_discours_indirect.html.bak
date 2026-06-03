@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammaire · Le Discours Indirect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ede9df;
+  --card: #faf7f1;
+  --border: #c4bead;
+  --text: #1a1814;
+  --text2: #44413a;
+  --text3: #706c64;
+  --accent: #7a5a0a;
+  --accent-light: #f0e0c0;
+  --accent-mid: #b89050;
+  --warn-bg: #fdf0cc;
+  --shadow: 0 2px 14px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-sm: 0 1px 6px rgba(0,0,0,0.08);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --green: #1a6028;  --green-bg: #e4f2e8;
+  --red: #a81e2e;    --red-bg: #fce6e8;
+  --blue: #163494;   --blue-bg: #e6ebf8;
+  --purple: #6a1a8a; --purple-bg: #f2e6f8;
+  /* DI colors */
+  --di-color: #163494;  --di-bg: #e6ebf8;   /* discours indirect — blue */
+  --dd-color: #1a6028;  --dd-bg: #e4f2e8;   /* discours direct   — green */
+  --tv-color: #6a1a8a;  --tv-bg: #f2e6f8;   /* temps verbaux     — purple */
+  --mt-color: #8b1a4a;  --mt-bg: #f8e6ee;   /* marqueurs temps   — wine */
+  --fs: 15px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: var(--fs); }
+
+.site-header { background: var(--card); border-bottom: 2px solid var(--border); padding: 20px 20px 14px; }
+.header-top { display: flex; align-items: baseline; gap: 10px; margin-bottom: 3px; flex-wrap: wrap; }
+.site-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem,5vw,1.9rem); font-weight: 700; color: var(--text); }
+.header-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent-mid); border-radius: 20px; padding: 3px 10px; }
+.subtitle { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
+.stats-row { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+.stat-pill { border-radius: 20px; padding: 4px 11px; font-size: 0.76rem; font-weight: 600; border: 1px solid; }
+.stat-pill.di { background: var(--di-bg); color: var(--di-color); border-color: var(--di-color); }
+.stat-pill.dd { background: var(--dd-bg); color: var(--dd-color); border-color: var(--dd-color); }
+.stat-pill.tv { background: var(--tv-bg); color: var(--tv-color); border-color: var(--tv-color); }
+.stat-pill.mt { background: var(--mt-bg); color: var(--mt-color); border-color: var(--mt-color); }
+.stat-pill.neu { background: var(--bg); color: var(--text2); border-color: var(--border); font-weight: 500; }
+.fs-wrap { display: flex; align-items: center; gap: 7px; margin-left: auto; }
+.fs-slider { width: 76px; accent-color: var(--accent); cursor: pointer; }
+.fs-sz { color: var(--text3); font-weight: 700; }
+
+.mode-toggle { display: flex; border-bottom: 2px solid var(--border); background: var(--card); }
+.mode-btn { flex: 1; padding: 12px 8px; font-family: 'DM Sans', sans-serif; font-size: 0.84rem; font-weight: 600; color: var(--text3); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.15s; margin-bottom: -2px; }
+.mode-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.section-nav { position: sticky; top: 0; z-index: 200; background: var(--card); border-bottom: 2px solid var(--border); box-shadow: var(--shadow-sm); }
+.section-nav-inner { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.section-nav-inner::-webkit-scrollbar { display: none; }
+.snav-btn { flex-shrink: 0; padding: 11px 16px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; color: var(--text3); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.snav-btn:hover { color: var(--text2); }
+.snav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.main-layout { max-width: 860px; margin: 0 auto; padding: 16px 16px 40px; }
+.panel { display: none; } .panel.active { display: block; }
+.sec-block { display: none; } .sec-block.active { display: block; }
+.gram-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden; }
+.gram-card-body { padding: 18px; }
+
+.def-box { background: var(--warn-bg); border-left: 4px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 15px; margin-bottom: 14px; line-height: 1.65; }
+.def-box strong { color: var(--accent); font-weight: 700; }
+.warn-box { background: #fff4e0; border: 1px solid #c8900a; border-radius: var(--radius-sm); padding: 10px 13px; margin: 10px 0; font-size: 0.9em; display: flex; gap: 8px; align-items: flex-start; }
+.warn-icon { flex-shrink: 0; margin-top: 1px; }
+.warn-text { color: var(--text2); line-height: 1.55; }
+.warn-text strong { color: #7a4400; font-weight: 700; }
+.note-box { background: var(--purple-bg); border-left: 4px solid var(--purple); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 10px 0; font-size: 0.9em; color: var(--text2); line-height: 1.55; }
+.note-box strong { color: var(--purple); font-weight: 700; }
+.green-box { background: var(--green-bg); border-left: 4px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 10px 0; font-size: 0.9em; color: var(--text2); line-height: 1.55; }
+.green-box strong { color: var(--green); font-weight: 700; }
+
+/* Discours blocks */
+.di-pair { margin: 10px 0; }
+.di-label { font-size: 0.68em; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px 4px 0 0; display: inline-block; margin-bottom: 0; }
+.di-label.dd { background: var(--dd-color); color: #fff; }
+.di-label.di { background: var(--di-color); color: #fff; }
+.di-box { border-radius: 0 var(--radius-sm) var(--radius-sm) var(--radius-sm); padding: 10px 14px; margin-bottom: 2px; }
+.di-box.dd { background: var(--dd-bg); border: 1.5px solid var(--dd-color); }
+.di-box.di { background: var(--di-bg); border: 1.5px solid var(--di-color); }
+.di-fr { font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.di-es { font-size: 0.86em; color: var(--text2); font-style: italic; }
+.di-note { font-size: 0.76em; color: var(--text3); margin-top: 3px; font-weight: 500; }
+.edd  { color: var(--dd-color); font-weight: 700; }
+.edi  { color: var(--di-color); font-weight: 700; }
+.etv  { color: var(--tv-color); font-weight: 700; }
+.emt  { color: var(--mt-color); font-weight: 700; }
+
+.example-block { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; margin: 8px 0; }
+.example-block.di  { background: var(--di-bg); border-left: 4px solid var(--di-color); }
+.example-block.dd  { background: var(--dd-bg); border-left: 4px solid var(--dd-color); }
+.example-block.neu { background: var(--blue-bg); border-left: 4px solid var(--blue); }
+.ex-fr { font-weight: 600; margin-bottom: 3px; color: var(--text); }
+.ex-es { color: var(--text2); font-size: 0.88em; font-style: italic; }
+.ex-note { font-size: 0.78em; color: var(--text3); margin-top: 3px; font-weight: 500; }
+
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.gram-table { width: 100%; border-collapse: collapse; min-width: 280px; }
+.gram-table th { background: var(--bg); border-bottom: 2px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; text-align: left; font-size: 0.72em; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+.gram-table td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); padding: 8px 11px; vertical-align: top; }
+.gram-table tr:last-child td { border-bottom: none; }
+.gram-table tr:nth-child(even) td { background: #f4f0e6; }
+.gram-table td:last-child, .gram-table th:last-child { border-right: none; }
+.hl-dd { color: var(--dd-color); font-weight: 700; }
+.hl-di { color: var(--di-color); font-weight: 700; }
+.hl-tv { color: var(--tv-color); font-weight: 700; }
+.hl-mt { color: var(--mt-color); font-weight: 700; }
+.hl    { color: var(--accent);   font-weight: 700; }
+.dim   { color: var(--text3); font-size: 0.88em; }
+.ok-cell  { color: var(--green); font-weight: 700; }
+.err-cell { color: var(--red);   font-weight: 600; font-style: italic; }
+
+.chip-bar { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.chip { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; white-space: nowrap; }
+.chip:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+.chip.active     { background: var(--accent);    color: #fff; border-color: var(--accent); }
+.chip.di.active  { background: var(--di-color);  border-color: var(--di-color); }
+.chip.dd.active  { background: var(--dd-color);  border-color: var(--dd-color); }
+.chip.tv.active  { background: var(--tv-color);  border-color: var(--tv-color); }
+.chip.mt.active  { background: var(--mt-color);  border-color: var(--mt-color); }
+.chip-panel { display: none; } .chip-panel.active { display: block; }
+
+.sec-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin: 14px 0 7px; }
+
+.trap-cards { display: flex; flex-direction: column; gap: 10px; }
+.trap-card { border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.trap-card-header { padding: 11px 14px; background: var(--bg); }
+.trap-name { font-weight: 700; font-size: 0.9em; color: var(--text); margin-bottom: 7px; }
+.trap-vs { display: flex; gap: 8px; flex-wrap: wrap; }
+.trap-wrong { background: var(--red-bg);  border: 1.5px solid #d09098; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--red);   font-weight: 500; }
+.trap-right { background: var(--green-bg); border: 1.5px solid #80b890; border-radius: 6px; padding: 4px 10px; font-size: 0.82em; color: var(--green); font-weight: 500; }
+.trap-expl { padding: 10px 14px 12px; font-size: 0.86em; color: var(--text2); line-height: 1.6; border-top: 1px solid var(--border); background: var(--card); }
+.trap-expl strong { color: var(--text); font-weight: 700; }
+
+.exercise-controls { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.exercise-controls h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+.ctrl-label { font-size: 0.7em; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 7px; display: block; }
+.ex-options { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.ex-opt-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.ex-opt-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+.row-btns { display: flex; gap: 7px; margin-bottom: 14px; flex-wrap: wrap; }
+.pill-btn { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.82em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+.pill-btn:hover:not(.active) { background: var(--border); }
+.pill-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+.pill-btn.diff.active.A2 { background: var(--green); border-color: var(--green); color: #fff; }
+.pill-btn.diff.active.B1 { background: var(--blue);  border-color: var(--blue);  color: #fff; }
+.pill-btn.diff.active.B2 { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-generate { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; border: none; border-radius: 10px; padding: 13px; font-family: 'DM Sans', sans-serif; font-size: 0.92em; font-weight: 700; cursor: pointer; background: var(--accent); color: white; transition: all 0.18s; margin-top: 4px; }
+.btn-generate:hover:not(:disabled) { filter: brightness(1.1); box-shadow: 0 4px 14px rgba(122,90,10,0.32); }
+.btn-generate:disabled { opacity: 0.5; cursor: not-allowed; }
+.spinner { display: none; animation: spin 0.8s linear infinite; }
+.btn-generate.loading .spinner { display: inline; }
+.btn-generate.loading .btn-icon { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.progress-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 14px; display: none; }
+.progress-wrap.visible { display: block; }
+.progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.progress-label { font-size: 0.78em; color: var(--text3); font-weight: 600; }
+.progress-frac  { font-size: 0.92em; font-weight: 700; color: var(--accent); }
+.progress-track { height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-fill  { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.35s ease; }
+.progress-score { display: flex; gap: 14px; margin-top: 9px; font-size: 0.8em; flex-wrap: wrap; align-items: center; }
+.score-item { display: flex; align-items: center; gap: 5px; font-weight: 500; color: var(--text2); }
+.score-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.score-dot.g { background: var(--green); } .score-dot.r { background: var(--red); }
+.btn-retry { border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 13px; font-family: 'DM Sans', sans-serif; font-size: 0.78em; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; margin-left: auto; }
+.btn-retry:hover { background: var(--border); }
+.final-score-bar { display: none; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
+.final-score-bar.visible { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.final-num { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+.final-label { font-size: 0.74em; color: var(--text3); }
+.final-track { flex: 1; min-width: 80px; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.final-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+.final-msg { font-size: 0.84em; color: var(--text2); width: 100%; font-weight: 500; }
+.exercise-area { display: none; } .exercise-area.visible { display: block; }
+.exercise-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 12px; overflow: hidden; }
+.exercise-card-header { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--border); }
+.ex-num { font-weight: 700; color: var(--accent); font-size: 0.88em; }
+.ex-type-badge { font-size: 0.68em; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-mid); border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge { font-size: 0.68em; font-weight: 700; border-radius: 12px; padding: 2px 8px; }
+.ex-diff-badge.A2 { background: var(--green-bg); color: var(--green); border: 1px solid #80b890; }
+.ex-diff-badge.B1 { background: var(--blue-bg);  color: var(--blue);  border: 1px solid #90a8e0; }
+.ex-diff-badge.B2 { background: var(--warn-bg);  color: var(--accent); border: 1px solid var(--accent-mid); }
+.ex-status { margin-left: auto; }
+.exercise-body { padding: 16px 18px; }
+.exercise-prompt { line-height: 1.7; margin-bottom: 12px; color: var(--text); }
+.exercise-prompt em { color: var(--accent); font-style: italic; font-weight: 600; }
+.fill-input { border: none; border-bottom: 2px solid var(--accent-mid); background: var(--accent-light); padding: 2px 8px; border-radius: 4px 4px 0 0; font-family: 'DM Sans', sans-serif; font-size: 1em; color: var(--text); min-width: 130px; outline: none; transition: border-color 0.15s; }
+.fill-input:focus { border-bottom-color: var(--accent); }
+.fill-input.ok  { background: var(--green-bg); border-bottom-color: var(--green); }
+.fill-input.err { background: var(--red-bg);   border-bottom-color: var(--red); }
+.choices-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 10px; }
+.choice-btn { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.88em; font-weight: 500; cursor: pointer; text-align: left; background: var(--bg); color: var(--text); transition: all 0.15s; }
+.choice-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-light); }
+.choice-btn.ok  { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 700; }
+.choice-btn.err { background: var(--red-bg);   border-color: var(--red);   color: var(--red); }
+.choice-btn:disabled { cursor: default; }
+.transform-input { width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.9em; background: var(--bg); color: var(--text); outline: none; margin-bottom: 8px; transition: border-color 0.15s; }
+.transform-input:focus { border-color: var(--accent); }
+.transform-input.ok  { background: var(--green-bg); border-color: var(--green); }
+.transform-input.err { background: var(--red-bg);   border-color: var(--red); }
+.btn-check { border: 1.5px solid var(--accent); border-radius: 20px; padding: 7px 18px; font-family: 'DM Sans', sans-serif; font-size: 0.84em; font-weight: 700; cursor: pointer; background: transparent; color: var(--accent); transition: all 0.15s; }
+.btn-check:hover:not(:disabled) { background: var(--accent); color: white; }
+.btn-check:disabled { opacity: 0.35; cursor: default; }
+.ex-feedback { display: none; border-radius: var(--radius-sm); padding: 11px 14px; line-height: 1.55; margin-top: 10px; font-size: 0.9em; }
+.ex-feedback.visible { display: block; }
+.ex-feedback.ok  { background: var(--green-bg); border: 1.5px solid #80b890; color: #0e4818; }
+.ex-feedback.err { background: var(--red-bg);   border: 1.5px solid #c08090; color: #700018; }
+.fb-rule-link { display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 0.84em; font-weight: 700; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.skeleton-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 12px; }
+.skel { background: linear-gradient(90deg,var(--border) 25%,#e6e0d4 50%,var(--border) 75%); background-size: 200% 100%; animation: skel 1.4s infinite; border-radius: 4px; height: 13px; margin-bottom: 9px; }
+@keyframes skel { to { background-position: -200% 0; } }
+.state-msg { text-align: center; padding: 40px 20px; color: var(--text3); }
+.state-icon { font-size: 2rem; margin-bottom: 10px; }
+.state-msg p { max-width: 260px; margin: 0 auto; line-height: 1.6; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <h1>Le Discours Indirect</h1>
+    <span class="header-tag">Grammaire</span>
+  </div>
+  <div class="subtitle">Gramática francesa · DELF B1–B2</div>
+  <div class="stats-row">
+    <div class="stat-pill dd">Discours direct</div>
+    <div class="stat-pill di">Discours indirect</div>
+    <div class="stat-pill tv">Concordance des temps</div>
+    <div class="stat-pill mt">Marqueurs temporels</div>
+    <div class="stat-pill neu" id="score-pill" style="display:none">Resultado: <span id="score-pill-val">—</span></div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referencia</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Qué es</button>
+    <button class="snav-btn"        onclick="showSection('s-verbes',this)">2. Verbos introductores</button>
+    <button class="snav-btn"        onclick="showSection('s-affirmatives',this)">3. Afirmativas</button>
+    <button class="snav-btn"        onclick="showSection('s-concordance',this)">4. Concordancia</button>
+    <button class="snav-btn"        onclick="showSection('s-marqueurs',this)">5. Marcadores temporales</button>
+    <button class="snav-btn"        onclick="showSection('s-interrogatives',this)">6. Interrogativas</button>
+    <button class="snav-btn"        onclick="showSection('s-imperatives',this)">7. Imperativas</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">8. Trampas</button>
+  </div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. QUÉ ES -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>discours indirect</strong> (estilo indirecto) transmite las palabras de alguien sin citarlas literalmente. A diferencia del discours direct (con comillas y dos puntos), en el indirecto se usa una <strong>proposición subordinada</strong> introducida por un verbo de comunicación. Las transformaciones afectan los pronombres, los tiempos verbales y los marcadores temporales.
+      </div>
+
+      <div class="sec-label">Discours direct vs. discours indirect — visión de conjunto</div>
+      <div class="di-pair">
+        <div class="di-label dd">Discours direct</div>
+        <div class="di-box dd"><div class="di-fr">Il dit : <span class="edd">« Je suis fatigué. »</span></div><div class="di-es">Él dice: "Estoy cansado."</div></div>
+      </div>
+      <div class="di-pair">
+        <div class="di-label di">Discours indirect</div>
+        <div class="di-box di"><div class="di-fr">Il dit <span class="edi">qu'il est fatigué.</span></div><div class="di-es">Él dice que está cansado.</div></div>
+      </div>
+
+      <div class="sec-label">Las tres transformaciones obligatorias</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>#</th><th>Qué cambia</th><th>Cuándo</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1</strong></td><td><strong>Pronombres</strong> (persona)</td><td>Siempre</td><td><em>«je»</em> → <em>il/elle</em></td></tr>
+          <tr><td><strong>2</strong></td><td><strong>Tiempos verbales</strong> (concordancia)</td><td>Verbo introductor en pasado</td><td><em>présent</em> → <em>imparfait</em></td></tr>
+          <tr><td><strong>3</strong></td><td><strong>Marcadores temporales</strong></td><td>Verbo introductor en pasado</td><td><em>aujourd'hui</em> → <em>ce jour-là</em></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Regla fundamental:</strong> las transformaciones de tiempo verbal y de marcadores temporales solo son obligatorias cuando el verbo introductor está en <strong>pasado</strong> (dit → <em>a dit / disait</em>). Si el verbo introductor está en présent, no hay cambio de tiempo verbal.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. VERBOS INTRODUCTORES -->
+  <div class="sec-block" id="s-verbes">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El verbo introductor determina la construcción gramatical de la subordinada y transmite la <strong>intención comunicativa</strong> (afirmar, preguntar, ordenar, expresar un deseo…). La elección del verbo introductor es uno de los aspectos más valorados en producción escrita B2.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip di active" onclick="selectChip('verb',0)">Afirmación / declaración</button>
+        <button class="chip di"        onclick="selectChip('verb',1)">Petición / orden</button>
+        <button class="chip di"        onclick="selectChip('verb',2)">Pregunta</button>
+        <button class="chip di"        onclick="selectChip('verb',3)">Otros matices</button>
+      </div>
+      <div id="verb-panels">
+
+        <div class="chip-panel active" id="verb-p-0">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Verbo</th><th>Construcción</th><th>Ejemplo en DI</th></tr></thead>
+            <tbody>
+              <tr><td><strong>dire</strong></td><td>que + indicatif</td><td>Il dit <span class="hl-di">qu'</span>il est prêt.</td></tr>
+              <tr><td><strong>affirmer</strong></td><td>que + indicatif</td><td>Elle affirme <span class="hl-di">que</span> c'est vrai.</td></tr>
+              <tr><td><strong>déclarer</strong></td><td>que + indicatif</td><td>Il déclare <span class="hl-di">qu'</span>il démissionne.</td></tr>
+              <tr><td><strong>expliquer</strong></td><td>que + indicatif</td><td>Elle explique <span class="hl-di">que</span> c'est impossible.</td></tr>
+              <tr><td><strong>préciser</strong></td><td>que + indicatif</td><td>Il précise <span class="hl-di">que</span> la réunion est à 10h.</td></tr>
+              <tr><td><strong>ajouter</strong></td><td>que + indicatif</td><td>Elle ajoute <span class="hl-di">qu'</span>elle sera en retard.</td></tr>
+              <tr><td><strong>admettre</strong></td><td>que + indicatif</td><td>Il admet <span class="hl-di">qu'</span>il a tort.</td></tr>
+              <tr><td><strong>reconnaître</strong></td><td>que + indicatif</td><td>Elle reconnaît <span class="hl-di">que</span> c'était une erreur.</td></tr>
+              <tr><td><strong>promettre</strong></td><td>que + indicatif / de + inf.</td><td>Il promet <span class="hl-di">qu'</span>il viendra.</td></tr>
+              <tr><td><strong>penser / croire</strong></td><td>que + indicatif</td><td>Elle croit <span class="hl-di">que</span> tu as raison.</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="chip-panel" id="verb-p-1">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Verbo</th><th>Construcción</th><th>Ejemplo en DI</th></tr></thead>
+            <tbody>
+              <tr><td><strong>demander</strong></td><td>de + infinitif</td><td>Il demande <span class="hl-di">de</span> partir.</td></tr>
+              <tr><td><strong>dire</strong></td><td>de + infinitif</td><td>Elle dit <span class="hl-di">de</span> faire attention.</td></tr>
+              <tr><td><strong>ordonner</strong></td><td>de + infinitif</td><td>Il ordonne <span class="hl-di">de</span> se taire.</td></tr>
+              <tr><td><strong>conseiller</strong></td><td>de + infinitif</td><td>Elle conseille <span class="hl-di">de</span> partir tôt.</td></tr>
+              <tr><td><strong>interdire</strong></td><td>de + infinitif</td><td>Il interdit <span class="hl-di">de</span> fumer.</td></tr>
+              <tr><td><strong>permettre</strong></td><td>de + infinitif</td><td>Elle permet <span class="hl-di">de</span> sortir.</td></tr>
+              <tr><td><strong>supplier</strong></td><td>de + infinitif</td><td>Il supplie <span class="hl-di">de</span> rester.</td></tr>
+              <tr><td><strong>proposer</strong></td><td>de + infinitif</td><td>Elle propose <span class="hl-di">d'</span>aller au cinéma.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="note-box"><strong>Regla:</strong> para órdenes y peticiones, el impératif del DD se convierte en <strong>de + infinitif</strong> en DI, nunca en subjonctif.</div>
+        </div>
+
+        <div class="chip-panel" id="verb-p-2">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Verbo</th><th>Construcción</th><th>Ejemplo en DI</th></tr></thead>
+            <tbody>
+              <tr><td><strong>demander</strong></td><td>si / ce que / ce qui…</td><td>Il demande <span class="hl-di">si</span> tu viens.</td></tr>
+              <tr><td><strong>vouloir savoir</strong></td><td>si / ce que / ce qui…</td><td>Elle veut savoir <span class="hl-di">ce que</span> tu fais.</td></tr>
+              <tr><td><strong>se demander</strong></td><td>si / ce que / ce qui…</td><td>Il se demande <span class="hl-di">où</span> elle est.</td></tr>
+              <tr><td><strong>ignorer</strong></td><td>si / ce que / ce qui…</td><td>Elle ignore <span class="hl-di">pourquoi</span> il est parti.</td></tr>
+              <tr><td><strong>savoir</strong></td><td>si / ce que / ce qui…</td><td>Tu sais <span class="hl-di">si</span> elle vient ?</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="chip-panel" id="verb-p-3">
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Verbo</th><th>Matiz</th><th>Construcción</th></tr></thead>
+            <tbody>
+              <tr><td><strong>s'exclamer</strong></td><td>exclamación</td><td>que + indicatif</td></tr>
+              <tr><td><strong>se plaindre</strong></td><td>queja</td><td>que + indicatif</td></tr>
+              <tr><td><strong>se vanter</strong></td><td>fanfarronería</td><td>que + indicatif</td></tr>
+              <tr><td><strong>avouer</strong></td><td>confesión</td><td>que + indicatif / de + inf.</td></tr>
+              <tr><td><strong>espérer</strong></td><td>esperanza</td><td>que + indicatif (no subjonctif)</td></tr>
+              <tr><td><strong>craindre / avoir peur</strong></td><td>temor</td><td>que + subjonctif / de + inf.</td></tr>
+              <tr><td><strong>souhaiter</strong></td><td>deseo</td><td>que + subjonctif / de + inf.</td></tr>
+              <tr><td><strong>refuser</strong></td><td>negativa</td><td>de + infinitif</td></tr>
+              <tr><td><strong>accepter</strong></td><td>aceptación</td><td>de + infinitif</td></tr>
+            </tbody>
+          </table></div>
+          <div class="green-box"><strong>Para producción escrita B2:</strong> variar el verbo introductor enriquece el texto y demuestra dominio del registro. Evitar repetir siempre <em>dire</em>.</div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3. AFIRMATIVAS -->
+  <div class="sec-block" id="s-affirmatives">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las proposiciones afirmativas en discours indirect se introducen con <strong>que / qu'</strong>. La transformación más importante es la de los <strong>pronombres personales</strong>, que cambian según quién habla y a quién se refiere.
+      </div>
+
+      <div class="sec-label">Transformaciones de persona</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>DD — quien habla dice…</th><th>DI — el narrador reporta…</th></tr></thead>
+        <tbody>
+          <tr><td>«<span class="hl-dd">Je</span> suis content.»</td><td>Il dit <span class="hl-di">qu'il</span> est content.</td></tr>
+          <tr><td>«<span class="hl-dd">Tu</span> as raison.»</td><td>Il dit <span class="hl-di">que tu</span> as raison. <span class="dim">(depende del contexto)</span></td></tr>
+          <tr><td>«<span class="hl-dd">Nous</span> partons demain.»</td><td>Elle dit <span class="hl-di">qu'ils</span> partent demain.</td></tr>
+          <tr><td>«<span class="hl-dd">Mon</span> frère est là.»</td><td>Elle dit que <span class="hl-di">son</span> frère est là.</td></tr>
+          <tr><td>«Je t'<span class="hl-dd">aime</span>.»</td><td>Il lui dit <span class="hl-di">qu'il</span> l'aime.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos en contexto — verbo introductor en présent (sin cambio de tiempo)</div>
+      <div class="di-pair">
+        <div class="di-label dd">DD</div>
+        <div class="di-box dd"><div class="di-fr">Elle dit : « <span class="edd">Je ne suis pas d'accord.</span> »</div></div>
+      </div>
+      <div class="di-pair">
+        <div class="di-label di">DI (verbo introd. en présent)</div>
+        <div class="di-box di"><div class="di-fr">Elle dit <span class="edi">qu'elle n'est pas d'accord.</span></div><div class="di-note">Verbo introductor en présent → tiempo verbal sin cambio</div></div>
+      </div>
+
+      <div class="di-pair" style="margin-top:12px">
+        <div class="di-label dd">DD</div>
+        <div class="di-box dd"><div class="di-fr">Il affirme : « <span class="edd">Nous avons trouvé une solution.</span> »</div></div>
+      </div>
+      <div class="di-pair">
+        <div class="di-label di">DI (verbo introd. en présent)</div>
+        <div class="di-box di"><div class="di-fr">Il affirme <span class="edi">qu'ils ont trouvé une solution.</span></div></div>
+      </div>
+
+      <div class="di-pair" style="margin-top:12px">
+        <div class="di-label dd">DD</div>
+        <div class="di-box dd"><div class="di-fr">Paul dit : « <span class="edd">Mon patron m'a licencié.</span> »</div></div>
+      </div>
+      <div class="di-pair">
+        <div class="di-label di">DI (verbo introd. en présent)</div>
+        <div class="di-box di"><div class="di-fr">Paul dit <span class="edi">que son patron l'a licencié.</span></div><div class="di-note">mon → son · m' → l'</div></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. CONCORDANCIA DE TIEMPOS -->
+  <div class="sec-block" id="s-concordance">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Cuando el verbo introductor está en <strong>pasado</strong> (passé composé, imparfait, passé simple…), los tiempos verbales del discours direct sufren una <strong>transformación sistemática</strong> hacia el pasado. Este proceso se llama <em>concordance des temps</em>.
+      </div>
+
+      <div class="sec-label">Tabla de concordancia</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tiempo en DD</th><th>→ Tiempo en DI (verbo introd. en pasado)</th></tr></thead>
+        <tbody>
+          <tr><td><strong class="hl-dd">Présent</strong></td><td><strong class="hl-tv">Imparfait</strong></td></tr>
+          <tr><td><strong class="hl-dd">Passé composé</strong></td><td><strong class="hl-tv">Plus-que-parfait</strong></td></tr>
+          <tr><td><strong class="hl-dd">Imparfait</strong></td><td><strong class="hl-tv">Imparfait</strong> <span class="dim">(no cambia)</span></td></tr>
+          <tr><td><strong class="hl-dd">Futur simple</strong></td><td><strong class="hl-tv">Conditionnel présent</strong></td></tr>
+          <tr><td><strong class="hl-dd">Futur antérieur</strong></td><td><strong class="hl-tv">Conditionnel passé</strong></td></tr>
+          <tr><td><strong class="hl-dd">Conditionnel présent</strong></td><td><strong class="hl-tv">Conditionnel présent</strong> <span class="dim">(no cambia)</span></td></tr>
+          <tr><td><strong class="hl-dd">Impératif</strong></td><td><strong class="hl-tv">de + infinitif</strong></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="chip-bar">
+        <button class="chip tv active" onclick="selectChip('conc',0)">Présent → Imparfait</button>
+        <button class="chip tv"        onclick="selectChip('conc',1)">Passé composé → PQP</button>
+        <button class="chip tv"        onclick="selectChip('conc',2)">Futur simple → Conditionnel</button>
+        <button class="chip tv"        onclick="selectChip('conc',3)">Futur antérieur → Cond. passé</button>
+        <button class="chip tv"        onclick="selectChip('conc',4)">Imparfait y conditionnel sin cambio</button>
+      </div>
+      <div id="conc-panels">
+
+        <div class="chip-panel active" id="conc-p-0">
+          <div class="di-pair">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Elle a dit : « Je <span class="edd">suis</span> fatiguée. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Elle a dit <span class="edi">qu'elle <span class="etv">était</span> fatiguée.</span></div><div class="di-note">présent → imparfait</div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Il a déclaré : « Nous <span class="edd">voulons</span> partir. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Il a déclaré <span class="edi">qu'ils <span class="etv">voulaient</span> partir.</span></div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Elle a affirmé : « Je <span class="edd">ne comprends</span> pas. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Elle a affirmé <span class="edi">qu'elle ne <span class="etv">comprenait</span> pas.</span></div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Il a expliqué : « C'<span class="edd">est</span> très simple. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Il a expliqué <span class="edi">que c'<span class="etv">était</span> très simple.</span></div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Paul a dit : « J'<span class="edd">ai</span> faim et j'<span class="edd">ai</span> soif. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Paul a dit <span class="edi">qu'il <span class="etv">avait</span> faim et qu'il <span class="etv">avait</span> soif.</span></div></div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="conc-p-1">
+          <div class="di-pair">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Elle a dit : « J'<span class="edd">ai vu</span> ce film. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Elle a dit <span class="edi">qu'elle <span class="etv">avait vu</span> ce film.</span></div><div class="di-note">passé composé → plus-que-parfait</div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Il a admis : « Je <span class="edd">me suis trompé</span>. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Il a admis <span class="edi">qu'il <span class="etv">s'était trompé</span>.</span></div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Elle a expliqué : « Nous <span class="edd">avons déjà fini</span>. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Elle a expliqué <span class="edi">qu'ils <span class="etv">avaient déjà fini</span>.</span></div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Il a reconnu : « Je n'<span class="edd">ai pas fait</span> mes devoirs. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Il a reconnu <span class="edi">qu'il n'<span class="etv">avait pas fait</span> ses devoirs.</span></div></div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="conc-p-2">
+          <div class="di-pair">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Il a dit : « Je <span class="edd">viendrai</span> demain. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Il a dit <span class="edi">qu'il <span class="etv">viendrait</span> le lendemain.</span></div><div class="di-note">futur simple → conditionnel présent · demain → le lendemain</div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Elle a promis : « Je <span class="edd">t'appellerai</span> ce soir. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Elle a promis <span class="edi">qu'elle <span class="etv">l'appellerait</span> ce soir-là.</span></div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Ils ont annoncé : « Nous <span class="edd">partirons</span> le mois prochain. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Ils ont annoncé <span class="edi">qu'ils <span class="etv">partiraient</span> le mois suivant.</span></div></div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="conc-p-3">
+          <div class="di-pair">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Il a dit : « Je t'appellerai quand j'<span class="edd">aurai fini</span>. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Il a dit <span class="edi">qu'il l'appellerait quand il <span class="etv">aurait fini</span>.</span></div><div class="di-note">futur antérieur → conditionnel passé</div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Elle a promis : « Dès que j'<span class="edd">aurai eu</span> les résultats, je t'en informerai. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Elle a promis <span class="edi">que dès qu'elle <span class="etv">aurait eu</span> les résultats, elle l'en informerait.</span></div></div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="conc-p-4">
+          <div class="def-box">Imparfait y conditionnel présent <strong>no cambian</strong> al pasar a discours indirect, independientemente del verbo introductor.</div>
+          <div class="di-pair">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Il a dit : « Je <span class="edd">voulais</span> partir. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Il a dit <span class="edi">qu'il <span class="etv">voulait</span> partir.</span></div><div class="di-note">imparfait → imparfait (sin cambio)</div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Elle a dit : « Je <span class="edd">voudrais</span> un café. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Elle a dit <span class="edi">qu'elle <span class="etv">voudrait</span> un café.</span></div><div class="di-note">conditionnel présent → conditionnel présent (sin cambio)</div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Il a expliqué : « Si j'<span class="edd">avais</span> le temps, je <span class="edd">viendrais</span>. »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Il a expliqué <span class="edi">que si il avait le temps, il <span class="etv">viendrait</span>.</span></div><div class="di-note">frase condicional tipo 2: ambos tiempos sin cambio</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 5. MARCADORES TEMPORALES -->
+  <div class="sec-block" id="s-marqueurs">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Cuando el verbo introductor está en pasado, los marcadores temporales del discours direct cambian para adaptarse al nuevo punto de referencia temporal. Este cambio es <strong>obligatorio</strong> en producción escrita formal y muy examinado en el DELF B2.
+      </div>
+
+      <div class="sec-label">Tabla completa de transformaciones</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Discours direct</th><th>→ Discours indirect (verbo introd. en pasado)</th></tr></thead>
+        <tbody>
+          <tr><td><strong class="hl-dd">aujourd'hui</strong></td><td><strong class="hl-mt">ce jour-là</strong></td></tr>
+          <tr><td><strong class="hl-dd">maintenant</strong></td><td><strong class="hl-mt">à ce moment-là</strong></td></tr>
+          <tr><td><strong class="hl-dd">hier</strong></td><td><strong class="hl-mt">la veille</strong></td></tr>
+          <tr><td><strong class="hl-dd">avant-hier</strong></td><td><strong class="hl-mt">l'avant-veille</strong></td></tr>
+          <tr><td><strong class="hl-dd">demain</strong></td><td><strong class="hl-mt">le lendemain</strong></td></tr>
+          <tr><td><strong class="hl-dd">après-demain</strong></td><td><strong class="hl-mt">le surlendemain</strong></td></tr>
+          <tr><td><strong class="hl-dd">ce matin / ce soir</strong></td><td><strong class="hl-mt">ce matin-là / ce soir-là</strong></td></tr>
+          <tr><td><strong class="hl-dd">cette semaine</strong></td><td><strong class="hl-mt">cette semaine-là</strong></td></tr>
+          <tr><td><strong class="hl-dd">ce mois-ci</strong></td><td><strong class="hl-mt">ce mois-là</strong></td></tr>
+          <tr><td><strong class="hl-dd">cette année</strong></td><td><strong class="hl-mt">cette année-là</strong></td></tr>
+          <tr><td><strong class="hl-dd">il y a trois jours</strong></td><td><strong class="hl-mt">trois jours avant / auparavant</strong></td></tr>
+          <tr><td><strong class="hl-dd">dans trois jours</strong></td><td><strong class="hl-mt">trois jours après / plus tard</strong></td></tr>
+          <tr><td><strong class="hl-dd">la semaine prochaine</strong></td><td><strong class="hl-mt">la semaine suivante / d'après</strong></td></tr>
+          <tr><td><strong class="hl-dd">la semaine dernière</strong></td><td><strong class="hl-mt">la semaine précédente / d'avant</strong></td></tr>
+          <tr><td><strong class="hl-dd">l'année prochaine</strong></td><td><strong class="hl-mt">l'année suivante</strong></td></tr>
+          <tr><td><strong class="hl-dd">l'année dernière</strong></td><td><strong class="hl-mt">l'année précédente / d'avant</strong></td></tr>
+          <tr><td><strong class="hl-dd">ici</strong></td><td><strong class="hl-mt">là / là-bas</strong></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos en contexto</div>
+      <div class="di-pair">
+        <div class="di-label dd">DD</div>
+        <div class="di-box dd"><div class="di-fr">Elle a dit : « Je pars <span class="edd">demain</span>. »</div></div>
+      </div>
+      <div class="di-pair">
+        <div class="di-label di">DI</div>
+        <div class="di-box di"><div class="di-fr">Elle a dit <span class="edi">qu'elle partait <span class="emt">le lendemain</span>.</span></div></div>
+      </div>
+      <div class="di-pair" style="margin-top:10px">
+        <div class="di-label dd">DD</div>
+        <div class="di-box dd"><div class="di-fr">Il a expliqué : « J'ai fait ça <span class="edd">hier</span>. »</div></div>
+      </div>
+      <div class="di-pair">
+        <div class="di-label di">DI</div>
+        <div class="di-box di"><div class="di-fr">Il a expliqué <span class="edi">qu'il avait fait ça <span class="emt">la veille</span>.</span></div></div>
+      </div>
+      <div class="di-pair" style="margin-top:10px">
+        <div class="di-label dd">DD</div>
+        <div class="di-box dd"><div class="di-fr">Elle a dit : « <span class="edd">Maintenant</span> je comprends. »</div></div>
+      </div>
+      <div class="di-pair">
+        <div class="di-label di">DI</div>
+        <div class="di-box di"><div class="di-fr">Elle a dit <span class="edi">qu'<span class="emt">à ce moment-là</span> elle comprenait.</span></div></div>
+      </div>
+      <div class="di-pair" style="margin-top:10px">
+        <div class="di-label dd">DD</div>
+        <div class="di-box dd"><div class="di-fr">Il a annoncé : « La réunion aura lieu <span class="edd">la semaine prochaine</span>. »</div></div>
+      </div>
+      <div class="di-pair">
+        <div class="di-label di">DI</div>
+        <div class="di-box di"><div class="di-fr">Il a annoncé <span class="edi">que la réunion aurait lieu <span class="emt">la semaine suivante</span>.</span></div></div>
+      </div>
+      <div class="di-pair" style="margin-top:10px">
+        <div class="di-label dd">DD</div>
+        <div class="di-box dd"><div class="di-fr">Elle a confié : « <span class="edd">Ce matin</span>, j'ai reçu une mauvaise nouvelle. »</div></div>
+      </div>
+      <div class="di-pair">
+        <div class="di-label di">DI</div>
+        <div class="di-box di"><div class="di-fr">Elle a confié <span class="edi">que <span class="emt">ce matin-là</span>, elle avait reçu une mauvaise nouvelle.</span></div></div>
+      </div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Cuándo NO cambian los marcadores:</strong> si el evento referenciado sigue siendo verdad en el momento de la narración (hechos permanentes, fechas absolutas), los marcadores pueden permanecer. <em>«Il a dit que la réunion aurait lieu le 15 mars»</em> — si aún es antes del 15 de marzo, el marcador puede conservarse.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. INTERROGATIVAS -->
+  <div class="sec-block" id="s-interrogatives">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las preguntas en discours indirect <strong>nunca llevan signos de interrogación ni inversión verbo-sujeto</strong>. Se introducen con <em>si</em> (preguntas totales) o con el pronombre/adverbio interrogativo correspondiente (preguntas parciales).
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip di active" onclick="selectChip('inter',0)">Pregunta total → si</button>
+        <button class="chip di"        onclick="selectChip('inter',1)">Pregunta parcial → mot interrogatif</button>
+        <button class="chip di"        onclick="selectChip('inter',2)">Qu'est-ce que / Qu'est-ce qui → ce que / ce qui</button>
+        <button class="chip di"        onclick="selectChip('inter',3)">Concordancia en interrogativas</button>
+      </div>
+      <div id="inter-panels">
+
+        <div class="chip-panel active" id="inter-p-0">
+          <div class="def-box">Preguntas de sí/no: se introduce con <strong>si</strong>. Sin inversión verbo-sujeto. Sin signos de interrogación.</div>
+          <div class="di-pair">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Il a demandé : « <span class="edd">Tu viens ?</span> »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Il a demandé <span class="edi">si elle venait.</span></div><div class="di-note">? desaparece · inversión desaparece · tu → elle · présent → imparfait</div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Elle a voulu savoir : « <span class="edd">Est-ce que tu as fini ?</span> »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Elle a voulu savoir <span class="edi">s'il avait fini.</span></div><div class="di-note">est-ce que → si · PC → PQP</div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Il s'est demandé : « <span class="edd">Viendra-t-elle ?</span> »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Il s'est demandé <span class="edi">si elle viendrait.</span></div><div class="di-note">inversión → ordre normal · futur → conditionnel</div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Elle a demandé : « <span class="edd">Est-ce qu'il y a de la place ?</span> »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Elle a demandé <span class="edi">s'il y avait de la place.</span></div></div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="inter-p-1">
+          <div class="def-box">Preguntas con palabra interrogativa: se conserva el mot interrogatif, se elimina la inversión y los signos de interrogación.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>DD (mot interrogatif)</th><th>→ DI (mismo mot interrogatif)</th></tr></thead>
+            <tbody>
+              <tr><td>« <span class="hl-dd">Où</span> vas-tu ? »</td><td>Il a demandé <span class="hl-di">où</span> elle allait.</td></tr>
+              <tr><td>« <span class="hl-dd">Quand</span> pars-tu ? »</td><td>Elle a demandé <span class="hl-di">quand</span> il partait.</td></tr>
+              <tr><td>« <span class="hl-dd">Comment</span> tu t'appelles ? »</td><td>Il a voulu savoir <span class="hl-di">comment</span> elle s'appelait.</td></tr>
+              <tr><td>« <span class="hl-dd">Pourquoi</span> tu pars ? »</td><td>Elle a demandé <span class="hl-di">pourquoi</span> il partait.</td></tr>
+              <tr><td>« <span class="hl-dd">Combien</span> ça coûte ? »</td><td>Il a demandé <span class="hl-di">combien</span> ça coûtait.</td></tr>
+              <tr><td>« <span class="hl-dd">Avec qui</span> viens-tu ? »</td><td>Elle a demandé <span class="hl-di">avec qui</span> il venait.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="di-pair">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Il a demandé : « <span class="edd">Pourquoi es-tu en retard ?</span> »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Il a demandé <span class="edi">pourquoi elle était en retard.</span></div><div class="di-note">pourquoi se conserva · inversión desaparece · présent → imparfait</div></div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="inter-p-2">
+          <div class="def-box">Las formas con <em>est-ce que / est-ce qui</em> se transforman sistemáticamente en <em>ce que / ce qui</em> en el discours indirect.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>DD</th><th>→ DI</th></tr></thead>
+            <tbody>
+              <tr><td>« <span class="hl-dd">Qu'est-ce que</span> tu fais ? »</td><td>Il demande <span class="hl-di">ce qu'</span>elle fait.</td></tr>
+              <tr><td>« <span class="hl-dd">Qu'est-ce qui</span> se passe ? »</td><td>Elle demande <span class="hl-di">ce qui</span> se passe.</td></tr>
+              <tr><td>« <span class="hl-dd">Que</span> fais-tu ? »</td><td>Il demande <span class="hl-di">ce qu'</span>elle fait.</td></tr>
+              <tr><td>« <span class="hl-dd">Qui est-ce qui</span> vient ? »</td><td>Elle demande <span class="hl-di">qui</span> vient.</td></tr>
+              <tr><td>« <span class="hl-dd">Qui est-ce que</span> tu cherches ? »</td><td>Il demande <span class="hl-di">qui</span> elle cherche.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="di-pair">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Elle a demandé : « <span class="edd">Qu'est-ce que vous voulez manger ?</span> »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Elle a demandé <span class="edi">ce qu'ils voulaient manger.</span></div><div class="di-note">qu'est-ce que → ce que · présent → imparfait</div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD</div>
+            <div class="di-box dd"><div class="di-fr">Il a voulu savoir : « <span class="edd">Qu'est-ce qui t'a fait rire ?</span> »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI</div>
+            <div class="di-box di"><div class="di-fr">Il a voulu savoir <span class="edi">ce qui l'avait fait rire.</span></div><div class="di-note">qu'est-ce qui → ce qui · PC → PQP</div></div>
+          </div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text"><strong>Qu'est-ce que → ce que</strong> (objeto). <strong>Qu'est-ce qui → ce qui</strong> (sujeto). La distinción sujeto/objeto se conserva en DI.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="inter-p-3">
+          <div class="def-box">Las preguntas indirectas siguen las mismas reglas de concordancia que las afirmativas cuando el verbo introductor está en pasado.</div>
+          <div class="di-pair">
+            <div class="di-label dd">DD (présent)</div>
+            <div class="di-box dd"><div class="di-fr">« <span class="edd">Où travailles-tu ?</span> »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI (pasado)</div>
+            <div class="di-box di"><div class="di-fr">Il a demandé <span class="edi">où elle <span class="etv">travaillait</span>.</span></div><div class="di-note">présent → imparfait</div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD (futur)</div>
+            <div class="di-box dd"><div class="di-fr">« <span class="edd">Quand viendras-tu ?</span> »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI (pasado)</div>
+            <div class="di-box di"><div class="di-fr">Il a demandé <span class="edi">quand elle <span class="etv">viendrait</span>.</span></div><div class="di-note">futur simple → conditionnel présent</div></div>
+          </div>
+          <div class="di-pair" style="margin-top:10px">
+            <div class="di-label dd">DD (PC)</div>
+            <div class="di-box dd"><div class="di-fr">« <span class="edd">Qu'est-ce que tu as décidé ?</span> »</div></div>
+          </div>
+          <div class="di-pair">
+            <div class="di-label di">DI (pasado)</div>
+            <div class="di-box di"><div class="di-fr">Elle a voulu savoir <span class="edi">ce qu'il <span class="etv">avait décidé</span>.</span></div><div class="di-note">qu'est-ce que → ce que · PC → PQP</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 7. IMPERATIVAS -->
+  <div class="sec-block" id="s-imperatives">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las frases imperativas en discours indirect se transforman usando un <strong>verbo introductor apropiado + de + infinitif</strong>. El impératif nunca se conserva en DI.
+      </div>
+
+      <div class="sec-label">Estructura</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Discours direct (impératif)</th><th>→ Discours indirect (de + inf.)</th></tr></thead>
+        <tbody>
+          <tr><td>« <span class="hl-dd">Viens ici !</span> »</td><td>Il lui a dit <span class="hl-di">de venir</span>.</td></tr>
+          <tr><td>« <span class="hl-dd">Ne pars pas !</span> »</td><td>Elle lui a demandé <span class="hl-di">de ne pas partir</span>.</td></tr>
+          <tr><td>« <span class="hl-dd">Dépêche-toi !</span> »</td><td>Il lui a ordonné <span class="hl-di">de se dépêcher</span>.</td></tr>
+          <tr><td>« <span class="hl-dd">Sois sage !</span> »</td><td>Elle lui a dit <span class="hl-di">d'être sage</span>.</td></tr>
+          <tr><td>« <span class="hl-dd">Finissez ce travail !</span> »</td><td>Il leur a demandé <span class="hl-di">de finir ce travail</span>.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Negación: ne pas antes del infinitivo</div>
+      <div class="di-pair">
+        <div class="di-label dd">DD</div>
+        <div class="di-box dd"><div class="di-fr">Le médecin a dit : « <span class="edd">Ne fumez pas</span> ! »</div></div>
+      </div>
+      <div class="di-pair">
+        <div class="di-label di">DI</div>
+        <div class="di-box di"><div class="di-fr">Le médecin leur a dit <span class="edi">de <span class="etv">ne pas fumer</span>.</span></div><div class="di-note">ne…pas enroda el infinitivo</div></div>
+      </div>
+      <div class="di-pair" style="margin-top:10px">
+        <div class="di-label dd">DD</div>
+        <div class="di-box dd"><div class="di-fr">Elle a dit : « <span class="edd">N'oublie pas</span> ton passeport ! »</div></div>
+      </div>
+      <div class="di-pair">
+        <div class="di-label di">DI</div>
+        <div class="di-box di"><div class="di-fr">Elle lui a dit <span class="edi">de ne pas oublier son passeport.</span></div></div>
+      </div>
+
+      <div class="sec-label">Con verbos pronominales</div>
+      <div class="di-pair">
+        <div class="di-label dd">DD</div>
+        <div class="di-box dd"><div class="di-fr">Il a dit : « <span class="edd">Lève-toi !</span> »</div></div>
+      </div>
+      <div class="di-pair">
+        <div class="di-label di">DI</div>
+        <div class="di-box di"><div class="di-fr">Il lui a dit <span class="edi">de se lever.</span></div><div class="di-note">toi → se (concordancia de persona)</div></div>
+      </div>
+      <div class="di-pair" style="margin-top:10px">
+        <div class="di-label dd">DD</div>
+        <div class="di-box dd"><div class="di-fr">Elle a crié : « <span class="edd">Taisez-vous !</span> »</div></div>
+      </div>
+      <div class="di-pair">
+        <div class="di-label di">DI</div>
+        <div class="di-box di"><div class="di-fr">Elle leur a crié <span class="edi">de se taire.</span></div></div>
+      </div>
+
+      <div class="sec-label">Ejemplos con distintos verbos introductores</div>
+      <div class="example-block di"><div class="ex-fr">Le professeur leur a <span class="edi">demandé</span> de rendre leurs copies.</div><div class="ex-es">El profesor les pidió que entregaran sus copias.</div></div>
+      <div class="example-block di"><div class="ex-fr">Le médecin lui a <span class="edi">conseillé</span> de se reposer.</div><div class="ex-es">El médico le aconsejó que descansara.</div></div>
+      <div class="example-block di"><div class="ex-fr">Le directeur leur a <span class="edi">interdit</span> de parler à la presse.</div><div class="ex-es">El director les prohibió hablar a la prensa.</div></div>
+      <div class="example-block di"><div class="ex-fr">Elle lui a <span class="edi">proposé</span> de partir ensemble.</div><div class="ex-es">Le propuso irse juntos.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 8. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con el discours indirect en el DELF B1–B2.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+</div><!-- /main-layout -->
+
+<script>
+/* DATA */
+const TRAPS = [
+  {name:"Concordancia: présent → imparfait (no présent en DI pasado)",
+   wrong:"Il a dit qu'il est fatigué. (verbo introd. en pasado)",
+   right:"Il a dit qu'il était fatigué.",
+   expl:"Cuando el verbo introductor está en <strong>pasado</strong>, el présent del DD se convierte en <strong>imparfait</strong> en DI. El error más frecuente es conservar el présent. Solo si el verbo introductor está en présent, el tiempo verbal se mantiene."},
+  {name:"Interrogativa total: si (no si... ?) ni que",
+   wrong:"Il a demandé que tu venais. / Il a demandé si tu venais ?",
+   right:"Il a demandé si tu venais.",
+   expl:"La pregunta total (sí/no) se introduce con <strong>si</strong> en DI, nunca con <em>que</em>. Además, no hay signo de interrogación ni inversión verbo-sujeto en DI. <em>Est-ce que</em> desaparece → <em>si</em>."},
+  {name:"Qu'est-ce que / Qu'est-ce qui → ce que / ce qui",
+   wrong:"Il a demandé qu'est-ce qu'elle faisait.",
+   right:"Il a demandé ce qu'elle faisait.",
+   expl:"<em>Qu'est-ce que</em> → <strong>ce que</strong> (objeto). <em>Qu'est-ce qui</em> → <strong>ce qui</strong> (sujeto). Las formas con <em>est-ce que/qui</em> no se conservan en DI. Es uno de los errores más sistemáticos."},
+  {name:"Imperativa: de + infinitif (no subjonctif ni que)",
+   wrong:"Il lui a dit qu'il parte. / Il lui a dit qu'il faut partir.",
+   right:"Il lui a dit de partir.",
+   expl:"El impératif en DD se transforma en <strong>de + infinitif</strong> en DI, con el verbo introductor apropiado (dire, demander, ordonner…). Nunca en subjonctif ni en <em>que + indicatif</em>."},
+  {name:"Negativa en DI imperial: ne pas devant l'infinitif",
+   wrong:"Il lui a dit ne fume pas. / Il lui a dit de ne fume pas.",
+   right:"Il lui a dit de ne pas fumer.",
+   expl:"La negación en DI con imperativa: <strong>de + ne pas + infinitif</strong>. Los dos elementos de la negación (<em>ne</em> y <em>pas</em>) van juntos antes del infinitivo. <em>Ne pas fumer</em> ✓ — <em>ne fume pas</em> ✗ (eso es imperativa, no infinitivo)."},
+  {name:"Marcador temporal: demain → le lendemain",
+   wrong:"Il a dit qu'il partirait demain. (verbo introd. en pasado, sin cambio)",
+   right:"Il a dit qu'il partirait le lendemain.",
+   expl:"Con verbo introductor en <strong>pasado</strong>, los marcadores temporales también cambian: <em>demain → <strong>le lendemain</strong></em>, <em>hier → <strong>la veille</strong></em>, <em>aujourd'hui → <strong>ce jour-là</strong></em>, <em>la semaine prochaine → <strong>la semaine suivante</strong></em>."},
+  {name:"Futur simple → conditionnel (no futur en DI pasado)",
+   wrong:"Il a promis qu'il viendra.",
+   right:"Il a promis qu'il viendrait.",
+   expl:"Cuando el verbo introductor está en pasado, el <strong>futur simple</strong> del DD se transforma en <strong>conditionnel présent</strong> en DI. El conditionnel aquí no expresa hipótesis sino que es simplemente la forma de futuro en el pasado."},
+  {name:"Passé composé → plus-que-parfait (no PC en DI pasado)",
+   wrong:"Elle a admis qu'elle a menti.",
+   right:"Elle a admis qu'elle avait menti.",
+   expl:"El <strong>passé composé</strong> del DD se transforma en <strong>plus-que-parfait</strong> en DI cuando el verbo introductor está en pasado. La lógica es la misma que en español (dijo que había mentido), pero en francés el cambio es obligatorio y sistemático."},
+];
+
+function renderTraps() {
+  document.getElementById("trap-cards").innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join("");
+}
+
+/* CHIP SELECT */
+function selectChip(ns, idx) {
+  document.querySelectorAll(".chip-bar").forEach(bar => {
+    const first = bar.querySelector(".chip");
+    if (first && first.getAttribute("onclick") && first.getAttribute("onclick").includes("'" + ns + "'")) {
+      bar.querySelectorAll(".chip").forEach((c, i) => c.classList.toggle("active", i === idx));
+    }
+  });
+  const el = document.getElementById(ns + "-panels");
+  if (el) el.querySelectorAll(":scope > .chip-panel").forEach((p, i) => p.classList.toggle("active", i === idx));
+}
+
+/* NAV */
+function showSection(id, btn) {
+  document.querySelectorAll(".sec-block").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".snav-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  btn.classList.add("active");
+}
+function switchMode(mode, btn) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById("panel-" + mode).classList.add("active");
+  btn.classList.add("active");
+  document.getElementById("section-nav").style.display = mode === "ref" ? "" : "none";
+}
+function setFontSize(v) { document.documentElement.style.setProperty("--fs", v + "px"); }
+
+/* EXERCISE STATE */
+let exType = "fill", exDiff = "B1", exQty = 5, exFoco = "mix";
+let exTotal = 0, exAnswered = 0, exCorrect = 0, exWrong = 0;
+
+document.querySelectorAll(".ex-opt-btn:not(.foco)").forEach(b => b.addEventListener("click", function () {
+  document.querySelectorAll(".ex-opt-btn:not(.foco)").forEach(x => x.classList.remove("active"));
+  this.classList.add("active"); exType = this.dataset.type;
+}));
+document.querySelectorAll(".ex-opt-btn.foco").forEach(b => b.addEventListener("click", function () {
+  document.querySelectorAll(".ex-opt-btn.foco").forEach(x => x.classList.remove("active"));
+  this.classList.add("active"); exFoco = this.dataset.foco;
+}));
+
+function setDiff(d) {
+  exDiff = d;
+  document.querySelectorAll("#diff-btns .pill-btn").forEach(b => {
+    b.classList.remove("active", "A2", "B1", "B2");
+    if (b.textContent.trim() === d) b.classList.add("active", d);
+  });
+}
+function setQty(q) {
+  exQty = q;
+  document.querySelectorAll("#qty-btns .pill-btn").forEach(b =>
+    b.classList.toggle("active", parseInt(b.textContent.trim()) === q));
+}
+
+/* GENERATE */
+const FOCO_DESC = {
+  mix:           "todos los aspectos del discours indirect: transformación de afirmativas (pronombres + concordancia de tiempos), interrogativas (si / mot interrogatif / ce que/ce qui), imperativas (de + infinitif), marcadores temporales",
+  concordance:   "concordancia de tiempos verbales: présent→imparfait, passé composé→PQP, futur simple→conditionnel présent, futur antérieur→conditionnel passé; el alumno debe conjugar el verbo correctamente en DI con verbo introductor en pasado",
+  marqueurs:     "transformación de marcadores temporales: aujourd'hui→ce jour-là, demain→le lendemain, hier→la veille, la semaine prochaine→la semaine suivante, maintenant→à ce moment-là, dans X jours→X jours plus tard, etc.",
+  interrogatives:"interrogativas indirectas: preguntas totales (si), preguntas parciales (où/quand/comment/pourquoi/combien conservados), qu'est-ce que→ce que, qu'est-ce qui→ce qui; sin inversión ni signos de interrogación",
+  imperatives:   "imperativas en DI: impératif→de+infinitif; negación ne pas devant infinitif; verbos pronominales (lève-toi→de se lever); distintos verbos introductores (dire, demander, ordonner, conseiller, interdire, proposer)",
+  verbes_intro:  "elección del verbo introductor apropiado según el matiz (dire/affirmer/expliquer/admettre/reconnaître/promettre/demander/ordonner/conseiller/proposer/refuser) y su construcción (que+indicatif vs de+infinitif)",
+};
+const TYPE_DESC = {
+  fill:      "completar huecos: el alumno escribe la forma verbal correcta, el marcador temporal transformado, o la conjunción de introducción",
+  choice:    "elección múltiple: 4 opciones de formas verbales, marcadores o conjunciones, solo una correcta",
+  transform: "transformación DD→DI: se da la frase en discours direct y el verbo introductor; el alumno escribe la frase completa en discours indirect con todas las transformaciones necesarias",
+  mix:       "mixto: combina fill, choice y transform",
+};
+
+const RULE_LABELS = {
+  "s-intro":          "Qué es el discours indirect",
+  "s-verbes":         "Verbos introductores",
+  "s-affirmatives":   "Afirmativas",
+  "s-concordance":    "Concordancia de tiempos",
+  "s-marqueurs":      "Marcadores temporales",
+  "s-interrogatives": "Interrogativas indirectas",
+  "s-imperatives":    "Imperativas",
+  "s-trampas":        "Trampas"
+};
+
+function renderExercises(exs) {
+  const area = document.getElementById("exercise-area");
+  const labels = { fill: "Completar", choice: "Elección múltiple", transform: "Transformación DD→DI" };
+  area.innerHTML = exs.map((ex, i) =>
+    `<div class="exercise-card" id="ex-card-${i}" data-expl="${esc(ex.explanation)}" data-rule="${ex.rule_ref || ""}">
+      <div class="exercise-card-header">
+        <span class="ex-num">${i + 1}</span>
+        <span class="ex-type-badge">${labels[ex.type] || ex.type}</span>
+        <span class="ex-diff-badge ${ex.diff}">${ex.diff}</span>
+        <span class="ex-status" id="ex-st-${i}"></span>
+      </div>
+      <div class="exercise-body">
+        ${buildBody(ex, i)}
+        <div class="ex-feedback" id="ex-fb-${i}"></div>
+      </div>
+    </div>`).join("");
+  exs.forEach((ex, i) => {
+    const chk = document.getElementById("chk-" + i);
+    if (chk) chk.addEventListener("click", () => checkAnswer(ex, i));
+    const inp = document.getElementById("inp-" + i);
+    if (inp) inp.addEventListener("keydown", e => { if (e.key === "Enter") checkAnswer(ex, i); });
+  });
+}
+
+function buildBody(ex, i) {
+  if (ex.type === "fill")
+    return `<div class="exercise-prompt">${ex.prompt_parts[0]}<input class="fill-input" id="inp-${i}" type="text" placeholder="${ex.blank_hint || "…"}" autocomplete="off" spellcheck="false">${ex.prompt_parts[1] || ""}</div><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  if (ex.type === "choice")
+    return `<div class="exercise-prompt">${ex.prompt}</div><div class="choices-grid">${ex.options.map((o, j) => `<button class="choice-btn" id="ch-${i}-${j}" onclick="selectChoice(${i},${j},${ex.correct_index})">${o}</button>`).join("")}</div>`;
+  if (ex.type === "transform")
+    return `<div class="exercise-prompt">${ex.instruction}<br><em>${ex.original}</em></div><input class="transform-input" id="inp-${i}" type="text" placeholder="Escribe la frase en DI completa…" autocomplete="off" spellcheck="false"><button class="btn-check" id="chk-${i}">Comprobar</button>`;
+  return "";
+}
+
+function checkAnswer(ex, i) {
+  const inp = document.getElementById("inp-" + i);
+  if (!inp || inp.disabled) return;
+  const ok = inp.value.trim().toLowerCase() === ex.answer.trim().toLowerCase();
+  inp.classList.add(ok ? "ok" : "err"); inp.disabled = true;
+  const chk = document.getElementById("chk-" + i); if (chk) chk.disabled = true;
+  showFeedback(i, ok, ex.answer, ex.explanation, ex.rule_ref);
+  recordAnswer(ok);
+}
+
+function selectChoice(idx, chosen, correct) {
+  const c0 = document.getElementById(`ch-${idx}-0`);
+  if (!c0 || c0.disabled) return;
+  for (let j = 0; j < 4; j++) {
+    const b = document.getElementById(`ch-${idx}-${j}`);
+    if (!b) continue; b.disabled = true;
+    if (j === correct) b.classList.add("ok"); else if (j === chosen) b.classList.add("err");
+  }
+  const card = document.getElementById("ex-card-" + idx);
+  showFeedback(idx, chosen === correct, null, card.dataset.expl, card.dataset.rule);
+  recordAnswer(chosen === correct);
+}
+
+function showFeedback(i, ok, ans, expl, ruleRef) {
+  document.getElementById("ex-st-" + i).textContent = ok ? "✅" : "❌";
+  const fb = document.getElementById("ex-fb-" + i);
+  fb.className = "ex-feedback visible " + (ok ? "ok" : "err");
+  const link = RULE_LABELS[ruleRef]
+    ? `<span class="fb-rule-link" onclick="goToRule('${ruleRef}')">📖 Ver: ${RULE_LABELS[ruleRef]}</span>` : "";
+  let html = ok ? `<strong>✓ Correcto</strong>` : `<strong>✗ Incorrecto</strong>${ans ? ` — Respuesta: <strong>${ans}</strong>` : ""}`;
+  if (expl) html += `<br><span style="font-size:0.88em;opacity:0.92;margin-top:3px;display:block">${expl}</span>`;
+  html += link; fb.innerHTML = html;
+}
+
+function goToRule(ref) {
+  switchMode("ref", document.querySelector(".mode-btn"));
+  setTimeout(() => {
+    showSection(ref, document.querySelector(`.snav-btn[onclick*="${ref}"]`));
+    document.getElementById(ref).scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 80);
+}
+
+function recordAnswer(ok) { exAnswered++; if (ok) exCorrect++; else exWrong++; updateProgress(); }
+
+function updateProgress() {
+  const pct = exTotal > 0 ? (exAnswered / exTotal) * 100 : 0;
+  document.getElementById("progress-frac").textContent = `${exAnswered} / ${exTotal}`;
+  document.getElementById("progress-fill").style.width = pct + "%";
+  document.getElementById("score-correct").textContent = `${exCorrect} correcta${exCorrect !== 1 ? "s" : ""}`;
+  document.getElementById("score-wrong").textContent = `${exWrong} error${exWrong !== 1 ? "es" : ""}`;
+  if (exAnswered >= exTotal && exTotal > 0) showFinalScore();
+}
+
+function showFinalScore() {
+  const pct = Math.round((exCorrect / exTotal) * 100);
+  document.getElementById("final-score-bar").classList.add("visible");
+  document.getElementById("final-num").textContent = `${exCorrect} / ${exTotal}`;
+  const fill = document.getElementById("final-fill");
+  fill.style.width = pct + "%";
+  fill.style.background = pct >= 80 ? "var(--green)" : pct >= 50 ? "var(--accent)" : "var(--red)";
+  const msgs = {
+    100: "Parfait ! Dominas el discours indirect. 🎉",
+    80:  "Très bien ! Repasa los errores marcados.",
+    50:  "Bien, pero refuerza los bloques señalados.",
+    0:   "Vuelve a Referencia antes de repetir."
+  };
+  document.getElementById("final-msg").textContent = msgs[pct === 100 ? 100 : pct >= 80 ? 80 : pct >= 50 ? 50 : 0];
+  document.getElementById("score-pill").style.display = "";
+  document.getElementById("score-pill-val").textContent = `${exCorrect}/${exTotal}`;
+}
+
+function resetExercises() {
+  document.getElementById("exercise-area").innerHTML = `<div class="state-msg"><div class="state-icon">✏️</div><p>Elige tipo, foco, nivel y cantidad, y pulsa <strong>Generar ejercicios</strong>.</p></div>`;
+  document.getElementById("progress-wrap").classList.remove("visible");
+  document.getElementById("final-score-bar").classList.remove("visible");
+  document.getElementById("score-pill").style.display = "none";
+  exAnswered = 0; exCorrect = 0; exWrong = 0;
+}
+
+function esc(s) { return (s || "").replace(/"/g, "&quot;").replace(/</g, "&lt;"); }
+
+renderTraps();
+</script>
+</body>
+</html>
