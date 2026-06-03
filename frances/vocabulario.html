@@ -2298,6 +2298,23 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   margin-bottom: 12px;
   line-height: 1.1;
 }
+.srs-translation-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; margin-bottom: 12px;
+}
+.srs-translation-row .srs-translation { margin-bottom: 0; }
+.tts-btn-srs-main {
+  background: var(--bg2, #eef0f4); border: 1px solid var(--border, #d0d4dc);
+  cursor: pointer; color: var(--text2, #555);
+  font-size: 1.1rem; padding: 6px 12px; border-radius: 8px;
+  line-height: 1; opacity: 0.85;
+  transition: opacity .15s, background .15s, transform .1s;
+  display: inline-flex; align-items: center;
+}
+.tts-btn-srs-main:hover { opacity: 1; background: var(--accent, #1a4d7a); color: #fff; }
+.tts-btn-srs-main:active { transform: scale(0.93); }
+.tts-btn-srs-main.speaking { opacity: 1; background: var(--accent, #1a4d7a); color: #fff; animation: tts-pulse-card 1s ease-in-out infinite; }
+.tts-btn-srs-main[hidden] { display: none !important; }
 .srs-ex-fr {
   font-style: italic;
   color: var(--text2);
@@ -3229,7 +3246,10 @@ body.profile-guest #btnSrsResExport {
         <button class="srs-reveal-btn" id="btnSrsReveal" type="button" title="Atajo: Espacio / Enter" style="display: none;">Revelar</button>
       </div>
       <div class="srs-back" id="srsBack">
-        <div class="srs-translation" id="srsTranslation">actuellement</div>
+        <div class="srs-translation-row">
+          <div class="srs-translation" id="srsTranslation">actuellement</div>
+          <button type="button" class="tts-btn-srs-main" id="srsTtsBtn" data-tts="" title="Escuchar pronunciación (V)" aria-label="Escuchar" hidden>&#128266;</button>
+        </div>
         <div class="srs-ex-fr" id="srsExFr">Actuellement, je travaille sur un projet très intéressant.</div>
         <div class="srs-ex-es" id="srsExEs">Actualmente (= ahora mismo) trabajo en un proyecto muy interesante.</div>
         <div class="srs-syn" id="srsSyn" style="display: none;"></div>
@@ -45928,6 +45948,9 @@ function srsRenderCurrentCard() {
   }
   document.getElementById("srsWord").textContent = srsFrontText;
   document.getElementById("srsTemaChip").textContent = card.tema || "—";
+  // Hide TTS button until reveal (it shows only on the back/answer side)
+  var srsTtsHide = document.getElementById("srsTtsBtn");
+  if (srsTtsHide) { srsTtsHide.hidden = true; srsTtsHide.classList.remove("speaking"); }
 
   // Chips
   var chipsEl = document.getElementById("srsCardChips");
@@ -45996,6 +46019,13 @@ function srsReveal() {
 
   // Al revelar mostramos el término en francés (el .t ya está en el frente)
   document.getElementById("srsTranslation").textContent = card.w || "";
+  var srsTts = document.getElementById("srsTtsBtn");
+  if (srsTts && TTS_OK && card.w) {
+    srsTts.setAttribute("data-tts", card.w);
+    srsTts.hidden = false;
+  } else if (srsTts) {
+    srsTts.hidden = true;
+  }
   var exFr = document.getElementById("srsExFr");
   exFr.textContent = card.ex_fr || "";
   exFr.style.display = card.ex_fr ? "" : "none";
@@ -46501,6 +46531,13 @@ function initSRSAddon() {
   document.getElementById("btnSrsReveal").addEventListener("click", srsReveal);
   var btnUndoFs = document.getElementById("btnSrsUndoFs");
   if (btnUndoFs) btnUndoFs.addEventListener("click", srsUndo);
+  var srsTtsBtnInit = document.getElementById("srsTtsBtn");
+  if (srsTtsBtnInit) {
+    srsTtsBtnInit.addEventListener("click", function(e) {
+      e.stopPropagation();
+      ttsSpeak(this.getAttribute("data-tts"), this);
+    });
+  }
 
   function toggleSrsFullscreen() {
     var ov = document.getElementById("srsOverlay");
@@ -46557,6 +46594,11 @@ function initSRSAddon() {
     if (k === "f" || k === "F") { e.preventDefault(); document.getElementById("btnSrsFullscreen").click(); return; }
     if (k === "s" || k === "S") { e.preventDefault(); srsToggleImportant(); return; }
     if (k === "p" || k === "P") { e.preventDefault(); srsPauseCurrent(); return; }
+    if (k === "v" || k === "V") {
+      var srsTtsK = document.getElementById("srsTtsBtn");
+      if (srsTtsK && !srsTtsK.hidden) { e.preventDefault(); ttsSpeak(srsTtsK.getAttribute("data-tts"), srsTtsK); }
+      return;
+    }
     if (!srsSession.revealed) {
       if (k === " " || k === "Enter") {
         e.preventDefault();
