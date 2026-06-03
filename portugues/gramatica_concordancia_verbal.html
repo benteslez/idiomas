@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Concordância Verbal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Concordância Verbal → Verbos · dk-teal */
+:root {
+  --primary: #1c4258;
+  --primary-soft: #e8f0f4;
+  --primary-mid: #5887a0;
+  --primary-strong: #0f2a3a;
+  --primary-glow: rgba(28, 66, 88, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fb5cf;
+  --primary-soft: #1a2a35;
+  --primary-mid: #4a8aa5;
+  --primary-strong: #b8d4e2;
+  --primary-glow: rgba(127, 181, 207, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; }
+.split-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 0.96rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.01em; }
+.split-card p { font-size: 0.86em; color: var(--text2); line-height: 1.6; }
+
+.alert-box {
+  background: var(--warn-bg); border: 1px solid var(--warn-border);
+  border-radius: var(--radius-md); padding: 14px 17px; margin: 14px 0;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.alert-box .alert-icon { font-size: 1.2em; flex-shrink: 0; }
+.alert-box .alert-text { color: var(--text2); line-height: 1.6; font-size: 0.92em; }
+.alert-box .alert-text strong { color: var(--warn); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Concordância Verbal</h1>
+    <span class="header-tag">Gramática</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B2–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Sujeto ↔ verbo</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Regla general</button>
+    <button class="snav-btn"        onclick="showSection('s-composto',this)">2. Sujeto compuesto</button>
+    <button class="snav-btn"        onclick="showSection('s-coletivo',this)">3. Colectivos</button>
+    <button class="snav-btn"        onclick="showSection('s-quantidade',this)">4. Cantidades</button>
+    <button class="snav-btn"        onclick="showSection('s-a-gente',this)">5. A gente / você</button>
+    <button class="snav-btn"        onclick="showSection('s-norma-pb',this)">6. Norma vs PB oral</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        La <strong>concordância verbal</strong> es la regla de que el verbo debe concordar con el sujeto en <strong>número y persona</strong>. En portugués culto la regla es estricta. Sin embargo, el PB hablado presenta múltiples casos de simplificación o variación. Conocer la norma es marcador clave de B2-C1; reconocer las variantes orales es clave para entender al hablante.
+      </div>
+
+      <div class="sec-label">Regla básica</div>
+      <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">falo</span>. / Tu <span class="epr">falas</span>. / Ele <span class="epr">fala</span>. / Nós <span class="epr">falamos</span>. / Eles <span class="epr">falam</span>.</div><div class="ex-es">Concordancia simple verbo-sujeto.</div></div>
+
+      <div class="sec-label">Casos problemáticos</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Caso</th><th>Regla normativa</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Sujeto compuesto</td><td>verbo en plural</td><td>O Pedro e o Paulo <span class="hl-pr">vieram</span>.</td></tr>
+          <tr><td>Sujeto posposto</td><td>concuerda con el sujeto real</td><td><span class="hl-pr">Existem</span> várias soluções.</td></tr>
+          <tr><td>Colectivos</td><td>3ª sing. (con flexibilidad)</td><td>A maioria <span class="hl-pr">votou</span> / <span class="hl-pr">votaram</span> contra.</td></tr>
+          <tr><td>Porcentajes</td><td>concuerda con el complemento</td><td>50% dos brasileiros <span class="hl-pr">votaram</span>.</td></tr>
+          <tr><td>A gente</td><td>SIEMPRE 3ª sing.</td><td>A gente <span class="hl-pr">vai</span>.</td></tr>
+          <tr><td>Você(s) / o senhor</td><td>3ª persona (sing. o pl.)</td><td>Você <span class="hl-pr">fala</span> bem.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Eje de la ficha:</strong> identificar el sujeto real y aplicar la concordancia correcta. La trampa frecuente: confundir el núcleo del sujeto con un complemento o atributo cercano al verbo.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. SUJETO COMPUESTO -->
+  <div class="sec-block" id="s-composto">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Un <strong>sujeto compuesto</strong> consta de dos o más elementos coordinados (con <em>e</em>, <em>ou</em>, <em>nem</em>). La regla básica: el verbo va en <strong>plural</strong>. Pero existen casos especiales según el conector y la posición.
+      </div>
+
+      <div class="sec-label">Sujeto compuesto antepuesto: plural obligatorio</div>
+      <div class="example-block pr"><div class="ex-fr">O Pedro e o Paulo <span class="epr">vieram</span> à festa.</div><div class="ex-es">Pedro y Pablo vinieron a la fiesta.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A Maria e eu <span class="epr">somos</span> amigos.</div><div class="ex-es">María y yo somos amigos.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Tu e ele <span class="epr">precisam</span> conversar. (PB) / <span class="epr">precisais</span> (norma luso)</div><div class="ex-es">Tú y él tenéis que hablar.</div></div>
+
+      <div class="sec-label">Regla de las personas (norma culta)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Combinación</th><th>Concordancia</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>eu + tu/ele</td><td>1ª pl. (nós)</td><td>Eu e ele <span class="hl-pr">vamos</span> sair.</td></tr>
+          <tr><td>tu + ele</td><td>2ª pl. (vós, PB: vocês)</td><td>Tu e ele <span class="hl-pr">ireis</span> (norma); <span class="hl-pr">vão</span> (PB).</td></tr>
+          <tr><td>eu + tu + ele</td><td>1ª pl. (nós)</td><td>Eu, tu e ele <span class="hl-pr">somos</span> amigos.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Sujeto posposto: concordancia posible con uno solo</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Apareceu</span> o Pedro e o Paulo. (norma flexible)</div><div class="ex-es">Apareció Pedro y Pablo.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Apareceram</span> o Pedro e o Paulo. (norma estricta)</div><div class="ex-es">Aparecieron Pedro y Pablo.</div></div>
+      <div class="note-box"><strong>Tendencia PB:</strong> con sujeto posposto, el verbo suele concordar con el más próximo (atracción): <em>Falta dois funcionários</em> (oral) vs <em>Faltam dois funcionários</em> (norma).</div>
+
+      <div class="sec-label">Con conector ou</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Valor de ou</th><th>Concordancia</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>excluyente</td><td>3ª sing.</td><td>Pedro ou Paulo <span class="hl-pr">será</span> o eleito.</td></tr>
+          <tr><td>inclusivo (suma)</td><td>3ª pl.</td><td>Os professores ou os alunos <span class="hl-pr">vão</span> protestar.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Con conector nem</div>
+      <div class="example-block pr"><div class="ex-fr">Nem o Pedro nem o Paulo <span class="epr">apareceram</span>.</div><div class="ex-es">Ni Pedro ni Pablo aparecieron.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Nem chuva nem frio <span class="epr">impediu</span> a viagem. (singular, atracción)</div><div class="ex-es">Ni la lluvia ni el frío impidieron el viaje.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 3. COLETIVO -->
+  <div class="sec-block" id="s-coletivo">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los <strong>sujetos colectivos</strong> (<em>a maioria, a maior parte, o povo, a multidão, um grupo, a turma</em>) admiten concordancia en <strong>singular</strong> (gramatical) o <strong>plural</strong> (ad sensum, por atracción semántica con el complemento partitivo).
+      </div>
+
+      <div class="split-grid">
+        <div class="split-card">
+          <h4>Singular (norma gramatical)</h4>
+          <p>El verbo concuerda con el colectivo (singular).</p>
+          <p style="margin-top:6px"><em>A maioria dos brasileiros votou contra.</em></p>
+          <p><em>O povo prefere paz.</em></p>
+          <p><em>Um grupo de jovens cantou.</em></p>
+        </div>
+        <div class="split-card">
+          <h4>Plural (concordância ad sensum)</h4>
+          <p>El verbo concuerda con el complemento partitivo.</p>
+          <p style="margin-top:6px"><em>A maioria dos brasileiros votaram contra.</em></p>
+          <p><em>Um grupo de jovens cantaram.</em></p>
+        </div>
+      </div>
+
+      <div class="sec-label">Colectivos partitivos típicos</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Colectivo + de + plural</th><th>Singular (norma)</th><th>Plural (ad sensum)</th></tr></thead>
+        <tbody>
+          <tr><td>a maioria das pessoas</td><td><span class="hl-pr">votou</span></td><td><span class="hl-pr">votaram</span></td></tr>
+          <tr><td>a maior parte dos alunos</td><td><span class="hl-pr">estudou</span></td><td><span class="hl-pr">estudaram</span></td></tr>
+          <tr><td>um grupo de turistas</td><td><span class="hl-pr">chegou</span></td><td><span class="hl-pr">chegaram</span></td></tr>
+          <tr><td>um bando de pássaros</td><td><span class="hl-pr">voou</span></td><td><span class="hl-pr">voaram</span></td></tr>
+          <tr><td>uma multidão de fãs</td><td><span class="hl-pr">esperava</span></td><td><span class="hl-pr">esperavam</span></td></tr>
+          <tr><td>metade dos votos</td><td><span class="hl-pr">foi</span> contra</td><td><span class="hl-pr">foram</span> contra</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Recomendación:</strong> ambas opciones son aceptables en norma escrita. La elección es estilística. La ad sensum (plural) suena más natural en PB y es preferida cuando el complemento es muy próximo al verbo.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. QUANTIDADE -->
+  <div class="sec-block" id="s-quantidade">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Con <strong>expresiones de cantidad, porcentajes y fracciones</strong>, la concordancia del verbo sigue reglas específicas según el numeral o expresión.
+      </div>
+
+      <div class="sec-label">Porcentajes</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Sujeto</th><th>Concordancia</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>1% (singular)</td><td>3ª sing.</td><td>1% dos votos <span class="hl-pr">foi</span> em branco.</td></tr>
+          <tr><td>2%+ (plural)</td><td>3ª pl.</td><td>20% dos brasileiros <span class="hl-pr">votaram</span>.</td></tr>
+          <tr><td>X% + de + sing.</td><td>3ª sing.</td><td>50% da população <span class="hl-pr">aprovou</span>.</td></tr>
+          <tr><td>X% + de + pl.</td><td>3ª pl. (o sing. con atracción culta)</td><td>50% dos alunos <span class="hl-pr">passaram</span>.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Fracciones y números fraccionarios</div>
+      <div class="example-block pr"><div class="ex-fr">Um terço dos alunos <span class="epr">faltou</span>. (singular, norma)</div><div class="ex-es">Un tercio de los alumnos faltó.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Dois terços dos votos <span class="epr">foram</span> aprovados.</div><div class="ex-es">Dos tercios de los votos fueron aprobados.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Metade dos professores <span class="epr">apoia / apoiam</span> a reforma.</div><div class="ex-es">La mitad de los profesores apoya la reforma.</div></div>
+
+      <div class="sec-label">Cantidades específicas</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Houve</span> cem inscritos. (impersonal con haver = 3ª sing.)</div><div class="ex-es">Hubo cien inscritos.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Havia</span> centenas de pessoas. (impersonal)</div><div class="ex-es">Había cientos de personas.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Faltam</span> dez minutos. (norma) / <span class="epr">Falta</span> dez minutos. (PB oral)</div><div class="ex-es">Faltan diez minutos.</div></div>
+
+      <div class="alert-box">
+        <span class="alert-icon">⚠️</span>
+        <div class="alert-text">
+          <strong>Haver impersonal:</strong> el verbo <em>haver</em> con valor existencial es <strong>siempre invariable en 3ª sing.</strong>, no concuerda con el complemento. <em>Houve várias reuniões</em>, <em>havia mil pessoas</em>, <em>haverá problemas</em>. En PB hablado se reemplaza por <em>ter</em>: <em>tem várias reuniões, tinha mil pessoas</em>.
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 5. A GENTE / VOCE -->
+  <div class="sec-block" id="s-a-gente">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las expresiones de tratamiento (<strong>você, vocês, o senhor, a senhora</strong>) y la forma colectiva <strong>a gente</strong> (= nós) son <strong>semánticamente</strong> primera o segunda persona, pero <strong>gramaticalmente</strong> tercera persona. La concordancia exige 3ª singular o plural.
+      </div>
+
+      <div class="sec-label">A gente: SIEMPRE 3ª singular</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Pronombre</th><th>Verbo (presente)</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>nós</strong></td><td>1ª plural</td><td>Nós <span class="hl-pr">vamos</span> ao cinema.</td></tr>
+          <tr><td><strong>a gente</strong></td><td>3ª singular</td><td>A gente <span class="hl-pr">vai</span> ao cinema.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="alert-box">
+        <span class="alert-icon">🚨</span>
+        <div class="alert-text">
+          <strong>Regla absoluta:</strong> <em>a gente</em> exige <strong>3ª persona singular</strong>: <em>a gente vai, a gente fala, a gente é, a gente tem, a gente faz</em>. NUNCA <em>*a gente vamos, *a gente somos</em>. Este es el error más común y notorio.
+        </div>
+      </div>
+
+      <div class="sec-label">Você(s): 3ª persona</div>
+      <div class="example-block pr"><div class="ex-fr">Você <span class="epr">fala</span> português? (no <em>falas</em> ni <em>fala</em>s)</div><div class="ex-es">¿Hablas portugués?</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vocês <span class="epr">vão</span> conosco? (3ª plural)</div><div class="ex-es">¿Vais con nosotros?</div></div>
+      <div class="example-block pr"><div class="ex-fr">O senhor <span class="epr">aceita</span> um café? (formal sing.)</div><div class="ex-es">¿Acepta usted un café?</div></div>
+      <div class="example-block pr"><div class="ex-fr">As senhoras <span class="epr">querem</span> sentar? (formal pl.)</div><div class="ex-es">¿Quieren sentarse las señoras?</div></div>
+
+      <div class="sec-label">Reflexivos con a gente / você</div>
+      <div class="example-block pr"><div class="ex-fr">A gente <span class="epr">se</span> diverte muito. (no <em>nos</em>)</div><div class="ex-es">Nos divertimos mucho.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Você <span class="epr">se</span> sente bem? (no <em>te</em>)</div><div class="ex-es">¿Te sientes bien?</div></div>
+      <div class="example-block pr"><div class="ex-fr">A gente <span class="epr">tem que se</span> esforçar.</div><div class="ex-es">Tenemos que esforzarnos.</div></div>
+
+      <div class="note-box"><strong>PB regional con tu:</strong> en regiones que mantienen <em>tu</em> (sur, nordeste, parte do Rio), la concordancia varía: <em>tu vais</em> (norma), <em>tu vai</em> (PB regional simplificado). En registro escrito, mantener 2ª singular formal.</div>
+    </div></div>
+  </div>
+
+  <!-- 6. NORMA VS PB -->
+  <div class="sec-block" id="s-norma-pb">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El PB hablado presenta <strong>simplificaciones de concordancia</strong> muy extendidas, sobre todo en habla popular. Conocerlas es clave para entender el habla real, sin imitarlas en escritura formal.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('vp',0)">Concordancia ad sensum</button>
+        <button class="chip pr"        onclick="selectChip('vp',1)">PB oral simplificado</button>
+        <button class="chip pr"        onclick="selectChip('vp',2)">Sujeto colectivo</button>
+        <button class="chip pr"        onclick="selectChip('vp',3)">Voz pasiva con se</button>
+      </div>
+      <div id="vp-panels">
+
+        <div class="chip-panel active" id="vp-p-0">
+          <div class="def-box">La concordancia ad sensum (por el sentido, no por la gramática estricta) es admitida con sujetos colectivos y partitivos en norma flexible.</div>
+          <div class="example-block pr"><div class="ex-fr">A maioria dos alunos <span class="epr">passaram</span> na prova. (ad sensum)</div><div class="ex-es">La mayoría de los alumnos aprobaron el examen.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Um grupo de turistas <span class="epr">visitaram</span> o museu. (ad sensum)</div><div class="ex-es">Un grupo de turistas visitó el museo.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Boa parte do povo <span class="epr">acreditam</span> nisso.</div><div class="ex-es">Buena parte del pueblo cree en esto.</div></div>
+        </div>
+
+        <div class="chip-panel" id="vp-p-1">
+          <div class="def-box">En PB popular, es frecuente la pérdida de la marca de plural en el verbo cuando el sujeto plural es claro.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Norma culta</th><th>PB popular / oral</th></tr></thead>
+            <tbody>
+              <tr><td>Os meninos <span class="hl-pr">chegaram</span> tarde.</td><td>Os menino <span class="hl-pr">chegou</span> tarde. (popular)</td></tr>
+              <tr><td>Vocês <span class="hl-pr">querem</span> sair?</td><td>Vocês <span class="hl-pr">quer</span> sair? (raro pero existe)</td></tr>
+              <tr><td>As pessoas <span class="hl-pr">acreditam</span>...</td><td>As pessoa <span class="hl-pr">acredita</span>... (popular)</td></tr>
+            </tbody>
+          </table></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text"><strong>Estigma social:</strong> la falta de concordancia con plural es estigmatizada en escritura formal y en hablantes con instrucción superior. Solo aparece en habla popular o regional. EN ESCRITURA, mantén siempre la concordancia.</div>
+          </div>
+        </div>
+
+        <div class="chip-panel" id="vp-p-2">
+          <div class="def-box">Con sujetos como <em>o povo, o pessoal, a gente</em>, en PB oral aparece a veces concordancia con 3ª plural por sentido (1ª pl. semántica).</div>
+          <div class="example-block pr"><div class="ex-fr">O pessoal <span class="epr">vão</span> chegar logo. (popular, ad sensum)</div><div class="ex-es">La gente va a llegar pronto.</div></div>
+          <div class="example-block pr"><div class="ex-fr">O povo <span class="epr">querem</span> mudança. (popular)</div><div class="ex-es">El pueblo quiere cambio.</div></div>
+          <div class="note-box"><strong>Recomendación:</strong> en escritura culta, mantener 3ª singular: <em>o pessoal vai, o povo quer</em>. En literatura coloquial / diálogos, se acepta la variante popular.</div>
+        </div>
+
+        <div class="chip-panel" id="vp-p-3">
+          <div class="def-box">El <em>se apassivador</em> exige concordancia del verbo con el sujeto pasivo plural. En PB oral, esta concordancia se pierde muy frecuentemente.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Norma</th><th>PB oral</th></tr></thead>
+            <tbody>
+              <tr><td><span class="hl-pr">Vendem-se</span> casas.</td><td><span class="hl-pr">Vende-se</span> casas. (popular)</td></tr>
+              <tr><td><span class="hl-pr">Alugam-se</span> apartamentos.</td><td><span class="hl-pr">Aluga-se</span> apartamentos. (popular)</td></tr>
+              <tr><td><span class="hl-pr">Procuram-se</span> funcionários.</td><td><span class="hl-pr">Procura-se</span> funcionários. (popular)</td></tr>
+            </tbody>
+          </table></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text">En letreros y anuncios PB, la falta de concordancia en <em>se apassivador</em> es endémica. La norma sigue exigiendo plural: <em>vendem-se casas</em>. En escritura formal, mantén siempre la concordancia.</div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con la concordância verbal.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'A gente con 1ª plural (error clásico)',
+   wrong:"A gente vamos sair.",
+   right:"A gente vai sair.",
+   expl:'<em>A gente</em> es semánticamente "nós" pero gramaticalmente 3ª sing. Nunca con 1ª pl.: <strong>a gente vai, a gente fala, a gente é, a gente faz</strong>. Reflexivo: <em>a gente se diverte</em> (no <em>nos</em>). Es el error más estigmatizado en PB.'},
+  {name:'Você con 2ª singular (error de hispanohablantes)',
+   wrong:"Você falas português?",
+   right:"Você fala português?",
+   expl:'<em>Você</em> exige <strong>3ª singular</strong>, no 2ª. Lo mismo con <em>o senhor, a senhora</em>: <em>o senhor aceita, a senhora prefere</em>. Confusión común para hispanohablantes que asocian "tú" con la 2ª singular.'},
+  {name:'Haver impersonal en plural',
+   wrong:"Houveram muitas pessoas no evento.",
+   right:"Houve muitas pessoas no evento.",
+   expl:'<em>Haver</em> existencial es <strong>invariable en 3ª sing.</strong>, no concuerda con el complemento: <em>houve, havia, haverá, haveria</em>. <em>Houveram</em> es un error normativo grave. En PB oral se sustituye por <em>ter</em>: <em>teve muita gente</em>.'},
+  {name:'Fazer impersonal con tiempo',
+   wrong:"Fazem dois anos que mora aqui.",
+   right:"Faz dois anos que mora aqui.",
+   expl:'<em>Fazer</em> impersonal (con tiempo) es <strong>invariable en 3ª sing.</strong>: <em>faz dois anos, faz uma hora, fazia muito tempo</em>. Como <em>haver</em>, no concuerda con el complemento. En registro popular se admite <em>fazem</em>, pero es agramatical en norma culta.'},
+  {name:'Pluralizar el se apassivador',
+   wrong:"Vende-se casas. (en escritura formal)",
+   right:"Vendem-se casas.",
+   expl:'En el <em>se apassivador</em>, el verbo concuerda con el sujeto pasivo plural: <em>vendem-se casas, alugam-se quartos, procuram-se voluntários</em>. La falta de concordancia es popular pero estigmatizada en escritura.'},
+  {name:'Sujeto compuesto con plural automático',
+   wrong:"Pedro ou Paulo são candidatos. (en valor excluyente)",
+   right:"Pedro ou Paulo é o candidato.",
+   expl:'Con <em>ou</em> excluyente (= solo uno), el verbo va en singular: <em>Pedro ou Paulo será eleito</em>. Con <em>ou</em> inclusivo (suma), va en plural: <em>os homens ou as mulheres vão protestar</em>. Distinción semántica clave.'},
+  {name:'Mais de um + singular',
+   wrong:"Mais de um aluno chegaram tarde.",
+   right:"Mais de um aluno chegou tarde.",
+   expl:'<em>Mais de um</em>, aunque semánticamente plural, exige <strong>verbo en singular</strong> por norma. Solo se pluraliza si la idea es enfáticamente recíproca: <em>mais de um aluno se cumprimentaram</em>.'},
+  {name:'Posposición y atracción',
+   wrong:"Falta dez minutos para a reunião.",
+   right:"Faltam dez minutos para a reunião.",
+   expl:'Con sujeto posposto, la norma exige concordancia con el sujeto real plural: <em>faltam dez minutos, sobram cinco lugares, existem várias opções</em>. La forma popular con atracción al verbo singular (<em>falta dez minutos</em>) es agramatical en escritura culta.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

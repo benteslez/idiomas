@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Perífrases Verbais</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Perífrases verbais → Verbos · dk-teal */
+:root {
+  --primary: #1c4258;
+  --primary-soft: #e8f0f4;
+  --primary-mid: #5887a0;
+  --primary-strong: #0f2a3a;
+  --primary-glow: rgba(28, 66, 88, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fb5cf;
+  --primary-soft: #1a2a35;
+  --primary-mid: #4a8aa5;
+  --primary-strong: #b8d4e2;
+  --primary-glow: rgba(127, 181, 207, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.peri-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 14px 0; }
+.peri-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px 14px; border-left: 4px solid var(--primary); transition: all var(--t-base) var(--ease); }
+.peri-card:hover { border-color: var(--primary-mid); box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+.peri-card h5 { font-family: 'Fraunces', Georgia, serif; font-size: 0.92rem; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+.peri-card .peri-val { font-size: 0.74em; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.peri-card .peri-ex { font-size: 0.82em; color: var(--text2); line-height: 1.5; }
+.peri-card .peri-ex em { color: var(--primary); font-weight: 600; font-style: normal; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Perífrases Verbais</h1>
+    <span class="header-tag">Gramática</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B1–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Aspecto · modalidad</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Qué son</button>
+    <button class="snav-btn"        onclick="showSection('s-aspectuales',this)">2. Aspectuales</button>
+    <button class="snav-btn"        onclick="showSection('s-temporales',this)">3. Temporales</button>
+    <button class="snav-btn"        onclick="showSection('s-estar-ger',this)">4. Estar + ger.</button>
+    <button class="snav-btn"        onclick="showSection('s-ficar-andar-vir-ir',this)">5. Ficar / Andar / Vir / Ir</button>
+    <button class="snav-btn"        onclick="showSection('s-comecar-deixar',this)">6. Começar / Deixar / Voltar</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las <strong>perífrases verbais</strong> son construcciones de dos verbos: uno <strong>auxiliar</strong> que aporta información gramatical (aspecto, modalidad, fase) y otro <strong>principal</strong> en forma nominal (infinitivo, gerúndio o particípio). El PB tiene un sistema muy rico, en parte único por la combinación con <em>ficar, andar, vir, ir + gerúndio</em>.
+      </div>
+
+      <div class="sec-label">Tres tipos según el aspecto</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tipo</th><th>Función</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Aspectuales</strong></td><td>marcan fase: inicio, curso, final</td><td>começou a chover · está chovendo · parou de chover</td></tr>
+          <tr><td><strong>Temporales</strong></td><td>marcan tiempo: futuro, pasado reciente</td><td>vou chover (= vou viajar) · acabei de chegar</td></tr>
+          <tr><td><strong>Modales</strong></td><td>marcan modalidad (ver ficha 14)</td><td>pode chover · deve chover · tem que chover</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Estructura:</strong> auxiliar conjugado + (preposición opcional) + verbo principal en forma nominal. Ejemplos: <em>está + falando, vai + falar, começou + a + falar, acabou + de + falar</em>.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. ASPECTUALES -->
+  <div class="sec-block" id="s-aspectuales">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las <strong>perífrasis aspectuales</strong> marcan la <strong>fase</strong> en que se encuentra la acción: incoativa (inicio), durativa (curso), terminativa (final) o reiterativa (repetición).
+      </div>
+
+      <div class="sec-label">Perífrasis incoativas (inicio)</div>
+      <div class="peri-grid">
+        <div class="peri-card">
+          <h5>começar a + inf.</h5>
+          <div class="peri-val">Inicio puntual</div>
+          <div class="peri-ex">Ele <em>começou a estudar</em> às oito.</div>
+        </div>
+        <div class="peri-card">
+          <h5>pôr-se a + inf.</h5>
+          <div class="peri-val">Inicio enfático</div>
+          <div class="peri-ex">A criança <em>pôs-se a chorar</em>.</div>
+        </div>
+        <div class="peri-card">
+          <h5>desatar a + inf.</h5>
+          <div class="peri-val">Inicio repentino</div>
+          <div class="peri-ex">Ela <em>desatou a rir</em>.</div>
+        </div>
+        <div class="peri-card">
+          <h5>passar a + inf.</h5>
+          <div class="peri-val">Cambio durativo</div>
+          <div class="peri-ex">Ele <em>passou a trabalhar</em> de casa.</div>
+        </div>
+      </div>
+
+      <div class="sec-label">Perífrasis durativas (curso)</div>
+      <div class="peri-grid">
+        <div class="peri-card">
+          <h5>estar + gerúndio</h5>
+          <div class="peri-val">Progresivo PB</div>
+          <div class="peri-ex">Eu <em>estou trabalhando</em>.</div>
+        </div>
+        <div class="peri-card">
+          <h5>estar a + inf.</h5>
+          <div class="peri-val">Progresivo PE</div>
+          <div class="peri-ex">Eu <em>estou a trabalhar</em>.</div>
+        </div>
+        <div class="peri-card">
+          <h5>continuar + ger.</h5>
+          <div class="peri-val">Persistencia</div>
+          <div class="peri-ex">Ela <em>continua estudando</em>.</div>
+        </div>
+        <div class="peri-card">
+          <h5>seguir + ger.</h5>
+          <div class="peri-val">Persistencia (variante)</div>
+          <div class="peri-ex"><em>Sigam fazendo</em> o exercício.</div>
+        </div>
+      </div>
+
+      <div class="sec-label">Perífrasis terminativas (final)</div>
+      <div class="peri-grid">
+        <div class="peri-card">
+          <h5>parar de + inf.</h5>
+          <div class="peri-val">Interrupción</div>
+          <div class="peri-ex">Ele <em>parou de fumar</em> em 2020.</div>
+        </div>
+        <div class="peri-card">
+          <h5>deixar de + inf.</h5>
+          <div class="peri-val">Cesación definitiva</div>
+          <div class="peri-ex">Ela <em>deixou de comer</em> carne.</div>
+        </div>
+        <div class="peri-card">
+          <h5>acabar de + inf.</h5>
+          <div class="peri-val">Pasado reciente</div>
+          <div class="peri-ex">Eu <em>acabei de chegar</em>.</div>
+        </div>
+        <div class="peri-card">
+          <h5>terminar de + inf.</h5>
+          <div class="peri-val">Conclusión</div>
+          <div class="peri-ex">Eu <em>terminei de comer</em>.</div>
+        </div>
+      </div>
+
+      <div class="sec-label">Perífrasis reiterativas (repetición)</div>
+      <div class="peri-grid">
+        <div class="peri-card">
+          <h5>voltar a + inf.</h5>
+          <div class="peri-val">Repetición</div>
+          <div class="peri-ex">Ele <em>voltou a fumar</em>.</div>
+        </div>
+        <div class="peri-card">
+          <h5>tornar a + inf.</h5>
+          <div class="peri-val">Repetición (formal)</div>
+          <div class="peri-ex">Ela não <em>tornou a aparecer</em>.</div>
+        </div>
+        <div class="peri-card">
+          <h5>costumar + inf.</h5>
+          <div class="peri-val">Hábito</div>
+          <div class="peri-ex">Ele <em>costuma chegar</em> cedo.</div>
+        </div>
+        <div class="peri-card">
+          <h5>viver + ger.</h5>
+          <div class="peri-val">Hábito enfático (PB col.)</div>
+          <div class="peri-ex">Ele <em>vive reclamando</em> de tudo.</div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3. TEMPORALES -->
+  <div class="sec-block" id="s-temporales">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las <strong>perífrasis temporales</strong> reemplazan a los tiempos sintéticos en habla. La más importante: <em>ir + infinitivo</em> como futuro (típico de PB).
+      </div>
+
+      <div class="sec-label">Ir + infinitivo: futuro analítico</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tiempo de ir</th><th>Estructura</th><th>Equivalente sintético</th></tr></thead>
+        <tbody>
+          <tr><td>presente</td><td class="hl-pr">vou falar</td><td>falarei</td></tr>
+          <tr><td>imperfeito</td><td class="hl-pr">ia falar</td><td>falaria</td></tr>
+          <tr><td>PPS</td><td class="hl-pr">fui falar (= fui a hablar, no es futuro)</td><td>—</td></tr>
+          <tr><td>subj. fut.</td><td class="hl-pr">se eu for falar</td><td>se falar</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos de ir + inf.</div>
+      <div class="example-block pr"><div class="ex-fr">Amanhã eu <span class="epr">vou viajar</span> para o Rio.</div><div class="ex-es">Mañana voy a viajar a Río.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ela <span class="epr">vai estudar</span> medicina.</div><div class="ex-es">Va a estudiar medicina.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A gente <span class="epr">vai chegar</span> tarde.</div><div class="ex-es">Vamos a llegar tarde.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Se eu <span class="epr">ia falar</span>, ele me interrompeu. (intención frustrada)</div><div class="ex-es">Si iba a hablar, me interrumpió.</div></div>
+
+      <div class="sec-label">Acabar de + infinitivo: pasado reciente</div>
+      <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">acabei de chegar</span> agora.</div><div class="ex-es">Acabo de llegar ahora.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ela <span class="epr">acaba de sair</span>.</div><div class="ex-es">Acaba de salir.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Nós <span class="epr">acabávamos de jantar</span> quando ele ligou.</div><div class="ex-es">Acabábamos de cenar cuando llamó.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Acabar de</strong> tiene dos significados según el tiempo: en <strong>presente</strong> = "acabar de" (pasado reciente: <em>acabo de chegar</em>); en <strong>PPS</strong> = "terminar de" (conclusión: <em>acabei de comer</em> = terminé de comer). El contexto suele desambiguar.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. ESTAR + GERÚNDIO -->
+  <div class="sec-block" id="s-estar-ger">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong>Estar + gerúndio</strong> es la perífrasis aspectual más frecuente del PB. Construye el <strong>progresivo</strong> (acción en curso). Equivalente a <em>estar a + inf.</em> en PE.
+      </div>
+
+      <div class="sec-label">Conjugación en todos los tiempos</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tiempo</th><th>PB (estar + ger.)</th><th>PE (estar a + inf.)</th></tr></thead>
+        <tbody>
+          <tr><td>Presente</td><td class="hl-pr">estou falando</td><td>estou a falar</td></tr>
+          <tr><td>Imperfeito</td><td class="hl-pr">estava falando</td><td>estava a falar</td></tr>
+          <tr><td>PPS</td><td class="hl-pr">estive falando</td><td>estive a falar</td></tr>
+          <tr><td>Mais-que-perfeito</td><td class="hl-pr">tinha estado falando</td><td>tinha estado a falar</td></tr>
+          <tr><td>Futuro</td><td class="hl-pr">estarei falando</td><td>estarei a falar</td></tr>
+          <tr><td>Condicional</td><td class="hl-pr">estaria falando</td><td>estaria a falar</td></tr>
+          <tr><td>Pres. subj.</td><td class="hl-pr">esteja falando</td><td>esteja a falar</td></tr>
+          <tr><td>Imp. subj.</td><td class="hl-pr">estivesse falando</td><td>estivesse a falar</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos en uso</div>
+      <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">estou estudando</span> português há dois anos.</div><div class="ex-es">Estoy estudiando portugués hace dos años.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ontem ela <span class="epr">estava cozinhando</span> quando cheguei.</div><div class="ex-es">Ayer ella estaba cocinando cuando llegué.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Estive trabalhando</span> nisso a tarde inteira.</div><div class="ex-es">Estuve trabajando en eso toda la tarde.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Amanhã estarei <span class="epr">voando</span> para Paris.</div><div class="ex-es">Mañana estaré volando a París.</div></div>
+
+      <div class="note-box"><strong>Diferencia con español:</strong> el portugués no usa <em>estar + gerúndio</em> con verbos de estado en presente (<em>estar, ter, ser</em>): se prefiere el simple presente. <em>Eu sei</em> (no <em>estou sabendo</em>), <em>eu tenho</em> (no <em>estou tendo</em>).</div>
+    </div></div>
+  </div>
+
+  <!-- 5. FICAR / ANDAR / VIR / IR -->
+  <div class="sec-block" id="s-ficar-andar-vir-ir">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Cuatro perífrasis con gerúndio aportan matices distintos al simple progresivo. Son <strong>específicas del PB</strong> (mucho más productivas que en PE) y constituyen un sistema rico de aspectos.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('mov',0)">Ficar + ger.</button>
+        <button class="chip pr"        onclick="selectChip('mov',1)">Andar + ger.</button>
+        <button class="chip pr"        onclick="selectChip('mov',2)">Vir + ger.</button>
+        <button class="chip pr"        onclick="selectChip('mov',3)">Ir + ger.</button>
+      </div>
+      <div id="mov-panels">
+
+        <div class="chip-panel active" id="mov-p-0">
+          <div class="def-box"><strong>Ficar + gerúndio:</strong> permanencia continua en una acción o estado. Muy PB. Implica "quedarse haciendo".</div>
+          <div class="example-block pr"><div class="ex-fr">Ela <span class="epr">ficou esperando</span> a noite toda.</div><div class="ex-es">Se quedó esperando toda la noche.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Não <span class="epr">fique</span> me <span class="epr">olhando</span> assim!</div><div class="ex-es">¡No te quedes mirándome así!</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ele <span class="epr">fica reclamando</span> de tudo.</div><div class="ex-es">Se la pasa quejándose de todo.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">fiquei pensando</span> no que você disse.</div><div class="ex-es">Me quedé pensando en lo que dijiste.</div></div>
+          <div class="note-box"><strong>Matiz coloquial PB:</strong> <em>fica nessa, fica dessa</em> = "déjate de eso" (con valor reprobatorio). <em>Fica fora</em> = "queda fuera".</div>
+        </div>
+
+        <div class="chip-panel" id="mov-p-1">
+          <div class="def-box"><strong>Andar + gerúndio:</strong> acción habitual o repetida con dispersión temporal. "Últimamente he estado haciendo".</div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">ando estudando</span> bastante ultimamente.</div><div class="ex-es">Últimamente he estado estudiando bastante.</div></div>
+          <div class="example-block pr"><div class="ex-fr">A gente <span class="epr">anda saindo</span> muito esses dias.</div><div class="ex-es">Hemos estado saliendo mucho estos días.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ele <span class="epr">anda meio estranho</span>. (con adjetivo)</div><div class="ex-es">Anda algo raro.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">ando ocupado</span> com o trabalho.</div><div class="ex-es">Ando ocupado con el trabajo.</div></div>
+        </div>
+
+        <div class="chip-panel" id="mov-p-2">
+          <div class="def-box"><strong>Vir + gerúndio:</strong> progresión acumulativa desde el pasado hasta el presente. "Vengo + ger."</div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">venho trabalhando</span> nisso há meses.</div><div class="ex-es">Vengo trabajando en eso desde hace meses.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Os preços <span class="epr">vêm subindo</span> constantemente.</div><div class="ex-es">Los precios vienen subiendo constantemente.</div></div>
+          <div class="example-block pr"><div class="ex-fr">A empresa <span class="epr">vem crescendo</span> nos últimos anos.</div><div class="ex-es">La empresa viene creciendo en los últimos años.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ele <span class="epr">vem dizendo</span> isso há tempo.</div><div class="ex-es">Lleva tiempo diciendo eso.</div></div>
+          <div class="note-box"><strong>Diferencia con vir + inf.:</strong> <em>venho dizer / vir falar</em> = "vengo a decir, venir a hablar" (verbo de movimiento). <em>Venho dizendo / vir falando</em> = "vengo diciendo, ir progresando".</div>
+        </div>
+
+        <div class="chip-panel" id="mov-p-3">
+          <div class="def-box"><strong>Ir + gerúndio:</strong> progresión gradual hacia el futuro. "Va + ger." Implica desarrollo paulatino.</div>
+          <div class="example-block pr"><div class="ex-fr">A situação <span class="epr">vai melhorando</span> aos poucos.</div><div class="ex-es">La situación va mejorando poco a poco.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ele <span class="epr">vai aprendendo</span> com o tempo.</div><div class="ex-es">Va aprendiendo con el tiempo.</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Vão chegando</span> mais convidados.</div><div class="ex-es">Van llegando más invitados.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Vão <span class="epr">vendo</span> como podem ajudar.</div><div class="ex-es">Vayan viendo cómo pueden ayudar.</div></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text"><strong>No confundir:</strong> <em>vou falar</em> (= voy a hablar, futuro) ≠ <em>vou falando</em> (= voy hablando, progresión gradual). El primero usa infinitivo; el segundo, gerúndio.</div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. COMEÇAR / DEIXAR / VOLTAR -->
+  <div class="sec-block" id="s-comecar-deixar">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Otras perífrasis frecuentes que marcan fases específicas: comienzo, cesación, repetición.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('cd',0)">Começar a + inf.</button>
+        <button class="chip pr"        onclick="selectChip('cd',1)">Parar de / Deixar de</button>
+        <button class="chip pr"        onclick="selectChip('cd',2)">Voltar a + inf.</button>
+        <button class="chip pr"        onclick="selectChip('cd',3)">Costumar + inf.</button>
+      </div>
+      <div id="cd-panels">
+
+        <div class="chip-panel active" id="cd-p-0">
+          <div class="def-box"><strong>Começar a + infinitivo:</strong> inicio puntual de una acción. Muy frecuente. Lleva preposición <em>a</em> obligatoria.</div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">comecei a estudar</span> português em 2020.</div><div class="ex-es">Empecé a estudiar portugués en 2020.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Está <span class="epr">começando a chover</span>.</div><div class="ex-es">Está empezando a llover.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ele <span class="epr">começou a trabalhar</span> aos 16 anos.</div><div class="ex-es">Empezó a trabajar a los 16 años.</div></div>
+          <div class="note-box"><strong>Alternativa con gerúndio:</strong> <em>começou trabalhando aos 16 anos</em> = empezó trabajando a los 16 (énfasis en la primera actividad de una secuencia). Sintácticamente distinta.</div>
+        </div>
+
+        <div class="chip-panel" id="cd-p-1">
+          <div class="def-box"><strong>Parar de / deixar de:</strong> ambas indican cesación, pero con matices distintos.</div>
+          <div class="table-wrap"><table class="gram-table">
+            <thead><tr><th>Perífrasis</th><th>Matiz</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><strong>parar de</strong></td><td>interrupción momentânea o permanente</td><td>Ele <span class="hl-pr">parou de fumar</span> em 2020.</td></tr>
+              <tr><td><strong>deixar de</strong></td><td>cesación definitiva, abandono</td><td>Ela <span class="hl-pr">deixou de comer</span> carne.</td></tr>
+              <tr><td><strong>cessar de</strong> (literario)</td><td>cesar (formal)</td><td>Não <span class="hl-pr">cessou de chover</span> o dia todo.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Para de fazer</span> isso!</div><div class="ex-es">¡Deja de hacer eso!</div></div>
+          <div class="example-block pr"><div class="ex-fr">Não <span class="epr">deixe de ler</span> esse livro.</div><div class="ex-es">No dejes de leer ese libro.</div></div>
+          <div class="example-block pr"><div class="ex-fr">A chuva <span class="epr">parou de cair</span>.</div><div class="ex-es">La lluvia paró de caer.</div></div>
+        </div>
+
+        <div class="chip-panel" id="cd-p-2">
+          <div class="def-box"><strong>Voltar a + infinitivo:</strong> repetir una acción que se había abandonado.</div>
+          <div class="example-block pr"><div class="ex-fr">Ele <span class="epr">voltou a fumar</span> depois de dois anos.</div><div class="ex-es">Volvió a fumar después de dos años.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">voltei a estudar</span> francês.</div><div class="ex-es">Volví a estudiar francés.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Os preços <span class="epr">voltaram a subir</span>.</div><div class="ex-es">Los precios volvieron a subir.</div></div>
+          <div class="note-box"><strong>Alternativa formal:</strong> <em>tornar a + inf.</em> = voltar a + inf., más literario. <em>Ela não tornou a aparecer</em>.</div>
+        </div>
+
+        <div class="chip-panel" id="cd-p-3">
+          <div class="def-box"><strong>Costumar + infinitivo:</strong> hábito en presente o pasado. En PB usa el verbo conjugado, no la perífrasis <em>tener la costumbre de</em>.</div>
+          <div class="example-block pr"><div class="ex-fr">Ele <span class="epr">costuma chegar</span> cedo no trabalho.</div><div class="ex-es">Suele llegar pronto al trabajo.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">costumava jogar</span> futebol todo domingo.</div><div class="ex-es">Solía jugar al fútbol todos los domingos.</div></div>
+          <div class="example-block pr"><div class="ex-fr">A gente <span class="epr">costuma viajar</span> em julho.</div><div class="ex-es">Solemos viajar en julio.</div></div>
+          <div class="warn-box"><span class="warn-icon">⚠️</span>
+            <div class="warn-text"><strong>Distinción tiempo:</strong> en presente <em>costuma</em> = "suele actualmente"; en imperfeito <em>costumava</em> = "solía". El portugués (igual que el español) usa imperfeito para hábitos pasados, no PPS.</div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con las perífrases verbais.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Olvidar preposición tras começar / acabar / deixar',
+   wrong:"Comecei estudar / acabei chegar / deixei fumar",
+   right:"Comecei a estudar / acabei de chegar / deixei de fumar",
+   expl:'Las perífrasis con <em>começar, acabar, deixar, parar, voltar</em> exigen preposición fija entre auxiliar e infinitivo: <strong>começar A</strong>, <strong>acabar DE</strong>, <strong>deixar DE</strong>, <strong>parar DE</strong>, <strong>voltar A</strong>. Hay que memorizarlas.'},
+  {name:'Vou + gerúndio (gerundismo en futuro)',
+   wrong:"Vou estar mandando o e-mail.",
+   right:"Vou mandar o e-mail.",
+   expl:'En registro formal, evita <em>vou estar + gerúndio</em> para futuro. La forma correcta es <em>ir + infinitivo</em>: <em>vou mandar, vou fazer, vou ir</em>. El gerundismo es típico de telemarketing y está estigmatizado en escritura cuidada.'},
+  {name:'Estar a + inf. en PB',
+   wrong:"Estou a falar com ele.",
+   right:"Estou falando com ele.",
+   expl:'En PB, la forma natural del progresivo es <em>estar + gerúndio</em>: <em>estou falando, está chegando, estavam dormindo</em>. La forma <em>estar a + inf.</em> es de PE y suena extraña o regionalmente marcada en Brasil.'},
+  {name:'Acabar de en PPS: ambiguo',
+   wrong:"Acabei de comer (= acabo de comer / terminé de comer)",
+   right:"Contexto desambigua",
+   expl:'<em>Acabar de</em> en presente = "acabar de" (pasado reciente): <em>acabo de chegar</em>. En PPS = "terminar de" (acción concluida): <em>acabei de comer</em> = terminé de comer. La ambigüedad la resuelve el contexto.'},
+  {name:'Vir + ger. vs vir + inf.',
+   wrong:"Confundir venho dizer (= vengo a decir) con venho dizendo (= vengo diciendo)",
+   right:"Dos perífrasis distintas con valores opuestos",
+   expl:'<em>Vir + infinitivo</em> = movimiento + finalidad: <em>venho dizer</em> = "vengo a decir". <em>Vir + gerúndio</em> = progresión acumulativa: <em>venho dizendo</em> = "llevo tiempo diciendo". No los confundas.'},
+  {name:'Ir + ger. en lugar de futuro',
+   wrong:"Amanhã vou falando com ele. (intentando futuro)",
+   right:"Amanhã vou falar com ele.",
+   expl:'<em>Ir + gerúndio</em> NO es futuro: marca progresión gradual (<em>vou aprendendo</em> = voy aprendiendo). Para futuro inmediato, usa <em>ir + infinitivo</em>: <em>vou falar, vou estudar, vou viajar</em>.'},
+  {name:'Pôr-se a + inf. confundido con começar',
+   wrong:"Pôs-se estudar.",
+   right:"Pôs-se a estudar.",
+   expl:'<em>Pôr-se a + inf.</em> exige la preposición <em>a</em>. Y atención: <em>pôr-se</em> es pronominal: <em>pus-me, pôs-se, pomo-nos a estudar</em>. En PB hablado se prefiere <em>começar a</em>.'},
+  {name:'Costumava vs costumou',
+   wrong:"Costumei jogar futebol quando era criança.",
+   right:"Costumava jogar futebol quando era criança.",
+   expl:'Para hábitos en el pasado, usa <strong>imperfeito</strong>: <em>eu costumava, ele costumava, nós costumávamos</em>. El PPS <em>costumei</em> es agramatical para hábitos. Igual que en español: "solía", no "solí".'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>
