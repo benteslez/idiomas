@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Futuro do Presente e Futuro do Pretérito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Futuros → Verbos · dk-teal */
+:root {
+  --primary: #1c4258;
+  --primary-soft: #e8f0f4;
+  --primary-mid: #5887a0;
+  --primary-strong: #0f2a3a;
+  --primary-glow: rgba(28, 66, 88, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fb5cf;
+  --primary-soft: #1a2a35;
+  --primary-mid: #4a8aa5;
+  --primary-strong: #b8d4e2;
+  --primary-glow: rgba(127, 181, 207, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.irreg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px; margin-bottom: 16px;
+}
+.irreg-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all var(--t-base) var(--ease);
+}
+.irreg-card:hover {
+  border-color: var(--primary-mid);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+.irreg-card-head {
+  background: var(--primary);
+  color: #fff;
+  padding: 8px 14px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: -0.005em;
+}
+.irreg-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 14px;
+  font-size: 0.82em;
+  border-bottom: 1px solid var(--border);
+}
+.irreg-row:last-child { border-bottom: none; }
+.irreg-pron { color: var(--text3); }
+.irreg-form { color: var(--primary); font-weight: 700; }
+
+.def-box {
+  background: var(--primary-strong);
+  color: #ffffff;
+  border-color: var(--primary-strong);
+}
+.def-box strong,
+.def-box em {
+  color: #ffffff;
+}
+
+.split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+.split-card h4 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.split-card p {
+  font-size: 0.86em;
+  color: var(--text2);
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Futuro do Presente e Futuro do Pretérito</h1>
+    <span class="header-tag">Gramática</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B1–B2</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Futuro · Condicional</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Los dos futuros</button>
+    <button class="snav-btn"        onclick="showSection('s-fp-form',this)">2. Futuro do presente</button>
+    <button class="snav-btn"        onclick="showSection('s-fp-usos',this)">3. Usos del futuro</button>
+    <button class="snav-btn"        onclick="showSection('s-fpr-form',this)">4. Futuro do pretérito</button>
+    <button class="snav-btn"        onclick="showSection('s-fpr-usos',this)">5. Usos del condicional</button>
+    <button class="snav-btn"        onclick="showSection('s-pb-ir',this)">6. PB: ir + infinitivo</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El portugués distingue dos formas verbales de "futuro": el <strong>futuro do presente</strong> (<em>falarei</em> = hablaré) y el <strong>futuro do pretérito</strong> (<em>falaria</em> = hablaría). Ambos se forman <strong>añadiendo terminaciones al infinitivo</strong>, no a un radical aparte. En PB, las dos formas son percibidas como cultas y se reemplazan en habla por perífrasis con <em>ir</em>.
+      </div>
+
+      <div class="split-grid">
+        <div class="split-card">
+          <h4>Futuro do Presente</h4>
+          <p><strong>Función:</strong> hechos futuros, predicciones, promesas, conjeturas sobre el presente.</p>
+          <p style="margin-top:6px"><em>Eu falarei amanhã.</em> → Hablaré mañana.</p>
+          <p style="margin-top:6px"><em>Será que ele vem?</em> → ¿Vendrá?</p>
+        </div>
+        <div class="split-card">
+          <h4>Futuro do Pretérito</h4>
+          <p><strong>Función:</strong> condicional (= español <em>hablaría</em>), cortesía, futuro en el pasado, hipótesis.</p>
+          <p style="margin-top:6px"><em>Eu falaria com ele.</em> → Hablaría con él.</p>
+          <p style="margin-top:6px"><em>Disse que faria.</em> → Dijo que haría.</p>
+        </div>
+      </div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Atención al nombre:</strong> "futuro do pretérito" significa "futuro visto desde el pasado". A pesar del nombre, en valor independiente equivale al <strong>condicional</strong> español. La etiqueta refleja su origen histórico (<em>haber</em> en imperfeito + infinitivo).</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. FUTURO DO PRESENTE — FORMACIÓN -->
+  <div class="sec-block" id="s-fp-form">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Formación: <strong>infinitivo completo + -ei / -ás / -á / -emos / -ão</strong>. Iguales para -AR, -ER, -IR. Solo <strong>tres verbos</strong> son irregulares: <em>fazer, dizer, trazer</em>.
+      </div>
+
+      <div class="sec-label">Conjugación regular</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Pronombre</th><th>FALAR</th><th>COMER</th><th>PARTIR</th><th>Term.</th></tr></thead>
+        <tbody>
+          <tr><td><strong>eu</strong></td><td class="hl-pr">falarei</td><td class="hl-pr">comerei</td><td class="hl-pr">partirei</td><td class="hl-pr">-ei</td></tr>
+          <tr><td><strong>tu</strong></td><td class="hl-pr">falarás</td><td class="hl-pr">comerás</td><td class="hl-pr">partirás</td><td class="hl-pr">-ás</td></tr>
+          <tr><td><strong>você/ele</strong></td><td class="hl-pr">falará</td><td class="hl-pr">comerá</td><td class="hl-pr">partirá</td><td class="hl-pr">-á</td></tr>
+          <tr><td><strong>nós</strong></td><td class="hl-pr">falaremos</td><td class="hl-pr">comeremos</td><td class="hl-pr">partiremos</td><td class="hl-pr">-emos</td></tr>
+          <tr><td><strong>vocês/eles</strong></td><td class="hl-pr">falarão</td><td class="hl-pr">comerão</td><td class="hl-pr">partirão</td><td class="hl-pr">-ão</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Los tres irregulares</div>
+      <div class="irreg-grid">
+        <div class="irreg-card">
+          <div class="irreg-card-head">fazer</div>
+          <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">farei</span></div>
+          <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">farás</span></div>
+          <div class="irreg-row"><span class="irreg-pron">ele</span><span class="irreg-form">fará</span></div>
+          <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">faremos</span></div>
+          <div class="irreg-row"><span class="irreg-pron">eles</span><span class="irreg-form">farão</span></div>
+        </div>
+        <div class="irreg-card">
+          <div class="irreg-card-head">dizer</div>
+          <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">direi</span></div>
+          <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">dirás</span></div>
+          <div class="irreg-row"><span class="irreg-pron">ele</span><span class="irreg-form">dirá</span></div>
+          <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">diremos</span></div>
+          <div class="irreg-row"><span class="irreg-pron">eles</span><span class="irreg-form">dirão</span></div>
+        </div>
+        <div class="irreg-card">
+          <div class="irreg-card-head">trazer</div>
+          <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">trarei</span></div>
+          <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">trarás</span></div>
+          <div class="irreg-row"><span class="irreg-pron">ele</span><span class="irreg-form">trará</span></div>
+          <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">traremos</span></div>
+          <div class="irreg-row"><span class="irreg-pron">eles</span><span class="irreg-form">trarão</span></div>
+        </div>
+      </div>
+
+      <div class="note-box"><strong>Patrón mnemotécnico:</strong> los tres irregulares pierden la sílaba <em>-ze-/-er-</em> del infinitivo: <em>fazer → fa-rei, dizer → di-rei, trazer → tra-rei</em>. Sus derivados siguen el mismo patrón: <em>desfazer → desfarei, contradizer → contradirei, retrazer → retrarei</em>.</div>
+
+      <div class="sec-label">Ejemplos en contexto</div>
+      <div class="example-block pr"><div class="ex-fr">Amanhã eu <span class="epr">falarei</span> com o diretor.</div><div class="ex-es">Mañana hablaré con el director.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Eles <span class="epr">farão</span> a apresentação na próxima semana.</div><div class="ex-es">Harán la presentación la semana que viene.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">direi</span> a verdade.</div><div class="ex-es">Diré la verdad.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 3. USOS DEL FUTURO DO PRESENTE -->
+  <div class="sec-block" id="s-fp-usos">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El futuro do presente cubre varios valores: <strong>temporal</strong> (acción futura), <strong>epistémico</strong> (conjetura sobre el presente), <strong>promesa/obligación</strong>, y aparece en textos formales y consagrados (leyes, mandamientos).
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('fpu',0)">Temporal</button>
+        <button class="chip pr"        onclick="selectChip('fpu',1)">Epistémico</button>
+        <button class="chip pr"        onclick="selectChip('fpu',2)">Promesa / orden</button>
+        <button class="chip pr"        onclick="selectChip('fpu',3)">Registro formal</button>
+      </div>
+      <div id="fpu-panels">
+
+        <div class="chip-panel active" id="fpu-p-0">
+          <div class="def-box">Acción que ocurrirá después del momento del habla. Aparece con marcadores como <em>amanhã, no próximo mês, daqui a, em breve</em>.</div>
+          <div class="example-block pr"><div class="ex-fr">No ano que vem, eu <span class="epr">viajarei</span> para o exterior.</div><div class="ex-es">El año que viene viajaré al extranjero.</div></div>
+          <div class="example-block pr"><div class="ex-fr">A reunião <span class="epr">começará</span> às nove em ponto.</div><div class="ex-es">La reunión empezará a las nueve en punto.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Daqui a alguns anos, todos <span class="epr">terão</span> carros elétricos.</div><div class="ex-es">Dentro de algunos años, todos tendrán coches eléctricos.</div></div>
+        </div>
+
+        <div class="chip-panel" id="fpu-p-1">
+          <div class="def-box">Expresa <strong>conjetura, suposición o probabilidad</strong> sobre el presente. Muy frecuente con <em>ser</em>.</div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Será</span> que ele está em casa?</div><div class="ex-es">¿Estará en casa?</div></div>
+          <div class="example-block pr"><div class="ex-fr">Quem <span class="epr">será</span> aquele homem?</div><div class="ex-es">¿Quién será aquel hombre?</div></div>
+          <div class="example-block pr"><div class="ex-fr">Que horas <span class="epr">serão</span>?</div><div class="ex-es">¿Qué hora será?</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ele <span class="epr">terá</span> uns trinta anos.</div><div class="ex-es">Tendrá unos treinta años.</div></div>
+          <div class="note-box"><strong>Fórmula PB:</strong> <em>será que…?</em> es la pregunta epistémica por excelencia. Equivale al "¿será que?" del español o al "¿estará...?" interrogativo.</div>
+        </div>
+
+        <div class="chip-panel" id="fpu-p-2">
+          <div class="def-box">Compromiso fuerte (promesa solemne) o mandato (en textos prescriptivos: 10 mandamientos, constitución).</div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">cumprirei</span> minhas promessas.</div><div class="ex-es">Cumpliré mis promesas.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Não <span class="epr">matarás</span>. Não <span class="epr">roubarás</span>.</div><div class="ex-es">No matarás. No robarás.</div><div class="ex-note">Mandamientos: registro bíblico-prescriptivo.</div></div>
+          <div class="example-block pr"><div class="ex-fr">A multa <span class="epr">será</span> aplicada em caso de descumprimento.</div><div class="ex-es">La multa será aplicada en caso de incumplimiento.</div></div>
+        </div>
+
+        <div class="chip-panel" id="fpu-p-3">
+          <div class="def-box">El futuro do presente es típico de la prosa formal, la prensa, los textos académicos y legislativos. En habla cotidiana se reemplaza por <em>ir + infinitivo</em>.</div>
+          <div class="example-block pr"><div class="ex-fr">O Brasil <span class="epr">enfrentará</span> grandes desafios nos próximos anos.</div><div class="ex-es">Brasil enfrentará grandes desafíos en los próximos años.</div></div>
+          <div class="example-block pr"><div class="ex-fr">A nova lei <span class="epr">entrará</span> em vigor em janeiro.</div><div class="ex-es">La nueva ley entrará en vigor en enero.</div></div>
+          <div class="warn-box"><span class="warn-icon">💡</span>
+            <div class="warn-text"><strong>Registro:</strong> decir <em>amanhã eu falarei com ele</em> en una conversación cotidiana suena artificial o muy formal. Lo natural es: <em>amanhã eu vou falar com ele</em>.</div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. FUTURO DO PRETÉRITO — FORMACIÓN -->
+  <div class="sec-block" id="s-fpr-form">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Formación: <strong>infinitivo + -ia / -ias / -ia / -íamos / -iam</strong>. Iguales para -AR, -ER, -IR. Los mismos tres irregulares: <em>faria, diria, traria</em>.
+      </div>
+
+      <div class="sec-label">Conjugación regular</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Pronombre</th><th>FALAR</th><th>COMER</th><th>PARTIR</th><th>Term.</th></tr></thead>
+        <tbody>
+          <tr><td><strong>eu</strong></td><td class="hl-pr">falaria</td><td class="hl-pr">comeria</td><td class="hl-pr">partiria</td><td class="hl-pr">-ia</td></tr>
+          <tr><td><strong>tu</strong></td><td class="hl-pr">falarias</td><td class="hl-pr">comerias</td><td class="hl-pr">partirias</td><td class="hl-pr">-ias</td></tr>
+          <tr><td><strong>você/ele</strong></td><td class="hl-pr">falaria</td><td class="hl-pr">comeria</td><td class="hl-pr">partiria</td><td class="hl-pr">-ia</td></tr>
+          <tr><td><strong>nós</strong></td><td class="hl-pr">falaríamos</td><td class="hl-pr">comeríamos</td><td class="hl-pr">partiríamos</td><td class="hl-pr">-íamos</td></tr>
+          <tr><td><strong>vocês/eles</strong></td><td class="hl-pr">falariam</td><td class="hl-pr">comeriam</td><td class="hl-pr">partiriam</td><td class="hl-pr">-iam</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Atención homógrafos:</strong> las terminaciones <em>-ia/-iam</em> coinciden con las del <strong>imperfeito</strong> de -ER e -IR (<em>comia, partia</em>). La diferencia: imperfeito se forma sobre el <strong>radical</strong>; futuro do pretérito sobre el <strong>infinitivo</strong>. Compara: <em>comia</em> (impf. = comía) vs <em>comeria</em> (cond. = comería).</div>
+      </div>
+
+      <div class="sec-label">Irregulares</div>
+      <div class="irreg-grid">
+        <div class="irreg-card">
+          <div class="irreg-card-head">fazer</div>
+          <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">faria</span></div>
+          <div class="irreg-row"><span class="irreg-pron">ele</span><span class="irreg-form">faria</span></div>
+          <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">faríamos</span></div>
+          <div class="irreg-row"><span class="irreg-pron">eles</span><span class="irreg-form">fariam</span></div>
+        </div>
+        <div class="irreg-card">
+          <div class="irreg-card-head">dizer</div>
+          <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">diria</span></div>
+          <div class="irreg-row"><span class="irreg-pron">ele</span><span class="irreg-form">diria</span></div>
+          <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">diríamos</span></div>
+          <div class="irreg-row"><span class="irreg-pron">eles</span><span class="irreg-form">diriam</span></div>
+        </div>
+        <div class="irreg-card">
+          <div class="irreg-card-head">trazer</div>
+          <div class="irreg-row"><span class="irreg-pron">eu</span><span class="irreg-form">traria</span></div>
+          <div class="irreg-row"><span class="irreg-pron">ele</span><span class="irreg-form">traria</span></div>
+          <div class="irreg-row"><span class="irreg-pron">nós</span><span class="irreg-form">traríamos</span></div>
+          <div class="irreg-row"><span class="irreg-pron">eles</span><span class="irreg-form">trariam</span></div>
+        </div>
+      </div>
+
+      <div class="green-box"><strong>Regla útil:</strong> si conoces el futuro do presente, intercambia <em>-ei/-ás/-á/-emos/-ão</em> por <em>-ia/-ias/-ia/-íamos/-iam</em>. <em>Farei → faria, direi → diria, trarei → traria</em>.</div>
+    </div></div>
+  </div>
+
+  <!-- 5. USOS DEL FUTURO DO PRETÉRITO -->
+  <div class="sec-block" id="s-fpr-usos">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Funciona como el <strong>condicional español</strong>. Cuatro usos principales: cortesía, hipótesis irreal, futuro visto desde el pasado, y conjetura sobre el pasado.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('fpru',0)">Cortesía</button>
+        <button class="chip pr"        onclick="selectChip('fpru',1)">Hipótesis</button>
+        <button class="chip pr"        onclick="selectChip('fpru',2)">Futuro en el pasado</button>
+        <button class="chip pr"        onclick="selectChip('fpru',3)">Conjetura pasado</button>
+      </div>
+      <div id="fpru-panels">
+
+        <div class="chip-panel active" id="fpru-p-0">
+          <div class="def-box">Atenúa peticiones, deseos y opiniones. Más educado que el presente.</div>
+          <div class="example-block pr"><div class="ex-fr">Você <span class="epr">poderia</span> me ajudar?</div><div class="ex-es">¿Podrías ayudarme?</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">gostaria</span> de uma água, por favor.</div><div class="ex-es">Querría un agua, por favor.</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Seria</span> possível mudar de mesa?</div><div class="ex-es">¿Sería posible cambiar de mesa?</div></div>
+          <div class="note-box"><strong>PB hablado:</strong> en habla coloquial, el <em>imperfeito</em> sustituye al futuro do pretérito en cortesía: <em>eu queria, você podia, era possível</em>. Ambos son aceptables y educados.</div>
+        </div>
+
+        <div class="chip-panel" id="fpru-p-1">
+          <div class="def-box">En periodos hipotéticos del tipo II (irreal del presente): <strong>se + imperfeito do subjuntivo → futuro do pretérito</strong>.</div>
+          <div class="example-block pr"><div class="ex-fr">Se eu tivesse dinheiro, <span class="epr">compraria</span> uma casa.</div><div class="ex-es">Si tuviera dinero, compraría una casa.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Se eu pudesse, <span class="epr">viajaria</span> o mundo todo.</div><div class="ex-es">Si pudiera, viajaría por todo el mundo.</div></div>
+          <div class="example-block pr"><div class="ex-fr">No seu lugar, eu <span class="epr">faria</span> diferente.</div><div class="ex-es">En tu lugar, yo haría algo diferente.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Sem ele, nós não <span class="epr">conseguiríamos</span>.</div><div class="ex-es">Sin él, no lo conseguiríamos.</div></div>
+        </div>
+
+        <div class="chip-panel" id="fpru-p-2">
+          <div class="def-box">Acción posterior a un momento del pasado (= "iba a + inf."). Común en discurso indirecto en pasado.</div>
+          <div class="example-block pr"><div class="ex-fr">Ele disse que <span class="epr">viria</span> hoje.</div><div class="ex-es">Dijo que vendría hoy.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ela prometeu que me <span class="epr">ligaria</span>.</div><div class="ex-es">Prometió que me llamaría.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Os jornais anunciaram que o evento <span class="epr">seria</span> adiado.</div><div class="ex-es">Los periódicos anunciaron que el evento sería pospuesto.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eu sabia que ele não <span class="epr">aceitaria</span>.</div><div class="ex-es">Yo sabía que no aceptaría.</div></div>
+        </div>
+
+        <div class="chip-panel" id="fpru-p-3">
+          <div class="def-box">Suposición o conjetura sobre algo del pasado. Equivale a "habrá" o "sería" español.</div>
+          <div class="example-block pr"><div class="ex-fr">Ele já <span class="epr">teria</span> uns cinquenta anos quando casou.</div><div class="ex-es">Tendría unos cincuenta años cuando se casó.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Quem <span class="epr">seria</span> aquela pessoa?</div><div class="ex-es">¿Quién sería aquella persona?</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Seria</span> umas dez horas da noite.</div><div class="ex-es">Serían las diez de la noche.</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. PB IR + INFINITIVO -->
+  <div class="sec-block" id="s-pb-ir">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        En PB hablado, las dos formas de futuro son reemplazadas masivamente por dos perífrasis: <strong>ir (presente) + infinitivo</strong> para el futuro, y <strong>ir (imperfeito) + infinitivo</strong> para el condicional. Esta es la marca distintiva del PB oral frente al PE.
+      </div>
+
+      <div class="sec-label">Ir + infinitivo = futuro do presente</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Forma normativa</th><th>PB hablado</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td>Eu <span class="hl-pr">falarei</span> com ele.</td><td>Eu <span class="hl-pr">vou falar</span> com ele.</td><td>Hablaré con él.</td></tr>
+          <tr><td>Ela <span class="hl-pr">terá</span> 30 anos em junho.</td><td>Ela <span class="hl-pr">vai ter</span> 30 anos em junho.</td><td>Cumplirá 30 años en junio.</td></tr>
+          <tr><td>Nós <span class="hl-pr">viajaremos</span> em agosto.</td><td>A gente <span class="hl-pr">vai viajar</span> em agosto.</td><td>Vamos a viajar en agosto.</td></tr>
+          <tr><td><span class="hl-pr">Choverá</span> amanhã.</td><td><span class="hl-pr">Vai chover</span> amanhã.</td><td>Lloverá / Va a llover mañana.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ir (imperfeito) + infinitivo = futuro do pretérito</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Forma normativa</th><th>PB hablado</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td>Se eu pudesse, <span class="hl-pr">iria</span>.</td><td>Se eu pudesse, eu <span class="hl-pr">ia</span>.</td><td>Si pudiera, iría.</td></tr>
+          <tr><td>Eu <span class="hl-pr">faria</span> tudo por você.</td><td>Eu <span class="hl-pr">ia fazer</span> tudo por você.</td><td>Haría todo por ti.</td></tr>
+          <tr><td>Você <span class="hl-pr">poderia</span> me ajudar?</td><td>Você <span class="hl-pr">podia</span> me ajudar?</td><td>¿Podrías ayudarme?</td></tr>
+          <tr><td>Eu disse que <span class="hl-pr">viria</span>.</td><td>Eu falei que <span class="hl-pr">ia vir</span>.</td><td>Dije que vendría.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Combinación de marcadores temporales</div>
+      <div class="example-block pr"><div class="ex-fr">Amanhã eu <span class="epr">vou trabalhar</span> de casa.</div><div class="ex-es">Mañana voy a trabajar desde casa.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A gente <span class="epr">vai sair</span> mais tarde.</div><div class="ex-es">Vamos a salir más tarde.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Você <span class="epr">vai gostar</span> deste filme.</div><div class="ex-es">Te va a gustar esta película.</div></div>
+      <div class="example-block pr"><div class="ex-fr">No seu lugar, eu <span class="epr">ia procurar</span> outro emprego.</div><div class="ex-es">En tu lugar, buscaría otro trabajo.</div></div>
+
+      <div class="green-box"><strong>Regla práctica:</strong> en producción oral o escritura informal, usa <strong>ir + inf.</strong> En registro formal (académico, periodístico, legal, literario), usa el <strong>futuro do presente / pretérito sintético</strong>. La elección no depende del significado sino del registro.</div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con los futuros del indicativo en portugués.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Confundir imperfeito con futuro do pretérito',
+   wrong:"Comia (= comería) en contexto condicional",
+   right:"Comia (= comía, imperfeito) vs comeria (= comería, condicional)",
+   expl:'Las terminaciones <em>-ia/-iam</em> aparecen en imperfeito (sobre radical: <em>comia</em>) y en futuro do pretérito (sobre infinitivo: <em>comeria</em>). En PB hablado se confunden por la sustitución coloquial, pero en escritura culta hay que distinguirlas.'},
+  {name:'Olvidar la irregularidad de fazer/dizer/trazer',
+   wrong:"Eu fazerei / dizerei / trazerei",
+   right:"Eu farei / direi / trarei",
+   expl:'Los tres únicos verbos irregulares en los dos futuros son <strong>fazer (farei, faria), dizer (direi, diria), trazer (trarei, traria)</strong>. Pierden la sílaba <em>-ze-/-er-</em> del infinitivo. Es obligatorio.'},
+  {name:'Futuro do presente para hechos cotidianos',
+   wrong:"Amanhã eu falarei com você. (en conversación casual)",
+   right:"Amanhã eu vou falar com você.",
+   expl:'En PB hablado, <em>amanhã eu falarei</em> suena artificial o sobreacademizado. Lo natural es <em>amanhã eu vou falar</em>. Reserva el futuro sintético para escritura formal, prensa, leyes o promesas solemnes.'},
+  {name:'Pronombres átonos con futuro: mesóclise',
+   wrong:"Eu lhe falarei / eu te darei (norma escrita PE)",
+   right:"Eu vou te falar / eu vou te dar (PB oral)",
+   expl:'En PE normativo, los pronombres con futuro do presente/pretérito van en <strong>mesóclise</strong>: <em>falar-lhe-ei, dar-te-ia</em>. En PB esto es totalmente artificial; se usa próclise o, mejor aún, la perífrasis con <em>ir</em>.'},
+  {name:'Será que vs será (confusión epistémico/temporal)',
+   wrong:"Será que ele vai vir? = pregunta sobre futuro",
+   right:"Será que ele vem? = ¿vendrá? (epistémico sobre presente/futuro)",
+   expl:'<em>Será que…?</em> es la fórmula universal de pregunta epistémica en PB. No es solo temporal: introduce duda o conjetura sobre cualquier momento. <em>Será que ele está em casa?</em> (ahora). <em>Será que ele vai vir?</em> (futuro).'},
+  {name:'Periodo hipotético tipo II',
+   wrong:"Se eu teria dinheiro, compraria...",
+   right:"Se eu tivesse dinheiro, compraria...",
+   expl:'En el tipo II del periodo hipotético: <strong>se + imperfeito do subjuntivo → futuro do pretérito</strong>. Nunca <em>se + futuro do pretérito</em>. Es decir: <em>se eu tivesse</em>, no <em>se eu teria</em>. Ver tarjeta de Subjuntivo Presente e Passado.'},
+  {name:'Discurso indireto: tiempos hacia atrás',
+   wrong:"Ele disse que virá hoje.",
+   right:"Ele disse que viria hoje.",
+   expl:'Con verbo introductor en pasado, el futuro do presente del directo se convierte en futuro do pretérito en el indirecto. <em>Disse: "virei"</em> → <em>disse que viria</em>. En PB hablado se acepta <em>disse que vai vir</em>.'},
+  {name:'Acento en -íamos / -ão',
+   wrong:"falariamos / falaram (PPS) vs falarão (futuro)",
+   right:"falaríamos (cond.) / falarão (fut.) / falaram (PPS)",
+   expl:'Atención a la grafía: <strong>falaríamos</strong> (con tilde en la í), <strong>falarão</strong> (con til en ão, futuro), <strong>falaram</strong> (sin til, PPS 3ª pl.). La diferencia ortográfica es crucial: <em>vão / vou / vão</em> futuro vs <em>foram / fomos</em> PPS.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

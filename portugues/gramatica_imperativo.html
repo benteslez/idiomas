@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Imperativo (Formal e Coloquial)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Imperativo → Verbos · dk-teal */
+:root {
+  --primary: #1c4258;
+  --primary-soft: #e8f0f4;
+  --primary-mid: #5887a0;
+  --primary-strong: #0f2a3a;
+  --primary-glow: rgba(28, 66, 88, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fb5cf;
+  --primary-soft: #1a2a35;
+  --primary-mid: #4a8aa5;
+  --primary-strong: #b8d4e2;
+  --primary-glow: rgba(127, 181, 207, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.irreg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px; margin-bottom: 16px;
+}
+.irreg-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all var(--t-base) var(--ease);
+}
+.irreg-card:hover {
+  border-color: var(--primary-mid);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+.irreg-card-head {
+  background: var(--primary);
+  color: #fff;
+  padding: 8px 14px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: -0.005em;
+}
+.irreg-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 14px;
+  font-size: 0.82em;
+  border-bottom: 1px solid var(--border);
+}
+.irreg-row:last-child { border-bottom: none; }
+.irreg-pron { color: var(--text3); }
+.irreg-form { color: var(--primary); font-weight: 700; }
+
+.def-box {
+  background: var(--primary-strong);
+  color: #ffffff;
+  border-color: var(--primary-strong);
+}
+.def-box strong,
+.def-box em {
+  color: #ffffff;
+}
+
+.split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+.split-card h4 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.split-card p {
+  font-size: 0.86em;
+  color: var(--text2);
+  line-height: 1.6;
+}
+.flow-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary-soft);
+  border-radius: var(--radius-pill);
+  padding: 6px 12px;
+  font-size: 0.84em;
+  color: var(--primary);
+  font-weight: 600;
+  margin: 8px 0;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Imperativo — Formal e Coloquial</h1>
+    <span class="header-tag">Gramática</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR A2–B1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Modo Imperativo</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Dos imperativos</button>
+    <button class="snav-btn"        onclick="showSection('s-formal',this)">2. Imperativo formal</button>
+    <button class="snav-btn"        onclick="showSection('s-coloquial',this)">3. Imperativo coloquial PB</button>
+    <button class="snav-btn"        onclick="showSection('s-negativo',this)">4. Imperativo negativo</button>
+    <button class="snav-btn"        onclick="showSection('s-irreg',this)">5. Irregulares</button>
+    <button class="snav-btn"        onclick="showSection('s-pronomes',this)">6. Pronombres con imperativo</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El portugués brasileño tiene dos sistemas paralelos para el imperativo: el <strong>formal</strong> (formado a partir del subjuntivo presente) y el <strong>coloquial</strong> (formado a partir del presente del indicativo). En el habla cotidiana ambos coexisten, a menudo mezclados en el mismo discurso del mismo hablante. Esta variabilidad es típica de PB.
+      </div>
+
+      <div class="split-grid">
+        <div class="split-card">
+          <h4>Imperativo formal (norma)</h4>
+          <p>Formado a partir del <strong>subjuntivo presente</strong>. Es el recomendado por gramáticas y se usa en avisos, instrucciones escritas y registro cuidado.</p>
+          <p style="margin-top:6px"><em>Fale comigo. / Faça o exercício. / Não esqueça.</em></p>
+        </div>
+        <div class="split-card">
+          <h4>Imperativo coloquial PB</h4>
+          <p>Formado a partir del <strong>indicativo presente</strong> (3ª pers. sing. sin -s). Domina en habla cotidiana, mensajes, redes sociales.</p>
+          <p style="margin-top:6px"><em>Fala comigo. / Faz o exercício. / Não esquece.</em></p>
+        </div>
+      </div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Ambos son válidos en PB hablado.</strong> El formal con <em>você</em> es percibido como ligeramente más educado o normativo; el coloquial es más íntimo y juvenil. Pueden mezclarse libremente: <em>Olha aqui, não esquece de ligar pra mim, viu?</em></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. IMPERATIVO FORMAL -->
+  <div class="sec-block" id="s-formal">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El imperativo formal usa las formas del <strong>subjuntivo presente</strong>. Esto significa: 3ª pers. sing. del indicativo cambia la vocal temática (-AR → -e, -ER/-IR → -a). Es el imperativo "ortodoxo" según la norma culta.
+      </div>
+
+      <div class="sec-label">Formación: del indicativo al imperativo formal</div>
+      <div class="flow-arrow">indicativo "ele fala" → quitar -a → añadir -e → <strong>fale</strong> (imperativo)</div>
+      <div class="flow-arrow">indicativo "ele come" → quitar -e → añadir -a → <strong>coma</strong> (imperativo)</div>
+
+      <div class="sec-label">Conjugación regular</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Persona</th><th>FALAR (-ar)</th><th>COMER (-er)</th><th>PARTIR (-ir)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>tu</strong> (norma)</td><td class="hl-pr">fala</td><td class="hl-pr">come</td><td class="hl-pr">parte</td></tr>
+          <tr><td><strong>você</strong></td><td class="hl-pr">fale</td><td class="hl-pr">coma</td><td class="hl-pr">parta</td></tr>
+          <tr><td><strong>nós</strong> (= vamos…)</td><td class="hl-pr">falemos</td><td class="hl-pr">comamos</td><td class="hl-pr">partamos</td></tr>
+          <tr><td><strong>vocês</strong></td><td class="hl-pr">falem</td><td class="hl-pr">comam</td><td class="hl-pr">partam</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="note-box"><strong>Imperativo de tu (norma escrita):</strong> en la norma culta lusófona, el <em>tu</em> afirmativo es igual a la 3ª pers. sing. del indicativo (<em>fala, come, parte</em>). En el negativo, en cambio, se forma con subjuntivo: <em>não fales, não comas</em>. Pero en PB hablado regional con <em>tu</em>, esta distinción se neutraliza.</div>
+
+      <div class="sec-label">Ejemplos típicos del formal</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Fale</span> mais devagar, por favor.</div><div class="ex-es">Hable más despacio, por favor.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Tenha</span> um bom dia!</div><div class="ex-es">¡Que tenga un buen día!</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Faça</span> o exercício na página 32.</div><div class="ex-es">Haga el ejercicio en la página 32.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Sigam</span> as instruções com atenção.</div><div class="ex-es">Sigan las instrucciones con atención.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Apertem</span> os cintos.</div><div class="ex-es">Abrochen los cinturones.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 3. IMPERATIVO COLOQUIAL -->
+  <div class="sec-block" id="s-coloquial">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        En PB hablado, el imperativo se forma sencillamente con la <strong>3ª persona singular del presente del indicativo</strong>: la misma forma que se usaría con <em>você fala / ele fala</em>. Es altamente productivo y se aplica a todos los verbos, regulares e irregulares.
+      </div>
+
+      <div class="sec-label">Conjugación coloquial PB (= 3ª sing. indicativo)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Verbo</th><th>Formal</th><th>Coloquial PB</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td>falar</td><td class="dim">fale</td><td class="hl-pr">fala</td><td>habla</td></tr>
+          <tr><td>comer</td><td class="dim">coma</td><td class="hl-pr">come</td><td>come</td></tr>
+          <tr><td>partir</td><td class="dim">parta</td><td class="hl-pr">parte</td><td>parte</td></tr>
+          <tr><td>fazer</td><td class="dim">faça</td><td class="hl-pr">faz</td><td>haz</td></tr>
+          <tr><td>ir</td><td class="dim">vá</td><td class="hl-pr">vai</td><td>ve</td></tr>
+          <tr><td>vir</td><td class="dim">venha</td><td class="hl-pr">vem</td><td>ven</td></tr>
+          <tr><td>dizer</td><td class="dim">diga</td><td class="hl-pr">fala/diz</td><td>di</td></tr>
+          <tr><td>dar</td><td class="dim">dê</td><td class="hl-pr">dá</td><td>da</td></tr>
+          <tr><td>ver</td><td class="dim">veja</td><td class="hl-pr">vê</td><td>ve / mira</td></tr>
+          <tr><td>pôr</td><td class="dim">ponha</td><td class="hl-pr">põe</td><td>pon</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos típicos del coloquial</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Fala</span> sério!</div><div class="ex-es">¡No me digas!</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Vem</span> cá!</div><div class="ex-es">¡Ven aquí!</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Olha</span> isso!</div><div class="ex-es">¡Mira esto!</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Vai</span> lá!</div><div class="ex-es">¡Ve allá!</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Faz</span> isso pra mim.</div><div class="ex-es">Haz esto por mí.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Espera</span> um pouco!</div><div class="ex-es">¡Espera un poco!</div></div>
+
+      <div class="green-box"><strong>Productividad altísima en PB:</strong> el imperativo coloquial es la forma por defecto en mensajes, redes sociales, conversación informal. <em>"Manda mensagem", "deixa eu ver", "para com isso", "anda logo", "calma!"</em></div>
+    </div></div>
+  </div>
+
+  <!-- 4. NEGATIVO -->
+  <div class="sec-block" id="s-negativo">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        En la <strong>norma culta</strong>, el imperativo negativo se forma <strong>siempre con subjuntivo presente</strong>. En PB hablado, se mantiene esta regla con <em>você/vocês</em>, pero en habla muy coloquial puede aparecer también con indicativo.
+      </div>
+
+      <div class="sec-label">Conjugación negativa normativa</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Persona</th><th>FALAR</th><th>COMER</th><th>PARTIR</th><th>FAZER</th></tr></thead>
+        <tbody>
+          <tr><td><strong>tu</strong> (norma)</td><td class="hl-pr">não fales</td><td class="hl-pr">não comas</td><td class="hl-pr">não partas</td><td class="hl-pr">não faças</td></tr>
+          <tr><td><strong>você</strong></td><td class="hl-pr">não fale</td><td class="hl-pr">não coma</td><td class="hl-pr">não parta</td><td class="hl-pr">não faça</td></tr>
+          <tr><td><strong>nós</strong></td><td class="hl-pr">não falemos</td><td class="hl-pr">não comamos</td><td class="hl-pr">não partamos</td><td class="hl-pr">não façamos</td></tr>
+          <tr><td><strong>vocês</strong></td><td class="hl-pr">não falem</td><td class="hl-pr">não comam</td><td class="hl-pr">não partam</td><td class="hl-pr">não façam</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Negativo coloquial PB</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Norma</th><th>Coloquial PB</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td><span class="hl-pr">Não fale</span> alto.</td><td><span class="hl-pr">Não fala</span> alto.</td><td>No hables alto.</td></tr>
+          <tr><td><span class="hl-pr">Não faça</span> isso.</td><td><span class="hl-pr">Não faz</span> isso.</td><td>No hagas eso.</td></tr>
+          <tr><td><span class="hl-pr">Não esqueça</span> de mim.</td><td><span class="hl-pr">Não esquece</span> de mim.</td><td>No te olvides de mí.</td></tr>
+          <tr><td><span class="hl-pr">Não saia</span> sem mim.</td><td><span class="hl-pr">Não sai</span> sem mim.</td><td>No salgas sin mí.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Recomendación:</strong> en escritura formal o cuidada, usa siempre el negativo con subjuntivo (<em>não fale, não faça</em>). En habla cotidiana, ambas formas conviven. La forma coloquial con indicativo ("não fala") es típica de la oralidad, no de la escritura.</div>
+      </div>
+
+      <div class="sec-label">Locuciones negativas frecuentes</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Não esqueça</span> de fechar a porta.</div><div class="ex-es">No te olvides de cerrar la puerta.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Não se preocupe</span>, vai dar tudo certo.</div><div class="ex-es">No te preocupes, todo va a salir bien.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Nunca diga</span> nunca.</div><div class="ex-es">Nunca digas nunca.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Não toque</span> isso!</div><div class="ex-es">¡No toques eso!</div></div>
+    </div></div>
+  </div>
+
+  <!-- 5. IRREGULARES -->
+  <div class="sec-block" id="s-irreg">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los verbos más frecuentes tienen imperativos irregulares en la forma formal (porque su subjuntivo presente lo es). En la forma coloquial son simplemente la 3ª sing. del presente indicativo.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('irr',0)">Ser, estar, ir, ter</button>
+        <button class="chip pr"        onclick="selectChip('irr',1)">Fazer, dizer, dar, ver</button>
+        <button class="chip pr"        onclick="selectChip('irr',2)">Vir, pôr, saber, poder</button>
+      </div>
+      <div id="irr-panels">
+
+        <div class="chip-panel active" id="irr-p-0">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">ser</div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">sê</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você</span><span class="irreg-form">seja</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês</span><span class="irreg-form">sejam</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">estar</div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">está</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você</span><span class="irreg-form">esteja</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês</span><span class="irreg-form">estejam</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">ir</div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">vai</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você</span><span class="irreg-form">vá</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês</span><span class="irreg-form">vão</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">ter</div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">tem</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você</span><span class="irreg-form">tenha</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês</span><span class="irreg-form">tenham</span></div>
+            </div>
+          </div>
+          <div class="note-box"><strong>Fórmulas frecuentes:</strong> <em>Seja bem-vindo!</em>, <em>Tenha um bom dia!</em>, <em>Esteja à vontade.</em>, <em>Vá com calma.</em></div>
+        </div>
+
+        <div class="chip-panel" id="irr-p-1">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">fazer</div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">faz</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você</span><span class="irreg-form">faça</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês</span><span class="irreg-form">façam</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">dizer</div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">diz/dize</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você</span><span class="irreg-form">diga</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês</span><span class="irreg-form">digam</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">dar</div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">dá</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você</span><span class="irreg-form">dê</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês</span><span class="irreg-form">deem</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">ver</div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">vê</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você</span><span class="irreg-form">veja</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês</span><span class="irreg-form">vejam</span></div>
+            </div>
+          </div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Faça</span> o favor. / <span class="epr">Faz</span> o favor.</div><div class="ex-es">Haga el favor. / Haz el favor.</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Veja</span> só! / <span class="epr">Vê</span> só!</div><div class="ex-es">¡Mira esto!</div></div>
+        </div>
+
+        <div class="chip-panel" id="irr-p-2">
+          <div class="irreg-grid">
+            <div class="irreg-card">
+              <div class="irreg-card-head">vir</div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">vem</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você</span><span class="irreg-form">venha</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês</span><span class="irreg-form">venham</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">pôr</div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">põe</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você</span><span class="irreg-form">ponha</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês</span><span class="irreg-form">ponham</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">saber</div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">sabe</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você</span><span class="irreg-form">saiba</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês</span><span class="irreg-form">saibam</span></div>
+            </div>
+            <div class="irreg-card">
+              <div class="irreg-card-head">poder</div>
+              <div class="irreg-row"><span class="irreg-pron">tu</span><span class="irreg-form">pode</span></div>
+              <div class="irreg-row"><span class="irreg-pron">você</span><span class="irreg-form">possa</span></div>
+              <div class="irreg-row"><span class="irreg-pron">vocês</span><span class="irreg-form">possam</span></div>
+            </div>
+          </div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Vem</span> cá! / <span class="epr">Venha</span> cá!</div><div class="ex-es">¡Ven aquí!</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Põe</span> isso na mesa.</div><div class="ex-es">Pon eso en la mesa.</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Saiba</span> que estou orgulhoso.</div><div class="ex-es">Sepas que estoy orgulloso.</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. PRONOMBRES CON IMPERATIVO -->
+  <div class="sec-block" id="s-pronomes">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        La colocación pronominal con imperativo es uno de los puntos donde norma escrita y PB hablado se distancian más. La norma exige <strong>ênclise</strong> (pronombre después del verbo, con guion); el PB usa <strong>próclise</strong> universal.
+      </div>
+
+      <div class="sec-label">Imperativo afirmativo: ênclise vs próclise</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Norma escrita (ênclise)</th><th>PB hablado (próclise)</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td><span class="hl-pr">Diga-me</span> a verdade.</td><td><span class="hl-pr">Me diz</span> a verdade.</td><td>Dime la verdad.</td></tr>
+          <tr><td><span class="hl-pr">Sente-se</span>, por favor.</td><td><span class="hl-pr">Senta</span> aí. / Se <span class="hl-pr">senta</span>.</td><td>Siéntate.</td></tr>
+          <tr><td><span class="hl-pr">Dê-me</span> um momento.</td><td><span class="hl-pr">Me dá</span> um minuto.</td><td>Dame un momento.</td></tr>
+          <tr><td><span class="hl-pr">Faça-o</span> agora.</td><td><span class="hl-pr">Faz</span> isso agora.</td><td>Hazlo ahora.</td></tr>
+          <tr><td><span class="hl-pr">Esqueça-o</span>.</td><td><span class="hl-pr">Esquece</span> ele.</td><td>Olvídalo.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Imperativo negativo: próclise obligatoria (en ambos registros)</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Não me diga</span> isso!</div><div class="ex-es">¡No me digas eso!</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Não se preocupe</span>.</div><div class="ex-es">No te preocupes.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Não o esqueça</span>. / Não esquece <span class="epr">ele</span>.</div><div class="ex-es">No lo olvides.</div></div>
+
+      <div class="note-box"><strong>PB oral simplificado:</strong> en habla, los clíticos <em>o, a, os, as</em> (acusativo) son reemplazados por <em>ele, ela, eles, elas</em>: <em>esquece ele</em> (no <em>esquece-o</em>). Para el dativo se mantienen <em>me, te</em> antepuestos: <em>me dá, me liga, te conto</em>.</div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Cuidado al escribir:</strong> en textos formales (carta, correo de negocio, redacción ENEM), mantén la <strong>ênclise normativa</strong>: <em>diga-me, dê-nos, faça-o</em>. En mensajes, redes sociales o ficción dialogada se acepta el orden coloquial PB.</div>
+      </div>
+
+      <div class="sec-label">Imperativo + pronombre: combinaciones frecuentes</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Me ajuda</span> aqui? / <span class="epr">Ajude-me</span>, por favor.</div><div class="ex-es">¿Me ayudas aquí? / Ayúdeme, por favor.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Me liga</span> mais tarde. / <span class="epr">Ligue-me</span> mais tarde.</div><div class="ex-es">Llámame más tarde.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Me passa</span> o sal? / <span class="epr">Passe-me</span> o sal, por favor.</div><div class="ex-es">¿Me pasas la sal? / Páseme la sal, por favor.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con el imperativo en portugués.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Imperativo de você ≠ presente de você',
+   wrong:"Você fale comigo (orden) → no, esto es presente",
+   right:"Fale comigo. (imperativo, sin sujeto explícito)",
+   expl:'El imperativo no lleva sujeto explícito normalmente. <em>Você fale</em> sería raro; el formato natural es <strong>Fale comigo</strong>. Si quieres marcar el sujeto: <em>Fale você mesmo!</em> El imperativo coloquial PB <em>fala comigo</em> coincide formalmente con 3ª sing. presente, pero el contexto desambigua.'},
+  {name:'Imperativo negativo SIEMPRE con subjuntivo (norma)',
+   wrong:"Não fala alto (escrito formal)",
+   right:"Não fale alto.",
+   expl:'En registro escrito formal, el negativo exige subjuntivo: <strong>não fale, não faça, não vá</strong>. En PB hablado coloquial se acepta <em>não fala, não faz, não vai</em>, pero suena marcadamente informal.'},
+  {name:'Imperativo de ir: vai (col.) vs vá (formal)',
+   wrong:"Vá para casa (en conversación casual)",
+   right:"Vai para casa. (PB cotidiano) / Vá para casa. (formal)",
+   expl:'En PB hablado, <strong>vai</strong> es la forma natural del imperativo de <em>ir</em>: <em>vai pra casa, vai lá, vai dormir</em>. <em>Vá</em> suena formal o regional. En el negativo se prefiere <em>não vá</em> incluso en habla.'},
+  {name:'Ênclise normativa vs próclise PB',
+   wrong:"Diga-me em conversa casual (escrito y oral PB)",
+   right:"Me diz / Me fala / Me conta",
+   expl:'La ênclise (<em>diga-me, sente-se, ouça-me</em>) suena artificial en PB hablado. Lo natural: <strong>próclise</strong> (<em>me diz, se senta, me escuta</em>). En escritura formal, sin embargo, la ênclise sigue siendo la norma.'},
+  {name:'Acentuación del imperativo de pôr y dar',
+   wrong:"Poe / De (sin acento)",
+   right:"Põe (col.) / Ponha (formal) — Dá (col.) / Dê (formal)",
+   expl:'<strong>Põe</strong> (con til, coloquial de pôr) y <strong>ponha</strong> (formal). <strong>Dá</strong> (con tilde, coloquial de dar) y <strong>dê</strong> (con circunflejo, formal). Los acentos son obligatorios para distinguir formas y mantener la pronunciación.'},
+  {name:'Mezclar formal y coloquial dentro del mismo verbo',
+   wrong:"Faça isso e fala comigo. (inconsistente)",
+   right:"Faça isso e fale comigo. (formal) / Faz isso e fala comigo. (coloquial)",
+   expl:'Aunque el PB hablado es flexible, dentro de una misma oración o instrucción es mejor mantener el mismo registro. Mezclar <em>faça</em> (formal) con <em>fala</em> (coloquial) crea inconsistencia. Elige uno y mantenlo.'},
+  {name:'Imperativo de tu en regiones PB',
+   wrong:"Tu fala (en regiones que mantienen tu)",
+   right:"Tu fala (Rio Grande do Sul, Nordeste — uso coloquial generalizado)",
+   expl:'En las regiones donde se usa <em>tu</em> (sur, nordeste, parte do Rio), el imperativo coloquial mantiene la forma de 3ª singular: <em>tu fala, tu vai, tu faz</em>. La forma <em>fala tu</em> con sujeto pospuesto es enfática. La norma exigiría <em>fala</em> (afirmativo) y <em>não fales</em> (negativo), pero ambos son raros.'},
+  {name:'Vamos / Vamo: 1ª plural del imperativo',
+   wrong:"Falamos sobre isso (como exhortación)",
+   right:"Vamos falar sobre isso. / Falemos sobre isso. (literario)",
+   expl:'Para "hablemos sobre eso", lo natural en PB es <strong>vamos falar</strong>. La forma sintética <em>falemos</em> es literaria y poco usada. En habla muy coloquial PB: <em>vamo falar</em> (sin -s, con marca de cohortativo grupal).'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>
