@@ -429,6 +429,26 @@ body > *{position:relative;z-index:1;}
   text-decoration-color: #2d7a3a;
   text-underline-offset: 3px;
 }
+.tts-btn-card {
+  background: rgba(255,255,255,0.18); border: none; cursor: pointer;
+  color: #fff; font-size: 0.78em; padding: 2px 7px; margin-left: 8px;
+  border-radius: 6px; line-height: 1; opacity: 0.7;
+  transition: opacity .15s, background .15s, transform .1s;
+  vertical-align: middle; display: inline-flex; align-items: center;
+}
+.tts-btn-card:hover { opacity: 1; background: rgba(255,255,255,0.32); }
+.tts-btn-card:active { transform: scale(0.92); }
+.tts-btn-card.speaking { opacity: 1; animation: tts-pulse-card 1s ease-in-out infinite; }
+@keyframes tts-pulse-card { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+.tts-btn-back {
+  background: rgba(255,255,255,0.2); color: #fff;
+}
+.tts-btn-back:hover { background: rgba(255,255,255,0.35); }
+.tts-btn-swipe {
+  background: rgba(255,255,255,0.2); color: #fff;
+  font-size: 0.6em; padding: 4px 9px; margin-left: 10px;
+}
+.tts-btn-swipe:hover { background: rgba(255,255,255,0.35); }
 mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 .badges-row { display: none; }
 .badge {
@@ -42823,6 +42843,28 @@ function argPills(escapedStr) {
   }
   return clean;
 }
+// ── TTS (Web Speech API): pronuncia la palabra en francés ──
+var TTS_OK = (typeof window !== "undefined") && ("speechSynthesis" in window);
+function ttsSpeak(text, btn) {
+  if (!TTS_OK || !text) return;
+  try {
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = "fr-FR"; u.rate = 0.92; u.pitch = 1;
+    if (btn) {
+      btn.classList.add("speaking");
+      u.onend = u.onerror = function() { btn.classList.remove("speaking"); };
+    }
+    window.speechSynthesis.speak(u);
+  } catch (e) {}
+}
+function ttsButtonHtml(text, extraClass) {
+  if (!TTS_OK) return "";
+  var cls = "tts-btn-card" + (extraClass ? " " + extraClass : "");
+  return '<button type="button" class="' + cls + '" data-tts="' +
+         escHtml(text) + '" title="Escuchar pronunciación" aria-label="Escuchar" tabindex="-1">&#128266;</button>';
+}
+
 function frontInnerHtml(d, q, isKnown) {
   var tc = TEMA_CLASS[d.tema]||"MA";
   var cc = CAT_CLASS[d.cat]||"N";
@@ -42866,7 +42908,7 @@ function frontInnerHtml(d, q, isKnown) {
 
   return "<div class=\"card-head\">" +
       "<div class=\"card-word-block\">" +
-        "<div class=\"card-word" + wordKnownClass + "\" style=\"background:" + pillBg + ";\">" + word + "</div>" +
+        "<div class=\"card-word" + wordKnownClass + "\" style=\"background:" + pillBg + ";\">" + word + ttsButtonHtml(d.w) + "</div>" +
         "<div class=\"badges-row\">" +
           "<span class=\"badge badge-tema badge-tema-" + tc + "\">" + escHtml(d.tema) + "</span>" +
           (d.subtema ? "<span class=\"badge badge-subtema\">" + escHtml(d.subtema) + "</span>" : "") +
@@ -42914,7 +42956,7 @@ function buildCard(d) {
     backInner =
       "<div class=\"card-back-inner\">" +
         "<div class=\"back-label\">Falso amigo</div>" +
-        "<div class=\"back-translation\">" + highlight(escHtml(d.w), q) + "</div>" +
+        "<div class=\"back-translation\">" + highlight(escHtml(d.w), q) + ttsButtonHtml(d.w, "tts-btn-back") + "</div>" +
         "<div class=\"back-tema-label\">&#128683; ¿Sabes su trampa?</div>" +
         "<div class=\"back-flip-hint\">&#8635; pulsa para ver la explicación</div>" +
       "</div>";
@@ -42965,6 +43007,13 @@ function reRender(keepInitial) {
   render();
   var grid = document.getElementById("grid");
   grid.onclick = function(e) {
+    // TTS button — pronounce the French word, no flip
+    var ttsBtn = e.target.closest(".tts-btn-card");
+    if (ttsBtn) {
+      e.stopPropagation();
+      ttsSpeak(ttsBtn.getAttribute("data-tts"), ttsBtn);
+      return;
+    }
     // Known button — stops propagation
     var knownBtn = e.target.closest(".known-btn");
     if (knownBtn) {
@@ -43864,7 +43913,7 @@ function buildSwipeCard(d, isTop, peekIdx) {
     "<div class=\"swipe-front\">" +
       "<div class=\"swipe-front-body\">" +
         "<div class=\"swipe-center-group\">" +
-          "<div class=\"swipe-word\">" + gEscHtml(d.w) + "</div>" +
+          "<div class=\"swipe-word\">" + gEscHtml(d.w) + ttsButtonHtml(d.w, "tts-btn-swipe") + "</div>" +
           "<div class=\"swipe-badges\">" +
             "<span class=\"badge badge-tema badge-tema-" + tc + "\">" + gEscHtml(d.tema) + "</span>" +
             "<span class=\"badge badge-cat badge-cat-" + cc + "\">" + gEscHtml(CAT_LABEL_G[d.cat] || d.cat) + "</span>" +
@@ -43974,6 +44023,13 @@ function attachDragToTop() {
 
   function onPointerDown(e) {
     if (active) return;
+    // Skip swipe/flip logic when the user taps the TTS speaker button
+    if (e.target && e.target.closest && e.target.closest(".tts-btn-card")) {
+      ttsSpeak(e.target.closest(".tts-btn-card").getAttribute("data-tts"),
+               e.target.closest(".tts-btn-card"));
+      e.stopPropagation();
+      return;
+    }
     active   = true;
     dragging = false;
     currentX = 0;
