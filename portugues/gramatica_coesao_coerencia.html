@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Coesão e Coerência Textual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+:root {
+  --primary: #3f2456; --primary-soft: #ede8f4; --primary-mid: #7a609a;
+  --primary-strong: #2a1340; --primary-glow: rgba(63, 36, 86, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #b89adb; --primary-soft: #20162e; --primary-mid: #8a6cba;
+  --primary-strong: #dcc6ec; --primary-glow: rgba(184, 154, 219, 0.18);
+}
+.stat-pill.pr { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr { color: var(--primary); font-weight: 700; }
+.hl-pr { color: var(--primary); font-weight: 700; }
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; }
+.split-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 0.96rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; }
+.split-card p { font-size: 0.86em; color: var(--text2); line-height: 1.6; }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></a>
+    <h1>Coesão e Coerência Textual</h1>
+    <span class="header-tag">Produção · C1</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Anáfora · catáfora · progressão</div>
+    <div class="fs-wrap"><span class="fs-sz" style="font-size:0.75rem">A</span><input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)"><span class="fs-sz" style="font-size:1.05rem">A</span><button class="theme-toggle" onclick="toggleTheme()"><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button></div>
+  </div>
+</header>
+
+<div class="mode-toggle"><button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button></div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Coesão vs coerência</button>
+    <button class="snav-btn"        onclick="showSection('s-referencial',this)">2. Coesão referencial</button>
+    <button class="snav-btn"        onclick="showSection('s-sequencial',this)">3. Coesão sequencial</button>
+    <button class="snav-btn"        onclick="showSection('s-elipse',this)">4. Elipse</button>
+    <button class="snav-btn"        onclick="showSection('s-coerencia',this)">5. Coerência</button>
+    <button class="snav-btn"        onclick="showSection('s-progressao',this)">6. Progressão temática</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+<div class="sec-block active" id="s-intro">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      La <strong>coesão</strong> y la <strong>coerência</strong> son los dos pilares de la textualidad. <strong>Coesão</strong> = conexión <em>formal</em> entre elementos del texto (palabras, frases, párrafos) mediante mecanismos lingüísticos. <strong>Coerência</strong> = conexión <em>lógica</em> entre las ideas (no contradicción, progresión sensata). Un texto puede ser cohesivo pero incoherente, o coherente pero poco cohesivo. Lo ideal: ambas.
+    </div>
+    <div class="split-grid">
+      <div class="split-card">
+        <h4>Coesão (formal)</h4>
+        <p>Mecanismos lingüísticos que conectan elementos.</p>
+        <p style="margin-top:6px">Pronombres, conectivos, sinónimos, elipse, repetición controlada.</p>
+        <p style="margin-top:6px"><em>"João chegou. <strong>Ele</strong> estava cansado."</em> (Ele = anáfora pronominal)</p>
+      </div>
+      <div class="split-card">
+        <h4>Coerência (lógica)</h4>
+        <p>Articulación sensata de ideas.</p>
+        <p style="margin-top:6px">No contradicción, progresión temática, relevancia, intencionalidad.</p>
+        <p style="margin-top:6px"><em>"Estava cansado, por isso descansou."</em> (relación causa-consecuencia lógica)</p>
+      </div>
+    </div>
+    <div class="warn-box"><span class="warn-icon">💡</span><div class="warn-text"><strong>Criterio C4 del ENEM:</strong> evalúa específicamente "demonstrar conhecimento dos mecanismos linguísticos necessários para a construção da argumentação". Es decir: <em>coesão</em>. La <em>coerência</em> se evalúa parcialmente en C3 (argumentação).</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-referencial">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">La <strong>coesão referencial</strong> usa elementos para <strong>retomar</strong> referentes ya mencionados (anáfora) o <strong>anticipar</strong> referentes (catáfora). Sus principales mecanismos: pronombres, demostrativos, sinónimos, hiperónimos, paráfrasis.</div>
+    <div class="sec-label">Tipos de coesão referencial</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Mecanismo</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td>Pronombre personal</td><td>O João chegou. <em>Ele</em> estava cansado.</td></tr>
+        <tr><td>Pronombre demostrativo</td><td>Vi o livro. <em>Esse</em> livro é ótimo.</td></tr>
+        <tr><td>Pronombre relativo</td><td>O livro <em>que</em> comprei...</td></tr>
+        <tr><td>Pronombre posesivo</td><td>Maria viu seu pai. <em>O dele</em> também veio.</td></tr>
+        <tr><td>Sinónimo</td><td>O médico... <em>o profissional</em>...</td></tr>
+        <tr><td>Hiperónimo</td><td>cães e gatos... <em>os animais</em>...</td></tr>
+        <tr><td>Hipónimo</td><td>animais... <em>cães</em>, <em>gatos</em>...</td></tr>
+        <tr><td>Paráfrasis</td><td>A pandemia COVID-19... <em>a crise sanitária global</em>...</td></tr>
+        <tr><td>Encapsuladores</td><td>Tudo isso... <em>esse fenômeno</em>... <em>tal situação</em>...</td></tr>
+        <tr><td>Numeral / cuantificador</td><td>Vi três pessoas. <em>Duas</em> eram amigas.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-label">Anáfora vs catáfora</div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Anáfora (retomar):</strong> "Maria chegou. <span class="epr">Ela</span> estava cansada." (Ela retoma "Maria")</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Catáfora (anticipar):</strong> "Anote <span class="epr">isto</span>: a reunião será na sexta." (Isto anuncia)</div></div>
+    <div class="sec-label">Ejemplo de cadena referencial</div>
+    <div class="example-block pr"><div class="ex-fr"><em>"<span class="epr">Machado de Assis</span> nasceu em 1839. <span class="epr">O escritor</span> é considerado o maior nome da literatura brasileira. Em <span class="epr">sua obra</span>, destacam-se romances como Dom Casmurro. <span class="epr">Esse autor</span> também escreveu crônicas e poemas."</em></div></div>
+    <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Encapsuladores con demostrativo:</strong> <em>esse fenômeno, tal questão, essa realidade, esse processo, tal cenário</em> son herramientas C1 para retomar ideas abstractas o conceptos extensos sin tener que repetir.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-sequencial">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">La <strong>coesão sequencial</strong> articula la <strong>progresión del discurso</strong>: secuencia temporal, lógica, argumentativa. Su mecanismo principal son los <strong>conectivos</strong>.</div>
+    <div class="sec-label">Tipos de conectivos sequenciais</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Categoría</th><th>Conectivos</th></tr></thead>
+      <tbody>
+        <tr><td>Adición</td><td>e, também, além disso, ademais, ainda, outrossim</td></tr>
+        <tr><td>Adversidad / oposición</td><td>mas, porém, contudo, todavia, no entanto, entretanto, em contrapartida</td></tr>
+        <tr><td>Causa</td><td>porque, pois, já que, uma vez que, visto que, dado que</td></tr>
+        <tr><td>Consecuencia / conclusión</td><td>portanto, logo, por conseguinte, assim, dessa forma, em vista disso</td></tr>
+        <tr><td>Tiempo</td><td>quando, enquanto, depois que, assim que, antes que</td></tr>
+        <tr><td>Condición</td><td>se, caso, contanto que, desde que, a menos que</td></tr>
+        <tr><td>Finalidad</td><td>para que, a fim de que, com o objetivo de</td></tr>
+        <tr><td>Comparación</td><td>como, tal como, do mesmo modo, igualmente</td></tr>
+        <tr><td>Ejemplificación</td><td>por exemplo, a saber, tal como, isto é</td></tr>
+        <tr><td>Reformulação</td><td>ou seja, isto é, em outras palavras, melhor dizendo</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-label">Ejemplo de coesão sequencial</div>
+    <div class="example-block pr"><div class="ex-fr"><em>"<span class="epr">Primeiramente</span>, vale destacar a importância da educação. <span class="epr">Ademais</span>, é necessário considerar o papel da família. <span class="epr">No entanto</span>, esses fatores não bastam: <span class="epr">por isso</span>, o Estado deve atuar. <span class="epr">Em síntese</span>, é uma responsabilidade compartilhada."</em></div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-elipse">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">La <strong>elipse</strong> es la omisión de elementos recuperables por el contexto. Es mecanismo de coesão sutil pero importante: evita repetición, da ritmo al texto.</div>
+    <div class="sec-label">Tipos de elipse</div>
+    <div class="example-block pr"><div class="ex-fr">Pedro foi ao mercado, e (Pedro) <span class="epr">[Ø]</span> comprou frutas. (elipse de sujeito)</div></div>
+    <div class="example-block pr"><div class="ex-fr">Maria gosta de café; Paula, (gosta) <span class="epr">[Ø]</span> de chá. (elipse de verbo)</div></div>
+    <div class="example-block pr"><div class="ex-fr">Comprou um livro novo, (um livro) <span class="epr">[Ø]</span> caro. (elipse de sustantivo)</div></div>
+    <div class="example-block pr"><div class="ex-fr">Quando (eu) <span class="epr">[Ø]</span> cheguei, ele já tinha saído. (elipse en subordinada)</div></div>
+    <div class="sec-label">Elipse del sujeto (PB)</div>
+    <div class="example-block pr"><div class="ex-fr">"Fui ao cinema. <span class="epr">[Ø]</span> Gostei muito do filme. <span class="epr">[Ø]</span> Voltei para casa cedo."</div></div>
+    <div class="note-box"><strong>PB conserva el sujeto explícito más que PE:</strong> el PB hablado tiende a explicitar el sujeto pronominal (<em>eu gostei, eu voltei</em>) más que el PE. En escritura culta PB, sin embargo, la elipse de sujeito sigue siendo recurso de cohesión.</div>
+    <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Cuidado con la elipse:</strong> elipse mal usada puede crear ambigüedad o incoherencia. Asegúrate de que el elemento omitido sea <strong>recuperable inequívocamente</strong> por el contexto.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-coerencia">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">La <strong>coerência</strong> es la conexión lógica entre las ideas del texto. Sus principios: <strong>no contradicción, relevancia, progresión, intencionalidad, conocimiento del mundo</strong>. Un texto coherente comunica un mensaje claro y articulado.</div>
+    <div class="sec-label">Principios de coerência</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Principio</th><th>Ejemplo de violação</th></tr></thead>
+      <tbody>
+        <tr><td><strong>No contradicción</strong></td><td>"João é solteiro. Sua esposa é médica." (contradicción)</td></tr>
+        <tr><td><strong>Relevancia</strong></td><td>Información que no se relaciona con el tema central</td></tr>
+        <tr><td><strong>Progresión</strong></td><td>Estancarse: no aportar nueva información</td></tr>
+        <tr><td><strong>Intencionalidad</strong></td><td>Texto sin propósito claro</td></tr>
+        <tr><td><strong>Conocimiento del mundo</strong></td><td>Afirmar lo manifiestamente falso</td></tr>
+        <tr><td><strong>Cronología</strong></td><td>Sequência temporal coherente</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-label">Ejemplos de incoerência</div>
+    <div class="example-block pr"><div class="ex-fr">✗ <em>"O Brasil é uma democracia desde 1500. A Constituição foi escrita em 1988."</em> (incoherencia histórica)</div></div>
+    <div class="example-block pr"><div class="ex-fr">✗ <em>"A pesquisa mostra avanços. No entanto, não há nada para celebrar. Os avanços foram significativos."</em> (contradicción)</div></div>
+    <div class="example-block pr"><div class="ex-fr">✗ <em>"Esse problema afeta a saúde. O Brasil tem 200 milhões de habitantes."</em> (falta de relevância: dado no se conecta)</div></div>
+    <div class="sec-label">Mecanismos para garantir coerência</div>
+    <div class="example-block pr"><div class="ex-fr"><strong>1. Plan previo:</strong> esquematiza antes de escribir.</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>2. Pregunta-clave:</strong> ¿esta idea apoya mi tese? Si no, eliminar.</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>3. Conexión explícita:</strong> usa conectivos para evidenciar relaciones lógicas.</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>4. Releer:</strong> verifica que cada frase progresa lógicamente desde la anterior.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-progressao">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">La <strong>progressão temática</strong> es el mecanismo por el cual el texto avanza añadiendo nueva información sin perder cohesión con lo ya dicho. Es la combinación dinámica de coesão referencial + coesão sequencial.</div>
+    <div class="sec-label">Patrones de progresión</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Patrón</th><th>Estructura</th><th>Uso típico</th></tr></thead>
+      <tbody>
+        <tr><td>Lineal</td><td>R₁ se vuelve T₂, R₂ se vuelve T₃...</td><td>narración, exposición sequencial</td></tr>
+        <tr><td>Constante</td><td>mismo T, diferentes R</td><td>descripción de un objeto/personaje</td></tr>
+        <tr><td>Derivada</td><td>hipertema dividido en subtemas</td><td>análisis, clasificación</td></tr>
+        <tr><td>Salto temático</td><td>nuevo tema sin relación directa</td><td>NORMALMENTE evitar</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-label">Ejemplos de cada patrón</div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Lineal:</strong> <em>"A pesquisa analisou <span class="epr">o consumo digital</span>. <span class="epr">Esse consumo</span> cresce a cada ano. <span class="epr">Esse crescimento</span> preocupa especialistas."</em></div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Constante:</strong> <em>"<span class="epr">A floresta amazônica</span> regula o clima. <span class="epr">Ela</span> abriga milhares de espécies. <span class="epr">Esse bioma</span> também sustenta povos indígenas."</em></div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Derivada:</strong> <em>"<span class="epr">O sistema brasileiro de saúde</span> tem três níveis. <span class="epr">A atenção básica</span> oferece consultas. <span class="epr">A média complexidade</span> trata casos hospitalares. <span class="epr">A alta complexidade</span> cuida de casos graves."</em></div></div>
+    <div class="sec-label">Reglas de oro para progressão</div>
+    <div class="example-block pr"><div class="ex-fr">1. Cada frase añade nueva información (no es solo paráfrasis).</div></div>
+    <div class="example-block pr"><div class="ex-fr">2. Cada frase se conecta con lo anterior (vía anáfora o conectivo).</div></div>
+    <div class="example-block pr"><div class="ex-fr">3. La información avanza hacia la conclusión / tese.</div></div>
+    <div class="example-block pr"><div class="ex-fr">4. Evita el "salto" temático sin marcador adecuado.</div></div>
+    <div class="warn-box"><span class="warn-icon">💡</span><div class="warn-text"><strong>Pista para coesão fluida:</strong> al releer cada oración, verifica: ¿retomo algo de la anterior? ¿añado info nueva? ¿está conectado lógicamente? Si las tres respuestas son sí, hay buena progressão.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-trampas">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los 7 errores más frecuentes en coesão y coerência.</div>
+    <div class="trap-cards" id="trap-cards"></div>
+  </div></div>
+</div>
+
+</div>
+<footer class="page-end"><button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Voltar ao topo</button></footer>
+</div>
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Anáfora ambígua',
+   wrong:"Pedro encontrou João. Ele estava cansado. (¿quién?)",
+   right:"Pedro encontrou João. O primeiro estava cansado. / O João estava cansado.",
+   expl:'Si el pronombre tiene <strong>varios referentes posibles</strong>, la anáfora es ambigua. Resuelve con explicitación (<em>o primeiro, o segundo, o autor X</em>) o reformula la frase para que solo haya un referente plausible.'},
+  {name:'Repetición sin variación',
+   wrong:"A pesquisa... A pesquisa... A pesquisa... (repetición)",
+   right:"A pesquisa... O estudo... A investigação... Esse trabalho...",
+   expl:'Usa <strong>sinónimos, hiperónimos, paráfrasis, demostrativos encapsuladores</strong> para variar las retomadas. Repetir el mismo término en cada frase es señal de pobreza léxica.'},
+  {name:'Conectivos sin relación lógica real',
+   wrong:"Choveu. Portanto, é uma boa praia. (no hay causa-consecuencia)",
+   right:"Choveu, portanto cancelamos a praia.",
+   expl:'El conectivo debe reflejar la <strong>relación lógica real</strong>. Usar <em>portanto</em> donde no hay consecuencia es agramatical y rompe coerência. Lee cada conectivo y verifica: ¿es esa la relación entre las dos frases?'},
+  {name:'Falta de progresión (estancamiento)',
+   wrong:"A educação é importante. A educação é necessária. A educação é fundamental. (sin progresión)",
+   right:"A educação é importante. Esse fato se evidencia em três aspectos. Primeiro,...",
+   expl:'Cada frase debe <strong>añadir información nueva</strong>. Si solo paráfrasis la idea sin avanzar, hay estancamiento. Usa cada nueva frase para introducir matiz, ejemplo, dato, perspectiva.'},
+  {name:'Contradicción interna',
+   wrong:"A pesquisa demonstra avanços. No entanto, não há nada para celebrar. Esses avanços são significativos.",
+   right:"A pesquisa demonstra avanços. No entanto, ainda há desafios.",
+   expl:'Verifica que <strong>las frases no se contradigan entre sí</strong>. Si afirmaste algo en el párrafo 1, no lo niegues en el párrafo 3 sin marcador adecuado. La coerência exige consistencia.'},
+  {name:'Elipse ambígua',
+   wrong:"Pedro viu Maria e [Ø] saiu. (¿quién salió?)",
+   right:"Pedro viu Maria e ele saiu. / e ela saiu. (explicitar)",
+   expl:'Si el sujeto omitido puede ser <strong>cualquiera de los dos elementos mencionados</strong>, la elipse es ambigua. Explicita el pronombre o reformula.'},
+  {name:'Demasiados conectivos',
+   wrong:"Mas, porém, contudo, e ademais, no entanto, assim... (saturado)",
+   right:"No entanto, vale destacar... Ademais, é necessário considerar...",
+   expl:'No abuses de conectivos. Demasiados pueden hacer el texto <strong>artificial o redundante</strong>. Cada conectivo debe tener función real. A veces, una buena oración no necesita conectivo, basta con la lógica del contenido.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card"><div class="trap-card-header"><div class="trap-name">${t.name}</div><div class="trap-vs"><span class="trap-wrong">✗ ${t.wrong}</span><span class="trap-right">✓ ${t.right}</span></div></div><div class="trap-expl">${t.expl}</div></div>`).join('');
+}
+renderTraps();
+</script>
+</body>
+</html>

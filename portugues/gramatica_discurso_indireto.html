@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Discurso Indireto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+:root {
+  --primary: #5e2842; --primary-soft: #f5e8ee; --primary-mid: #9a6a82;
+  --primary-strong: #3a1428; --primary-glow: rgba(94, 40, 66, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #d99cb8; --primary-soft: #2a1620; --primary-mid: #b07690;
+  --primary-strong: #ecc0d4; --primary-glow: rgba(217, 156, 184, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></a>
+    <h1>Discurso Indireto</h1>
+    <span class="header-tag">Discurso</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B2–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Disse que · perguntou se</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()"><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle"><button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button></div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Direto vs indireto</button>
+    <button class="snav-btn"        onclick="showSection('s-tempos',this)">2. Transformación de tiempos</button>
+    <button class="snav-btn"        onclick="showSection('s-pronomes',this)">3. Pronombres / posesivos</button>
+    <button class="snav-btn"        onclick="showSection('s-temporais',this)">4. Marcadores temporais</button>
+    <button class="snav-btn"        onclick="showSection('s-interrogativas',this)">5. Interrogativas indir.</button>
+    <button class="snav-btn"        onclick="showSection('s-imperativo',this)">6. Imperativo indireto</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+<div class="sec-block active" id="s-intro">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      El <strong>discurso indireto</strong> (o reportado) reproduce las palabras de otro hablante en forma subordinada, sin las palabras exactas: requiere <strong>verbo introductor</strong> (disse, falou, perguntou…) + <em>que / se / palabra interrogativa</em>. La transformación afecta a <strong>tiempos verbales, pronombres, posesivos y marcadores temporales</strong>.
+    </div>
+    <div class="sec-label">Comparación directo vs indireto</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Discurso direto</th><th>Discurso indireto</th></tr></thead>
+      <tbody>
+        <tr><td>Ele disse: "Eu vou viajar amanhã."</td><td>Ele disse <span class="hl-pr">que ia viajar no dia seguinte</span>.</td></tr>
+        <tr><td>Ela perguntou: "Você vem?"</td><td>Ela perguntou <span class="hl-pr">se eu vinha</span>.</td></tr>
+        <tr><td>O pai disse: "Estude mais!"</td><td>O pai disse <span class="hl-pr">para eu estudar mais</span>.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn-box"><span class="warn-icon">💡</span><div class="warn-text"><strong>Verbos introductores frecuentes:</strong> <em>dizer, falar, contar, afirmar, declarar, anunciar, garantir, responder, perguntar, querer saber, pedir, ordenar, mandar, aconselhar</em>.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-tempos">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Cuando el verbo introductor está en <strong>pasado</strong>, los tiempos del discurso directo se "retroceden" un grado en el discurso indireto. Si está en <strong>presente o futuro</strong>, los tiempos no cambian.</div>
+    <div class="sec-label">Tabla de transformación (con verbo introductor en pasado)</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Direto</th><th>Indireto (pasado)</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td>Presente</td><td class="hl-pr">imperfeito</td><td>"Estou cansado" → ele disse que <span class="hl-pr">estava cansado</span>.</td></tr>
+        <tr><td>PPS</td><td class="hl-pr">mais-que-perfeito (tinha + part.)</td><td>"Cheguei ontem" → ele disse que <span class="hl-pr">tinha chegado</span> no dia anterior.</td></tr>
+        <tr><td>Imperfeito</td><td class="hl-pr">imperfeito (sin cambio)</td><td>"Eu estudava muito" → ele disse que <span class="hl-pr">estudava muito</span>.</td></tr>
+        <tr><td>Futuro do presente</td><td class="hl-pr">futuro do pretérito (-ia)</td><td>"Eu virei" → ele disse que <span class="hl-pr">viria</span>.</td></tr>
+        <tr><td>Ir + inf. (futuro)</td><td class="hl-pr">ia + inf.</td><td>"Vou viajar" → ele disse que <span class="hl-pr">ia viajar</span>.</td></tr>
+        <tr><td>Imperativo</td><td class="hl-pr">que + subj. imperf. / para + inf.</td><td>"Estude!" → mandou <span class="hl-pr">que estudasse</span> / <span class="hl-pr">para estudar</span>.</td></tr>
+        <tr><td>Subjuntivo presente</td><td class="hl-pr">subjuntivo imperfeito</td><td>"Espero que venha" → disse que esperava que <span class="hl-pr">viesse</span>.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-label">Con verbo introductor en presente (sin retroceder)</div>
+    <div class="example-block pr"><div class="ex-fr">"Eu vou amanhã." → Ele diz que <span class="epr">vai amanhã</span>. (no cambia)</div></div>
+    <div class="example-block pr"><div class="ex-fr">"Estou cansado." → Ele afirma que <span class="epr">está cansado</span>.</div></div>
+    <div class="note-box"><strong>Regla práctica:</strong> con verbo introductor en presente o futuro (<em>diz que, afirma que, vai dizer que</em>), los tiempos del directo NO se retroceden. Solo cambian pronombres y marcadores temporais.</div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-pronomes">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los <strong>pronombres y posesivos</strong> cambian de persona según quién reporta a quién. La 1ª persona del original se transforma en 3ª (si el reportante es distinto), la 2ª en 3ª (refiriendo al interlocutor original), etc.</div>
+    <div class="sec-label">Cambios típicos</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Directo</th><th>Indireto</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td>eu</td><td class="hl-pr">ele/ela</td><td>"Eu vou" → Ele disse que <span class="hl-pr">ele ia</span>.</td></tr>
+        <tr><td>nós / a gente</td><td class="hl-pr">eles / a gente</td><td>"Nós viemos" → Eles disseram que <span class="hl-pr">tinham vindo</span>.</td></tr>
+        <tr><td>você (al interlocutor)</td><td class="hl-pr">eu (si yo soy el interlocutor)</td><td>"Você vem?" → Ele me perguntou se <span class="hl-pr">eu vinha</span>.</td></tr>
+        <tr><td>meu/minha</td><td class="hl-pr">seu/sua / dele/dela</td><td>"Meu livro" → Ele disse que <span class="hl-pr">o livro dele</span>...</td></tr>
+        <tr><td>te/teu</td><td class="hl-pr">me/meu (si yo soy el interlocutor)</td><td>"Te dou um livro" → Ele disse que <span class="hl-pr">me</span> daria...</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-label">Ejemplo completo de transformación</div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Directo:</strong> O Pedro disse à Maria: "<span class="epr">Eu</span> vou viajar com <span class="epr">você</span> amanhã."</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Indireto:</strong> O Pedro disse à Maria que <span class="epr">ele</span> ia viajar com <span class="epr">ela</span> no dia seguinte.</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Indireto (reporta Maria):</strong> O Pedro me disse que <span class="epr">ele</span> ia viajar <span class="epr">comigo</span> no dia seguinte.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-temporais">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los <strong>marcadores temporais</strong> y espaciais cambian según el punto de referencia del reportante. Los marcadores "yo-aquí-ahora" se transforman en marcadores remotos.</div>
+    <div class="sec-label">Tabla de transformación</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Directo (deíctico)</th><th>Indireto (no deíctico)</th></tr></thead>
+      <tbody>
+        <tr><td>hoje</td><td class="hl-pr">naquele dia</td></tr>
+        <tr><td>ontem</td><td class="hl-pr">no dia anterior / na véspera</td></tr>
+        <tr><td>amanhã</td><td class="hl-pr">no dia seguinte</td></tr>
+        <tr><td>agora</td><td class="hl-pr">naquele momento / então</td></tr>
+        <tr><td>aqui</td><td class="hl-pr">lá / ali</td></tr>
+        <tr><td>este(a)</td><td class="hl-pr">aquele(a) / esse(a)</td></tr>
+        <tr><td>esse / isso</td><td class="hl-pr">aquele / aquilo</td></tr>
+        <tr><td>na próxima semana</td><td class="hl-pr">na semana seguinte</td></tr>
+        <tr><td>há dois dias</td><td class="hl-pr">dois dias antes</td></tr>
+        <tr><td>vir</td><td class="hl-pr">ir (cambio de referencia espacial)</td></tr>
+        <tr><td>trazer</td><td class="hl-pr">levar (cambio de referencia espacial)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-label">Ejemplos en transformación</div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Directo:</strong> "Eu cheguei ontem e vou partir amanhã."</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Indireto:</strong> Ele disse que tinha chegado <span class="epr">na véspera</span> e que ia partir <span class="epr">no dia seguinte</span>.</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Directo:</strong> "Aqui está muito calor agora."</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Indireto:</strong> Ele disse que <span class="epr">lá</span> estava muito calor <span class="epr">naquele momento</span>.</div></div>
+    <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Vir/trazer → ir/levar:</strong> los verbos <em>vir</em> e <em>trazer</em> se transforman si el reportante NO está en el lugar original. <em>"Venha aqui!" → Ele me pediu para ir lá. "Traga o livro!" → Ele me pediu para levar o livro.</em></div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-interrogativas">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Las <strong>interrogativas indiretas</strong> usan <strong>se</strong> (pregunta total) o <strong>palabra interrogativa</strong> (parcial). NO llevan signo de interrogación: son afirmaciones que contienen una pregunta indirecta.</div>
+    <div class="sec-label">Pregunta total con se</div>
+    <div class="example-block pr"><div class="ex-fr">Directo: "Você vem?" → Indireto: Ela perguntou <span class="epr">se</span> eu vinha.</div></div>
+    <div class="example-block pr"><div class="ex-fr">Directo: "Tem ingressos?" → Indireto: Quero saber <span class="epr">se</span> tem ingressos.</div></div>
+    <div class="sec-label">Preguntas parciales</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Directo</th><th>Indireto</th></tr></thead>
+      <tbody>
+        <tr><td>"Onde você mora?"</td><td>Perguntou <span class="hl-pr">onde</span> eu morava.</td></tr>
+        <tr><td>"Quando ele chega?"</td><td>Quis saber <span class="hl-pr">quando</span> ele chegava.</td></tr>
+        <tr><td>"Como faz isso?"</td><td>Perguntou <span class="hl-pr">como</span> eu fazia.</td></tr>
+        <tr><td>"Quem chamou?"</td><td>Disse <span class="hl-pr">quem</span> tinha chamado.</td></tr>
+        <tr><td>"O que ele quer?"</td><td>Quis saber <span class="hl-pr">o que</span> ele queria.</td></tr>
+        <tr><td>"Por que saiu?"</td><td>Perguntou <span class="hl-pr">por que</span> tinha saído.</td></tr>
+        <tr><td>"Quanto custa?"</td><td>Perguntou <span class="hl-pr">quanto</span> custava.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-label">Orden sujeto-verbo</div>
+    <div class="example-block pr"><div class="ex-fr">Directo (inversión posible): "Onde está ele?"</div></div>
+    <div class="example-block pr"><div class="ex-fr">Indireto (sujeto antes del verbo): Perguntou <span class="epr">onde ele estava</span>.</div></div>
+    <div class="note-box"><strong>Orden en interrog. indireta:</strong> el sujeto va antes del verbo (no hay inversión). <em>Onde ele mora</em>, no <em>onde mora ele</em>. Y no terminan con "?".</div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-imperativo">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">El <strong>imperativo</strong> en discurso indireto se transforma con <strong>verbo introductor + para + infinitivo</strong> (PB usual) o <strong>verbo introductor + que + subjuntivo</strong> (norma o más enfático).</div>
+    <div class="sec-label">Imperativo directo → indireto</div>
+    <div class="example-block pr"><div class="ex-fr">"Estude mais!" → Pediu/mandou <span class="epr">para</span> eu estudar mais.</div></div>
+    <div class="example-block pr"><div class="ex-fr">"Estude mais!" → Pediu <span class="epr">que</span> eu estudasse mais.</div></div>
+    <div class="example-block pr"><div class="ex-fr">"Venha aqui!" → Mandou <span class="epr">que</span> eu fosse lá. / Mandou eu ir lá.</div></div>
+    <div class="example-block pr"><div class="ex-fr">"Não façam isso!" → Proibiu <span class="epr">que</span> fizessem isso. / Pediu para não fazerem.</div></div>
+    <div class="sec-label">Verbos introductores comunes con imperativo</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Tipo de orden</th><th>Verbo</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td>Pedido cortés</td><td>pedir</td><td>Pediu <span class="hl-pr">para</span> eu sair.</td></tr>
+        <tr><td>Mandato directo</td><td>mandar / ordenar</td><td>Mandou <span class="hl-pr">que</span> eu saísse.</td></tr>
+        <tr><td>Consejo</td><td>aconselhar / sugerir</td><td>Sugeriu <span class="hl-pr">que</span> eu lesse o livro.</td></tr>
+        <tr><td>Prohibición</td><td>proibir</td><td>Proibiu <span class="hl-pr">que</span> eu falasse.</td></tr>
+        <tr><td>Permiso</td><td>deixar / permitir</td><td>Deixou <span class="hl-pr">que</span> eu saísse cedo.</td></tr>
+        <tr><td>Petición</td><td>solicitar / pedir</td><td>Solicitou <span class="hl-pr">que</span> eu apresentasse documentos.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn-box"><span class="warn-icon">💡</span><div class="warn-text"><strong>PB usual: para + inf.</strong> En conversación, lo más natural es <em>pediu para eu sair, mandou para eu fazer</em>. La forma con <em>que + subjuntivo</em> es más formal o enfática: <em>exigiu que eu fizesse</em>.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-trampas">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los 7 errores más frecuentes con discurso indireto.</div>
+    <div class="trap-cards" id="trap-cards"></div>
+  </div></div>
+</div>
+
+</div>
+<footer class="page-end"><button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Voltar ao topo</button></footer>
+</div>
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'No retroceder tiempos con verbo introductor en pasado',
+   wrong:"Ele disse que vai chegar amanhã. (en escritura culta)",
+   right:"Ele disse que ia chegar no dia seguinte.",
+   expl:'Con verbo introductor en <strong>pasado</strong> (disse, falou, contou), los tiempos del directo retroceden: presente → imperfeito, PPS → mais-que-perfeito, futuro → futuro do pretérito (ou ia + inf.).'},
+  {name:'Mantener marcadores deícticos',
+   wrong:"Ele disse que ia viajar amanhã. (cuando ya pasó)",
+   right:"Ele disse que ia viajar no dia seguinte.",
+   expl:'Los marcadores deícticos (<em>hoje, amanhã, ontem, agora, aqui</em>) se transforman en no-deícticos (<em>naquele dia, no dia seguinte, no dia anterior, naquele momento, lá</em>) en discurso indireto en pasado.'},
+  {name:'Signo de interrogación en indirecta',
+   wrong:"Ele perguntou onde eu morava?",
+   right:"Ele perguntou onde eu morava.",
+   expl:'Las interrogativas indiretas <strong>no llevan</strong> signo de interrogación. Son afirmaciones que contienen una pregunta indirecta: terminan con punto, no con "?".'},
+  {name:'Inversión sujeto-verbo en indireta',
+   wrong:"Quero saber onde está ele.",
+   right:"Quero saber onde ele está.",
+   expl:'En interrogativas indiretas, el orden es <strong>sujeto + verbo</strong> (no inverso como en directa). <em>Onde ele está, como ela faz, quando ele chega</em>.'},
+  {name:'Confundir se condicional / se interrogativo',
+   wrong:"Não sei se ele venha. (con subj. en interrog. indireta)",
+   right:"Não sei se ele vem. (indicativo) / Se ele viesse, eu sabería. (condicional, subj.)",
+   expl:'<em>Se</em> en interrogativa indireta exige <strong>indicativo</strong>: <em>não sei se vem, perguntou se ia</em>. <em>Se</em> condicional exige imperfeito do subj. (en tipo II hipotético).'},
+  {name:'No transformar vir/trazer',
+   wrong:"Ele me pediu para vir aqui. (cuando estoy en otro lugar)",
+   right:"Ele me pediu para ir lá. / Pediu para eu ir até onde ele estava.",
+   expl:'Si el reportante no está en el lugar de origen, <em>vir → ir, trazer → levar</em>: <em>"Venha!" → pediu para ir lá. "Traga o livro!" → pediu para levar o livro.</em>'},
+  {name:'Imperativo con que + indicativo',
+   wrong:"Mandou que eu estudo mais.",
+   right:"Mandou que eu estudasse mais. / Mandou para eu estudar mais.",
+   expl:'El imperativo indireto exige <strong>subjuntivo</strong> (norma: <em>mandou que estudasse</em>) o <strong>infinitivo</strong> (PB: <em>pediu para eu estudar</em>). NUNCA con indicativo: <em>mandou que estudo</em> es agramatical.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card"><div class="trap-card-header"><div class="trap-name">${t.name}</div><div class="trap-vs"><span class="trap-wrong">✗ ${t.wrong}</span><span class="trap-right">✓ ${t.right}</span></div></div><div class="trap-expl">${t.expl}</div></div>`).join('');
+}
+renderTraps();
+</script>
+</body>
+</html>

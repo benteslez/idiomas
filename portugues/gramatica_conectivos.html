@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Conectivos e Argumentação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+:root {
+  --primary: #5e2842; --primary-soft: #f5e8ee; --primary-mid: #9a6a82;
+  --primary-strong: #3a1428; --primary-glow: rgba(94, 40, 66, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #d99cb8; --primary-soft: #2a1620; --primary-mid: #b07690;
+  --primary-strong: #ecc0d4; --primary-glow: rgba(217, 156, 184, 0.18);
+}
+.stat-pill.pr { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr { color: var(--primary); font-weight: 700; }
+.hl-pr { color: var(--primary); font-weight: 700; }
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+.con-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 14px 0; }
+.con-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px 14px; border-left: 4px solid var(--primary); }
+.con-card h5 { font-family: 'Fraunces', Georgia, serif; font-size: 0.92rem; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+.con-card .con-mean { font-size: 0.78em; color: var(--text3); font-style: italic; margin-bottom: 6px; }
+.con-card .con-ex { font-size: 0.82em; color: var(--text2); line-height: 1.5; }
+.con-card .con-ex em { color: var(--primary); font-weight: 600; font-style: normal; }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></a>
+    <h1>Conectivos e Argumentação</h1>
+    <span class="header-tag">Discurso</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B1–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Mas · portanto · além disso</div>
+    <div class="fs-wrap"><span class="fs-sz" style="font-size:0.75rem">A</span><input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)"><span class="fs-sz" style="font-size:1.05rem">A</span><button class="theme-toggle" onclick="toggleTheme()"><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button></div>
+  </div>
+</header>
+
+<div class="mode-toggle"><button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button></div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Sistema general</button>
+    <button class="snav-btn"        onclick="showSection('s-aditivos',this)">2. Aditivos</button>
+    <button class="snav-btn"        onclick="showSection('s-adversativos',this)">3. Adversativos</button>
+    <button class="snav-btn"        onclick="showSection('s-conclusivos',this)">4. Conclusivos</button>
+    <button class="snav-btn"        onclick="showSection('s-explicativos',this)">5. Explicativos / ejemplificativos</button>
+    <button class="snav-btn"        onclick="showSection('s-formais',this)">6. Argumentativos formales</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+<div class="sec-block active" id="s-intro">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      Los <strong>conectivos discursivos</strong> son palabras o locuciones que articulan las ideas en un texto, indicando la <strong>relación lógica</strong> entre frases o párrafos: adición, oposición, causa, consecuencia, ejemplificación, conclusión, etc. Son <strong>fundamentales en argumentação</strong> (redação ENEM, CELPE-Bras, ensayo). Conviene tener un repertorio variado para evitar repetición.
+    </div>
+    <div class="sec-label">Categorías principales</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Categoría</th><th>Función</th><th>Ejemplos</th></tr></thead>
+      <tbody>
+        <tr><td>Aditivos</td><td>añadir info</td><td>e, também, além disso, ademais</td></tr>
+        <tr><td>Adversativos</td><td>contrastar</td><td>mas, porém, contudo, entretanto, no entanto</td></tr>
+        <tr><td>Conclusivos</td><td>concluir</td><td>portanto, logo, assim, dessa forma</td></tr>
+        <tr><td>Explicativos</td><td>explicar</td><td>pois, isto é, ou seja, em outras palavras</td></tr>
+        <tr><td>Ejemplificativos</td><td>ejemplificar</td><td>por exemplo, como, tal como</td></tr>
+        <tr><td>Reformuladores</td><td>reformular</td><td>melhor dizendo, aliás, com efeito</td></tr>
+        <tr><td>Tópico</td><td>introducir tema</td><td>quanto a, em relação a, no que tange a</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn-box"><span class="warn-icon">💡</span><div class="warn-text"><strong>Marcador C1:</strong> el uso variado de conectivos es uno de los criterios objetivos para distinguir B1 (uso pobre de "e", "mas") de C1 (uso variado: <em>ademais, contudo, dessa forma, em contrapartida</em>).</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-aditivos">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los <strong>conectivos aditivos</strong> añaden información a lo dicho: una nueva razón, un dato, un argumento.</div>
+    <div class="con-grid">
+      <div class="con-card"><h5>e</h5><div class="con-mean">y (básico)</div><div class="con-ex">Pedro <em>e</em> Maria vieram.</div></div>
+      <div class="con-card"><h5>também</h5><div class="con-mean">también</div><div class="con-ex">Ele veio. <em>Também</em> trouxe presentes.</div></div>
+      <div class="con-card"><h5>além disso</h5><div class="con-mean">además</div><div class="con-ex"><em>Além disso</em>, é barato.</div></div>
+      <div class="con-card"><h5>ademais</h5><div class="con-mean">además (formal)</div><div class="con-ex"><em>Ademais</em>, há outros benefícios.</div></div>
+      <div class="con-card"><h5>ainda por cima</h5><div class="con-mean">encima (col.)</div><div class="con-ex">Errou e <em>ainda por cima</em> reclamou.</div></div>
+      <div class="con-card"><h5>outrossim</h5><div class="con-mean">además (muy formal)</div><div class="con-ex"><em>Outrossim</em>, devemos lembrar...</div></div>
+      <div class="con-card"><h5>do mesmo modo</h5><div class="con-mean">del mismo modo</div><div class="con-ex"><em>Do mesmo modo</em>, devemos agir aqui.</div></div>
+      <div class="con-card"><h5>igualmente</h5><div class="con-mean">igualmente</div><div class="con-ex"><em>Igualmente</em>, há que considerar...</div></div>
+      <div class="con-card"><h5>não só... mas também</h5><div class="con-mean">no solo... sino también</div><div class="con-ex"><em>Não só</em> estudou, <em>mas também</em> trabalhou.</div></div>
+      <div class="con-card"><h5>bem como</h5><div class="con-mean">así como, igual que</div><div class="con-ex">Pedro, <em>bem como</em> Maria, está aqui.</div></div>
+    </div>
+    <div class="sec-label">Ejemplos en argumentação</div>
+    <div class="example-block pr"><div class="ex-fr">A medida foi necessária. <span class="epr">Além disso</span>, trouxe benefícios à economia.</div></div>
+    <div class="example-block pr"><div class="ex-fr">Ele estudou muito. <span class="epr">Também</span> trabalhou para se manter.</div></div>
+    <div class="example-block pr"><div class="ex-fr">O projeto é viável. <span class="epr">Outrossim</span>, conta com apoio internacional.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-adversativos">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los <strong>conectivos adversativos</strong> introducen una idea que se opone o contrasta con la anterior. Permiten matizar, contrastar, refutar.</div>
+    <div class="con-grid">
+      <div class="con-card"><h5>mas</h5><div class="con-mean">pero (básico)</div><div class="con-ex">Quero, <em>mas</em> não posso.</div></div>
+      <div class="con-card"><h5>porém</h5><div class="con-mean">sin embargo</div><div class="con-ex">Estudou; <em>porém</em>, não passou.</div></div>
+      <div class="con-card"><h5>contudo</h5><div class="con-mean">sin embargo</div><div class="con-ex">É difícil; <em>contudo</em>, vale a pena.</div></div>
+      <div class="con-card"><h5>todavia</h5><div class="con-mean">no obstante (formal)</div><div class="con-ex">Tentou; <em>todavia</em>, falhou.</div></div>
+      <div class="con-card"><h5>no entanto</h5><div class="con-mean">sin embargo</div><div class="con-ex">É caro; <em>no entanto</em>, é bom.</div></div>
+      <div class="con-card"><h5>entretanto</h5><div class="con-mean">sin embargo</div><div class="con-ex">É difícil; <em>entretanto</em>, persistiu.</div></div>
+      <div class="con-card"><h5>em contrapartida</h5><div class="con-mean">en contrapartida</div><div class="con-ex">Tem vantagens; <em>em contrapartida</em>, é caro.</div></div>
+      <div class="con-card"><h5>por outro lado</h5><div class="con-mean">por otro lado</div><div class="con-ex">É positivo; <em>por outro lado</em>, há riscos.</div></div>
+      <div class="con-card"><h5>ao contrário</h5><div class="con-mean">al contrario</div><div class="con-ex">Não falhou; <em>ao contrário</em>, brilhou.</div></div>
+      <div class="con-card"><h5>apesar disso</h5><div class="con-mean">a pesar de eso</div><div class="con-ex">Era difícil. <em>Apesar disso</em>, conseguiu.</div></div>
+      <div class="con-card"><h5>não obstante</h5><div class="con-mean">no obstante (muy formal)</div><div class="con-ex"><em>Não obstante</em> os esforços, falhou.</div></div>
+      <div class="con-card"><h5>ainda assim</h5><div class="con-mean">aun así</div><div class="con-ex">Era pouco; <em>ainda assim</em>, ajudou.</div></div>
+    </div>
+    <div class="sec-label">Ejemplos en argumentação</div>
+    <div class="example-block pr"><div class="ex-fr">A tecnologia trouxe benefícios. <span class="epr">No entanto</span>, gerou novos problemas sociais.</div></div>
+    <div class="example-block pr"><div class="ex-fr">O projeto era ambicioso; <span class="epr">contudo</span>, faltavam recursos.</div></div>
+    <div class="example-block pr"><div class="ex-fr">Há vantagens evidentes; <span class="epr">por outro lado</span>, devemos considerar os custos.</div></div>
+    <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Posición de adversativos:</strong> <em>mas</em> va al inicio de la oración. <em>Porém, contudo, no entanto, entretanto, todavia</em> pueden ir al inicio, en medio (entre comas) o al final.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-conclusivos">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los <strong>conectivos conclusivos</strong> introducen una conclusión o consecuencia lógica de lo dicho.</div>
+    <div class="con-grid">
+      <div class="con-card"><h5>portanto</h5><div class="con-mean">por tanto (clave)</div><div class="con-ex">Choveu; <em>portanto</em>, ficamos em casa.</div></div>
+      <div class="con-card"><h5>logo</h5><div class="con-mean">por consiguiente</div><div class="con-ex">Penso, <em>logo</em> existo.</div></div>
+      <div class="con-card"><h5>por conseguinte</h5><div class="con-mean">por consiguiente</div><div class="con-ex"><em>Por conseguinte</em>, é preciso agir.</div></div>
+      <div class="con-card"><h5>assim</h5><div class="con-mean">así, por tanto</div><div class="con-ex"><em>Assim</em>, chegamos à conclusão.</div></div>
+      <div class="con-card"><h5>dessa forma</h5><div class="con-mean">de esta forma</div><div class="con-ex"><em>Dessa forma</em>, evitamos problemas.</div></div>
+      <div class="con-card"><h5>desse modo</h5><div class="con-mean">de este modo</div><div class="con-ex"><em>Desse modo</em>, conseguimos o objetivo.</div></div>
+      <div class="con-card"><h5>em vista disso</h5><div class="con-mean">en vista de eso</div><div class="con-ex"><em>Em vista disso</em>, decidimos mudar.</div></div>
+      <div class="con-card"><h5>em suma</h5><div class="con-mean">en suma</div><div class="con-ex"><em>Em suma</em>, há que repensar.</div></div>
+      <div class="con-card"><h5>em síntese</h5><div class="con-mean">en síntesis</div><div class="con-ex"><em>Em síntese</em>, três pontos importam.</div></div>
+      <div class="con-card"><h5>concluindo</h5><div class="con-mean">concluyendo</div><div class="con-ex"><em>Concluindo</em>, devemos lembrar...</div></div>
+      <div class="con-card"><h5>em conclusão</h5><div class="con-mean">en conclusión</div><div class="con-ex"><em>Em conclusão</em>, a proposta é viável.</div></div>
+    </div>
+    <div class="sec-label">Ejemplos en redação</div>
+    <div class="example-block pr"><div class="ex-fr">A educação é a base do desenvolvimento. <span class="epr">Portanto</span>, investir nela é prioritário.</div></div>
+    <div class="example-block pr"><div class="ex-fr">Os dados mostram a urgência. <span class="epr">Dessa forma</span>, é preciso agir já.</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Em síntese</span>, a proposta atende três objetivos principais.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-explicativos">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los <strong>conectivos explicativos y ejemplificativos</strong> sirven para aclarar, reformular, ejemplificar lo dicho.</div>
+    <div class="sec-label">Explicativos</div>
+    <div class="con-grid">
+      <div class="con-card"><h5>isto é</h5><div class="con-mean">es decir</div><div class="con-ex">Falaremos de morfologia, <em>isto é</em>, da forma das palavras.</div></div>
+      <div class="con-card"><h5>ou seja</h5><div class="con-mean">o sea</div><div class="con-ex">Está em recesso, <em>ou seja</em>, não há aulas.</div></div>
+      <div class="con-card"><h5>em outras palavras</h5><div class="con-mean">en otras palabras</div><div class="con-ex">É complexo; <em>em outras palavras</em>, não há solução simples.</div></div>
+      <div class="con-card"><h5>quer dizer</h5><div class="con-mean">o sea (col.)</div><div class="con-ex">Saiu, <em>quer dizer</em>, foi embora.</div></div>
+      <div class="con-card"><h5>melhor dizendo</h5><div class="con-mean">mejor dicho</div><div class="con-ex">Eu queria, <em>melhor dizendo</em>, eu precisava ir.</div></div>
+      <div class="con-card"><h5>pois</h5><div class="con-mean">pues (causal)</div><div class="con-ex">Não vou, <em>pois</em> estou cansado.</div></div>
+    </div>
+    <div class="sec-label">Ejemplificativos</div>
+    <div class="con-grid">
+      <div class="con-card"><h5>por exemplo</h5><div class="con-mean">por ejemplo</div><div class="con-ex">Existem várias opções, <em>por exemplo</em>, café ou chá.</div></div>
+      <div class="con-card"><h5>tal como</h5><div class="con-mean">tal como</div><div class="con-ex">Países <em>tal como</em> Brasil enfrentam isso.</div></div>
+      <div class="con-card"><h5>como</h5><div class="con-mean">como</div><div class="con-ex">Frutas <em>como</em> banana e maçã.</div></div>
+      <div class="con-card"><h5>a saber</h5><div class="con-mean">a saber</div><div class="con-ex">Três pontos, <em>a saber</em>: A, B e C.</div></div>
+      <div class="con-card"><h5>isso é</h5><div class="con-mean">esto es</div><div class="con-ex">Avaliação, <em>isso é</em>, sem preconceito.</div></div>
+      <div class="con-card"><h5>seja como for</h5><div class="con-mean">sea como sea</div><div class="con-ex"><em>Seja como for</em>, vamos prosseguir.</div></div>
+    </div>
+    <div class="sec-label">Reformuladores y aclarativos</div>
+    <div class="example-block pr"><div class="ex-fr">A política, <span class="epr">aliás</span>, é tema controvertido. (= por cierto, marca digresión)</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Com efeito</span>, é verdade. (= en efecto, formal)</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Por sinal</span>, você viu o filme? (= por cierto, PB col.)</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-formais">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los <strong>conectivos argumentativos formales</strong> son típicos de la redação culta, prensa, ensayo, discursos. Marcan distintos momentos de la argumentación.</div>
+    <div class="sec-label">Para introducir argumentos</div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Em primeiro lugar</span>, devemos considerar...</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Primeiramente</span>, é importante destacar...</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">De início</span>, vale lembrar que...</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">A princípio</span>, podemos pensar que... (= inicialmente)</div></div>
+    <div class="sec-label">Para añadir argumentos</div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Em segundo lugar</span>, é preciso ressaltar...</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Além disso</span>, há outros fatores...</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Soma-se a isso</span> o fato de que...</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Acrescenta-se que</span>...</div></div>
+    <div class="sec-label">Para contrastar / refutar</div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Em contrapartida</span>, há quem defenda...</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Contrariamente</span>, alguns autores...</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Por outro lado</span>, devemos considerar...</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Ao contrário do que se pensa</span>, ...</div></div>
+    <div class="sec-label">Para concluir</div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Por fim</span>, é importante destacar...</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Finalmente</span>, vale ressaltar...</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Em última análise</span>, a questão é...</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">No final das contas</span>, tudo se resume a... (col.)</div></div>
+    <div class="sec-label">Para citar / ejemplificar</div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Segundo</span> os especialistas...</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">De acordo com</span> a pesquisa...</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">Conforme</span> dados do IBGE...</div></div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">A título de exemplo</span>, citemos...</div></div>
+    <div class="warn-box"><span class="warn-icon">💡</span><div class="warn-text"><strong>Estrategia C1:</strong> en redação, alterna conectivos para evitar repetir <em>mas, também, por isso, portanto</em>. Construye un repertorio personal de 3–4 conectivos por categoría. Esta diversificación es uno de los criterios visibles de evaluación.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-trampas">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los 7 errores más frecuentes con conectivos.</div>
+    <div class="trap-cards" id="trap-cards"></div>
+  </div></div>
+</div>
+
+</div>
+<footer class="page-end"><button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Voltar ao topo</button></footer>
+</div>
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Repetición excesiva de mas',
+   wrong:"Usar "mas" en todas las contraposiciones de la redação",
+   right:"Alternar: mas / porém / contudo / no entanto / entretanto",
+   expl:'En redação, repetir <em>mas</em> en cada párrafo es señal de pobreza léxica. Alterna con: <em>porém, contudo, no entanto, entretanto, todavia, em contrapartida, por outro lado, ainda assim</em>.'},
+  {name:'Mais vs mas (ortografía)',
+   wrong:"Quero ir, mais não posso. (= "pero")",
+   right:"Quero ir, mas não posso.",
+   expl:'<strong>Mas</strong> (conjunción adversativa, = "pero"). <strong>Mais</strong> (= "más", cantidad). Confusión ortográfica MUY frecuente en PB. Reglita: <em>mas</em> sin "i" = pero; <em>mais</em> con "i" = más.'},
+  {name:'Portanto al inicio sin pausa',
+   wrong:"Portanto vamos. (sin coma)",
+   right:"Portanto, vamos.",
+   expl:'Los conectivos conclusivos como <em>portanto, logo, assim, dessa forma</em> normalmente van seguidos de <strong>coma</strong> cuando inician oración. La coma marca la pausa entonacional típica de estos conectivos.'},
+  {name:'Por que vs porque vs por quê',
+   wrong:"Não vou por que estou cansado. (= "porque")",
+   right:"Não vou porque estou cansado.",
+   expl:'<strong>Porque</strong> (conjunción causal, junto): <em>não vou porque...</em>. <strong>Por que</strong> (interrogativo o relativo, separado): <em>por que você não vem?</em>. <strong>Por quê</strong> (final, antes de punto): <em>você saiu por quê?</em>.'},
+  {name:'Outrossim en habla cotidiana',
+   wrong:"Outrossim, vamos comer. (en conversación)",
+   right:"Também vamos comer.",
+   expl:'<em>Outrossim</em> es muy formal/arcaico, propio de prosa solemne, jurídica o literaria. En habla cotidiana o escritura informal usa <em>também, além disso, ademais</em>.'},
+  {name:'Pois inicial en redação culta',
+   wrong:"Pois eu não concordo. (al inicio absoluto)",
+   right:"Não concordo, pois... / Não concordo porque...",
+   expl:'En norma escrita culta, <em>pois</em> causal se prefiere <strong>postpuesto</strong> a la principal, no al inicio absoluto. Para iniciar usa <em>porque</em>. <em>Pois</em> inicial es coloquial o suena raro.'},
+  {name:'Conector sin coherencia lógica',
+   wrong:"Choveu. Portanto, é uma boa praia. (sin lógica)",
+   right:"Choveu, portanto cancelamos a praia.",
+   expl:'Los conectivos deben reflejar una <strong>relación lógica real</strong> entre las ideas. Si pones <em>portanto</em>, la segunda idea debe ser consecuencia natural de la primera. Es error común en C1 mecanizar conectivos sin cohesión real.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card"><div class="trap-card-header"><div class="trap-name">${t.name}</div><div class="trap-vs"><span class="trap-wrong">✗ ${t.wrong}</span><span class="trap-right">✓ ${t.right}</span></div></div><div class="trap-expl">${t.expl}</div></div>`).join('');
+}
+renderTraps();
+</script>
+</body>
+</html>

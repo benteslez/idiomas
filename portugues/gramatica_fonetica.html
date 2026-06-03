@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Fonética e Pronúncia do PB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+:root {
+  --primary: #6e521f; --primary-soft: #f5ede0; --primary-mid: #a88a52;
+  --primary-strong: #3e2e12; --primary-glow: rgba(110, 82, 31, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #d4b87a; --primary-soft: #2e2614; --primary-mid: #a8895a;
+  --primary-strong: #ead8b0; --primary-glow: rgba(212, 184, 122, 0.18);
+}
+.stat-pill.pr { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr { color: var(--primary); font-weight: 700; }
+.hl-pr { color: var(--primary); font-weight: 700; }
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+.son-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 14px 0; }
+.son-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px 14px; border-left: 4px solid var(--primary); }
+.son-card h5 { font-family: 'Fraunces', Georgia, serif; font-size: 0.94rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+.son-card .son-ipa { font-family: 'Fraunces', Georgia, serif; font-size: 1rem; color: var(--primary-mid); margin-bottom: 6px; font-style: italic; }
+.son-card .son-ex { font-size: 0.82em; color: var(--text2); line-height: 1.5; }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></a>
+    <h1>Fonética e Pronúncia do PB</h1>
+    <span class="header-tag">Léxico</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR A1–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Vocais nasais · R · L final</div>
+    <div class="fs-wrap"><span class="fs-sz" style="font-size:0.75rem">A</span><input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)"><span class="fs-sz" style="font-size:1.05rem">A</span><button class="theme-toggle" onclick="toggleTheme()"><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button></div>
+  </div>
+</header>
+
+<div class="mode-toggle"><button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button></div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Sistema</button>
+    <button class="snav-btn"        onclick="showSection('s-vocais',this)">2. Vocales</button>
+    <button class="snav-btn"        onclick="showSection('s-nasais',this)">3. Nasales</button>
+    <button class="snav-btn"        onclick="showSection('s-ditongos',this)">4. Diptongos</button>
+    <button class="snav-btn"        onclick="showSection('s-r-l',this)">5. R / L / S</button>
+    <button class="snav-btn"        onclick="showSection('s-vs-espanol',this)">6. PB vs español</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+<div class="sec-block active" id="s-intro">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      La <strong>fonética del PB</strong> presenta varios sonidos <strong>inexistentes en español</strong>: vocales nasales (<em>mãe, pão</em>), diptongos nasales (<em>ões, ães</em>), /R/ retroflexo o aspirado (<em>porta, carro</em>), /L/ velar final (<em>Brasil → Brasiu</em>), distinción entre vocales abiertas y cerradas (<em>avó / avô</em>). Sin dominar estos sonidos, el hispanohablante suena fuertemente extranjero. Esta ficha cubre los puntos críticos.
+    </div>
+    <div class="sec-label">Sonidos clave del PB que no existen en español</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Sonido</th><th>IPA</th><th>Grafía</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td>Vocal nasal /ã/</td><td>[ɐ̃]</td><td>ã, an, am</td><td>m<span class="hl-pr">ã</span>e, c<span class="hl-pr">an</span>to</td></tr>
+        <tr><td>Vocal nasal /õ/</td><td>[õ]</td><td>õ, on, om</td><td>limõ<span class="hl-pr">es</span>, b<span class="hl-pr">on</span>s</td></tr>
+        <tr><td>Ditongo nasal /ãw̃/</td><td>[ɐ̃w̃]</td><td>ão</td><td>p<span class="hl-pr">ão</span>, c<span class="hl-pr">ão</span></td></tr>
+        <tr><td>Ditongo nasal /õj̃/</td><td>[õj̃]</td><td>õe</td><td>p<span class="hl-pr">õe</span>, lim<span class="hl-pr">õe</span>s</td></tr>
+        <tr><td>Ditongo nasal /ɐ̃j̃/</td><td>[ɐ̃j̃]</td><td>ãe / ães</td><td>m<span class="hl-pr">ãe</span>, c<span class="hl-pr">ães</span></td></tr>
+        <tr><td>/R/ retroflexo o aspirado</td><td>[χ] [h] [ɻ]</td><td>r inicial, rr, r final</td><td><span class="hl-pr">r</span>ato, ca<span class="hl-pr">rr</span>o, po<span class="hl-pr">r</span>ta</td></tr>
+        <tr><td>/L/ velarizada final</td><td>[w]</td><td>l final</td><td>Brasi<span class="hl-pr">l</span> [brazíw]</td></tr>
+        <tr><td>/d/, /t/ palatalizados</td><td>[dʒ], [tʃ]</td><td>di, de final / ti, te final</td><td><span class="hl-pr">di</span>a [dʒía], lei<span class="hl-pr">te</span> [léjtʃi]</td></tr>
+        <tr><td>Vocal abierta /ɔ/, /ɛ/</td><td>[ɔ] [ɛ]</td><td>ó, é (acento agudo)</td><td>av<span class="hl-pr">ó</span> [ɔ] / av<span class="hl-pr">ô</span> [o]</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn-box"><span class="warn-icon">💡</span><div class="warn-text"><strong>El PB tiene la mayor diversidad vocálica de las lenguas románicas:</strong> 7 vocales orales (a, é, ê, i, ó, ô, u), 5 vocales nasales (ã, ẽ, ĩ, õ, ũ), múltiples diptongos orales y nasales. El español tiene solo 5 vocales.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-vocais">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">El PB distingue <strong>siete vocales orales</strong>: /a/, /ɛ/ (é abierta), /e/ (ê cerrada), /i/, /ɔ/ (ó abierta), /o/ (ô cerrada), /u/. La distinción abierta/cerrada de E y O es crítica para la comprensión.</div>
+    <div class="sec-label">Distinción E abierta vs cerrada</div>
+    <div class="son-grid">
+      <div class="son-card"><h5>É abierta /ɛ/</h5><div class="son-ipa">[ɛ] como "café"</div><div class="son-ex">c<em>afé</em>, p<em>é</em>, f<em>é</em>, av<em>ó</em> (¡no!), p<em>edra</em> (en algunas variantes)</div></div>
+      <div class="son-card"><h5>Ê cerrada /e/</h5><div class="son-ipa">[e] como "dedo"</div><div class="son-ex">d<em>edo</em>, m<em>esa</em>, p<em>ê</em>ra, vov<em>ô</em>, voc<em>ê</em></div></div>
+      <div class="son-card"><h5>É vs Ê en pares mínimos</h5><div class="son-ipa">/ɛ/ vs /e/</div><div class="son-ex">avó (abuela) [ɔ] vs avô (abuelo) [o]; este [es-te] vs êste (raro hoje)</div></div>
+    </div>
+    <div class="sec-label">Distinción O abierta vs cerrada</div>
+    <div class="son-grid">
+      <div class="son-card"><h5>Ó abierta /ɔ/</h5><div class="son-ipa">[ɔ] como "porta"</div><div class="son-ex">p<em>ó</em>, m<em>ó</em>vel, p<em>ó</em>de (verbo, presente), av<em>ó</em></div></div>
+      <div class="son-card"><h5>Ô cerrada /o/</h5><div class="son-ipa">[o] como "bolo"</div><div class="son-ex">b<em>ô</em>lo, av<em>ô</em>, p<em>ô</em>r, ele p<em>ô</em>de (PPS)</div></div>
+      <div class="son-card"><h5>Par mínimo ó/ô</h5><div class="son-ipa">/ɔ/ vs /o/</div><div class="son-ex">avó [ɔ] = abuela / avô [o] = abuelo; pode [ɔ] = puede / pôde [o] = pudo</div></div>
+    </div>
+    <div class="sec-label">Reducción vocálica átona (PB)</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Vocal escrita</th><th>Posición átona final</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td>e</td><td>→ [i] (chiado)</td><td>leit<span class="hl-pr">e</span> [léjtʃi]</td></tr>
+        <tr><td>o</td><td>→ [u]</td><td>livr<span class="hl-pr">o</span> [lívru]</td></tr>
+        <tr><td>a final</td><td>→ [ɐ] (más débil)</td><td>cas<span class="hl-pr">a</span> [káza]</td></tr>
+      </tbody>
+    </table></div>
+    <div class="example-block pr"><div class="ex-fr">leite → [léjtʃi] (la "e" final se cierra en "i")</div></div>
+    <div class="example-block pr"><div class="ex-fr">livro → [lívru] (la "o" final se cierra en "u")</div></div>
+    <div class="example-block pr"><div class="ex-fr">menino → [miníno] (la "e" inicial átona también se cierra en "i")</div></div>
+    <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Para hispanohablantes:</strong> el español pronuncia todas las vocales claramente. En PB, las vocales átonas se reducen mucho. Hay que <strong>cerrar</strong> las "e" finales a [i] y las "o" finales a [u]: <em>noite</em> suena [nójtʃi], no [nójte].</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-nasais">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Las <strong>vocales nasales</strong> son uno de los rasgos más distintivos del portugués. Se producen al pasar el aire por la nariz mientras se pronuncia la vocal. En español casi no existen; en PB hay 5 vocales nasales + diptongos nasales.</div>
+    <div class="sec-label">Las cinco vocales nasales</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Sonido</th><th>Grafías</th><th>Ejemplos</th></tr></thead>
+      <tbody>
+        <tr><td>/ã/ [ɐ̃]</td><td>ã, an, am (final)</td><td>m<span class="hl-pr">ã</span>e, c<span class="hl-pr">an</span>to, sa<span class="hl-pr">m</span>ba</td></tr>
+        <tr><td>/ẽ/ [ẽ]</td><td>en, em (final)</td><td>v<span class="hl-pr">en</span>to, t<span class="hl-pr">em</span>po, ord<span class="hl-pr">em</span></td></tr>
+        <tr><td>/ĩ/ [ĩ]</td><td>in, im</td><td>p<span class="hl-pr">in</span>to, j<span class="hl-pr">im</span>, l<span class="hl-pr">in</span>do</td></tr>
+        <tr><td>/õ/ [õ]</td><td>õ, on, om</td><td>p<span class="hl-pr">õ</span>e, b<span class="hl-pr">on</span>, b<span class="hl-pr">om</span></td></tr>
+        <tr><td>/ũ/ [ũ]</td><td>un, um</td><td>m<span class="hl-pr">un</span>do, jej<span class="hl-pr">um</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-label">Diptongos nasales (combinación V + semivocal nasal)</div>
+    <div class="son-grid">
+      <div class="son-card"><h5>ÃO [ɐ̃w̃]</h5><div class="son-ipa">vocal "ã" + w nasal</div><div class="son-ex">pão, mão, capitão, irmão, alemão. Plural: pães [ɐ̃j̃ʃ], mãos [ɐ̃w̃ʃ], capitães [ɐ̃j̃ʃ], irmãos [ɐ̃w̃ʃ], alemães [ɐ̃j̃ʃ]</div></div>
+      <div class="son-card"><h5>ÕE [õj̃]</h5><div class="son-ipa">vocal "õ" + i nasal</div><div class="son-ex">põe, lições, opiniões, condições, religiões</div></div>
+      <div class="son-card"><h5>ÃE [ɐ̃j̃]</h5><div class="son-ipa">vocal "ã" + i nasal</div><div class="son-ex">mãe, capitães, alemães, pães. Solo plural de algunos -ão</div></div>
+      <div class="son-card"><h5>ÕES [õj̃ʃ]</h5><div class="son-ipa">/õj̃/ + "s" final</div><div class="son-ex">limões, melões, balões, opiniões, situações</div></div>
+    </div>
+    <div class="sec-label">Cómo pronunciar las nasales (hispanohablantes)</div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Truco 1:</strong> Empieza por la vocal oral correspondiente y deja salir aire por la nariz. <em>mãe</em>: empieza con "ma" y cierra hacia "i" dejando salir aire nasal.</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Truco 2:</strong> NO pronuncies la N o M finales como consonantes. En <em>bem</em>, no se dice [bem] sino [bẽj̃] (sin la M consonante, solo nasaliza la vocal).</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Truco 3:</strong> El sonido es <em>cantado</em> hacia la nariz. Practica con un espejo y tapándote la nariz: si tapando no puedes pronunciar, está bien nasalizada.</div></div>
+    <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Trampa crítica:</strong> el "m" y "n" finales en portugués NO se pronuncian como consonantes (como en español <em>pan, son</em>). Solo <strong>nasalizan</strong> la vocal anterior. <em>Pão</em> NO es [pa-on], es un sonido único [pɐ̃w̃]. <em>Bem</em> NO es [bem], es [bẽj̃].</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-ditongos">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">El PB tiene <strong>muchos diptongos</strong> orales y nasales que dificultan la pronunciación al hispanohablante. Los orales más distintivos: <em>ei, ou, ai, au, eu, iu</em>. Los nasales: <em>ão, õe, ãe, em, am</em> (en posición final).</div>
+    <div class="sec-label">Diptongos orales clave</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Diptongo</th><th>IPA aproximado</th><th>Ejemplo</th><th>Particularidad PB</th></tr></thead>
+      <tbody>
+        <tr><td>EI</td><td>[ej] o [e] (PB carioca a veces)</td><td>p<span class="hl-pr">ei</span>xe, l<span class="hl-pr">ei</span>te</td><td>en habla rápida puede reducirse a [e]</td></tr>
+        <tr><td>OU</td><td>[ow] o [o] (mayoría PB)</td><td>v<span class="hl-pr">ou</span>, f<span class="hl-pr">ou</span>l</td><td>en PB hablado se reduce a [o]: vou → [vo]</td></tr>
+        <tr><td>AI</td><td>[aj]</td><td>p<span class="hl-pr">ai</span>, m<span class="hl-pr">ai</span>s</td><td>se mantiene claramente</td></tr>
+        <tr><td>AU</td><td>[aw]</td><td>m<span class="hl-pr">au</span>, c<span class="hl-pr">au</span>sa</td><td>se mantiene</td></tr>
+        <tr><td>EU</td><td>[ew]</td><td><span class="hl-pr">eu</span>, c<span class="hl-pr">éu</span></td><td>se mantiene</td></tr>
+        <tr><td>IU</td><td>[iw]</td><td>v<span class="hl-pr">iu</span>, sa<span class="hl-pr">iu</span></td><td>se mantiene</td></tr>
+        <tr><td>OI</td><td>[oj]</td><td>d<span class="hl-pr">oi</span>s, n<span class="hl-pr">oi</span>te</td><td>se mantiene</td></tr>
+        <tr><td>UI</td><td>[uj]</td><td>m<span class="hl-pr">ui</span>to</td><td><em>muito</em> se pronuncia [mũjto] con nasalización</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-label">Reducción de OU en PB hablado</div>
+    <div class="example-block pr"><div class="ex-fr">"Eu vou" → [ew vo] (la "u" desaparece prácticamente)</div></div>
+    <div class="example-block pr"><div class="ex-fr">"Outono" → [otóno] (la "u" inicial no se pronuncia claramente)</div></div>
+    <div class="example-block pr"><div class="ex-fr">"Trouxe" → [trose] (la "u" desaparece)</div></div>
+    <div class="note-box"><strong>Diferencia con PE:</strong> el PE conserva el diptongo OU como [ow]. El PB lo reduce a [o] en la mayoría de los casos. Esta es una de las marcas auditivas más claras entre PB y PE.</div>
+    <div class="sec-label">Triptongos</div>
+    <div class="example-block pr"><div class="ex-fr">Tritongo nasal "uão": q<span class="epr">uão</span>. (raro)</div></div>
+    <div class="example-block pr"><div class="ex-fr">Tritongo "uai": ig<span class="epr">uais</span>, ig<span class="epr">uais</span>. (común)</div></div>
+    <div class="example-block pr"><div class="ex-fr">Tritongo "uei": averig<span class="epr">uei</span> (yo averigüé).</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-r-l">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Las consonantes <strong>/R/, /L/ y /S/</strong> tienen pronunciaciones muy distintas del español, y varían además según la <strong>región</strong> de Brasil. Esto es crítico para identificar el sotaque del hablante.</div>
+    <div class="sec-label">La R en PB</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Posición</th><th>Carioca / NE</th><th>Paulista</th><th>Sul / Mineiro</th></tr></thead>
+      <tbody>
+        <tr><td>R inicial</td><td>[χ] aspirada (j alemana, "ch" alemán)</td><td>[h] aspirada (h inglesa)</td><td>[ʁ] uvular / [r] vibrante</td></tr>
+        <tr><td>RR (intervocálica)</td><td>[χ] aspirada</td><td>[h] aspirada</td><td>[ʁ] uvular / [r]</td></tr>
+        <tr><td>R simple intervocálica</td><td>[ɾ] golpe (igual español)</td><td>[ɾ]</td><td>[ɾ]</td></tr>
+        <tr><td>R final de sílaba / palabra</td><td>[χ] o [h] aspirada o eliminada</td><td>[ɻ] retroflexo (típico "R caipira")</td><td>[ʁ] o [r]</td></tr>
+      </tbody>
+    </table></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Carioca:</strong> "porta" → [pɔ́χta] (con "j" aspirada)</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Paulista (R caipira):</strong> "porta" → [pɔ́ɻta] (con R retroflexa, como inglés americano)</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Gaúcho:</strong> "porta" → [pɔ́ʁta] (con R uvular o vibrante)</div></div>
+    <div class="warn-box"><span class="warn-icon">💡</span><div class="warn-text"><strong>Para hispanohablantes:</strong> la R española vibrante NO se usa para R inicial ni RR en PB (sería un acento muy extranjero). Aprende a aspirar la R inicial: <em>rato</em> → [χáto] o [háto], no [r̄áto].</div></div>
+    <div class="sec-label">La L final velar</div>
+    <div class="example-block pr"><div class="ex-fr">Brasil → [brazíw] (la L final se vocaliza en [w])</div></div>
+    <div class="example-block pr"><div class="ex-fr">papel → [papéw]</div></div>
+    <div class="example-block pr"><div class="ex-fr">animal → [animáw]</div></div>
+    <div class="example-block pr"><div class="ex-fr">sol → [sɔw]</div></div>
+    <div class="note-box"><strong>Plural de palabras en -L:</strong> al pluralizar, la L se restablece como [is] o [es]: <em>animal → animais</em> [animájs]; <em>papel → papéis</em> [papɛ́js]; <em>sol → sóis</em>. La L vuelve a sonar, pero ahora como [j].</div>
+    <div class="sec-label">La S en PB</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Posición</th><th>Sonido</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td>Inicial</td><td>[s]</td><td><span class="hl-pr">s</span>al, <span class="hl-pr">s</span>ola</td></tr>
+        <tr><td>Intervocálica (1 S)</td><td>[z]</td><td>ca<span class="hl-pr">s</span>a [káza], me<span class="hl-pr">s</span>a [méza]</td></tr>
+        <tr><td>SS intervocálica</td><td>[s]</td><td>ma<span class="hl-pr">ss</span>a, pa<span class="hl-pr">ss</span>o</td></tr>
+        <tr><td>S antes de consonante sonora</td><td>[z]</td><td>de<span class="hl-pr">s</span>de [dézdʒi]</td></tr>
+        <tr><td>S antes de consonante sorda</td><td>[s]</td><td>e<span class="hl-pr">s</span>tar [istár]</td></tr>
+        <tr><td>S final (carioca)</td><td>[ʃ] (como "sh")</td><td>do<span class="hl-pr">is</span> [dójʃ]</td></tr>
+        <tr><td>S final (paulista, mineiro)</td><td>[s]</td><td>do<span class="hl-pr">is</span> [dójs]</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-label">Palatalización de D y T (PB carioca y la mayoría)</div>
+    <div class="example-block pr"><div class="ex-fr">"di" → [dʒi] como "yi" inglés: dia → [dʒía], partiu → [paχtʃíw]</div></div>
+    <div class="example-block pr"><div class="ex-fr">"ti" → [tʃi] como "chi" inglés: tia → [tʃía], leite → [léjtʃi]</div></div>
+    <div class="example-block pr"><div class="ex-fr">"de" final → [dʒi]: tarde → [táχdʒi]</div></div>
+    <div class="example-block pr"><div class="ex-fr">"te" final → [tʃi]: noite → [nójtʃi]</div></div>
+    <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Marca clave del PB:</strong> la palatalización de D/T ante I es uno de los rasgos más visibles del PB. En PE no ocurre (<em>tia</em> = [tía], no [tʃía]). En algunas regiones de PB (sur, parte del nordeste) tampoco ocurre.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-vs-espanol">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Las diferencias fonéticas con el español son numerosas. Conocerlas ayuda a evitar acento extranjero.</div>
+    <div class="sec-label">Diferencias clave</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Aspecto</th><th>Español</th><th>PB</th></tr></thead>
+      <tbody>
+        <tr><td>Vocales</td><td>5 vocales</td><td>7 vocales orales + 5 nasales</td></tr>
+        <tr><td>Vocal abierta /ɛ/</td><td>no distinguida (é = ê)</td><td>distinguida (café vs dedo)</td></tr>
+        <tr><td>Vocal nasal</td><td>no existe</td><td>fundamental (mãe, pão)</td></tr>
+        <tr><td>S intervocálica</td><td>[s] (casa = [kása])</td><td>[z] (casa = [káza])</td></tr>
+        <tr><td>S final</td><td>[s]</td><td>[ʃ] o [s] según región</td></tr>
+        <tr><td>R inicial</td><td>[r̄] vibrante múltiple</td><td>[χ], [h], [ʁ] aspirada / uvular</td></tr>
+        <tr><td>L final</td><td>[l]</td><td>[w] vocálica</td></tr>
+        <tr><td>D / T + I</td><td>[d], [t]</td><td>[dʒ], [tʃ] palatalizadas</td></tr>
+        <tr><td>Reducción átona</td><td>vocales claras</td><td>e → [i], o → [u] átonas finales</td></tr>
+        <tr><td>Acento tónico</td><td>predominantemente paroxítono</td><td>predominantemente paroxítono</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-label">Errores típicos del hispanohablante</div>
+    <div class="example-block pr"><div class="ex-fr">✗ Pronunciar "casa" como [kása] → ✓ [káza]</div></div>
+    <div class="example-block pr"><div class="ex-fr">✗ Pronunciar "rato" con vibrante → ✓ [χáto] aspirado</div></div>
+    <div class="example-block pr"><div class="ex-fr">✗ Pronunciar "Brasil" como [brasíl] → ✓ [brazíw]</div></div>
+    <div class="example-block pr"><div class="ex-fr">✗ Pronunciar "tia" como [tía] → ✓ [tʃía]</div></div>
+    <div class="example-block pr"><div class="ex-fr">✗ Pronunciar "leite" como [léjte] → ✓ [léjtʃi]</div></div>
+    <div class="example-block pr"><div class="ex-fr">✗ Pronunciar "pão" como [pa-on] → ✓ [pɐ̃w̃] (una sola sílaba nasal)</div></div>
+    <div class="example-block pr"><div class="ex-fr">✗ Decir "bem" como [bem] (con M consonante) → ✓ [bẽj̃] (solo nasalización)</div></div>
+    <div class="warn-box"><span class="warn-icon">💡</span><div class="warn-text"><strong>Estrategia para mejorar pronunciación:</strong> escucha mucho material en PB (películas, podcasts, novelas). Imita conscientemente la entonación. Graba tu voz y compara. Los puntos críticos: nasalizar bien, palatalizar D/T+I, cerrar vocales átonas finales (e→i, o→u).</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-trampas">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los 8 errores fonéticos más frecuentes del hispanohablante en PB.</div>
+    <div class="trap-cards" id="trap-cards"></div>
+  </div></div>
+</div>
+
+</div>
+<footer class="page-end"><button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Voltar ao topo</button></footer>
+</div>
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'M y N finales como consonantes',
+   wrong:"Pão pronunciado [pa-on]. Bem pronunciado [bem].",
+   right:"Pão = [pɐ̃w̃] (nasalización en una sílaba). Bem = [bẽj̃].",
+   expl:'En portugués, las letras M y N en posición final NO se pronuncian como consonantes. Solo <strong>nasalizan</strong> la vocal anterior. Es la diferencia auditiva más visible con el español. Practica nasalizando sin cerrar los labios al final.'},
+  {name:'S intervocálica como sorda',
+   wrong:"Casa pronunciado [kása] (como español)",
+   right:"Casa = [káza] (con Z).",
+   expl:'En PB, la S intervocálica (con una sola S) se pronuncia [z]: <em>casa, mesa, rosa, base, peso, asa</em>. La SS intervocálica sí es [s]: <em>passo, massa</em>. Esta distinción no existe en español.'},
+  {name:'R con vibrante española',
+   wrong:"Rato con [r̄] múltiple (como español)",
+   right:"Rato = [χáto] o [háto] (aspirada).",
+   expl:'La R inicial y RR intervocálica en PB son <strong>aspiradas</strong> (como J alemana o H inglesa), no vibrantes múltiples como en español. <em>Rato, rua, carro, terra, ferro</em>. Suena más a "j alemana" o "h aspirada".'},
+  {name:'L final como consonante',
+   wrong:"Brasil = [brasíl] (con L final consonante)",
+   right:"Brasil = [brazíw] (con L vocalizada en W).",
+   expl:'La L final de sílaba o palabra en PB se <strong>vocaliza en [w]</strong>: <em>Brasil [brazíw], papel [papéw], sol [sɔw], legal [legáw]</em>. Pluralización: la L reaparece como [j]: <em>animais, papéis</em>.'},
+  {name:'No palatalizar D/T ante I',
+   wrong:"Tia [tía], dia [día] (como español)",
+   right:"Tia = [tʃía], dia = [dʒía].",
+   expl:'En PB (excepto regiones del sur y partes del nordeste), D/T ante I se palatalizan: <em>tia [tʃía], dia [dʒía], leite [léjtʃi], tarde [táχdʒi]</em>. Suena como "chi/yi" del inglés. Sin esta palatalización, suena PE o español.'},
+  {name:'No cerrar vocales átonas finales',
+   wrong:"Leite pronunciado [léj-te]. Livro [lí-bro].",
+   right:"Leite = [léjtʃi]. Livro = [lívru].",
+   expl:'Las vocales <strong>átonas finales</strong> se reducen en PB: E → [i], O → [u]. <em>Leite, noite, tarde</em> terminan en [i]. <em>Livro, cinco, ovo, sapato</em> terminan en [u]. No mantener este cierre suena PE o extranjero.'},
+  {name:'Acento ortográfico no respetado',
+   wrong:"avo (sin distinguir avó/avô)",
+   right:"avó (abuela, [ɔ]) vs avô (abuelo, [o]).",
+   expl:'En portugués escrito, los acentos <strong>cambian la pronunciación y el significado</strong>: <em>avó (abuela) ≠ avô (abuelo); pode (puede) ≠ pôde (pudo); por (preposición) ≠ pôr (verbo)</em>. Sin acento, otra palabra.'},
+  {name:'OU como diptongo claro',
+   wrong:"Vou pronunciado [vów] con diptongo claro",
+   right:"Vou = [vo] (monoptongado en PB hablado).",
+   expl:'En PB hablado, el diptongo OU se <strong>monoptonga</strong> en [o] en la mayoría de los casos: <em>vou [vo], outro [ótru], pousa [póza]</em>. En PE se mantiene [ow]. Pronunciar siempre [ow] suena PE.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card"><div class="trap-card-header"><div class="trap-name">${t.name}</div><div class="trap-vs"><span class="trap-wrong">✗ ${t.wrong}</span><span class="trap-right">✓ ${t.right}</span></div></div><div class="trap-expl">${t.expl}</div></div>`).join('');
+}
+renderTraps();
+</script>
+</body>
+</html>

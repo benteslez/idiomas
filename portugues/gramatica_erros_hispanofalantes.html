@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Erros Sistemáticos do Hispanofalante</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+:root {
+  --primary: #3f2456; --primary-soft: #ede8f4; --primary-mid: #7a609a;
+  --primary-strong: #2a1340; --primary-glow: rgba(63, 36, 86, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #b89adb; --primary-soft: #20162e; --primary-mid: #8a6cba;
+  --primary-strong: #dcc6ec; --primary-glow: rgba(184, 154, 219, 0.18);
+}
+.stat-pill.pr { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr { color: var(--primary); font-weight: 700; }
+.hl-pr { color: var(--primary); font-weight: 700; }
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+.erro-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px 14px; border-left: 4px solid var(--red); margin-bottom: 10px; }
+.erro-card .erro-num { font-weight: 700; color: var(--red); font-family: 'Fraunces', Georgia, serif; font-size: 0.95em; }
+.erro-card h5 { font-family: 'Fraunces', Georgia, serif; font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+.erro-card .erro-wrong { font-size: 0.84em; color: var(--red); margin-bottom: 3px; }
+.erro-card .erro-right { font-size: 0.84em; color: var(--green); margin-bottom: 6px; }
+.erro-card .erro-tip { font-size: 0.78em; color: var(--text2); line-height: 1.5; font-style: italic; }
+.erro-card .erro-ref { font-size: 0.74em; color: var(--text3); margin-top: 5px; font-weight: 600; }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></a>
+    <h1>🔴 Erros Sistemáticos do Hispanofalante</h1>
+    <span class="header-tag">Meta-ficha</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B1–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Checklist de autocorrección</div>
+    <div class="fs-wrap"><span class="fs-sz" style="font-size:0.75rem">A</span><input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)"><span class="fs-sz" style="font-size:1.05rem">A</span><button class="theme-toggle" onclick="toggleTheme()"><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button></div>
+  </div>
+</header>
+
+<div class="mode-toggle"><button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button></div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Sistema</button>
+    <button class="snav-btn"        onclick="showSection('s-foneticos',this)">2. Fonéticos</button>
+    <button class="snav-btn"        onclick="showSection('s-pronominais',this)">3. Pronominais</button>
+    <button class="snav-btn"        onclick="showSection('s-verbais',this)">4. Verbais</button>
+    <button class="snav-btn"        onclick="showSection('s-lexicais',this)">5. Léxico / falsos amigos</button>
+    <button class="snav-btn"        onclick="showSection('s-sintaticos',this)">6. Sintaxis / preposiciones</button>
+    <button class="snav-btn"        onclick="showSection('s-checklist',this)">7. Checklist final</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+<div class="sec-block active" id="s-intro">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      Esta es una <strong>meta-ficha</strong> que consolida los <strong>50+ errores más sistemáticos</strong> del hispanohablante al aprender portugués brasileño. Cada error está organizado por categoría, con la forma incorrecta, la correcta, una pista mnemotécnica y referencia a la ficha donde se trata a fondo. Úsala como <strong>checklist de autocorrección</strong> al revisar textos o practicar producción.
+    </div>
+    <div class="sec-label">Cuatro tipos de error sistemático</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Tipo</th><th>Origen</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Interferencia fonética</strong></td><td>aplicar sonidos del español</td><td>"rato" pronunciado con R vibrante</td></tr>
+        <tr><td><strong>Calco léxico</strong></td><td>traducción literal</td><td>"hacer una decisión" (= make a decision)</td></tr>
+        <tr><td><strong>Falso amigo</strong></td><td>forma similar, significado distinto</td><td>"borracha" = goma, no ebria</td></tr>
+        <tr><td><strong>Calco sintáctico</strong></td><td>estructura del español</td><td>"vou a casa" (= vou para casa)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn-box"><span class="warn-icon">💡</span><div class="warn-text"><strong>Por qué la cercanía es trampa:</strong> el portugués y el español son ~85% mutuamente inteligibles. Esto hace muy fácil aprender PB en 1-2 meses a nivel funcional, pero <strong>muy difícil llegar a C1</strong>: los errores se cristalizan precisamente por la transparencia engañosa. Esta ficha es tu antídoto sistemático.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-foneticos">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los errores fonéticos son la marca más audible del "sotaque hispano". Conocerlos permite trabajar específicamente en cada uno.</div>
+    <div class="erro-card"><span class="erro-num">F1</span> <h5>M y N finales como consonantes</h5>
+      <div class="erro-wrong">✗ "Pão" → [pa-on]; "bem" → [bem]</div>
+      <div class="erro-right">✓ "Pão" = [pɐ̃w̃]; "bem" = [bẽj̃]</div>
+      <div class="erro-tip">M y N finales NO son consonantes en portugués: solo <strong>nasalizan</strong> la vocal anterior. Practica sin cerrar los labios.</div>
+      <div class="erro-ref">→ Ficha 59 Fonética</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">F2</span> <h5>S intervocálica como [s]</h5>
+      <div class="erro-wrong">✗ "Casa" = [kása] (como español)</div>
+      <div class="erro-right">✓ "Casa" = [káza] (con Z)</div>
+      <div class="erro-tip">S intervocálica (una sola) en portugués es [z]. SS sí es [s].</div>
+      <div class="erro-ref">→ Ficha 59 Fonética</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">F3</span> <h5>R con vibrante española</h5>
+      <div class="erro-wrong">✗ "Rato" = [r̄áto] (vibrante múltiple)</div>
+      <div class="erro-right">✓ "Rato" = [χáto] / [háto] (aspirada)</div>
+      <div class="erro-tip">R inicial y RR son ASPIRADAS en PB (como J alemana), no vibrantes.</div>
+      <div class="erro-ref">→ Ficha 59 Fonética</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">F4</span> <h5>L final como consonante</h5>
+      <div class="erro-wrong">✗ "Brasil" = [brasíl]</div>
+      <div class="erro-right">✓ "Brasil" = [brazíw] (L vocalizada en W)</div>
+      <div class="erro-tip">L final se vocaliza en [w]: papel [papéw], sol [sɔw].</div>
+      <div class="erro-ref">→ Ficha 59 Fonética</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">F5</span> <h5>No palatalizar D/T ante I</h5>
+      <div class="erro-wrong">✗ "Tia" = [tía], "dia" = [día]</div>
+      <div class="erro-right">✓ "Tia" = [tʃía], "dia" = [dʒía]</div>
+      <div class="erro-tip">D/T + I se palatalizan: leite [léjtʃi], tarde [táχdʒi].</div>
+      <div class="erro-ref">→ Ficha 59 Fonética</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">F6</span> <h5>No cerrar vocales átonas finales</h5>
+      <div class="erro-wrong">✗ "Leite" = [léj-te], "livro" = [lí-bro]</div>
+      <div class="erro-right">✓ "Leite" = [léjtʃi], "livro" = [lívru]</div>
+      <div class="erro-tip">E final átona → [i]; O final átona → [u]. Crucial en PB.</div>
+      <div class="erro-ref">→ Ficha 59 Fonética</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">F7</span> <h5>No distinguir é/ê y ó/ô</h5>
+      <div class="erro-wrong">✗ "Avo" sin distinguir abuela/abuelo</div>
+      <div class="erro-right">✓ Avó (abuela, [ɔ]) vs avô (abuelo, [o])</div>
+      <div class="erro-tip">El acento agudo (´) marca vocal abierta; el circunflexo (^) marca vocal cerrada.</div>
+      <div class="erro-ref">→ Ficha 60 Acentuação</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-pronominais">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los errores con pronombres son sistemáticos y muy frecuentes. El sistema PB difiere radicalmente del español.</div>
+    <div class="erro-card"><span class="erro-num">P1</span> <h5>Você con 2ª singular</h5>
+      <div class="erro-wrong">✗ "Você falas português?"</div>
+      <div class="erro-right">✓ "Você fala português?" (3ª singular)</div>
+      <div class="erro-tip">Você es semánticamente "tú" pero gramaticalmente 3ª persona. Tratalo como "usted".</div>
+      <div class="erro-ref">→ Fichas 19 Sistema pronominal, 21 Tratamento</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">P2</span> <h5>A gente con 1ª plural</h5>
+      <div class="erro-wrong">✗ "A gente vamos sair."</div>
+      <div class="erro-right">✓ "A gente vai sair." (3ª sing.)</div>
+      <div class="erro-tip">"A gente" = nós semántico, pero 3ª SINGULAR siempre. Nunca "vamos, fazemos" con a gente.</div>
+      <div class="erro-ref">→ Fichas 18, 19</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">P3</span> <h5>"A personal" del español</h5>
+      <div class="erro-wrong">✗ "Vi a o Pedro." / "Amo a você."</div>
+      <div class="erro-right">✓ "Vi o Pedro." / "Amo você."</div>
+      <div class="erro-tip">NO existe la "a personal" en portugués. Verbos como amar, ver, conhecer, visitar son trans. directos sin "a".</div>
+      <div class="erro-ref">→ Ficha 31 Regências</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">P4</span> <h5>Lhe usado como OD</h5>
+      <div class="erro-wrong">✗ "Eu lhe vi ontem." (norma)</div>
+      <div class="erro-right">✓ "Eu o/a vi ontem." (norma) / "Vi ele/ela ontem." (PB hablado)</div>
+      <div class="erro-tip">Lhe es OI (= a él/ella), no OD. PB regional (NE) sí usa lhe como OD, pero es agramatical en norma.</div>
+      <div class="erro-ref">→ Ficha 20 Pronomes oblíquos</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">P5</span> <h5>Mim vs eu tras preposición</h5>
+      <div class="erro-wrong">✗ "Esse é para eu." / "Sem eu."</div>
+      <div class="erro-right">✓ "Esse é para mim." / "Sem mim."</div>
+      <div class="erro-tip">Tras preposición se usa MIM (no EU), excepto cuando es sujeto explícito del infinitivo: "para eu fazer".</div>
+      <div class="erro-ref">→ Ficha 20</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">P6</span> <h5>Demostrativo este/esse</h5>
+      <div class="erro-wrong">✗ Mezclar "este" y "esse" sin distinguir</div>
+      <div class="erro-right">✓ Este = cerca del hablante; esse = cerca del oyente; aquele = lejos.</div>
+      <div class="erro-tip">En PB hablado, esse domina, pero en escritura formal mantén la norma de 3 grados.</div>
+      <div class="erro-ref">→ Ficha 24 Demonstrativos</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-verbais">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los errores verbais son los más graves por su frecuencia. Cubren tiempos, modos y construcciones específicas del portugués.</div>
+    <div class="erro-card"><span class="erro-num">V1</span> <h5>Pretérito perfeito composto como "he hecho"</h5>
+      <div class="erro-wrong">✗ "Hoje eu tenho falado com ela." (=he hablado)</div>
+      <div class="erro-right">✓ "Hoje eu falei com ela."</div>
+      <div class="erro-tip">"Tenho falado" en portugués significa "he estado hablando últimamente" (iterativo/durativo), NO "he hablado". Para "he hecho" español, usa PPS.</div>
+      <div class="erro-ref">→ Ficha 04 Pretérito Perfeito Composto</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">V2</span> <h5>Quando + presente con valor futuro</h5>
+      <div class="erro-wrong">✗ "Quando eu chego em casa, te ligo."</div>
+      <div class="erro-right">✓ "Quando eu chegar em casa, te ligo."</div>
+      <div class="erro-tip">"Cuando llegue" del español se traduce con SUBJUNTIVO FUTURO portugués: "quando chegar". Inexistente en español.</div>
+      <div class="erro-ref">→ Ficha 08 Subjuntivo Futuro</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">V3</span> <h5>Se + futuro do presente / condicional</h5>
+      <div class="erro-wrong">✗ "Se eu teria dinheiro, compraria..."</div>
+      <div class="erro-right">✓ "Se eu tivesse dinheiro, compraria..."</div>
+      <div class="erro-tip">Período hipotético tipo II: se + imperfeito do subjuntivo → futuro do pretérito. NUNCA "se + faria/teria".</div>
+      <div class="erro-ref">→ Ficha 09 Período Hipotético</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">V4</span> <h5>Embora + indicativo</h5>
+      <div class="erro-wrong">✗ "Embora chove, vou sair."</div>
+      <div class="erro-right">✓ "Embora chova, vou sair." (subjuntivo)</div>
+      <div class="erro-tip">Las concesivas (embora, mesmo que, ainda que, por mais que) exigen SIEMPRE subjuntivo. El español "aunque" admite ind. con hecho real; portugués no.</div>
+      <div class="erro-ref">→ Ficha 35 Causais/Concessivas</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">V5</span> <h5>Talvez + indicativo</h5>
+      <div class="erro-wrong">✗ "Talvez ele vem amanhã."</div>
+      <div class="erro-right">✓ "Talvez ele venha amanhã."</div>
+      <div class="erro-tip">Talvez antepuesto exige obligatoriamente subjuntivo: venha, possa, seja.</div>
+      <div class="erro-ref">→ Ficha 28 Advérbios</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">V6</span> <h5>Ser e Ir con PPS distintos</h5>
+      <div class="erro-wrong">✗ Intentar diferenciar PPS de ser e ir</div>
+      <div class="erro-right">✓ Ambos comparten: fui, foste, foi, fomos, foram.</div>
+      <div class="erro-tip">Ser e ir tienen exactamente el mismo PPS. El contexto desambigua.</div>
+      <div class="erro-ref">→ Ficha 02 PPS/Imperfeito</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">V7</span> <h5>Estar a + infinitivo en PB</h5>
+      <div class="erro-wrong">✗ "Estou a falar com ele." (en PB)</div>
+      <div class="erro-right">✓ "Estou falando com ele." (PB) / "Estou a falar" (PE)</div>
+      <div class="erro-tip">En PB el progresivo es ESTAR + GERÚNDIO. La forma "estar a + inf." es PE y suena rara en Brasil.</div>
+      <div class="erro-ref">→ Ficha 11 Gerúndio PB vs PE</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">V8</span> <h5>Tener años sin "ter"</h5>
+      <div class="erro-wrong">✗ "Eu sou de 25 anos."</div>
+      <div class="erro-right">✓ "Eu tenho 25 anos."</div>
+      <div class="erro-tip">Edad se expresa con TER + número + ANOS. Nunca "ser de X años" (calco español).</div>
+      <div class="erro-ref">→ Ficha 61 Numerais</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">V9</span> <h5>Olvidar acento en pôde / têm</h5>
+      <div class="erro-wrong">✗ "Ontem ele pode vir." / "Eles tem dinheiro."</div>
+      <div class="erro-right">✓ "Ontem ele pôde vir." / "Eles têm dinheiro."</div>
+      <div class="erro-tip">Acentos diferenciais obligatorios: pode (pres.) vs pôde (PPS); tem (3ª sing.) vs têm (3ª pl.).</div>
+      <div class="erro-ref">→ Ficha 60 Acentuação</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-lexicais">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los falsos amigos y calcos léxicos son la fuente más frecuente de errores comunicativos.</div>
+    <div class="erro-card"><span class="erro-num">L1</span> <h5>Embaraçada vs grávida</h5>
+      <div class="erro-wrong">✗ "Minha esposa está embaraçada." (= avergonzada)</div>
+      <div class="erro-right">✓ "Minha esposa está grávida."</div>
+      <div class="erro-tip">Embaraçada = avergonzada, no embarazada. Grávida = embarazada.</div>
+      <div class="erro-ref">→ Ficha 47 Falsos Amigos</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">L2</span> <h5>Borracha = goma de borrar</h5>
+      <div class="erro-wrong">✗ "Ele está borracha." (= ebrio)</div>
+      <div class="erro-right">✓ "Ele está bêbado."</div>
+      <div class="erro-tip">Borracha en PT = goma de borrar. Borracho/a = bêbado/a.</div>
+      <div class="erro-ref">→ Ficha 47</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">L3</span> <h5>Apelido = apodo, no apellido</h5>
+      <div class="erro-wrong">✗ "Meu apelido é Silva."</div>
+      <div class="erro-right">✓ "Meu sobrenome é Silva."</div>
+      <div class="erro-tip">Apelido = apodo. Sobrenome = apellido. Confusión total.</div>
+      <div class="erro-ref">→ Ficha 47</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">L4</span> <h5>Roxo = morado, no rojo</h5>
+      <div class="erro-wrong">✗ "O sangue é roxo." (= morado)</div>
+      <div class="erro-right">✓ "O sangue é vermelho."</div>
+      <div class="erro-tip">Roxo = morado/violeta. Rojo = vermelho.</div>
+      <div class="erro-ref">→ Ficha 47</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">L5</span> <h5>Esquisito = raro, no exquisito</h5>
+      <div class="erro-wrong">✗ "Ele é uma pessoa esquisita." (= refinada)</div>
+      <div class="erro-right">✓ "Ele é uma pessoa requintada / refinada."</div>
+      <div class="erro-tip">Esquisito = raro, extraño. Para "exquisito (refinado)" usa requintado, refinado, sofisticado.</div>
+      <div class="erro-ref">→ Ficha 47</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">L6</span> <h5>Salada = ensalada, no "con sal"</h5>
+      <div class="erro-wrong">✗ "Esta comida está salada." (= con sal)</div>
+      <div class="erro-right">✓ "Esta comida está salgada."</div>
+      <div class="erro-tip">Salada = ensalada (comida). Salgada = con mucha sal.</div>
+      <div class="erro-ref">→ Ficha 47</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">L7</span> <h5>Cumplir vs realizar/alcançar</h5>
+      <div class="erro-wrong">✗ "Quero cumprir meu sonho."</div>
+      <div class="erro-right">✓ "Quero realizar meu sonho."</div>
+      <div class="erro-tip">Cumprir = solo promesas, leyes, obligaciones. Para sueños/objetivos: realizar, alcançar.</div>
+      <div class="erro-ref">→ Ficha 48 Colocações</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">L8</span> <h5>Hacer una decisión (calco)</h5>
+      <div class="erro-wrong">✗ "Vou fazer uma decisão."</div>
+      <div class="erro-right">✓ "Vou tomar uma decisão."</div>
+      <div class="erro-tip">"Tomar decisão", no "fazer decisão". Calco del español/inglés.</div>
+      <div class="erro-ref">→ Ficha 48 Colocações</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">L9</span> <h5>Mais vs mas (ortografía)</h5>
+      <div class="erro-wrong">✗ "Quero ir, mais não posso." (= "pero")</div>
+      <div class="erro-right">✓ "Quero ir, mas não posso."</div>
+      <div class="erro-tip">Mas (sin i) = "pero". Mais (con i) = "más". Confusión ortográfica muy frecuente.</div>
+      <div class="erro-ref">→ Ficha 28 Advérbios</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-sintaticos">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los errores sintácticos cubren preposiciones, regências verbais y construcciones específicas del portugués.</div>
+    <div class="erro-card"><span class="erro-num">S1</span> <h5>Destino: para vs a</h5>
+      <div class="erro-wrong">✗ "Vou a casa amanhã." (suena rígido en PB)</div>
+      <div class="erro-right">✓ "Vou para casa amanhã."</div>
+      <div class="erro-tip">En PB, PARA domina como destino, especialmente con estancia. "A" es más PE o formal.</div>
+      <div class="erro-ref">→ Ficha 30 Para vs A</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">S2</span> <h5>Crase ante masculino o verbo</h5>
+      <div class="erro-wrong">✗ "Vou à banco." / "Começou à chover."</div>
+      <div class="erro-right">✓ "Vou ao banco." / "Começou a chover."</div>
+      <div class="erro-tip">Crase (à) solo con femeninos. Con masculinos: ao. Con verbo en inf.: jamás crase.</div>
+      <div class="erro-ref">→ Ficha 29 Preposições</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">S3</span> <h5>Gostar sin "de"</h5>
+      <div class="erro-wrong">✗ "Eu gosto chocolate."</div>
+      <div class="erro-right">✓ "Eu gosto de chocolate."</div>
+      <div class="erro-tip">Gostar SIEMPRE exige DE: gosto de, gosta de, gostam de.</div>
+      <div class="erro-ref">→ Ficha 31 Regências</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">S4</span> <h5>Confiar de (calco)</h5>
+      <div class="erro-wrong">✗ "Confio de você."</div>
+      <div class="erro-right">✓ "Confio em você."</div>
+      <div class="erro-tip">Confiar exige EM (no de): confio em, acredito em, penso em.</div>
+      <div class="erro-ref">→ Ficha 31</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">S5</span> <h5>Medios de transporte con em</h5>
+      <div class="erro-wrong">✗ "Vou em ônibus / em avião."</div>
+      <div class="erro-right">✓ "Vou de ônibus / de avião."</div>
+      <div class="erro-tip">Medios de transporte con DE: de carro, de ônibus, de moto, de avião. Excepción: a pé.</div>
+      <div class="erro-ref">→ Ficha 29</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">S6</span> <h5>"¿" y "¡" iniciais</h5>
+      <div class="erro-wrong">✗ "¿Você vem?" / "¡Que bom!"</div>
+      <div class="erro-right">✓ "Você vem?" / "Que bom!"</div>
+      <div class="erro-tip">Portugués NUNCA usa ¿ ni ¡ iniciais. Solo signos al final.</div>
+      <div class="erro-ref">→ Ficha 53 Pontuação</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">S7</span> <h5>Vírgula entre sujeto y verbo</h5>
+      <div class="erro-wrong">✗ "Os alunos, chegaram tarde."</div>
+      <div class="erro-right">✓ "Os alunos chegaram tarde."</div>
+      <div class="erro-tip">NUNCA coma entre sujeto y verbo (a menos que haya inciso/aposto).</div>
+      <div class="erro-ref">→ Ficha 53 Pontuação</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">S8</span> <h5>Tener calor / hambre con "ter"</h5>
+      <div class="erro-wrong">✗ "Eu tenho frio." (más PE)</div>
+      <div class="erro-right">✓ "Estou com frio." (PB natural)</div>
+      <div class="erro-tip">En PB hablado, estados físicos van con ESTAR COM + sust.: estou com fome, com sono, com pressa.</div>
+      <div class="erro-ref">→ Ficha 17 Construções</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">S9</span> <h5>Tópico con sujeito pronominal redundante (en redação)</h5>
+      <div class="erro-wrong">✗ "O Pedro, ele chegou tarde." (en redação)</div>
+      <div class="erro-right">✓ "O Pedro chegou tarde."</div>
+      <div class="erro-tip">En escritura culta, no doblar el sujeito con pronombre. Es PB hablado.</div>
+      <div class="erro-ref">→ Ficha 38 Topicalização</div>
+    </div>
+    <div class="erro-card"><span class="erro-num">S10</span> <h5>Assistir sin "a" (norma)</h5>
+      <div class="erro-wrong">✗ "Assisti o filme." (en redação culta)</div>
+      <div class="erro-right">✓ "Assisti ao filme." (norma)</div>
+      <div class="erro-tip">En norma escrita, "assistir" (= ver) exige "a". En PB hablado se omite, pero en escritura culta es obligatorio.</div>
+      <div class="erro-ref">→ Ficha 31</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-checklist">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      <strong>Checklist de autocorrección</strong> para revisar tu producción escrita y oral. Pasa por estos puntos al releer cualquier texto en portugués.
+    </div>
+    <div class="sec-label">✅ Checklist de revisión final</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Categoría</th><th>Pregunta de verificación</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Pronombres</strong></td><td>¿"Você" con 3ª singular? ¿"A gente" con 3ª sing.? ¿Sin "a personal"?</td></tr>
+        <tr><td><strong>Verbos</strong></td><td>¿"Quando" con subj. futuro si es futuro? ¿"Se" con imp. subj. en condicional? ¿"Embora" con subj.?</td></tr>
+        <tr><td><strong>PPS vs PPC</strong></td><td>¿Para "he hecho" español, usé PPS (não tenho feito)?</td></tr>
+        <tr><td><strong>Preposiciones</strong></td><td>¿"Para" para destino? ¿"De" con transporte? ¿"Em" con creer/pensar?</td></tr>
+        <tr><td><strong>Crase</strong></td><td>¿Crase solo con fem. + artículo? ¿Sin crase ante verbo?</td></tr>
+        <tr><td><strong>Acentos</strong></td><td>¿Distinguí pôde/pode, têm/tem, pôr/por?</td></tr>
+        <tr><td><strong>Falsos amigos</strong></td><td>¿Verifiqué "embaraçada, esquisito, borracha, roxo, apelido"?</td></tr>
+        <tr><td><strong>Colocações</strong></td><td>¿"Tomar decisão", "realizar sonho", "tirar foto"?</td></tr>
+        <tr><td><strong>Pontuação</strong></td><td>¿Sin ¿ ni ¡ iniciais? ¿Sin coma entre sujeito y verbo?</td></tr>
+        <tr><td><strong>Concordancia</strong></td><td>¿Concordancia plena en sintagma plural? ¿Adjetivos concordando?</td></tr>
+        <tr><td><strong>Registro</strong></td><td>¿Coherencia: norma escrita o PB hablado, sin mezcla?</td></tr>
+        <tr><td><strong>Fonética</strong> (oral)</td><td>¿Nasalizo bien? ¿Cierro vocales átonas? ¿Palatalizo D/T+I?</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-label">Estrategia de aprendizaje</div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Paso 1:</strong> Identifica tu nivel: ¿qué categoría de errores cometes más? (fonéticos, pronominais, verbais, lexicais, sintáticos)</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Paso 2:</strong> Trabaja una categoría a la vez. Revisa cada error con su ficha de referencia.</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Paso 3:</strong> Practica producción dirigida con cada error. Por ejemplo: escribe 10 frases usando "quando" + subj. futuro.</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Paso 4:</strong> Aceptas que algunos errores son persistentes y los marcas para vigilancia consciente.</div></div>
+    <div class="example-block pr"><div class="ex-fr"><strong>Paso 5:</strong> Lee y escucha mucho contenido en PB. La inmersión consolida lo aprendido.</div></div>
+    <div class="warn-box"><span class="warn-icon">💡</span><div class="warn-text"><strong>Mensaje final:</strong> el hispanohablante puede llegar a C1 en portugués <strong>solo si trabaja conscientemente sobre estos errores sistemáticos</strong>. Sin esto, la cercanía con el español garantiza fluidez inmediata, pero impide superar el techo B2. Cada error resuelto es un paso real hacia el C1.</div></div>
+  </div></div>
+</div>
+
+</div>
+<footer class="page-end"><button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Voltar ao topo</button></footer>
+</div>
+<script src="design.js"></script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Formação de Palavras</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+:root {
+  --primary: #6e521f; --primary-soft: #f5ede0; --primary-mid: #a88a52;
+  --primary-strong: #3e2e12; --primary-glow: rgba(110, 82, 31, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #d4b87a; --primary-soft: #2e2614; --primary-mid: #a8895a;
+  --primary-strong: #ead8b0; --primary-glow: rgba(212, 184, 122, 0.18);
+}
+.stat-pill.pr { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr { color: var(--primary); font-weight: 700; }
+.hl-pr { color: var(--primary); font-weight: 700; }
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+.suf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 14px 0; }
+.suf-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px 14px; border-left: 4px solid var(--primary); }
+.suf-card h5 { font-family: 'Fraunces', Georgia, serif; font-size: 0.92rem; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+.suf-card .suf-mean { font-size: 0.78em; color: var(--text3); font-style: italic; margin-bottom: 6px; }
+.suf-card .suf-ex { font-size: 0.82em; color: var(--text2); line-height: 1.5; }
+.suf-card .suf-ex em { color: var(--primary); font-weight: 600; font-style: normal; }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></a>
+    <h1>Formação de Palavras</h1>
+    <span class="header-tag">Léxico</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B2–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Sufijos · prefijos · derivación</div>
+    <div class="fs-wrap"><span class="fs-sz" style="font-size:0.75rem">A</span><input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)"><span class="fs-sz" style="font-size:1.05rem">A</span><button class="theme-toggle" onclick="toggleTheme()"><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button></div>
+  </div>
+</header>
+
+<div class="mode-toggle"><button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button></div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Sistema general</button>
+    <button class="snav-btn"        onclick="showSection('s-suf-nominais',this)">2. Sufijos nominais</button>
+    <button class="snav-btn"        onclick="showSection('s-suf-adjetivais',this)">3. Sufijos adjetivais</button>
+    <button class="snav-btn"        onclick="showSection('s-suf-verbais',this)">4. Sufijos verbais</button>
+    <button class="snav-btn"        onclick="showSection('s-prefixos',this)">5. Prefijos</button>
+    <button class="snav-btn"        onclick="showSection('s-composicao',this)">6. Composición y otros</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+<div class="sec-block active" id="s-intro">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      La <strong>formação de palavras</strong> en portugués se realiza principalmente por <strong>derivación</strong> (sufijos y prefijos) y <strong>composición</strong> (unión de dos palabras). Conocer los sufijos y prefijos productivos permite <strong>inferir significados</strong> de palabras nuevas y <strong>crear neologismos</strong> espontáneos. Es competencia léxica clave para B2–C1.
+    </div>
+    <div class="sec-label">Procesos principales</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Proceso</th><th>Ejemplo</th><th>Significado</th></tr></thead>
+      <tbody>
+        <tr><td>Sufijación nominal</td><td>educar → educação, livre → liberdade</td><td>verbo / adj. → sust.</td></tr>
+        <tr><td>Sufijación adjetival</td><td>amor → amoroso, calor → calorento</td><td>sust. → adj.</td></tr>
+        <tr><td>Sufijación verbal</td><td>moderno → modernizar, simples → simplificar</td><td>adj. → verbo</td></tr>
+        <tr><td>Sufijación adverbial</td><td>rápido → rapidamente</td><td>adj. → adverbio</td></tr>
+        <tr><td>Prefijación</td><td>fazer → desfazer, ver → rever</td><td>añade matiz semántico</td></tr>
+        <tr><td>Composición</td><td>guarda + chuva = guarda-chuva</td><td>palabra nueva por unión</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn-box"><span class="warn-icon">💡</span><div class="warn-text"><strong>Productividad:</strong> los sufijos más productivos en PB moderno son <em>-ção, -mento, -dade, -ismo, -izar, -ar, -inho</em>. Permiten formar neologismos espontáneos: <em>privacização, empoderar, descomplicar, googlear (col.)</em>.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-suf-nominais">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los <strong>sufijos nominais</strong> forman sustantivos a partir de verbos, adjetivos u otros sustantivos. Cada sufijo aporta un matiz semántico (acción, proceso, cualidad, profesión, doctrina).</div>
+    <div class="suf-grid">
+      <div class="suf-card"><h5>-ção (-são)</h5><div class="suf-mean">acción / efecto (de verbo)</div><div class="suf-ex">educar → <em>educação</em>, ver → <em>visão</em>, ver → televisão.</div></div>
+      <div class="suf-card"><h5>-mento</h5><div class="suf-mean">acción / efecto</div><div class="suf-ex">crescer → <em>crescimento</em>, pensar → <em>pensamento</em>.</div></div>
+      <div class="suf-card"><h5>-dade (-idade)</h5><div class="suf-mean">cualidad abstracta (de adj.)</div><div class="suf-ex">livre → <em>liberdade</em>, igual → <em>igualdade</em>.</div></div>
+      <div class="suf-card"><h5>-eza</h5><div class="suf-mean">cualidad (de adj.)</div><div class="suf-ex">belo → <em>beleza</em>, fraco → <em>fraqueza</em>.</div></div>
+      <div class="suf-card"><h5>-ura</h5><div class="suf-mean">cualidad / estado</div><div class="suf-ex">doce → <em>doçura</em>, alto → <em>altura</em>, frio → frescura.</div></div>
+      <div class="suf-card"><h5>-agem</h5><div class="suf-mean">acción / colectivo</div><div class="suf-ex">paisar → <em>paisagem</em>, ferrar → <em>ferragem</em>.</div></div>
+      <div class="suf-card"><h5>-ismo</h5><div class="suf-mean">doctrina / sistema</div><div class="suf-ex">social → <em>socialismo</em>, modern → <em>modernismo</em>.</div></div>
+      <div class="suf-card"><h5>-ista</h5><div class="suf-mean">persona / adepto</div><div class="suf-ex">jornal → <em>jornalista</em>, dent → <em>dentista</em>.</div></div>
+      <div class="suf-card"><h5>-ário / -eiro</h5><div class="suf-mean">profesión / lugar</div><div class="suf-ex">arte → <em>artista</em>, livro → <em>livraria, livreiro</em>.</div></div>
+      <div class="suf-card"><h5>-ador / -edor</h5><div class="suf-mean">agente (persona o instr.)</div><div class="suf-ex">trabalhar → <em>trabalhador</em>, ven → <em>vendedor</em>.</div></div>
+      <div class="suf-card"><h5>-ância / -ência</h5><div class="suf-mean">cualidad / acción</div><div class="suf-ex">tolerar → <em>tolerância</em>, viver → <em>vivência</em>.</div></div>
+      <div class="suf-card"><h5>-ório / -ária</h5><div class="suf-mean">lugar / función</div><div class="suf-ex">conservar → <em>conservatório</em>, secre → <em>secretaria</em>.</div></div>
+      <div class="suf-card"><h5>-aria / -eria</h5><div class="suf-mean">tienda / lugar de</div><div class="suf-ex">livro → <em>livraria</em>, pão → <em>padaria</em>, pizza → <em>pizzaria</em>.</div></div>
+      <div class="suf-card"><h5>-zinho / -zinha</h5><div class="suf-mean">diminutivo (afectivo)</div><div class="suf-ex">café → <em>cafezinho</em>, mão → <em>mãozinha</em>.</div></div>
+      <div class="suf-card"><h5>-ão / -ona</h5><div class="suf-mean">aumentativo</div><div class="suf-ex">carro → <em>carrão</em>, mulher → <em>mulherona</em>.</div></div>
+    </div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-suf-adjetivais">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los <strong>sufijos adjetivais</strong> forman adjetivos a partir de sustantivos, verbos u otros adjetivos. Aportan matices como posibilidad, posesión, relación, abundancia.</div>
+    <div class="suf-grid">
+      <div class="suf-card"><h5>-vel / -ável / -ível</h5><div class="suf-mean">posibilidad / capacidad</div><div class="suf-ex">amar → <em>amável</em>, fazer → <em>factível</em>.</div></div>
+      <div class="suf-card"><h5>-oso / -osa</h5><div class="suf-mean">abundancia / posesión</div><div class="suf-ex">amor → <em>amoroso</em>, gosto → <em>gostoso</em>, ódio → odioso.</div></div>
+      <div class="suf-card"><h5>-al</h5><div class="suf-mean">relativo a</div><div class="suf-ex">natur → <em>natural</em>, glob → <em>global</em>, ment → <em>mental</em>.</div></div>
+      <div class="suf-card"><h5>-ivo / -iva</h5><div class="suf-mean">tendencia / función</div><div class="suf-ex">produzir → <em>produtivo</em>, ativ → <em>ativo</em>, criar → criativo.</div></div>
+      <div class="suf-card"><h5>-ento</h5><div class="suf-mean">cualidad (de sust.)</div><div class="suf-ex">calor → <em>calorento</em>, pó → <em>poento</em>, friorento.</div></div>
+      <div class="suf-card"><h5>-eiro / -eira</h5><div class="suf-mean">relativo a / oficio</div><div class="suf-ex">brasileiro, fofoqueiro, festeiro.</div></div>
+      <div class="suf-card"><h5>-ano / -ana</h5><div class="suf-mean">origen / pertenencia</div><div class="suf-ex">italiano, paraense, mexicano.</div></div>
+      <div class="suf-card"><h5>-ês / -esa</h5><div class="suf-mean">origen</div><div class="suf-ex">português, francês, japonês.</div></div>
+      <div class="suf-card"><h5>-ino / -ina</h5><div class="suf-mean">relativo a (raro)</div><div class="suf-ex">argentino, paulistano, marinho.</div></div>
+      <div class="suf-card"><h5>-udo / -uda</h5><div class="suf-mean">posesión enf. (col.)</div><div class="suf-ex">barbudo, peludo, sortudo.</div></div>
+      <div class="suf-card"><h5>-ado / -ido</h5><div class="suf-mean">participio adj.</div><div class="suf-ex">cansado, perdido, abandonado.</div></div>
+      <div class="suf-card"><h5>-ante / -ente</h5><div class="suf-mean">cualidad activa</div><div class="suf-ex">brilhante, importante, urgente.</div></div>
+      <div class="suf-card"><h5>-ico / -ica</h5><div class="suf-mean">relativo a (técnico)</div><div class="suf-ex">romântico, prático, geográfico.</div></div>
+      <div class="suf-card"><h5>-iano</h5><div class="suf-mean">relativo a (autor)</div><div class="suf-ex">freudiano, machadiano, sebastianista.</div></div>
+    </div>
+    <div class="sec-label">Ejemplos en uso</div>
+    <div class="example-block pr"><div class="ex-fr">Um problema <span class="epr">solucionável</span> = que se puede solucionar.</div></div>
+    <div class="example-block pr"><div class="ex-fr">Uma pessoa <span class="epr">amorosa</span> = llena de amor.</div></div>
+    <div class="example-block pr"><div class="ex-fr">A vida <span class="epr">moderna</span> = relativa a la modernidad.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-suf-verbais">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los <strong>sufijos verbais</strong> forman verbos a partir de sustantivos o adjetivos. Permiten "verbalizar" cualquier concepto. Son altamente productivos (especialmente <em>-izar</em>).</div>
+    <div class="suf-grid">
+      <div class="suf-card"><h5>-izar</h5><div class="suf-mean">hacer / transformar en</div><div class="suf-ex">moderno → <em>modernizar</em>, real → <em>realizar</em>.</div></div>
+      <div class="suf-card"><h5>-ificar</h5><div class="suf-mean">hacer (formal)</div><div class="suf-ex">claro → <em>clarificar</em>, simples → <em>simplificar</em>.</div></div>
+      <div class="suf-card"><h5>-ejar</h5><div class="suf-mean">acción repetida / lúdica</div><div class="suf-ex">gota → <em>gotejar</em>, bra → <em>bracejar</em>.</div></div>
+      <div class="suf-card"><h5>-ecer</h5><div class="suf-mean">volverse / aumentar</div><div class="suf-ex">escur → <em>escurecer</em>, vermelho → <em>avermelhecer</em>.</div></div>
+      <div class="suf-card"><h5>-itar / -ear</h5><div class="suf-mean">acción intensiva / suave</div><div class="suf-ex">debilitar, transit → transitar, golpe → golpear.</div></div>
+      <div class="suf-card"><h5>en- ... -ar</h5><div class="suf-mean">causativo</div><div class="suf-ex">grand → <em>engrandecer</em>, gord → <em>engordar</em>.</div></div>
+      <div class="suf-card"><h5>a- ... -ar</h5><div class="suf-mean">aproximación</div><div class="suf-ex">tarde → <em>atrasar</em>, próx → <em>aproximar</em>.</div></div>
+    </div>
+    <div class="sec-label">Productividad de -izar</div>
+    <div class="example-block pr"><div class="ex-fr">global → <span class="epr">globalizar</span>, computador → <span class="epr">computadorizar</span>, profissional → <span class="epr">profissionalizar</span>.</div></div>
+    <div class="example-block pr"><div class="ex-fr">Neologismos: <span class="epr">facebookizar, instagramizar, googlear</span> (algunos resultados con -ar).</div></div>
+    <div class="note-box"><strong>-izar es muy productivo:</strong> el PB acepta neologismos con -izar para cualquier nuevo concepto: <em>privatizar, terceirizar, viralizar, monetizar, descentralizar, digitalizar</em>. En tecnología, política, marketing.</div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-prefixos">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los <strong>prefijos</strong> añaden un matiz semántico al radical sin cambiar la clase de palabra. Son altamente productivos en formación de neologismos.</div>
+    <div class="suf-grid">
+      <div class="suf-card"><h5>in- / im- / i-</h5><div class="suf-mean">negación</div><div class="suf-ex">feliz → <em>infeliz</em>, possível → <em>impossível</em>, legal → ilegal.</div></div>
+      <div class="suf-card"><h5>des-</h5><div class="suf-mean">acción inversa</div><div class="suf-ex">fazer → <em>desfazer</em>, conectar → <em>desconectar</em>.</div></div>
+      <div class="suf-card"><h5>re-</h5><div class="suf-mean">repetición</div><div class="suf-ex">fazer → <em>refazer</em>, ler → <em>reler</em>, ver → <em>rever</em>.</div></div>
+      <div class="suf-card"><h5>super- / sobre-</h5><div class="suf-mean">por encima / superlativo</div><div class="suf-ex"><em>super-homem, sobrenatural, supermercado</em>.</div></div>
+      <div class="suf-card"><h5>sub-</h5><div class="suf-mean">debajo / inferior</div><div class="suf-ex"><em>submarino, subterrâneo, subgerente</em>.</div></div>
+      <div class="suf-card"><h5>pré- / pre-</h5><div class="suf-mean">antes</div><div class="suf-ex"><em>pré-história, prever, precolombino</em>.</div></div>
+      <div class="suf-card"><h5>pós- / pos-</h5><div class="suf-mean">después</div><div class="suf-ex"><em>pós-graduação, pós-guerra, posdoctoral</em>.</div></div>
+      <div class="suf-card"><h5>anti-</h5><div class="suf-mean">contra</div><div class="suf-ex"><em>anti-herói, antibiótico, antissocial</em>.</div></div>
+      <div class="suf-card"><h5>contra-</h5><div class="suf-mean">en oposición</div><div class="suf-ex"><em>contraproducente, contrapeso, contrariar</em>.</div></div>
+      <div class="suf-card"><h5>hiper- / mega-</h5><div class="suf-mean">superlativo (col. PB)</div><div class="suf-ex"><em>hipermercado, megaprojeto, megabacana</em>.</div></div>
+      <div class="suf-card"><h5>auto-</h5><div class="suf-mean">por sí mismo</div><div class="suf-ex"><em>autoestima, autocrítica, autoescola</em>.</div></div>
+      <div class="suf-card"><h5>inter- / entre-</h5><div class="suf-mean">entre</div><div class="suf-ex"><em>internacional, intercâmbio, entrevista</em>.</div></div>
+      <div class="suf-card"><h5>multi- / pluri-</h5><div class="suf-mean">muchos</div><div class="suf-ex"><em>multifuncional, pluricultural, multinacional</em>.</div></div>
+      <div class="suf-card"><h5>ex-</h5><div class="suf-mean">ex-, antiguo</div><div class="suf-ex"><em>ex-presidente, ex-marido, ex-aluno</em>.</div></div>
+      <div class="suf-card"><h5>extra-</h5><div class="suf-mean">fuera / superlativo</div><div class="suf-ex"><em>extraordinário, extraescolar, extrasensorial</em>.</div></div>
+      <div class="suf-card"><h5>vice-</h5><div class="suf-mean">en lugar de</div><div class="suf-ex"><em>vice-presidente, vice-líder</em>.</div></div>
+    </div>
+    <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Guion en prefijos:</strong> según el Acordo Ortográfico de 1990, algunos prefijos usan guion (<em>pré-, pós-, vice-, ex-, super-</em> ante vocal) y otros no (<em>anti-, auto-, contra-, infra-, inter-</em> en general unidos). Reglas precisas en cada caso.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-composicao">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Otros procesos: <strong>composição</strong> (unión de palabras), <strong>aglutinação</strong> (fusión total), <strong>siglas / acrónimos</strong>, <strong>conversión</strong> (cambio de clase sin sufijo).</div>
+    <div class="sec-label">Composição (con guion o sin)</div>
+    <div class="suf-grid">
+      <div class="suf-card"><h5>Sust. + sust.</h5><div class="suf-mean">unidad compleja</div><div class="suf-ex"><em>peixe-espada, palavra-chave, pé-de-meia</em>.</div></div>
+      <div class="suf-card"><h5>Verbo + sust.</h5><div class="suf-mean">agente / instrumento</div><div class="suf-ex"><em>guarda-chuva, beija-flor, quebra-cabeça</em>.</div></div>
+      <div class="suf-card"><h5>Adj. + sust.</h5><div class="suf-mean">valoración</div><div class="suf-ex"><em>má-fé, boa-vontade, livre-arbítrio</em>.</div></div>
+      <div class="suf-card"><h5>Sust. + adj.</h5><div class="suf-mean">color compuesto</div><div class="suf-ex"><em>azul-claro, vermelho-vivo, cor-de-rosa</em>.</div></div>
+      <div class="suf-card"><h5>Numeral + sust.</h5><div class="suf-mean">cantidad</div><div class="suf-ex"><em>terça-feira, segunda-feira, sete-estrelo</em>.</div></div>
+    </div>
+    <div class="sec-label">Aglutinação (fusión total)</div>
+    <div class="example-block pr"><div class="ex-fr">em + boa hora → <span class="epr">embora</span></div></div>
+    <div class="example-block pr"><div class="ex-fr">para + a → <span class="epr">pra</span> (en habla)</div></div>
+    <div class="example-block pr"><div class="ex-fr">por + isso → <span class="epr">por isso</span> (se mantiene separado)</div></div>
+    <div class="sec-label">Siglas y acrónimos</div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">PT</span> (Partido dos Trabalhadores), <span class="epr">USP</span> (Universidade de São Paulo), <span class="epr">PUC</span>, <span class="epr">CPF</span>.</div></div>
+    <div class="example-block pr"><div class="ex-fr">Genéricos: <span class="epr">UTI, RH, BO, RG, CEP, CNPJ</span>.</div></div>
+    <div class="sec-label">Conversión (cambio de clase sin sufijo)</div>
+    <div class="example-block pr"><div class="ex-fr">Verbo → sust.: o <span class="epr">jantar</span>, o <span class="epr">poder</span>, o <span class="epr">querer</span>.</div></div>
+    <div class="example-block pr"><div class="ex-fr">Adj. → sust.: o <span class="epr">belo</span>, o <span class="epr">útil</span>, o <span class="epr">justo</span>.</div></div>
+    <div class="example-block pr"><div class="ex-fr">Sust. → adj.: cores <span class="epr">laranja</span>, <span class="epr">rosa</span>, <span class="epr">vinho</span> (color).</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-trampas">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los 7 errores más frecuentes con formação de palavras.</div>
+    <div class="trap-cards" id="trap-cards"></div>
+  </div></div>
+</div>
+
+</div>
+<footer class="page-end"><button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Voltar ao topo</button></footer>
+</div>
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'-ción español → -ção portugués',
+   wrong:"Educacion / informacion (con n)",
+   right:"Educação / informação (con ç + ão).",
+   expl:'El sufijo español <em>-ción</em> se convierte en <strong>-ção</strong> en portugués: <em>educação, informação, comunicação, situação, nação, ação</em>. Con cedilla y -ão. NUNCA <em>-cion</em>.'},
+  {name:'-dad español → -dade portugués',
+   wrong:"Felicidad / dificultad",
+   right:"Felicidade / dificuldade.",
+   expl:'El sufijo español <em>-dad / -tad</em> se convierte en <strong>-dade</strong>: <em>felicidade, dificuldade, sociedade, liberdade, igualdade</em>. Con -e final. NUNCA <em>-dad</em>.'},
+  {name:'-mente con masculino',
+   wrong:"Rapidamente del adj. rápido (masc.)",
+   right:"Rapidamente, formado a partir de rápida (fem.).",
+   expl:'El sufijo <em>-mente</em> se añade a la <strong>forma femenina</strong> del adjetivo: <em>rápida → rapidamente, lenta → lentamente, certa → certamente</em>. Si invariable, queda igual: <em>simples → simplesmente, fácil → facilmente</em>.'},
+  {name:'-vel / -ável / -ível confusión',
+   wrong:"Amavel / facivel (mal acentuado o mezcla)",
+   right:"Amável / factível.",
+   expl:'<em>-vel</em> requiere acento agudo en la <strong>antepenúltima sílaba</strong>: <em>amável, possível, terrível, factível, sustentável, sociável</em>. Verbos en -AR → -ável; verbos en -ER/-IR → -ível: <em>compreensível, audível</em>.'},
+  {name:'Prefijos sin guion (acordo ortográfico)',
+   wrong:"Anti-social / auto-escola (escritos con guion)",
+   right:"Antissocial / autoescola (sin guion, por el Acordo).",
+   expl:'El Acordo Ortográfico de 1990 simplificó el uso de guion en prefijos. Reglas: <em>anti-, auto-, contra-, infra-, super-</em> + vocal → unión con duplicación de "s" o "r" si necesario: <em>antissocial, autoescola, contrarregra, suprassumo</em>.'},
+  {name:'Falsos amigos por sufijo',
+   wrong:"Asumir que -oso siempre significa "lleno de"",
+   right:"Algunos son neutros: famoso (= famoso), mas amoroso (= cariñoso)",
+   expl:'Cuidado con falsos amigos: <em>amoroso</em> en portugués es "cariñoso" (no "amoroso de pareja"). <em>Gracioso</em> es "gracioso, divertido" en ambos. <em>Honroso</em> = "honroso". Conoce el matiz semántico.'},
+  {name:'Composición sin guion donde se requiere',
+   wrong:"Guardachuva / beijaflor (sin guion)",
+   right:"Guarda-chuva / beija-flor (con guion).",
+   expl:'Las composiciones <strong>verbo + sustantivo</strong> normalmente llevan guion: <em>guarda-chuva, beija-flor, quebra-cabeça, bate-papo, salva-vidas</em>. Es regla ortográfica obligatoria.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card"><div class="trap-card-header"><div class="trap-name">${t.name}</div><div class="trap-vs"><span class="trap-wrong">✗ ${t.wrong}</span><span class="trap-right">✓ ${t.right}</span></div></div><div class="trap-expl">${t.expl}</div></div>`).join('');
+}
+renderTraps();
+</script>
+</body>
+</html>

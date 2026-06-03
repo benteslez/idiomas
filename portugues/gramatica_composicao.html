@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Composição Lexical</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+:root {
+  --primary: #6e521f; --primary-soft: #f5ede0; --primary-mid: #a88a52;
+  --primary-strong: #3e2e12; --primary-glow: rgba(110, 82, 31, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #d4b87a; --primary-soft: #2e2614; --primary-mid: #a8895a;
+  --primary-strong: #ead8b0; --primary-glow: rgba(212, 184, 122, 0.18);
+}
+.stat-pill.pr { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr { color: var(--primary); font-weight: 700; }
+.hl-pr { color: var(--primary); font-weight: 700; }
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+.comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 14px 0; }
+.comp-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px 14px; border-left: 4px solid var(--primary); }
+.comp-card h5 { font-family: 'Fraunces', Georgia, serif; font-size: 0.92rem; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+.comp-card .comp-mean { font-size: 0.78em; color: var(--text3); font-style: italic; margin-bottom: 6px; }
+.comp-card .comp-ex { font-size: 0.82em; color: var(--text2); line-height: 1.5; }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></a>
+    <h1>Composição Lexical</h1>
+    <span class="header-tag">Léxico</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B2–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Palavras compostas</div>
+    <div class="fs-wrap"><span class="fs-sz" style="font-size:0.75rem">A</span><input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)"><span class="fs-sz" style="font-size:1.05rem">A</span><button class="theme-toggle" onclick="toggleTheme()"><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button></div>
+  </div>
+</header>
+
+<div class="mode-toggle"><button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button></div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Tipos</button>
+    <button class="snav-btn"        onclick="showSection('s-justaposicao',this)">2. Justaposição</button>
+    <button class="snav-btn"        onclick="showSection('s-aglutinacao',this)">3. Aglutinação</button>
+    <button class="snav-btn"        onclick="showSection('s-verbo',this)">4. Verbo + sust.</button>
+    <button class="snav-btn"        onclick="showSection('s-plural',this)">5. Plural de compostos</button>
+    <button class="snav-btn"        onclick="showSection('s-siglas',this)">6. Siglas / acrónimos</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+<div class="sec-block active" id="s-intro">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">
+      La <strong>composição lexical</strong> es el proceso de crear palabras nuevas combinando dos o más palabras existentes. El portugués tiene cuatro tipos principales: <strong>justaposição</strong> (con guion), <strong>aglutinação</strong> (fusión total), <strong>composição perifrástica</strong> (sin guion) y <strong>siglas / acrónimos</strong>. El plural de palabras compuestas tiene reglas propias.
+    </div>
+    <div class="sec-label">Cuatro tipos de composição</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Tipo</th><th>Ejemplo</th><th>Características</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Justaposição</strong></td><td>guarda-chuva, palavra-chave</td><td>palabras unidas por guion, conservan forma</td></tr>
+        <tr><td><strong>Aglutinação</strong></td><td>embora (< em boa hora)</td><td>fusión total, alguna palabra modificada</td></tr>
+        <tr><td><strong>Composição perifrástica</strong></td><td>fim de semana (sin guion)</td><td>locuciones nominales sin guion</td></tr>
+        <tr><td><strong>Siglas / acrónimos</strong></td><td>USP, BNDES, AIDS</td><td>letras iniciales formando nueva unidad</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn-box"><span class="warn-icon">💡</span><div class="warn-text"><strong>Acordo Ortográfico de 1990:</strong> modificó muchas reglas de guion en composições. Algunos compuestos perdieron el guion (<em>fim de semana</em>, antes <em>fim-de-semana</em>) y otros mantuvieron (<em>guarda-chuva</em>).</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-justaposicao">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">La <strong>justaposição</strong> une palabras con <strong>guion</strong> manteniendo la forma de cada componente. Es el tipo más visible y frecuente.</div>
+    <div class="sec-label">Sustantivo + sustantivo</div>
+    <div class="comp-grid">
+      <div class="comp-card"><h5>peixe-espada</h5><div class="comp-mean">pez espada</div><div class="comp-ex">O <em>peixe-espada</em> nada rápido.</div></div>
+      <div class="comp-card"><h5>palavra-chave</h5><div class="comp-mean">palabra clave</div><div class="comp-ex">Use as <em>palavras-chave</em>.</div></div>
+      <div class="comp-card"><h5>couve-flor</h5><div class="comp-mean">coliflor</div><div class="comp-ex">Comprei <em>couve-flor</em>.</div></div>
+      <div class="comp-card"><h5>arco-íris</h5><div class="comp-mean">arcoíris</div><div class="comp-ex">Vi um <em>arco-íris</em>.</div></div>
+      <div class="comp-card"><h5>banana-prata</h5><div class="comp-mean">tipo de plátano</div><div class="comp-ex">Quero <em>banana-prata</em>.</div></div>
+      <div class="comp-card"><h5>relógio-despertador</h5><div class="comp-mean">despertador</div><div class="comp-ex">Comprei um <em>relógio-despertador</em>.</div></div>
+      <div class="comp-card"><h5>navio-escola</h5><div class="comp-mean">buque escuela</div><div class="comp-ex">O <em>navio-escola</em> chegou.</div></div>
+      <div class="comp-card"><h5>terça-feira</h5><div class="comp-mean">martes</div><div class="comp-ex">Na <em>terça-feira</em>.</div></div>
+      <div class="comp-card"><h5>luz-pirilampo</h5><div class="comp-mean">luciérnaga</div><div class="comp-ex">Vi <em>luzes-pirilampo</em>.</div></div>
+    </div>
+    <div class="sec-label">Adjetivo + sustantivo o sustantivo + adjetivo</div>
+    <div class="comp-grid">
+      <div class="comp-card"><h5>boa-vontade</h5><div class="comp-mean">buena voluntad</div><div class="comp-ex">Falta <em>boa-vontade</em>.</div></div>
+      <div class="comp-card"><h5>livre-arbítrio</h5><div class="comp-mean">libre albedrío</div><div class="comp-ex">O <em>livre-arbítrio</em> é um princípio.</div></div>
+      <div class="comp-card"><h5>má-fé</h5><div class="comp-mean">mala fe</div><div class="comp-ex">Agiu com <em>má-fé</em>.</div></div>
+      <div class="comp-card"><h5>obra-prima</h5><div class="comp-mean">obra maestra</div><div class="comp-ex">É uma <em>obra-prima</em>.</div></div>
+      <div class="comp-card"><h5>cidade-fantasma</h5><div class="comp-mean">ciudad fantasma</div><div class="comp-ex">É uma <em>cidade-fantasma</em>.</div></div>
+      <div class="comp-card"><h5>escola-modelo</h5><div class="comp-mean">escuela modelo</div><div class="comp-ex">A <em>escola-modelo</em> destaca-se.</div></div>
+    </div>
+    <div class="sec-label">Adjetivo + adjetivo</div>
+    <div class="comp-grid">
+      <div class="comp-card"><h5>luso-brasileiro</h5><div class="comp-mean">luso-brasileño</div><div class="comp-ex">Relação <em>luso-brasileira</em>.</div></div>
+      <div class="comp-card"><h5>franco-alemão</h5><div class="comp-mean">franco-alemán</div><div class="comp-ex">Acordo <em>franco-alemão</em>.</div></div>
+      <div class="comp-card"><h5>azul-claro</h5><div class="comp-mean">azul claro</div><div class="comp-ex">Vestido <em>azul-claro</em>.</div></div>
+      <div class="comp-card"><h5>verde-escuro</h5><div class="comp-mean">verde oscuro</div><div class="comp-ex">Casaco <em>verde-escuro</em>.</div></div>
+      <div class="comp-card"><h5>vermelho-vivo</h5><div class="comp-mean">rojo vivo</div><div class="comp-ex">Cor <em>vermelho-vivo</em>.</div></div>
+      <div class="comp-card"><h5>amarelo-ouro</h5><div class="comp-mean">amarillo oro</div><div class="comp-ex">Brilho <em>amarelo-ouro</em>.</div></div>
+    </div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-aglutinacao">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">La <strong>aglutinação</strong> es una fusión total: dos o más palabras se unen en una sola, frecuentemente con modificación fonética. Las palabras componentes se vuelven irreconocibles.</div>
+    <div class="sec-label">Ejemplos clásicos de aglutinação</div>
+    <div class="comp-grid">
+      <div class="comp-card"><h5>embora</h5><div class="comp-mean">< em boa hora (aunque)</div><div class="comp-ex">Vou <em>embora</em> agora.</div></div>
+      <div class="comp-card"><h5>fidalgo</h5><div class="comp-mean">< filho de algo (hidalgo)</div><div class="comp-ex">Era um <em>fidalgo</em>.</div></div>
+      <div class="comp-card"><h5>aguardente</h5><div class="comp-mean">< água ardente</div><div class="comp-ex">Bebida <em>aguardente</em>.</div></div>
+      <div class="comp-card"><h5>vinagre</h5><div class="comp-mean">< vinho acre</div><div class="comp-ex">Compre <em>vinagre</em>.</div></div>
+      <div class="comp-card"><h5>passatempo</h5><div class="comp-mean">< passa + tempo (pasatiempo)</div><div class="comp-ex">Meu <em>passatempo</em> é ler.</div></div>
+      <div class="comp-card"><h5>girassol</h5><div class="comp-mean">< gira + sol (girasol)</div><div class="comp-ex">O <em>girassol</em> é amarelo.</div></div>
+      <div class="comp-card"><h5>planalto</h5><div class="comp-mean">< plano + alto (meseta)</div><div class="comp-ex">No <em>planalto</em> central.</div></div>
+      <div class="comp-card"><h5>varapau</h5><div class="comp-mean">< vara + pau (alto y delgado)</div><div class="comp-ex">Ele é um <em>varapau</em>.</div></div>
+      <div class="comp-card"><h5>pernalta</h5><div class="comp-mean">< perna + alta (zancudo)</div><div class="comp-ex">Aves <em>pernaltas</em>.</div></div>
+    </div>
+    <div class="sec-label">Aglutinação con preposiciones (contracciones)</div>
+    <div class="example-block pr"><div class="ex-fr">de + o → <span class="epr">do</span>, em + a → <span class="epr">na</span>, por + o → <span class="epr">pelo</span>, a + a → <span class="epr">à</span> (crase).</div></div>
+    <div class="example-block pr"><div class="ex-fr">para + a → <span class="epr">pra</span> (en habla)</div></div>
+    <div class="note-box"><strong>Comportamiento como una palabra:</strong> las palabras aglutinadas se tratan gramaticalmente como una sola: <em>embora</em> es invariable; <em>girassol</em> tiene plural <em>girassóis</em>; <em>planalto</em> tiene plural <em>planaltos</em>.</div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-verbo">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">La composición <strong>verbo + sustantivo</strong> es extremadamente productiva en portugués. Genera sustantivos que típicamente indican <strong>agente</strong> (quien realiza la acción) o <strong>instrumento</strong> (lo que sirve para hacerla). Casi siempre con guion.</div>
+    <div class="sec-label">Lista de verbo + sustantivo</div>
+    <div class="comp-grid">
+      <div class="comp-card"><h5>guarda-chuva</h5><div class="comp-mean">paraguas</div><div class="comp-ex">Levei o <em>guarda-chuva</em>.</div></div>
+      <div class="comp-card"><h5>guarda-sol</h5><div class="comp-mean">sombrilla</div><div class="comp-ex">Um <em>guarda-sol</em> na praia.</div></div>
+      <div class="comp-card"><h5>guarda-roupa</h5><div class="comp-mean">armario</div><div class="comp-ex">Dentro do <em>guarda-roupa</em>.</div></div>
+      <div class="comp-card"><h5>beija-flor</h5><div class="comp-mean">colibrí</div><div class="comp-ex">Um <em>beija-flor</em> no jardim.</div></div>
+      <div class="comp-card"><h5>quebra-cabeça</h5><div class="comp-mean">rompecabezas / puzzle</div><div class="comp-ex">Faço <em>quebra-cabeças</em>.</div></div>
+      <div class="comp-card"><h5>bate-papo</h5><div class="comp-mean">charla / chat</div><div class="comp-ex">Vamos ter um <em>bate-papo</em>.</div></div>
+      <div class="comp-card"><h5>quebra-mar</h5><div class="comp-mean">rompeolas</div><div class="comp-ex">O <em>quebra-mar</em> protege o porto.</div></div>
+      <div class="comp-card"><h5>salva-vidas</h5><div class="comp-mean">salvavidas</div><div class="comp-ex">O <em>salva-vidas</em> da praia.</div></div>
+      <div class="comp-card"><h5>limpa-pés</h5><div class="comp-mean">felpudo, alfombrilla</div><div class="comp-ex">No <em>limpa-pés</em>.</div></div>
+      <div class="comp-card"><h5>guarda-noturno</h5><div class="comp-mean">vigilante nocturno</div><div class="comp-ex">O <em>guarda-noturno</em>.</div></div>
+      <div class="comp-card"><h5>porta-malas</h5><div class="comp-mean">maletero</div><div class="comp-ex">No <em>porta-malas</em> do carro.</div></div>
+      <div class="comp-card"><h5>porta-voz</h5><div class="comp-mean">portavoz</div><div class="comp-ex">É o <em>porta-voz</em> do partido.</div></div>
+      <div class="comp-card"><h5>vai-e-vem</h5><div class="comp-mean">ir y venir</div><div class="comp-ex">Um <em>vai-e-vem</em> constante.</div></div>
+      <div class="comp-card"><h5>tira-gosto</h5><div class="comp-mean">aperitivo</div><div class="comp-ex">Vamos pedir um <em>tira-gosto</em>.</div></div>
+      <div class="comp-card"><h5>passa-tempo</h5><div class="comp-mean">pasatiempo</div><div class="comp-ex">Leitura é meu <em>passatempo</em>. (también aglutinada: passatempo)</div></div>
+      <div class="comp-card"><h5>cata-vento</h5><div class="comp-mean">veleta</div><div class="comp-ex">No telhado tem <em>cata-vento</em>.</div></div>
+    </div>
+    <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Guion obligatorio:</strong> en composições con <em>guarda-, salva-, beija-, quebra-, bate-, porta-, tira-, passa-, cata-</em>, el guion es obligatorio. Sin guion son agramaticales (<em>guardachuva, beijaflor</em> son errores).</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-plural">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">El <strong>plural de palabras compuestas</strong> sigue reglas específicas según el tipo de composición. Hay que aprenderlas: NO es automático.</div>
+    <div class="sec-label">Regla general según elementos</div>
+    <div class="table-wrap"><table class="gram-table">
+      <thead><tr><th>Tipo</th><th>Regla</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td>Sust. + sust.</td><td>Ambos van al plural</td><td>palavra-chave → palavras-<span class="hl-pr">chave</span> (chave invariable suele)</td></tr>
+        <tr><td>Sust. + sust. (concordancia)</td><td>Ambos plural</td><td>navio-escola → navios-escolas</td></tr>
+        <tr><td>Verbo + sust.</td><td>Solo el sust. va al plural</td><td>guarda-chuva → guarda-<span class="hl-pr">chuvas</span></td></tr>
+        <tr><td>Verbo + sust. plural</td><td>Invariable</td><td>salva-vidas → salva-vidas (invariable)</td></tr>
+        <tr><td>Adj. + adj.</td><td>Solo el último va al plural</td><td>luso-brasileiro → luso-<span class="hl-pr">brasileiros</span></td></tr>
+        <tr><td>Color compuesto</td><td>Invariable (típicamente)</td><td>azul-marinho → azul-marinho (inv.)</td></tr>
+        <tr><td>Adj. + sust.</td><td>Ambos plural</td><td>obra-prima → <span class="hl-pr">obras</span>-<span class="hl-pr">primas</span></td></tr>
+        <tr><td>Vai-e-vem y otras invariables</td><td>Invariable</td><td>vai-e-vem → vai-e-vens (raro)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-label">Ejemplos en uso</div>
+    <div class="example-block pr"><div class="ex-fr">Os <span class="epr">guarda-chuvas</span> estão na entrada. (verbo + sust., solo sust. pl.)</div></div>
+    <div class="example-block pr"><div class="ex-fr">As <span class="epr">obras-primas</span> da literatura. (adj. + sust., ambos pl.)</div></div>
+    <div class="example-block pr"><div class="ex-fr">Os <span class="epr">salva-vidas</span> trabalham na praia. (verbo + sust. pl., invariable)</div></div>
+    <div class="example-block pr"><div class="ex-fr">As <span class="epr">palavras-chave</span> do texto. (sust. pl. + sust. invariable)</div></div>
+    <div class="example-block pr"><div class="ex-fr">Os países <span class="epr">luso-brasileiros</span>. (solo último pl.)</div></div>
+    <div class="example-block pr"><div class="ex-fr">Os blusões <span class="epr">azul-marinho</span>. (color compuesto invariable)</div></div>
+    <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Casos dudosos:</strong> en muchos compuestos, hay variación de plural (<em>palavras-chave / palavras-chaves</em>; <em>peixes-espada / peixes-espadas</em>). En general, la forma con <em>chave/espada</em> invariable es mayoritaria.</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-siglas">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Las <strong>siglas y acrónimos</strong> son palabras formadas por las letras iniciales (o sílabas iniciales) de un grupo de palabras. Brasil tiene una cultura siglas muy productiva.</div>
+    <div class="sec-label">Siglas frecuentes en PB</div>
+    <div class="comp-grid">
+      <div class="comp-card"><h5>USP</h5><div class="comp-mean">Universidade de São Paulo</div><div class="comp-ex">Estudei na <em>USP</em>.</div></div>
+      <div class="comp-card"><h5>PUC</h5><div class="comp-mean">Pontifícia Universidade Católica</div><div class="comp-ex">Sou da <em>PUC</em>.</div></div>
+      <div class="comp-card"><h5>ENEM</h5><div class="comp-mean">Exame Nacional do Ensino Médio</div><div class="comp-ex">Vou fazer o <em>ENEM</em>.</div></div>
+      <div class="comp-card"><h5>BNDES</h5><div class="comp-mean">Banco Nacional de Desenvolvimento</div><div class="comp-ex">O <em>BNDES</em> financiou o projeto.</div></div>
+      <div class="comp-card"><h5>IBGE</h5><div class="comp-mean">Instituto Brasileiro de Geografia e Estatística</div><div class="comp-ex">Segundo o <em>IBGE</em>.</div></div>
+      <div class="comp-card"><h5>SUS</h5><div class="comp-mean">Sistema Único de Saúde</div><div class="comp-ex">Trabalho no <em>SUS</em>.</div></div>
+      <div class="comp-card"><h5>OAB</h5><div class="comp-mean">Ordem dos Advogados do Brasil</div><div class="comp-ex">Passei na prova da <em>OAB</em>.</div></div>
+      <div class="comp-card"><h5>STF</h5><div class="comp-mean">Supremo Tribunal Federal</div><div class="comp-ex">O <em>STF</em> decidiu.</div></div>
+      <div class="comp-card"><h5>CPF</h5><div class="comp-mean">Cadastro de Pessoa Física</div><div class="comp-ex">Qual o seu <em>CPF</em>?</div></div>
+      <div class="comp-card"><h5>RG</h5><div class="comp-mean">Registro Geral (DNI)</div><div class="comp-ex">Mostre o <em>RG</em>.</div></div>
+      <div class="comp-card"><h5>CEP</h5><div class="comp-mean">Código de Endereçamento Postal</div><div class="comp-ex">Qual o <em>CEP</em>?</div></div>
+      <div class="comp-card"><h5>CNPJ</h5><div class="comp-mean">Cadastro Nacional Pessoa Jurídica</div><div class="comp-ex">Empresa com <em>CNPJ</em>.</div></div>
+      <div class="comp-card"><h5>UTI</h5><div class="comp-mean">Unidade de Terapia Intensiva</div><div class="comp-ex">Foi internado na <em>UTI</em>.</div></div>
+      <div class="comp-card"><h5>BO</h5><div class="comp-mean">Boletim de Ocorrência</div><div class="comp-ex">Fui fazer o <em>BO</em>.</div></div>
+      <div class="comp-card"><h5>RH</h5><div class="comp-mean">Recursos Humanos</div><div class="comp-ex">Trabalho no <em>RH</em>.</div></div>
+      <div class="comp-card"><h5>PT, PMDB, PSDB, PL...</h5><div class="comp-mean">partidos políticos</div><div class="comp-ex">Votou no <em>PT</em>.</div></div>
+    </div>
+    <div class="sec-label">Acrónimos (se leen como palabra)</div>
+    <div class="example-block pr"><div class="ex-fr"><span class="epr">AIDS</span> [aids], <span class="epr">FIFA</span> [fifa], <span class="epr">FOMENTO</span>, <span class="epr">SEBRAE</span>, <span class="epr">BANESTADO</span>.</div></div>
+    <div class="sec-label">Género y plural de siglas</div>
+    <div class="example-block pr"><div class="ex-fr">O <span class="epr">CD</span>, os <span class="epr">CDs</span>. A <span class="epr">FM</span>, as <span class="epr">FMs</span>. (con -s minúscula)</div></div>
+    <div class="example-block pr"><div class="ex-fr">O <span class="epr">ENEM</span> de 2024. (singular, no se pluraliza)</div></div>
+    <div class="warn-box"><span class="warn-icon">💡</span><div class="warn-text"><strong>Género:</strong> el género de la sigla suele determinarse por el género del primer sustantivo en español. <em>O CPF</em> (cadastro = masc.), <em>a OAB</em> (ordem = fem.), <em>o STF</em> (supremo = masc.).</div></div>
+  </div></div>
+</div>
+
+<div class="sec-block" id="s-trampas">
+  <div class="gram-card"><div class="gram-card-body">
+    <div class="def-box">Los 7 errores más frecuentes con composição.</div>
+    <div class="trap-cards" id="trap-cards"></div>
+  </div></div>
+</div>
+
+</div>
+<footer class="page-end"><button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Voltar ao topo</button></footer>
+</div>
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Plural de verbo + sust.',
+   wrong:"Os guardas-chuvas (con guarda-s)",
+   right:"Os guarda-chuvas.",
+   expl:'En composições <em>verbo + sustantivo</em>, SOLO el sustantivo va al plural: <em>guarda-chuva → guarda-chuvas, beija-flor → beija-flores, quebra-cabeça → quebra-cabeças, porta-malas → porta-malas (inv. ya plural)</em>.'},
+  {name:'Sin guion donde se requiere',
+   wrong:"Guardachuva / beijaflor / portavoz",
+   right:"Guarda-chuva / beija-flor / porta-voz.",
+   expl:'Las composições verbo + sustantivo, sustantivo + sustantivo (con relación específica) y palabras como <em>terça-feira</em> llevan <strong>guion obligatorio</strong>. Sin guion son errores ortográficos.'},
+  {name:'Fim de semana con guion',
+   wrong:"Fim-de-semana (anterior al Acordo)",
+   right:"Fim de semana (post-Acordo 1990).",
+   expl:'El Acordo Ortográfico de 1990 eliminó el guion en muchas locuciones: <em>fim de semana, dia a dia, cara a cara, ponto e vírgula</em>. Estos van <strong>sin guion</strong>. Algunas siguen con guion: <em>ano-luz, dia-a-dia (controvertido)</em>.'},
+  {name:'Color compuesto pluralizado',
+   wrong:"Sapatos azuis-marinhos.",
+   right:"Sapatos azul-marinho. (invariable)",
+   expl:'Los <strong>colores compuestos</strong> con sustantivo o adjetivo + adjetivo son típicamente invariables: <em>azul-marinho, verde-musgo, vermelho-vivo, amarelo-ouro</em>. NO se pluralizan ni varían en género.'},
+  {name:'Adj. + adj. con ambos plural',
+   wrong:"Países lusos-brasileiros.",
+   right:"Países luso-brasileiros.",
+   expl:'En adj. + adj., SOLO el último va al plural: <em>luso-brasileiros, franco-alemães, ítalo-portugueses</em>. El primer adjetivo queda invariable como forma compositiva.'},
+  {name:'Sigla sin género claro',
+   wrong:"O USP / O OAB",
+   right:"A USP (universidade fem.) / A OAB (ordem fem.).",
+   expl:'El género de la sigla viene del <strong>primer sustantivo</strong> que abrevia. <em>USP</em> = <strong>U</strong>niversidade → femenino: <em>a USP</em>. <em>OAB</em> = <strong>O</strong>rdem → femenino: <em>a OAB</em>. <em>STF</em> = <strong>S</strong>upremo → masculino: <em>o STF</em>.'},
+  {name:'Aglutinação como composição',
+   wrong:"Em-bora / vina-gre (intentando separar)",
+   right:"Embora / vinagre (palabras únicas).",
+   expl:'Las palabras aglutinadas son <strong>UNA SOLA palabra</strong>: <em>embora, vinagre, planalto, fidalgo, girassol</em>. NO se separan con guion. Se tratan gramaticalmente como cualquier sustantivo simple.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card"><div class="trap-card-header"><div class="trap-name">${t.name}</div><div class="trap-vs"><span class="trap-wrong">✗ ${t.wrong}</span><span class="trap-right">✓ ${t.right}</span></div></div><div class="trap-expl">${t.expl}</div></div>`).join('');
+}
+renderTraps();
+</script>
+</body>
+</html>
