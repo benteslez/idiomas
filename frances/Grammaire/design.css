@@ -290,6 +290,12 @@ body {
   position: relative;
 }
 .def-box strong { color: var(--primary); font-weight: 600; }
+/* Dark-mode safeguard: some pages override .def-box with a strong (light-inverted)
+   background + white text, which becomes unreadable in dark mode. Force a readable
+   dark callout. Higher specificity than the pages' inline `.def-box{}`, so it wins. */
+[data-theme="dark"] .def-box { background: var(--primary-soft); color: var(--text); }
+[data-theme="dark"] .def-box strong,
+[data-theme="dark"] .def-box em { color: var(--primary); }
 
 .warn-box {
   background: var(--warn-bg); border: 1px solid var(--warn-border);
