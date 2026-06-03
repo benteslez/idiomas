@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Adjetivos — Concordância e Posição</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Adjetivos → Sintaxis · dk-green */
+:root {
+  --primary: #1f4634;
+  --primary-soft: #e8f0eb;
+  --primary-mid: #5a8a72;
+  --primary-strong: #0f2e22;
+  --primary-glow: rgba(31, 70, 52, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fc99e;
+  --primary-soft: #1a2e23;
+  --primary-mid: #4a8a66;
+  --primary-strong: #b8dcc6;
+  --primary-glow: rgba(127, 201, 158, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; }
+.split-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 0.96rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.01em; }
+.split-card p { font-size: 0.86em; color: var(--text2); line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Adjetivos — Concordância e Posição</h1>
+    <span class="header-tag">Sintaxe</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B1–B2</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Género · número · ordem</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Sistema general</button>
+    <button class="snav-btn"        onclick="showSection('s-genero',this)">2. Género</button>
+    <button class="snav-btn"        onclick="showSection('s-numero',this)">3. Número</button>
+    <button class="snav-btn"        onclick="showSection('s-posicao',this)">4. Posición</button>
+    <button class="snav-btn"        onclick="showSection('s-mudanca',this)">5. Cambio de significado</button>
+    <button class="snav-btn"        onclick="showSection('s-invariaveis',this)">6. Adj. invariables</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los <strong>adjetivos</strong> modifican al sustantivo, expresando cualidades, propiedades, estados. En portugués, los adjetivos <strong>concuerdan en género y número</strong> con el sustantivo. La <strong>posición</strong> (antes o después) puede cambiar significado en algunos casos. La mayoría va pospuesta; algunos cambian de matiz según posición.
+      </div>
+
+      <div class="sec-label">Tres dimensiones de un adjetivo</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Dimensión</th><th>Regla básica</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Género</strong></td><td>concuerda con el sustantivo</td><td>menino <span class="hl-pr">alto</span> / menina <span class="hl-pr">alta</span></td></tr>
+          <tr><td><strong>Número</strong></td><td>concuerda en singular/plural</td><td>livros <span class="hl-pr">bons</span> / casas <span class="hl-pr">novas</span></td></tr>
+          <tr><td><strong>Posición</strong></td><td>posposto por defecto</td><td>uma casa <span class="hl-pr">grande</span></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Comparación con español:</strong> el sistema de concordancia es similar (género y número). La gran diferencia: en portugués algunos adjetivos cambian de significado según vayan antes o después del sustantivo (<em>grande homem</em> vs <em>homem grande</em>). Esta distinción es más sistemática que en español.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. GENERO -->
+  <div class="sec-block" id="s-genero">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los adjetivos pueden ser <strong>biformes</strong> (dos formas para masc./fem.) o <strong>uniformes</strong> (una sola forma para ambos géneros). Los biformes son la mayoría: <em>alto/alta, bonito/bonita</em>. Los uniformes terminan típicamente en <em>-e</em>, <em>-l</em>, <em>-z</em>, <em>-m</em>, <em>-ar</em>.
+      </div>
+
+      <div class="sec-label">Adjetivos biformes (mayoría)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Terminación masc.</th><th>Femenino</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>-o</td><td>-a</td><td>alto → alt<span class="hl-pr">a</span>, bonito → bonit<span class="hl-pr">a</span></td></tr>
+          <tr><td>-ês</td><td>-esa</td><td>francês → franc<span class="hl-pr">esa</span>, português → portu<span class="hl-pr">guesa</span></td></tr>
+          <tr><td>-or</td><td>-ora</td><td>encantador → encanta<span class="hl-pr">dora</span></td></tr>
+          <tr><td>-u</td><td>-ua</td><td>cru → cr<span class="hl-pr">ua</span>, nu → n<span class="hl-pr">ua</span></td></tr>
+          <tr><td>-eu</td><td>-eia</td><td>europeu → europ<span class="hl-pr">eia</span></td></tr>
+          <tr><td>-ão</td><td>-ã / -ona</td><td>são → s<span class="hl-pr">ã</span>; cristão → crist<span class="hl-pr">ã</span>; valentão → valent<span class="hl-pr">ona</span></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Adjetivos uniformes (una sola forma)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Terminación</th><th>Ejemplo</th><th>Masc./Fem.</th></tr></thead>
+        <tbody>
+          <tr><td>-e</td><td>inteligente, grande, doce, triste</td><td>menino inteligente / menina inteligente</td></tr>
+          <tr><td>-l</td><td>azul, fácil, difícil, gentil</td><td>carro azul / casa azul</td></tr>
+          <tr><td>-z</td><td>feliz, capaz, feroz, audaz</td><td>homem feliz / mulher feliz</td></tr>
+          <tr><td>-m</td><td>jovem, comum, ruim</td><td>rapaz jovem / moça jovem</td></tr>
+          <tr><td>-ar</td><td>familiar, similar, particular</td><td>caso familiar / situação familiar</td></tr>
+          <tr><td>-ior</td><td>maior, melhor, pior, superior</td><td>homem melhor / mulher melhor</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos en uso</div>
+      <div class="example-block pr"><div class="ex-fr">O menino é <span class="epr">alto</span>. / A menina é <span class="epr">alta</span>.</div><div class="ex-es">El niño es alto. / La niña es alta.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Um homem <span class="epr">feliz</span>. / Uma mulher <span class="epr">feliz</span>. (uniforme)</div><div class="ex-es">Un hombre feliz. / Una mujer feliz.</div></div>
+      <div class="example-block pr"><div class="ex-fr">O carro é <span class="epr">azul</span>. / A casa é <span class="epr">azul</span>. (uniforme)</div><div class="ex-es">El coche es azul. / La casa es azul.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Adjetivos en -ão:</strong> femeninos variables: <em>são → sã, cristão → cristã, alemão → alemã</em>, pero <em>valentão → valentona, chorão → chorona</em>. Cada uno tiene su forma fija.</div>
+      </div>
+
+      <div class="sec-label">Concordancia con sujeto compuesto</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Combinación</th><th>Concordancia</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>masc. + masc.</td><td>masc. plural</td><td>O Pedro e o João são <span class="hl-pr">altos</span>.</td></tr>
+          <tr><td>fem. + fem.</td><td>fem. plural</td><td>A Ana e a Maria são <span class="hl-pr">altas</span>.</td></tr>
+          <tr><td>masc. + fem.</td><td>masc. plural</td><td>O Pedro e a Ana são <span class="hl-pr">altos</span>.</td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+  </div>
+
+  <!-- 3. NUMERO -->
+  <div class="sec-block" id="s-numero">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El plural de los adjetivos sigue las mismas reglas que los sustantivos: <strong>añadir -s</strong> a la mayoría, con cambios fonéticos en terminaciones específicas.
+      </div>
+
+      <div class="sec-label">Reglas de plural</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Terminación</th><th>Plural</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>vocal o -n (raro)</td><td>+ -s</td><td>alto → alt<span class="hl-pr">os</span>, livre → livr<span class="hl-pr">es</span></td></tr>
+          <tr><td>-r, -s, -z</td><td>+ -es</td><td>melhor → melhor<span class="hl-pr">es</span>, feliz → feliz<span class="hl-pr">es</span></td></tr>
+          <tr><td>-m</td><td>m → ns</td><td>bom → b<span class="hl-pr">ons</span>, comum → comu<span class="hl-pr">ns</span></td></tr>
+          <tr><td>-al, -el, -ol, -ul</td><td>l → is</td><td>legal → lega<span class="hl-pr">is</span>, azul → azu<span class="hl-pr">is</span></td></tr>
+          <tr><td>-il (tónica)</td><td>il → is</td><td>gentil → gent<span class="hl-pr">is</span>, viril → vir<span class="hl-pr">is</span></td></tr>
+          <tr><td>-il (átona)</td><td>il → eis</td><td>fácil → fác<span class="hl-pr">eis</span>, difícil → difíc<span class="hl-pr">eis</span></td></tr>
+          <tr><td>-ão</td><td>-ãos / -ões / -ães (variable)</td><td>são → sãos; cristão → cristãos; alemão → alemães</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos en uso</div>
+      <div class="example-block pr"><div class="ex-fr">Compramos <span class="epr">bons</span> livros.</div><div class="ex-es">Compramos buenos libros.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Esses problemas são <span class="epr">difíceis</span>.</div><div class="ex-es">Estos problemas son difíciles.</div></div>
+      <div class="example-block pr"><div class="ex-fr">As crianças são <span class="epr">felizes</span>.</div><div class="ex-es">Los niños son felices.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Os céus estão <span class="epr">azuis</span> hoje.</div><div class="ex-es">Los cielos están azules hoy.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>-ão plural variable:</strong> <em>são → sãos</em> (cristão → cristãos), <em>-ão → -ões</em> (campeão → campeões), <em>-ão → -ães</em> (alemão → alemães, capitão → capitães). Hay que memorizarlos. La regla más común es <em>-ões</em>.</div>
+      </div>
+
+      <div class="sec-label">Concordancia parcial / total</div>
+      <div class="example-block pr"><div class="ex-fr">Comprei livros <span class="epr">novos</span> e revistas <span class="epr">novas</span>. (cada adj. concuerda)</div><div class="ex-es">Compré libros nuevos y revistas nuevas.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Língua e cultura <span class="epr">portuguesas</span>. (concordancia con el último, en fem. pl.)</div><div class="ex-es">Lengua y cultura portuguesas.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Língua e cultura <span class="epr">portuguesa</span>. (concordancia con el más cercano)</div><div class="ex-es">Lengua y cultura portuguesa.</div></div>
+
+      <div class="note-box"><strong>Adj. después de dos sustantivos:</strong> el adjetivo puede ir en plural (concordancia con ambos) o en singular (concordancia con el más cercano). Ambas son válidas, con leve preferencia por la concordancia total en escritura cuidada.</div>
+    </div></div>
+  </div>
+
+  <!-- 4. POSICION -->
+  <div class="sec-block" id="s-posicao">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        La posición por defecto del adjetivo en portugués es <strong>pospuesta</strong>. Algunos adjetivos pueden ir antepuestos, especialmente los <strong>cualitativos subjetivos</strong> (afecto, valoración) y los <strong>numerales ordinales</strong>. La anteposición suele añadir matiz <strong>subjetivo o intensivo</strong>.
+      </div>
+
+      <div class="sec-label">Posición por defecto: pospuesta</div>
+      <div class="example-block pr"><div class="ex-fr">Uma casa <span class="epr">grande</span>.</div><div class="ex-es">Una casa grande.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Um livro <span class="epr">interessante</span>.</div><div class="ex-es">Un libro interesante.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Uma cidade <span class="epr">brasileira</span>.</div><div class="ex-es">Una ciudad brasileña.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Um carro <span class="epr">vermelho</span>.</div><div class="ex-es">Un coche rojo.</div></div>
+
+      <div class="sec-label">Posición pospuesta obligatoria</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Categoría</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Adjetivos de color</td><td>casa <span class="hl-pr">azul</span>, carro <span class="hl-pr">vermelho</span></td></tr>
+          <tr><td>Adjetivos de nacionalidad/origen</td><td>vinho <span class="hl-pr">português</span>, cultura <span class="hl-pr">brasileira</span></td></tr>
+          <tr><td>Adjetivos de forma/material</td><td>mesa <span class="hl-pr">redonda</span>, anel <span class="hl-pr">de ouro</span></td></tr>
+          <tr><td>Adjetivos relacionales (técnicos)</td><td>análise <span class="hl-pr">linguística</span>, sistema <span class="hl-pr">solar</span></td></tr>
+          <tr><td>Participios pasivos como adjetivo</td><td>porta <span class="hl-pr">aberta</span>, livro <span class="hl-pr">lido</span></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Posición antepuesta posible (subjetiva/valorativa)</div>
+      <div class="example-block pr"><div class="ex-fr">Uma <span class="epr">linda</span> manhã. (subjetivo afetivo)</div><div class="ex-es">Una hermosa mañana.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Um <span class="epr">grande</span> escritor. (= importante, valoración)</div><div class="ex-es">Un gran escritor.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Uma <span class="epr">simples</span> palavra. (= solo una palabra)</div><div class="ex-es">Una simple palabra.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A <span class="epr">primeira</span> vez.</div><div class="ex-es">La primera vez.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Uma <span class="epr">velha</span> amiga. (= de larga amistad)</div><div class="ex-es">Una vieja amiga.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Regla práctica:</strong> la posición pospuesta es <strong>objetiva, descriptiva, clasificatoria</strong>. La posición antepuesta es <strong>subjetiva, valorativa, intensiva</strong>. Cambiar la posición puede cambiar el matiz o incluso el significado.</div>
+      </div>
+
+      <div class="sec-label">Ordinales y posesivos siempre antepuestos</div>
+      <div class="example-block pr"><div class="ex-fr">O <span class="epr">primeiro</span> dia, o <span class="epr">terceiro</span> capítulo, a <span class="epr">décima</span> hora.</div><div class="ex-es">El primer día, el tercer capítulo, la décima hora.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Meu</span> livro, <span class="epr">tua</span> casa, <span class="epr">nossa</span> família.</div><div class="ex-es">Mi libro, tu casa, nuestra familia.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 5. MUDANCA -->
+  <div class="sec-block" id="s-mudanca">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Algunos adjetivos cambian de <strong>significado</strong> según vayan antepuestos o pospuestos al sustantivo. La posición antepuesta tiende a un sentido <strong>figurado o valorativo</strong>; la pospuesta, un sentido <strong>literal o descriptivo</strong>.
+      </div>
+
+      <div class="sec-label">Pares contrastivos</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Adjetivo</th><th>Antepuesto (figurado)</th><th>Pospuesto (literal)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>grande</strong></td><td>um <span class="hl-pr">grande</span> homem = importante</td><td>um homem <span class="hl-pr">grande</span> = de gran tamaño</td></tr>
+          <tr><td><strong>velho</strong></td><td>um <span class="hl-pr">velho</span> amigo = antiguo, de larga amistad</td><td>um amigo <span class="hl-pr">velho</span> = anciano</td></tr>
+          <tr><td><strong>pobre</strong></td><td>um <span class="hl-pr">pobre</span> homem = desafortunado, digno de pena</td><td>um homem <span class="hl-pr">pobre</span> = sin dinero</td></tr>
+          <tr><td><strong>simples</strong></td><td>uma <span class="hl-pr">simples</span> pergunta = solo, mera</td><td>uma pergunta <span class="hl-pr">simples</span> = no compleja</td></tr>
+          <tr><td><strong>certo</strong></td><td><span class="hl-pr">certa</span> pessoa = cierta, alguna</td><td>a pessoa <span class="hl-pr">certa</span> = correcta, adecuada</td></tr>
+          <tr><td><strong>raro</strong></td><td><span class="hl-pr">raras</span> vezes = pocas veces</td><td>uma flor <span class="hl-pr">rara</span> = poco común</td></tr>
+          <tr><td><strong>diferente</strong></td><td><span class="hl-pr">diferentes</span> coisas = varias, distintas</td><td>coisa <span class="hl-pr">diferente</span> = no igual a otra</td></tr>
+          <tr><td><strong>antigo</strong></td><td>um <span class="hl-pr">antigo</span> aluno = ex-alumno</td><td>um móvel <span class="hl-pr">antigo</span> = viejo, de época</td></tr>
+          <tr><td><strong>novo</strong></td><td>uma <span class="hl-pr">nova</span> casa = otra casa que adquirí</td><td>uma casa <span class="hl-pr">nova</span> = recién construida</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos contrastivos</div>
+      <div class="example-block pr"><div class="ex-fr">Cervantes foi um <span class="epr">grande</span> escritor.</div><div class="ex-es">Cervantes fue un gran escritor.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vi um homem <span class="epr">grande</span> na rua.</div><div class="ex-es">Vi a un hombre grande (alto/corpulento) en la calle.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ela é uma <span class="epr">velha</span> amiga minha. (la conozco hace tiempo)</div><div class="ex-es">Es una vieja amiga mía.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ela é uma amiga <span class="epr">velha</span>. (es anciana)</div><div class="ex-es">Es una amiga anciana.</div></div>
+      <div class="example-block pr"><div class="ex-fr">O <span class="epr">pobre</span> rapaz perdeu tudo. (digno de pena)</div><div class="ex-es">El pobre chico lo perdió todo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Um rapaz <span class="epr">pobre</span>, sem dinheiro. (sin dinero)</div><div class="ex-es">Un chico pobre, sin dinero.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Patrón general:</strong> <em>adj. antes</em> = sentido figurado, subjetivo, intensivo. <em>Adj. después</em> = sentido literal, descriptivo. Esta lógica también aparece en español, pero el portugués es más sistemático.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. INVARIAVEIS -->
+  <div class="sec-block" id="s-invariaveis">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Algunos adjetivos son <strong>invariables</strong> (no concuerdan en género ni en número). Son principalmente los nombres compuestos o derivados de sustantivos usados como adjetivos: colores compuestos, marcas, frutas usadas como colores.
+      </div>
+
+      <div class="sec-label">Adjetivos invariables típicos</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Adjetivo</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>laranja</strong></td><td>naranja (color)</td><td>vestido <span class="hl-pr">laranja</span>, sapatos <span class="hl-pr">laranja</span></td></tr>
+          <tr><td><strong>rosa</strong></td><td>rosa (color)</td><td>camisa <span class="hl-pr">rosa</span>, calças <span class="hl-pr">rosa</span></td></tr>
+          <tr><td><strong>cor-de-rosa</strong></td><td>color rosa</td><td>blusa <span class="hl-pr">cor-de-rosa</span></td></tr>
+          <tr><td><strong>azul-marinho</strong></td><td>azul marino</td><td>roupas <span class="hl-pr">azul-marinho</span></td></tr>
+          <tr><td><strong>azul-claro / azul-escuro</strong></td><td>azul claro/oscuro</td><td>céus <span class="hl-pr">azul-claros</span> (concuerda) o invariable</td></tr>
+          <tr><td><strong>verde-musgo</strong></td><td>verde musgo</td><td>cortinas <span class="hl-pr">verde-musgo</span></td></tr>
+          <tr><td><strong>vinho</strong></td><td>color vino</td><td>terno <span class="hl-pr">vinho</span></td></tr>
+          <tr><td><strong>creme</strong></td><td>color crema</td><td>sapatos <span class="hl-pr">creme</span></td></tr>
+          <tr><td><strong>marrom</strong></td><td>marrón</td><td>cinto <span class="hl-pr">marrom</span>, sapatos <span class="hl-pr">marrons</span> (variable en n.º)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos en uso</div>
+      <div class="example-block pr"><div class="ex-fr">Comprei sapatos <span class="epr">laranja</span>.</div><div class="ex-es">Compré zapatos color naranja.</div></div>
+      <div class="example-block pr"><div class="ex-fr">As paredes são <span class="epr">cor-de-rosa</span>.</div><div class="ex-es">Las paredes son rosadas.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vou com a blusa <span class="epr">azul-marinho</span>.</div><div class="ex-es">Voy con la blusa azul marino.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Colores compuestos:</strong> los colores formados por dos elementos (<em>azul-marinho, verde-claro, vermelho-vivo</em>) son normalmente <strong>invariables</strong>. Excepción: cuando el segundo elemento es adjetivo común, puede concordar: <em>azul-claros</em>.</div>
+      </div>
+
+      <div class="sec-label">Otros adjetivos invariables o de uso especial</div>
+      <div class="example-block pr"><div class="ex-fr">Casa <span class="epr">grátis</span>, livros <span class="epr">grátis</span>. (= gratis, invariable)</div><div class="ex-es">Casa gratis, libros gratis.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ele é meio <span class="epr">esquisito</span>. (= un poco raro)</div><div class="ex-es">Es un poco raro.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ela é <span class="epr">meio</span> louca. (meio invariable como adv. = un poco)</div><div class="ex-es">Está medio loca.</div></div>
+
+      <div class="note-box"><strong>Meio invariable como adverbio:</strong> cuando <em>meio</em> significa "un poco, algo, medio", es invariable: <em>ela está meio cansada</em> (no "meia cansada"). Como numeral fraccionario sí concuerda: <em>meia hora, meio quilo</em>.</div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con los adjetivos.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Cambio de género PT vs ES',
+   wrong:"A leite, o cor, o flor (calco español)",
+   right:"O leite, a cor, a flor",
+   expl:'Muchos sustantivos tienen género distinto del español: <em>o leite</em> (esp. la leche), <em>a cor</em> (esp. el color), <em>a flor</em> (esp. la flor), <em>a viagem</em> (esp. el viaje), <em>o nariz</em> (esp. la nariz), <em>o sangue</em> (esp. la sangre). El género dispara la concordancia del adjetivo.'},
+  {name:'Plural de -al/-el/-ol',
+   wrong:"Animals / hotels (calco inglés)",
+   right:"Animais / hotéis",
+   expl:'Adjetivos y sustantivos terminados en <em>-al, -el, -ol, -ul</em> hacen plural en <em>-ais, -éis, -óis, -uis</em>: <em>animal → animais, hotel → hotéis, lençol → lençóis, azul → azuis</em>. Atención a los acentos en -éis, -óis.'},
+  {name:'Meio en valor adverbial',
+   wrong:"Ela está meia cansada.",
+   right:"Ela está meio cansada.",
+   expl:'Cuando <em>meio</em> significa "un poco, algo" (adverbio), es <strong>invariable</strong>: <em>meio cansada, meio louco, meio estranha</em>. Solo concuerda como numeral fraccionario: <em>meia hora, meia dúzia</em>.'},
+  {name:'Adjetivo de color invariable',
+   wrong:"Vestidos laranjas, sapatos rosas.",
+   right:"Vestidos laranja, sapatos rosa.",
+   expl:'Los colores derivados de sustantivos (frutas, flores, objetos) son <strong>invariables</strong>: <em>laranja, rosa, creme, vinho, salmão</em>. <em>Os sapatos laranja, as blusas rosa</em>. NO añadir -s.'},
+  {name:'Posición del adjetivo: cambio de significado',
+   wrong:"Un homem grande (intentando decir importante)",
+   right:"Um grande homem.",
+   expl:'Algunos adjetivos cambian de matiz según posición: <em>grande homem</em> = importante; <em>homem grande</em> = corporal grande. <em>Pobre homem</em> = digno de pena; <em>homem pobre</em> = sin dinero. La posición es semánticamente significativa.'},
+  {name:'Concordancia con sujeto compuesto',
+   wrong:"A Maria e a Ana estão cansado.",
+   right:"A Maria e a Ana estão cansadas.",
+   expl:'Con sujeto compuesto, el adjetivo va en <strong>plural</strong>. Si ambos son femeninos: <em>cansadas</em>. Si hay al menos uno masculino: <em>cansados</em> (masc. pl., "regla de masc. dominante").'},
+  {name:'Bom / boa / bons / boas',
+   wrong:"Boms livros / bos amigos",
+   right:"Bons livros / bons amigos",
+   expl:'El plural de <em>bom</em> es <strong>bons</strong> (m → ns). <em>Bom → bons, comum → comuns, jovem → jovens, ruim → ruins</em>. Atención: NO se añade <em>-ms</em>.'},
+  {name:'Posposto vs anteposto en literario',
+   wrong:"Uma alta montanha (en escritura común)",
+   right:"Uma montanha alta.",
+   expl:'En escritura común, el orden por defecto es <strong>sustantivo + adjetivo</strong>. La anteposición <em>uma alta montanha</em> es marca estilística (poética, valorativa). En registro neutral, posterga el adjetivo: <em>uma montanha alta</em>.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

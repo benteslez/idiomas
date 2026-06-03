@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Finais, Consecutivas e Comparativas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Finais Consecutivas Comparativas → Sintaxis · dk-green */
+:root {
+  --primary: #1f4634;
+  --primary-soft: #e8f0eb;
+  --primary-mid: #5a8a72;
+  --primary-strong: #0f2e22;
+  --primary-glow: rgba(31, 70, 52, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fc99e;
+  --primary-soft: #1a2e23;
+  --primary-mid: #4a8a66;
+  --primary-strong: #b8dcc6;
+  --primary-glow: rgba(127, 201, 158, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; }
+.split-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 0.96rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.01em; }
+.split-card p { font-size: 0.86em; color: var(--text2); line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Finais, Consecutivas e Comparativas</h1>
+    <span class="header-tag">Sintaxe</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B1–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Para que · tão...que · como se</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Tres tipos</button>
+    <button class="snav-btn"        onclick="showSection('s-finais',this)">2. Finales</button>
+    <button class="snav-btn"        onclick="showSection('s-consecutivas',this)">3. Consecutivas</button>
+    <button class="snav-btn"        onclick="showSection('s-comparativas',this)">4. Comparativas</button>
+    <button class="snav-btn"        onclick="showSection('s-como-se',this)">5. Como se</button>
+    <button class="snav-btn"        onclick="showSection('s-proporcionais',this)">6. Proporcionales</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Tres tipos de subordinadas adverbiales que comparten una estructura semejante pero exigen modos verbales distintos: <strong>finales</strong> (finalidad, exigen subjuntivo), <strong>consecutivas</strong> (consecuencia, indicativo), <strong>comparativas</strong> (comparación, indicativo + <em>como se</em> con subjuntivo).
+      </div>
+
+      <div class="sec-label">Cuadro panorámico</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tipo</th><th>Conectores</th><th>Modo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Finais</strong></td><td>para que, a fim de que, com o objetivo de que</td><td>SIEMPRE subjuntivo</td></tr>
+          <tr><td><strong>Finales con inf.</strong></td><td>para, a fim de, com o objetivo de</td><td>infinitivo (mismo sujeto)</td></tr>
+          <tr><td><strong>Consecutivas</strong></td><td>tão/tanto...que, tal...que, de modo/maneira/forma que</td><td>indicativo (o subj. con valor final)</td></tr>
+          <tr><td><strong>Comparativas</strong></td><td>mais/menos...(do) que, tão/tanto...quanto/como</td><td>indicativo (elíptico frecuente)</td></tr>
+          <tr><td><strong>Como se</strong></td><td>como se + imp. subj.</td><td>imperfeito do subjuntivo</td></tr>
+          <tr><td><strong>Proporcionais</strong></td><td>quanto mais...mais, quanto menos...menos</td><td>indicativo / subj. futuro</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Regla útil:</strong> los conectores con valor de <em>finalidad</em> o <em>hipótesis</em> exigen subjuntivo. Los de <em>consecuencia real</em> o <em>comparación factual</em> usan indicativo. Las comparativas son las únicas que admiten estructuras elípticas (sin verbo).</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. FINAIS -->
+  <div class="sec-block" id="s-finais">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las <strong>orações finais</strong> indican el objetivo o finalidad de la acción principal. Las que llevan verbo conjugado exigen <strong>subjuntivo</strong> obligatorio. Las que llevan infinitivo aparecen cuando el sujeto coincide con el principal.
+      </div>
+
+      <div class="sec-label">Estructura general</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Conector</th><th>Estructura</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>para que</strong></td><td>+ subjuntivo</td><td>Falo devagar <span class="hl-pr">para que</span> você entenda.</td></tr>
+          <tr><td><strong>a fim de que</strong></td><td>+ subjuntivo (formal)</td><td>Estudo <span class="hl-pr">a fim de que</span> eu passe na prova.</td></tr>
+          <tr><td><strong>com o objetivo de que</strong></td><td>+ subjuntivo (formal)</td><td>Trabalha <span class="hl-pr">com o objetivo de que</span> seus filhos vivam melhor.</td></tr>
+          <tr><td><strong>de modo que / de forma que</strong></td><td>+ subjuntivo (cuando valor final)</td><td>Falou <span class="hl-pr">de modo que</span> todos compreendessem.</td></tr>
+          <tr><td><strong>para</strong></td><td>+ infinitivo (mismo suj.)</td><td>Estudo <span class="hl-pr">para</span> aprender.</td></tr>
+          <tr><td><strong>a fim de</strong></td><td>+ infinitivo (mismo suj.)</td><td>Vim <span class="hl-pr">a fim de</span> ajudar.</td></tr>
+          <tr><td><strong>com o objetivo de</strong></td><td>+ infinitivo</td><td>Criei a empresa <span class="hl-pr">com o objetivo de</span> inovar.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Para que + subjuntivo (sujetos distintos)</div>
+      <div class="example-block pr"><div class="ex-fr">Eu falo claro <span class="epr">para que</span> você entenda.</div><div class="ex-es">Hablo claro para que entiendas.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Trabalho <span class="epr">para que</span> meus filhos tenham um futuro melhor.</div><div class="ex-es">Trabajo para que mis hijos tengan un mejor futuro.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Pedi <span class="epr">para que</span> ele viesse cedo. (= que viesse)</div><div class="ex-es">Pedí que viniera temprano.</div></div>
+
+      <div class="sec-label">Para + infinitivo (mismo sujeto o impersonal)</div>
+      <div class="example-block pr"><div class="ex-fr">Estudo <span class="epr">para</span> aprender. (= eu estudo, eu aprendo)</div><div class="ex-es">Estudio para aprender.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vim <span class="epr">para</span> ajudar.</div><div class="ex-es">Vine para ayudar.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Para</span> entender melhor, leia o capítulo dois.</div><div class="ex-es">Para entender mejor, lee el capítulo dos.</div></div>
+
+      <div class="sec-label">Para + infinitivo pessoal (sujeto distinto, alternativa)</div>
+      <div class="example-block pr"><div class="ex-fr">Falo devagar <span class="epr">para vocês entenderem</span>. (inf. pessoal, = para que vocês entendam)</div><div class="ex-es">Hablo despacio para que entiendan.</div></div>
+      <div class="example-block pr"><div class="ex-fr">É importante <span class="epr">para nós sabermos</span> a verdade.</div><div class="ex-es">Es importante que sepamos la verdad.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>NUNCA "para que + indicativo":</strong> los conectores finales son disparadores absolutos de subjuntivo. <em>"Falo para que você entenda"</em> (subj.), NO <em>"para que você entende"</em>.</div>
+      </div>
+
+      <div class="sec-label">Concordancia de tiempos en finais</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Verbo principal</th><th>Subordinada con para que</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Presente / futuro / imperativo</td><td>presente do subj.</td><td>Falo claro <span class="hl-pr">para que entenda</span>.</td></tr>
+          <tr><td>Pasado / condicional</td><td>imperfeito do subj.</td><td>Falei claro <span class="hl-pr">para que entendesse</span>.</td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+  </div>
+
+  <!-- 3. CONSECUTIVAS -->
+  <div class="sec-block" id="s-consecutivas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las <strong>orações consecutivas</strong> expresan la consecuencia o resultado de la oración principal. Se construyen con un cuantificador o intensificador en la principal (<em>tão, tanto, tal</em>) + <em>que</em> + indicativo. Cuando indican finalidad/intención, pueden usar subjuntivo.
+      </div>
+
+      <div class="sec-label">Estructuras básicas</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Estructura</th><th>Función</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>tão + adj./adv. + que</strong></td><td>intensidad + consecuencia</td><td>Era <span class="hl-pr">tão</span> bom <span class="hl-pr">que</span> todos aplaudiram.</td></tr>
+          <tr><td><strong>tanto/-a/-os/-as + sust. + que</strong></td><td>cantidad de sust. + cons.</td><td>Tem <span class="hl-pr">tantos</span> livros <span class="hl-pr">que</span> não cabem.</td></tr>
+          <tr><td><strong>verbo + tanto + que</strong></td><td>intensidad verbal</td><td>Falou <span class="hl-pr">tanto que</span> ficou rouco.</td></tr>
+          <tr><td><strong>tal + sust. + que</strong></td><td>cualidad + consecuencia</td><td>Fez <span class="hl-pr">tal</span> esforço <span class="hl-pr">que</span> conseguiu.</td></tr>
+          <tr><td><strong>de modo que / de maneira que</strong></td><td>modo + consecuencia</td><td>Falou <span class="hl-pr">de modo que</span> todos entenderam. (real, ind.)</td></tr>
+          <tr><td><strong>de forma que</strong></td><td>modo + consecuencia</td><td>Agi <span class="hl-pr">de forma que</span> ninguém percebeu.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Tão + adj./adv. + que (consecuencia real)</div>
+      <div class="example-block pr"><div class="ex-fr">Ele é <span class="epr">tão alto que</span> bate a cabeça na porta.</div><div class="ex-es">Es tan alto que se golpea la cabeza en la puerta.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Está <span class="epr">tão calor que</span> não dá para sair.</div><div class="ex-es">Hace tanto calor que no se puede salir.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A música tocou <span class="epr">tão alto que</span> os vizinhos reclamaram.</div><div class="ex-es">La música sonó tan alto que los vecinos reclamaron.</div></div>
+
+      <div class="sec-label">Tanto/a/os/as + sust. + que</div>
+      <div class="example-block pr"><div class="ex-fr">Ele tem <span class="epr">tanto dinheiro que</span> não sabe onde gastá-lo.</div><div class="ex-es">Tiene tanto dinero que no sabe en qué gastarlo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Comi <span class="epr">tanta comida que</span> passei mal.</div><div class="ex-es">Comí tanta comida que me sentí mal.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Há <span class="epr">tantos problemas que</span> não sabemos por onde começar.</div><div class="ex-es">Hay tantos problemas que no sabemos por dónde empezar.</div></div>
+
+      <div class="sec-label">Verbo + tanto + que</div>
+      <div class="example-block pr"><div class="ex-fr">Estudou <span class="epr">tanto que</span> passou em primeiro lugar.</div><div class="ex-es">Estudió tanto que aprobó en primer lugar.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Trabalhei <span class="epr">tanto que</span> fiquei exausto.</div><div class="ex-es">Trabajé tanto que quedé exhausto.</div></div>
+
+      <div class="sec-label">De modo que (consecutiva vs final)</div>
+      <div class="split-grid">
+        <div class="split-card">
+          <h4>Consecutiva (indicativo)</h4>
+          <p>Resultado real, hecho consumado.</p>
+          <p style="margin-top:6px"><em>Falou claro, <strong>de modo que</strong> todos entenderam.</em></p>
+          <p>→ "habló de modo que (consecuencia real) todos entendieron"</p>
+        </div>
+        <div class="split-card">
+          <h4>Final (subjuntivo)</h4>
+          <p>Intención, finalidad.</p>
+          <p style="margin-top:6px"><em>Falou claro, <strong>de modo que</strong> todos entendessem.</em></p>
+          <p>→ "habló para que (intención) todos entendieran"</p>
+        </div>
+      </div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>De modo que ambíguo:</strong> el conector puede ser consecutivo (con indicativo, hecho real) o final (con subjuntivo, intención). El modo verbal aclara la función: <em>de modo que entenderam</em> (hecho) vs <em>de modo que entendessem</em> (intención).</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. COMPARATIVAS -->
+  <div class="sec-block" id="s-comparativas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las <strong>orações comparativas</strong> establecen una relación de comparación (superioridad, inferioridad, igualdad) entre dos elementos. Suelen ser <strong>elípticas</strong> (con verbo sobreentendido). Usan <strong>indicativo</strong> en general; <em>como se</em> usa imperfeito do subjuntivo.
+      </div>
+
+      <div class="sec-label">Comparativas de superioridad / inferioridad</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Estructura</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>mais + adj./adv./sust. + (do) que</td><td>Ele é <span class="hl-pr">mais alto do que</span> eu.</td></tr>
+          <tr><td>menos + adj./adv./sust. + (do) que</td><td>Tenho <span class="hl-pr">menos tempo do que</span> antes.</td></tr>
+          <tr><td>verbo + mais/menos + (do) que</td><td>Eu estudo <span class="hl-pr">mais do que</span> meu irmão.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Comparativas de igualdad</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Estructura</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>tão + adj./adv. + quanto/como</td><td>Ela é <span class="hl-pr">tão inteligente quanto</span> ele.</td></tr>
+          <tr><td>tanto/-a/-os/-as + sust. + quanto/como</td><td>Tenho <span class="hl-pr">tantos livros quanto</span> você.</td></tr>
+          <tr><td>verbo + tanto + quanto/como</td><td>Trabalho <span class="hl-pr">tanto quanto</span> ele.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Comparativas elípticas (sin verbo)</div>
+      <div class="example-block pr"><div class="ex-fr">Ele é mais alto do que eu (sou). (verbo elidido)</div><div class="ex-es">Es más alto que yo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Tenho mais livros do que ele (tem).</div><div class="ex-es">Tengo más libros que él.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Falo português tão bem quanto francês.</div><div class="ex-es">Hablo portugués tan bien como francés.</div></div>
+
+      <div class="sec-label">Comparativas con verbo conjugado</div>
+      <div class="example-block pr"><div class="ex-fr">A vida é mais complicada <span class="epr">do que parece</span>.</div><div class="ex-es">La vida es más complicada de lo que parece.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ele estuda mais <span class="epr">do que se imagina</span>.</div><div class="ex-es">Estudia más de lo que se imagina.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Faço mais <span class="epr">do que você pensa</span>.</div><div class="ex-es">Hago más de lo que piensas.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>"Mais do que" vs "mais que":</strong> ambas formas son válidas. <em>Do que</em> es preferido cuando hay verbo en la subordinada (<em>mais do que parece</em>). <em>Que</em> es más común en habla y comparaciones cortas (<em>mais alto que eu</em>). En escritura formal, <em>do que</em> suena más cuidado.</div>
+      </div>
+
+      <div class="sec-label">Construcciones especiales: o mismo que, igual a</div>
+      <div class="example-block pr"><div class="ex-fr">Ele faz <span class="epr">o mesmo que</span> eu.</div><div class="ex-es">Hace lo mismo que yo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Esse livro é <span class="epr">igual ao</span> outro.</div><div class="ex-es">Ese libro es igual al otro.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Aprendi <span class="epr">tal qual</span> ele me ensinou.</div><div class="ex-es">Aprendí tal como me enseñó.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 5. COMO SE -->
+  <div class="sec-block" id="s-como-se">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong>Como se</strong> introduce una comparación hipotética o irreal. Equivale al "como si" español. SIEMPRE va con <strong>imperfeito do subjuntivo</strong> o, para anterioridad, con <strong>mais-que-perfeito do subjuntivo</strong>.
+      </div>
+
+      <div class="sec-label">Como se + imperfeito do subjuntivo (irreal del presente)</div>
+      <div class="example-block pr"><div class="ex-fr">Ele fala <span class="epr">como se fosse</span> especialista.</div><div class="ex-es">Habla como si fuera especialista.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Caminha <span class="epr">como se</span> ele <span class="epr">conhecesse</span> o lugar.</div><div class="ex-es">Camina como si conociera el lugar.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Sorri <span class="epr">como se nada tivesse</span> acontecido.</div><div class="ex-es">Sonríe como si nada hubiera pasado.</div></div>
+
+      <div class="sec-label">Como se + mais-que-perfeito do subjuntivo (irreal del pasado)</div>
+      <div class="example-block pr"><div class="ex-fr">Ela falava <span class="epr">como se tivesse vivido</span> lá.</div><div class="ex-es">Hablaba como si hubiera vivido allí.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Reagiu <span class="epr">como se nunca tivesse ouvido</span> a notícia.</div><div class="ex-es">Reaccionó como si nunca hubiera oído la noticia.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Comportou-se <span class="epr">como se tivesse ganho</span> a loteria.</div><div class="ex-es">Se comportó como si hubiera ganado la lotería.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Como se NUNCA con indicativo:</strong> NUNCA <em>como se ele é</em>; SIEMPRE <em>como se ele fosse</em>. <em>Como se</em> introduce hipótesis irreal y exige imperfeito (o mais-que-perfeito) do subjuntivo.</div>
+      </div>
+
+      <div class="sec-label">Comparativa estructural</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tiempo principal</th><th>Como se + tiempo subj.</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>presente</td><td>imperfeito do subj.</td><td>Anda <span class="hl-pr">como se voasse</span>.</td></tr>
+          <tr><td>presente / pasado</td><td>mais-que-perfeito do subj. (anterioridade)</td><td>Anda <span class="hl-pr">como se tivesse aprendido</span>.</td></tr>
+          <tr><td>pasado</td><td>imperfeito do subj. (simultaneidade)</td><td>Andava <span class="hl-pr">como se voasse</span>.</td></tr>
+          <tr><td>pasado</td><td>mais-que-perfeito do subj. (anterioridade)</td><td>Andava <span class="hl-pr">como se tivesse aprendido</span>.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Alternativas a como se</div>
+      <div class="example-block pr"><div class="ex-fr">Ele fala <span class="epr">como quem</span> sabe tudo. (= como alguém que sabe)</div><div class="ex-es">Habla como quien lo sabe todo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Caminha <span class="epr">parecendo</span> conhecer o caminho. (gerúndio)</div><div class="ex-es">Camina pareciendo conocer el camino.</div></div>
+      <div class="note-box"><strong>Como quem:</strong> equivale a "como una persona que" + indicativo. <em>Falou como quem sabia tudo</em> ≈ <em>como se soubesse tudo</em>. Matices distintos pero intercambiables en muchos contextos.</div>
+    </div></div>
+  </div>
+
+  <!-- 6. PROPORCIONAIS -->
+  <div class="sec-block" id="s-proporcionais">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las <strong>orações proporcionais</strong> establecen una correlación entre dos magnitudes que cambian en paralelo. Se construyen con <strong>quanto mais...mais</strong>, <strong>quanto menos...menos</strong>, y variantes.
+      </div>
+
+      <div class="sec-label">Estructura principal</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Estructura</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>quanto mais... mais...</td><td><span class="hl-pr">Quanto mais</span> estudo, <span class="hl-pr">mais</span> aprendo.</td></tr>
+          <tr><td>quanto menos... menos...</td><td><span class="hl-pr">Quanto menos</span> falo, <span class="hl-pr">menos</span> erro.</td></tr>
+          <tr><td>quanto mais... menos...</td><td><span class="hl-pr">Quanto mais</span> ele insiste, <span class="hl-pr">menos</span> eu aceito.</td></tr>
+          <tr><td>quanto menos... mais...</td><td><span class="hl-pr">Quanto menos</span> ele dorme, <span class="hl-pr">mais</span> rende.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos en uso</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Quanto mais</span> a gente aprende, <span class="epr">mais</span> percebe que não sabe nada.</div><div class="ex-es">Cuanto más uno aprende, más se da cuenta de que no sabe nada.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Quanto mais</span> tarde, <span class="epr">pior</span>. (forma cristalizada)</div><div class="ex-es">Cuanto más tarde, peor.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Quanto menos</span> você se preocupar, <span class="epr">melhor</span> dormirá. (con subj. futuro)</div><div class="ex-es">Cuanto menos te preocupes, mejor dormirás.</div></div>
+
+      <div class="sec-label">Modo verbal en proporcionais</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Temporalidad</th><th>Modo</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Hábito / atemporal</td><td>presente indicativo</td><td>Quanto mais estudo, mais aprendo.</td></tr>
+          <tr><td>Pasado</td><td>imperfeito / PPS</td><td>Quanto mais estudava, mais aprendia.</td></tr>
+          <tr><td>Futuro / hipótesis</td><td>subjuntivo futuro</td><td>Quanto mais você estudar, melhor será.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Quanto mais + subjuntivo futuro:</strong> con referencia futura, <em>quanto mais</em> exige subjuntivo futuro: <em>quanto mais você estudar, melhor</em>. Es la misma regla que con <em>quando, enquanto, assim que</em>: condicionales futuras → subj. futuro.</div>
+      </div>
+
+      <div class="sec-label">Variantes formales</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">À medida que</span> o tempo passa, mais saudades sinto. (progresión temporal)</div><div class="ex-es">A medida que pasa el tiempo, más nostalgia siento.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Mais um esforço, e <span class="epr">tanto</span> melhor.</div><div class="ex-es">Un esfuerzo más, y tanto mejor.</div></div>
+
+      <div class="sec-label">Expresiones cristalizadas</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Quanto antes, melhor</span>. (= cuanto antes, mejor)</div><div class="ex-es">Cuanto antes, mejor.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Quanto mais, melhor</span>. (= cuanto más, mejor)</div><div class="ex-es">Cuanto más, mejor.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Quanto antes</span> resolvermos, melhor.</div><div class="ex-es">Cuanto antes lo resolvamos, mejor.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con finais, consecutivas y comparativas.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Para que + indicativo (error)',
+   wrong:"Falo claro para que você entende.",
+   right:"Falo claro para que você entenda.",
+   expl:'<em>Para que</em> exige <strong>subjuntivo</strong> obligatoriamente. Igual que en español "para que": <em>para que você entenda, para que ele venha, para que saibamos</em>. NUNCA indicativo.'},
+  {name:'Como se + indicativo (error)',
+   wrong:"Ele fala como se sabe tudo.",
+   right:"Ele fala como se soubesse tudo.",
+   expl:'<em>Como se</em> exige <strong>imperfeito do subjuntivo</strong> (irreal del presente) o <strong>mais-que-perfeito do subj.</strong> (irreal del pasado): <em>como se fosse, como se soubesse, como se tivesse vivido</em>. NUNCA con indicativo. Es disparador absoluto de subjuntivo.'},
+  {name:'Tão / tanto confusión',
+   wrong:"Ele é tanto alto que bate na porta.",
+   right:"Ele é tão alto que bate na porta.",
+   expl:'<em>Tão</em> + adjetivo o adverbio: <em>tão alto, tão bem, tão rapidamente</em>. <em>Tanto/tanta/tantos/tantas</em> + sustantivo: <em>tantos livros, tanta comida</em>. <em>Tanto</em> tras verbo (intensidad): <em>trabalha tanto</em>.'},
+  {name:'De modo que con valor ambíguo',
+   wrong:"Confundir consecutivo y final",
+   right:"De modo que entenderam (consecutiva, ind.) / de modo que entendessem (final, subj.)",
+   expl:'<em>De modo que / de maneira que / de forma que</em> puede ser <strong>consecutiva</strong> (con indicativo, resultado real) o <strong>final</strong> (con subjuntivo, intención). El modo verbal distingue: <em>falou de modo que entenderam</em> (hecho) vs <em>falou de modo que entendessem</em> (intención).'},
+  {name:'Quanto mais + indicativo en futuro',
+   wrong:"Quanto mais você estuda, melhor será. (futuro hipotético)",
+   right:"Quanto mais você estudar, melhor será.",
+   expl:'En proporcionais con referencia <strong>futura</strong>, <em>quanto mais</em> exige <strong>subjuntivo futuro</strong>: <em>quanto mais estudar, quanto menos comer, quanto mais lutar</em>. Para hábito atemporal: indicativo: <em>quanto mais estudo, mais aprendo</em>.'},
+  {name:'Mais que (sin "do") con verbo',
+   wrong:"Ele é mais alto que pensa. (con verbo conjugado, suena raro)",
+   right:"Ele é mais alto do que pensa.",
+   expl:'Cuando la comparativa lleva verbo conjugado, se prefiere <em>do que</em>: <em>mais do que pensa, mais do que parece, menos do que esperamos</em>. <em>Mais que</em> sin <em>do</em> es más natural en comparaciones cortas elípticas: <em>mais alto que eu</em>.'},
+  {name:'A fim de + que + indicativo',
+   wrong:"A fim de que ele entende, falo devagar.",
+   right:"A fim de que ele entenda, falo devagar.",
+   expl:'<em>A fim de que</em> es un conector final formal y exige <strong>subjuntivo</strong>: <em>a fim de que ele entenda, a fim de que tudo dê certo</em>. Para mismo sujeto: <em>a fim de + infinitivo</em>: <em>a fim de entender</em>.'},
+  {name:'Tal qual / tal como',
+   wrong:"Fez tal como manda o manual (mezcla con tal)",
+   right:"Fez tal como manda o manual. / Fez tal qual manda o manual.",
+   expl:'<em>Tal qual</em> y <em>tal como</em> son ambos válidos como conectores comparativos (= "tal como, así como"). En PB hablado se prefiere <em>tal como</em>; <em>tal qual</em> es más formal/literario. Ejemplo: <em>aprendeu tal qual o pai ensinou</em>.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

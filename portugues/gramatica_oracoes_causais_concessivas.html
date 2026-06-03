@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Orações Causais e Concessivas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Causais Concessivas → Sintaxis · dk-green */
+:root {
+  --primary: #1f4634;
+  --primary-soft: #e8f0eb;
+  --primary-mid: #5a8a72;
+  --primary-strong: #0f2e22;
+  --primary-glow: rgba(31, 70, 52, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fc99e;
+  --primary-soft: #1a2e23;
+  --primary-mid: #4a8a66;
+  --primary-strong: #b8dcc6;
+  --primary-glow: rgba(127, 201, 158, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; }
+.split-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 0.96rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.01em; }
+.split-card p { font-size: 0.86em; color: var(--text2); line-height: 1.6; }
+
+.alert-box {
+  background: var(--warn-bg); border: 1px solid var(--warn-border);
+  border-radius: var(--radius-md); padding: 14px 17px; margin: 14px 0;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.alert-box .alert-icon { font-size: 1.2em; flex-shrink: 0; }
+.alert-box .alert-text { color: var(--text2); line-height: 1.6; font-size: 0.92em; }
+.alert-box .alert-text strong { color: var(--warn); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Orações Causais e Concessivas</h1>
+    <span class="header-tag">Sintaxe</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B1–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Porque · embora · ainda que</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Sistema general</button>
+    <button class="snav-btn"        onclick="showSection('s-causais',this)">2. Causales</button>
+    <button class="snav-btn"        onclick="showSection('s-pois',this)">3. Pois (sutilezas)</button>
+    <button class="snav-btn"        onclick="showSection('s-como-ja',this)">4. Como, já que, visto que</button>
+    <button class="snav-btn"        onclick="showSection('s-concessivas',this)">5. Concesivas</button>
+    <button class="snav-btn"        onclick="showSection('s-apesar',this)">6. Apesar de / mesmo que</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las <strong>orações causais</strong> introducen la causa de un hecho (<em>porque, pois, uma vez que, já que</em>) y van casi siempre con <strong>indicativo</strong>. Las <strong>orações concessivas</strong> introducen un obstáculo que NO impide la acción (<em>embora, ainda que, mesmo que, apesar de que</em>) y exigen <strong>subjuntivo obligatorio</strong>. Distinguir bien estas dos categorías es central para B2–C1.
+      </div>
+
+      <div class="sec-label">Cuadro panorámico</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tipo</th><th>Conectores</th><th>Modo</th></tr></thead>
+        <tbody>
+          <tr><td>Causal</td><td>porque, pois, já que, uma vez que, visto que, dado que, como (preverbal)</td><td>indicativo</td></tr>
+          <tr><td>Concessiva</td><td>embora, ainda que, mesmo que, conquanto, posto que (formal), por mais que</td><td>subjuntivo</td></tr>
+          <tr><td>Concessiva con apesar</td><td>apesar de + inf., apesar de que + subj.</td><td>infinitivo / subj.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Distinción semántica:</strong> la <em>causa</em> es lo que produce un efecto; la <em>concesión</em> es un obstáculo que NO impide ese efecto. <em>"No salí porque llovía"</em> (causa) vs <em>"Salí aunque llovía"</em> (concesión). El modo verbal cambia en consecuencia.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. CAUSAIS -->
+  <div class="sec-block" id="s-causais">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las <strong>orações causais</strong> explican el motivo o razón del hecho principal. Casi todos los conectores causales exigen <strong>indicativo</strong>. La elección del conector depende del registro y del énfasis.
+      </div>
+
+      <div class="sec-label">Lista de conectores causales</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Conector</th><th>Registro</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>porque</strong></td><td>neutro, universal</td><td>Não saí <span class="hl-pr">porque</span> chovia.</td></tr>
+          <tr><td><strong>pois</strong></td><td>formal o explicativo</td><td>Vou descansar, <span class="hl-pr">pois</span> estou cansado.</td></tr>
+          <tr><td><strong>já que</strong></td><td>neutro</td><td><span class="hl-pr">Já que</span> você está aqui, vamos conversar.</td></tr>
+          <tr><td><strong>uma vez que</strong></td><td>formal</td><td><span class="hl-pr">Uma vez que</span> ele aceitou, prossiga.</td></tr>
+          <tr><td><strong>visto que</strong></td><td>formal</td><td><span class="hl-pr">Visto que</span> há divergências, vamos votar.</td></tr>
+          <tr><td><strong>dado que</strong></td><td>formal / argumentativo</td><td><span class="hl-pr">Dado que</span> o tempo é curto, sejamos breves.</td></tr>
+          <tr><td><strong>como</strong> (preverbal)</td><td>narrativo, escrito</td><td><span class="hl-pr">Como</span> chovia, ficamos em casa.</td></tr>
+          <tr><td><strong>porquanto</strong></td><td>muy formal / arcaico</td><td>Não veio, <span class="hl-pr">porquanto</span> estava doente.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Porque vs por que vs porquê</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Forma</th><th>Función</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>porque</strong></td><td>conjunción causal (= porque)</td><td>Não fui <span class="hl-pr">porque</span> estava doente.</td></tr>
+          <tr><td><strong>por que</strong></td><td>pregunta directa o indirecta inicial</td><td><span class="hl-pr">Por que</span> você não veio? / Não sei <span class="hl-pr">por que</span> ele saiu.</td></tr>
+          <tr><td><strong>por quê</strong></td><td>final de oración (antes de punto)</td><td>Você saiu <span class="hl-pr">por quê</span>?</td></tr>
+          <tr><td><strong>porquê</strong></td><td>sustantivo (= la razón)</td><td>Não entendo <span class="hl-pr">o porquê</span> disso tudo.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos en uso</div>
+      <div class="example-block pr"><div class="ex-fr">Não saí <span class="epr">porque</span> estava chovendo.</div><div class="ex-es">No salí porque estaba lloviendo.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Já que</span> você insiste, eu vou.</div><div class="ex-es">Ya que insistes, voy.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Uma vez que</span> aceitamos o desafio, temos que cumprir.</div><div class="ex-es">Una vez que aceptamos el desafío, tenemos que cumplir.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Como</span> não havia ninguém, fechamos cedo.</div><div class="ex-es">Como no había nadie, cerramos pronto.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Visto que</span> a situação é grave, é preciso agir.</div><div class="ex-es">Visto que la situación es grave, hay que actuar.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>"Como" preverbal:</strong> <em>como</em> con valor causal va siempre <strong>al inicio de la oración</strong>, antes del verbo principal: <em>Como chovia, fiquei em casa</em>. Pospuesto sería comparativo ("como"): <em>fala como ela</em>.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3. POIS -->
+  <div class="sec-block" id="s-pois">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El conector <strong>pois</strong> tiene varios valores: <strong>causal</strong> (= "porque"), <strong>explicativo</strong> (= "pues"), <strong>conclusivo</strong> (= "por tanto", postpuesto al verbo). Distinguirlos por la posición y entonación es esencial para la lectura culta.
+      </div>
+
+      <div class="sec-label">Tres valores de pois</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Valor</th><th>Posición</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Causal / explicativo</strong></td><td>introduce oración subordinada, separada por coma</td><td>Vamos sair, <span class="hl-pr">pois</span> está fazendo sol.</td></tr>
+          <tr><td><strong>Conclusivo</strong></td><td>postverbal, entre comas</td><td>Pensem, <span class="hl-pr">pois</span>, no que querem.</td></tr>
+          <tr><td><strong>De respuesta</strong></td><td>al inicio, en diálogo</td><td>— Você vem? — <span class="hl-pr">Pois</span> não!</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Pois causal/explicativo</div>
+      <div class="example-block pr"><div class="ex-fr">Não vou sair, <span class="epr">pois</span> está chovendo.</div><div class="ex-es">No voy a salir, pues está lloviendo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Termine o trabalho, <span class="epr">pois</span> é importante.</div><div class="ex-es">Termina el trabajo, pues es importante.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Estou triste, <span class="epr">pois</span> meu amigo viajou.</div><div class="ex-es">Estoy triste, pues mi amigo viajó.</div></div>
+
+      <div class="sec-label">Pois conclusivo (formal)</div>
+      <div class="example-block pr"><div class="ex-fr">Pensem, <span class="epr">pois</span>, com cuidado. (= por tanto)</div><div class="ex-es">Piensen, pues, con cuidado.</div></div>
+      <div class="example-block pr"><div class="ex-fr">É necessário, <span class="epr">pois</span>, agir com prudência.</div><div class="ex-es">Es necesario, pues, actuar con prudencia.</div></div>
+
+      <div class="sec-label">Pois em PB conversacional</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Pois não</span>! (= ¡claro, cómo no, por supuesto!)</div><div class="ex-es">¡Claro! / ¡Por supuesto!</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Pois é</span>... (= así es, sí)</div><div class="ex-es">Así es... / Sí.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Pois então</span>, vamos lá!</div><div class="ex-es">Pues entonces, ¡vamos!</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Pois no inicial en escritura:</strong> normativamente, <em>pois</em> causal NO debe ir al inicio absoluto de oración. La forma <em>"Pois eu não fui..."</em> es coloquial; norma prefiere <em>"Não fui, pois..."</em> o usa <em>porque</em>.</div>
+      </div>
+
+      <div class="sec-label">Pois não vs pois sim</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Pois não</span>, senhor! (afirmativo: claro que sí)</div><div class="ex-es">¡Por supuesto, señor!</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Pois sim</span>! (irónico: ¡claro que no!)</div><div class="ex-es">¡Sí, claro! (irónico)</div></div>
+      <div class="note-box"><strong>Curiosa inversión:</strong> <em>pois não</em> es afirmativo (= "cómo no"), mientras que <em>pois sim</em> suele ser irónico/sarcástico ("sí, claro!"). Confunde a los hispanohablantes.</div>
+    </div></div>
+  </div>
+
+  <!-- 4. COMO / JA QUE -->
+  <div class="sec-block" id="s-como-ja">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Tres conectores causales que añaden matices: <strong>como</strong> (narrativo, contextual), <strong>já que</strong> (causa conocida), <strong>uma vez que / visto que / dado que</strong> (formales, argumentativos).
+      </div>
+
+      <div class="sec-label">Como (preverbal, causal)</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Como</span> chovia, ficamos em casa.</div><div class="ex-es">Como llovía, nos quedamos en casa.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Como</span> ele não veio, tivemos que adiar.</div><div class="ex-es">Como no vino, tuvimos que posponerlo.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Como</span> não havia mais tempo, paramos.</div><div class="ex-es">Como no había más tiempo, paramos.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Como causal SOLO preverbal:</strong> el <em>como</em> con valor causal aparece <strong>solo al inicio</strong> de la oración subordinada antepuesta a la principal. Pospuesto sería comparativo o modal.</div>
+      </div>
+
+      <div class="sec-label">Já que (causa conocida / aceptada)</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Já que</span> você insiste, vou aceitar.</div><div class="ex-es">Ya que insistes, voy a aceptar.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Já que</span> não há outra solução, faremos assim.</div><div class="ex-es">Ya que no hay otra solución, lo haremos así.</div></div>
+      <div class="note-box"><strong>Matiz de já que:</strong> indica que la causa es <strong>conocida</strong> por el oyente o presupuesta como evidente. No introduce información nueva, sino que la activa.</div>
+
+      <div class="sec-label">Uma vez que (causa establecida / formal)</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Uma vez que</span> aceitamos as regras, devemos cumpri-las.</div><div class="ex-es">Una vez que aceptamos las reglas, debemos cumplirlas.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Uma vez que</span> o problema é grave, exige solução imediata.</div><div class="ex-es">Una vez que el problema es grave, exige solución inmediata.</div></div>
+
+      <div class="sec-label">Visto que / dado que (formal, argumentativo)</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Visto que</span> há divergências, vamos votar.</div><div class="ex-es">Visto que hay divergencias, vamos a votar.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Dado que</span> o orçamento é limitado, faremos cortes.</div><div class="ex-es">Dado que el presupuesto es limitado, haremos recortes.</div></div>
+
+      <div class="sec-label">Diferencias de matiz</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Conector</th><th>Matiz</th><th>Registro</th></tr></thead>
+        <tbody>
+          <tr><td>porque</td><td>causa neutra, factual</td><td>universal</td></tr>
+          <tr><td>como (preverbal)</td><td>contexto narrativo, encadeamento</td><td>narrativo / escrito</td></tr>
+          <tr><td>já que</td><td>causa conocida, aceptada</td><td>conversacional / escrito</td></tr>
+          <tr><td>uma vez que</td><td>establecimiento de premisa</td><td>formal / argumentativo</td></tr>
+          <tr><td>visto que</td><td>presentación de evidencia</td><td>formal / técnico</td></tr>
+          <tr><td>dado que</td><td>presupuesto / hipótesis</td><td>formal / argumentativo</td></tr>
+          <tr><td>pois (postverbal)</td><td>explicación / conclusión</td><td>formal / culto</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="note-box"><strong>En redação ENEM:</strong> alterna entre <em>porque, já que, uma vez que, visto que, dado que</em> para evitar repetición y mostrar dominio léxico. <em>Como</em> es útil al inicio para encadenar narrativamente.</div>
+    </div></div>
+  </div>
+
+  <!-- 5. CONCESSIVAS -->
+  <div class="sec-block" id="s-concessivas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las <strong>orações concessivas</strong> introducen un obstáculo o circunstancia que <strong>NO impide</strong> la acción principal. TODAS exigen <strong>subjuntivo obligatorio</strong>, sin importar la temporalidad. Es una de las marcas más claras del subjuntivo en portugués.
+      </div>
+
+      <div class="alert-box">
+        <span class="alert-icon">⚠️</span>
+        <div class="alert-text">
+          <strong>Regla absoluta:</strong> los conectores concessivos (<em>embora, ainda que, mesmo que, conquanto, posto que, por mais que</em>) exigen <strong>siempre subjuntivo</strong>, nunca indicativo. NUNCA <em>embora chove</em>; sí <em>embora chova</em>. NUNCA <em>mesmo que ele veio</em>; sí <em>mesmo que ele tenha vindo</em>.
+        </div>
+      </div>
+
+      <div class="sec-label">Lista de conectores concessivos</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Conector</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>embora</strong></td><td>aunque (más común)</td><td><span class="hl-pr">Embora chova</span>, vou sair.</td></tr>
+          <tr><td><strong>ainda que</strong></td><td>aun cuando, aunque</td><td><span class="hl-pr">Ainda que insistas</span>, não irei.</td></tr>
+          <tr><td><strong>mesmo que</strong></td><td>aunque (énfasis)</td><td><span class="hl-pr">Mesmo que esteja cansado</span>, vou tentar.</td></tr>
+          <tr><td><strong>conquanto</strong></td><td>aunque (formal/literario)</td><td><span class="hl-pr">Conquanto seja difícil</span>, é possível.</td></tr>
+          <tr><td><strong>posto que</strong></td><td>aunque (formal/arcaico)</td><td><span class="hl-pr">Posto que ele negue</span>, é a verdade.</td></tr>
+          <tr><td><strong>por mais que</strong></td><td>por más que</td><td><span class="hl-pr">Por mais que eu tente</span>, não consigo.</td></tr>
+          <tr><td><strong>por menos que</strong></td><td>por menos que</td><td><span class="hl-pr">Por menos que pague</span>, sempre é caro.</td></tr>
+          <tr><td><strong>por muito que</strong></td><td>por mucho que</td><td><span class="hl-pr">Por muito que se diga</span>, ele não escuta.</td></tr>
+          <tr><td><strong>nem que</strong></td><td>aunque tenga que (enf.)</td><td>Vou fazer, <span class="hl-pr">nem que</span> me custe a vida.</td></tr>
+          <tr><td><strong>quando mesmo</strong></td><td>aunque (raro)</td><td><span class="hl-pr">Quando mesmo</span> houvesse erro, eu defenderia.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Embora: el más usado</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Embora chova</span>, vou para o trabalho.</div><div class="ex-es">Aunque llueva, voy al trabajo.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Embora seja</span> jovem, é muito experiente.</div><div class="ex-es">Aunque sea joven, es muy experimentado.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Embora tivesse</span> dinheiro, não comprou. (imperfeito do subj.)</div><div class="ex-es">Aunque tuviera dinero, no compró.</div></div>
+
+      <div class="sec-label">Mesmo que: aunque enfático</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Mesmo que</span> você não goste, é a verdade.</div><div class="ex-es">Aunque no te guste, es la verdad.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Mesmo que</span> eu estivesse cansado, ajudaria. (hipótesis)</div><div class="ex-es">Aunque estuviera cansado, ayudaría.</div></div>
+
+      <div class="sec-label">Por mais que: por más que</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Por mais que</span> eu tente, não consigo entender.</div><div class="ex-es">Por más que intente, no logro entender.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Por mais</span> dinheiro <span class="epr">que</span> ele tenha, nunca está satisfeito.</div><div class="ex-es">Por mucho dinero que tenga, nunca está satisfecho.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Concordancia de tiempos:</strong> con principal en presente/futuro, subordinada en presente subj. Con principal en pasado/condicional, subordinada en imperfeito do subj. <em>Embora chova, sairei</em> (futuro) vs <em>Embora chovesse, saí</em> (pasado).</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. APESAR DE -->
+  <div class="sec-block" id="s-apesar">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Diferencia importante: <strong>apesar de</strong> (preposición) va con <strong>sustantivo o infinitivo</strong>; <strong>apesar de que</strong> (conjunción, menos común) va con <strong>verbo conjugado en subjuntivo</strong>. Distinguirlos correctamente es marca de C1.
+      </div>
+
+      <div class="sec-label">Apesar de + sustantivo / infinitivo</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Estructura</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>apesar de + sust.</td><td><span class="hl-pr">Apesar da</span> chuva, fomos à praia.</td></tr>
+          <tr><td>apesar de + inf. (mismo suj.)</td><td><span class="hl-pr">Apesar de</span> estar cansado, vou tentar.</td></tr>
+          <tr><td>apesar de + inf. pessoal (suj. distinto)</td><td><span class="hl-pr">Apesar de</span> vocês insistirem, eu não vou.</td></tr>
+          <tr><td>apesar de tudo</td><td>Confio em você, <span class="hl-pr">apesar de tudo</span>.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Apesar de que + subjuntivo (registro formal)</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Apesar de que</span> chova, vou sair.</div><div class="ex-es">A pesar de que llueva, voy a salir.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Apesar de que</span> ele seja jovem, é muito sábio.</div><div class="ex-es">A pesar de que sea joven, es muy sabio.</div></div>
+      <div class="note-box"><strong>Apesar de que (raro):</strong> es aceptable pero menos común que <em>apesar de + sust./inf.</em> o que <em>embora + subj.</em> En PB, se prefiere usar <em>embora</em> o reformular con <em>apesar de + inf./sust.</em></div>
+
+      <div class="sec-label">Comparación: embora vs apesar de</div>
+      <div class="split-grid">
+        <div class="split-card">
+          <h4>Embora (+ subjuntivo)</h4>
+          <p>Conjunción que introduce oración con verbo conjugado.</p>
+          <p style="margin-top:6px"><em>Embora chova, vou sair.</em></p>
+          <p><em>Embora seja difícil, vou tentar.</em></p>
+        </div>
+        <div class="split-card">
+          <h4>Apesar de (+ sust./inf.)</h4>
+          <p>Preposición que introduce sustantivo o infinitivo.</p>
+          <p style="margin-top:6px"><em>Apesar da chuva, vou sair.</em></p>
+          <p><em>Apesar de ser difícil, vou tentar.</em></p>
+        </div>
+      </div>
+
+      <div class="sec-label">Otras estructuras concesivas</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Não obstante</span> os obstáculos, conseguimos. (= a pesar de)</div><div class="ex-es">No obstante los obstáculos, lo conseguimos.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">A despeito de</span> tudo, ele continuou. (formal)</div><div class="ex-es">A pesar de todo, continuó.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ele sorriu, <span class="epr">malgrado</span> a tristeza. (literario, raro)</div><div class="ex-es">Sonrió, a pesar de la tristeza.</div></div>
+
+      <div class="sec-label">Concesivas con valor de hipótesis irreal</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Ainda que</span> ele me pedisse, eu não iria. (hipotético irreal)</div><div class="ex-es">Aun cuando me lo pidiera, no iría.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Mesmo que</span> eu tivesse dinheiro, não compraria.</div><div class="ex-es">Aunque tuviera dinero, no compraría.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Por mais que</span> ele dissesse, eu não acreditaria.</div><div class="ex-es">Por más que dijera, no le creería.</div></div>
+
+      <div class="note-box"><strong>Concordancia con condicional:</strong> cuando la concesiva expresa hipótesis irreal, va con imperfeito do subj. y la principal con futuro do pretérito (= condicional). Mismo patrón que el periodo hipotético tipo II.</div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con causales y concesivas.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Embora + indicativo (error clave)',
+   wrong:"Embora chove, vou sair.",
+   right:"Embora chova, vou sair.",
+   expl:'Las concesivas (<em>embora, ainda que, mesmo que, conquanto, por mais que</em>) exigen <strong>siempre subjuntivo</strong>, sin excepción. <em>Embora chove</em> es agramatical. Confusión típica con español "aunque" que admite indicativo si el hecho es real.'},
+  {name:'Embora + subjuntivo futuro (error)',
+   wrong:"Embora ele vier amanhã, não vou ficar.",
+   right:"Embora ele venha amanhã, não vou ficar.",
+   expl:'Las concesivas NUNCA usan subjuntivo futuro: van con <strong>presente subj.</strong> (referencia futura/presente) o <strong>imperfeito subj.</strong> (referencia pasada/hipotética). <em>Embora ele venha</em> (no <em>vier</em>).'},
+  {name:'Por que vs porque vs por quê',
+   wrong:"Confundir las cuatro formas",
+   right:"por que (interrogativo) / porque (causal) / por quê (final) / porquê (sustantivo)",
+   expl:'<strong>Porque</strong> (conjunción causal): <em>não fui porque chovia</em>. <strong>Por que</strong> (interrogativo inicial): <em>por que você não veio?</em>. <strong>Por quê</strong> (final, antes de punto): <em>você saiu por quê?</em>. <strong>Porquê</strong> (sustantivo, = la razón): <em>não entendo o porquê</em>.'},
+  {name:'Apesar de que + indicativo',
+   wrong:"Apesar de que ele veio, não falamos.",
+   right:"Apesar de que ele venha (raro) / Apesar de ele ter vindo, não falamos. / Embora ele tenha vindo...",
+   expl:'<em>Apesar de que</em> exige subjuntivo (cuando se usa). Más común: <em>apesar de + sust./inf.</em> (<em>apesar da vinda dele</em>) o <em>embora + subj.</em> (<em>embora ele tenha vindo</em>).'},
+  {name:'Como causal pospuesto',
+   wrong:"Ficamos em casa como chovia.",
+   right:"Como chovia, ficamos em casa.",
+   expl:'<em>Como</em> con valor causal va siempre <strong>al inicio</strong> de la oración subordinada antepuesta. Pospuesto sería comparativo: <em>fala como ela</em>. Para causal pospuesta, usa <em>porque</em>: <em>ficamos em casa porque chovia</em>.'},
+  {name:'Pois inicial en escritura formal',
+   wrong:"Pois eu não fui à festa. (en redação)",
+   right:"Não fui à festa, pois estava cansado. / Não fui porque estava cansado.",
+   expl:'En norma escrita culta, <em>pois</em> causal va <strong>postpuesto</strong> a la principal, no al inicio absoluto. <em>Pois</em> inicial es coloquial. En escritura formal, usa <em>porque</em> al inicio o <em>pois</em> como conector medio: "Não fui, pois...".'},
+  {name:'Mesmo que + indicativo (error)',
+   wrong:"Mesmo que ele está cansado, vai trabalhar.",
+   right:"Mesmo que ele esteja cansado, vai trabalhar.",
+   expl:'<em>Mesmo que</em> (= "aunque enfático") exige <strong>subjuntivo</strong>. Igual que <em>embora, ainda que, conquanto</em>. NUNCA con indicativo. <em>Mesmo que esteja, esteja, possa, queira</em>.'},
+  {name:'Confundir já que (causa conhecida) con uma vez que (formal)',
+   wrong:"Usar indistintamente",
+   right:"Já que tem matiz coloquial, uma vez que es formal/argumentativo",
+   expl:'<em>Já que</em> es neutral, indica causa <strong>conocida/aceptada</strong>. <em>Uma vez que</em> es más <strong>formal/argumentativo</strong>, establece una premisa. En redação ENEM, prefiere <em>uma vez que / visto que / dado que</em>. En conversación: <em>já que</em>.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

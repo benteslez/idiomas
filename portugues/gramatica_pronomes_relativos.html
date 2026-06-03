@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Pronomes Relativos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Pronomes Relativos → Sintaxis · dk-green */
+:root {
+  --primary: #1f4634;
+  --primary-soft: #e8f0eb;
+  --primary-mid: #5a8a72;
+  --primary-strong: #0f2e22;
+  --primary-glow: rgba(31, 70, 52, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fc99e;
+  --primary-soft: #1a2e23;
+  --primary-mid: #4a8a66;
+  --primary-strong: #b8dcc6;
+  --primary-glow: rgba(127, 201, 158, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; }
+.split-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 0.96rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.01em; }
+.split-card p { font-size: 0.86em; color: var(--text2); line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Pronomes Relativos</h1>
+    <span class="header-tag">Sintaxe</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B1–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Que · cujo · o qual · onde</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Sistema general</button>
+    <button class="snav-btn"        onclick="showSection('s-que',this)">2. Que</button>
+    <button class="snav-btn"        onclick="showSection('s-quem',this)">3. Quem</button>
+    <button class="snav-btn"        onclick="showSection('s-cujo',this)">4. Cujo</button>
+    <button class="snav-btn"        onclick="showSection('s-oqual',this)">5. O qual / onde / quando</button>
+    <button class="snav-btn"        onclick="showSection('s-restritivas',this)">6. Restrictivas vs explicativas</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los <strong>pronomes relativos</strong> introducen oraciones subordinadas que se refieren a un <strong>antecedente</strong> (sustantivo, pronombre o frase del enunciado principal). Funcionan como "puente" entre dos oraciones. Los principales son <strong>que, quem, cujo, o qual, onde, quando, como, quanto</strong>. Cada uno tiene reglas específicas de uso.
+      </div>
+
+      <div class="sec-label">Cuadro completo</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Relativo</th><th>Antecedente</th><th>Función</th></tr></thead>
+        <tbody>
+          <tr><td><strong>que</strong></td><td>persona o cosa</td><td>universal, sujeto u objeto</td></tr>
+          <tr><td><strong>quem</strong></td><td>solo persona</td><td>tras preposición</td></tr>
+          <tr><td><strong>cujo / cuja / cujos / cujas</strong></td><td>cualquier</td><td>posesivo (= "de quien, cuyo")</td></tr>
+          <tr><td><strong>o qual / a qual / os quais / as quais</strong></td><td>cualquier</td><td>énfasis, claridad, evita ambigüedad</td></tr>
+          <tr><td><strong>onde</strong></td><td>lugar</td><td>complemento de lugar</td></tr>
+          <tr><td><strong>quando</strong></td><td>tiempo</td><td>complemento temporal</td></tr>
+          <tr><td><strong>como</strong></td><td>modo</td><td>complemento modal</td></tr>
+          <tr><td><strong>quanto / quantos / quantas</strong></td><td>cantidad</td><td>cuantificador relativo</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>PB hablado:</strong> el sistema se simplifica drásticamente. El relativo <em>que</em> sirve para casi todo. <em>Cujo</em> casi desapareció (se reemplaza por <em>que + o seu / que + de quem</em>). <em>O qual</em> aparece solo en escritura culta. <em>Quem</em> con preposición es muy frecuente.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. QUE -->
+  <div class="sec-block" id="s-que">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong>Que</strong> es el relativo más usado del portugués. Cubre antecedentes de persona o cosa, funciona como sujeto u objeto directo, y aparece en restrictivas y explicativas. Es invariable.
+      </div>
+
+      <div class="sec-label">Como sujeto del relativo</div>
+      <div class="example-block pr"><div class="ex-fr">O homem <span class="epr">que</span> chegou é meu tio. (o homem chegou)</div><div class="ex-es">El hombre que llegó es mi tío.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A casa <span class="epr">que</span> fica na esquina é nova.</div><div class="ex-es">La casa que está en la esquina es nueva.</div></div>
+      <div class="example-block pr"><div class="ex-fr">As pessoas <span class="epr">que</span> trabalham aqui são simpáticas.</div><div class="ex-es">Las personas que trabajan aquí son simpáticas.</div></div>
+
+      <div class="sec-label">Como objeto directo</div>
+      <div class="example-block pr"><div class="ex-fr">O livro <span class="epr">que</span> comprei é ótimo. (comprei o livro)</div><div class="ex-es">El libro que compré es óptimo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A pessoa <span class="epr">que</span> vi ontem...</div><div class="ex-es">La persona que vi ayer...</div></div>
+      <div class="example-block pr"><div class="ex-fr">As músicas <span class="epr">que</span> ela canta são muito antigas.</div><div class="ex-es">Las canciones que ella canta son muy antiguas.</div></div>
+
+      <div class="sec-label">Con preposición (norma)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Estructura</th><th>Ejemplo</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td>em + que</td><td>O dia <span class="hl-pr">em que</span> nos conhecemos.</td><td>El día en que nos conocimos.</td></tr>
+          <tr><td>a + que</td><td>A reunião <span class="hl-pr">a que</span> assistimos.</td><td>La reunión a la que asistimos.</td></tr>
+          <tr><td>de + que</td><td>O assunto <span class="hl-pr">de que</span> falamos.</td><td>El tema del que hablamos.</td></tr>
+          <tr><td>por + que</td><td>O motivo <span class="hl-pr">por que</span> ele saiu. (= pelo qual)</td><td>El motivo por el que se fue.</td></tr>
+          <tr><td>com + que</td><td>A caneta <span class="hl-pr">com que</span> escrevi.</td><td>La pluma con la que escribí.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>PB hablado:</strong> con preposición, suele eliminarse o "que" se repite con pronombre tónico. <em>O assunto que a gente falou (sobre ele)</em> en lugar de <em>o assunto de que falamos</em>. Esto es agramatical en norma escrita pero universal en habla.</div>
+      </div>
+
+      <div class="sec-label">Que como neutro (= o que, lo que)</div>
+      <div class="example-block pr"><div class="ex-fr">Não sei <span class="epr">o que</span> ele quer.</div><div class="ex-es">No sé lo que él quiere.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">O que</span> me importa é a verdade.</div><div class="ex-es">Lo que me importa es la verdad.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Faça <span class="epr">o que</span> quiser.</div><div class="ex-es">Haz lo que quieras.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 3. QUEM -->
+  <div class="sec-block" id="s-quem">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong>Quem</strong> es relativo que se refiere <strong>solo a personas</strong>. Aparece principalmente <strong>tras preposición</strong> y en oraciones sin antecedente expreso (= "quien"). Es invariable.
+      </div>
+
+      <div class="sec-label">Quem tras preposición (norma escrita)</div>
+      <div class="example-block pr"><div class="ex-fr">A pessoa <span class="epr">com quem</span> falei é meu chefe.</div><div class="ex-es">La persona con quien hablé es mi jefe.</div></div>
+      <div class="example-block pr"><div class="ex-fr">O homem <span class="epr">de quem</span> te falei chegou.</div><div class="ex-es">El hombre de quien te hablé llegó.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A amiga <span class="epr">a quem</span> escrevi não respondeu.</div><div class="ex-es">La amiga a quien escribí no respondió.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Aquele <span class="epr">por quem</span> me apaixonei...</div><div class="ex-es">Aquel por quien me enamoré...</div></div>
+
+      <div class="sec-label">Quem sin antecedente (= "quien")</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Quem</span> tem boca vai a Roma.</div><div class="ex-es">Quien tiene boca va a Roma.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Quem</span> espera sempre alcança.</div><div class="ex-es">Quien espera siempre alcanza.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vou ajudar <span class="epr">quem</span> precisar.</div><div class="ex-es">Voy a ayudar a quien necesite.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Quem</span> não arrisca, não petisca.</div><div class="ex-es">Quien no arriesga, no gana.</div></div>
+
+      <div class="sec-label">Quem PB hablado</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Norma escrita</th><th>PB hablado</th></tr></thead>
+        <tbody>
+          <tr><td>A pessoa <span class="hl-pr">com quem</span> falei.</td><td>A pessoa <span class="hl-pr">que eu falei com ela</span>. (popular)</td></tr>
+          <tr><td>O homem <span class="hl-pr">de quem</span> te falei.</td><td>O homem <span class="hl-pr">que eu te falei dele</span>. (popular)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>PB popular: relativa con pronombre recuperador.</strong> En lugar de mover la preposición al inicio (norma escrita), se mantiene en su lugar y se añade pronombre: <em>a pessoa que falei com ela</em>. Es agramatical en norma, pero universal en habla.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. CUJO -->
+  <div class="sec-block" id="s-cujo">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong>Cujo / cuja / cujos / cujas</strong> es un relativo <strong>posesivo</strong>, equivale al "cuyo / cuya" del español. <strong>Concuerda con el sustantivo que sigue</strong>, no con el antecedente. En PB hablado está prácticamente extinto.
+      </div>
+
+      <div class="sec-label">Formación y concordancia</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Antecedente</th><th>Sustantivo siguiente</th><th>Forma</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>cualquier</td><td>masc. sing.</td><td class="hl-pr">cujo</td><td>O homem <span class="hl-pr">cujo</span> filho conheço.</td></tr>
+          <tr><td>cualquier</td><td>fem. sing.</td><td class="hl-pr">cuja</td><td>A mulher <span class="hl-pr">cuja</span> filha conheço.</td></tr>
+          <tr><td>cualquier</td><td>masc. pl.</td><td class="hl-pr">cujos</td><td>O autor <span class="hl-pr">cujos</span> livros li.</td></tr>
+          <tr><td>cualquier</td><td>fem. pl.</td><td class="hl-pr">cujas</td><td>A casa <span class="hl-pr">cujas</span> portas estão abertas.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos en uso (norma escrita)</div>
+      <div class="example-block pr"><div class="ex-fr">O escritor <span class="epr">cujo</span> livro li é português.</div><div class="ex-es">El escritor cuyo libro leí es portugués.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A empresa <span class="epr">cujas</span> ações subiram.</div><div class="ex-es">La empresa cuyas acciones subieron.</div></div>
+      <div class="example-block pr"><div class="ex-fr">O país <span class="epr">cuja</span> capital é Brasília.</div><div class="ex-es">El país cuya capital es Brasilia.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Os artistas <span class="epr">cujos</span> trabalhos admiramos.</div><div class="ex-es">Los artistas cuyos trabajos admiramos.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Cujo SIN artículo:</strong> nunca se usa artículo entre <em>cujo</em> y el sustantivo siguiente. <em>O homem cujo o filho</em> es agramatical. Correcto: <em>o homem cujo filho</em>.</div>
+      </div>
+
+      <div class="sec-label">Cujo PB hablado: sustitución</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Norma escrita</th><th>PB hablado</th></tr></thead>
+        <tbody>
+          <tr><td>O homem <span class="hl-pr">cujo filho</span> conheço.</td><td>O homem <span class="hl-pr">que eu conheço o filho dele</span>.</td></tr>
+          <tr><td>A casa <span class="hl-pr">cuja porta</span> está aberta.</td><td>A casa <span class="hl-pr">que a porta dela</span> está aberta.</td></tr>
+          <tr><td>O autor <span class="hl-pr">cujos livros</span> li.</td><td>O autor <span class="hl-pr">que li os livros dele</span>.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="note-box"><strong>Recomendación:</strong> en escritura formal (redação ENEM, CELPE-Bras, prensa, ensayo), usa <em>cujo</em>. En habla o registro coloquial escrito, la sustitución con <em>que + pron. posesivo recuperador</em> es completamente natural.</div>
+
+      <div class="sec-label">Cujo con preposición</div>
+      <div class="example-block pr"><div class="ex-fr">O autor <span class="epr">de cujo</span> livro falamos.</div><div class="ex-es">El autor de cuyo libro hablamos.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A árvore <span class="epr">sob cujas</span> sombras descansamos.</div><div class="ex-es">El árbol bajo cuyas sombras descansamos.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 5. O QUAL -->
+  <div class="sec-block" id="s-oqual">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong>O qual / a qual / os quais / as quais</strong> son relativos que <strong>concuerdan</strong> con el antecedente. Se usan para evitar ambigüedad (cuando <em>que</em> sería confuso) o por énfasis estilístico. <strong>Onde, quando, como, quanto</strong> son relativos circunstanciales.
+      </div>
+
+      <div class="sec-label">O qual: evita ambigüedad</div>
+      <div class="example-block pr"><div class="ex-fr">A casa do meu primo, <span class="epr">a qual</span> fica em São Paulo, é grande.</div><div class="ex-es">La casa de mi primo, la cual está en São Paulo, es grande.</div><div class="ex-note">Aquí "a qual" se refiere claramente a "a casa", no a "primo". Con "que" sería ambiguo.</div></div>
+
+      <div class="sec-label">O qual con preposición (mais formal que "que")</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Contracción</th><th>Forma</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>de + o qual</td><td class="hl-pr">do qual</td><td>O assunto <span class="hl-pr">do qual</span> falamos.</td></tr>
+          <tr><td>em + o qual</td><td class="hl-pr">no qual</td><td>O dia <span class="hl-pr">no qual</span> nos conhecemos.</td></tr>
+          <tr><td>a + o qual</td><td class="hl-pr">ao qual</td><td>O lugar <span class="hl-pr">ao qual</span> fomos.</td></tr>
+          <tr><td>por + o qual</td><td class="hl-pr">pelo qual</td><td>O motivo <span class="hl-pr">pelo qual</span> saí.</td></tr>
+          <tr><td>de + a qual</td><td class="hl-pr">da qual</td><td>A casa <span class="hl-pr">da qual</span> falei.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Onde, quando, como</div>
+      <div class="example-block pr"><div class="ex-fr">A cidade <span class="epr">onde</span> nasci é pequena. (= em que)</div><div class="ex-es">La ciudad donde nací es pequeña.</div></div>
+      <div class="example-block pr"><div class="ex-fr">O lugar <span class="epr">aonde</span> vou. (preposición a + onde — movimiento)</div><div class="ex-es">El lugar adonde voy.</div></div>
+      <div class="example-block pr"><div class="ex-fr">O ano <span class="epr">quando</span> isso aconteceu... (formal)</div><div class="ex-es">El año cuando esto ocurrió...</div></div>
+      <div class="example-block pr"><div class="ex-fr">A maneira <span class="epr">como</span> ele fala é estranha.</div><div class="ex-es">La manera como él habla es extraña.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Onde vs aonde:</strong> <em>onde</em> con verbos estáticos (estar, ficar, morar). <em>Aonde</em> con verbos de movimiento (ir, chegar). <em>A cidade onde moro</em> / <em>O lugar aonde vou</em>. En PB hablado, <em>aonde</em> reemplaza a <em>onde</em> en muchos casos: <em>onde você tá? / aonde você tá?</em></div>
+      </div>
+
+      <div class="sec-label">Onde como sustituto de "que"</div>
+      <div class="example-block pr"><div class="ex-fr">A casa <span class="epr">onde</span> moro = a casa <span class="epr">em que</span> moro.</div><div class="ex-es">La casa donde vivo / en la que vivo.</div></div>
+      <div class="note-box"><strong>Atención:</strong> <em>onde</em> solo para LUGAR. Para personas o cosas no físicas se usa <em>em que / no qual</em>. NO: "a situação onde estou" → SÍ: "a situação em que estou".</div>
+
+      <div class="sec-label">Quanto / quantos / quantas</div>
+      <div class="example-block pr"><div class="ex-fr">Trouxe <span class="epr">quanto</span> pude.</div><div class="ex-es">Traje cuanto pude.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Comprei <span class="epr">quantos</span> livros quis.</div><div class="ex-es">Compré cuantos libros quise.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 6. RESTRITIVAS -->
+  <div class="sec-block" id="s-restritivas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las oraciones relativas se dividen en dos clases con consecuencias semánticas y de puntuación: <strong>restritivas</strong> (sin vírgulas, definen el antecedente) y <strong>explicativas</strong> (con vírgulas, añaden información no esencial).
+      </div>
+
+      <div class="split-grid">
+        <div class="split-card">
+          <h4>Restritiva (sin coma)</h4>
+          <p>Restringe / define el antecedente. Esencial al significado.</p>
+          <p style="margin-top:6px"><em>Os alunos que estudaram passaram.</em></p>
+          <p>→ Solo algunos alumnos estudiaron; esos pasaron. (no todos)</p>
+        </div>
+        <div class="split-card">
+          <h4>Explicativa (con coma)</h4>
+          <p>Añade información complementaria, no esencial.</p>
+          <p style="margin-top:6px"><em>Os alunos, que estudaram, passaram.</em></p>
+          <p>→ Todos los alumnos estudiaron y todos pasaron.</p>
+        </div>
+      </div>
+
+      <div class="sec-label">Más ejemplos contrastivos</div>
+      <div class="example-block pr"><div class="ex-fr"><strong>Restritiva:</strong> Meu irmão <span class="epr">que mora em SP</span> chegou.</div><div class="ex-es">(implica: tengo varios hermanos, el de SP llegó)</div></div>
+      <div class="example-block pr"><div class="ex-fr"><strong>Explicativa:</strong> Meu irmão, <span class="epr">que mora em SP,</span> chegou.</div><div class="ex-es">(implica: tengo un solo hermano, y vive en SP)</div></div>
+      <div class="example-block pr"><div class="ex-fr"><strong>Restritiva:</strong> A pessoa <span class="epr">que ligou</span> não deixou recado.</div><div class="ex-es">(definimos cuál persona)</div></div>
+      <div class="example-block pr"><div class="ex-fr"><strong>Explicativa:</strong> Maria Silva, <span class="epr">que ligou ontem,</span> não deixou recado.</div><div class="ex-es">(información extra sobre Maria)</div></div>
+
+      <div class="sec-label">Pista para decidir</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Pregunta</th><th>Si SÍ: restritiva</th><th>Si NO: explicativa</th></tr></thead>
+        <tbody>
+          <tr><td>¿La oración relativa identifica/define al antecedente?</td><td>sin coma</td><td>con coma</td></tr>
+          <tr><td>¿Sin la relativa, la oración pierde sentido o cambia de significado?</td><td>sin coma</td><td>con coma</td></tr>
+          <tr><td>¿El antecedente es único o ya identificado?</td><td>no (= varios)</td><td>sí (= único)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Truco práctico:</strong> si puedes quitar la relativa y la oración mantiene su significado central → es <em>explicativa</em> (con coma). Si quitando la relativa la oración cambia o pierde precisión → es <em>restritiva</em> (sin coma).</div>
+      </div>
+
+      <div class="sec-label">Quem en explicativas</div>
+      <div class="example-block pr"><div class="ex-fr">Meu pai, <span class="epr">a quem</span> devo tudo, faleceu ontem.</div><div class="ex-es">Mi padre, a quien debo todo, falleció ayer.</div></div>
+      <div class="note-box"><strong>Quem solo en explicativas (con coma):</strong> en relativas restritivas, <em>quem</em> aparece solo cuando va precedido de preposición. Sin preposición y restrictiva, se usa <em>que</em>: <em>a mulher que falou</em> (no <em>a mulher quem falou</em>).</div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con los pronomes relativos.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Cujo con artículo',
+   wrong:"O homem cujo o filho conheço.",
+   right:"O homem cujo filho conheço.",
+   expl:'<em>Cujo</em> NUNCA va seguido de artículo. La estructura es siempre <em>cujo + sustantivo</em>: <em>cujo filho, cuja casa, cujos livros</em>. Insertar el artículo es un error normativo grave.'},
+  {name:'Quem en relativa restritiva sin preposición',
+   wrong:"A mulher quem falou no rádio.",
+   right:"A mulher que falou no rádio.",
+   expl:'En relativas <strong>restritivas</strong> (sin coma), el relativo de persona es <em>que</em>, no <em>quem</em>. <em>Quem</em> aparece solo: 1) tras preposición (<em>a pessoa com quem falei</em>), 2) en explicativas (<em>meu pai, a quem amo</em>), 3) sin antecedente (<em>quem espera alcança</em>).'},
+  {name:'Onde para algo no físico',
+   wrong:"A situação onde estamos é difícil.",
+   right:"A situação em que estamos é difícil.",
+   expl:'<em>Onde</em> se usa SOLO para <strong>lugar físico</strong>. Para situaciones, estados, contextos abstractos: <em>em que, no qual, na qual</em>. <em>A condição em que vivemos, o momento em que estamos</em>.'},
+  {name:'Onde vs aonde con verbos de movimiento',
+   wrong:"O lugar onde vou amanhã.",
+   right:"O lugar aonde vou amanhã.",
+   expl:'<em>Aonde</em> con verbos de <strong>movimiento</strong> (ir, chegar, levar): "<em>o lugar aonde vou, o destino aonde nos levaram</em>". <em>Onde</em> con verbos <strong>estáticos</strong>: "<em>a casa onde moro, o lugar onde estamos</em>". Distinción normativa.'},
+  {name:'Cujo con genérico (= que del cual)',
+   wrong:"A reunião cuja participamos foi longa.",
+   right:"A reunião da qual participamos foi longa.",
+   expl:'<em>Cujo</em> tiene valor <strong>posesivo</strong> (= "cuyo, de quien"). Si el sentido es "del cual / en el cual / al cual", usa <em>do qual, no qual, ao qual</em>. <em>Cujo</em> requiere posesión: <em>a casa cuja porta</em> (la puerta de la casa).'},
+  {name:'Restritiva con coma (error de puntuación)',
+   wrong:"As pessoas, que trabalham aqui, são simpáticas.",
+   right:"As pessoas que trabalham aqui são simpáticas.",
+   expl:'En oración <strong>restritiva</strong> (define el antecedente), NUNCA usar comas. La presencia de comas convierte la oración en explicativa, cambiando el significado: con comas implicaría que todas las personas trabajan ahí; sin comas, solo se habla de las que trabajan ahí.'},
+  {name:'O qual sin preposición y sin necesidad',
+   wrong:"A casa a qual fica na esquina.",
+   right:"A casa que fica na esquina.",
+   expl:'<em>O qual / a qual</em> se usa para evitar ambigüedad o tras preposición. Sin necesidad, prefiere <em>que</em> que es más natural. <em>O qual</em> queda en escritura culta o cuando varias antecedentes posibles podrían confundirse.'},
+  {name:'Que repetido con preposición (PB popular)',
+   wrong:"O assunto que falamos sobre ele... (en escritura formal)",
+   right:"O assunto sobre o qual falamos / O assunto de que falamos.",
+   expl:'En PB hablado popular, las relativas con preposición se construyen con <em>que</em> + pronombre recuperador: <em>o cara que falei com ele, o filme que gostei dele</em>. En escritura formal, mueve la preposición al inicio: <em>com quem falei, de que gostei</em>.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

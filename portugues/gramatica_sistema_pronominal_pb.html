@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Sistema Pronominal do PB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Sistema Pronominal PB → Sintaxis · dk-green */
+:root {
+  --primary: #1f4634;
+  --primary-soft: #e8f0eb;
+  --primary-mid: #5a8a72;
+  --primary-strong: #0f2e22;
+  --primary-glow: rgba(31, 70, 52, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fc99e;
+  --primary-soft: #1a2e23;
+  --primary-mid: #4a8a66;
+  --primary-strong: #b8dcc6;
+  --primary-glow: rgba(127, 201, 158, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; }
+.split-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 0.96rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.01em; }
+.split-card p { font-size: 0.86em; color: var(--text2); line-height: 1.6; }
+
+.alert-box {
+  background: var(--red-bg); border: 1px solid var(--red-border);
+  border-radius: var(--radius-md); padding: 14px 17px; margin: 14px 0;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.alert-box .alert-icon { font-size: 1.2em; flex-shrink: 0; }
+.alert-box .alert-text { color: var(--text2); line-height: 1.6; font-size: 0.92em; }
+.alert-box .alert-text strong { color: var(--red); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>🔴 Sistema Pronominal do PB</h1>
+    <span class="header-tag">Sintaxe · Exclusivo PB</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR A2–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Você · a gente · tu</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Norma vs PB</button>
+    <button class="snav-btn"        onclick="showSection('s-voce',this)">2. Você</button>
+    <button class="snav-btn"        onclick="showSection('s-tu',this)">3. Tu (regional)</button>
+    <button class="snav-btn"        onclick="showSection('s-a-gente',this)">4. A gente</button>
+    <button class="snav-btn"        onclick="showSection('s-voces',this)">5. Vocês</button>
+    <button class="snav-btn"        onclick="showSection('s-mistura',this)">6. Mezcla de paradigmas</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>sistema pronominal del PB</strong> (portugués brasileño) es <strong>radicalmente distinto</strong> del que enseñan las gramáticas tradicionales. La norma escrita conserva el cuadro clásico de 6 personas (eu, tu, ele, nós, vós, eles), pero el PB hablado lo ha reorganizado en torno a <strong>você, a gente, vocês</strong>, con consecuencias gramaticales profundas: simplificación de la conjugación, pérdida de clíticos, mezcla de paradigmas.
+      </div>
+
+      <div class="sec-label">Comparación visual</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Persona</th><th>Norma culta (escrita)</th><th>PB hablado dominante</th></tr></thead>
+        <tbody>
+          <tr><td>1ª sing.</td><td>eu</td><td>eu</td></tr>
+          <tr><td>2ª sing. (tú)</td><td>tu (con 2ª sing.: tu falas)</td><td>você (con 3ª sing.: você fala)</td></tr>
+          <tr><td>3ª sing.</td><td>ele/ela</td><td>ele/ela</td></tr>
+          <tr><td>1ª pl. (nosotros)</td><td>nós</td><td>a gente (con 3ª sing.: a gente vai)</td></tr>
+          <tr><td>2ª pl. (vosotros)</td><td>vós (con 2ª pl.: vós falais — desaparecido)</td><td>vocês (con 3ª pl.: vocês vão)</td></tr>
+          <tr><td>3ª pl.</td><td>eles/elas</td><td>eles/elas</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="alert-box">
+        <span class="alert-icon">🚨</span>
+        <div class="alert-text">
+          <strong>Consecuencia gramatical:</strong> el PB ha reducido la conjugación verbal a <strong>3 formas básicas</strong>: 1ª sing. (eu), 3ª sing. (você, ele, a gente) y 3ª pl. (vocês, eles). Las formas <em>tu falas, nós falamos, vós falais</em> sobreviven solo en escritura formal o en habla regional muy específica.
+        </div>
+      </div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Diglosia:</strong> entre la norma escrita y el PB hablado hay una distancia tan grande que se habla de <em>diglosia</em>. Los brasileños alfabetizados manejan ambos sistemas: el escrito (formal) y el oral (informal). Saber alternar es marcador de competencia comunicativa.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. VOCE -->
+  <div class="sec-block" id="s-voce">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong>Você</strong> es el pronombre de tratamento dominante en PB para la <strong>segunda persona singular (tú)</strong>, en cualquier contexto: amigo, familiar, conocido, profesional joven. Solo es percibido como ligeramente más distante en regiones donde <em>tu</em> es vivo.
+      </div>
+
+      <div class="sec-label">Conjugación con você (= 3ª persona singular)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tiempo</th><th>Verbo falar</th><th>Equivalente español (tú)</th></tr></thead>
+        <tbody>
+          <tr><td>Presente</td><td>Você <span class="hl-pr">fala</span> português.</td><td>Hablas portugués.</td></tr>
+          <tr><td>PPS</td><td>Você <span class="hl-pr">falou</span> com ele.</td><td>Hablaste con él.</td></tr>
+          <tr><td>Imperfeito</td><td>Você <span class="hl-pr">falava</span> bem.</td><td>Hablabas bien.</td></tr>
+          <tr><td>Futuro</td><td>Você <span class="hl-pr">vai falar</span>.</td><td>Vas a hablar.</td></tr>
+          <tr><td>Subjuntivo</td><td>Espero que você <span class="hl-pr">fale</span>.</td><td>Espero que hables.</td></tr>
+          <tr><td>Imperativo</td><td><span class="hl-pr">Fale</span>! (formal) / <span class="hl-pr">Fala</span>! (informal)</td><td>¡Habla!</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Pronombres associados a você</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Función</th><th>Pronombre</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Sujeto</td><td>você</td><td><span class="hl-pr">Você</span> mora aqui?</td></tr>
+          <tr><td>Oblíquo (preposición)</td><td>você</td><td>É pra <span class="hl-pr">você</span>.</td></tr>
+          <tr><td>Reflexivo</td><td>se</td><td>Você <span class="hl-pr">se</span> chama Pedro?</td></tr>
+          <tr><td>Posesivo</td><td>seu(s) / sua(s) — o de você</td><td><span class="hl-pr">Seu</span> livro / o livro <span class="hl-pr">de você</span>.</td></tr>
+          <tr><td>Acusativo (PB oral)</td><td>te (de tu) o você</td><td>Eu <span class="hl-pr">te</span> vi / Eu vi <span class="hl-pr">você</span>.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Origen histórico:</strong> <em>você</em> viene de <em>Vossa Mercê</em> (forma de tratamiento solemne) → <em>vosmecê</em> → <em>você</em>. Por eso conserva la concordancia en 3ª persona aunque su valor semántico sea 2ª persona.</div>
+      </div>
+
+      <div class="sec-label">Reducción ortográfica oral (cê)</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Cê</span> tá bem? (PB muy informal, reducción de "você")</div><div class="ex-es">¿Estás bien?</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Cê</span> vai sair?</div><div class="ex-es">¿Vas a salir?</div></div>
+      <div class="note-box"><strong>Cê:</strong> reducción de <em>você</em> típica del habla muy informal, juvenil, urbana. No aparece en escritura formal, pero sí en mensajes, redes sociales y literatura coloquial.</div>
+    </div></div>
+  </div>
+
+  <!-- 3. TU -->
+  <div class="sec-block" id="s-tu">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong>Tu</strong> sigue vivo en varias regiones de Brasil (sur, parte do nordeste, parte do norte, Rio de Janeiro popular), pero con un fenómeno particular: la conjugación <strong>varía</strong>. En la norma, <em>tu</em> exige 2ª sing. (<em>tu falas</em>); en el habla regional, suele usarse con 3ª sing. (<em>tu fala</em>).
+      </div>
+
+      <div class="sec-label">Regiones donde tu está vivo</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Región</th><th>Uso</th><th>Concordancia</th></tr></thead>
+        <tbody>
+          <tr><td>Rio Grande do Sul</td><td>tu dominante con familiares y amigos</td><td>variada (gaúchos cultos: tu falas; popular: tu fala)</td></tr>
+          <tr><td>Santa Catarina (litoral)</td><td>tu común</td><td>2ª sing. (tu vais, tu fazes)</td></tr>
+          <tr><td>Nordeste (Recife, Fortaleza, Maceió, Natal, Belém)</td><td>tu coexiste con você</td><td>frecuentemente 3ª sing. (tu fala, tu vai)</td></tr>
+          <tr><td>Rio de Janeiro (popular)</td><td>tu en habla muy informal</td><td>3ª sing. (tu fala, tu pode)</td></tr>
+          <tr><td>São Paulo, Minas Gerais, centro-oeste</td><td>tu casi inexistente</td><td>solo você</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Tu con concordancia variable</div>
+      <div class="split-grid">
+        <div class="split-card">
+          <h4>Norma (PE / RS / SC culta)</h4>
+          <p>Tu con 2ª persona singular regular.</p>
+          <p style="margin-top:6px"><em>Tu falas português?</em></p>
+          <p><em>Tu vais ao cinema?</em></p>
+          <p><em>Tu fazes o que?</em></p>
+        </div>
+        <div class="split-card">
+          <h4>PB regional popular</h4>
+          <p>Tu con 3ª persona singular (mezcla con você).</p>
+          <p style="margin-top:6px"><em>Tu fala português?</em></p>
+          <p><em>Tu vai ao cinema?</em></p>
+          <p><em>Tu faz o que?</em></p>
+        </div>
+      </div>
+
+      <div class="sec-label">Pronombres associados a tu</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Función</th><th>Pronombre</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Sujeto</td><td>tu</td><td><span class="hl-pr">Tu</span> mora aqui?</td></tr>
+          <tr><td>Oblíquo</td><td>ti / contigo</td><td>É pra <span class="hl-pr">ti</span>. / Vou <span class="hl-pr">contigo</span>.</td></tr>
+          <tr><td>Reflexivo</td><td>te</td><td><span class="hl-pr">Te</span> levanta cedo?</td></tr>
+          <tr><td>Posesivo (norma)</td><td>teu(s) / tua(s)</td><td><span class="hl-pr">Teu</span> livro.</td></tr>
+          <tr><td>Acusativo</td><td>te</td><td>Eu <span class="hl-pr">te</span> vi ontem.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Te / ti en PB:</strong> aunque <em>tu</em> sea minoritario, los pronombres <strong>te</strong> y <strong>ti</strong> sobreviven con altísima frecuencia, asociados informalmente a você. <em>Eu te amo, te ligo amanhã, fala contigo</em> son completamente normales en PB.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. A GENTE -->
+  <div class="sec-block" id="s-a-gente">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong>A gente</strong> es el pronombre de 1ª persona plural dominante en PB hablado. Reemplaza a <em>nós</em> con altísima frecuencia (90%+ en habla informal). Su rasgo gramatical clave: <strong>concordancia en 3ª persona singular</strong>, no en 1ª plural.
+      </div>
+
+      <div class="alert-box">
+        <span class="alert-icon">🚨</span>
+        <div class="alert-text">
+          <strong>Regla absoluta:</strong> <em>a gente</em> + 3ª sing. SIEMPRE. <strong>a gente vai, a gente fala, a gente é, a gente tem</strong>. NUNCA <em>*a gente vamos, *a gente somos</em>. Reflexivo: <em>se</em>, no <em>nos</em>: <em>a gente se diverte, a gente se vê</em>.
+        </div>
+      </div>
+
+      <div class="sec-label">Conjugación con a gente</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tiempo</th><th>A gente + verbo</th><th>Equivalente con nós</th></tr></thead>
+        <tbody>
+          <tr><td>Presente</td><td>A gente <span class="hl-pr">fala</span>.</td><td>Nós falamos.</td></tr>
+          <tr><td>PPS</td><td>A gente <span class="hl-pr">falou</span>.</td><td>Nós falamos.</td></tr>
+          <tr><td>Imperfeito</td><td>A gente <span class="hl-pr">falava</span>.</td><td>Nós falávamos.</td></tr>
+          <tr><td>Futuro</td><td>A gente <span class="hl-pr">vai falar</span>.</td><td>Nós vamos falar.</td></tr>
+          <tr><td>Subjuntivo</td><td>Espero que a gente <span class="hl-pr">fale</span>.</td><td>Espero que nós falemos.</td></tr>
+          <tr><td>Reflexivo</td><td>A gente <span class="hl-pr">se</span> diverte.</td><td>Nós nos divertimos.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Pronombres asociados a a gente</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Función</th><th>Pronombre</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Sujeto</td><td>a gente</td><td><span class="hl-pr">A gente</span> mora aqui.</td></tr>
+          <tr><td>Oblíquo</td><td>a gente / nós</td><td>Vem com <span class="hl-pr">a gente</span>! / É pra <span class="hl-pr">nós</span>.</td></tr>
+          <tr><td>Reflexivo</td><td>se</td><td>A gente <span class="hl-pr">se</span> chama todo dia.</td></tr>
+          <tr><td>Posesivo</td><td>nosso(s) / nossa(s) — o da gente</td><td><span class="hl-pr">Nosso</span> apartamento / o apartamento <span class="hl-pr">da gente</span>.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Frecuencia y registro</div>
+      <div class="example-block pr"><div class="ex-fr">A gente vai sair hoje? (informal, amigos)</div><div class="ex-es">¿Salimos hoy?</div></div>
+      <div class="example-block pr"><div class="ex-fr">Nós vamos sair hoje. (semi-formal o escrito)</div><div class="ex-es">Vamos a salir hoy.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Saudades da gente! (cariñoso)</div><div class="ex-es">¡Te echamos de menos!</div></div>
+      <div class="example-block pr"><div class="ex-fr">A gente se vê depois! (despedida común)</div><div class="ex-es">¡Nos vemos después!</div></div>
+
+      <div class="note-box"><strong>Origen:</strong> <em>a gente</em> procede del sustantivo "la gente" (con artículo). Conservó la concordancia gramatical (3ª sing.) aunque adquirió el valor pronominal (1ª pl.). Es la misma evolución que dio <em>você</em> (Vossa Mercê → 2ª persona).</div>
+    </div></div>
+  </div>
+
+  <!-- 5. VOCES -->
+  <div class="sec-block" id="s-voces">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong>Vocês</strong> es el único pronombre de 2ª persona plural en PB. <em>Vós</em> ha desaparecido completamente del habla (sobrevive solo en oraciones religiosas, textos antiguos y discurso muy solemne). <em>Vocês</em> exige <strong>3ª persona plural</strong>.
+      </div>
+
+      <div class="sec-label">Conjugación con vocês (= 3ª persona plural)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tiempo</th><th>Vocês + verbo</th><th>Equivalente español (vosotros)</th></tr></thead>
+        <tbody>
+          <tr><td>Presente</td><td>Vocês <span class="hl-pr">falam</span> português.</td><td>Habláis portugués.</td></tr>
+          <tr><td>PPS</td><td>Vocês <span class="hl-pr">falaram</span> com ele.</td><td>Hablasteis con él.</td></tr>
+          <tr><td>Imperfeito</td><td>Vocês <span class="hl-pr">falavam</span>.</td><td>Hablabais.</td></tr>
+          <tr><td>Futuro</td><td>Vocês <span class="hl-pr">vão falar</span>.</td><td>Vais a hablar.</td></tr>
+          <tr><td>Subjuntivo</td><td>Espero que vocês <span class="hl-pr">falem</span>.</td><td>Espero que habléis.</td></tr>
+          <tr><td>Imperativo</td><td><span class="hl-pr">Falem</span>! / <span class="hl-pr">Fala</span> vocês! (col.)</td><td>¡Hablad! / ¡Habléis!</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Pronombres asociados a vocês</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Función</th><th>Pronombre</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Sujeto</td><td>vocês</td><td><span class="hl-pr">Vocês</span> moram aqui?</td></tr>
+          <tr><td>Oblíquo</td><td>vocês</td><td>É pra <span class="hl-pr">vocês</span>.</td></tr>
+          <tr><td>Reflexivo</td><td>se</td><td>Vocês <span class="hl-pr">se</span> conhecem?</td></tr>
+          <tr><td>Posesivo</td><td>seu(s) / sua(s) — o de vocês</td><td><span class="hl-pr">Seu</span> livro / o livro <span class="hl-pr">de vocês</span>.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Sin distinción formal/informal:</strong> a diferencia del español ("vosotros" vs "ustedes"), el PB usa <em>vocês</em> para cualquier plural de 2ª persona. Es el equivalente universal: ustedes / vosotros. Para más formalidad: <em>os senhores, as senhoras, vocês todos</em>.</div>
+      </div>
+
+      <div class="sec-label">Vós: solo registros muy especiales</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Vós</span> sois a luz do mundo. (Bíblia, registro solemne)</div><div class="ex-es">Vosotros sois la luz del mundo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Senhores deputados, peço a <span class="epr">vossa</span> atenção. (parlamento, formal)</div><div class="ex-es">Señores diputados, pido vuestra atención.</div></div>
+      <div class="note-box"><strong>Vós no es PE moderno:</strong> contrariamente al estereotipo, ni en Portugal se usa <em>vós</em> en el habla común. Solo aparece en registro religioso, literario antiguo y discursos solemnes específicos.</div>
+    </div></div>
+  </div>
+
+  <!-- 6. MISTURA -->
+  <div class="sec-block" id="s-mistura">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Un fenómeno distintivo del PB es la <strong>mezcla de paradigmas</strong>: el sujeto va con <em>você</em> (3ª pers.), pero el reflexivo o el posesivo va con <em>te / teu</em> (2ª pers.). Esto se debe a la fusión histórica de los dos sistemas (você + tu) en una sola persona.
+      </div>
+
+      <div class="sec-label">Mezcla típica você + te</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Você</span> <span class="epr">te</span> lembra do que eu disse?</div><div class="ex-es">¿Te acuerdas de lo que dije?</div><div class="ex-note">Mezcla: sujeto você (3ª pers.) + reflexivo te (2ª pers.).</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Você</span> trouxe o <span class="epr">teu</span> livro?</div><div class="ex-es">¿Trajiste tu libro?</div><div class="ex-note">Mezcla: sujeto você + posesivo teu.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">te</span> vejo amanhã, <span class="epr">você</span> vai estar lá?</div><div class="ex-es">Te veo mañana, ¿vas a estar?</div></div>
+
+      <div class="sec-label">Variantes en uso</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Variante</th><th>Combinación</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Norma escrita</td><td>você + se + seu</td><td><span class="hl-pr">Você</span> <span class="hl-pr">se</span> lembra do <span class="hl-pr">seu</span> livro?</td></tr>
+          <tr><td>PB hablado A</td><td>você + te + seu</td><td><span class="hl-pr">Você</span> <span class="hl-pr">te</span> lembra do <span class="hl-pr">seu</span> livro?</td></tr>
+          <tr><td>PB hablado B</td><td>você + se + teu</td><td><span class="hl-pr">Você</span> <span class="hl-pr">se</span> lembra do <span class="hl-pr">teu</span> livro?</td></tr>
+          <tr><td>PB hablado C</td><td>você + te + teu</td><td><span class="hl-pr">Você</span> <span class="hl-pr">te</span> lembra do <span class="hl-pr">teu</span> livro?</td></tr>
+          <tr><td>Coloquial (sin posesivo)</td><td>você + te + "de você"</td><td><span class="hl-pr">Você</span> <span class="hl-pr">te</span> lembra do livro <span class="hl-pr">de você</span>?</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Ambigüedad de seu/sua:</strong> en PB, <em>seu/sua</em> puede referirse a la 2ª (você), 3ª (ele/ela) o tratamiento formal (o senhor). Para desambiguar, se usa frecuentemente <em>de + pronombre</em>: <em>o livro de você, o carro dela, a casa dele</em>.</div>
+      </div>
+
+      <div class="sec-label">Sintetizando: las 3 variantes de PB</div>
+      <div class="example-block pr"><div class="ex-fr">"Vi a Maria. Eu encontrei <span class="epr">a casa dela</span>." (= la casa de ella)</div><div class="ex-es">Vi a María. Encontré su casa.</div></div>
+      <div class="example-block pr"><div class="ex-fr">"Vi a Maria. Eu encontrei <span class="epr">sua casa</span>." (ambíguo: tu casa o su casa?)</div><div class="ex-es">Vi a María. Encontré tu/su casa.</div><div class="ex-note">La forma "sua casa" es ambigua en PB; el PB hablado prefiere "a casa dela" para desambiguar.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con el sistema pronominal del PB.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Você con 2ª singular (calco español)',
+   wrong:"Você falas português?",
+   right:"Você fala português?",
+   expl:'<em>Você</em>, aunque traduce a "tú", exige <strong>3ª persona singular</strong>. Para hispanohablantes es el error más común. Confunde porque la noción semántica es "tú" pero la forma es como "él/ella". Pista: trata <em>você</em> como si fuera "usted" gramaticalmente.'},
+  {name:'A gente con 1ª plural',
+   wrong:"A gente vamos sair.",
+   right:"A gente vai sair.",
+   expl:'<em>A gente</em> = "nosotros" semántico, pero <strong>3ª sing. gramatical</strong>: <em>a gente vai, a gente faz, a gente tem, a gente se vê</em>. NUNCA <em>vamos, fazemos, temos</em> con <em>a gente</em>. El error más estigmatizado.'},
+  {name:'Vós en habla común',
+   wrong:"Vós podeis vir comigo? (en conversación)",
+   right:"Vocês podem vir comigo?",
+   expl:'<em>Vós</em> está completamente extinto en habla. Solo aparece en oraciones religiosas, literatura antigua, discursos solemnes. En PB y PE modernos: usa <em>vocês</em> para vosotros/ustedes.'},
+  {name:'Tu + 3ª sing. en escritura formal',
+   wrong:"Tu fala bem o português. (en redação ENEM)",
+   right:"Tu falas bem o português. / Você fala bem o português.",
+   expl:'En escritura formal, <em>tu</em> exige 2ª persona singular regular: <em>tu falas, tu vais, tu fazes</em>. La forma <em>tu fala</em> es PB regional popular, agramatical en escritura culta. En registro escrito, prefiere <em>você</em>.'},
+  {name:'Mezclar te y se con você',
+   wrong:"Você te diverte muito? / Você se diverte muito? — ambos PB hablado",
+   right:"Norma: você se diverte. PB hablado: ambas válidas.",
+   expl:'En PB hablado conviven <em>você se</em> (norma) y <em>você te</em> (mezcla histórica). En escritura formal, usa <em>se</em>. En habla, las dos formas son comunes; no es error grave en habla informal.'},
+  {name:'Seu/sua ambiguo',
+   wrong:"Vi o seu carro. (= ¿de él o de ella o de usted?)",
+   right:"Vi o carro dela / Vi o seu carro (contexto claro)",
+   expl:'En PB hablado, <em>seu/sua</em> es ambiguo: puede referirse a você, ele/ela o o senhor. Para evitar ambigüedad, usa <em>o carro dele, o carro dela, o carro de você</em>. Este recurso es altamente productivo en PB.'},
+  {name:'Cê en escritura formal',
+   wrong:"Cê pode me ajudar? (en e-mail formal)",
+   right:"Você pode me ajudar?",
+   expl:'<em>Cê</em> es reducción oral de <em>você</em>, típica del habla muy informal, juvenil, urbana. En escritura formal escribe siempre <em>você</em>. En mensajes informales, redes sociales, ficción dialogada, <em>cê</em> es aceptable.'},
+  {name:'Convivência tu / você en mismo discurso',
+   wrong:"Tu falas com você? (mezcla en misma oración)",
+   right:"Decide: tu falas comigo? / Você fala comigo?",
+   expl:'Aunque PB hablado mezcla paradigmas con frecuencia, dentro de una misma oración dirigida a la misma persona, mantén coherencia: o <em>tu/te/teu</em>, o <em>você/se/seu</em>. La mezcla extrema queda mal incluso en habla coloquial.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

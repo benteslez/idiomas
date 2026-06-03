@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Pronomes Demonstrativos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Demonstrativos → Sintaxis · dk-green */
+:root {
+  --primary: #1f4634;
+  --primary-soft: #e8f0eb;
+  --primary-mid: #5a8a72;
+  --primary-strong: #0f2e22;
+  --primary-glow: rgba(31, 70, 52, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fc99e;
+  --primary-soft: #1a2e23;
+  --primary-mid: #4a8a66;
+  --primary-strong: #b8dcc6;
+  --primary-glow: rgba(127, 201, 158, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; }
+.split-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 0.96rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.01em; }
+.split-card p { font-size: 0.86em; color: var(--text2); line-height: 1.6; }
+
+.alert-box {
+  background: var(--red-bg); border: 1px solid var(--red-border);
+  border-radius: var(--radius-md); padding: 14px 17px; margin: 14px 0;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.alert-box .alert-icon { font-size: 1.2em; flex-shrink: 0; }
+.alert-box .alert-text { color: var(--text2); line-height: 1.6; font-size: 0.92em; }
+.alert-box .alert-text strong { color: var(--red); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Pronomes Demonstrativos</h1>
+    <span class="header-tag">Sintaxe</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR A2–B1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Este · esse · aquele</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Sistema general</button>
+    <button class="snav-btn"        onclick="showSection('s-norma',this)">2. Norma (3 grados)</button>
+    <button class="snav-btn"        onclick="showSection('s-neutros',this)">3. Isto / isso / aquilo</button>
+    <button class="snav-btn"        onclick="showSection('s-contracoes',this)">4. Contracciones</button>
+    <button class="snav-btn"        onclick="showSection('s-pb-real',this)">5. PB real</button>
+    <button class="snav-btn"        onclick="showSection('s-anaforico',this)">6. Uso anafórico</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los <strong>pronomes demonstrativos</strong> indican la posición espacial o temporal de personas/cosas en relación con los participantes del diálogo. El portugués tiene tres grados: <strong>este</strong> (cerca del hablante), <strong>esse</strong> (cerca del oyente), <strong>aquele</strong> (lejos de ambos). En PB hablado, sin embargo, <strong>este</strong> y <strong>esse</strong> se confunden masivamente, con <em>esse</em> dominando.
+      </div>
+
+      <div class="sec-label">Cuadro completo: variables</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Grado</th><th>Masc. sing.</th><th>Fem. sing.</th><th>Masc. pl.</th><th>Fem. pl.</th><th>Neutro</th></tr></thead>
+        <tbody>
+          <tr><td>1º (este)</td><td class="hl-pr">este</td><td class="hl-pr">esta</td><td class="hl-pr">estes</td><td class="hl-pr">estas</td><td class="hl-pr">isto</td></tr>
+          <tr><td>2º (esse)</td><td class="hl-pr">esse</td><td class="hl-pr">essa</td><td class="hl-pr">esses</td><td class="hl-pr">essas</td><td class="hl-pr">isso</td></tr>
+          <tr><td>3º (aquele)</td><td class="hl-pr">aquele</td><td class="hl-pr">aquela</td><td class="hl-pr">aqueles</td><td class="hl-pr">aquelas</td><td class="hl-pr">aquilo</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="alert-box">
+        <span class="alert-icon">🚨</span>
+        <div class="alert-text">
+          <strong>Trampa para hispanohablantes:</strong> el español tiene <em>este/ese/aquel</em>; el portugués tiene <em>este/esse/aquele</em>. La <strong>"e" portuguesa</strong> y la <strong>"o" abierta del esp.</strong> NO son equivalentes directos. En español, <em>"ese"</em> es 2º grado; en portugués, <em>"esse"</em> también, pero su uso real en PB difiere mucho del esquema teórico.
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. NORMA -->
+  <div class="sec-block" id="s-norma">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Según la <strong>norma gramatical</strong>, los tres grados se distribuyen por proximidad espacial, temporal o discursiva al hablante, al oyente o a un tercer punto.
+      </div>
+
+      <div class="sec-label">Distribución espacial (norma)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Grado</th><th>Distancia</th><th>Posesivo asociado</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>este</strong></td><td>cerca del hablante (1ª pers.)</td><td>meu, nosso</td><td><span class="hl-pr">Este</span> livro aqui é meu.</td></tr>
+          <tr><td><strong>esse</strong></td><td>cerca del oyente (2ª pers.)</td><td>seu, teu</td><td><span class="hl-pr">Esse</span> livro aí é seu.</td></tr>
+          <tr><td><strong>aquele</strong></td><td>lejos de ambos (3ª pers.)</td><td>dele, dela</td><td><span class="hl-pr">Aquele</span> livro lá é dele.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Distribución temporal (norma)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Grado</th><th>Tiempo</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>este</strong></td><td>presente / período actual</td><td><span class="hl-pr">Este</span> ano vou viajar.</td></tr>
+          <tr><td><strong>esse</strong></td><td>pasado próximo</td><td>Em <span class="hl-pr">esses</span> dias (PB: nesses dias).</td></tr>
+          <tr><td><strong>aquele</strong></td><td>pasado lejano</td><td><span class="hl-pr">Aquele</span> dia foi inesquecível.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Distribución discursiva</div>
+      <div class="example-block pr"><div class="ex-fr">Ele disse <span class="epr">isto</span>: que viria amanhã. (= lo que voy a decir, catafórico)</div><div class="ex-es">Dijo esto: que vendría mañana.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ele disse que viria. <span class="epr">Isso</span> me deixou contente. (= lo que se acaba de decir, anafórico)</div><div class="ex-es">Dijo que vendría. Eso me dejó contento.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Naqueles tempos, tudo era diferente. (= remoto, lejano)</div><div class="ex-es">En aquellos tiempos, todo era diferente.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Reglas anafórica/catafórica:</strong> <em>este/isto</em> introduce algo que VA a venir (catafórico). <em>Esse/isso</em> retoma algo que YA se mencionó (anafórico). Esta distinción culta se respeta en escritura formal.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3. NEUTROS -->
+  <div class="sec-block" id="s-neutros">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los <strong>demonstrativos neutros</strong> son <strong>isto, isso, aquilo</strong>. Son invariables y se refieren a cosas no identificadas, ideas, acciones o conceptos abstractos. NO sustituyen sustantivos con género definido.
+      </div>
+
+      <div class="sec-label">Cuándo usar neutros</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Función</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Objeto no identificado</td><td>O que é <span class="hl-pr">isso</span> na sua mão?</td></tr>
+          <tr><td>Idea / abstracto</td><td><span class="hl-pr">Isso</span> não faz sentido.</td></tr>
+          <tr><td>Frase / situación</td><td>Ele saiu correndo. <span class="hl-pr">Isso</span> me assustou.</td></tr>
+          <tr><td>Catafórico</td><td>Diga-me <span class="hl-pr">isto</span>: você vem ou não?</td></tr>
+          <tr><td>Anafórico</td><td>Ele recusou. <span class="hl-pr">Isso</span> foi triste.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos contrastivos</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Isso</span> não me interessa. (concepto neutro)</div><div class="ex-es">Eso no me interesa.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Essa</span> história não me interessa. (sustantivo fem.)</div><div class="ex-es">Esa historia no me interesa.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Esse</span> livro não me interessa. (sustantivo masc.)</div><div class="ex-es">Ese libro no me interesa.</div></div>
+
+      <div class="sec-label">Expresiones cristalizadas con neutros</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Isso</span> mesmo! (= ¡eso es!, ¡exacto!)</div><div class="ex-es">¡Exactamente!</div></div>
+      <div class="example-block pr"><div class="ex-fr">É <span class="epr">isso</span> aí! (PB enfático: ¡así es!)</div><div class="ex-es">¡Así es!</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Por isso</span> mesmo. (= por eso mismo)</div><div class="ex-es">Por eso mismo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Daí <span class="epr">aquilo</span> aconteceu. (registro narrativo)</div><div class="ex-es">Entonces aquello pasó.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Que é <span class="epr">isto</span>!? (expresión de sorpresa, formal)</div><div class="ex-es">¡Qué es esto!</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Isso es el rey en PB hablado:</strong> <em>isso</em> domina ampliamente sobre <em>isto</em> en habla. <em>Isto</em> queda en escritura formal o discurso muy cuidado. En conversación: <em>isso é meu, isso me incomoda, isso aqui</em> (incluso para algo cerca del hablante).</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. CONTRACOES -->
+  <div class="sec-block" id="s-contracoes">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los demonstrativos forman <strong>contracciones obligatorias</strong> con las preposiciones <em>de</em> y <em>em</em>. La crase puede aparecer con <em>aquele/aquela/aquilo</em> tras la preposición <em>a</em>.
+      </div>
+
+      <div class="sec-label">Contracciones con de</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>de + demonstrativo</th><th>Contracción</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>de + este</td><td class="hl-pr">deste</td><td><span class="hl-pr">Deste</span> jeito não dá certo.</td></tr>
+          <tr><td>de + esta</td><td class="hl-pr">desta</td><td>Falo <span class="hl-pr">desta</span> situação.</td></tr>
+          <tr><td>de + esse</td><td class="hl-pr">desse</td><td>Não gosto <span class="hl-pr">desse</span> tipo.</td></tr>
+          <tr><td>de + essa</td><td class="hl-pr">dessa</td><td>Saia <span class="hl-pr">dessa</span> situação!</td></tr>
+          <tr><td>de + aquele</td><td class="hl-pr">daquele</td><td>Falo <span class="hl-pr">daquele</span> homem.</td></tr>
+          <tr><td>de + aquela</td><td class="hl-pr">daquela</td><td>Lembro-me <span class="hl-pr">daquela</span> noite.</td></tr>
+          <tr><td>de + isto</td><td class="hl-pr">disto</td><td>Não gosto <span class="hl-pr">disto</span>.</td></tr>
+          <tr><td>de + isso</td><td class="hl-pr">disso</td><td>Não sabia <span class="hl-pr">disso</span>!</td></tr>
+          <tr><td>de + aquilo</td><td class="hl-pr">daquilo</td><td>Esqueci <span class="hl-pr">daquilo</span>.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Contracciones con em</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>em + demonstrativo</th><th>Contracción</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>em + este</td><td class="hl-pr">neste</td><td><span class="hl-pr">Neste</span> momento, não posso.</td></tr>
+          <tr><td>em + esta</td><td class="hl-pr">nesta</td><td>Estamos <span class="hl-pr">nesta</span> casa há anos.</td></tr>
+          <tr><td>em + esse</td><td class="hl-pr">nesse</td><td>Pense <span class="hl-pr">nesse</span> assunto.</td></tr>
+          <tr><td>em + essa</td><td class="hl-pr">nessa</td><td>Não entro <span class="hl-pr">nessa</span> conversa.</td></tr>
+          <tr><td>em + aquele</td><td class="hl-pr">naquele</td><td>Vivi <span class="hl-pr">naquele</span> bairro.</td></tr>
+          <tr><td>em + aquela</td><td class="hl-pr">naquela</td><td>Aconteceu <span class="hl-pr">naquela</span> época.</td></tr>
+          <tr><td>em + isto</td><td class="hl-pr">nisto</td><td><span class="hl-pr">Nisto</span>, ele chegou. (= en esto, en este momento)</td></tr>
+          <tr><td>em + isso</td><td class="hl-pr">nisso</td><td>Não pense <span class="hl-pr">nisso</span>!</td></tr>
+          <tr><td>em + aquilo</td><td class="hl-pr">naquilo</td><td>Mexer <span class="hl-pr">naquilo</span> é perigoso.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Crase con aquele / aquela / aquilo</div>
+      <div class="example-block pr"><div class="ex-fr">Vou <span class="epr">àquele</span> lugar. (= a + aquele)</div><div class="ex-es">Voy a aquel lugar.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Refiro-me <span class="epr">àquela</span> ideia.</div><div class="ex-es">Me refiero a aquella idea.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Não dei importância <span class="epr">àquilo</span>.</div><div class="ex-es">No le di importancia a aquello.</div></div>
+
+      <div class="note-box"><strong>Crase obligatoria:</strong> con <em>aquele/aquela/aquilo</em>, la contracción de la preposición <em>a</em> con la <em>a</em> del demonstrativo se marca con acento grave: <em>à</em>. No olvides el acento; sin él (<em>aquele</em>) significa otra cosa.</div>
+    </div></div>
+  </div>
+
+  <!-- 5. PB REAL -->
+  <div class="sec-block" id="s-pb-real">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El PB hablado <strong>simplifica radicalmente</strong> el sistema de demonstrativos: la oposición <em>este/esse</em> se neutraliza casi por completo. <em>Esse</em> domina, incluso para referirse a cosas cerca del hablante.
+      </div>
+
+      <div class="split-grid">
+        <div class="split-card">
+          <h4>Norma (3 grados)</h4>
+          <p>Distribución espacial estricta.</p>
+          <p style="margin-top:6px"><em>Este aqui é meu.</em></p>
+          <p><em>Esse aí é seu.</em></p>
+          <p><em>Aquele lá é dele.</em></p>
+        </div>
+        <div class="split-card">
+          <h4>PB hablado (2 grados)</h4>
+          <p>Esse para ambos los próximos; aquele para lo distante.</p>
+          <p style="margin-top:6px"><em>Esse aqui é meu.</em> (lo de cerca del hablante!)</p>
+          <p><em>Esse aí é seu.</em></p>
+          <p><em>Aquele lá é dele.</em></p>
+        </div>
+      </div>
+
+      <div class="sec-label">Marcadores de proximidad: aqui / aí / lá</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Demonstrativo + marcador</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td>esse <span class="hl-pr">aqui</span></td><td>cerca del hablante (PB simplificado, = este)</td></tr>
+          <tr><td>esse <span class="hl-pr">aí</span></td><td>cerca del oyente (norma esse)</td></tr>
+          <tr><td>aquele <span class="hl-pr">lá</span></td><td>lejos de ambos</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Frecuencia real en PB hablado</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Esse</span> livro aqui é meu. (PB hablado, ¡incluso para algo en mi mano!)</div><div class="ex-es">Este libro es mío.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Você gosta <span class="epr">desse</span> filme? (cualquier proximidad)</div><div class="ex-es">¿Te gusta esa/esta película?</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Nesse</span> momento, ele entrou. (= en este momento)</div><div class="ex-es">En este momento, él entró.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Em <span class="epr">esse</span> dia... (popular, sin contracción) / <span class="epr">Nesse</span> dia... (norma)</div><div class="ex-es">Ese día...</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>En escritura formal:</strong> mantén la distinción <em>este/esse/aquele</em> según la norma. En redação ENEM, CELPE-Bras, prensa, ensayo: respeta los tres grados. En habla y registro informal: usa <em>esse</em> con libertad.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. ANAFORICO -->
+  <div class="sec-block" id="s-anaforico">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        En el discurso, los demonstrativos retoman elementos mencionados (función <strong>anafórica</strong>) o anuncian elementos próximos (función <strong>catafórica</strong>). Esta es la función discursiva clave, especialmente en escritura.
+      </div>
+
+      <div class="sec-label">Función anafórica (retomar)</div>
+      <div class="example-block pr"><div class="ex-fr">Ele disse que viria. <span class="epr">Isso</span> me alegrou.</div><div class="ex-es">Dijo que vendría. Eso me alegró.</div><div class="ex-note">"Isso" retoma toda la oración anterior.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A reforma foi aprovada. <span class="epr">Essa</span> decisão é histórica.</div><div class="ex-es">La reforma fue aprobada. Esa decisión es histórica.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A pandemia foi um momento difícil. Naquele período, todos sofreram.</div><div class="ex-es">La pandemia fue un momento difícil. En aquel período, todos sufrieron.</div></div>
+
+      <div class="sec-label">Función catafórica (anunciar)</div>
+      <div class="example-block pr"><div class="ex-fr">Eu te digo <span class="epr">isto</span>: amanhã será diferente.</div><div class="ex-es">Te digo esto: mañana será diferente.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Lembre-se de <span class="epr">uma</span> coisa: a verdade sempre aparece. (forma alterantiva)</div><div class="ex-es">Recuerda una cosa: la verdad siempre aparece.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Considere <span class="epr">esta</span> hipótese: ele não veio porque se sentiu mal.</div><div class="ex-es">Considera esta hipótesis: no vino porque se sintió mal.</div></div>
+
+      <div class="sec-label">Regla clásica anafórica vs catafórica</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Función</th><th>Demonstrativo (norma)</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Anafórica (ya mencionado)</td><td>esse, essa, esses, essas, isso</td><td>...Maria veio. <span class="hl-pr">Isso</span> foi ontem.</td></tr>
+          <tr><td>Catafórica (va a mencionar)</td><td>este, esta, estes, estas, isto</td><td>Digo <span class="hl-pr">isto</span>: vai chover.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Sumario discursivo:</strong> <em>este/isto</em> = lo que va a venir (catafórico). <em>Esse/isso</em> = lo que ya se dijo (anafórico). <em>Aquele/aquilo</em> = lo lejano en discurso o tiempo. En PB hablado, <em>esse/isso</em> cubre casi todo.</div>
+      </div>
+
+      <div class="sec-label">Demonstrativo como pronombre o determinante</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Este</span> livro é meu. (determinante: con sust.)</div><div class="ex-es">Este libro es mío.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Este</span> é meu. (pronombre: sin sust.)</div><div class="ex-es">Este es mío.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Quero <span class="epr">aquele</span> ali, não <span class="epr">este</span>. (pronombre)</div><div class="ex-es">Quiero aquel allá, no este.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con los demonstrativos.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Este vs esse en escritura formal',
+   wrong:"Esse livro aqui na minha mão é meu. (en redação ENEM)",
+   right:"Este livro aqui é meu.",
+   expl:'En escritura formal, mantén la distinción: <em>este</em> = cerca del hablante, <em>esse</em> = cerca del oyente, <em>aquele</em> = lejos de ambos. <em>Esse aqui</em> es PB hablado pero raro / agramatical en redação culta.'},
+  {name:'Isto / isso confundidos',
+   wrong:"Isto que você disse é interessante. (ya mencionado)",
+   right:"Isso que você disse é interessante.",
+   expl:'<em>Isso</em> retoma lo ya dicho (anafórico). <em>Isto</em> anuncia lo que va a venir (catafórico). Para lo que el oyente acaba de decir: <em>isso</em>. Para lo que YO voy a decir: <em>isto</em>. PB hablado generaliza <em>isso</em>.'},
+  {name:'Contracciones obligatorias',
+   wrong:"Em este momento / De esse jeito",
+   right:"Neste momento / Desse jeito",
+   expl:'Las contracciones <em>em + demonstrativo = neste/nessa/naquilo</em> y <em>de + demonstrativo = deste/dessa/disso</em> son <strong>obligatorias</strong>. Nunca se escribe <em>em este</em> ni <em>de esse</em>.'},
+  {name:'Crase con aquele/aquela/aquilo',
+   wrong:"Refiro-me aquele homem. (sin crase)",
+   right:"Refiro-me àquele homem.",
+   expl:'Cuando hay preposición <em>a</em> + demonstrativo que empieza con <em>a-</em>, se marca crase obligatoria con acento grave: <em>àquele, àquela, àqueles, àquelas, àquilo</em>. Es ortográficamente obligatorio.'},
+  {name:'Concordancia de género',
+   wrong:"Esse caneta é minha.",
+   right:"Essa caneta é minha.",
+   expl:'Los demonstrativos variables concuerdan en género y número con el sustantivo. <em>Caneta</em> (fem.) → <em>essa caneta</em>. Cuidado con falsos amigos: <em>o leite</em> (m.), <em>o sangue</em> (m.), <em>a cor</em> (f.), <em>a viagem</em> (f.).'},
+  {name:'Neutro con sustantivo definido',
+   wrong:"Isso livro é meu.",
+   right:"Esse livro é meu. / Isso é meu.",
+   expl:'Los neutros (<em>isto, isso, aquilo</em>) son <strong>invariables</strong> y NUNCA acompañan a un sustantivo. Si hay sustantivo, usa la forma variable correspondiente: <em>isso livro</em> es agramatical. Correcto: <em>esse livro</em> (con sust.) o <em>isso</em> (solo).'},
+  {name:'Plural disto / disso (no existen)',
+   wrong:"Não preciso distos. (intentando plural)",
+   right:"Não preciso disso. / Não preciso destas coisas.",
+   expl:'Los neutros <em>isto, isso, aquilo</em> son <strong>invariables, no tienen plural</strong>. Para plural, usa la forma variable: <em>destas coisas, dessas coisas</em>. <em>Distos, dissos, daquilos</em> no existen.'},
+  {name:'Anafórico / catafórico en escritura culta',
+   wrong:"Maria chegou. Isto foi às 8h. (anafórico con isto)",
+   right:"Maria chegou. Isso foi às 8h.",
+   expl:'En escritura culta, mantén la regla anafórica/catafórica: para retomar (ya dicho) usa <em>esse/essa/isso</em>; para anunciar (va a decir) usa <em>este/esta/isto</em>. <em>Disse isto: vai chover</em> (catafórico) vs <em>chuviu. Isso me molhou</em> (anafórico).'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

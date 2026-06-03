@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Regências Verbais com Preposição</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Regências Verbais → Sintaxis · dk-green */
+:root {
+  --primary: #1f4634;
+  --primary-soft: #e8f0eb;
+  --primary-mid: #5a8a72;
+  --primary-strong: #0f2e22;
+  --primary-glow: rgba(31, 70, 52, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fc99e;
+  --primary-soft: #1a2e23;
+  --primary-mid: #4a8a66;
+  --primary-strong: #b8dcc6;
+  --primary-glow: rgba(127, 201, 158, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; }
+.split-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 0.96rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.01em; }
+.split-card p { font-size: 0.86em; color: var(--text2); line-height: 1.6; }
+
+.alert-box {
+  background: var(--warn-bg); border: 1px solid var(--warn-border);
+  border-radius: var(--radius-md); padding: 14px 17px; margin: 14px 0;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.alert-box .alert-icon { font-size: 1.2em; flex-shrink: 0; }
+.alert-box .alert-text { color: var(--text2); line-height: 1.6; font-size: 0.92em; }
+.alert-box .alert-text strong { color: var(--warn); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Regências Verbais com Preposição</h1>
+    <span class="header-tag">Sintaxe</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B1–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Verbo + preposição</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Sistema general</button>
+    <button class="snav-btn"        onclick="showSection('s-de',this)">2. Verbos + de</button>
+    <button class="snav-btn"        onclick="showSection('s-em',this)">3. Verbos + em</button>
+    <button class="snav-btn"        onclick="showSection('s-a',this)">4. Verbos + a</button>
+    <button class="snav-btn"        onclick="showSection('s-com-para',this)">5. Verbos + com/para</button>
+    <button class="snav-btn"        onclick="showSection('s-pb-norma',this)">6. PB vs norma culta</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        La <strong>regência verbal</strong> es la relación gramatical entre el verbo y su complemento: indica si el verbo es transitivo directo (sin preposición), transitivo indirecto (con preposición fija), transitivo directo e indirecto, o intransitivo. La <strong>preposición exigida</strong> por cada verbo es fija y hay que memorizarla. El PB hablado simplifica muchas regências de la norma culta.
+      </div>
+
+      <div class="sec-label">Cuatro tipos de regência</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tipo</th><th>Estructura</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Transitivo directo (TD)</td><td>verbo + OD (sin prep.)</td><td>amar alguém, ver algo</td></tr>
+          <tr><td>Transitivo indirecto (TI)</td><td>verbo + prep. + OI</td><td>gostar <strong>de</strong> algo</td></tr>
+          <tr><td>Transitivo direto e indireto (TDI)</td><td>verbo + OD + prep. + OI</td><td>dar algo <strong>a/para</strong> alguém</td></tr>
+          <tr><td>Intransitivo</td><td>verbo solo o + complemento circ.</td><td>chegar (a, em, para um lugar)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="alert-box">
+        <span class="alert-icon">⚠️</span>
+        <div class="alert-text">
+          <strong>Distancia PB / norma:</strong> muchos verbos cambian de regência entre la norma culta y el PB hablado: <em>assistir a</em> (norma) → <em>assistir</em> (PB); <em>obedecer a</em> (norma) → <em>obedecer</em> (PB). Conocer ambas formas es esencial para B2–C1.
+        </div>
+      </div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Cómo aprender regências:</strong> no hay reglas universales; cada verbo se memoriza con su preposición. Útil agrupar por preposición exigida (verbos con <em>de</em>, con <em>em</em>, con <em>a</em>, etc.). El verbo + preposición forma una unidad léxica.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. DE -->
+  <div class="sec-block" id="s-de">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los <strong>verbos con preposición DE</strong> son numerosos y muy frecuentes. Cubren campos semánticos como <strong>gusto, necesidad, dependencia, recuerdo, separación, queja</strong>.
+      </div>
+
+      <div class="sec-label">Lista de verbos + de</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Verbo</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>gostar de</strong></td><td>gustar</td><td><span class="hl-pr">Gosto de</span> chocolate.</td></tr>
+          <tr><td><strong>precisar de</strong></td><td>necesitar</td><td><span class="hl-pr">Preciso de</span> ajuda.</td></tr>
+          <tr><td><strong>depender de</strong></td><td>depender de</td><td><span class="hl-pr">Depende de</span> você.</td></tr>
+          <tr><td><strong>lembrar-se de</strong></td><td>acordarse de</td><td>Eu <span class="hl-pr">me lembro de</span> você.</td></tr>
+          <tr><td><strong>esquecer-se de</strong></td><td>olvidarse de</td><td>Eu <span class="hl-pr">me esqueci da</span> chave.</td></tr>
+          <tr><td><strong>arrepender-se de</strong></td><td>arrepentirse de</td><td>Ele <span class="hl-pr">se arrepende do</span> que disse.</td></tr>
+          <tr><td><strong>queixar-se de</strong></td><td>quejarse de</td><td>Eles <span class="hl-pr">se queixam do</span> barulho.</td></tr>
+          <tr><td><strong>aproximar-se de</strong></td><td>acercarse a</td><td>O carro <span class="hl-pr">se aproximou da</span> casa.</td></tr>
+          <tr><td><strong>afastar-se de</strong></td><td>alejarse de</td><td>Ela <span class="hl-pr">se afastou de</span> mim.</td></tr>
+          <tr><td><strong>desistir de</strong></td><td>desistir, abandonar</td><td>Não vou <span class="hl-pr">desistir de</span> tentar.</td></tr>
+          <tr><td><strong>discordar de</strong></td><td>discrepar de</td><td>Eu <span class="hl-pr">discordo de</span> você.</td></tr>
+          <tr><td><strong>cuidar de</strong></td><td>cuidar de</td><td>Ela <span class="hl-pr">cuida dos</span> filhos sozinha.</td></tr>
+          <tr><td><strong>tratar de</strong></td><td>tratar (asunto)</td><td>Vamos <span class="hl-pr">tratar do</span> assunto amanhã.</td></tr>
+          <tr><td><strong>aproveitar de / aproveitar</strong></td><td>aprovechar</td><td><span class="hl-pr">Aproveite-se da</span> chance.</td></tr>
+          <tr><td><strong>servir-se de</strong></td><td>servirse de, usar</td><td>Não <span class="hl-pr">se sirva da</span> ingenuidade dele.</td></tr>
+          <tr><td><strong>orgulhar-se de</strong></td><td>enorgullecerse de</td><td>Ela <span class="hl-pr">se orgulha dos</span> filhos.</td></tr>
+          <tr><td><strong>aproveitar-se de</strong></td><td>aprovecharse de</td><td>Ele <span class="hl-pr">se aproveitou da</span> situação.</td></tr>
+          <tr><td><strong>libertar-se de</strong></td><td>liberarse de</td><td>Vou <span class="hl-pr">me libertar dessa</span> dependência.</td></tr>
+          <tr><td><strong>aproximar de / dar conta de</strong></td><td>aproximarse / arreglárselas con</td><td>Não <span class="hl-pr">dou conta disso</span> sozinho.</td></tr>
+          <tr><td><strong>zombar de</strong></td><td>burlarse de</td><td>Não <span class="hl-pr">zombe dos</span> mais fracos.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Verbos de comunicación con de (= acerca de)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Verbo</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>falar de</td><td>hablar de (= acerca de)</td><td>Falamos <span class="hl-pr">do</span> projeto.</td></tr>
+          <tr><td>tratar de</td><td>tratar de (= acerca de)</td><td>O livro <span class="hl-pr">trata de</span> ecologia.</td></tr>
+          <tr><td>conversar sobre / de</td><td>conversar sobre</td><td>Conversamos <span class="hl-pr">de</span> tudo.</td></tr>
+          <tr><td>desconfiar de</td><td>desconfiar de</td><td>Eu <span class="hl-pr">desconfio de</span> tudo isso.</td></tr>
+          <tr><td>duvidar de</td><td>dudar de</td><td>Não <span class="hl-pr">duvido das</span> intenções dele.</td></tr>
+          <tr><td>rir de</td><td>reírse de</td><td>Eles <span class="hl-pr">riram da</span> piada.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">PB hablado: omisión frecuente de "de"</div>
+      <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">lembro</span> você. (PB hablado, sin "de" ni "me")</div><div class="ex-es">Te recuerdo / Me acuerdo de ti.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">preciso</span> dormir. (en infinitivo, sin "de")</div><div class="ex-es">Necesito dormir.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">preciso de</span> dinheiro. (con sustantivo, "de" obligatorio)</div><div class="ex-es">Necesito dinero.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>PB con "precisar":</strong> ante infinitivo en PB, el <em>de</em> es opcional u omitido (<em>preciso sair, preciso dormir</em>). Ante sustantivo, el <em>de</em> es obligatorio (<em>preciso de ajuda, preciso de tempo</em>). En PE, <em>de + infinitivo</em> sigue siendo norma.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3. EM -->
+  <div class="sec-block" id="s-em">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los <strong>verbos con preposición EM</strong> cubren campos de <strong>creencia, pensamiento, confianza, insistencia, entrada y contacto</strong>. Algunos son muy frecuentes y conviene memorizarlos.
+      </div>
+
+      <div class="sec-label">Lista de verbos + em</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Verbo</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>acreditar em</strong></td><td>creer en</td><td><span class="hl-pr">Acredito em</span> Deus.</td></tr>
+          <tr><td><strong>crer em</strong></td><td>creer en</td><td>Ele <span class="hl-pr">crê em</span> tudo.</td></tr>
+          <tr><td><strong>pensar em</strong></td><td>pensar en</td><td>Eu <span class="hl-pr">penso em</span> você.</td></tr>
+          <tr><td><strong>confiar em</strong></td><td>confiar en</td><td><span class="hl-pr">Confio em</span> você.</td></tr>
+          <tr><td><strong>insistir em</strong></td><td>insistir en</td><td>Ele <span class="hl-pr">insistiu em</span> ir.</td></tr>
+          <tr><td><strong>persistir em</strong></td><td>persistir en</td><td>Vamos <span class="hl-pr">persistir no</span> esforço.</td></tr>
+          <tr><td><strong>entrar em</strong></td><td>entrar en</td><td>Ele <span class="hl-pr">entrou na</span> sala.</td></tr>
+          <tr><td><strong>investir em</strong></td><td>invertir en</td><td>Vou <span class="hl-pr">investir em</span> ações.</td></tr>
+          <tr><td><strong>concentrar-se em</strong></td><td>concentrarse en</td><td><span class="hl-pr">Concentre-se no</span> trabalho.</td></tr>
+          <tr><td><strong>focar em</strong></td><td>enfocar(se) en</td><td>Precisamos <span class="hl-pr">focar no</span> essencial.</td></tr>
+          <tr><td><strong>tocar em</strong></td><td>tocar (algo/alguien)</td><td>Não <span class="hl-pr">toque em</span> nada.</td></tr>
+          <tr><td><strong>pegar em</strong></td><td>tomar, agarrar</td><td>Ele <span class="hl-pr">pegou no</span> livro.</td></tr>
+          <tr><td><strong>esbarrar em</strong></td><td>tropezar con</td><td><span class="hl-pr">Esbarrei em</span> uma cadeira.</td></tr>
+          <tr><td><strong>colidir com / em</strong></td><td>chocar con</td><td>O carro <span class="hl-pr">colidiu em</span> um poste.</td></tr>
+          <tr><td><strong>cair em</strong></td><td>caer en</td><td>O dinheiro <span class="hl-pr">caiu na</span> conta.</td></tr>
+          <tr><td><strong>refletir em / sobre</strong></td><td>reflejar(se) en</td><td>Pense, <span class="hl-pr">reflita no</span> assunto.</td></tr>
+          <tr><td><strong>tropeçar em</strong></td><td>tropezar con</td><td><span class="hl-pr">Tropecei em</span> uma pedra.</td></tr>
+          <tr><td><strong>resistir a / em</strong></td><td>resistir a</td><td><span class="hl-pr">Resisti à</span> tentação.</td></tr>
+          <tr><td><strong>chegar a / em</strong></td><td>llegar a / en (PB: em)</td><td>Cheguei <span class="hl-pr">no</span> Rio. (PB) / <span class="hl-pr">ao</span> Rio. (norma)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Diferencia con español</div>
+      <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">penso em</span> você. (esp. "pienso en ti")</div><div class="ex-es">Pienso en ti.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Acredito <span class="epr">em</span> Deus. (esp. "creo en Dios")</div><div class="ex-es">Creo en Dios.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vou <span class="epr">investir em</span> educação. (esp. "invertir en educación")</div><div class="ex-es">Voy a invertir en educación.</div></div>
+
+      <div class="note-box"><strong>Verbos de movimiento/llegada:</strong> en PB se usa frecuentemente <em>em</em> en lugar de <em>a</em>: <em>cheguei no Rio, vou no banco, entrei na sala</em>. La norma exige <em>a</em>: <em>cheguei ao Rio, vou ao banco</em>. Mantén <em>a</em> en escritura formal.</div>
+    </div></div>
+  </div>
+
+  <!-- 4. A -->
+  <div class="sec-block" id="s-a">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los <strong>verbos con preposición A</strong> son frecuentemente <strong>simplificados en PB</strong>: muchos pierden la preposición en habla. Conviene saber tanto la norma culta (que la mantiene) como la forma hablada (que la omite).
+      </div>
+
+      <div class="sec-label">Verbos + a (norma culta)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Verbo (norma)</th><th>Significado</th><th>Ejemplo normativo</th><th>PB hablado</th></tr></thead>
+        <tbody>
+          <tr><td><strong>assistir a</strong></td><td>asistir / ver (TV, película)</td><td><span class="hl-pr">Assisti ao</span> jogo.</td><td>Assisti <span class="hl-pr">o</span> jogo. (sin a)</td></tr>
+          <tr><td><strong>obedecer a</strong></td><td>obedecer</td><td><span class="hl-pr">Obedeceu ao</span> chefe.</td><td>Obedeceu <span class="hl-pr">o</span> chefe. (sin a)</td></tr>
+          <tr><td><strong>desobedecer a</strong></td><td>desobedecer</td><td><span class="hl-pr">Desobedece às</span> regras.</td><td>Desobedece <span class="hl-pr">as</span> regras.</td></tr>
+          <tr><td><strong>responder a</strong></td><td>responder a</td><td><span class="hl-pr">Respondi à</span> pergunta.</td><td>Respondi <span class="hl-pr">a</span> pergunta. (sin crase, OD)</td></tr>
+          <tr><td><strong>agradar a</strong></td><td>agradar (a alguien)</td><td>O filme <span class="hl-pr">agradou ao</span> público.</td><td>Agradou <span class="hl-pr">o</span> público. (PB)</td></tr>
+          <tr><td><strong>aspirar a</strong></td><td>aspirar a (algo)</td><td><span class="hl-pr">Aspiro a</span> um cargo melhor.</td><td>Aspiro <span class="hl-pr">um</span> cargo melhor.</td></tr>
+          <tr><td><strong>renunciar a</strong></td><td>renunciar a</td><td><span class="hl-pr">Renunciou ao</span> cargo.</td><td>Renunciou <span class="hl-pr">o</span> cargo.</td></tr>
+          <tr><td><strong>visar a</strong></td><td>perseguir, apuntar a (meta)</td><td>O projeto <span class="hl-pr">visa a</span> reduzir custos.</td><td>Visa <span class="hl-pr">a</span> reduzir / visa reduzir.</td></tr>
+          <tr><td><strong>proceder a</strong></td><td>proceder a</td><td>Vamos <span class="hl-pr">proceder à</span> votação.</td><td>—</td></tr>
+          <tr><td><strong>recorrer a</strong></td><td>recurrir a</td><td><span class="hl-pr">Recorreu a</span> um amigo.</td><td>Recorreu <span class="hl-pr">a</span> um amigo. (mismo)</td></tr>
+          <tr><td><strong>chamar a (atenção)</strong></td><td>llamar la atención</td><td>O escândalo <span class="hl-pr">chamou a</span> atenção da imprensa.</td><td>—</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Verbos siempre transitivos directos (sin a)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Verbo</th><th>Estructura</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>amar</strong></td><td>amar alguém</td><td><span class="hl-pr">Amo você.</span> (no <em>amo a você</em>)</td></tr>
+          <tr><td><strong>ver</strong></td><td>ver algo/alguém</td><td>Eu <span class="hl-pr">vi o filme.</span></td></tr>
+          <tr><td><strong>ouvir</strong></td><td>oír algo</td><td><span class="hl-pr">Ouvi um barulho.</span></td></tr>
+          <tr><td><strong>conhecer</strong></td><td>conocer alguém/algo</td><td><span class="hl-pr">Conheço o Pedro.</span></td></tr>
+          <tr><td><strong>encontrar</strong></td><td>encontrar alguém/algo</td><td><span class="hl-pr">Encontrei a Maria.</span> (con artículo PB, sin "a" personal)</td></tr>
+          <tr><td><strong>esperar</strong></td><td>esperar alguém/algo</td><td><span class="hl-pr">Espero você</span> aqui.</td></tr>
+          <tr><td><strong>visitar</strong></td><td>visitar alguém/lugar</td><td><span class="hl-pr">Visitei meus avós.</span></td></tr>
+          <tr><td><strong>chamar</strong></td><td>llamar alguém</td><td><span class="hl-pr">Chamei o gerente.</span></td></tr>
+          <tr><td><strong>convidar</strong></td><td>invitar alguém</td><td><span class="hl-pr">Convidei a Ana</span> para a festa.</td></tr>
+          <tr><td><strong>cumprimentar</strong></td><td>saludar alguém</td><td><span class="hl-pr">Cumprimentei o presidente.</span></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="alert-box">
+        <span class="alert-icon">⚠️</span>
+        <div class="alert-text">
+          <strong>NO existe la "a" personal en portugués:</strong> a diferencia del español ("vi a Pedro"), el portugués usa el verbo + OD directo: <em>vi o Pedro, conheci a Maria, esperei o José</em>. NUNCA "vi a o Pedro" ni "amo a você".
+        </div>
+      </div>
+
+      <div class="sec-label">Verbos clave con cambio</div>
+      <div class="example-block pr"><div class="ex-fr"><strong>Assistir:</strong> norma <span class="epr">"assistir a um filme"</span> (= ver). PB hablado: <span class="epr">"assistir um filme"</span>.</div><div class="ex-es">Asistir / ver una película.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><strong>Visar:</strong> norma "visar <span class="epr">a</span> + meta abstracta". <em>O projeto visa <span class="epr">a</span> melhorar a vida.</em> Sin "a" puede aparecer en PB hablado.</div><div class="ex-es">El proyecto visa mejorar la vida.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 5. COM / PARA -->
+  <div class="sec-block" id="s-com-para">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los <strong>verbos con com</strong> indican compañía, contacto, oposición o acuerdo. Los con <strong>para</strong> indican destinatario o finalidad. Algunos verbos aceptan varias preposiciones con matices distintos.
+      </div>
+
+      <div class="sec-label">Verbos + com</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Verbo</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>concordar com</strong></td><td>estar de acuerdo con</td><td>Eu <span class="hl-pr">concordo com</span> você.</td></tr>
+          <tr><td><strong>contar com</strong></td><td>contar con</td><td>Você pode <span class="hl-pr">contar comigo</span>.</td></tr>
+          <tr><td><strong>casar com</strong></td><td>casarse con</td><td>Ela vai <span class="hl-pr">casar com</span> o Pedro.</td></tr>
+          <tr><td><strong>conversar com</strong></td><td>conversar con</td><td><span class="hl-pr">Conversei com</span> ele ontem.</td></tr>
+          <tr><td><strong>brigar com</strong></td><td>pelearse con</td><td>Ele <span class="hl-pr">brigou com</span> o irmão.</td></tr>
+          <tr><td><strong>discutir com</strong></td><td>discutir con</td><td>Não vou <span class="hl-pr">discutir com</span> você.</td></tr>
+          <tr><td><strong>importar-se com</strong></td><td>preocuparse por, importar</td><td>Não <span class="hl-pr">se importa com</span> isso.</td></tr>
+          <tr><td><strong>preocupar-se com</strong></td><td>preocuparse por</td><td>Ela <span class="hl-pr">se preocupa com</span> os filhos.</td></tr>
+          <tr><td><strong>parecer-se com</strong></td><td>parecerse a</td><td>Ela <span class="hl-pr">se parece com</span> a mãe.</td></tr>
+          <tr><td><strong>contribuir com / para</strong></td><td>contribuir con / para</td><td><span class="hl-pr">Contribuiu com</span> dinheiro.</td></tr>
+          <tr><td><strong>sonhar com</strong></td><td>soñar con</td><td>Eu <span class="hl-pr">sonhei com</span> você.</td></tr>
+          <tr><td><strong>simpatizar com</strong></td><td>simpatizar con</td><td><span class="hl-pr">Simpatizo com</span> a causa.</td></tr>
+          <tr><td><strong>colaborar com</strong></td><td>colaborar con</td><td>Vamos <span class="hl-pr">colaborar com</span> o projeto.</td></tr>
+          <tr><td><strong>combinar com</strong></td><td>quedar / hacer juego con</td><td>Esses sapatos <span class="hl-pr">combinam com</span> o vestido.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Verbos + para (destinatario / finalidad)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Verbo</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>dar para</strong></td><td>dar a (PB) / ser posible</td><td>Dei o livro <span class="hl-pr">para</span> ele.</td></tr>
+          <tr><td><strong>falar para</strong></td><td>decir a (PB hablado)</td><td>Falei <span class="hl-pr">para</span> você ontem.</td></tr>
+          <tr><td><strong>escrever para</strong></td><td>escribir a</td><td><span class="hl-pr">Escrevi para</span> a Maria.</td></tr>
+          <tr><td><strong>servir para</strong></td><td>servir para</td><td>Isso <span class="hl-pr">serve para</span> tudo.</td></tr>
+          <tr><td><strong>ir para</strong></td><td>ir a (estancia larga)</td><td>Vou <span class="hl-pr">para</span> São Paulo.</td></tr>
+          <tr><td><strong>contribuir para</strong></td><td>contribuir a</td><td><span class="hl-pr">Contribui para</span> o sucesso.</td></tr>
+          <tr><td><strong>mandar para</strong></td><td>enviar a</td><td>Mande o e-mail <span class="hl-pr">para</span> o cliente.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Verbos con regência variable</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Verbo</th><th>Prep. 1</th><th>Prep. 2</th><th>Matiz</th></tr></thead>
+        <tbody>
+          <tr><td>preferir</td><td>preferir A a B</td><td>preferir A do que B (col.)</td><td>norma: <em>prefiro café a chá</em>; PB: <em>prefiro café do que chá</em></td></tr>
+          <tr><td>casar (com)</td><td>casar com alguém</td><td>casar-se com</td><td>ambos válidos</td></tr>
+          <tr><td>namorar</td><td>namorar alguém (sin com en PB)</td><td>namorar com (PE)</td><td>PB: <em>namoro a Maria</em>; PE: <em>namorar com a Maria</em></td></tr>
+          <tr><td>resistir</td><td>resistir a algo</td><td>—</td><td>norma: <em>resisti à tentação</em></td></tr>
+          <tr><td>sobreviver</td><td>sobreviver a algo</td><td>—</td><td><em>sobreviveu ao acidente</em></td></tr>
+          <tr><td>contar</td><td>contar com / contar a</td><td>—</td><td><em>conto com você</em> (depender) / <em>contei a história a ele</em></td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+  </div>
+
+  <!-- 6. PB VS NORMA -->
+  <div class="sec-block" id="s-pb-norma">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>PB hablado simplifica drásticamente</strong> las regências verbais de la norma. Muchas preposiciones desaparecen o se reemplazan. Saber alternar entre los dos registros es marcador de competencia diglósica.
+      </div>
+
+      <div class="sec-label">Verbos donde PB y norma divergen claramente</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Verbo</th><th>Norma culta</th><th>PB hablado</th></tr></thead>
+        <tbody>
+          <tr><td>assistir (ver TV/filme)</td><td>assistir <span class="hl-pr">a</span> um filme</td><td>assistir um filme</td></tr>
+          <tr><td>obedecer</td><td>obedecer <span class="hl-pr">a</span> alguém</td><td>obedecer alguém</td></tr>
+          <tr><td>visitar</td><td>visitar alguém / lugar (TD)</td><td>visitar alguém / lugar (sin cambio)</td></tr>
+          <tr><td>namorar</td><td>namorar <span class="hl-pr">com</span> alguém (PE)</td><td>namorar alguém (sin com)</td></tr>
+          <tr><td>chegar</td><td>chegar <span class="hl-pr">a</span> um lugar</td><td>chegar <span class="hl-pr">em</span> um lugar</td></tr>
+          <tr><td>ir</td><td>ir <span class="hl-pr">a</span> um lugar</td><td>ir <span class="hl-pr">em / para</span> um lugar</td></tr>
+          <tr><td>preferir</td><td>preferir A <span class="hl-pr">a</span> B</td><td>preferir A <span class="hl-pr">do que</span> B</td></tr>
+          <tr><td>esquecer</td><td>esquecer-<span class="hl-pr">se de</span> algo</td><td>esquecer algo (sin se / sin de)</td></tr>
+          <tr><td>lembrar</td><td>lembrar-<span class="hl-pr">se de</span> algo</td><td>lembrar de algo / lembrar algo</td></tr>
+          <tr><td>responder</td><td>responder <span class="hl-pr">a</span> algo</td><td>responder algo (sin a)</td></tr>
+          <tr><td>agradar</td><td>agradar <span class="hl-pr">a</span> alguém</td><td>agradar alguém</td></tr>
+          <tr><td>servir</td><td>servir <span class="hl-pr">a</span> alguém / algo</td><td>servir alguém / algo</td></tr>
+          <tr><td>presidir</td><td>presidir <span class="hl-pr">a</span> uma reunião</td><td>presidir uma reunião</td></tr>
+          <tr><td>simpatizar</td><td>simpatizar <span class="hl-pr">com</span></td><td>simpatizar com (igual)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos contrastivos</div>
+      <div class="example-block pr"><div class="ex-fr"><strong>Norma:</strong> <span class="epr">Assisti ao</span> filme ontem.</div><div class="ex-es">Vi la película ayer.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><strong>PB hablado:</strong> <span class="epr">Assisti o</span> filme ontem.</div><div class="ex-es">Vi la película ayer.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><strong>Norma:</strong> Eu <span class="epr">prefiro</span> café <span class="epr">a</span> chá.</div><div class="ex-es">Prefiero café al té.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><strong>PB hablado:</strong> Eu <span class="epr">prefiro</span> café <span class="epr">do que</span> chá.</div><div class="ex-es">Prefiero café que té.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><strong>Norma:</strong> Cheguei <span class="epr">a</span> Brasília.</div><div class="ex-es">Llegué a Brasilia.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><strong>PB hablado:</strong> Cheguei <span class="epr">em</span> Brasília.</div><div class="ex-es">Llegué a Brasilia.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Recomendación de uso:</strong> en escritura formal (redação ENEM, CELPE-Bras escrita, prensa, ensayo), respeta la regência normativa. En habla y registro informal escrito, las simplificaciones PB son completamente naturales y aceptadas. Saber alternar es la marca de competencia C1.</div>
+      </div>
+
+      <div class="sec-label">Verbos clave para ENEM/CELPE-Bras</div>
+      <div class="example-block pr"><div class="ex-fr">Os jovens <span class="epr">aspiram a</span> uma vida melhor. (norma)</div><div class="ex-es">Los jóvenes aspiran a una vida mejor.</div></div>
+      <div class="example-block pr"><div class="ex-fr">O presidente <span class="epr">visa à</span> redução do desemprego. (con crase)</div><div class="ex-es">El presidente visa a la reducción del desempleo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Devemos <span class="epr">obedecer às</span> regras.</div><div class="ex-es">Debemos obedecer las reglas.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con las regências verbais.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'A personal española (no existe en port.)',
+   wrong:"Vi a o Pedro / Amo a você.",
+   right:"Vi o Pedro / Amo você.",
+   expl:'En portugués NO existe la "a personal" del español. Los verbos como <em>amar, ver, ouvir, conhecer, encontrar, visitar, esperar</em> son <strong>transitivos directos</strong>: <em>vi o Pedro, amo você, encontrei a Maria, visito meus avós</em>. Sin "a" ante el objeto humano.'},
+  {name:'Assistir sin a (norma vs PB)',
+   wrong:"Assisti ao filme (en habla cotidiana, suena formal) / Assisti o filme (en redação ENEM)",
+   right:"Norma: Assisti ao filme / PB hablado: Assisti o filme",
+   expl:'En norma escrita culta, <em>assistir</em> con sentido de "ver" exige <strong>a</strong>: <em>assistir a um filme, a um jogo, a uma palestra</em>. En PB hablado, se omite la preposición: <em>assistir um filme</em>. En redação culta, mantén la forma normativa.'},
+  {name:'Preferir A do que B (norma)',
+   wrong:"Prefiro café do que chá (en escritura culta)",
+   right:"Prefiro café a chá.",
+   expl:'La norma exige <em>preferir A a B</em> (no <em>do que</em>): <strong>prefiro café a chá, prefere ler a ver TV</strong>. En PB hablado se usa frecuentemente <em>preferir do que</em>, pero es agramatical en escritura culta.'},
+  {name:'Lembrar / esquecer sin se',
+   wrong:"Eu lembro de você (en escritura formal) / Eu esqueci da chave",
+   right:"Eu me lembro de você / Eu me esqueci da chave.",
+   expl:'En norma culta, <em>lembrar-se</em> y <em>esquecer-se</em> son <strong>pronominales</strong> y exigen <em>de</em>: <em>me lembro de, me esqueci de</em>. Sin <em>se</em>, son transitivos directos con OD: <em>lembrei algo, esqueci a chave</em>. En PB hablado conviven las formas.'},
+  {name:'Chegar em vs chegar a',
+   wrong:"Cheguei no Rio (en redação)",
+   right:"Cheguei ao Rio.",
+   expl:'La norma exige <em>chegar a + lugar</em>: <em>cheguei ao Rio, cheguei à praia, cheguei a São Paulo</em>. En PB hablado se usa <em>chegar em</em>: <em>cheguei no Rio</em>. En escritura formal, mantén <em>chegar a</em>.'},
+  {name:'Confiar de (calco español)',
+   wrong:"Confio de você.",
+   right:"Confio em você.",
+   expl:'<em>Confiar</em> exige <strong>em</strong> en portugués: <em>confio em você, em Deus, no destino, no futuro</em>. NO <em>de</em> (calco del español "confiar de" raro; en español: "confiar en").'},
+  {name:'Visar sin a (norma)',
+   wrong:"O projeto visa melhorar a vida (norma estricta exige a)",
+   right:"O projeto visa a melhorar a vida.",
+   expl:'En norma estricta, <em>visar</em> con sentido de "tener como objetivo" exige <strong>a</strong>: <em>visa a melhorar, visa a + meta</em>. En PB hablado se omite: <em>visa melhorar</em>. Cuando <em>visar</em> significa "apuntar (con arma)", también exige <em>a</em>: <em>visou ao alvo</em>.'},
+  {name:'Gostar sin de',
+   wrong:"Eu gosto chocolate (calco español)",
+   right:"Eu gosto de chocolate.",
+   expl:'<em>Gostar</em> SIEMPRE exige <strong>de</strong>: <em>gosto de chocolate, gosto de você, gosto de viajar</em>. El error es típico de hispanohablantes que aplican la estructura "me gusta el chocolate" (sin preposición tras el sujeto).'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

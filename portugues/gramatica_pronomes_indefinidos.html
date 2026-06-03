@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Pronomes Indefinidos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Pronomes Indefinidos → Sintaxis · dk-green */
+:root {
+  --primary: #1f4634;
+  --primary-soft: #e8f0eb;
+  --primary-mid: #5a8a72;
+  --primary-strong: #0f2e22;
+  --primary-glow: rgba(31, 70, 52, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fc99e;
+  --primary-soft: #1a2e23;
+  --primary-mid: #4a8a66;
+  --primary-strong: #b8dcc6;
+  --primary-glow: rgba(127, 201, 158, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; }
+.split-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 0.96rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.01em; }
+.split-card p { font-size: 0.86em; color: var(--text2); line-height: 1.6; }
+
+.alert-box {
+  background: var(--red-bg); border: 1px solid var(--red-border);
+  border-radius: var(--radius-md); padding: 14px 17px; margin: 14px 0;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.alert-box .alert-icon { font-size: 1.2em; flex-shrink: 0; }
+.alert-box .alert-text { color: var(--text2); line-height: 1.6; font-size: 0.92em; }
+.alert-box .alert-text strong { color: var(--red); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Pronomes Indefinidos</h1>
+    <span class="header-tag">Sintaxe</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B1–B2</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Alguém · todo / tudo · cada</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Sistema general</button>
+    <button class="snav-btn"        onclick="showSection('s-personas',this)">2. Personas / cosas</button>
+    <button class="snav-btn"        onclick="showSection('s-todo-tudo',this)">3. Todo vs tudo</button>
+    <button class="snav-btn"        onclick="showSection('s-cada',this)">4. Cada / qualquer</button>
+    <button class="snav-btn"        onclick="showSection('s-quantidade',this)">5. Cuantificadores</button>
+    <button class="snav-btn"        onclick="showSection('s-negacao',this)">6. Doble negación</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los <strong>pronomes indefinidos</strong> se refieren a la 3ª persona de manera <strong>vaga o no específica</strong>: alguien sin identificar, una cosa cualquiera, todo, nada, cada uno, varios. Algunos son invariables (<em>alguém, ninguém, algo, nada, tudo</em>); otros varían en género y/o número (<em>algum/alguma/alguns/algumas, todo/toda/todos/todas</em>).
+      </div>
+
+      <div class="sec-label">Cuadro panorámico</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Categoría</th><th>Indefinidos invariables</th><th>Variables</th></tr></thead>
+        <tbody>
+          <tr><td>Personas</td><td>alguém, ninguém</td><td>algum, nenhum, todo, outro, certo</td></tr>
+          <tr><td>Cosas</td><td>algo, nada, tudo</td><td>algum, nenhum</td></tr>
+          <tr><td>Cantidad indefinida</td><td>—</td><td>vários, muitos, poucos, tantos, demais</td></tr>
+          <tr><td>Distributivos</td><td>cada</td><td>—</td></tr>
+          <tr><td>Universal</td><td>—</td><td>qualquer / quaisquer, todo / toda / todos / todas</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Trampa central para hispanohablantes:</strong> la distinción <em>todo</em> vs <em>tudo</em> (sección 3). El español usa "todo" para ambas funciones; el portugués los distingue claramente.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. PERSONAS / COSAS -->
+  <div class="sec-block" id="s-personas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los indefinidos <strong>alguém, ninguém, algo, nada</strong> son invariables y se refieren a personas (alguém, ninguém) o cosas (algo, nada) no identificadas. <strong>Algum, nenhum</strong> con sus formas femeninas y plurales son determinantes y pronombres.
+      </div>
+
+      <div class="sec-label">Para personas: alguém, ninguém, algum, nenhum</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Indefinido</th><th>Equivalente español</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>alguém</strong></td><td>alguien</td><td><span class="hl-pr">Alguém</span> ligou.</td></tr>
+          <tr><td><strong>ninguém</strong></td><td>nadie</td><td><span class="hl-pr">Ninguém</span> sabe.</td></tr>
+          <tr><td><strong>algum / alguma + N</strong></td><td>algún / alguna</td><td><span class="hl-pr">Algum</span> aluno faltou.</td></tr>
+          <tr><td><strong>alguns / algumas + N</strong></td><td>algunos / algunas</td><td><span class="hl-pr">Algumas</span> pessoas chegaram.</td></tr>
+          <tr><td><strong>nenhum / nenhuma + N</strong></td><td>ningún / ninguna</td><td><span class="hl-pr">Nenhum</span> erro foi cometido.</td></tr>
+          <tr><td><strong>nenhuns / nenhumas + N</strong></td><td>ningunos / ningunas (raro)</td><td>— prácticamente no se usa</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Para cosas: algo, nada</div>
+      <div class="example-block pr"><div class="ex-fr">Você quer beber <span class="epr">algo</span>?</div><div class="ex-es">¿Quieres beber algo?</div></div>
+      <div class="example-block pr"><div class="ex-fr">Não comprei <span class="epr">nada</span>.</div><div class="ex-es">No compré nada.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Aconteceu <span class="epr">algo</span> estranho.</div><div class="ex-es">Pasó algo extraño.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Nada</span> me agrada hoje.</div><div class="ex-es">Nada me gusta hoy.</div></div>
+
+      <div class="sec-label">Algum vs nenhum (negación pospuesta)</div>
+      <div class="example-block pr"><div class="ex-fr">Não tem aluno <span class="epr">algum</span> aqui. (= ningún alumno, énfasis)</div><div class="ex-es">No hay ningún alumno aquí.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Não há razão <span class="epr">alguma</span> para isso. (= ninguna razón)</div><div class="ex-es">No hay razón alguna para eso.</div></div>
+      <div class="note-box"><strong>Algum pospuesto en oraciones negativas:</strong> equivale a "ningún/alguna" enfático, similar a "alguno" en español. Se usa con negación previa: <em>não tem problema algum</em> = no hay ningún problema.</div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Concordancia:</strong> los indefinidos variables (<em>algum, alguma, alguns, algumas, nenhum, nenhuma</em>) concuerdan en género y número con el sustantivo que modifican.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3. TODO VS TUDO -->
+  <div class="sec-block" id="s-todo-tudo">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        La distinción <strong>todo</strong> vs <strong>tudo</strong> es una de las trampas centrales del portugués. <strong>Todo</strong> (variable) modifica un sustantivo o pronombre. <strong>Tudo</strong> (invariable, neutro) significa "todas las cosas" en sentido general, sin referencia a un sustantivo específico.
+      </div>
+
+      <div class="alert-box">
+        <span class="alert-icon">🚨</span>
+        <div class="alert-text">
+          <strong>Regla:</strong> <em>tudo</em> = "all (things)" sin sustantivo. <em>Todo/toda/todos/todas</em> + sustantivo. Ejemplos: <em>quero tudo</em> (sin sust.) / <em>quero todo o livro</em> (con sust.).
+        </div>
+      </div>
+
+      <div class="split-grid">
+        <div class="split-card">
+          <h4>Tudo (invariable, neutro)</h4>
+          <p>Pronombre indefinido neutro. No modifica un sustantivo. Significa "todas las cosas" en general.</p>
+          <p style="margin-top:6px"><em>Eu sei tudo.</em></p>
+          <p><em>Tudo está bem.</em></p>
+          <p><em>Eu comprei tudo.</em></p>
+          <p><em>Falamos sobre tudo.</em></p>
+        </div>
+        <div class="split-card">
+          <h4>Todo (variable)</h4>
+          <p>Determinante que modifica un sustantivo. Concuerda en género y número.</p>
+          <p style="margin-top:6px"><em>Eu li todo o livro.</em></p>
+          <p><em>Toda a cidade estava feliz.</em></p>
+          <p><em>Todos os alunos passaram.</em></p>
+          <p><em>Todas as portas estão abertas.</em></p>
+        </div>
+      </div>
+
+      <div class="sec-label">Distinción crucial: todo o dia vs todo dia</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Estructura</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>todo + artículo + N</strong></td><td>la totalidad de</td><td><span class="hl-pr">Todo o dia</span> = el día entero.</td></tr>
+          <tr><td><strong>todo + N (sin artículo)</strong></td><td>cada (distributivo)</td><td><span class="hl-pr">Todo dia</span> eu venho aqui = todos los días.</td></tr>
+          <tr><td><strong>todos os + N</strong></td><td>la totalidad de los…</td><td><span class="hl-pr">Todos os dias</span> = todos los días (= cada día).</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Todo dia</span> ela faz a mesma coisa. (distributivo: cada día)</div><div class="ex-es">Todos los días hace lo mismo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Choveu <span class="epr">o dia todo</span>. (totalidad: el día entero)</div><div class="ex-es">Llovió el día entero.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Choveu <span class="epr">todo o dia</span>. (= o dia todo, totalidad)</div><div class="ex-es">Llovió todo el día.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Estudei <span class="epr">todas as matérias</span>. (la totalidad)</div><div class="ex-es">Estudié todas las asignaturas.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>PB hablado:</strong> <em>todo dia</em> sin artículo es muy común con valor distributivo (= cada día). En contextos formales, prefiere <em>todos os dias</em> que es inequívoco.</div>
+      </div>
+
+      <div class="sec-label">Posición de todo / tudo</div>
+      <div class="example-block pr"><div class="ex-fr">Comeu <span class="epr">tudo</span>. (después del verbo)</div><div class="ex-es">Comió todo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Eu sei <span class="epr">tudo</span> sobre você.</div><div class="ex-es">Sé todo sobre ti.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Tudo</span> está bem.</div><div class="ex-es">Todo está bien.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 4. CADA / QUALQUER -->
+  <div class="sec-block" id="s-cada">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong>Cada</strong> (invariable, distributivo) y <strong>qualquer / quaisquer</strong> (universal libre) son indefinidos clave. <em>Cada</em> selecciona individuos uno por uno; <em>qualquer</em> indica indiferencia ante la elección.
+      </div>
+
+      <div class="sec-label">Cada (invariable)</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Cada</span> pessoa recebeu um presente.</div><div class="ex-es">Cada persona recibió un regalo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Eu venho aqui <span class="epr">cada</span> dois dias.</div><div class="ex-es">Vengo aquí cada dos días.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Cada</span> um por si!</div><div class="ex-es">¡Cada uno por su cuenta!</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Cada</span> coisa no seu lugar.</div><div class="ex-es">Cada cosa en su lugar.</div></div>
+
+      <div class="note-box"><strong>Cada coisa enfático (PB):</strong> <em>cada</em> también funciona como exclamativo enfático en PB: <em>Tem cada coisa nesse mundo!</em> = ¡Hay tantas cosas en este mundo! (con tono de asombro o sarcasmo).</div>
+
+      <div class="sec-label">Qualquer / quaisquer</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Qualquer</span> pessoa pode fazer isso. (= cualquiera)</div><div class="ex-es">Cualquier persona puede hacer eso.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Pode vir a <span class="epr">qualquer</span> hora.</div><div class="ex-es">Puede venir a cualquier hora.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Compre <span class="epr">quaisquer</span> dois livros. (plural, raro)</div><div class="ex-es">Compra cualesquiera dos libros.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ele é <span class="epr">um qualquer</span>. (= un cualquiera, despectivo)</div><div class="ex-es">Es un cualquiera.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Qualquer vs todo:</strong> <em>qualquer pessoa</em> = "cualquier persona, no importa quién". <em>Toda pessoa</em> = "toda persona, sin excepción, todas las personas". <em>Qualquer um pode fazer</em> = uno cualquiera puede; <em>todos podem fazer</em> = todos pueden.</div>
+      </div>
+
+      <div class="sec-label">Outro / certo</div>
+      <div class="example-block pr"><div class="ex-fr">Me dá <span class="epr">outro</span> copo.</div><div class="ex-es">Dame otro vaso.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Outros</span> dirão coisas diferentes.</div><div class="ex-es">Otros dirán cosas diferentes.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Certas</span> pessoas não entendem.</div><div class="ex-es">Ciertas personas no entienden.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Houve <span class="epr">certa</span> discussão.</div><div class="ex-es">Hubo cierta discusión.</div></div>
+
+      <div class="note-box"><strong>Certo pospuesto vs antepuesto:</strong> <em>certa pessoa</em> (= cierta, indefinido, antepuesto). <em>uma resposta certa</em> (= correcta, adjetivo, pospuesto). Cambio de significado según posición.</div>
+    </div></div>
+  </div>
+
+  <!-- 5. QUANTIDADE -->
+  <div class="sec-block" id="s-quantidade">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los <strong>cuantificadores indefinidos</strong> indican cantidad imprecisa: <strong>muito, pouco, vários, tanto, demais</strong>. Varían en género y número (excepto <em>demais</em>) y pueden ser pronombres o determinantes.
+      </div>
+
+      <div class="sec-label">Cuantificadores principales</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Indefinido</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>muito / muita / muitos / muitas</strong></td><td>mucho/-a/-os/-as</td><td>Tenho <span class="hl-pr">muitos</span> amigos.</td></tr>
+          <tr><td><strong>pouco / pouca / poucos / poucas</strong></td><td>poco/-a/-os/-as</td><td>Tem <span class="hl-pr">pouca</span> gente.</td></tr>
+          <tr><td><strong>vários / várias</strong></td><td>varios/-as</td><td>Comprei <span class="hl-pr">vários</span> livros.</td></tr>
+          <tr><td><strong>tanto / tanta / tantos / tantas</strong></td><td>tanto/-a/-os/-as</td><td>Tenho <span class="hl-pr">tantas</span> dúvidas!</td></tr>
+          <tr><td><strong>demais</strong> (invariable)</td><td>de más, en exceso</td><td>Vocês falam <span class="hl-pr">demais</span>.</td></tr>
+          <tr><td><strong>bastante / bastantes</strong></td><td>bastante/-s</td><td>Há <span class="hl-pr">bastantes</span> motivos.</td></tr>
+          <tr><td><strong>diversos / diversas</strong></td><td>diversos/-as</td><td><span class="hl-pr">Diversas</span> opções.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Muito como pronombre / adverbio / adjetivo</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Muito</span> mundo está aqui. (pronombre / determinante)</div><div class="ex-es">Mucha gente está aquí.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ele fala <span class="epr">muito</span>. (adverbio, invariable)</div><div class="ex-es">Él habla mucho.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A festa estava <span class="epr">muito</span> boa. (adverbio, invariable)</div><div class="ex-es">La fiesta estuvo muy buena.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Comemos <span class="epr">muitas</span> coisas. (determinante, concuerda)</div><div class="ex-es">Comimos muchas cosas.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Muito vs muy:</strong> el español distingue "muy" (adverbio, modifica adj./adv.) de "mucho" (determinante). El portugués usa <strong>muito</strong> para ambos: <em>muito bom</em> (= muy bueno), <em>muitos livros</em> (= muchos libros).</div>
+      </div>
+
+      <div class="sec-label">Demais (invariable)</div>
+      <div class="example-block pr"><div class="ex-fr">Vocês comem <span class="epr">demais</span>. (= en exceso)</div><div class="ex-es">Coméis demasiado.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A festa estava boa <span class="epr">demais</span>! (= buenísima, PB enfático)</div><div class="ex-es">¡La fiesta estaba buenísima!</div></div>
+      <div class="example-block pr"><div class="ex-fr">Os <span class="epr">demais</span> alunos esperam. (= los otros, los restantes)</div><div class="ex-es">Los demás alumnos esperan.</div></div>
+      <div class="note-box"><strong>Dos usos de demais:</strong> 1) adverbio = "en exceso, demasiado"; 2) determinante (con artículo) = "los otros, los restantes": <em>os demais convidados</em>.</div>
+    </div></div>
+  </div>
+
+  <!-- 6. DOBLE NEGACIÓN -->
+  <div class="sec-block" id="s-negacao">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El portugués acepta y prefiere la <strong>doble negación</strong> cuando los indefinidos negativos (<em>ninguém, nada, nunca, nenhum</em>) van <strong>después</strong> del verbo. Si van antes, se omite el <em>não</em>.
+      </div>
+
+      <div class="sec-label">Regla central</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Posición del indefinido</th><th>Estructura</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Después del verbo</td><td>não + verbo + indefinido</td><td><span class="hl-pr">Não</span> vi <span class="hl-pr">ninguém</span>.</td></tr>
+          <tr><td>Antes del verbo</td><td>indefinido + verbo (sin não)</td><td><span class="hl-pr">Ninguém</span> chegou.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos con doble negación</div>
+      <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">não</span> vi <span class="epr">ninguém</span> ontem.</div><div class="ex-es">No vi a nadie ayer.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ele <span class="epr">não</span> sabe <span class="epr">nada</span>.</div><div class="ex-es">Él no sabe nada.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Não</span> faltou <span class="epr">nenhum</span> aluno.</div><div class="ex-es">No faltó ningún alumno.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ela <span class="epr">não</span> sai <span class="epr">nunca</span>.</div><div class="ex-es">Ella no sale nunca.</div></div>
+
+      <div class="sec-label">Sin negación previa (indefinido antepuesto)</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Ninguém</span> ligou hoje.</div><div class="ex-es">Nadie llamó hoy.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Nada</span> me agrada.</div><div class="ex-es">Nada me gusta.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Nunca</span> vou esquecer.</div><div class="ex-es">Nunca lo voy a olvidar.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Nenhum</span> aluno passou.</div><div class="ex-es">Ningún alumno aprobó.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Doble negación en PB enfático:</strong> el PB hablado lleva la doble negación aún más lejos: <em>Não fiz nada não</em>, <em>Eu não sei não</em>. La segunda negación al final es marcador de énfasis muy típico del habla.</div>
+      </div>
+
+      <div class="sec-label">Nem (= ni)</div>
+      <div class="example-block pr"><div class="ex-fr">Ele <span class="epr">não</span> fala <span class="epr">nem</span> inglês <span class="epr">nem</span> francês.</div><div class="ex-es">No habla ni inglés ni francés.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Nem</span> ele <span class="epr">nem</span> ela vieram.</div><div class="ex-es">Ni él ni ella vinieron.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Não me deu <span class="epr">nem</span> bom dia. (= ni siquiera)</div><div class="ex-es">No me dio ni los buenos días.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con los pronomes indefinidos.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Todo vs tudo (la gran trampa)',
+   wrong:"Eu sei todo. / Quero todo.",
+   right:"Eu sei tudo. / Quero tudo.",
+   expl:'Sin sustantivo, "todo" en español se traduce con <strong>tudo</strong> (invariable, neutro). <em>Tudo está bem, eu sei tudo, quero tudo</em>. Con sustantivo: <em>todo o livro, toda a cidade, todos os alunos</em>. Es el error más frecuente para hispanohablantes.'},
+  {name:'Todo o dia vs todo dia',
+   wrong:"Vou todo dia ao supermercado = "todo el día"",
+   right:"Vou todo dia ao supermercado = "todos los días" (distributivo)",
+   expl:'<em>Todo dia</em> (sin artículo) = "cada día, todos los días" (distributivo). <em>Todo o dia</em> (con artículo) = "el día entero, todo el día" (totalidad). Misma distinción para <em>toda noite</em> vs <em>toda a noite</em>.'},
+  {name:'Muito como muy (sin concordancia)',
+   wrong:"A festa estava muitas boas. (concordando incorrectamente)",
+   right:"A festa estava muito boa.",
+   expl:'Cuando <em>muito</em> es <strong>adverbio</strong> (modifica adjetivo o adverbio), es <strong>invariable</strong>: <em>muito bom, muito bem, muito interessante, muito boa</em>. Solo concuerda cuando es determinante de sustantivo: <em>muitas pessoas, muitos livros</em>.'},
+  {name:'Ninguém con verbo afirmativo',
+   wrong:"Ninguém não veio.",
+   right:"Ninguém veio. / Não veio ninguém.",
+   expl:'Si <em>ninguém, nada, nunca, nenhum</em> van ANTES del verbo: NO se usa <em>não</em>. Si van DESPUÉS: SÍ se usa <em>não</em>. <em>Ninguém veio</em> (antepuesto) vs <em>Não veio ninguém</em> (pospuesto). La doble negación <em>ninguém não veio</em> es agramatical.'},
+  {name:'Algum / algums (plural inexistente)',
+   wrong:"Tenho algums livros.",
+   right:"Tenho alguns livros.",
+   expl:'El plural de <em>algum</em> es <strong>alguns</strong> (no <em>algums</em>). Lo mismo: nenhum → nenhuns (raro), algum → alguns. Atención a la ortografía: <em>-uns</em>, no <em>-ums</em>.'},
+  {name:'Cada con cualquier (confusión)',
+   wrong:"Cada pessoa pode entrar. (= cualquiera, valor universal)",
+   right:"Qualquer pessoa pode entrar.",
+   expl:'<em>Cada</em> es distributivo (uno por uno, ordenadamente): <em>cada aluno recebeu uma nota</em>. <em>Qualquer</em> es universal libre (no importa cuál): <em>qualquer aluno pode pegar o livro</em>. Diferencia semántica importante.'},
+  {name:'Posición de certo: cambia de significado',
+   wrong:"Resposta certa = respuesta cierta (indefinida)",
+   right:"Uma resposta certa = respuesta correcta. / Certa resposta = cierta respuesta (indefinida).",
+   expl:'<em>Certo / certa</em> antepuesto al sustantivo = "cierto" (indefinido): <em>certa pessoa, certo lugar</em>. Pospuesto = "correcto, adecuado": <em>a resposta certa, o caminho certo</em>. Cambio de significado por posición.'},
+  {name:'Outra coisa vs uma outra coisa',
+   wrong:"Quero outra coisa = "una de las otras cosas" (interpretación posible)",
+   right:"Quero outra coisa = "otra cosa, distinta"",
+   expl:'<em>Outro</em> en portugués NO lleva artículo indefinido (<em>um/uma</em>) por norma: <em>quero outro café</em> (no <em>quero um outro café</em>). En español es lo mismo: "quiero otro café". En PB hablado a veces aparece <em>um outro</em>, pero es redundante.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

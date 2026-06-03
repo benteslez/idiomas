@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Artigos e Determinantes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Artigos → Sintaxis · dk-green */
+:root {
+  --primary: #1f4634;
+  --primary-soft: #e8f0eb;
+  --primary-mid: #5a8a72;
+  --primary-strong: #0f2e22;
+  --primary-glow: rgba(31, 70, 52, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fc99e;
+  --primary-soft: #1a2e23;
+  --primary-mid: #4a8a66;
+  --primary-strong: #b8dcc6;
+  --primary-glow: rgba(127, 201, 158, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; }
+.split-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 0.96rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.01em; }
+.split-card p { font-size: 0.86em; color: var(--text2); line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Artigos e Determinantes</h1>
+    <span class="header-tag">Sintaxe</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR A2–B1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">O · a · um · uma</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Sistema general</button>
+    <button class="snav-btn"        onclick="showSection('s-definido',this)">2. Artículo definido</button>
+    <button class="snav-btn"        onclick="showSection('s-indefinido',this)">3. Artículo indefinido</button>
+    <button class="snav-btn"        onclick="showSection('s-nomes-proprios',this)">4. Con nombres propios</button>
+    <button class="snav-btn"        onclick="showSection('s-posesivos',this)">5. Con posesivos</button>
+    <button class="snav-btn"        onclick="showSection('s-omissao',this)">6. Omisión del artículo</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los <strong>artigos</strong> son determinantes que acompañan al sustantivo, marcando definitud (definido vs indefinido), género y número. El portugués tiene <strong>artículo definido</strong> (o, a, os, as) y <strong>artículo indefinido</strong> (um, uma, uns, umas). El uso del artículo en PB es notablemente más extenso que en español o PE: aparece antes de nombres propios, días de la semana, posesivos.
+      </div>
+
+      <div class="sec-label">Cuadro completo de artigos</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tipo</th><th>Masc. sing.</th><th>Fem. sing.</th><th>Masc. pl.</th><th>Fem. pl.</th></tr></thead>
+        <tbody>
+          <tr><td>Definido</td><td class="hl-pr">o</td><td class="hl-pr">a</td><td class="hl-pr">os</td><td class="hl-pr">as</td></tr>
+          <tr><td>Indefinido</td><td class="hl-pr">um</td><td class="hl-pr">uma</td><td class="hl-pr">uns</td><td class="hl-pr">umas</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Diferencia PB vs español:</strong> el PB tiende a poner artículo donde el español lo omite, especialmente ante nombres propios (<em>a Maria, o João</em>) y posesivos (<em>o meu carro</em>, aunque también: <em>meu carro</em>). Esta es una característica distintiva del idioma.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. DEFINIDO -->
+  <div class="sec-block" id="s-definido">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>artículo definido</strong> (o, a, os, as) marca un sustantivo <strong>identificable</strong> en el contexto: conocido por hablante y oyente, único, o ya mencionado.
+      </div>
+
+      <div class="sec-label">Funciones principales</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Función</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Identificar elemento único</td><td><span class="hl-pr">O</span> sol nasce no leste.</td></tr>
+          <tr><td>Elemento ya mencionado</td><td>Comprei um livro. <span class="hl-pr">O</span> livro é ótimo.</td></tr>
+          <tr><td>Elemento identificable por contexto</td><td>Estou na cozinha. <span class="hl-pr">O</span> fogão está quente.</td></tr>
+          <tr><td>Especies, géneros (sentido general)</td><td><span class="hl-pr">O</span> homem é mortal.</td></tr>
+          <tr><td>Partes del cuerpo, ropa</td><td>Ele lavou <span class="hl-pr">as</span> mãos.</td></tr>
+          <tr><td>Países (la mayoría)</td><td><span class="hl-pr">O</span> Brasil, <span class="hl-pr">a</span> França, <span class="hl-pr">os</span> Estados Unidos.</td></tr>
+          <tr><td>Idiomas (en contexto neutro)</td><td>Eu falo <span class="hl-pr">o</span> português.</td></tr>
+          <tr><td>Días de la semana (PB)</td><td><span class="hl-pr">Na</span> segunda-feira não trabalho.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Contracciones obligatorias con preposiciones</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>prep. + art.</th><th>Contracción</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>de + o/a/os/as</td><td class="hl-pr">do, da, dos, das</td><td>O livro <span class="hl-pr">do</span> Pedro.</td></tr>
+          <tr><td>em + o/a/os/as</td><td class="hl-pr">no, na, nos, nas</td><td>Estou <span class="hl-pr">na</span> escola.</td></tr>
+          <tr><td>a + o/a/os/as</td><td class="hl-pr">ao, à, aos, às</td><td>Vou <span class="hl-pr">ao</span> mercado.</td></tr>
+          <tr><td>por + o/a/os/as</td><td class="hl-pr">pelo, pela, pelos, pelas</td><td>Passamos <span class="hl-pr">pela</span> praça.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Crase à / às:</strong> contracción de <em>a + a/as</em>. Solo cuando preposición <em>a</em> + artículo <em>a/as</em>: <em>vou à praia</em>. NUNCA antes de masculinos (<em>vou ao banco</em>), pronombres personales (<em>vou a você</em>), o verbos.</div>
+      </div>
+
+      <div class="sec-label">Países con y sin artículo</div>
+      <div class="split-grid">
+        <div class="split-card">
+          <h4>CON artículo</h4>
+          <p>La mayoría de países lleva artículo:</p>
+          <p style="margin-top:6px"><em>o Brasil, a Argentina, o Chile, o Peru, os Estados Unidos, a França, a Itália, a Espanha, a Alemanha, a Inglaterra, o Japão, a China, a Rússia, a Índia</em></p>
+        </div>
+        <div class="split-card">
+          <h4>SIN artículo (excepciones)</h4>
+          <p>Algunos países NO llevan:</p>
+          <p style="margin-top:6px"><em>Portugal, Cuba, Israel, Angola, Moçambique, Cabo Verde, São Tomé e Príncipe, Timor-Leste</em></p>
+          <p>Y los nombres con "São/Santa": <em>São Paulo (la ciudad)</em></p>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3. INDEFINIDO -->
+  <div class="sec-block" id="s-indefinido">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>artículo indefinido</strong> (um, uma, uns, umas) presenta un sustantivo como <strong>no identificable</strong>, nuevo o desconocido. <em>Uns/umas</em> también tienen valor de "algunos/algunas" o "más o menos".
+      </div>
+
+      <div class="sec-label">Funciones del indefinido</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Función</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Presentar elemento nuevo</td><td>Vi <span class="hl-pr">uma</span> mulher na rua.</td></tr>
+          <tr><td>Elemento no identificado</td><td>Quero <span class="hl-pr">um</span> café.</td></tr>
+          <tr><td>Sentido aproximado (uns/umas)</td><td><span class="hl-pr">Uns</span> dez minutos. (= unos diez)</td></tr>
+          <tr><td>Énfasis ("un tal", "uno de esos")</td><td>Ele é <span class="hl-pr">um</span> idiota!</td></tr>
+          <tr><td>Cantidad indefinida (plural)</td><td>Comprei <span class="hl-pr">uns</span> presentes.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Contracciones con preposiciones</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>prep. + art.</th><th>Contracción</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>de + um/uma</td><td class="hl-pr">dum, duma (raro en PB)</td><td>Falaram de um caso → falaram <span class="hl-pr">dum</span> caso.</td></tr>
+          <tr><td>em + um/uma</td><td class="hl-pr">num, numa</td><td>Estou <span class="hl-pr">numa</span> reunião.</td></tr>
+          <tr><td>em + uns/umas</td><td class="hl-pr">nuns, numas</td><td>Estou pensando <span class="hl-pr">numas</span> coisas.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="note-box"><strong>Dum, duma poco usado en PB:</strong> en PB hablado y escrito moderno, las contracciones <em>dum, duma, duns, dumas</em> son raras. Se prefiere <em>de um, de uma, de uns, de umas</em>. <em>Num, numa</em> son más comunes.</div>
+
+      <div class="sec-label">Uns / umas como aproximadores</div>
+      <div class="example-block pr"><div class="ex-fr">Vou demorar <span class="epr">uns</span> dez minutos. (= unos diez)</div><div class="ex-es">Voy a tardar unos diez minutos.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Tem <span class="epr">umas</span> 20 pessoas aqui.</div><div class="ex-es">Hay unas 20 personas aquí.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Trabalhei <span class="epr">umas</span> três horas. (= tres horas, más o menos)</div><div class="ex-es">Trabajé unas tres horas.</div></div>
+
+      <div class="sec-label">Omisión del indefinido (con sustantivos abstractos)</div>
+      <div class="example-block pr"><div class="ex-fr">Ele é professor. (no <em>um professor</em>)</div><div class="ex-es">Es profesor.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ela tem medo. (no <em>um medo</em>)</div><div class="ex-es">Tiene miedo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Tenho fome.</div><div class="ex-es">Tengo hambre.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Profesiones sin artículo:</strong> al decir oficio o profesión con <em>ser</em>, NO se usa el indefinido. <em>Ele é médico</em> (no <em>um médico</em>). Solo aparece cuando hay modificación: <em>ele é um médico excelente</em>.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. NOMES PROPRIOS -->
+  <div class="sec-block" id="s-nomes-proprios">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El uso de <strong>artículo antes de nombres propios</strong> es uno de los rasgos más distintivos del PB. En habla, prácticamente todos los nombres de persona llevan artículo: <em>a Maria, o Pedro, a Ana</em>. Es marcador afectivo y de familiaridad.
+      </div>
+
+      <div class="sec-label">Nombres de persona</div>
+      <div class="split-grid">
+        <div class="split-card">
+          <h4>PB hablado (artículo común)</h4>
+          <p>El artículo es muy frecuente, especialmente en familias y entre conocidos.</p>
+          <p style="margin-top:6px"><em>A Maria veio ontem.</em></p>
+          <p><em>O João é meu amigo.</em></p>
+          <p><em>Falei com a Ana.</em></p>
+          <p><em>O Pedro chegou tarde.</em></p>
+        </div>
+        <div class="split-card">
+          <h4>Sin artículo (formal o distante)</h4>
+          <p>En escritura formal, listas, presentaciones oficiales, o cuando se habla de personas no conocidas personalmente.</p>
+          <p style="margin-top:6px"><em>Machado de Assis nasceu em 1839.</em></p>
+          <p><em>Camões escreveu Os Lusíadas.</em></p>
+          <p><em>Maria Silva é a candidata escolhida.</em></p>
+        </div>
+      </div>
+
+      <div class="sec-label">Ciudades y lugares</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tipo</th><th>Con/sin artículo</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Ciudades (la mayoría)</td><td>SIN artículo</td><td>São Paulo, Lisboa, Madrid, Paris</td></tr>
+          <tr><td>Ciudades con artículo</td><td>CON artículo (excepciones)</td><td><span class="hl-pr">o</span> Rio de Janeiro, <span class="hl-pr">o</span> Porto, <span class="hl-pr">o</span> Cairo, <span class="hl-pr">a</span> Haia</td></tr>
+          <tr><td>Países (la mayoría)</td><td>CON artículo</td><td><span class="hl-pr">o</span> Brasil, <span class="hl-pr">a</span> Itália, <span class="hl-pr">a</span> França</td></tr>
+          <tr><td>Países sin artículo</td><td>SIN artículo</td><td>Portugal, Cuba, Israel, Angola</td></tr>
+          <tr><td>Estados / regiones</td><td>variable</td><td><span class="hl-pr">a</span> Bahia, <span class="hl-pr">o</span> Pará / Minas Gerais (sin)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Cuando el nombre lleva título o profesión</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">O</span> doutor Silva chegou.</div><div class="ex-es">El doctor Silva llegó.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">O</span> presidente Lula. / Lula. (sin título no obligatorio)</div><div class="ex-es">El presidente Lula.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">O</span> professor Carlos é meu mentor.</div><div class="ex-es">El profesor Carlos es mi mentor.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Diferencia con español:</strong> en español el artículo ante nombre propio (<em>la Maria, el Pedro</em>) suena despectivo o regional. En PB es <strong>neutro y afectivo</strong>: indica familiaridad y proximidad. Su ausencia en PB puede sonar formal o distante.</div>
+      </div>
+
+      <div class="sec-label">Marcas, instituciones, periódicos</div>
+      <div class="example-block pr"><div class="ex-fr">Comprei <span class="epr">a</span> Coca-Cola.</div><div class="ex-es">Compré la Coca-Cola.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Leia <span class="epr">o</span> Globo. (= jornal)</div><div class="ex-es">Lee el Globo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Trabalho na <span class="epr">Petrobras</span>. (sin artículo, nombre de empresa)</div><div class="ex-es">Trabajo en Petrobras.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 5. POSESIVOS -->
+  <div class="sec-block" id="s-posesivos">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El uso de artículo <strong>antes del posesivo</strong> es <strong>variable</strong> en portugués. En PB ambas formas coexisten (<em>meu livro / o meu livro</em>). En PE, el artículo es obligatorio (<em>o meu livro</em>). Sin artículo es marca más PB y más coloquial.
+      </div>
+
+      <div class="sec-label">Cuadro comparativo PB vs PE</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Estructura</th><th>PB hablado</th><th>PB escrito</th><th>PE</th></tr></thead>
+        <tbody>
+          <tr><td>posesivo + sust.</td><td>frecuente (<em>meu livro</em>)</td><td>común (<em>meu livro</em>)</td><td>raro</td></tr>
+          <tr><td>art. + pos. + sust.</td><td>común (<em>o meu livro</em>)</td><td>preferido en formal (<em>o meu livro</em>)</td><td>obligatorio (<em>o meu livro</em>)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos comparativos</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Meu</span> carro está na garagem. (PB hablado)</div><div class="ex-es">Mi coche está en el garaje.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">O meu</span> carro está na garagem. (PB escrito / PE)</div><div class="ex-es">Mi coche está en el garaje.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Onde está <span class="epr">a sua</span> mãe? (PB hablado y escrito)</div><div class="ex-es">¿Dónde está tu madre?</div></div>
+      <div class="example-block pr"><div class="ex-fr">Onde está <span class="epr">sua</span> mãe? (PB hablado simplificado)</div><div class="ex-es">¿Dónde está tu madre?</div></div>
+
+      <div class="sec-label">Omisión obligatoria con partes del cuerpo y prendas</div>
+      <div class="example-block pr"><div class="ex-fr">Lavo <span class="epr">as</span> mãos antes de comer. (no "<em>minhas mãos</em>")</div><div class="ex-es">Me lavo las manos antes de comer.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Tira <span class="epr">o</span> casaco. (no "<em>seu casaco</em>")</div><div class="ex-es">Quítate el abrigo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ela tem <span class="epr">os</span> olhos azuis.</div><div class="ex-es">Ella tiene los ojos azules.</div></div>
+
+      <div class="note-box"><strong>Como en español:</strong> con partes del cuerpo y vestimenta, se usa artículo definido en lugar de posesivo cuando el "dueño" es claro por el contexto. <em>Quebrei a perna</em> = me rompí la pierna (no <em>minha perna</em>).</div>
+
+      <div class="sec-label">Con nombres de parentesco íntimo</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Minha</span> mãe vai chegar. (sin artículo, común)</div><div class="ex-es">Mi madre va a llegar.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">A minha</span> mãe vai chegar. (con artículo, también válido)</div><div class="ex-es">Mi madre va a llegar.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Mãe! (vocativo, sin artículo ni posesivo)</div><div class="ex-es">¡Madre!</div></div>
+    </div></div>
+  </div>
+
+  <!-- 6. OMISSAO -->
+  <div class="sec-block" id="s-omissao">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Hay contextos donde <strong>NO se usa artículo</strong> en portugués: profesiones con ser, vocativos, sustantivos abstractos en sentido general, enumeraciones, expresiones cristalizadas.
+      </div>
+
+      <div class="sec-label">Cuándo omitir el artículo</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Contexto</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Profesión con ser</td><td>Ele é professor. (no <em>um professor</em>)</td></tr>
+          <tr><td>Religión, nacionalidad</td><td>Sou brasileiro. / Ela é católica.</td></tr>
+          <tr><td>Vocativo</td><td>Mãe! Pedro! Doutor!</td></tr>
+          <tr><td>Enumeraciones</td><td>Compre frutas, legumes, pão.</td></tr>
+          <tr><td>Sustantivos en aposición</td><td>Brasília, capital do Brasil...</td></tr>
+          <tr><td>Tras expressões existenciais</td><td>Tem leite na geladeira? (no <em>o leite</em>)</td></tr>
+          <tr><td>Idioma como complemento</td><td>Falo português. (sin artículo, pos-verb)</td></tr>
+          <tr><td>Algunos topónimos</td><td>Vou para Portugal / São Paulo / Cuba.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Sustantivo singular sin artículo (sentido genérico)</div>
+      <div class="example-block pr"><div class="ex-fr">Vou comprar pão. (= algo de pan, indefinido)</div><div class="ex-es">Voy a comprar pan.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Tem leite? (= ¿hay leche?)</div><div class="ex-es">¿Hay leche?</div></div>
+      <div class="example-block pr"><div class="ex-fr">Falo português. (= español lengua, sin artículo)</div><div class="ex-es">Hablo portugués.</div></div>
+      <div class="example-block pr"><div class="ex-fr">O português é uma língua bonita. (con artículo: identifica la lengua)</div><div class="ex-es">El portugués es una lengua bonita.</div></div>
+
+      <div class="sec-label">Expresiones cristalizadas sin artículo</div>
+      <div class="example-block pr"><div class="ex-fr">Em casa, no trabalho, em frente, por isso, de manhã, à tarde, à noite.</div><div class="ex-es">En casa, en el trabajo, enfrente, por eso, por la mañana, por la tarde, por la noche.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A pé, a cavalo, de carro, de ônibus, a mão.</div><div class="ex-es">A pie, a caballo, en coche, en autobús, a mano.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Em casa vs na casa:</strong> <em>em casa</em> (= "en mi casa, hogar") es expresión sin artículo. <em>Na casa</em> (= "en la casa específica") con artículo. <em>Estou em casa</em> = estoy en casa (mi hogar); <em>Estou na casa do Pedro</em> = estoy en la casa de Pedro.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con los artigos y determinantes.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Profesiones con artículo indefinido',
+   wrong:"Ela é uma professora.",
+   right:"Ela é professora. / Ela é uma professora excelente.",
+   expl:'Con <em>ser</em> + profesión / religión / nacionalidad, NO se usa <em>um/uma</em>: <em>ele é médico, ela é brasileira, sou católico</em>. Solo aparece el indefinido si hay modificación: <em>ele é um médico excelente</em>.'},
+  {name:'Brasil sin artículo',
+   wrong:"Vou para Brasil amanhã.",
+   right:"Vou para o Brasil amanhã.",
+   expl:'La mayoría de países llevan artículo en portugués: <strong>o Brasil, a Argentina, a França, os Estados Unidos</strong>. Las excepciones son pocas: <em>Portugal, Cuba, Israel, Angola, Moçambique</em>. En duda, usa artículo.'},
+  {name:'Em + artículo sin contracción',
+   wrong:"Estou em a escola.",
+   right:"Estou na escola.",
+   expl:'Las contracciones <em>em + o/a/os/as = no/na/nos/nas</em> son <strong>obligatorias</strong>. Igual: <em>de + o = do</em>, <em>a + o = ao</em>, <em>por + o = pelo</em>. Nunca dejar separados <em>em o, de a, a o, por a</em>.'},
+  {name:'Crase con masculino',
+   wrong:"Vou à banco.",
+   right:"Vou ao banco.",
+   expl:'La crase (à) es solo con sustantivos <strong>femeninos</strong>. Con masculinos, la contracción es <em>ao</em>: <em>ao banco, ao supermercado, ao trabalho</em>. Femenino: <em>à praia, à escola, à festa, às vezes</em>.'},
+  {name:'Crase delante de verbo',
+   wrong:"Começou à chover.",
+   right:"Começou a chover.",
+   expl:'Crase solo entre preposición <em>a</em> + artículo <em>a/as</em> o demonstrativo <em>aquele/aquela/aquilo</em>. NUNCA antes de verbo en infinitivo, pronombre personal, masculino, palabras sin artículo. <em>Começou a chover</em>, <em>vou a você</em>, <em>chego a tempo</em>.'},
+  {name:'Artículo con nombre propio en escritura formal',
+   wrong:"A Maria Silva é a autora do livro. (en redação formal)",
+   right:"Maria Silva é a autora do livro.",
+   expl:'En escritura formal (redação ENEM, prensa, ensayo), evita el artículo ante nombres propios desconocidos o cuando se presentan formalmente. En habla familiar, <em>a Maria</em> es lo natural. Distingue registro.'},
+  {name:'Falsos amigos de género',
+   wrong:"A leite / o cor / a sangue (cambio de género)",
+   right:"O leite / a cor / o sangue (género distinto del español)",
+   expl:'Muchos sustantivos tienen género diferente del español: <em>o leite, o sangue, o nariz, o sal, o mel</em> (masc. en port., fem. o variable en esp.); <em>a árvore, a viagem, a dor, a cor, a flor</em> (fem.). El género dispara la concordancia de artículo y adjetivo.'},
+  {name:'Em casa vs na casa',
+   wrong:"Estou em casa do Pedro.",
+   right:"Estou na casa do Pedro. / Estou em casa.",
+   expl:'<em>Em casa</em> (sin artículo) = "en mi hogar, casa propia". <em>Na casa de + alguém</em> (con artículo) = "en la casa de alguien específico". <em>Estou em casa</em> (en mi casa) vs <em>estou na casa do Pedro</em> (en casa de Pedro).'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

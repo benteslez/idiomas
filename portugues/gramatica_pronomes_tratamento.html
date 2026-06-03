@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Pronomes de Tratamento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Pronomes de Tratamento → Sintaxis · dk-green */
+:root {
+  --primary: #1f4634;
+  --primary-soft: #e8f0eb;
+  --primary-mid: #5a8a72;
+  --primary-strong: #0f2e22;
+  --primary-glow: rgba(31, 70, 52, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fc99e;
+  --primary-soft: #1a2e23;
+  --primary-mid: #4a8a66;
+  --primary-strong: #b8dcc6;
+  --primary-glow: rgba(127, 201, 158, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.registro-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 14px 0; }
+.registro-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px 14px; border-left: 4px solid var(--primary); }
+.registro-card h5 { font-family: 'Fraunces', Georgia, serif; font-size: 0.92rem; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+.registro-card .reg-context { font-size: 0.78em; color: var(--text3); font-style: italic; margin-bottom: 6px; }
+.registro-card .reg-ex { font-size: 0.82em; color: var(--text2); line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Pronomes de Tratamento</h1>
+    <span class="header-tag">Sintaxe</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR A2–B1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Você · senhor · Vossa Ex.ª</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Sistema general</button>
+    <button class="snav-btn"        onclick="showSection('s-informais',this)">2. Informais</button>
+    <button class="snav-btn"        onclick="showSection('s-senhor',this)">3. O senhor / a senhora</button>
+    <button class="snav-btn"        onclick="showSection('s-vossa',this)">4. Vossa + título</button>
+    <button class="snav-btn"        onclick="showSection('s-elecao',this)">5. Cómo elegir</button>
+    <button class="snav-btn"        onclick="showSection('s-escrita',this)">6. En escritura formal</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los <strong>pronomes de tratamento</strong> son las formas que se usan para dirigirse a una persona según el grado de formalidad, jerarquía o respeto. Todos exigen <strong>verbo en 3ª persona</strong> aunque su valor semántico sea 2ª persona. El portugués tiene un sistema rico que va del más informal (<em>você</em>) al más solemne (<em>Vossa Magnificência</em>).
+      </div>
+
+      <div class="sec-label">Escala de formalidad</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Nivel</th><th>Pronombre</th><th>Contexto</th></tr></thead>
+        <tbody>
+          <tr><td>Íntimo / juvenil</td><td>cê (oral) / tu (regional)</td><td>amigos, familiares cercanos</td></tr>
+          <tr><td>Neutro</td><td><strong>você / vocês</strong></td><td>conocidos, profesional joven, mayoría de contextos</td></tr>
+          <tr><td>Formal cortés</td><td><strong>o senhor / a senhora</strong></td><td>cliente, mayor, jefe, desconocido</td></tr>
+          <tr><td>Institucional</td><td><strong>Vossa Senhoria (V.Sa.)</strong></td><td>correspondencia oficial neutra</td></tr>
+          <tr><td>Alta autoridad</td><td><strong>Vossa Excelência (V.Ex.ª)</strong></td><td>presidente, ministro, juez, embajador</td></tr>
+          <tr><td>Académica</td><td><strong>Vossa Magnificência</strong></td><td>reitor de universidad</td></tr>
+          <tr><td>Eclesiástica</td><td><strong>Vossa Reverendíssima / Santidade</strong></td><td>clero, papa</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Regla universal:</strong> todos los pronomes de tratamento exigen <strong>verbo en 3ª persona</strong> (singular o plural según corresponda) y pronombres asociados de 3ª persona (<em>se, seu, sua</em>). NUNCA usar 2ª persona del singular o plural con ellos.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. INFORMAIS -->
+  <div class="sec-block" id="s-informais">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        En el registro informal y neutro del PB, <strong>você</strong> domina absolutamente. Cubre todo el espectro de "tú" en español: amigo, hermano, compañero, vecino, conocido.
+      </div>
+
+      <div class="sec-label">Você en contextos</div>
+      <div class="registro-grid">
+        <div class="registro-card">
+          <h5>Família</h5>
+          <div class="reg-context">padres, hijos, hermanos</div>
+          <div class="reg-ex"><em>Mãe, você sabe onde estão minhas chaves?</em></div>
+        </div>
+        <div class="registro-card">
+          <h5>Amigos</h5>
+          <div class="reg-context">cualquier amistad</div>
+          <div class="reg-ex"><em>Cara, você não vai acreditar!</em></div>
+        </div>
+        <div class="registro-card">
+          <h5>Compañeros</h5>
+          <div class="reg-context">trabajo, estudios</div>
+          <div class="reg-ex"><em>Você pode me passar o relatório?</em></div>
+        </div>
+        <div class="registro-card">
+          <h5>Conocidos</h5>
+          <div class="reg-context">vecino, comerciante habitual</div>
+          <div class="reg-ex"><em>Bom dia, você tem este modelo?</em></div>
+        </div>
+        <div class="registro-card">
+          <h5>Servicios</h5>
+          <div class="reg-context">cajero, mesero (neutro)</div>
+          <div class="reg-ex"><em>Você aceita cartão?</em></div>
+        </div>
+        <div class="registro-card">
+          <h5>Mensajes / redes</h5>
+          <div class="reg-context">comunicación digital</div>
+          <div class="reg-ex"><em>Cê viu o que aconteceu?</em></div>
+        </div>
+      </div>
+
+      <div class="sec-label">Tu en regiones específicas</div>
+      <div class="example-block pr"><div class="ex-fr">Tu vai sair hoje? (PB nordeste, sur, Rio popular)</div><div class="ex-es">¿Vas a salir hoy?</div></div>
+      <div class="example-block pr"><div class="ex-fr">E tu, como está? (RS culto: tu estás)</div><div class="ex-es">¿Y tú, cómo estás?</div></div>
+
+      <div class="note-box"><strong>Cê (reducción de você):</strong> habla muy informal y juvenil. <em>Cê tá bem? Cê vai sair?</em> No aparece en escritura formal, pero sí en mensajes y redes sociales.</div>
+
+      <div class="sec-label">Pronombres asociados a você (informal)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Función</th><th>Forma</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Sujeto</td><td>você</td><td><span class="hl-pr">Você</span> vem amanhã?</td></tr>
+          <tr><td>Complemento</td><td>você / te</td><td>É pra <span class="hl-pr">você</span>. / Eu <span class="hl-pr">te</span> ligo.</td></tr>
+          <tr><td>Reflexivo</td><td>se</td><td>Você <span class="hl-pr">se</span> sente bem?</td></tr>
+          <tr><td>Posesivo</td><td>seu / sua / teu / tua / de você</td><td><span class="hl-pr">Seu</span> livro / o livro <span class="hl-pr">de você</span>.</td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+  </div>
+
+  <!-- 3. SENHOR -->
+  <div class="sec-block" id="s-senhor">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        <strong>O senhor / a senhora</strong> es el tratamiento formal estándar para mostrar respeto: a personas mayores, a desconocidos, a clientes, a jefes, a profesores en contexto formal. Es el equivalente más cercano al "usted" español.
+      </div>
+
+      <div class="sec-label">Cuándo usar o senhor / a senhora</div>
+      <div class="registro-grid">
+        <div class="registro-card">
+          <h5>Personas mayores</h5>
+          <div class="reg-context">abuelos, ancianos, mayores de edad significativa</div>
+          <div class="reg-ex"><em>O senhor está bem, vovô?</em></div>
+        </div>
+        <div class="registro-card">
+          <h5>Clientes en comercios</h5>
+          <div class="reg-context">trato comercial respetuoso</div>
+          <div class="reg-ex"><em>A senhora deseja alguma coisa?</em></div>
+        </div>
+        <div class="registro-card">
+          <h5>Jefes / superiores</h5>
+          <div class="reg-context">contexto laboral jerárquico</div>
+          <div class="reg-ex"><em>O senhor poderia revisar o relatório?</em></div>
+        </div>
+        <div class="registro-card">
+          <h5>Profesionales</h5>
+          <div class="reg-context">médico, abogado, profesor</div>
+          <div class="reg-ex"><em>Doutor, a senhora pode me explicar?</em></div>
+        </div>
+        <div class="registro-card">
+          <h5>Desconocidos</h5>
+          <div class="reg-context">primer contacto formal</div>
+          <div class="reg-ex"><em>Com licença, o senhor sabe onde fica o banco?</em></div>
+        </div>
+        <div class="registro-card">
+          <h5>Contextos religiosos</h5>
+          <div class="reg-context">trato respetuoso en parroquia, comunidad</div>
+          <div class="reg-ex"><em>O senhor padre estava na missa.</em></div>
+        </div>
+      </div>
+
+      <div class="sec-label">Conjugación con o senhor / a senhora</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tiempo</th><th>O senhor + verbo</th><th>Equivalente español</th></tr></thead>
+        <tbody>
+          <tr><td>Presente</td><td>O senhor <span class="hl-pr">fala</span> português?</td><td>¿Habla usted portugués?</td></tr>
+          <tr><td>PPS</td><td>A senhora <span class="hl-pr">falou</span> com ele?</td><td>¿Habló usted con él?</td></tr>
+          <tr><td>Imperfeito</td><td>O senhor <span class="hl-pr">queria</span> alguma coisa?</td><td>¿Quería algo?</td></tr>
+          <tr><td>Imperativo</td><td><span class="hl-pr">Sente-se</span>, por favor.</td><td>Siéntese, por favor.</td></tr>
+          <tr><td>Plural</td><td>Os senhores <span class="hl-pr">aceitam</span> um café?</td><td>¿Aceptan ustedes un café?</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Pronombres asociados a o senhor</div>
+      <div class="example-block pr"><div class="ex-fr">O senhor está esperando o <span class="epr">seu</span> filho?</div><div class="ex-es">¿Está usted esperando a su hijo?</div></div>
+      <div class="example-block pr"><div class="ex-fr">Posso <span class="epr">lhe</span> oferecer alguma coisa, senhor? (norma escrita)</div><div class="ex-es">¿Puedo ofrecerle algo?</div></div>
+      <div class="example-block pr"><div class="ex-fr">A senhora <span class="epr">se</span> sente confortável aqui?</div><div class="ex-es">¿Se siente cómoda aquí?</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Variante PB regional:</strong> en algunas regiones del nordeste, se usa "<strong>o senhor</strong>" incluso con padres o personas cercanas mayores. Por ejemplo, los hijos llaman a sus padres de "senhor/senhora" como signo de respeto, no de distancia.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. VOSSA -->
+  <div class="sec-block" id="s-vossa">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las formas <strong>Vossa + título</strong> son tratamientos institucionales reservados para autoridades específicas. Aparecen en correspondencia oficial, ceremonias y discursos formales. Cada uno tiene un destinatario fijo.
+      </div>
+
+      <div class="sec-label">Principales tratamentos institucionais</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Pronombre</th><th>Abreviatura</th><th>Destinatario</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Vossa Excelência</strong></td><td>V.Ex.ª / V.Exa.</td><td>Presidente, ministros, senadores, deputados, juízes, embaixadores, oficiais generais</td></tr>
+          <tr><td><strong>Vossa Senhoria</strong></td><td>V.Sa.</td><td>Funcionários públicos, gerentes, autoridades menores; correspondencia comercial</td></tr>
+          <tr><td><strong>Vossa Magnificência</strong></td><td>V.Mag.ª</td><td>Reitor de universidad</td></tr>
+          <tr><td><strong>Vossa Reverendíssima</strong></td><td>V.Rev.ma</td><td>Sacerdotes, padres, monjes</td></tr>
+          <tr><td><strong>Vossa Eminência</strong></td><td>V.Em.ª</td><td>Cardenais</td></tr>
+          <tr><td><strong>Vossa Santidade</strong></td><td>V.S.</td><td>Papa</td></tr>
+          <tr><td><strong>Vossa Majestade</strong></td><td>V.M.</td><td>Reyes, reinas</td></tr>
+          <tr><td><strong>Vossa Alteza</strong></td><td>V.A.</td><td>Príncipes, princesas, duques</td></tr>
+          <tr><td><strong>Vossa Onipotência</strong></td><td>—</td><td>Dios (en oraciones)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Reglas de uso</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Vossa Excelência</span> tem a palavra. (en una sesión)</div><div class="ex-es">Su Excelencia tiene la palabra.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Vossa Senhoria</span> poderia confirmar o recebimento? (carta comercial)</div><div class="ex-es">Su Señoría podría confirmar la recepción?</div></div>
+      <div class="example-block pr"><div class="ex-fr">Recebemos a correspondência de <span class="epr">Vossa Reverendíssima</span>. (carta a un sacerdote)</div><div class="ex-es">Recibimos la correspondencia de su Reverencia.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Vossa vs Sua:</strong> <strong>Vossa</strong> Excelência se usa cuando se dirige directamente a la persona (vocativo o sujeto). <strong>Sua</strong> Excelência se usa cuando se habla DE la persona en tercera (referencia). Ejemplo: <em>Vossa Excelência tem razão</em> (a la persona) vs <em>Sua Excelência chegou</em> (sobre la persona).</div>
+      </div>
+
+      <div class="sec-label">Conjugación con Vossa Excelência</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Vossa Excelência sabe</span> que o povo aguarda. (sing.)</div><div class="ex-es">Su Excelencia sabe que el pueblo aguarda.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Vossas Excelências sabem</span> da importância. (plural)</div><div class="ex-es">Sus Excelencias saben de la importancia.</div></div>
+      <div class="note-box"><strong>Concordancia:</strong> con Vossa + título, los adjetivos y participios concuerdan con el sexo real del destinatario, no con el título. <em>Vossa Excelência é grande</em>, pero <em>Vossa Excelência está convidada</em> (si es mujer) / <em>convidado</em> (si es hombre).</div>
+    </div></div>
+  </div>
+
+  <!-- 5. ELECCION -->
+  <div class="sec-block" id="s-elecao">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Elegir el pronombre correcto exige considerar tres ejes: <strong>edad relativa, jerarquía social/profesional y grado de intimidad</strong>. En caso de duda, opta por la forma más formal: nunca ofende usar <em>o senhor / a senhora</em> en lugar de <em>você</em>.
+      </div>
+
+      <div class="sec-label">Matriz de decisión</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Situación</th><th>Pronombre recomendado</th></tr></thead>
+        <tbody>
+          <tr><td>Amigo de la misma edad</td><td>você (universal) / tu (regional)</td></tr>
+          <tr><td>Padres, hermanos, parientes cercanos</td><td>você</td></tr>
+          <tr><td>Compañero de trabajo / clase</td><td>você</td></tr>
+          <tr><td>Profesor universitario (relación cercana)</td><td>você o o senhor (según protocolo)</td></tr>
+          <tr><td>Profesor de escuela (con niños)</td><td>o senhor / a senhora</td></tr>
+          <tr><td>Mayores significativos (50+ años)</td><td>o senhor / a senhora</td></tr>
+          <tr><td>Cliente potencial / vendedor</td><td>o senhor / a senhora</td></tr>
+          <tr><td>Jefe directo</td><td>o senhor (en formal) / você (en informal)</td></tr>
+          <tr><td>Autoridad oficial (ministro, etc.)</td><td>Vossa Excelência</td></tr>
+          <tr><td>Carta comercial</td><td>Vossa Senhoria / o(a) senhor(a)</td></tr>
+          <tr><td>Sacerdote, padre</td><td>Vossa Reverendíssima (formal) / o senhor (cotidiano)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Cambio de pronombre durante la conversación</div>
+      <div class="example-block pr"><div class="ex-fr">— O senhor poderia me ajudar?
+— Claro! Pode me chamar de você, viu? (transición a tutoría)</div><div class="ex-es">— ¿Podría usted ayudarme?
+— ¡Claro! Puedes tratarme de tú, ¿eh?</div></div>
+      <div class="example-block pr"><div class="ex-fr">Em entrevista formal: O senhor pode me dar mais detalhes? (manteniendo formalidad)</div><div class="ex-es">En entrevista: ¿Puede usted darme más detalles?</div></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Diferencia regional crucial:</strong> en Brasil, <em>você</em> es mucho más generalizado que el "tú" en español de España. Es común que jefes, profesores, médicos digan <em>você</em> al hablar con clientes/alumnos. La barrera del formal solo aparece con personas mucho mayores o de jerarquía claramente superior.</div>
+      </div>
+
+      <div class="sec-label">Permitir / pedir cambio</div>
+      <div class="example-block pr"><div class="ex-fr">Pode me chamar de <span class="epr">você</span>. (= puedes tutearme)</div><div class="ex-es">Puedes tutearme.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Não precisa me tratar por "senhora". <span class="epr">Me chama de Ana</span> mesmo.</div><div class="ex-es">No tienes que tratarme de "señora". Llámame Ana.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 6. ESCRITA -->
+  <div class="sec-block" id="s-escrita">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        En <strong>correspondencia formal escrita</strong> (carta comercial, correo institucional, oficio), el uso de pronomes de tratamento sigue convenciones específicas. La abreviatura y la concordancia tienen reglas estrictas.
+      </div>
+
+      <div class="sec-label">Encabezados estándar</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tratamiento</th><th>Encabezado</th><th>Contexto</th></tr></thead>
+        <tbody>
+          <tr><td>Vossa Senhoria</td><td>Prezado(a) Senhor(a)</td><td>carta comercial neutra</td></tr>
+          <tr><td>Vossa Excelência</td><td>Excelentíssimo Senhor / Excelentíssima Senhora</td><td>autoridad pública</td></tr>
+          <tr><td>Vossa Magnificência</td><td>Magnífico Reitor</td><td>carta a reitor</td></tr>
+          <tr><td>Vossa Reverendíssima</td><td>Reverendíssimo Padre</td><td>carta a sacerdote</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Despedidas formales</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Fórmula</th><th>Registro</th></tr></thead>
+        <tbody>
+          <tr><td>Atenciosamente,</td><td>neutro, profesional</td></tr>
+          <tr><td>Cordialmente,</td><td>neutro, cálido</td></tr>
+          <tr><td>Respeitosamente,</td><td>autoridad, máximo respeto</td></tr>
+          <tr><td>Sem mais para o momento,</td><td>cierre comercial</td></tr>
+          <tr><td>Subscrevo-me com elevada estima,</td><td>solemne, anticuado</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos de correspondencia</div>
+      <div class="example-block pr"><div class="ex-fr">Prezado Senhor,
+
+Venho por meio desta solicitar a <span class="epr">Vossa Senhoria</span> uma reunião para tratar do assunto em questão. Estou à disposição de <span class="epr">V.Sa.</span> para o agendamento.
+
+Atenciosamente,
+Maria Silva</div><div class="ex-es">Estimado Señor: Por este medio solicito una reunión...</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Reglas de la correspondencia formal:</strong>
+        <br>1. La primera mención: forma completa (<em>Vossa Senhoria, Vossa Excelência</em>).
+        <br>2. Menciones siguientes: abreviatura (<em>V.Sa., V.Ex.ª</em>).
+        <br>3. Concordancia: con género real del destinatario.
+        <br>4. Posesivo: <em>seu, sua</em> + sustantivo (no <em>vosso</em>).
+        </div>
+      </div>
+
+      <div class="note-box"><strong>Email moderno:</strong> en correo electrónico profesional moderno, <em>você</em> es cada vez más aceptado. <em>Vossa Senhoria</em> queda para correspondencia muy formal o jurídica. Para email comercial cotidiano: <em>Prezado(a) [nombre]</em> + você.</div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con los pronomes de tratamento.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Você con 2ª singular (error clásico)',
+   wrong:"Você falas português?",
+   right:"Você fala português?",
+   expl:'TODOS los pronomes de tratamento exigen <strong>3ª persona</strong>. <em>Você fala</em>, <em>o senhor fala</em>, <em>Vossa Excelência sabe</em>. Es el error más estigmatizado para hispanohablantes.'},
+  {name:'Vossa Excelência con vosso',
+   wrong:"Recebi a vossa correspondência. (refiriendo a una persona)",
+   right:"Recebi a sua correspondência.",
+   expl:'Aunque el pronombre se llame <em>Vossa</em>, el posesivo asociado es <strong>seu/sua</strong> (de 3ª persona). <em>Vossa Excelência</em> "tiene" <em>seu/sua</em>, no <em>vosso/vossa</em>. La forma <em>vosso</em> queda solo en discurso religioso/poético: "vossa luz, vosso amor".'},
+  {name:'O senhor con verbo en 2ª persona',
+   wrong:"O senhor sabes como chegar lá?",
+   right:"O senhor sabe como chegar lá?",
+   expl:'<em>O senhor / a senhora</em> exigen <strong>3ª singular</strong>: <em>o senhor sabe, a senhora pode, o senhor quer</em>. NUNCA con 2ª persona. Plural: <em>os senhores sabem, as senhoras podem</em>.'},
+  {name:'Distinguir Vossa vs Sua',
+   wrong:"Sua Excelência tem a palavra. (cuando se dirige a la persona)",
+   right:"Vossa Excelência tem a palavra.",
+   expl:'<strong>Vossa</strong> Excelência: se dirige a la persona (vocativo, sujeto en la oración a la propia persona). <strong>Sua</strong> Excelência: se habla DE la persona en su ausencia (referencia). Ejemplo: <em>Vossa Excelência tem razão</em> (a la persona) / <em>Sua Excelência chegou</em> (referencia).'},
+  {name:'Vossa Magnificência fuera de contexto académico',
+   wrong:"Vossa Magnificência (a un alto ejecutivo de empresa)",
+   right:"Vossa Senhoria / Vossa Excelência (según contexto)",
+   expl:'<em>Vossa Magnificência</em> es <strong>exclusivamente</strong> para reitor universitario. Usarla fuera de ese contexto suena ridículo o irónico. Para ejecutivos: <em>Vossa Senhoria</em> o el cargo específico.'},
+  {name:'Mezclar tratamento en mismo texto',
+   wrong:"Você sabe que o senhor é o melhor? (mismo destinatario)",
+   right:"Você sabe que é o melhor? / O senhor sabe que é o melhor?",
+   expl:'Dentro de un mismo discurso dirigido a la misma persona, mantén el mismo pronombre. Cambiar entre <em>você</em> y <em>o senhor</em> en la misma conversación crea inconsistencia y suena raro. Solo se cambia con permiso explícito.'},
+  {name:'Verbo en 1ª pessoa plural con "vocês"',
+   wrong:"Vocês estamos bem hoje?",
+   right:"Vocês estão bem hoje?",
+   expl:'<em>Vocês</em> exige <strong>3ª persona plural</strong>: <em>vocês estão, vocês sabem, vocês querem</em>. No es 1ª persona (nós). Confusión común para hispanohablantes que asocian "vosotros" con segunda persona.'},
+  {name:'Despedida solemne para email cotidiano',
+   wrong:"Subscrevo-me com elevada estima (en email casual)",
+   right:"Atenciosamente, / Abraços, / Att.,",
+   expl:'Las despedidas solemnes (<em>subscrevo-me, respeitosamente</em>) suenan absurdas en email cotidiano. Para registro profesional moderno: <em>Atenciosamente</em>, <em>Cordialmente</em>, <em>Att.</em> Para amigos: <em>Abraços, Beijos, Até logo</em>.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

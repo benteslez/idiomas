@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Orações Temporais</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Orações Temporais → Sintaxis · dk-green */
+:root {
+  --primary: #1f4634;
+  --primary-soft: #e8f0eb;
+  --primary-mid: #5a8a72;
+  --primary-strong: #0f2e22;
+  --primary-glow: rgba(31, 70, 52, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fc99e;
+  --primary-soft: #1a2e23;
+  --primary-mid: #4a8a66;
+  --primary-strong: #b8dcc6;
+  --primary-glow: rgba(127, 201, 158, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.alert-box {
+  background: var(--red-bg); border: 1px solid var(--red-border);
+  border-radius: var(--radius-md); padding: 14px 17px; margin: 14px 0;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.alert-box .alert-icon { font-size: 1.2em; flex-shrink: 0; }
+.alert-box .alert-text { color: var(--text2); line-height: 1.6; font-size: 0.92em; }
+.alert-box .alert-text strong { color: var(--red); font-weight: 700; }
+
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; }
+.split-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 0.96rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.01em; }
+.split-card p { font-size: 0.86em; color: var(--text2); line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Orações Temporais</h1>
+    <span class="header-tag">Sintaxe</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B1–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Quando · enquanto · assim que</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Sistema general</button>
+    <button class="snav-btn"        onclick="showSection('s-simultaneidad',this)">2. Simultaneidad</button>
+    <button class="snav-btn"        onclick="showSection('s-anterior',this)">3. Anterioridad</button>
+    <button class="snav-btn"        onclick="showSection('s-posterior',this)">4. Posterioridad</button>
+    <button class="snav-btn"        onclick="showSection('s-subj-futuro',this)">5. Subj. futuro obligatorio</button>
+    <button class="snav-btn"        onclick="showSection('s-progressao',this)">6. Progresión</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Las <strong>orações temporais</strong> situan la acción de la oración principal en el tiempo: <strong>simultaneidad</strong> (quando, enquanto), <strong>anterioridad</strong> (antes que/de), <strong>posterioridad</strong> (depois que/de, assim que, mal), <strong>progresión</strong> (à medida que, na medida em que). Su rasgo más característico: <strong>exigen subjuntivo futuro</strong> cuando se refieren al futuro.
+      </div>
+
+      <div class="alert-box">
+        <span class="alert-icon">🚨</span>
+        <div class="alert-text">
+          <strong>Regla central:</strong> el portugués exige <strong>subjuntivo futuro</strong> en temporales referidas al futuro: <em>quando eu chegar, enquanto puder, assim que souber</em>. NUNCA presente del indicativo con valor futuro. Esta es la trampa más sistemática para hispanohablantes.
+        </div>
+      </div>
+
+      <div class="sec-label">Cuadro panorámico de conectores</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Relación temporal</th><th>Conectores</th><th>Modo</th></tr></thead>
+        <tbody>
+          <tr><td>Simultaneidad puntual</td><td>quando, no momento em que</td><td>ind. (pasado/hábito) / subj. futuro (futuro)</td></tr>
+          <tr><td>Simultaneidad durativa</td><td>enquanto</td><td>ind. (pasado/hábito) / subj. futuro (futuro)</td></tr>
+          <tr><td>Anterioridad</td><td>antes que, antes de</td><td>SIEMPRE subjuntivo / inf.</td></tr>
+          <tr><td>Posterioridad inmediata</td><td>assim que, logo que, mal, apenas</td><td>ind. (pasado) / subj. futuro (futuro)</td></tr>
+          <tr><td>Posterioridad general</td><td>depois que, depois de</td><td>ind. (pasado) / subj. futuro (futuro) / inf.</td></tr>
+          <tr><td>Repetición</td><td>sempre que, cada vez que, todas as vezes que</td><td>ind. (hábito) / subj. futuro (futuro)</td></tr>
+          <tr><td>Límite final</td><td>até que, até</td><td>SIEMPRE subjuntivo / inf.</td></tr>
+          <tr><td>Inicio</td><td>desde que (temporal)</td><td>ind. (cuando temporal)</td></tr>
+          <tr><td>Progresión</td><td>à medida que, à proporção que, na medida em que</td><td>indicativo</td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+  </div>
+
+  <!-- 2. SIMULTANEIDADE -->
+  <div class="sec-block" id="s-simultaneidad">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los conectores de <strong>simultaneidad</strong> indican que dos acciones ocurren al mismo tiempo: <strong>quando</strong> (puntual o repetida) y <strong>enquanto</strong> (durativa, "mientras"). El modo verbal depende de la temporalidad.
+      </div>
+
+      <div class="sec-label">Quando: cuándo</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Temporalidad</th><th>Modo</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Hábito presente / atemporal</td><td>presente indicativo</td><td><span class="hl-pr">Quando chove</span>, fico em casa.</td></tr>
+          <tr><td>Pasado puntual</td><td>PPS / imperfeito</td><td><span class="hl-pr">Quando cheguei</span>, ele saiu.</td></tr>
+          <tr><td>Pasado durativo</td><td>imperfeito</td><td><span class="hl-pr">Quando era jovem</span>, viajava muito.</td></tr>
+          <tr><td>Futuro / hipotético</td><td>subjuntivo futuro</td><td><span class="hl-pr">Quando chegar</span>, te ligo.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos contrastivos con quando</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Quando chove</span>, eu fico em casa. (hábito atemporal)</div><div class="ex-es">Cuando llueve, me quedo en casa.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Quando chegar</span> em casa, eu te ligo. (futuro)</div><div class="ex-es">Cuando llegue a casa, te llamo.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Quando cheguei</span> em casa, ele já tinha saído. (pasado)</div><div class="ex-es">Cuando llegué a casa, ya había salido.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Quando eu era criança</span>, brincava na rua. (pasado durativo)</div><div class="ex-es">Cuando era niño, jugaba en la calle.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Trampa clave:</strong> el español "cuando + presente subj." (cuando llegue) se traduce con <em>quando + subjuntivo futuro</em>: <em>quando chegar</em>. NUNCA <em>quando chego</em> con valor futuro (esto sería un hábito atemporal).</div>
+      </div>
+
+      <div class="sec-label">Enquanto: mientras</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Uso</th><th>Modo</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Simultaneidad pasada</td><td>imperfeito</td><td><span class="hl-pr">Enquanto eu lia</span>, ele cozinhava.</td></tr>
+          <tr><td>Simultaneidad presente / atemporal</td><td>presente</td><td><span class="hl-pr">Enquanto estudo</span>, escuto música.</td></tr>
+          <tr><td>Futuro / condicional</td><td>subjuntivo futuro</td><td><span class="hl-pr">Enquanto eu puder</span>, vou trabalhar.</td></tr>
+          <tr><td>Contraste adversativo</td><td>indicativo</td><td>Eu trabalho, <span class="hl-pr">enquanto</span> você descansa.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos con enquanto</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Enquanto eu estiver</span> vivo, vou lutar. (futuro)</div><div class="ex-es">Mientras esté vivo, lucharé.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Enquanto ele falava</span>, ninguém ouvia. (pasado)</div><div class="ex-es">Mientras hablaba, nadie escuchaba.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Eu trabalho, <span class="epr">enquanto</span> ele descansa. (contraste)</div><div class="ex-es">Yo trabajo, mientras él descansa.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Enquanto houver</span> dinheiro, vou continuar. (futuro)</div><div class="ex-es">Mientras haya dinero, voy a seguir.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 3. ANTERIORIDAD -->
+  <div class="sec-block" id="s-anterior">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los conectores de <strong>anterioridad</strong> indican que la acción subordinada ocurre <strong>antes</strong> que la principal: <strong>antes que</strong> (siempre con subjuntivo) y <strong>antes de</strong> (con infinitivo).
+      </div>
+
+      <div class="sec-label">Antes que + subjuntivo (siempre)</div>
+      <div class="example-block pr"><div class="ex-fr">Saia <span class="epr">antes que</span> chova!</div><div class="ex-es">¡Sal antes de que llueva!</div></div>
+      <div class="example-block pr"><div class="ex-fr">Termine o trabalho <span class="epr">antes que</span> ele volte.</div><div class="ex-es">Termina el trabajo antes de que vuelva.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vamos sair <span class="epr">antes que</span> seja tarde demais.</div><div class="ex-es">Vamos a salir antes de que sea demasiado tarde.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Avise-me <span class="epr">antes que</span> você vá embora.</div><div class="ex-es">Avísame antes de que te vayas.</div></div>
+
+      <div class="alert-box">
+        <span class="alert-icon">⚠️</span>
+        <div class="alert-text">
+          <strong>Antes que SIEMPRE con subjuntivo:</strong> incluso si la temporalidad es futura, NO va con subjuntivo futuro sino con <strong>subjuntivo presente</strong> (o imperfeito do subj. con principal en pasado). NUNCA <em>antes que eu chegar</em>; sí <em>antes que eu chegue</em>.
+        </div>
+      </div>
+
+      <div class="sec-label">Antes de + infinitivo (mismo o distinto sujeto)</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Antes de</span> sair, feche a porta. (mismo sujeto)</div><div class="ex-es">Antes de salir, cierra la puerta.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Antes de</span> você sair, feche a porta. (sujetos distintos con sust./pron.)</div><div class="ex-es">Antes de que salgas, cierra la puerta.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Antes de</span> vocês saírem, conversem comigo. (infinitivo pessoal)</div><div class="ex-es">Antes de que se vayan, hablen conmigo.</div></div>
+
+      <div class="sec-label">Concordancia de tiempos con antes que</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Verbo principal</th><th>Subordinada (antes que)</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Presente / futuro / imperativo</td><td>presente do subj.</td><td>Saia <span class="hl-pr">antes que chova</span>.</td></tr>
+          <tr><td>Pasado / condicional</td><td>imperfeito do subj.</td><td>Saí <span class="hl-pr">antes que chovesse</span>.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="example-block pr"><div class="ex-fr">Eu saí <span class="epr">antes que chovesse</span>. (pasado)</div><div class="ex-es">Salí antes de que lloviera.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Saia <span class="epr">antes que chova</span>. (presente/futuro)</div><div class="ex-es">Sal antes de que llueva.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 4. POSTERIOR -->
+  <div class="sec-block" id="s-posterior">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los conectores de <strong>posterioridad</strong> indican que la acción principal ocurre <strong>después</strong> de la subordinada. Los más frecuentes: <strong>depois que/de, assim que, logo que, mal, apenas, sempre que, até (que)</strong>.
+      </div>
+
+      <div class="sec-label">Conectores de posterioridad inmediata</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Conector</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>assim que</strong></td><td>en cuanto, tan pronto como</td><td><span class="hl-pr">Assim que chegar</span>, te ligo.</td></tr>
+          <tr><td><strong>logo que</strong></td><td>tan pronto como</td><td><span class="hl-pr">Logo que ele veio</span>, começamos.</td></tr>
+          <tr><td><strong>mal</strong> (= apenas)</td><td>apenas, en cuanto</td><td><span class="hl-pr">Mal cheguei</span>, ele saiu.</td></tr>
+          <tr><td><strong>apenas</strong></td><td>apenas, en cuanto</td><td><span class="hl-pr">Apenas chegou</span>, foi dormir.</td></tr>
+          <tr><td><strong>tão logo</strong></td><td>tan pronto como (formal)</td><td><span class="hl-pr">Tão logo souber</span>, eu aviso.</td></tr>
+          <tr><td><strong>no momento em que</strong></td><td>en el momento en que</td><td><span class="hl-pr">No momento em que entrou</span>, percebi.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Conectores de posterioridad general</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Conector</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>depois que</strong></td><td>después de que</td><td><span class="hl-pr">Depois que ele saiu</span>, eu chorei.</td></tr>
+          <tr><td><strong>depois de</strong></td><td>después de</td><td><span class="hl-pr">Depois de</span> sair, chorei.</td></tr>
+          <tr><td><strong>uma vez que</strong> (temporal)</td><td>una vez que</td><td><span class="hl-pr">Uma vez que terminar</span>, descansamos.</td></tr>
+          <tr><td><strong>sempre que</strong></td><td>siempre que (repetición)</td><td><span class="hl-pr">Sempre que vier</span>, vai gostar.</td></tr>
+          <tr><td><strong>todas as vezes que</strong></td><td>cada vez que</td><td><span class="hl-pr">Todas as vezes que falo</span>, ele ri.</td></tr>
+          <tr><td><strong>cada vez que</strong></td><td>cada vez que</td><td><span class="hl-pr">Cada vez que volto</span>, encontro tudo igual.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Hasta / límite final</div>
+      <div class="example-block pr"><div class="ex-fr">Vou esperar <span class="epr">até que</span> você chegue. (subjuntivo, futuro)</div><div class="ex-es">Voy a esperar hasta que llegues.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Esperei <span class="epr">até que</span> ele viesse. (subj. imperfeito, pasado)</div><div class="ex-es">Esperé hasta que viniera.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Continue <span class="epr">até</span> conseguir. (con infinitivo)</div><div class="ex-es">Sigue hasta lograrlo.</div></div>
+
+      <div class="sec-label">Desde que (temporal)</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Desde que</span> ele chegou, tudo mudou. (= a partir del momento que)</div><div class="ex-es">Desde que llegó, todo cambió.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Desde que</span> me mudei, estou feliz.</div><div class="ex-es">Desde que me mudé, estoy feliz.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Desde que con doble valor:</strong> <em>desde que</em> es ambiguo. <strong>Temporal</strong> (= "a partir de cuando") + indicativo: <em>desde que cheguei, estou cansado</em>. <strong>Condicional</strong> (= "con la condición de que") + subjuntivo: <em>pode sair, desde que volte cedo</em>. El contexto desambigua.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 5. SUBJ FUTURO -->
+  <div class="sec-block" id="s-subj-futuro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El uso del <strong>subjuntivo futuro</strong> en temporales referidas al futuro es la <strong>distinción más sistemática</strong> entre el portugués y el español. Esta sección resume cuándo es obligatorio y cuándo no.
+      </div>
+
+      <div class="sec-label">Cuándo SÍ usar subjuntivo futuro</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Conector</th><th>Con valor futuro</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>quando</td><td>SÍ (futuro)</td><td><span class="hl-pr">Quando eu chegar</span>...</td></tr>
+          <tr><td>enquanto</td><td>SÍ (futuro)</td><td><span class="hl-pr">Enquanto eu puder</span>...</td></tr>
+          <tr><td>assim que</td><td>SÍ (futuro)</td><td><span class="hl-pr">Assim que ele vier</span>...</td></tr>
+          <tr><td>logo que</td><td>SÍ (futuro)</td><td><span class="hl-pr">Logo que souber</span>...</td></tr>
+          <tr><td>depois que</td><td>SÍ (futuro)</td><td><span class="hl-pr">Depois que terminarmos</span>...</td></tr>
+          <tr><td>sempre que</td><td>SÍ (futuro)</td><td><span class="hl-pr">Sempre que vier</span>...</td></tr>
+          <tr><td>cada vez que</td><td>SÍ (futuro)</td><td><span class="hl-pr">Cada vez que ligar</span>...</td></tr>
+          <tr><td>mal</td><td>SÍ (futuro, raro)</td><td><span class="hl-pr">Mal chegar</span>, te aviso.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Cuándo NO usar subjuntivo futuro</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Conector</th><th>Modo exigido</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>antes que</strong></td><td>subj. presente (no futuro)</td><td><span class="hl-pr">Antes que chova</span>, vamos.</td></tr>
+          <tr><td><strong>até que</strong></td><td>subj. presente (no futuro)</td><td>Espere <span class="hl-pr">até que ele venha</span>.</td></tr>
+          <tr><td><strong>quando, enquanto + hábito</strong></td><td>indicativo</td><td><span class="hl-pr">Quando chove</span>, fico em casa.</td></tr>
+          <tr><td><strong>desde que (temporal)</strong></td><td>indicativo</td><td><span class="hl-pr">Desde que cheguei</span>, estou bem.</td></tr>
+          <tr><td><strong>à medida que</strong></td><td>indicativo</td><td><span class="hl-pr">À medida que cresce</span>, fica mais sábio.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Test del español: si "cuando" pide subjuntivo, portugués pide subj. futuro</div>
+      <div class="example-block pr"><div class="ex-fr">Esp.: "Cuando <span class="epr">llegue</span>, te llamo." → Port.: "<span class="epr">Quando chegar</span>, te ligo." (subj. futuro)</div><div class="ex-es">Equivalencia directa.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Esp.: "En cuanto <span class="epr">sepa</span>, te aviso." → Port.: "<span class="epr">Assim que souber</span>, te aviso." (subj. futuro)</div><div class="ex-es">Equivalencia directa.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Esp.: "Antes de que <span class="epr">llueva</span>, vamos." → Port.: "<span class="epr">Antes que chova</span>, vamos." (subj. PRESENTE, no futuro)</div><div class="ex-es">Diferencia: antes que NUNCA usa subj. futuro.</div></div>
+
+      <div class="alert-box">
+        <span class="alert-icon">🚨</span>
+        <div class="alert-text">
+          <strong>Resumen práctico:</strong> los conectores <em>quando, enquanto, assim que, logo que, depois que, sempre que, cada vez que</em> usan SUBJUNTIVO FUTURO con referencia futura. Los conectores <em>antes que, até que</em> NUNCA usan subjuntivo futuro: van con SUBJUNTIVO PRESENTE.
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. PROGRESSAO -->
+  <div class="sec-block" id="s-progressao">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los conectores de <strong>progresión temporal</strong> indican una correlación o desarrollo paralelo entre dos acciones: <strong>à medida que, à proporção que, na medida em que, conforme</strong> (en su sentido temporal). Van casi siempre con indicativo.
+      </div>
+
+      <div class="sec-label">À medida que: a medida que</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">À medida que</span> envelhecemos, aprendemos mais.</div><div class="ex-es">A medida que envejecemos, aprendemos más.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">À medida que</span> o tempo passa, as coisas mudam.</div><div class="ex-es">A medida que pasa el tiempo, las cosas cambian.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Os preços sobem <span class="epr">à medida que</span> a demanda aumenta.</div><div class="ex-es">Los precios suben a medida que aumenta la demanda.</div></div>
+
+      <div class="sec-label">À proporção que / na medida em que</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">À proporção que</span> avança, mais difícil fica.</div><div class="ex-es">A medida que avanza, se hace más difícil.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Na medida em que</span> entendemos o problema, encontramos soluções.</div><div class="ex-es">En la medida en que entendemos el problema, encontramos soluciones.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Distinción crítica:</strong> <em>à medida que</em> = "a medida que" (progresión temporal). <em>Na medida em que</em> = "en la medida en que" (causal-modal, indica grado o causa). Aunque parezcan iguales, en escritura culta tienen valores distintos: <em>à medida que = temporal</em>, <em>na medida em que = causal/intensidad</em>.</div>
+      </div>
+
+      <div class="sec-label">Conforme con valor temporal/progresivo</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Conforme</span> o tempo passa, esqueço dos detalhes.</div><div class="ex-es">Conforme pasa el tiempo, me olvido de los detalles.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Conforme</span> ele falava, eu anotava.</div><div class="ex-es">Conforme hablaba, yo apuntaba.</div></div>
+
+      <div class="sec-label">Construcciones sintéticas equivalentes</div>
+      <div class="example-block pr"><div class="ex-fr">Ele <span class="epr">vai aprendendo</span> com o tempo. (perífrasis ir + ger.)</div><div class="ex-es">Va aprendiendo con el tiempo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">As coisas <span class="epr">vão mudando</span> aos poucos.</div><div class="ex-es">Las cosas van cambiando poco a poco.</div></div>
+      <div class="note-box"><strong>Alternativa:</strong> en lugar de <em>à medida que</em>, el PB hablado prefiere las perífrasis con <em>ir + gerúndio</em> (progresión gradual). Son equivalentes en muchos casos.</div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con las orações temporais.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Quando + presente indicativo con valor futuro',
+   wrong:"Quando eu chego em casa, te ligo. (= cuando llegue)",
+   right:"Quando eu chegar em casa, te ligo.",
+   expl:'Este es el error sistemático del hispanohablante. Para referencia <strong>futura</strong>, <em>quando</em> exige <strong>subjuntivo futuro</strong>: <em>quando eu chegar, quando ele souber, quando puder</em>. <em>Quando eu chego</em> sería hábito atemporal ("cada vez que llego").'},
+  {name:'Antes que + subjuntivo futuro (error)',
+   wrong:"Saia antes que chover.",
+   right:"Saia antes que chova.",
+   expl:'<em>Antes que</em> NUNCA usa subjuntivo futuro: va con <strong>subjuntivo presente</strong> (o imperfeito do subj. si principal es pasado). <em>Antes que chova, antes que ele venha, antes que seja tarde</em>. La forma "antes que chover" es agramatical.'},
+  {name:'Enquanto con valor adversativo + subjuntivo',
+   wrong:"Eu trabalho enquanto ele descanse. (adversativo)",
+   right:"Eu trabalho, enquanto ele descansa.",
+   expl:'<em>Enquanto</em> con valor <strong>adversativo</strong> (= "mientras que / al contrario") va con indicativo. Con valor <strong>temporal futuro</strong>, sí va con subjuntivo futuro: <em>enquanto eu puder, vou trabalhar</em>.'},
+  {name:'Desde que: temporal vs condicional',
+   wrong:"Confundir: Desde que ele chegue, tudo muda. (intentando temporal)",
+   right:"Desde que ele chegou, tudo mudou. (temporal, indicativo) / Pode sair, desde que volte cedo. (condicional, subj.)",
+   expl:'<em>Desde que</em> temporal (= "a partir de cuando") va con indicativo: <em>desde que cheguei</em>. <em>Desde que</em> condicional (= "con la condición de") va con subjuntivo: <em>pode sair, desde que volte cedo</em>. Misma forma, dos valores.'},
+  {name:'Até que + indicativo (error)',
+   wrong:"Espere até que ele vem.",
+   right:"Espere até que ele venha.",
+   expl:'<em>Até que</em> exige siempre <strong>subjuntivo</strong>: <em>até que venha, até que termine, até que possamos</em>. Es similar a <em>antes que</em>. Cuando es referencia futura: <strong>presente subjuntivo</strong> (no futuro): <em>até que ele chegue</em>.'},
+  {name:'Mal + subjuntivo (sin futuro)',
+   wrong:"Mal chegar, eu te aviso. (con valor futuro pero estructura rara)",
+   right:"Assim que chegar, eu te aviso. (más natural)",
+   expl:'<em>Mal</em> (= "en cuanto, apenas") con valor futuro puede llevar subjuntivo futuro (<em>mal chegar</em>), pero suena raro. En PB es más natural usar <em>assim que, logo que</em>. <em>Mal</em> es más natural con PPS: <em>mal cheguei, ele saiu</em>.'},
+  {name:'À medida que vs na medida em que',
+   wrong:"Na medida em que avançamos, ficamos cansados. (causa-grado)",
+   right:"À medida que avançamos, ficamos cansados. (progresión temporal)",
+   expl:'<em>À medida que</em> = "a medida que" (progresión temporal). <em>Na medida em que</em> = "en la medida en que" (grado o causa). En escritura culta, distinguir: <em>à medida que envelhecemos</em> (tiempo) vs <em>na medida em que entendemos</em> (grado/causa).'},
+  {name:'Concordancia de tiempos con antes que',
+   wrong:"Eu saí antes que chova. (principal pasado, subordinada presente subj.)",
+   right:"Eu saí antes que chovesse.",
+   expl:'Con verbo principal en <strong>pasado</strong>, la subordinada con <em>antes que</em> va en <strong>imperfeito do subjuntivo</strong>: <em>saí antes que chovesse, fui antes que ele chegasse</em>. Con principal en presente/futuro: presente do subj.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

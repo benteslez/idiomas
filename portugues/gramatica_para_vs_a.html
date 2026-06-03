@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Para vs A — Distinção Crítica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Para vs A → Sintaxis · dk-green */
+:root {
+  --primary: #1f4634;
+  --primary-soft: #e8f0eb;
+  --primary-mid: #5a8a72;
+  --primary-strong: #0f2e22;
+  --primary-glow: rgba(31, 70, 52, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fc99e;
+  --primary-soft: #1a2e23;
+  --primary-mid: #4a8a66;
+  --primary-strong: #b8dcc6;
+  --primary-glow: rgba(127, 201, 158, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; }
+.split-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 0.96rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.01em; }
+.split-card p { font-size: 0.86em; color: var(--text2); line-height: 1.6; }
+
+.alert-box {
+  background: var(--red-bg); border: 1px solid var(--red-border);
+  border-radius: var(--radius-md); padding: 14px 17px; margin: 14px 0;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.alert-box .alert-icon { font-size: 1.2em; flex-shrink: 0; }
+.alert-box .alert-text { color: var(--text2); line-height: 1.6; font-size: 0.92em; }
+.alert-box .alert-text strong { color: var(--red); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Para vs A — Distinção Crítica</h1>
+    <span class="header-tag">Sintaxe · Armadilha</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B1–B2</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Destino · finalidade</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. La gran trampa</button>
+    <button class="snav-btn"        onclick="showSection('s-destino',this)">2. Destino: para vs a</button>
+    <button class="snav-btn"        onclick="showSection('s-finalidade',this)">3. Finalidad</button>
+    <button class="snav-btn"        onclick="showSection('s-pessoas',this)">4. Para personas</button>
+    <button class="snav-btn"        onclick="showSection('s-tempo',this)">5. Tiempo y plazo</button>
+    <button class="snav-btn"        onclick="showSection('s-fraseologia',this)">6. Pra (oral) y fraseología</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        La distinción <strong>para</strong> vs <strong>a</strong> es una de las trampas más sistemáticas del portugués para hispanohablantes. El español usa "a" para destino y "para" para finalidad; el portugués reorganiza esta distribución de forma distinta, especialmente en PB, donde <strong>para domina como preposición de destino</strong>.
+      </div>
+
+      <div class="alert-box">
+        <span class="alert-icon">🚨</span>
+        <div class="alert-text">
+          <strong>Regla de oro para hispanohablantes:</strong> donde el español usa "a" para destino, el PB <strong>generalmente</strong> usa <em>para</em>. <em>"Voy a casa"</em> → <em>"Vou para casa"</em>. <em>"Voy al banco"</em> → <em>"Vou ao banco"</em> (con artículo, sigue "a") o <em>"Vou no banco"</em> (PB hablado muy informal).
+        </div>
+      </div>
+
+      <div class="sec-label">Visión panorámica</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Función</th><th>PB hablado</th><th>PB formal / PE</th><th>Español</th></tr></thead>
+        <tbody>
+          <tr><td>Destino (estancia larga)</td><td>para</td><td>para</td><td>a</td></tr>
+          <tr><td>Destino (visita breve)</td><td>para / a</td><td>a</td><td>a</td></tr>
+          <tr><td>Finalidad</td><td>para</td><td>para</td><td>para</td></tr>
+          <tr><td>Tiempo puntual (horas)</td><td>a</td><td>a</td><td>a</td></tr>
+          <tr><td>Complemento indirecto</td><td>para / a</td><td>a</td><td>a</td></tr>
+          <tr><td>Destinatario</td><td>para</td><td>para / a</td><td>para / a</td></tr>
+          <tr><td>Plazo / fecha límite</td><td>para</td><td>para</td><td>para</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Distinción tradicional:</strong> en PE clásico, <em>a</em> es destino breve (volveré pronto) y <em>para</em> es destino con permanencia ("Vou a Paris para estudar"). En PB hablado, esta distinción se debilita: <em>para</em> domina ampliamente.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. DESTINO -->
+  <div class="sec-block" id="s-destino">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Para indicar <strong>destino físico</strong>, el PB usa tres opciones según contexto y registro: <strong>para</strong> (dominante), <strong>a</strong> (formal o estancia breve), y <strong>em/no/na</strong> (PB hablado muy informal con verbos como <em>ir</em>).
+      </div>
+
+      <div class="sec-label">Las tres opciones de destino</div>
+      <div class="split-grid">
+        <div class="split-card">
+          <h4>Para (PB dominante)</h4>
+          <p>Destino con permanencia significativa. La forma más natural y frecuente en habla.</p>
+          <p style="margin-top:6px"><em>Vou para casa.</em></p>
+          <p><em>Vou para o trabalho.</em></p>
+          <p><em>Vou para São Paulo.</em></p>
+          <p><em>Vou para a Bahia nas férias.</em></p>
+        </div>
+        <div class="split-card">
+          <h4>A (formal / breve)</h4>
+          <p>Destino con estancia breve (sigue PE). Más formal en PB.</p>
+          <p style="margin-top:6px"><em>Vou ao mercado.</em></p>
+          <p><em>Vou à praia.</em></p>
+          <p><em>Fui a Paris e voltei no dia seguinte.</em></p>
+        </div>
+      </div>
+
+      <div class="sec-label">PB oral: em + lugar</div>
+      <div class="example-block pr"><div class="ex-fr">Vou <span class="epr">no</span> banco. (PB hablado, muy informal)</div><div class="ex-es">Voy al banco.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vou <span class="epr">na</span> padaria.</div><div class="ex-es">Voy a la panadería.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vou <span class="epr">no</span> shopping.</div><div class="ex-es">Voy al shopping.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Em + lugar con ir es PB popular:</strong> "<em>vou no banco</em>" es agramatical en norma escrita (debería ser <em>ao banco</em> o <em>para o banco</em>), pero es muy común en PB hablado. NO usar en escritura culta.</div>
+      </div>
+
+      <div class="sec-label">Distinción tradicional (PE / norma)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Preposición</th><th>Matiz</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>a</strong></td><td>estancia breve, volverá pronto</td><td>Vou <span class="hl-pr">a</span> Paris (= breve viaje).</td></tr>
+          <tr><td><strong>para</strong></td><td>estancia larga, permanencia</td><td>Vou <span class="hl-pr">para</span> Paris (= mudarse, estancia larga).</td></tr>
+          <tr><td><strong>até</strong></td><td>límite, ida y vuelta corta</td><td>Vou <span class="hl-pr">até</span> a esquina.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="example-block pr"><div class="ex-fr">Vou <span class="epr">a</span> Paris no fim de semana. (PE: breve)</div><div class="ex-es">Voy a París el fin de semana.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vou <span class="epr">para</span> Paris no próximo mês para morar lá. (estancia larga)</div><div class="ex-es">Voy a París el próximo mes para vivir allí.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vou <span class="epr">até</span> o mercado e volto já. (límite, ida y vuelta)</div><div class="ex-es">Voy hasta el mercado y vuelvo en seguida.</div></div>
+
+      <div class="note-box"><strong>PB hablado: la distinción se debilita.</strong> En PB moderno, <em>para</em> cubre ambas funciones: estancia larga o breve. Si quieres parecer más formal o respetar la norma, usa la distinción tradicional. En habla cotidiana: <em>para</em> es lo natural.</div>
+    </div></div>
+  </div>
+
+  <!-- 3. FINALIDAD -->
+  <div class="sec-block" id="s-finalidade">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        En la función de <strong>finalidad</strong> (= "para qué", objetivo), el portugués usa exclusivamente <strong>para</strong>. Esto coincide con el español "para". <em>A</em> nunca aparece con valor de finalidad.
+      </div>
+
+      <div class="sec-label">Para + infinitivo / sustantivo (finalidad)</div>
+      <div class="example-block pr"><div class="ex-fr">Estudo <span class="epr">para</span> aprender.</div><div class="ex-es">Estudio para aprender.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vim <span class="epr">para</span> ajudar.</div><div class="ex-es">Vine para ayudar.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vou <span class="epr">para</span> trabalhar.</div><div class="ex-es">Voy para trabajar / a trabajar.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Esse remédio é <span class="epr">para</span> a dor de cabeça.</div><div class="ex-es">Este medicamento es para el dolor de cabeza.</div></div>
+      <div class="example-block pr"><div class="ex-fr">É <span class="epr">para</span> seu próprio bem.</div><div class="ex-es">Es para tu propio bien.</div></div>
+
+      <div class="sec-label">Para que + subjuntivo (finalidad subordinada)</div>
+      <div class="example-block pr"><div class="ex-fr">Falo devagar <span class="epr">para que</span> você entenda.</div><div class="ex-es">Hablo despacio para que entiendas.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Trouxe o livro <span class="epr">para que</span> ele leia.</div><div class="ex-es">Traje el libro para que lo lea.</div></div>
+
+      <div class="sec-label">Para + inf. impessoal vs para + inf. pessoal</div>
+      <div class="example-block pr"><div class="ex-fr">É difícil <span class="epr">para</span> entender. (mismo sujeto o impersonal)</div><div class="ex-es">Es difícil para entender.</div></div>
+      <div class="example-block pr"><div class="ex-fr">É difícil <span class="epr">para vocês entenderem</span>. (infinitivo pessoal)</div><div class="ex-es">Es difícil que ustedes entiendan.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>NUNCA "a + finalidade":</strong> el español dice "esto sirve a estudiar" (raro) o "esto sirve para estudiar". En portugués SIEMPRE <em>para</em>: <em>serve para estudar</em>, no <em>serve a estudar</em>.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. PESSOAS -->
+  <div class="sec-block" id="s-pessoas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Para <strong>destinatarios y personas</strong>, el portugués distingue: <em>para</em> indica destinatario o beneficiario; <em>a</em> indica complemento indirecto (norma) o destinatario en registro escrito formal. En PB hablado, <em>para</em> domina ampliamente.
+      </div>
+
+      <div class="sec-label">Destinatario / beneficiario: para</div>
+      <div class="example-block pr"><div class="ex-fr">Esse presente é <span class="epr">para</span> você.</div><div class="ex-es">Ese regalo es para ti.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Comprei flores <span class="epr">para</span> minha mãe.</div><div class="ex-es">Compré flores para mi madre.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Fiz isso <span class="epr">para</span> ela.</div><div class="ex-es">Lo hice para ella.</div></div>
+
+      <div class="sec-label">Complemento indirecto: a (norma) / para (PB)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Norma / formal</th><th>PB hablado</th></tr></thead>
+        <tbody>
+          <tr><td>Dei o livro <span class="hl-pr">a ele</span>.</td><td>Dei o livro <span class="hl-pr">para ele</span>. / Dei <span class="hl-pr">para</span> ele o livro.</td></tr>
+          <tr><td>Falei <span class="hl-pr">à</span> Maria.</td><td>Falei <span class="hl-pr">para</span> Maria. / Falei <span class="hl-pr">com</span> a Maria.</td></tr>
+          <tr><td>Escrevi uma carta <span class="hl-pr">ao</span> Pedro.</td><td>Escrevi uma carta <span class="hl-pr">para o</span> Pedro.</td></tr>
+          <tr><td>Mostrei a foto <span class="hl-pr">ao</span> meu amigo.</td><td>Mostrei a foto <span class="hl-pr">pro</span> meu amigo.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Verbos de transferencia: dar / dizer / enviar</div>
+      <div class="example-block pr"><div class="ex-fr">Dei o livro <span class="epr">para</span> a Maria. / Dei <span class="epr">à</span> Maria. (formal)</div><div class="ex-es">Le di el libro a María.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Disse <span class="epr">para</span> ele que ia chegar atrasado. / Disse <span class="epr">a</span> ele... (formal)</div><div class="ex-es">Le dije que iba a llegar tarde.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Mande o e-mail <span class="epr">para</span> o cliente. / <span class="epr">ao</span> cliente (formal)</div><div class="ex-es">Mande el correo al cliente.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>PB hablado:</strong> el complemento indirecto se construye casi siempre con <em>para</em> en habla: <em>falei para ela, escrevi para o João, mostrei para vocês</em>. La forma con <em>a/ao/à</em> queda en escritura formal o discurso cuidado.</div>
+      </div>
+
+      <div class="sec-label">Distinción matiz: ir a vs ir para alguém</div>
+      <div class="example-block pr"><div class="ex-fr">Vou <span class="epr">a</span> ele. (raro: dirigirse a alguien — formal)</div><div class="ex-es">Voy a él. (formal/raro)</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vou <span class="epr">para</span> ele. (= me dirijo hacia él, fin de movimiento)</div><div class="ex-es">Voy hacia él.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vou <span class="epr">para o lado dele</span>. (= a su lado)</div><div class="ex-es">Voy a su lado.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 5. TEMPO -->
+  <div class="sec-block" id="s-tempo">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        En la función <strong>temporal</strong>, <em>a</em> aparece con horas exactas y franjas horarias (<em>às 8 horas, das 9 às 18h</em>). <em>Para</em> aparece con plazos límite (<em>para amanhã, para sexta-feira</em>).
+      </div>
+
+      <div class="sec-label">A con horas (norma universal)</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Às</span> oito horas começa a reunião.</div><div class="ex-es">A las ocho horas empieza la reunión.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Trabalho <span class="epr">das</span> 9 <span class="epr">às</span> 18 horas.</div><div class="ex-es">Trabajo de las 9 a las 18 horas.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">À</span> uma hora da tarde.</div><div class="ex-es">A la una de la tarde.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Ao</span> meio-dia / <span class="epr">à</span> meia-noite.</div><div class="ex-es">A mediodía / a medianoche.</div></div>
+
+      <div class="sec-label">Para con plazos límite (deadline)</div>
+      <div class="example-block pr"><div class="ex-fr">O trabalho é <span class="epr">para</span> amanhã.</div><div class="ex-es">El trabajo es para mañana.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A reunião está marcada <span class="epr">para</span> sexta-feira.</div><div class="ex-es">La reunión está marcada para el viernes.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Tenho que terminar <span class="epr">para</span> a próxima semana.</div><div class="ex-es">Tengo que terminar para la próxima semana.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Estamos planejando uma viagem <span class="epr">para</span> dezembro.</div><div class="ex-es">Estamos planeando un viaje para diciembre.</div></div>
+
+      <div class="sec-label">Para indicar período futuro próximo</div>
+      <div class="example-block pr"><div class="ex-fr">Vou ficar aqui <span class="epr">por</span> uma semana. (duración con por)</div><div class="ex-es">Voy a quedarme aquí por una semana.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Adiei a viagem <span class="epr">para</span> a próxima semana. (plazo)</div><div class="ex-es">Pospuse el viaje para la próxima semana.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Resumen temporal:</strong> <em>a / às</em> = punto exacto en el tiempo (horas). <em>Para</em> = plazo, fecha límite. <em>Por</em> = duración. <em>Desde</em> = inicio. <em>Em</em> = ubicación temporal (en agosto, en 2020).</div>
+      </div>
+
+      <div class="sec-label">Comparación con otras preposiciones temporales</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Preposición</th><th>Función</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>a / às</td><td>punto temporal (hora)</td><td><span class="hl-pr">Às</span> 18h</td></tr>
+          <tr><td>em</td><td>período (mes, año)</td><td><span class="hl-pr">Em</span> dezembro / <span class="hl-pr">em</span> 2024</td></tr>
+          <tr><td>de</td><td>parte del día</td><td><span class="hl-pr">De</span> manhã, <span class="hl-pr">de</span> noite</td></tr>
+          <tr><td>desde</td><td>inicio</td><td><span class="hl-pr">Desde</span> 2020</td></tr>
+          <tr><td>até</td><td>fin / límite</td><td><span class="hl-pr">Até</span> sexta-feira</td></tr>
+          <tr><td>por</td><td>duración</td><td><span class="hl-pr">Por</span> três horas</td></tr>
+          <tr><td>para</td><td>plazo / deadline</td><td><span class="hl-pr">Para</span> amanhã</td></tr>
+          <tr><td>há / faz</td><td>tiempo transcurrido</td><td><span class="hl-pr">Há</span> dois anos / <span class="hl-pr">faz</span> dois anos</td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+  </div>
+
+  <!-- 6. FRASEOLOGIA -->
+  <div class="sec-block" id="s-fraseologia">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        En PB hablado, <strong>para</strong> se reduce frecuentemente a <strong>pra</strong> (o incluso <em>pra</em> + artículo: <em>pro, pra, pros, pras</em>). Es muy productivo en habla y aparece sistemáticamente en literatura coloquial, ficción dialogada, redes sociales.
+      </div>
+
+      <div class="sec-label">Pra: reducción oral de para</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Norma escrita</th><th>PB hablado</th></tr></thead>
+        <tbody>
+          <tr><td>É <span class="hl-pr">para</span> você.</td><td>É <span class="hl-pr">pra</span> você.</td></tr>
+          <tr><td>Vou <span class="hl-pr">para</span> a casa.</td><td>Vou <span class="hl-pr">pra</span> casa.</td></tr>
+          <tr><td><span class="hl-pr">Para o</span> Pedro.</td><td><span class="hl-pr">Pro</span> Pedro.</td></tr>
+          <tr><td><span class="hl-pr">Para a</span> Maria.</td><td><span class="hl-pr">Pra</span> Maria.</td></tr>
+          <tr><td><span class="hl-pr">Para os</span> meninos.</td><td><span class="hl-pr">Pros</span> meninos.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Pra en escritura:</strong> en escritura formal (redação, prensa, ensayo), usa siempre <em>para</em>. En mensajes, ficción dialogada, redes sociales, <em>pra</em> es aceptable. No es una falta de ortografía: es una reducción reconocida del habla.</div>
+      </div>
+
+      <div class="sec-label">Expresiones cristalizadas con para</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Para mim</span>, é igual.</div><div class="ex-es">Para mí, es igual.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Você é demais <span class="epr">para</span> mim! (PB enfático, romántico)</div><div class="ex-es">Eres demasiado para mí.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Para</span> falar a verdade...</div><div class="ex-es">Para decir la verdad...</div></div>
+      <div class="example-block pr"><div class="ex-fr">Vai dar tudo certo, <span class="epr">para</span> tua sorte.</div><div class="ex-es">Va a salir todo bien, para tu suerte.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Estou <span class="epr">para</span> sair. (= a punto de salir)</div><div class="ex-es">Estoy por salir / a punto de salir.</div></div>
+
+      <div class="sec-label">Expresiones cristalizadas con a</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">A</span> pé. <span class="epr">A</span> cavalo. <span class="epr">A</span> mão.</div><div class="ex-es">A pie. A caballo. A mano.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Comer <span class="epr">à</span> francesa / <span class="epr">à</span> italiana.</div><div class="ex-es">Comer a la francesa / a la italiana.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Bife <span class="epr">à</span> milanesa, frango <span class="epr">à</span> parmegiana.</div><div class="ex-es">Bife a la milanesa, pollo a la parmesana.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">À</span> espera de... (= esperando)</div><div class="ex-es">A la espera de...</div></div>
+      <div class="example-block pr"><div class="ex-fr">Aprender <span class="epr">a</span> falar / <span class="epr">a</span> escrever / <span class="epr">a</span> nadar.</div><div class="ex-es">Aprender a hablar / a escribir / a nadar.</div></div>
+
+      <div class="sec-label">Aprender a / começar a / ensinar a / ajudar a</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Verbo + a + inf.</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>aprender a</td><td>Estou <span class="hl-pr">aprendendo a</span> dirigir.</td></tr>
+          <tr><td>começar a</td><td><span class="hl-pr">Começou a</span> chover.</td></tr>
+          <tr><td>continuar a (PE)</td><td>Vou <span class="hl-pr">continuar a</span> trabalhar.</td></tr>
+          <tr><td>ensinar a</td><td>Vou te <span class="hl-pr">ensinar a</span> nadar.</td></tr>
+          <tr><td>ajudar a</td><td>Vou te <span class="hl-pr">ajudar a</span> estudar.</td></tr>
+          <tr><td>convidar a / para</td><td><span class="hl-pr">Convidei-o a</span> participar / <span class="hl-pr">para</span> participar.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="note-box"><strong>Regência verbal con a:</strong> ciertos verbos exigen <em>a</em> antes de infinitivo: <em>aprender a, começar a, ensinar a, ajudar a, ajudar a, continuar a (PE)</em>. Es regência verbal: hay que memorizarla.</div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con para vs a.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Destino con A (calco español)',
+   wrong:"Vou a casa amanhã (sonando rígido en PB)",
+   right:"Vou para casa amanhã. (PB natural)",
+   expl:'En PB, <strong>para</strong> domina como preposición de destino, especialmente con permanencia. <em>Vou a casa</em> no es agramatical pero suena PE o muy formal. <em>Vou para casa</em> es lo natural en PB hablado y escrito.'},
+  {name:'Para con horas (error)',
+   wrong:"A reunião começa para as 18h.",
+   right:"A reunião começa às 18h.",
+   expl:'Las horas exactas siempre con <em>a / às</em>: <em>às 8h, à uma hora, ao meio-dia, à meia-noite</em>. <em>Para</em> con tiempo se reserva para plazos/deadlines: <em>para amanhã, para sexta-feira</em>.'},
+  {name:'Em + lugar con ir (PB popular)',
+   wrong:"Vou no banco (en escritura formal)",
+   right:"Vou ao banco / Vou para o banco.",
+   expl:'En PB hablado popular, <em>vou no banco</em> es muy común, pero agramatical en escritura culta. Norma: <em>ir a/para</em> + lugar. En redação ENEM o CELPE-Bras, usa <em>vou ao banco</em> o <em>vou para o banco</em>.'},
+  {name:'A para finalidad',
+   wrong:"Isso é a comer (intentando finalidad)",
+   right:"Isso é para comer.",
+   expl:'La finalidad SIEMPRE se expresa con <strong>para</strong> en portugués. <em>Isso é para comer, estudo para aprender, vim para ajudar</em>. <em>A</em> nunca tiene valor de finalidad en portugués.'},
+  {name:'Pra en escritura formal',
+   wrong:"Vou pra casa amanhã (en redação)",
+   right:"Vou para casa amanhã.",
+   expl:'<em>Pra</em> es reducción oral de <em>para</em>. En escritura formal (redação, prensa, ensayo, documento oficial), usa siempre <em>para</em>. <em>Pra</em> es aceptable en mensajes, redes sociales y literatura dialogada.'},
+  {name:'Complemento indirecto: a vs para',
+   wrong:"Falei a ele (PB hablado, suena formal)",
+   right:"Falei para ele / Falei com ele. (PB natural)",
+   expl:'En PB hablado, el complemento indirecto se construye casi siempre con <em>para</em> o con <em>com</em> (con verbos de comunicación): <em>falei para ele, falei com ela, mostrei para vocês</em>. <em>A ele</em> queda en registro formal.'},
+  {name:'Cras ante preposiciones (error)',
+   wrong:"Olho à você / vou à ele.",
+   right:"Olho para você / vou para ele.",
+   expl:'Antes de pronombres personales (você, ele, ela, mim, ti), NO hay crase. Tampoco <em>a</em> con pronombre suena natural en PB: usa <em>para</em>. <em>Olho para você, escrevo para ele, dou isso para ti</em>.'},
+  {name:'Verbos con a obligatoria',
+   wrong:"Comecei estudar / aprendi nadar.",
+   right:"Comecei a estudar / aprendi a nadar.",
+   expl:'Ciertos verbos exigen <em>a</em> antes del infinitivo subordinado: <strong>começar a, aprender a, ensinar a, ajudar a, continuar a (PE)</strong>. Es regência verbal fija. NO se omite la preposición.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>
