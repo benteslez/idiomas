@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Particípio e Duplos Particípios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Particípio → Verbos · dk-teal */
+:root {
+  --primary: #1c4258;
+  --primary-soft: #e8f0f4;
+  --primary-mid: #5887a0;
+  --primary-strong: #0f2a3a;
+  --primary-glow: rgba(28, 66, 88, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fb5cf;
+  --primary-soft: #1a2a35;
+  --primary-mid: #4a8aa5;
+  --primary-strong: #b8d4e2;
+  --primary-glow: rgba(127, 181, 207, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.dup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+@media (max-width: 600px) { .dup-grid { grid-template-columns: 1fr; } }
+.dup-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+.dup-card-head { background: var(--primary); color: #fff; padding: 8px 14px; font-family: 'Fraunces', Georgia, serif; font-size: 0.92rem; font-weight: 600; font-style: italic; }
+.dup-row { display: flex; padding: 8px 14px; border-bottom: 1px solid var(--border); font-size: 0.85em; gap: 10px; align-items: center; }
+.dup-row:last-child { border-bottom: none; }
+.dup-row .dup-aux { font-weight: 600; color: var(--text3); flex-shrink: 0; min-width: 80px; }
+.dup-row .dup-form { color: var(--primary); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Particípio e Duplos Particípios</h1>
+    <span class="header-tag">Gramática</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B1–B2</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Particípio passado</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Qué es</button>
+    <button class="snav-btn"        onclick="showSection('s-regular',this)">2. Regulares</button>
+    <button class="snav-btn"        onclick="showSection('s-irreg',this)">3. Irregulares</button>
+    <button class="snav-btn"        onclick="showSection('s-duplos',this)">4. Duplos particípios</button>
+    <button class="snav-btn"        onclick="showSection('s-concordancia',this)">5. Concordancia</button>
+    <button class="snav-btn"        onclick="showSection('s-usos',this)">6. Usos</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>particípio</strong> (participio pasado) es una forma nominal del verbo con tres funciones principales: <strong>verbal</strong> (componente de tiempos compuestos con <em>ter/haver</em>), <strong>pasiva</strong> (con <em>ser/estar</em>, concuerda con el sujeto) y <strong>adjetival</strong> (modifica sustantivos, concuerda en género/número). El portugués tiene además un sistema de <strong>duplos particípios</strong>, en parte único entre las lenguas románicas.
+      </div>
+
+      <div class="sec-label">Las tres funciones del particípio</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Función</th><th>Auxiliar</th><th>Concordancia</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Verbal (tiempos compostos)</td><td>ter / haver</td><td>invariable (-o)</td><td>Eu tinha <span class="hl-pr">falado</span>.</td></tr>
+          <tr><td>Pasiva</td><td>ser / estar</td><td>concuerda con sujeto</td><td>As cartas foram <span class="hl-pr">escritas</span>.</td></tr>
+          <tr><td>Adjetival</td><td>—</td><td>concuerda con sustantivo</td><td>A porta <span class="hl-pr">aberta</span>.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Regla central:</strong> con <em>ter/haver</em> el particípio es <strong>invariable</strong> (siempre <em>-o</em>); con <em>ser/estar</em> y como adjetivo, <strong>concuerda</strong> en género y número.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. REGULARES -->
+  <div class="sec-block" id="s-regular">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Formación regular: <strong>radical del infinitivo + -ado</strong> (1ª conjugación) o <strong>-ido</strong> (2ª y 3ª conjugaciones).
+      </div>
+
+      <div class="sec-label">Conjugación regular</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Conjugación</th><th>Infinitivo</th><th>Particípio</th><th>Patrón</th></tr></thead>
+        <tbody>
+          <tr><td><strong>-AR</strong></td><td>falar</td><td class="hl-pr">falado</td><td class="hl-pr">-ado</td></tr>
+          <tr><td><strong>-AR</strong></td><td>amar</td><td class="hl-pr">amado</td><td class="hl-pr">-ado</td></tr>
+          <tr><td><strong>-AR</strong></td><td>trabalhar</td><td class="hl-pr">trabalhado</td><td class="hl-pr">-ado</td></tr>
+          <tr><td><strong>-ER</strong></td><td>comer</td><td class="hl-pr">comido</td><td class="hl-pr">-ido</td></tr>
+          <tr><td><strong>-ER</strong></td><td>vender</td><td class="hl-pr">vendido</td><td class="hl-pr">-ido</td></tr>
+          <tr><td><strong>-ER</strong></td><td>beber</td><td class="hl-pr">bebido</td><td class="hl-pr">-ido</td></tr>
+          <tr><td><strong>-IR</strong></td><td>partir</td><td class="hl-pr">partido</td><td class="hl-pr">-ido</td></tr>
+          <tr><td><strong>-IR</strong></td><td>decidir</td><td class="hl-pr">decidido</td><td class="hl-pr">-ido</td></tr>
+          <tr><td><strong>-IR</strong></td><td>servir</td><td class="hl-pr">servido</td><td class="hl-pr">-ido</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="note-box"><strong>Concordancia:</strong> como adjetivo o en pasiva, varía: <em>falado/falada/falados/faladas</em>, <em>comido/comida/comidos/comidas</em>, <em>partido/partida/partidos/partidas</em>. Con <em>ter/haver</em>, queda invariable en masculino singular: <em>elas tinham falado</em> (no <em>faladas</em>).</div>
+    </div></div>
+  </div>
+
+  <!-- 3. IRREGULARES -->
+  <div class="sec-block" id="s-irreg">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Algunos verbos frecuentes tienen un <strong>único particípio irregular</strong>, que cubre todas las funciones. Hay que memorizarlos. Son menos de 15, pero todos extremadamente comunes.
+      </div>
+
+      <div class="sec-label">Lista exhaustiva de irregulares únicos</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Infinitivo</th><th>Particípio</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>fazer</td><td class="hl-pr">feito</td><td>Eu tinha <span class="hl-pr">feito</span> o trabalho.</td></tr>
+          <tr><td>dizer</td><td class="hl-pr">dito</td><td>Ela já tinha <span class="hl-pr">dito</span> tudo.</td></tr>
+          <tr><td>ver</td><td class="hl-pr">visto</td><td>Nós tínhamos <span class="hl-pr">visto</span> o filme.</td></tr>
+          <tr><td>pôr</td><td class="hl-pr">posto</td><td>Ele tinha <span class="hl-pr">posto</span> a mesa.</td></tr>
+          <tr><td>vir</td><td class="hl-pr">vindo</td><td>Ela tinha <span class="hl-pr">vindo</span> antes.</td></tr>
+          <tr><td>abrir</td><td class="hl-pr">aberto</td><td>A porta tinha <span class="hl-pr">aberto</span>.</td></tr>
+          <tr><td>cobrir</td><td class="hl-pr">coberto</td><td>A neve tinha <span class="hl-pr">coberto</span> tudo.</td></tr>
+          <tr><td>escrever</td><td class="hl-pr">escrito</td><td>Eu tinha <span class="hl-pr">escrito</span> a carta.</td></tr>
+          <tr><td>descrever</td><td class="hl-pr">descrito</td><td>O autor tinha <span class="hl-pr">descrito</span> o lugar.</td></tr>
+          <tr><td>inscrever</td><td class="hl-pr">inscrito</td><td>Tinha me <span class="hl-pr">inscrito</span> no curso.</td></tr>
+          <tr><td>subscrever</td><td class="hl-pr">subscrito</td><td>O documento foi <span class="hl-pr">subscrito</span> por todos.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Derivados de pôr (todos -posto)</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Verbo</th><th>Particípio</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td>compor</td><td class="hl-pr">composto</td><td>compuesto</td></tr>
+          <tr><td>propor</td><td class="hl-pr">proposto</td><td>propuesto</td></tr>
+          <tr><td>dispor</td><td class="hl-pr">disposto</td><td>dispuesto</td></tr>
+          <tr><td>supor</td><td class="hl-pr">suposto</td><td>supuesto</td></tr>
+          <tr><td>impor</td><td class="hl-pr">imposto</td><td>impuesto</td></tr>
+          <tr><td>opor</td><td class="hl-pr">oposto</td><td>opuesto</td></tr>
+          <tr><td>expor</td><td class="hl-pr">exposto</td><td>expuesto</td></tr>
+          <tr><td>repor</td><td class="hl-pr">reposto</td><td>repuesto</td></tr>
+          <tr><td>transpor</td><td class="hl-pr">transposto</td><td>traspuesto</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="green-box"><strong>Patrón claro:</strong> todos los derivados de <em>pôr</em> y <em>escrever</em> conservan la irregularidad: <em>composto, descrito, predisposto, prescrito</em>.</div>
+    </div></div>
+  </div>
+
+  <!-- 4. DUPLOS -->
+  <div class="sec-block" id="s-duplos">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Los <strong>duplos particípios</strong> son verbos que tienen <strong>dos formas</strong>: una regular (-ado/-ido) y otra irregular (más corta). La regla tradicional dice que la forma regular va con <em>ter/haver</em> (voz activa) y la irregular con <em>ser/estar</em> (voz pasiva). En PB hablado actual, muchos verbos usan ya solo la forma irregular para ambos contextos.
+      </div>
+
+      <div class="sec-label">Regla normativa clásica</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Auxiliar</th><th>Forma del particípio</th><th>Función</th></tr></thead>
+        <tbody>
+          <tr><td><strong>ter / haver</strong></td><td>regular (-ado/-ido)</td><td>tiempo compuesto activo</td></tr>
+          <tr><td><strong>ser / estar</strong></td><td>irregular (corta)</td><td>voz pasiva / estado resultante</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Lista principal de duplos particípios</div>
+      <div class="dup-grid">
+        <div class="dup-card">
+          <div class="dup-card-head">aceitar</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">aceitado</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">aceito / aceite</span></div>
+        </div>
+        <div class="dup-card">
+          <div class="dup-card-head">acender</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">acendido</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">aceso</span></div>
+        </div>
+        <div class="dup-card">
+          <div class="dup-card-head">eleger</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">elegido</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">eleito</span></div>
+        </div>
+        <div class="dup-card">
+          <div class="dup-card-head">entregar</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">entregado</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">entregue</span></div>
+        </div>
+        <div class="dup-card">
+          <div class="dup-card-head">expulsar</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">expulsado</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">expulso</span></div>
+        </div>
+        <div class="dup-card">
+          <div class="dup-card-head">ganhar</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">ganhado</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">ganho</span></div>
+        </div>
+        <div class="dup-card">
+          <div class="dup-card-head">gastar</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">gastado</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">gasto</span></div>
+        </div>
+        <div class="dup-card">
+          <div class="dup-card-head">imprimir</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">imprimido</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">impresso</span></div>
+        </div>
+        <div class="dup-card">
+          <div class="dup-card-head">matar</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">matado</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">morto</span></div>
+        </div>
+        <div class="dup-card">
+          <div class="dup-card-head">morrer</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">morrido</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">morto</span></div>
+        </div>
+        <div class="dup-card">
+          <div class="dup-card-head">pagar</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">pagado</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">pago</span></div>
+        </div>
+        <div class="dup-card">
+          <div class="dup-card-head">pegar</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">pegado</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">pego</span></div>
+        </div>
+        <div class="dup-card">
+          <div class="dup-card-head">prender</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">prendido</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">preso</span></div>
+        </div>
+        <div class="dup-card">
+          <div class="dup-card-head">salvar</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">salvado</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">salvo</span></div>
+        </div>
+        <div class="dup-card">
+          <div class="dup-card-head">soltar</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">soltado</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">solto</span></div>
+        </div>
+        <div class="dup-card">
+          <div class="dup-card-head">suspender</div>
+          <div class="dup-row"><span class="dup-aux">ter/haver</span><span class="dup-form">suspendido</span></div>
+          <div class="dup-row"><span class="dup-aux">ser/estar</span><span class="dup-form">suspenso</span></div>
+        </div>
+      </div>
+
+      <div class="sec-label">Ejemplos en uso normativo</div>
+      <div class="example-block pr"><div class="ex-fr">A polícia tinha <span class="epr">prendido</span> o suspeito. (ter + regular)</div><div class="ex-es">La policía había detenido al sospechoso.</div></div>
+      <div class="example-block pr"><div class="ex-fr">O suspeito estava <span class="epr">preso</span>. (estar + irregular)</div><div class="ex-es">El sospechoso estaba detenido.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Eu tinha <span class="epr">pagado</span> a conta. (ter + regular, norma)</div><div class="ex-es">Yo había pagado la cuenta.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A conta foi <span class="epr">paga</span> ontem. (ser + irregular)</div><div class="ex-es">La cuenta fue pagada ayer.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Uso PB actual:</strong> en habla cotidiana brasileña, muchos hablantes ya usan la <strong>forma irregular en ambos contextos</strong>: <em>já tinha pago, já tinha ganho, já tinha pego</em>. Esto está aceptado en habla, aunque algunos manuales puristas siguen prefiriendo la regla clásica.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 5. CONCORDANCIA -->
+  <div class="sec-block" id="s-concordancia">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Reglas de concordancia del particípio según función. La regla simple: <strong>con ter/haver → invariable; con ser/estar/sustantivo → concuerda en género y número</strong>.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('conc',0)">Ter/Haver: invariable</button>
+        <button class="chip pr"        onclick="selectChip('conc',1)">Ser: pasiva, concuerda</button>
+        <button class="chip pr"        onclick="selectChip('conc',2)">Estar: estado, concuerda</button>
+        <button class="chip pr"        onclick="selectChip('conc',3)">Como adjetivo</button>
+      </div>
+      <div id="conc-panels">
+
+        <div class="chip-panel active" id="conc-p-0">
+          <div class="def-box">Con <em>ter</em> o <em>haver</em>, el particípio queda <strong>invariable</strong>: siempre en masculino singular (<em>-o</em>).</div>
+          <div class="example-block pr"><div class="ex-fr">Elas tinham <span class="epr">falado</span> com o diretor.</div><div class="ex-es">Habían hablado con el director.</div><div class="ex-note">No "faladas" — particípio invariable.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eu havia <span class="epr">escrito</span> várias cartas.</div><div class="ex-es">Había escrito varias cartas.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Eles tinham <span class="epr">comprado</span> as flores.</div><div class="ex-es">Habían comprado las flores.</div></div>
+        </div>
+
+        <div class="chip-panel" id="conc-p-1">
+          <div class="def-box">En la <strong>voz pasiva</strong> con <em>ser</em>, el particípio concuerda con el sujeto en género y número.</div>
+          <div class="example-block pr"><div class="ex-fr">As cartas foram <span class="epr">escritas</span> pelo Pedro.</div><div class="ex-es">Las cartas fueron escritas por Pedro.</div></div>
+          <div class="example-block pr"><div class="ex-fr">O livro foi <span class="epr">lido</span> em uma semana.</div><div class="ex-es">El libro fue leído en una semana.</div></div>
+          <div class="example-block pr"><div class="ex-fr">A reunião foi <span class="epr">cancelada</span>.</div><div class="ex-es">La reunión fue cancelada.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Os documentos serão <span class="epr">enviados</span> amanhã.</div><div class="ex-es">Los documentos serán enviados mañana.</div></div>
+        </div>
+
+        <div class="chip-panel" id="conc-p-2">
+          <div class="def-box">Con <em>estar</em> (estado resultante de una acción), el particípio también concuerda con el sujeto.</div>
+          <div class="example-block pr"><div class="ex-fr">A porta está <span class="epr">aberta</span>.</div><div class="ex-es">La puerta está abierta.</div></div>
+          <div class="example-block pr"><div class="ex-fr">As janelas estão <span class="epr">fechadas</span>.</div><div class="ex-es">Las ventanas están cerradas.</div></div>
+          <div class="example-block pr"><div class="ex-fr">As contas já estavam <span class="epr">pagas</span>.</div><div class="ex-es">Las cuentas ya estaban pagadas.</div></div>
+          <div class="example-block pr"><div class="ex-fr">O carro está <span class="epr">quebrado</span>.</div><div class="ex-es">El coche está roto.</div></div>
+        </div>
+
+        <div class="chip-panel" id="conc-p-3">
+          <div class="def-box">Como adjetivo modificador de sustantivo, el particípio concuerda como cualquier adjetivo.</div>
+          <div class="example-block pr"><div class="ex-fr">Uma porta <span class="epr">aberta</span>, um livro <span class="epr">lido</span>, cartas <span class="epr">escritas</span>.</div><div class="ex-es">Una puerta abierta, un libro leído, cartas escritas.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Os trabalhos <span class="epr">terminados</span>, as decisões <span class="epr">tomadas</span>.</div><div class="ex-es">Los trabajos terminados, las decisiones tomadas.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Uma mulher <span class="epr">apaixonada</span>, homens <span class="epr">desesperados</span>.</div><div class="ex-es">Una mujer enamorada, hombres desesperados.</div></div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. USOS -->
+  <div class="sec-block" id="s-usos">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Usos principales del particípio: en tiempos compuestos, en la voz pasiva y como adjetivo. Cada uso impone sus propias reglas.
+      </div>
+
+      <div class="sec-label">En tiempos compuestos</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tiempo compuesto</th><th>Estructura</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Pretérito perfeito composto</td><td>ter (pres.) + part.</td><td>Eu <span class="hl-pr">tenho falado</span>.</td></tr>
+          <tr><td>Pretérito mais-que-perfeito</td><td>ter (impf.) + part.</td><td>Eu <span class="hl-pr">tinha falado</span>.</td></tr>
+          <tr><td>Futuro do presente composto</td><td>ter (fut.) + part.</td><td>Eu <span class="hl-pr">terei falado</span>.</td></tr>
+          <tr><td>Futuro do pretérito composto</td><td>ter (fut. pret.) + part.</td><td>Eu <span class="hl-pr">teria falado</span>.</td></tr>
+          <tr><td>Pretérito perfeito do subj.</td><td>ter (pres. subj.) + part.</td><td>Que eu <span class="hl-pr">tenha falado</span>.</td></tr>
+          <tr><td>Mais-que-perfeito do subj.</td><td>ter (impf. subj.) + part.</td><td>Se eu <span class="hl-pr">tivesse falado</span>.</td></tr>
+          <tr><td>Futuro do subj. composto</td><td>ter (subj. fut.) + part.</td><td>Quando eu <span class="hl-pr">tiver falado</span>.</td></tr>
+          <tr><td>Infinitivo composto</td><td>ter + part.</td><td>Por <span class="hl-pr">ter falado</span> demais.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Particípio absoluto (literario)</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Terminado</span> o jantar, fomos passear.</div><div class="ex-es">Terminada la cena, fuimos a pasear.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Acabada</span> a reunião, todos saíram.</div><div class="ex-es">Acabada la reunión, todos salieron.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Lidas</span> as instruções, comecem a prova.</div><div class="ex-es">Leídas las instrucciones, empiecen el examen.</div></div>
+      <div class="note-box"><strong>Construção absoluta:</strong> el particípio inicia la frase, concuerda con el sustantivo siguiente, y equivale a una oración temporal: "después de que terminara la cena…".</div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con el particípio en portugués.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Concordancia con ter/haver (error)',
+   wrong:"Elas tinham faladas com o diretor.",
+   right:"Elas tinham falado com o diretor.",
+   expl:'Con <em>ter</em> y <em>haver</em>, el particípio es <strong>invariable</strong>: siempre en masculino singular (<em>-o</em>). No concuerda con el sujeto. La concordancia solo aparece con <em>ser/estar</em> o en función adjetival.'},
+  {name:'Olvidar particípios irregulares clave',
+   wrong:"Eu tinha fazido / dizido / vido / ponido",
+   right:"Eu tinha feito / dito / visto / posto",
+   expl:'Los irregulares <strong>feito, dito, visto, posto, vindo, aberto, coberto, escrito</strong> son obligatorios y muy frecuentes. Memorízalos como bloque. Los derivados siguen el patrón: <em>composto, descrito, predisposto, prescrito</em>.'},
+  {name:'Duplos particípios: forma "corta" con ter',
+   wrong:"Eu tinha pago a conta. (norma estricta) — pero aceptado en PB",
+   right:"Eu tinha pagado a conta. (norma) / Eu tinha pago. (PB hablado)",
+   expl:'La norma clásica exige <em>tinha + forma regular</em> (tinha pagado, tinha ganhado). En PB hablado actual, la forma corta (<em>tinha pago, tinha ganho, tinha pego</em>) es ya mayoritaria y aceptada. Decide según el registro.'},
+  {name:'Vindo: gerúndio o particípio',
+   wrong:"Confundir está vindo (= viniendo, gerúndio) con tinha vindo (= había venido, particípio)",
+   right:"Ambos son vindo, pero auxiliares distintos",
+   expl:'<em>Vindo</em> es <strong>tanto gerúndio como particípio</strong> de <em>vir</em>. La distinción la marca el auxiliar: <em>estar + vindo</em> = "estar viniendo" (gerúndio), <em>ter + vindo</em> = "haber venido" (particípio).'},
+  {name:'Pôr y derivados: posto, no "ponido"',
+   wrong:"Eu tinha ponido / supondo (gerúndio) — particípio: ponido",
+   right:"Eu tinha posto, suposto, disposto, exposto, composto",
+   expl:'Particípio de <em>pôr</em> = <strong>posto</strong>. Y de sus derivados: <em>composto, suposto, disposto, exposto, oposto, proposto, reposto, transposto, imposto</em>. Todos en <em>-posto</em>, irregular.'},
+  {name:'Concordancia en pasiva (error)',
+   wrong:"As cartas foram escrito por Pedro.",
+   right:"As cartas foram escritas por Pedro.",
+   expl:'En la voz pasiva con <em>ser</em>, el particípio <strong>concuerda con el sujeto</strong> en género y número: <em>as cartas foram escritas, os livros foram lidos, a porta foi aberta</em>.'},
+  {name:'Acentuação: aceite vs aceito vs aceitado',
+   wrong:"Confundir las tres formas",
+   right:"aceitado (regular) · aceito (irregular PB) · aceite (irregular PE)",
+   expl:'Tres formas válidas con valores distintos: <strong>aceitado</strong> (regular, con ter/haver, norma clásica) · <strong>aceito</strong> (irregular, con ser/estar, mayoritario en PB) · <strong>aceite</strong> (irregular, mayoritario en PE).'},
+  {name:'Morto: matar vs morrer',
+   wrong:"O cachorro morto = el perro lo mataron / murió?",
+   right:"Ambos verbos comparten el particípio morto",
+   expl:'<strong>Morto</strong> es particípio de <em>matar</em> (= ser/estar matado) y de <em>morrer</em> (= ser/estar muerto). El contexto desambigua: <em>foi morto</em> = "fue matado", <em>está morto</em> = "está muerto". Para "ha muerto": <em>morreu</em> (PPS).'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

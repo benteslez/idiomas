@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Voz Passiva — Sistema Completo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Voz Passiva → Verbos · dk-teal */
+:root {
+  --primary: #1c4258;
+  --primary-soft: #e8f0f4;
+  --primary-mid: #5887a0;
+  --primary-strong: #0f2a3a;
+  --primary-glow: rgba(28, 66, 88, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fb5cf;
+  --primary-soft: #1a2a35;
+  --primary-mid: #4a8aa5;
+  --primary-strong: #b8d4e2;
+  --primary-glow: rgba(127, 181, 207, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.transform-box {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin: 14px 0;
+}
+.transform-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  flex-wrap: wrap;
+  font-size: 0.92em;
+}
+.transform-tag {
+  font-size: 0.66em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  flex-shrink: 0;
+  min-width: 60px;
+}
+.transform-text strong { color: var(--primary); }
+
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; }
+.split-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 0.96rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.01em; }
+.split-card p { font-size: 0.86em; color: var(--text2); line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Voz Passiva — Sistema Completo</h1>
+    <span class="header-tag">Gramática</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR B2–C1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Pasiva analítica · pronominal</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. Sistema general</button>
+    <button class="snav-btn"        onclick="showSection('s-ser',this)">2. Pasiva con ser</button>
+    <button class="snav-btn"        onclick="showSection('s-estar',this)">3. Pasiva con estar</button>
+    <button class="snav-btn"        onclick="showSection('s-se-apass',this)">4. Se apassivador</button>
+    <button class="snav-btn"        onclick="showSection('s-se-impess',this)">5. Se impessoal</button>
+    <button class="snav-btn"        onclick="showSection('s-agente',this)">6. Agente con por</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El portugués dispone de un sistema completo de <strong>voz pasiva</strong> con tres construcciones principales: <strong>pasiva analítica con ser</strong> (acción), <strong>pasiva analítica con estar</strong> (estado resultante) y <strong>pasiva pronominal con se</strong> (sin agente expreso, o impersonal). La elección depende del foco, el registro y la presencia/ausencia del agente.
+      </div>
+
+      <div class="sec-label">Las tres construcciones</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tipo</th><th>Estructura</th><th>Valor</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Ser + part.</td><td>ser + part. (+ por agente)</td><td>acción dinámica</td><td>O livro <span class="hl-pr">foi escrito</span> em 2020.</td></tr>
+          <tr><td>Estar + part.</td><td>estar + part.</td><td>estado resultante</td><td>O livro <span class="hl-pr">está aberto</span>.</td></tr>
+          <tr><td>Se apassivador</td><td>verbo trans. + se (con sujeto inanimado)</td><td>pasiva sin agente</td><td><span class="hl-pr">Vendem-se</span> casas.</td></tr>
+          <tr><td>Se impessoal</td><td>verbo + se (3ª sing., sin sujeto)</td><td>impersonal genérico</td><td><span class="hl-pr">Precisa-se</span> de funcionários.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>Distinción clave ser/estar:</strong> <em>foi escrito</em> = acción ("fue escrito"); <em>está escrito</em> = estado ("está escrito"). El portugués distingue estos valores con auxiliar diferente, como el español.</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. SER + PARTICIPIO -->
+  <div class="sec-block" id="s-ser">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        La <strong>pasiva con ser + particípio</strong> presenta la acción como tal (dinámica). El particípio concuerda en género y número con el sujeto pasivo. El agente, si aparece, se introduce con <em>por</em>.
+      </div>
+
+      <div class="sec-label">Estructura y transformación</div>
+      <div class="transform-box">
+        <div class="transform-line">
+          <span class="transform-tag">Activa</span>
+          <span class="transform-text">O autor <strong>escreveu</strong> o livro.</span>
+        </div>
+        <div class="transform-line">
+          <span class="transform-tag">Pasiva</span>
+          <span class="transform-text">O livro <strong>foi escrito</strong> pelo autor.</span>
+        </div>
+      </div>
+
+      <div class="sec-label">Conjugación de ser en todos los tiempos</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tiempo</th><th>Ser + part.</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td>Presente</td><td class="hl-pr">é escrito</td><td>es escrito</td></tr>
+          <tr><td>Pretérito perfeito</td><td class="hl-pr">foi escrito</td><td>fue escrito</td></tr>
+          <tr><td>Pretérito imperfeito</td><td class="hl-pr">era escrito</td><td>era escrito</td></tr>
+          <tr><td>Mais-que-perfeito</td><td class="hl-pr">tinha sido escrito</td><td>había sido escrito</td></tr>
+          <tr><td>Futuro do presente</td><td class="hl-pr">será escrito</td><td>será escrito</td></tr>
+          <tr><td>Futuro do pretérito</td><td class="hl-pr">seria escrito</td><td>sería escrito</td></tr>
+          <tr><td>Presente do subj.</td><td class="hl-pr">seja escrito</td><td>sea escrito</td></tr>
+          <tr><td>Imperfeito do subj.</td><td class="hl-pr">fosse escrito</td><td>fuera escrito</td></tr>
+          <tr><td>Subj. futuro</td><td class="hl-pr">for escrito</td><td>(cuando) sea escrito</td></tr>
+          <tr><td>Infinitivo composto pas.</td><td class="hl-pr">ter sido escrito</td><td>haber sido escrito</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Concordancia obligatoria</div>
+      <div class="example-block pr"><div class="ex-fr">O livro foi <span class="epr">escrito</span> em 1999.</div><div class="ex-es">El libro fue escrito en 1999.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A carta foi <span class="epr">escrita</span> à mão.</div><div class="ex-es">La carta fue escrita a mano.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Os documentos foram <span class="epr">enviados</span> ontem.</div><div class="ex-es">Los documentos fueron enviados ayer.</div></div>
+      <div class="example-block pr"><div class="ex-fr">As decisões serão <span class="epr">tomadas</span> amanhã.</div><div class="ex-es">Las decisiones serán tomadas mañana.</div></div>
+
+      <div class="sec-label">Pasiva con tiempo compuesto</div>
+      <div class="example-block pr"><div class="ex-fr">O projeto <span class="epr">tinha sido aprovado</span> antes da minha chegada.</div><div class="ex-es">El proyecto había sido aprobado antes de mi llegada.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A casa <span class="epr">terá sido vendida</span> até dezembro.</div><div class="ex-es">La casa habrá sido vendida hasta diciembre.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Sem <span class="epr">ter sido convidado</span>, ele não foi à festa.</div><div class="ex-es">Sin haber sido invitado, no fue a la fiesta.</div></div>
+
+      <div class="note-box"><strong>Registro:</strong> la pasiva con ser es típica de prensa, prosa formal, redacción académica. En habla cotidiana se prefieren las formas activas o el <em>se apassivador</em>.</div>
+    </div></div>
+  </div>
+
+  <!-- 3. ESTAR + PARTICIPIO -->
+  <div class="sec-block" id="s-estar">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        La <strong>pasiva con estar + particípio</strong> no expresa una acción sino el <strong>estado resultante</strong> de una acción previa. El particípio también concuerda con el sujeto.
+      </div>
+
+      <div class="split-grid">
+        <div class="split-card">
+          <h4>Ser + part. (acción)</h4>
+          <p>Foco en el evento dinámico.</p>
+          <p style="margin-top:6px"><em>A porta foi aberta às 8h.</em></p>
+          <p>→ La puerta fue abierta a las 8h.</p>
+        </div>
+        <div class="split-card">
+          <h4>Estar + part. (estado)</h4>
+          <p>Foco en el resultado / situación.</p>
+          <p style="margin-top:6px"><em>A porta está aberta.</em></p>
+          <p>→ La puerta está abierta.</p>
+        </div>
+      </div>
+
+      <div class="sec-label">Ejemplos típicos</div>
+      <div class="example-block pr"><div class="ex-fr">A janela <span class="epr">está fechada</span>.</div><div class="ex-es">La ventana está cerrada.</div></div>
+      <div class="example-block pr"><div class="ex-fr">As contas <span class="epr">estão pagas</span>.</div><div class="ex-es">Las cuentas están pagadas.</div></div>
+      <div class="example-block pr"><div class="ex-fr">O trabalho <span class="epr">está terminado</span>.</div><div class="ex-es">El trabajo está terminado.</div></div>
+      <div class="example-block pr"><div class="ex-fr">O suspeito <span class="epr">está preso</span>.</div><div class="ex-es">El sospechoso está detenido.</div></div>
+      <div class="example-block pr"><div class="ex-fr">As luzes <span class="epr">estão acesas</span>.</div><div class="ex-es">Las luces están encendidas.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Con duplos particípios:</strong> en la pasiva con estar se prefiere la <strong>forma corta irregular</strong> (<em>aceso, preso, pago, ganho, gasto, morto</em>). En la pasiva con ser también suele usarse la forma corta para la voz pasiva estricta. Compárese: <em>tinha pagado</em> (norma con ter) vs <em>está pago / foi pago</em>.</div>
+      </div>
+
+      <div class="sec-label">Distinción dinámica vs resultante</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Ser + part. (dinámica)</th><th>Estar + part. (estado)</th></tr></thead>
+        <tbody>
+          <tr><td>A loja <span class="hl-pr">foi aberta</span> às 9h.</td><td>A loja <span class="hl-pr">está aberta</span> agora.</td></tr>
+          <tr><td>O carro <span class="hl-pr">foi consertado</span>.</td><td>O carro <span class="hl-pr">está consertado</span>.</td></tr>
+          <tr><td>A reunião <span class="hl-pr">foi cancelada</span>.</td><td>A reunião <span class="hl-pr">está cancelada</span>.</td></tr>
+          <tr><td>O problema <span class="hl-pr">foi resolvido</span>.</td><td>O problema <span class="hl-pr">está resolvido</span>.</td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+  </div>
+
+  <!-- 4. SE APASSIVADOR -->
+  <div class="sec-block" id="s-se-apass">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>se apassivador</strong> (o pasiva pronominal) construye una pasiva sin agente expreso. Solo aparece con verbos <strong>transitivos directos</strong>. El sujeto es la entidad pasiva (objeto en activa) y concuerda con el verbo en número.
+      </div>
+
+      <div class="sec-label">Estructura</div>
+      <div class="transform-box">
+        <div class="transform-line">
+          <span class="transform-tag">Activa</span>
+          <span class="transform-text">Alguém <strong>vende</strong> casas.</span>
+        </div>
+        <div class="transform-line">
+          <span class="transform-tag">Pas. ser</span>
+          <span class="transform-text">Casas <strong>são vendidas</strong> (por alguém).</span>
+        </div>
+        <div class="transform-line">
+          <span class="transform-tag">Pas. se</span>
+          <span class="transform-text"><strong>Vendem-se</strong> casas. / <strong>Se vendem</strong> casas.</span>
+        </div>
+      </div>
+
+      <div class="sec-label">Concordancia obligatoria (verbo ↔ sujeto)</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Vende-se</span> uma casa. (sujeto singular)</div><div class="ex-es">Se vende una casa.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Vendem-se</span> casas. (sujeto plural — concuerda)</div><div class="ex-es">Se venden casas.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Aluga-se</span> apartamento. (singular)</div><div class="ex-es">Se alquila apartamento.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Alugam-se</span> quartos. (plural)</div><div class="ex-es">Se alquilan habitaciones.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Procuram-se</span> funcionários experientes.</div><div class="ex-es">Se buscan empleados experimentados.</div></div>
+      <div class="example-block pr"><div class="ex-fr">As novas regras <span class="epr">serão divulgadas</span> em breve.</div><div class="ex-es">Las nuevas reglas serán divulgadas pronto.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Norma vs PB hablado:</strong> en la norma escrita, el verbo concuerda con el sujeto plural (<em>vendem-se casas</em>). En PB hablado, es muy frecuente la falta de concordancia: <em>vende-se casas</em>. Aunque popular, sigue siendo considerada agramatical en escritura culta.</div>
+      </div>
+
+      <div class="sec-label">Tipos de verbo compatibles</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Verbo transitivo</th><th>Pasiva con se</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td>vender</td><td>vendem-se / vende-se</td><td>se venden / se vende</td></tr>
+          <tr><td>alugar</td><td>alugam-se / aluga-se</td><td>se alquilan / se alquila</td></tr>
+          <tr><td>procurar</td><td>procuram-se</td><td>se buscan</td></tr>
+          <tr><td>fabricar</td><td>fabricam-se</td><td>se fabrican</td></tr>
+          <tr><td>estudar</td><td>estudam-se</td><td>se estudian</td></tr>
+          <tr><td>fazer</td><td>fazem-se</td><td>se hacen</td></tr>
+          <tr><td>discutir</td><td>discutem-se</td><td>se discuten</td></tr>
+          <tr><td>resolver</td><td>resolvem-se</td><td>se resuelven</td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+  </div>
+
+  <!-- 5. SE IMPESSOAL -->
+  <div class="sec-block" id="s-se-impess">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>se impessoal</strong> construye una oración sin sujeto definido (impersonal genérica). Aparece con verbos <strong>intransitivos</strong>, transitivos indirectos o con preposición. <strong>El verbo queda en 3ª persona singular invariable</strong> (no concuerda con nada).
+      </div>
+
+      <div class="sec-label">Estructura</div>
+      <div class="transform-box">
+        <div class="transform-line">
+          <span class="transform-tag">Activa</span>
+          <span class="transform-text">As pessoas <strong>precisam</strong> de funcionários.</span>
+        </div>
+        <div class="transform-line">
+          <span class="transform-tag">Impessoal</span>
+          <span class="transform-text"><strong>Precisa-se</strong> de funcionários.</span>
+        </div>
+      </div>
+
+      <div class="sec-label">Diferencia con el se apassivador</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Se apassivador</th><th>Se impessoal</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Verbo trans. directo</strong> + sujeto pasivo</td><td><strong>Verbo intrans. o trans. indir.</strong> + objeto preposicional</td></tr>
+          <tr><td>Concuerda con sujeto plural</td><td>Siempre 3ª sing., invariable</td></tr>
+          <tr><td>Vendem-se casas. (concuerda)</td><td>Precisa-se de funcionários. (no concuerda)</td></tr>
+          <tr><td>Procuram-se profissionais.</td><td>Procura-se por profissionais. (con preposición)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos típicos del se impessoal</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Precisa-se</span> de funcionários experientes.</div><div class="ex-es">Se necesita personal con experiencia.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Vive-se</span> bem aqui. (verbo intrans.)</div><div class="ex-es">Se vive bien aquí.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Trabalha-se</span> muito nesta empresa.</div><div class="ex-es">Se trabaja mucho en esta empresa.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Discute-se</span> sobre o assunto.</div><div class="ex-es">Se discute sobre el tema.</div></div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Acredita-se</span> em fantasmas?</div><div class="ex-es">¿Se cree en fantasmas?</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Trampa típica:</strong> <em>precisa-se de funcionários</em> (impessoal, invariable) vs <em>procuram-se funcionários</em> (apassivador, concuerda). El primero usa <em>precisar de</em> (transitivo indirecto); el segundo usa <em>procurar</em> (transitivo directo).</div>
+      </div>
+
+      <div class="sec-label">PB oral: simplificación masiva</div>
+      <div class="example-block pr"><div class="ex-fr">A gente vive bem aqui. (PB oral, sustituye al impessoal)</div><div class="ex-es">Se vive bien aquí. / Uno vive bien aquí.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A gente fala português aqui. (PB oral)</div><div class="ex-es">Se habla portugués aquí.</div></div>
+      <div class="note-box"><strong>Solución oral PB:</strong> el habla cotidiana brasileña reemplaza ambos <em>se apassivador</em> y <em>se impessoal</em> por <strong>a gente</strong> + verbo en 3ª sing.: <em>a gente vende casas, a gente precisa de funcionários</em>. Funciona como una pasiva-impessoal universal.</div>
+    </div></div>
+  </div>
+
+  <!-- 6. AGENTE POR -->
+  <div class="sec-block" id="s-agente">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        En la pasiva analítica con <em>ser</em>, el <strong>agente</strong> (quien realiza la acción) se introduce con la preposición <strong>por</strong>, que se contrae con artículos: <em>pelo, pela, pelos, pelas</em>. La presencia del agente es opcional.
+      </div>
+
+      <div class="sec-label">Contracciones de por + artículo</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>por + artigo</th><th>Contracción</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>por + o</td><td class="hl-pr">pelo</td><td>O livro foi escrito <span class="hl-pr">pelo autor</span>.</td></tr>
+          <tr><td>por + a</td><td class="hl-pr">pela</td><td>A carta foi enviada <span class="hl-pr">pela secretária</span>.</td></tr>
+          <tr><td>por + os</td><td class="hl-pr">pelos</td><td>Os documentos foram assinados <span class="hl-pr">pelos diretores</span>.</td></tr>
+          <tr><td>por + as</td><td class="hl-pr">pelas</td><td>As decisões foram tomadas <span class="hl-pr">pelas autoridades</span>.</td></tr>
+          <tr><td>por + um/uma</td><td class="hl-pr">por um / por uma</td><td>O quadro foi pintado <span class="hl-pr">por um artista famoso</span>.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos en contexto</div>
+      <div class="example-block pr"><div class="ex-fr">O Brasil foi descoberto <span class="epr">pelos portugueses</span> em 1500.</div><div class="ex-es">Brasil fue descubierto por los portugueses en 1500.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A música foi composta <span class="epr">por Tom Jobim</span>.</div><div class="ex-es">La canción fue compuesta por Tom Jobim.</div></div>
+      <div class="example-block pr"><div class="ex-fr">As fotos serão tiradas <span class="epr">pelo fotógrafo oficial</span>.</div><div class="ex-es">Las fotos serán tomadas por el fotógrafo oficial.</div></div>
+      <div class="example-block pr"><div class="ex-fr">O caso está sendo investigado <span class="epr">pela polícia</span>.</div><div class="ex-es">El caso está siendo investigado por la policía.</div></div>
+
+      <div class="sec-label">Alternativa rara: agente con de</div>
+      <div class="example-block pr"><div class="ex-fr">Ele é amado <span class="epr">de todos</span>. (registro culto, raro)</div><div class="ex-es">Es querido por todos.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A cidade foi cercada <span class="epr">de inimigos</span>. (literario)</div><div class="ex-es">La ciudad fue rodeada por enemigos.</div></div>
+      <div class="note-box"><strong>De vs por:</strong> con verbos como <em>amar, odiar, temer, respeitar</em>, en lengua culta puede aparecer <em>de</em>: <em>respeitado de todos</em>. Es estilísticamente refinado pero rarísimo en habla.</div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con la voz pasiva en portugués.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Confundir ser y estar en pasiva',
+   wrong:"A loja é aberta. (= se abre como acción cada día)",
+   right:"A loja está aberta. (= ahora está abierta) / A loja é aberta às 9h. (= cada día abre)",
+   expl:'<strong>Ser + part.</strong> describe la acción (puntual o habitual). <strong>Estar + part.</strong> describe el estado resultante. Confusión frecuente: <em>a porta foi fechada</em> (alguien la cerró) vs <em>a porta está fechada</em> (ahora está cerrada).'},
+  {name:'Falta de concordancia en se apassivador',
+   wrong:"Vende-se casas. (en escritura formal)",
+   right:"Vendem-se casas. (norma)",
+   expl:'El <strong>se apassivador</strong> exige concordancia entre verbo y sujeto plural. En letreros y habla coloquial es muy común <em>vende-se casas</em>, pero en escritura culta es agramatical. La forma correcta es <em>vendem-se casas, alugam-se quartos</em>.'},
+  {name:'Se impessoal con concordancia errónea',
+   wrong:"Precisam-se de funcionários.",
+   right:"Precisa-se de funcionários.",
+   expl:'El <strong>se impessoal</strong> siempre va en 3ª sing. invariable. <em>Precisar de</em> es trans. indirecto: <em>precisa-se de funcionários</em>. No concuerda con "funcionários". Contraste: <em>procuram-se funcionários</em> (apassivador, sin de, concuerda) vs <em>precisa-se de funcionários</em> (impessoal, con de, no concuerda).'},
+  {name:'Por o de en el agente',
+   wrong:"O livro foi escrito de Pedro.",
+   right:"O livro foi escrito por Pedro / pelo Pedro.",
+   expl:'El agente de la pasiva se introduce con <strong>por</strong> (contraído: <em>pelo, pela, pelos, pelas</em>). El uso de <em>de</em> con agente queda restringido a registro literario con verbos como <em>amar, temer, respeitar</em>: <em>amado de todos</em>.'},
+  {name:'Concordancia con ter + sido + part.',
+   wrong:"A casa tinha sido vendido.",
+   right:"A casa tinha sido vendida.",
+   expl:'En pasivas con tiempo compuesto (<em>ter sido + part.</em>), el participio principal concuerda con el sujeto: <em>a casa tinha sido vendida, os livros tinham sido publicados</em>. Solo <em>sido</em> es invariable; el participio léxico concuerda.'},
+  {name:'Duplos particípios en pasiva: forma corta',
+   wrong:"As contas foram pagadas. (poco natural en pasiva)",
+   right:"As contas foram pagas.",
+   expl:'En pasiva con <em>ser/estar</em>, los duplos particípios prefieren la <strong>forma corta irregular</strong>: <em>foi pago, está pago, foi ganho, está aceso, foi morto, foi preso</em>. La forma regular (<em>pagado, ganhado, acendido</em>) se reserva para <em>ter + part.</em>'},
+  {name:'Particípio en pasiva: posição del agente',
+   wrong:"Pelo autor o livro foi escrito.",
+   right:"O livro foi escrito pelo autor.",
+   expl:'El orden natural en pasiva portuguesa: <strong>sujeto + ser + part. + por + agente</strong>. <em>O livro foi escrito pelo autor</em>. La anteposición del agente es marcadamente focal y rara: <em>foi pelo autor que o livro foi escrito</em> (clivada).'},
+  {name:'Falsa pasiva con verbo intransitivo',
+   wrong:"Aqui é vivido bem. (intentando pasivizar viver)",
+   right:"Aqui se vive bem. / A gente vive bem aqui.",
+   expl:'No se puede formar pasiva analítica con verbos <strong>intransitivos</strong>. <em>Viver, dormir, chegar, sair, ir</em> no admiten <em>ser + part.</em> Para impersonal usa <em>se impessoal</em> (<em>vive-se bem</em>) o <em>a gente + verbo</em> (PB oral).'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>

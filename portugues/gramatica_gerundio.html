@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gramática · Gerúndio — PB vs PE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Gerúndio → Verbos · dk-teal */
+:root {
+  --primary: #1c4258;
+  --primary-soft: #e8f0f4;
+  --primary-mid: #5887a0;
+  --primary-strong: #0f2a3a;
+  --primary-glow: rgba(28, 66, 88, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #7fb5cf;
+  --primary-soft: #1a2a35;
+  --primary-mid: #4a8aa5;
+  --primary-strong: #b8d4e2;
+  --primary-glow: rgba(127, 181, 207, 0.18);
+}
+.stat-pill.pr       { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+.example-block.pr   { background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 18%, transparent); }
+.epr                { color: var(--primary); font-weight: 700; }
+.hl-pr              { color: var(--primary); font-weight: 700; }
+
+.def-box { background: var(--primary-strong); color: #ffffff; border-color: var(--primary-strong); }
+.def-box strong, .def-box em { color: #ffffff; }
+
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+@media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+.split-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; }
+.split-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 0.96rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.01em; }
+.split-card p { font-size: 0.86em; color: var(--text2); line-height: 1.6; }
+
+.alert-box {
+  background: var(--warn-bg); border: 1px solid var(--warn-border);
+  border-radius: var(--radius-md); padding: 14px 17px; margin: 14px 0;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.alert-box .alert-icon { font-size: 1.2em; flex-shrink: 0; }
+.alert-box .alert-text { color: var(--text2); line-height: 1.6; font-size: 0.92em; }
+.alert-box .alert-text strong { color: var(--warn); font-weight: 700; }
+
+.flag-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary-soft);
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  font-size: 0.78em;
+  font-weight: 600;
+  color: var(--primary);
+  margin-right: 6px;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_gramatica.html" class="back-btn" aria-label="Voltar ao índice de gramática" title="Voltar ao índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>🔴 Gerúndio — PB vs PE</h1>
+    <span class="header-tag">Gramática</span>
+  </div>
+  <div class="subtitle">Gramática portuguesa (PB) · CEFR A2–B1</div>
+  <div class="stats-row">
+    <div class="stat-pill pr">Progressivo · -ndo</div>
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="12" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="switchMode('ref',this)">📖 Referência</button>
+</div>
+
+<div class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('s-intro',this)">1. PB vs PE</button>
+    <button class="snav-btn"        onclick="showSection('s-formacion',this)">2. Formación</button>
+    <button class="snav-btn"        onclick="showSection('s-progressivo',this)">3. Progressivo</button>
+    <button class="snav-btn"        onclick="showSection('s-perifrases',this)">4. Otras perífrasis</button>
+    <button class="snav-btn"        onclick="showSection('s-adverbial',this)">5. Valor adverbial</button>
+    <button class="snav-btn"        onclick="showSection('s-gerundismo',this)">6. Gerundismo</button>
+    <button class="snav-btn"        onclick="showSection('s-trampas',this)">7. Armadilhas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</div>
+
+<div class="main-layout">
+<div class="panel active" id="panel-ref">
+
+  <!-- 1. INTRO PB VS PE -->
+  <div class="sec-block active" id="s-intro">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>gerúndio</strong> (-ando, -endo, -indo) es la forma nominal verbal que en portugués brasileño se usa masivamente para construir el <strong>aspecto progresivo</strong>: <em>estou falando</em>. Sin embargo, en portugués europeo, la misma idea se expresa con <em>estar a + infinitivo</em>: <em>estou a falar</em>. Esta es <strong>la diferencia más visible</strong> entre PB y PE.
+      </div>
+
+      <div class="split-grid">
+        <div class="split-card">
+          <h4><span class="flag-card">🇧🇷 PB</span> estar + gerúndio</h4>
+          <p>Forma estándar y única para el progresivo.</p>
+          <p style="margin-top:6px"><em>Estou trabalhando.</em></p>
+          <p><em>Ele está dormindo.</em></p>
+          <p><em>O que você está fazendo?</em></p>
+        </div>
+        <div class="split-card">
+          <h4><span class="flag-card">🇵🇹 PE</span> estar a + infinitivo</h4>
+          <p>Forma estándar en Portugal.</p>
+          <p style="margin-top:6px"><em>Estou a trabalhar.</em></p>
+          <p><em>Ele está a dormir.</em></p>
+          <p><em>O que estás a fazer?</em></p>
+        </div>
+      </div>
+
+      <div class="warn-box"><span class="warn-icon">💡</span>
+        <div class="warn-text"><strong>En PB:</strong> el <em>estar a + inf.</em> suena extranjero o muy literario. Lo natural es siempre el gerúndio. <strong>En PE:</strong> el gerúndio queda restringido al valor adverbial (causal, temporal, modal) y a perífrasis fijas; el progresivo es <em>estar a + inf.</em></div>
+      </div>
+
+      <div class="sec-label">Algunas regiones del norte y nordeste de Brasil también usan <em>estar a + inf.</em></div>
+      <div class="example-block pr"><div class="ex-fr">Estou a procurar minha chave. (regional, norte/nordeste PB)</div><div class="ex-es">Estoy buscando mi llave.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 2. FORMACIÓN -->
+  <div class="sec-block" id="s-formacion">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Formación del gerúndio: <strong>infinitivo sin -r + ndo</strong>. Es invariable (no concuerda en género ni en número) y totalmente regular salvo en <em>pôr</em> y derivados.
+      </div>
+
+      <div class="sec-label">Formación regular</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Conjugación</th><th>Infinitivo</th><th>Gerúndio</th><th>Patrón</th></tr></thead>
+        <tbody>
+          <tr><td><strong>-AR</strong></td><td>falar</td><td class="hl-pr">falando</td><td class="hl-pr">-ando</td></tr>
+          <tr><td><strong>-AR</strong></td><td>trabalhar</td><td class="hl-pr">trabalhando</td><td class="hl-pr">-ando</td></tr>
+          <tr><td><strong>-ER</strong></td><td>comer</td><td class="hl-pr">comendo</td><td class="hl-pr">-endo</td></tr>
+          <tr><td><strong>-ER</strong></td><td>fazer</td><td class="hl-pr">fazendo</td><td class="hl-pr">-endo</td></tr>
+          <tr><td><strong>-IR</strong></td><td>partir</td><td class="hl-pr">partindo</td><td class="hl-pr">-indo</td></tr>
+          <tr><td><strong>-IR</strong></td><td>dormir</td><td class="hl-pr">dormindo</td><td class="hl-pr">-indo</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Solo dos irregularidades notables</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Infinitivo</th><th>Gerúndio</th><th>Comentario</th></tr></thead>
+        <tbody>
+          <tr><td><strong>pôr</strong></td><td class="hl-pr">pondo</td><td>conserva radical pon- (mismo en supor, dispor, propor → pondo, supondo, dispondo, propondo)</td></tr>
+          <tr><td><strong>vir</strong></td><td class="hl-pr">vindo</td><td>idéntico al particípio: <em>vindo</em> (gerúndio) y <em>vindo</em> (particípio). El contexto desambigua.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Homógrafo crítico:</strong> <em>vindo</em> es tanto gerúndio como particípio de <em>vir</em>. En <em>está vindo</em> es gerúndio (= viniendo). En <em>tinha vindo</em> es particípio (= había venido). El auxiliar (estar vs ter) desambigua.</div>
+      </div>
+
+      <div class="sec-label">Pronombres con gerúndio</div>
+      <div class="example-block pr"><div class="ex-fr"><span class="epr">Vendo-o</span>, fiquei feliz. (norma escrita)</div><div class="ex-es">Viéndolo, me alegré.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Estou <span class="epr">te ligando</span> agora. (PB oral, próclise)</div><div class="ex-es">Te estoy llamando ahora.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Estou ligando <span class="epr">para você</span> agora. (PB oral)</div><div class="ex-es">Te estoy llamando ahora.</div></div>
+    </div></div>
+  </div>
+
+  <!-- 3. PROGRESSIVO -->
+  <div class="sec-block" id="s-progressivo">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        En PB, el aspecto progresivo (acción en curso) se construye sistemáticamente con <strong>estar + gerúndio</strong>. Funciona en todos los tiempos: presente, pasado, futuro, condicional, subjuntivo.
+      </div>
+
+      <div class="sec-label">Conjugación completa en todos los tiempos</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Tiempo</th><th>Estar + gerúndio</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td>Presente</td><td class="hl-pr">estou falando</td><td>estoy hablando</td></tr>
+          <tr><td>Pretérito perfeito</td><td class="hl-pr">estive falando</td><td>estuve hablando</td></tr>
+          <tr><td>Pretérito imperfeito</td><td class="hl-pr">estava falando</td><td>estaba hablando</td></tr>
+          <tr><td>Pretérito mais-que-perfeito (composto)</td><td class="hl-pr">tinha estado falando</td><td>había estado hablando</td></tr>
+          <tr><td>Futuro do presente</td><td class="hl-pr">estarei falando</td><td>estaré hablando</td></tr>
+          <tr><td>Futuro do pretérito</td><td class="hl-pr">estaria falando</td><td>estaría hablando</td></tr>
+          <tr><td>Presente do subjuntivo</td><td class="hl-pr">esteja falando</td><td>esté hablando</td></tr>
+          <tr><td>Imperfeito do subjuntivo</td><td class="hl-pr">estivesse falando</td><td>estuviera hablando</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sec-label">Ejemplos en contexto</div>
+      <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">estou estudando</span> português há dois anos.</div><div class="ex-es">Estoy estudiando portugués hace dos años.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Ontem ela <span class="epr">estava cozinhando</span> quando o telefone tocou.</div><div class="ex-es">Ayer estaba cocinando cuando sonó el teléfono.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Amanhã a esta hora, <span class="epr">estarei voando</span> para Paris.</div><div class="ex-es">Mañana a esta hora estaré volando a París.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Se ele <span class="epr">estivesse trabalhando</span>, eu não atrapalharia.</div><div class="ex-es">Si estuviera trabajando, no le molestaría.</div></div>
+
+      <div class="note-box"><strong>Diferencia matiz:</strong> <em>eu falo português</em> (presente, capacidad o hábito) vs <em>eu estou falando português</em> (en este instante). El segundo enfatiza la acción en curso "ahora mismo".</div>
+    </div></div>
+  </div>
+
+  <!-- 4. PERÍFRASIS -->
+  <div class="sec-block" id="s-perifrases">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        Además de <em>estar + gerúndio</em>, el PB usa otras perífrasis con gerúndio que aportan matices distintos: dirección, continuidad, repetición, gradualidad.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('per',0)">Ir + gerúndio</button>
+        <button class="chip pr"        onclick="selectChip('per',1)">Vir + gerúndio</button>
+        <button class="chip pr"        onclick="selectChip('per',2)">Andar + gerúndio</button>
+        <button class="chip pr"        onclick="selectChip('per',3)">Ficar + gerúndio</button>
+        <button class="chip pr"        onclick="selectChip('per',4)">Continuar / seguir + ger.</button>
+      </div>
+      <div id="per-panels">
+
+        <div class="chip-panel active" id="per-p-0">
+          <div class="def-box"><strong>Ir + gerúndio</strong> indica progresión gradual hacia el futuro, una acción que se desarrolla poco a poco.</div>
+          <div class="example-block pr"><div class="ex-fr">A situação <span class="epr">vai melhorando</span> aos poucos.</div><div class="ex-es">La situación va mejorando poco a poco.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ele <span class="epr">vai aprendendo</span> aos poucos.</div><div class="ex-es">Va aprendiendo paulatinamente.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Vão <span class="epr">vendo</span> como vocês podem ajudar.</div><div class="ex-es">Vayan viendo cómo pueden ayudar.</div></div>
+        </div>
+
+        <div class="chip-panel" id="per-p-1">
+          <div class="def-box"><strong>Vir + gerúndio</strong> indica progresión desde el pasado hasta el presente. Implica continuidad acumulativa.</div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">venho trabalhando</span> nisso há meses.</div><div class="ex-es">Vengo trabajando en esto desde hace meses.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ela <span class="epr">vem dizendo</span> isso há tempo.</div><div class="ex-es">Lleva tiempo diciendo eso.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Os preços <span class="epr">vêm subindo</span> constantemente.</div><div class="ex-es">Los precios vienen subiendo constantemente.</div></div>
+        </div>
+
+        <div class="chip-panel" id="per-p-2">
+          <div class="def-box"><strong>Andar + gerúndio</strong> indica acción habitual o repetida con cierta dispersión en el tiempo. Muy PB.</div>
+          <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">ando estudando</span> bastante ultimamente.</div><div class="ex-es">Últimamente he estado estudiando bastante.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ele <span class="epr">anda meio estranho</span> esses dias.</div><div class="ex-es">Anda algo raro estos días.</div><div class="ex-note">Con adjetivo, no gerúndio, pero misma idea de "andar = mostrarse continuamente".</div></div>
+          <div class="example-block pr"><div class="ex-fr">A gente <span class="epr">anda saindo</span> muito.</div><div class="ex-es">Hemos estado saliendo mucho.</div></div>
+        </div>
+
+        <div class="chip-panel" id="per-p-3">
+          <div class="def-box"><strong>Ficar + gerúndio</strong> indica permanencia en una acción o estado, o repetición. Muy productiva en PB.</div>
+          <div class="example-block pr"><div class="ex-fr">Não <span class="epr">fique</span> me <span class="epr">olhando</span> assim!</div><div class="ex-es">¡No te quedes mirándome así!</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ela <span class="epr">ficou esperando</span> a noite toda.</div><div class="ex-es">Estuvo esperando toda la noche.</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Fica repetindo</span> a mesma coisa.</div><div class="ex-es">Se la pasa repitiendo lo mismo.</div></div>
+        </div>
+
+        <div class="chip-panel" id="per-p-4">
+          <div class="def-box"><strong>Continuar / seguir + gerúndio</strong> marca persistencia explícita de la acción.</div>
+          <div class="example-block pr"><div class="ex-fr">Ele <span class="epr">continua trabalhando</span> na mesma empresa.</div><div class="ex-es">Sigue trabajando en la misma empresa.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ela <span class="epr">continua dizendo</span> que vai mudar.</div><div class="ex-es">Sigue diciendo que va a cambiar.</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Sigam fazendo</span> o que estão fazendo.</div><div class="ex-es">Sigan haciendo lo que están haciendo.</div></div>
+          <div class="note-box"><strong>Variante PE:</strong> en Portugal, <em>continuar a + infinitivo</em>: <em>continua a trabalhar</em>. En PB ambas formas coexisten, con preferencia por gerúndio.</div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 5. ADVERBIAL -->
+  <div class="sec-block" id="s-adverbial">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El gerúndio con valor adverbial expresa <strong>circunstancia</strong> (modo, causa, tiempo, condición, concesión) de la acción principal. Funciona como en español, italiano o francés.
+      </div>
+
+      <div class="chip-bar">
+        <button class="chip pr active" onclick="selectChip('adv',0)">Modal</button>
+        <button class="chip pr"        onclick="selectChip('adv',1)">Temporal</button>
+        <button class="chip pr"        onclick="selectChip('adv',2)">Causal</button>
+        <button class="chip pr"        onclick="selectChip('adv',3)">Condicional</button>
+        <button class="chip pr"        onclick="selectChip('adv',4)">Absoluto</button>
+      </div>
+      <div id="adv-panels">
+
+        <div class="chip-panel active" id="adv-p-0">
+          <div class="def-box">Indica el modo en que se realiza la acción principal. Equivale a "haciendo + X" o "de manera + X" español.</div>
+          <div class="example-block pr"><div class="ex-fr">Ele saiu <span class="epr">correndo</span>.</div><div class="ex-es">Salió corriendo.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Ela respondeu <span class="epr">sorrindo</span>.</div><div class="ex-es">Respondió sonriendo.</div></div>
+          <div class="example-block pr"><div class="ex-fr">Aprendemos <span class="epr">praticando</span> todos os dias.</div><div class="ex-es">Aprendemos practicando todos los días.</div></div>
+        </div>
+
+        <div class="chip-panel" id="adv-p-1">
+          <div class="def-box">Indica simultaneidad o secuencia temporal con la acción principal.</div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Saindo</span> daqui, vou direto pra casa.</div><div class="ex-es">Al salir de aquí, voy directo a casa.</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Lendo</span> o jornal, ele tomava café.</div><div class="ex-es">Leyendo el periódico, él tomaba café.</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Caminhando</span> pelo parque, ouvi os pássaros.</div><div class="ex-es">Caminando por el parque, oí a los pájaros.</div></div>
+        </div>
+
+        <div class="chip-panel" id="adv-p-2">
+          <div class="def-box">Expresa la causa o motivo de la acción principal.</div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Sendo</span> rico, ele pode viajar muito.</div><div class="ex-es">Siendo rico, puede viajar mucho.</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Não tendo</span> dinheiro, ficou em casa.</div><div class="ex-es">Al no tener dinero, se quedó en casa.</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Sabendo</span> da verdade, ela se afastou.</div><div class="ex-es">Sabiendo la verdad, se alejó.</div></div>
+        </div>
+
+        <div class="chip-panel" id="adv-p-3">
+          <div class="def-box">Equivale a una condición ("si + verbo conjugado").</div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Estudando</span> muito, você passa na prova.</div><div class="ex-es">Estudiando mucho (si estudias mucho), apruebas el examen.</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Pagando</span> à vista, você ganha desconto.</div><div class="ex-es">Pagando al contado, ganas descuento.</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Querendo</span>, a gente consegue.</div><div class="ex-es">Queriendo, lo conseguimos. / Si uno quiere, lo consigue.</div></div>
+        </div>
+
+        <div class="chip-panel" id="adv-p-4">
+          <div class="def-box">Construção absoluta: el gerúndio tiene su propio sujeto, distinto del de la oración principal.</div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">O sol nascendo</span>, os pássaros começaram a cantar.</div><div class="ex-es">Al amanecer, los pájaros empezaron a cantar.</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Todos estando</span> presentes, a reunião começou.</div><div class="ex-es">Estando todos presentes, la reunión empezó.</div></div>
+          <div class="example-block pr"><div class="ex-fr"><span class="epr">Eu mandando</span>, ninguém desobedece.</div><div class="ex-es">Mandando yo, nadie desobedece.</div></div>
+          <div class="note-box"><strong>Marcador culto:</strong> el gerúndio absoluto es típico de prosa formal, literatura, periodismo culto. Aparece poco en habla cotidiana.</div>
+        </div>
+
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. GERUNDISMO -->
+  <div class="sec-block" id="s-gerundismo">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">
+        El <strong>gerundismo</strong> es un fenómeno típico del PB hablado, especialmente en contextos de atención al cliente (call centers, comercio), donde se usa la perífrasis <em>vou estar + gerúndio</em> para acciones futuras. Es muy criticado por puristas, pero está extendidísimo.
+      </div>
+
+      <div class="alert-box">
+        <span class="alert-icon">⚠️</span>
+        <div class="alert-text">
+          <strong>Gerundismo:</strong> <em>vou estar transferindo / vou estar mandando / vou estar verificando</em>. Equivale a "voy a estar haciendo" en español de Latinoamérica. Es típico de operadores de telemarketing y servicio al cliente.
+        </div>
+      </div>
+
+      <div class="sec-label">Ejemplos típicos del gerundismo</div>
+      <div class="example-block pr"><div class="ex-fr">Senhor, eu <span class="epr">vou estar transferindo</span> sua chamada.</div><div class="ex-es">Señor, voy a estarle transfiriendo la llamada.</div></div>
+      <div class="example-block pr"><div class="ex-fr">A gente <span class="epr">vai estar mandando</span> o boleto por e-mail.</div><div class="ex-es">Le vamos a estar mandando el recibo por correo.</div></div>
+      <div class="example-block pr"><div class="ex-fr">Eu <span class="epr">vou estar verificando</span> sua conta agora mesmo.</div><div class="ex-es">Voy a estar verificando su cuenta ahora mismo.</div></div>
+
+      <div class="warn-box"><span class="warn-icon">⚠️</span>
+        <div class="warn-text"><strong>Crítica purista:</strong> los manuales de estilo y la gramática normativa rechazan el gerundismo. Alternativas correctas: <em>vou transferir / vou mandar / vou verificar</em> (futuro inminente sin progresivo) o <em>estou transferindo</em> (acción en curso). En escritura formal evita el gerundismo.</div>
+      </div>
+
+      <div class="sec-label">Alternativas correctas</div>
+      <div class="table-wrap"><table class="gram-table">
+        <thead><tr><th>Gerundismo (criticado)</th><th>Forma correcta</th></tr></thead>
+        <tbody>
+          <tr><td>Vou estar transferindo a chamada.</td><td>Vou transferir a chamada.</td></tr>
+          <tr><td>Vou estar mandando o documento.</td><td>Vou mandar o documento. / Vou enviar o documento.</td></tr>
+          <tr><td>Estaremos verificando.</td><td>Vamos verificar.</td></tr>
+          <tr><td>Vou estar passando aí às 10h.</td><td>Vou passar aí às 10h. / Passo aí às 10h.</td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+  </div>
+
+  <!-- 7. TRAMPAS -->
+  <div class="sec-block" id="s-trampas">
+    <div class="gram-card"><div class="gram-card-body">
+      <div class="def-box">Los 8 errores más frecuentes con el gerúndio en portugués.</div>
+      <div class="trap-cards" id="trap-cards"></div>
+    </div></div>
+  </div>
+
+</div><!-- /panel-ref -->
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Voltar ao topo
+  </button>
+</footer>
+</div><!-- /main-layout -->
+
+<script src="design.js"></script>
+<script>
+const TRAPS = [
+  {name:'Estar a + infinitivo en PB',
+   wrong:"Estou a falar (PB)",
+   right:"Estou falando",
+   expl:'En PB, la forma progresiva normal es <strong>estar + gerúndio</strong>: <em>estou falando, está chegando, estávamos dormindo</em>. El <em>estar a + inf.</em> es de PE y suena raro o regionalmente marcado en Brasil. Para hispanohablantes que vienen del español, esta es la confusión clave.'},
+  {name:'Gerundismo en contextos formales',
+   wrong:"Vou estar mandando o e-mail.",
+   right:"Vou mandar o e-mail. / Mando o e-mail.",
+   expl:'En escritura formal y registro cuidado, evita <em>vou estar + gerúndio</em>. La forma correcta es el futuro simple o el presente con valor futuro. El gerundismo es típico del habla de servicio (telemarketing) y está estigmatizado.'},
+  {name:'Confundir gerúndio y particípio de vir',
+   wrong:"Está vindo / tinha vindo (sin distinguir)",
+   right:"Está vindo (gerúndio = viniendo) / tinha vindo (particípio = había venido)",
+   expl:'<em>Vindo</em> es <strong>tanto gerúndio como particípio</strong> de <em>vir</em>. La función la marca el auxiliar: <em>estar + vindo</em> (progresivo) vs <em>ter + vindo</em> (pasado compuesto). Lo mismo: <em>está vindo</em> = "está viniendo", <em>tinha vindo</em> = "había venido".'},
+  {name:'Pôr y derivados: pondo (no ponendo)',
+   wrong:"Estou ponendo / supondo (correcto) / disponendo (incorrecto)",
+   right:"Pondo, supondo, dispondo, propondo, compondo",
+   expl:'<em>Pôr</em> y todos sus derivados (<em>supor, dispor, propor, compor, repor, transpor, opor</em>) forman el gerúndio con <strong>-ondo</strong>: <em>pondo, supondo, dispondo, propondo, compondo, repondo</em>. Conserva la raíz pon-, no ponen-.'},
+  {name:'Gerúndio con sujeto distinto sin marca',
+   wrong:"Saindo de casa, encontrei meu irmão. (¿quién sale?)",
+   right:"Saindo de casa, encontrei meu irmão. (= ambos saliendo) o eu saindo, ele veio.",
+   expl:'El gerúndio simple presupone que el sujeto coincide con el principal. Si el sujeto es distinto, hay que <strong>explicitarlo</strong> (construcción absoluta): <em>O sol nascendo, partimos</em>, <em>Eu falando, ele escutava</em>. Si no, queda ambiguo.'},
+  {name:'Gerúndio + objeto: orden de pronombres',
+   wrong:"Estou o vendo (literario) / Estou vendo o (incorrecto)",
+   right:"Estou vendo ele. (PB oral) / Vendo-o (norma escrita)",
+   expl:'En PB hablado, el clítico va antes del verbo conjugado: <em>te estou vendo</em>. En escritura formal, ênclise al gerúndio: <em>vendo-o, vendo-te</em>. Lo más común en PB oral es usar <em>ele/ela</em>: <em>estou vendo ele</em>.'},
+  {name:'Gerúndio como adjetivo (uso restringido)',
+   wrong:"Uma criança brincando (= que brinca, gerúndio adjetivo)",
+   right:"Uma criança brincando (válido pero típico de imágenes/leyendas)",
+   expl:'El gerúndio puede modificar un sustantivo, pero en portugués este uso es <strong>restringido</strong>: aparece bien en descripciones (pinturas, fotos: <em>criança brincando, pássaros voando</em>), pero suena raro como atributo cualquiera. Para "una persona que habla francés" se prefiere <em>uma pessoa que fala francês</em>, no <em>uma pessoa falando francês</em>.'},
+  {name:'Gerúndio en lugar de subordinada temporal',
+   wrong:"Comendo pão (= mientras comía pan, sin contexto)",
+   right:"Enquanto comia pão / Comendo pão (con contexto narrativo)",
+   expl:'En portugués el gerúndio temporal está más restringido que en español. <em>Comendo pão, ele falou</em> es aceptable en narrativa. Pero en contextos formales se prefiere la subordinada: <em>enquanto comia pão, ele falou</em>. El "gerundio durativo" muy español ("Estoy comiendo aquí desde hace una hora") se traduce mejor con <em>estar + gerúndio + há</em>: <em>estou comendo aqui há uma hora</em>.'},
+];
+
+function renderTraps() {
+  document.getElementById('trap-cards').innerHTML = TRAPS.map(t =>
+    `<div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+        <div class="trap-vs">
+          <span class="trap-wrong">✗ ${t.wrong}</span>
+          <span class="trap-right">✓ ${t.right}</span>
+        </div>
+      </div>
+      <div class="trap-expl">${t.expl}</div>
+    </div>`).join('');
+}
+
+renderTraps();
+</script>
+</body>
+</html>
