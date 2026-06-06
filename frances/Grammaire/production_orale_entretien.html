@@ -6,107 +6,146 @@
 <title>Entretien dirigé · DELF B2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#f3f1ec; --card:#fbfaf6; --border:#e2ddd0;
-  --text:#1a1814; --text2:#44413a; --text3:#706c64;
-  --accent:#7a5a0a; --accent-light:#f0e0c0; --accent-mid:#b89050;
-  --shadow:0 2px 14px rgba(0,0,0,.10),0 1px 4px rgba(0,0,0,.06);
-  --shadow-sm:0 1px 6px rgba(0,0,0,.07);
-  --radius:20px; --radius-sm:10px;
-
-  --conn:#a4530b;     --conn-bg:#fdf0d0;   --conn-border:#e9a83a;
-  --sub:#6d28d9;      --sub-bg:#ede9fe;    --sub-border:#a78bfa;
-  --past:#1d4ed8;     --past-bg:#dbeafe;   --past-border:#60a5fa;
-  --fut:#047857;      --fut-bg:#d1fae5;    --fut-border:#34d399;
-  --cond:#be185d;     --cond-bg:#fce7f3;   --cond-border:#f472b6;
+:root{
+  /* Page identity: Entretien · Production orale → dk-purple */
+  --primary:#3f2456; --primary-soft:#efe9f4; --primary-mid:#7a609a; --primary-strong:#2a1340;
+  --primary-glow:rgba(63,36,86,.14);
+  /* Neutrals */
+  --bg:#f7f7f5; --bg-elevated:#fbfbfa; --card:#ffffff;
+  --border:#ececec; --border-strong:#dfdfdf;
+  --text:#18181b; --text2:#52525b; --text3:#71717a;
+  /* Shadows */
+  --shadow-xs:0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:0 2px 8px rgba(15,23,42,.04),0 1px 2px rgba(15,23,42,.03);
+  --shadow:0 4px 16px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+  --shadow-lg:0 12px 32px rgba(15,23,42,.08),0 2px 6px rgba(15,23,42,.04);
+  --shadow-primary:0 6px 20px var(--primary-glow);
+  /* Geometry */
+  --radius:18px; --radius-md:14px; --radius-sm:10px; --radius-xs:6px; --radius-pill:999px;
+  /* Motion */
+  --ease:cubic-bezier(0.4,0,0.2,1); --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --t-fast:120ms; --t-base:200ms;
+  /* Highlight palette */
+  --conn:#b45309;     --conn-bg:#fffbeb;   --conn-border:#fde68a;
+  --sub:#7c3aed;      --sub-bg:#f5f3ff;    --sub-border:#ddd6fe;
+  --past:#1d4ed8;     --past-bg:#eff6ff;   --past-border:#bfdbfe;
+  --fut:#15803d;      --fut-bg:#ecfdf5;    --fut-border:#bbf7d0;
+  --cond:#be185d;     --cond-bg:#fdf2f8;   --cond-border:#fbcfe8;
+}
+[data-theme="dark"]{
+  --primary:#b89adb; --primary-soft:#20162e; --primary-mid:#8a6cba; --primary-strong:#dcc6ec;
+  --primary-glow:rgba(184,154,219,.18);
+  --bg:#0a0a0b; --bg-elevated:#131316; --card:#18181b;
+  --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.2);
+  --shadow:0 4px 16px rgba(0,0,0,.30),0 1px 3px rgba(0,0,0,.20);
+  --shadow-lg:0 12px 32px rgba(0,0,0,.40),0 2px 6px rgba(0,0,0,.25);
+  --shadow-primary:0 6px 24px var(--primary-glow);
+  --conn:#fbbf24;     --conn-bg:rgba(251,191,36,.10);     --conn-border:rgba(251,191,36,.30);
+  --sub:#a78bfa;      --sub-bg:rgba(167,139,250,.10);     --sub-border:rgba(167,139,250,.30);
+  --past:#60a5fa;     --past-bg:rgba(96,165,250,.10);     --past-border:rgba(96,165,250,.30);
+  --fut:#4ade80;      --fut-bg:rgba(74,222,128,.10);      --fut-border:rgba(74,222,128,.30);
+  --cond:#f472b6;     --cond-bg:rgba(244,114,182,.10);    --cond-border:rgba(244,114,182,.30);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
+*:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-xs);}
+html{scroll-behavior:smooth;}
 body{
-  font-family:'DM Sans',sans-serif;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
   background:var(--bg);
   color:var(--text);
   min-height:100vh;
+  line-height:1.6;
   -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  transition:background var(--t-base) var(--ease), color var(--t-base) var(--ease);
 }
 
-/* === LOCK SCREEN === */
+/* ===== LOCK SCREEN ===== */
 .lock-screen{
   position:fixed;inset:0;
-  background:var(--bg);
+  background:linear-gradient(180deg, var(--bg-elevated), var(--bg));
   display:flex;align-items:center;justify-content:center;
-  z-index:1000;padding:20px;
+  z-index:1000;padding:24px;
 }
 .lock-card{
   background:var(--card);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  box-shadow:var(--shadow);
+  box-shadow:var(--shadow-lg);
   padding:42px 34px 36px;
-  max-width:380px;width:100%;
+  max-width:400px;width:100%;
   text-align:center;
 }
 .lock-icon{
-  width:56px;height:56px;
-  margin:0 auto 18px;
-  background:var(--accent-light);
-  border-radius:50%;
+  width:60px;height:60px;
+  margin:0 auto 20px;
+  background:var(--primary-soft);
+  border-radius:var(--radius-pill);
   display:flex;align-items:center;justify-content:center;
-  color:var(--accent);
+  color:var(--primary);
 }
 .lock-card h2{
-  font-family:'Manrope',sans-serif;
-  font-size:1.35rem;font-weight:700;
+  font-family:'Fraunces',Georgia,serif;
+  font-size:1.5rem;font-weight:600;
   letter-spacing:-.012em;
   margin-bottom:8px;
+  color:var(--text);
 }
 .lock-card .lock-sub{
   color:var(--text3);
-  font-size:.86rem;
+  font-size:.92rem;
   margin-bottom:24px;
-  line-height:1.5;
+  line-height:1.55;
 }
 .lock-card input{
   width:100%;
   padding:13px 16px;
   border:1px solid var(--border);
-  border-radius:12px;
-  font-family:'DM Sans',sans-serif;
+  border-radius:var(--radius-md);
+  font-family:inherit;
   font-size:1.1rem;
-  background:#fff;
+  background:var(--bg-elevated);
+  color:var(--text);
   text-align:center;
   letter-spacing:.3em;
   outline:none;
-  transition:border-color .15s, box-shadow .15s;
+  transition:all var(--t-base) var(--ease);
   margin-bottom:12px;
 }
 .lock-card input:focus{
-  border-color:var(--accent-mid);
-  box-shadow:0 0 0 3px rgba(184,144,80,.18);
+  border-color:var(--primary);
+  background:var(--card);
+  box-shadow:0 0 0 3px var(--primary-glow);
 }
 .lock-card button{
   width:100%;
   padding:12px;
-  background:var(--text);
+  background:var(--primary);
   color:#fff;
   border:none;
-  border-radius:12px;
-  font-family:'DM Sans',sans-serif;
-  font-size:.92rem;
+  border-radius:var(--radius-md);
+  font-family:inherit;
+  font-size:.95rem;
   font-weight:600;
   cursor:pointer;
-  transition:background .15s, transform .1s;
+  box-shadow:var(--shadow-primary);
+  transition:all var(--t-base) var(--ease);
 }
-.lock-card button:hover{background:#000;}
-.lock-card button:active{transform:scale(.98);}
+.lock-card button:hover{background:var(--primary-strong); transform:translateY(-1px);}
+.lock-card button:active{transform:translateY(0);}
 .pw-error{
-  color:#b1102a;
-  font-size:.82rem;
+  color:#b91c1c;
+  font-size:.85rem;
   margin-top:10px;
   display:none;
   font-weight:500;
 }
+[data-theme="dark"] .pw-error{color:#f87171;}
 .pw-error.show{display:block;animation:shake .3s ease;}
 @keyframes shake{
   0%,100%{transform:translateX(0);}
@@ -114,157 +153,232 @@ body{
   75%{transform:translateX(4px);}
 }
 
-/* === BACK BUTTON === */
-.back-btn{
-  position:fixed;top:18px;left:18px;z-index:100;
-  display:inline-flex;align-items:center;gap:6px;
-  background:var(--card);border:1px solid var(--border);
-  border-radius:20px;padding:7px 14px 7px 11px;
-  font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;
-  color:var(--text2);text-decoration:none;
-  box-shadow:var(--shadow-sm);transition:all .15s;
+/* ===== HEADER ===== */
+.site-header{
+  background:linear-gradient(180deg, var(--bg-elevated), var(--bg));
+  padding:24px 20px 22px;
+  position:relative;
 }
-.back-btn:hover{background:var(--accent-light);border-color:var(--accent);color:var(--accent);transform:translateX(-2px);}
+.site-header::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+  background:linear-gradient(90deg, transparent, var(--border-strong) 20%, var(--border-strong) 80%, transparent);
+}
+.header-actions{
+  max-width:1000px;margin:0 auto 16px;
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius-pill);
+  padding:8px 14px 8px 11px;
+  font-family:inherit;font-size:.8rem;font-weight:500;
+  color:var(--text2);text-decoration:none;
+  box-shadow:var(--shadow-sm);
+  transition:all var(--t-base) var(--ease);
+}
+.back-btn:hover{
+  border-color:var(--primary-mid);color:var(--primary);
+  transform:translateX(-2px);box-shadow:var(--shadow);
+}
+.back-btn:active{transform:translateX(-2px) scale(.97);}
 .back-btn .arrow{font-size:1rem;line-height:1;}
 
-/* === HEADER === */
-.site-header{
-  background:var(--card);
-  border-bottom:1px solid var(--border);
-  padding:38px 20px 28px;
+.theme-toggle{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:38px;height:38px;border-radius:var(--radius-pill);
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text2);cursor:pointer;
+  box-shadow:var(--shadow-sm);
+  transition:all var(--t-base) var(--ease);
 }
-.header-inner{max-width:980px;margin:0 auto;}
+.theme-toggle:hover{
+  color:var(--primary);border-color:var(--primary-mid);
+  transform:translateY(-1px);box-shadow:var(--shadow);
+}
+.theme-toggle .icon-sun{display:none;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+
+.header-inner{max-width:1000px;margin:0 auto;}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;}
 .header-tag{
-  display:inline-block;
-  font-size:.66rem;font-weight:700;
+  font-size:.66rem;font-weight:600;
   letter-spacing:.14em;text-transform:uppercase;
-  color:var(--accent);background:var(--accent-light);
-  border-radius:20px;padding:4px 12px;
-  margin-bottom:12px;
+  color:var(--primary);background:var(--primary-soft);
+  border-radius:var(--radius-pill);padding:4px 12px;
 }
 .site-header h1{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1.7rem,5vw,2.5rem);
-  font-weight:700;letter-spacing:-.015em;
-  margin-bottom:8px;
+  font-family:'Fraunces',Georgia,serif;
+  font-optical-sizing:auto;
+  font-size:clamp(1.6rem,5vw,2.4rem);
+  font-weight:600;letter-spacing:-.02em;
+  line-height:1.1;
+  color:var(--text);
 }
 .header-sub{
-  font-size:.88rem;color:var(--text3);
-  font-weight:500;line-height:1.5;
-  max-width:620px;
+  font-size:.92rem;color:var(--text3);
+  font-weight:400;margin-top:6px;line-height:1.55;
+  max-width:680px;
 }
 
-/* === LEGEND === */
-.legend-wrap{
-  background:var(--card);
+/* ===== CONTROLS BAR (legend + toggle) ===== */
+.controls-bar{
+  background:var(--bg-elevated);
   border-bottom:1px solid var(--border);
   padding:14px 20px;
 }
-.legend{
-  max-width:980px;margin:0 auto;
-  display:flex;flex-wrap:wrap;gap:8px 10px;
+.controls-inner{
+  max-width:1000px;margin:0 auto;
+  display:flex;flex-wrap:wrap;gap:12px;
   align-items:center;
+}
+.legend{
+  display:flex;flex-wrap:wrap;gap:6px 7px;
 }
 .legend-item{
   display:inline-flex;align-items:center;
-  font-size:.73rem;font-weight:600;
-  padding:4px 10px;border-radius:14px;
+  font-size:.72rem;font-weight:600;
+  padding:4px 10px;border-radius:var(--radius-pill);
   border:1px solid;
 }
 .legend-item.l-conn{background:var(--conn-bg);color:var(--conn);border-color:var(--conn-border);}
-.legend-item.l-sub{background:var(--sub-bg);color:var(--sub);border-color:var(--sub-border);}
+.legend-item.l-sub {background:var(--sub-bg); color:var(--sub); border-color:var(--sub-border);}
 .legend-item.l-past{background:var(--past-bg);color:var(--past);border-color:var(--past-border);}
-.legend-item.l-fut{background:var(--fut-bg);color:var(--fut);border-color:var(--fut-border);}
+.legend-item.l-fut {background:var(--fut-bg); color:var(--fut); border-color:var(--fut-border);}
 .legend-item.l-cond{background:var(--cond-bg);color:var(--cond);border-color:var(--cond-border);}
-.toggle-btn{
-  margin-left:auto;
-  padding:6px 14px;
-  background:var(--text);color:#fff;
-  border:none;border-radius:14px;
-  font-family:'DM Sans',sans-serif;
-  font-size:.74rem;font-weight:600;
-  cursor:pointer;
-  transition:background .15s;
-  white-space:nowrap;
-}
-.toggle-btn:hover{background:#000;}
-.toggle-btn.off{background:#9a9690;}
 
-/* === TABS === */
+.toggle-wrap{
+  margin-left:auto;
+  display:flex;align-items:center;gap:9px;
+  flex-shrink:0;
+}
+.toggle-text{
+  font-size:.76rem;font-weight:600;
+  color:var(--text2);letter-spacing:.01em;
+  user-select:none;
+}
+.toggle-state{
+  font-size:.62rem;font-weight:700;
+  letter-spacing:.14em;color:var(--text3);
+  text-transform:uppercase;
+  min-width:22px;text-align:left;
+  user-select:none;
+  transition:color var(--t-base) var(--ease);
+}
+.toggle-state.on{color:var(--primary);}
+.toggle-switch{
+  position:relative;
+  width:46px;height:25px;
+  background:var(--border-strong);
+  border:0;border-radius:var(--radius-pill);
+  cursor:pointer;
+  transition:background var(--t-base) var(--ease);
+  padding:0;flex-shrink:0;
+}
+.toggle-switch.on{background:var(--primary);}
+.toggle-thumb{
+  position:absolute;
+  top:2px;left:2px;
+  width:21px;height:21px;
+  background:#fff;border-radius:50%;
+  box-shadow:0 1px 3px rgba(0,0,0,.28);
+  transition:transform var(--t-base) var(--ease-out);
+}
+.toggle-switch.on .toggle-thumb{transform:translateX(21px);}
+
+/* ===== TABS ===== */
 .tabs-wrap{
   position:sticky;top:0;z-index:50;
-  background:rgba(243,241,236,.92);
-  backdrop-filter:blur(12px) saturate(180%);
-  -webkit-backdrop-filter:blur(12px) saturate(180%);
+  background:color-mix(in srgb, var(--bg-elevated) 85%, transparent);
+  backdrop-filter:saturate(180%) blur(12px);
+  -webkit-backdrop-filter:saturate(180%) blur(12px);
   border-bottom:1px solid var(--border);
+  padding:13px 20px;
 }
 .tabs{
-  max-width:980px;margin:0 auto;
-  padding:11px 20px;
-  display:flex;flex-wrap:wrap;gap:6px;
-  overflow-x:auto;
+  max-width:1000px;margin:0 auto;
+  display:flex;gap:7px;flex-wrap:wrap;
 }
 .tab{
-  border:1px solid transparent;
-  border-radius:20px;
-  padding:8px 14px;
-  font-family:'DM Sans',sans-serif;
-  font-size:.82rem;font-weight:600;
+  border:1px solid var(--border);
+  border-radius:var(--radius-pill);
+  padding:8px 16px;
+  font-family:inherit;
+  font-size:.83rem;font-weight:500;
   cursor:pointer;
-  background:rgba(0,0,0,.045);
+  background:var(--card);
   color:var(--text2);
-  transition:all .15s;
+  transition:all var(--t-base) var(--ease);
   white-space:nowrap;
+  display:inline-flex;align-items:center;gap:6px;
 }
-.tab:hover{background:var(--accent-light);color:var(--accent);}
-.tab.active{background:var(--text);color:#fff;}
+.tab:hover{
+  border-color:var(--primary-mid);color:var(--primary);
+  transform:translateY(-1px);box-shadow:var(--shadow-xs);
+}
+.tab.active{
+  background:var(--primary);color:#fff;
+  border-color:var(--primary);
+  font-weight:600;
+  box-shadow:var(--shadow-primary);
+}
+.tab-num{
+  font-size:.72rem;font-weight:700;
+  opacity:.6;
+}
+.tab.active .tab-num{opacity:.8;}
 
-/* === MAIN === */
-.main{max-width:980px;margin:0 auto;padding:30px 20px 60px;}
+/* ===== MAIN ===== */
+.main{max-width:1000px;margin:0 auto;padding:32px 20px 64px;}
 .panel{display:none;}
-.panel.active{display:block;animation:fadeIn .35s ease;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.panel.active{display:block;animation:fadeSlideIn 360ms var(--ease-out);}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 
 .panel-header{
-  margin-bottom:24px;
+  margin-bottom:28px;
   padding-bottom:18px;
   border-bottom:1px solid var(--border);
 }
 .panel-header h2{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1.4rem,4vw,1.8rem);
-  font-weight:700;
-  letter-spacing:-.012em;
+  font-family:'Fraunces',Georgia,serif;
+  font-size:clamp(1.5rem,4vw,2rem);
+  font-weight:600;letter-spacing:-.018em;
+  line-height:1.15;
   margin-bottom:6px;
+  color:var(--text);
 }
 .panel-header .subtitle{
   font-size:.88rem;color:var(--text3);
   font-style:italic;
+  line-height:1.5;
 }
 
-.qa{margin-bottom:30px;}
+/* ===== Q&A ===== */
+.qa{margin-bottom:28px;}
 
 .ex{
-  font-family:'DM Sans',sans-serif;
+  font-family:inherit;
   font-size:.95rem;
   color:var(--text2);
   font-style:italic;
   padding:14px 18px;
-  background:rgba(122,90,10,.05);
-  border-left:3px solid var(--accent-mid);
-  border-radius:0 12px 12px 0;
+  background:var(--primary-soft);
+  border-left:3px solid var(--primary-mid);
+  border-radius:0 var(--radius-md) var(--radius-md) 0;
   margin-bottom:14px;
-  line-height:1.55;
+  line-height:1.6;
 }
-.ex strong{color:var(--text);font-style:normal;font-weight:700;}
+.ex strong{color:var(--primary);font-style:normal;font-weight:600;}
 
 .relance-label{
   display:inline-block;
-  font-size:.65rem;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;
-  color:var(--accent);
-  background:var(--accent-light);
-  padding:2px 9px;border-radius:10px;
+  font-size:.62rem;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--primary);
+  background:var(--card);
+  border:1px solid var(--primary-mid);
+  padding:2px 9px;border-radius:var(--radius-pill);
   margin-bottom:8px;
 }
 
@@ -272,9 +386,19 @@ body{
   background:var(--card);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:22px 26px 24px;
+  padding:24px 26px 26px;
   box-shadow:var(--shadow-sm);
+  position:relative;
+  overflow:hidden;
+  transition:box-shadow var(--t-base) var(--ease);
 }
+.rep::before{
+  content:""; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--primary), var(--primary-mid));
+  opacity:0; transition:opacity var(--t-base) var(--ease);
+}
+.rep:hover{box-shadow:var(--shadow);}
+.rep:hover::before{opacity:1;}
 .rep > p{
   font-size:1rem;
   line-height:1.85;
@@ -283,26 +407,33 @@ body{
 }
 .rep > p:last-child{margin-bottom:0;}
 .rep .name{
-  color:var(--accent);
+  color:var(--primary);
   font-weight:700;
-  font-size:.72rem;
-  letter-spacing:.12em;
+  font-size:.7rem;
+  letter-spacing:.14em;
   text-transform:uppercase;
-  display:block;
+  display:inline-block;
   margin-bottom:12px;
+  padding:3px 10px;
+  background:var(--primary-soft);
+  border-radius:var(--radius-pill);
 }
 
-/* === HIGHLIGHTS === */
+/* ===== HIGHLIGHTS ===== */
 .c-conn, .c-sub, .c-past, .c-fut, .c-cond{
   padding:1px 5px;
-  border-radius:5px;
+  border-radius:var(--radius-xs);
   border-bottom:2px solid;
-  transition:background .25s, color .25s, border-color .25s, font-weight .25s;
+  cursor:pointer;
+  transition:background var(--t-base) var(--ease), color var(--t-base) var(--ease), border-color var(--t-base) var(--ease), transform var(--t-fast) var(--ease);
+}
+.c-conn:hover, .c-sub:hover, .c-past:hover, .c-fut:hover, .c-cond:hover{
+  transform:translateY(-1px);
 }
 .c-conn{background:var(--conn-bg);color:var(--conn);border-bottom-color:var(--conn-border);}
-.c-sub{background:var(--sub-bg);color:var(--sub);border-bottom-color:var(--sub-border);font-weight:600;}
+.c-sub {background:var(--sub-bg); color:var(--sub); border-bottom-color:var(--sub-border); font-weight:600;}
 .c-past{background:var(--past-bg);color:var(--past);border-bottom-color:var(--past-border);}
-.c-fut{background:var(--fut-bg);color:var(--fut);border-bottom-color:var(--fut-border);font-weight:600;}
+.c-fut {background:var(--fut-bg); color:var(--fut); border-bottom-color:var(--fut-border); font-weight:600;}
 .c-cond{background:var(--cond-bg);color:var(--cond);border-bottom-color:var(--cond-border);font-weight:600;}
 
 body.no-highlights .c-conn,
@@ -315,42 +446,35 @@ body.no-highlights .c-cond{
   border-bottom:0;
   font-weight:inherit;
   padding:0;
+  cursor:text;
+  transform:none;
 }
 
-.hidden{display:none!important;}
-
-/* === TRANSLATION POPUP === */
-.c-conn, .c-sub, .c-past, .c-fut, .c-cond { cursor:pointer; }
-body.no-highlights .c-conn,
-body.no-highlights .c-sub,
-body.no-highlights .c-past,
-body.no-highlights .c-fut,
-body.no-highlights .c-cond { cursor:text; }
-
+/* ===== TRANSLATION POPUP ===== */
 .tr-popup{
   position:absolute;
   z-index:200;
-  background:#fff;
+  background:var(--card);
   border:1px solid var(--border);
-  border-radius:14px;
-  box-shadow:0 12px 32px rgba(0,0,0,.20), 0 3px 10px rgba(0,0,0,.10);
-  padding:14px 32px 14px 16px;
+  border-radius:var(--radius-md);
+  box-shadow:var(--shadow-lg);
+  padding:15px 36px 16px 18px;
   max-width:340px;
-  min-width:220px;
-  font-family:'DM Sans',sans-serif;
+  min-width:240px;
+  font-family:inherit;
   opacity:0;
   transform:translateY(-6px);
   pointer-events:none;
-  transition:opacity .18s ease, transform .18s ease;
+  transition:opacity var(--t-base) var(--ease), transform var(--t-base) var(--ease);
 }
 .tr-popup.show{opacity:1;transform:translateY(0);pointer-events:auto;}
 .tr-popup .tr-cat{
   display:inline-block;
-  font-size:.62rem;font-weight:700;
-  letter-spacing:.12em;text-transform:uppercase;
-  margin-bottom:9px;
+  font-size:.6rem;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:10px;
   padding:3px 10px;
-  border-radius:12px;
+  border-radius:var(--radius-pill);
   border:1px solid;
 }
 .tr-popup .tr-cat.cat-conn{background:var(--conn-bg);color:var(--conn);border-color:var(--conn-border);}
@@ -359,43 +483,180 @@ body.no-highlights .c-cond { cursor:text; }
 .tr-popup .tr-cat.cat-fut {background:var(--fut-bg); color:var(--fut); border-color:var(--fut-border);}
 .tr-popup .tr-cat.cat-cond{background:var(--cond-bg);color:var(--cond);border-color:var(--cond-border);}
 .tr-popup .tr-fr{
-  font-size:.85rem;
-  color:var(--text3);
+  font-family:'Fraunces',Georgia,serif;
+  font-size:.95rem;
+  color:var(--text2);
   font-style:italic;
   margin-bottom:6px;
   line-height:1.4;
 }
 .tr-popup .tr-es{
-  font-size:1.02rem;
+  font-size:1rem;
   color:var(--text);
-  font-weight:600;
+  font-weight:500;
   line-height:1.5;
 }
 .tr-popup .tr-close{
   position:absolute;
   top:8px;right:8px;
-  width:24px;height:24px;
+  width:26px;height:26px;
   border:0;
   background:transparent;
   color:var(--text3);
   cursor:pointer;
   font-size:.95rem;line-height:1;
-  border-radius:50%;
-  transition:background .15s, color .15s;
+  border-radius:var(--radius-pill);
+  transition:background var(--t-base) var(--ease), color var(--t-base) var(--ease);
   display:flex;align-items:center;justify-content:center;
 }
-.tr-popup .tr-close:hover{background:rgba(0,0,0,.06);color:var(--text);}
+.tr-popup .tr-close:hover{background:var(--bg-elevated);color:var(--text);}
+
+.hidden{display:none!important;}
+
+/* ===== PRONOUN HIGHLIGHTS (6th category) ===== */
+:root{
+  --pron:#0e7490;    --pron-bg:#ecfeff;    --pron-border:#a5f3fc;
+}
+[data-theme="dark"]{
+  --pron:#22d3ee;    --pron-bg:rgba(34,211,238,.10);    --pron-border:rgba(34,211,238,.30);
+}
+.c-pron{
+  padding:1px 5px;
+  border-radius:var(--radius-xs);
+  border-bottom:2px solid var(--pron-border);
+  cursor:pointer;
+  background:var(--pron-bg);
+  color:var(--pron);
+  font-weight:600;
+  transition:background var(--t-base) var(--ease), color var(--t-base) var(--ease), border-color var(--t-base) var(--ease), transform var(--t-fast) var(--ease);
+}
+.c-pron:hover{transform:translateY(-1px);}
+body.no-highlights .c-pron{
+  background:transparent;color:inherit;border-bottom:0;font-weight:inherit;padding:0;cursor:text;transform:none;
+}
+.legend-item.l-pron{background:var(--pron-bg);color:var(--pron);border-color:var(--pron-border);}
+.tr-popup .tr-cat.cat-pron{background:var(--pron-bg);color:var(--pron);border-color:var(--pron-border);}
+
+/* ===== EXAMPLE DETAILS (collapsible) ===== */
+.example-details{
+  margin-top:28px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:var(--shadow-sm);
+  transition:box-shadow var(--t-base) var(--ease);
+}
+.example-details:hover{box-shadow:var(--shadow);}
+.example-details > summary{
+  list-style:none;
+  cursor:pointer;
+  padding:18px 22px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  user-select:none;
+  background:var(--bg-elevated);
+  transition:background var(--t-base) var(--ease);
+}
+.example-details > summary::-webkit-details-marker{display:none;}
+.example-details > summary::marker{font-size:0;}
+.example-details > summary:hover{background:var(--primary-soft);}
+.example-details[open] > summary{border-bottom:1px solid var(--border);}
+.example-icon{
+  width:38px;height:38px;
+  border-radius:var(--radius-sm);
+  background:var(--primary-soft);
+  color:var(--primary);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.example-title{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:1.05rem;
+  font-weight:600;
+  color:var(--text);
+  flex:1;line-height:1.3;
+}
+.example-chevron{
+  color:var(--text3);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  transition:transform var(--t-base) var(--ease);
+}
+.example-details[open] .example-chevron{transform:rotate(180deg);}
+.example-body{padding:22px;}
+.example-controls{
+  margin-bottom:18px;
+  display:flex;flex-wrap:wrap;gap:10px;
+  align-items:center;
+}
+.example-marks-btn{
+  border:1px solid var(--border);
+  border-radius:var(--radius-pill);
+  padding:8px 16px;
+  font-family:inherit;
+  font-size:.82rem;font-weight:500;
+  background:var(--card);
+  color:var(--text2);
+  cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:all var(--t-base) var(--ease);
+}
+.example-marks-btn:hover{
+  border-color:var(--primary-mid);
+  color:var(--primary);
+  box-shadow:var(--shadow-xs);
+}
+.example-marks-btn.on{
+  background:var(--primary);
+  color:#fff;
+  border-color:var(--primary);
+  font-weight:600;
+  box-shadow:var(--shadow-primary);
+}
+.example-marks-btn .marks-icon{
+  width:8px;height:8px;border-radius:50%;
+  background:currentColor;opacity:.7;flex-shrink:0;
+}
+.example-letter{
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  padding:24px 26px;
+}
+.example-letter > p{
+  font-size:1rem;line-height:1.85;
+  margin-bottom:14px;color:var(--text);
+}
+.example-letter > p:last-child{margin-bottom:0;}
+.example-letter.no-marks .c-conn,
+.example-letter.no-marks .c-sub,
+.example-letter.no-marks .c-past,
+.example-letter.no-marks .c-fut,
+.example-letter.no-marks .c-cond,
+.example-letter.no-marks .c-pron{
+  background:transparent;color:inherit;
+  border-bottom:0;font-weight:inherit;
+  padding:0;cursor:text;transform:none;
+}
 
 @media (max-width:600px){
-  .back-btn{top:12px;left:12px;padding:6px 12px 6px 9px;font-size:.74rem;}
-  .site-header{padding:46px 18px 22px;}
-  .legend{gap:6px;}
+  .header-actions{margin-bottom:12px;}
+  .site-header{padding:20px 16px 18px;}
+  .header-sub{font-size:.86rem;}
+  .controls-bar{padding:12px 16px;}
+  .controls-inner{gap:10px;}
   .legend-item{font-size:.68rem;padding:3px 8px;}
-  .toggle-btn{font-size:.7rem;padding:5px 11px;margin-left:0;margin-top:6px;width:100%;}
-  .rep{padding:18px 18px;}
-  .rep > p{font-size:.95rem;line-height:1.75;}
-  .tabs{padding:9px 14px;}
-  .tab{font-size:.76rem;padding:7px 12px;}
+  .toggle-wrap{margin-left:0;width:100%;justify-content:flex-end;}
+  .toggle-text{font-size:.72rem;}
+  .toggle-state{font-size:.6rem;}
+  .tabs-wrap{padding:10px 14px;}
+  .tab{font-size:.78rem;padding:7px 13px;}
+  .main{padding:24px 14px 56px;}
+  .rep{padding:18px 18px 20px;}
+  .rep > p{font-size:.96rem;line-height:1.75;}
+  .ex{padding:12px 14px;font-size:.9rem;}
 }
 </style>
 </head>
@@ -405,7 +666,7 @@ body.no-highlights .c-cond { cursor:text; }
 <div id="lock" class="lock-screen">
   <div class="lock-card">
     <div class="lock-icon">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="3" y="11" width="18" height="11" rx="2"/>
         <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
       </svg>
@@ -421,37 +682,54 @@ body.no-highlights .c-cond { cursor:text; }
 <!-- ==================== CONTENT ==================== -->
 <div id="content" class="hidden">
 
-<a class="back-btn" href="index_grammaire.html" title="Volver al índice de gramática">
-  <span class="arrow">←</span><span>Grammaire</span>
-</a>
-
 <header class="site-header">
+  <div class="header-actions">
+    <a class="back-btn" href="index_grammaire.html" title="Volver al índice de gramática">
+      <span class="arrow">←</span><span>Grammaire</span>
+    </a>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema claro/oscuro">
+      <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
   <div class="header-inner">
-    <span class="header-tag">DELF B2 · Production orale</span>
+    <div class="header-top">
+      <span class="header-tag">DELF B2 · Production orale</span>
+    </div>
     <h1>Entretien dirigé</h1>
-    <p class="header-sub">6 diálogos completos para memorización · estructuras, conectores, tiempos verbales y subjuntivos resaltados por colores.</p>
+    <p class="header-sub">6 diálogos completos para memorización · estructuras, conectores, tiempos verbales y subjuntivos resaltados por colores. Toca cualquier resaltado para ver la traducción.</p>
   </div>
 </header>
 
-<div class="legend-wrap">
-  <div class="legend">
-    <span class="legend-item l-conn">Conectores y estructuras</span>
-    <span class="legend-item l-sub">Subjuntivo</span>
-    <span class="legend-item l-past">Pasados</span>
-    <span class="legend-item l-fut">Futuro</span>
-    <span class="legend-item l-cond">Condicional</span>
-    <button class="toggle-btn" id="toggle-btn">Ocultar resaltados</button>
+<div class="controls-bar">
+  <div class="controls-inner">
+    <div class="legend">
+      <span class="legend-item l-conn">Conectores</span>
+      <span class="legend-item l-sub">Subjuntivo</span>
+      <span class="legend-item l-past">Pasados</span>
+      <span class="legend-item l-fut">Futuro</span>
+      <span class="legend-item l-cond">Condicional</span>
+      <span class="legend-item l-pron">Pronombres</span>
+    </div>
+    <div class="toggle-wrap">
+      <span class="toggle-text">Resaltados</span>
+      <button id="hl-toggle" class="toggle-switch on" role="switch" aria-checked="true" aria-label="Activar o desactivar resaltados">
+        <span class="toggle-thumb"></span>
+      </button>
+      <span class="toggle-state on" id="hl-state">ON</span>
+    </div>
   </div>
 </div>
 
 <div class="tabs-wrap">
   <div class="tabs">
-    <button class="tab active" data-tab="1">1 · Présentation</button>
-    <button class="tab" data-tab="2">2 · Formation &amp; Travail</button>
-    <button class="tab" data-tab="3">3 · Loisirs</button>
-    <button class="tab" data-tab="4">4 · Vacances</button>
-    <button class="tab" data-tab="5">5 · Projets</button>
-    <button class="tab" data-tab="6">6 · Français</button>
+    <button class="tab active" data-tab="1"><span class="tab-num">01</span> Présentation</button>
+    <button class="tab" data-tab="2"><span class="tab-num">02</span> Formation &amp; Travail</button>
+    <button class="tab" data-tab="3"><span class="tab-num">03</span> Loisirs</button>
+    <button class="tab" data-tab="4"><span class="tab-num">04</span> Vacances</button>
+    <button class="tab" data-tab="5"><span class="tab-num">05</span> Projets</button>
+    <button class="tab" data-tab="6"><span class="tab-num">06</span> Français</button>
+    <button class="tab" data-tab="7"><span class="tab-num">07</span> Plantilla PE</button>
   </div>
 </div>
 
@@ -663,11 +941,99 @@ body.no-highlights .c-cond { cursor:text; }
   </div>
 </section>
 
+<!-- ============ THÈME 7 — PLANTILLA PE ============ -->
+<section class="panel" data-panel="7">
+  <div class="panel-header">
+    <h2>Plantilla PE · Message amical</h2>
+    <p class="subtitle">Modelo de respuesta a un(a) amigo(a) que pide consejo · DELF B2 Production écrite</p>
+  </div>
+
+  <div class="qa">
+    <div class="ex"><strong>Consigne :</strong> Tu reçois un message d'un(e) ami(e) qui te demande des conseils sur une décision importante (opportunité de travail, voyage, déménagement…). Réponds-lui dans un message amical pour le/la rassurer, partager ton expérience et l'encourager.</div>
+    <div class="rep">
+      <span class="name">Modèle</span>
+      <p>Salut XXX !</p>
+
+      <p>Quelle surprise de recevoir ton message ! Je suis sincèrement content <span class="c-sub">que tu m'aies demandé</span> mon avis. Ta situation <span class="c-past">m'a beaucoup fait réfléchir</span>, et <span class="c-fut">je vais essayer</span> de t'aider <span class="c-conn">du mieux que je peux</span>.</p>
+
+      <p><span class="c-conn">Personnellement</span>, je crois que ce n'est pas une décision facile à prendre, <span class="c-conn">et</span> je comprends que tu hésites. <span class="c-conn">Cependant</span>, <span class="c-conn">à mon avis</span>, <span class="c-cond">tu devrais</span> vraiment saisir cette chance — <span class="c-cond">ce serait dommage</span> de la laisser passer !</p>
+
+      <p>Je comprends bien tes inquiétudes <span class="c-conn">concernant</span> [problème 1], <span class="c-conn">mais</span> <span class="c-fut">tu t'en sortiras</span> sans problème, j'en suis persuadé(e) !</p>
+
+      <p><span class="c-conn">D'abord</span>, … <span class="c-conn">Ensuite</span>, … <span class="c-conn">Par ailleurs</span>, … <span class="c-conn">En effet</span>, …</p>
+
+      <p>Je me souviens que, <span class="c-conn">quand</span> <span class="c-past">j'étais</span> [contexte], <span class="c-past">j'ai vécu</span> une situation similaire. <span class="c-past">On m'avait proposé</span> [X], et moi <span class="c-conn">non plus</span>, <span class="c-past">je n'étais pas sûr(e)</span> de vouloir accepter. <span class="c-conn">Au début</span>, <span class="c-past">j'étais</span> un peu inquiet(e), <span class="c-conn">mais</span> cette expérience <span class="c-past">a changé</span> ma façon de voir les choses et <span class="c-past">m'a appris</span> énormément sur moi-même.</p>
+
+      <p><span class="c-conn">Même si</span> [problème 2], je sais que <span class="c-fut">tu sauras t'adapter</span> — et <span class="c-fut">tu verras</span>, ça en vaut largement la peine ! <span class="c-conn">Quoi que</span> <span class="c-sub">tu décides</span>, <span class="c-sub">sache</span> que <span class="c-fut">je serai là</span> pour toi <span class="c-conn">si</span> tu as besoin d'en parler.</p>
+
+      <p>J'espère t'avoir aidé(e) à y voir plus clair ! Je suis sûr(e) que <span class="c-fut">tu feras le bon choix</span> !</p>
+
+      <p>À très vite !<br>[Prénom]</p>
+    </div>
+  </div>
+
+  <!-- Ejemplo aplicado (desplegable) -->
+  <details class="example-details" id="ex-details">
+    <summary>
+      <span class="example-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+      </span>
+      <span class="example-title">Ejemplo aplicado · Laurent → Raphaël (texto completo)</span>
+      <span class="example-chevron">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </summary>
+    <div class="example-body">
+      <div class="example-controls">
+        <button class="example-marks-btn on" id="ex-marks-btn" aria-pressed="true" type="button">
+          <span class="marks-icon"></span>
+          Señalar conectores, tiempos y pronombres
+        </button>
+      </div>
+
+      <div class="example-letter" id="example-letter">
+        <p>Salut Raphaël !</p>
+
+        <p><span class="c-past">J'ai été</span> vraiment content de recevoir ton message, <span class="c-conn">même si</span> <span class="c-past">j'ai été</span> un peu triste d'apprendre que tu te trouves dans une situation aussi compliquée. C'est une grande décision à prendre, et je comprends parfaitement que tu hésites — <span class="c-pron">moi</span> aussi, <span class="c-cond">j'hésiterais</span> <span class="c-conn">à ta place</span> !</p>
+
+        <p><span class="c-conn">Cela dit</span>, je crois <span class="c-conn">qu'</span><span class="c-conn">il ne faut pas</span> forcément voir les choses <span class="c-conn">comme</span> un choix radical entre Paris et la campagne. <span class="c-conn">À ta place</span>, <span class="c-cond">je tenterais</span> <span class="c-conn">d'abord</span> un séjour d'un ou deux mois dans un village qui se trouve à moins d'une heure de Paris, <span class="c-conn">pour</span> voir comment tu <span class="c-pron">t'y</span> sens. <span class="c-conn">Ainsi</span>, <span class="c-cond">tu pourrais</span> <span class="c-pron">y</span> revenir facilement le week-end, et ta famille <span class="c-cond">profiterait</span> <span class="c-conn">quand même</span> du calme et de la nature. <span class="c-conn">Si</span> vous <span class="c-past">trouviez</span> un endroit que tout le monde <span class="c-past">aimait</span>, <span class="c-cond">vous pourriez</span> <span class="c-conn">ensuite</span> envisager un déménagement plus définitif — <span class="c-conn">mais</span> sans te précipiter !</p>
+
+        <p>Je me souviens que, <span class="c-conn">quand</span> <span class="c-past">j'ai déménagé</span> à la campagne, <span class="c-past">j'avais</span> toujours l'impression que <span class="c-past">j'allais manquer</span> ma vie en ville, les restaurants, les sorties… <span class="c-conn">Avant de</span> partir, <span class="c-past">je n'avais jamais imaginé</span> que <span class="c-cond">je pourrais</span> <span class="c-pron">m'y</span> plaire. <span class="c-conn">Au début</span>, <span class="c-past">j'étais</span> un peu perdu, <span class="c-conn">mais</span> cette expérience <span class="c-past">a vraiment changé</span> ma façon de voir les choses et <span class="c-past">m'a appris</span> énormément sur moi-même. Et je <span class="c-conn">ne</span> regrette absolument <span class="c-conn">rien</span> !</p>
+
+        <p>J'ai aussi des amis qui vivent entre Paris et la Normandie. <span class="c-conn">Comme toi</span>, le mari <span class="c-past">ne voulait pas</span> quitter la capitale, <span class="c-conn">donc</span> <span class="c-past">ils ont opté</span> pour un double domicile. C'est une solution qui fonctionne très bien pour eux, et chacun <span class="c-pron">y</span> <span class="c-past">a trouvé</span> son équilibre.</p>
+
+        <p>Je suis convaincu que <span class="c-fut">vous arriverez</span> à trouver une solution <span class="c-sub">qui convienne</span> à tout le monde ! Dis-moi ce que <span class="c-past">vous avez finalement décidé</span> — je suis curieux de savoir comment <span class="c-fut">ça va évoluer</span> !</p>
+
+        <p>À très vite,<br>Laurent</p>
+      </div>
+    </div>
+  </details>
+</section>
+
 </main>
 
 </div><!-- /content -->
 
 <script>
+// ===== THEME (light/dark) =====
+(function(){
+  let stored = null;
+  try { stored = localStorage.getItem('entretien-theme'); } catch(e){}
+  if(stored === 'dark' || (stored === null && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)){
+    document.documentElement.setAttribute('data-theme','dark');
+  }
+})();
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  if(next === 'dark') document.documentElement.setAttribute('data-theme','dark');
+  else document.documentElement.removeAttribute('data-theme');
+  try { localStorage.setItem('entretien-theme', next); } catch(e){}
+});
+
 // ===== PASSWORD =====
 function checkPassword(){
   const input = document.getElementById('pw-input').value.trim();
@@ -706,17 +1072,15 @@ document.querySelectorAll('.tab').forEach(btn => {
 });
 
 // ===== TOGGLE HIGHLIGHTS =====
-const toggleBtn = document.getElementById('toggle-btn');
-toggleBtn.addEventListener('click', () => {
-  document.body.classList.toggle('no-highlights');
-  if(document.body.classList.contains('no-highlights')){
-    toggleBtn.textContent = 'Mostrar resaltados';
-    toggleBtn.classList.add('off');
-    hideTr();
-  } else {
-    toggleBtn.textContent = 'Ocultar resaltados';
-    toggleBtn.classList.remove('off');
-  }
+const hlToggle = document.getElementById('hl-toggle');
+const hlState  = document.getElementById('hl-state');
+hlToggle.addEventListener('click', () => {
+  const isOn = hlToggle.classList.toggle('on');
+  hlToggle.setAttribute('aria-checked', String(isOn));
+  document.body.classList.toggle('no-highlights', !isOn);
+  hlState.textContent = isOn ? 'ON' : 'OFF';
+  hlState.classList.toggle('on', isOn);
+  if(!isOn) hideTr();
 });
 
 // ===== TRANSLATION POPUP =====
@@ -831,6 +1195,21 @@ const TR = {
   "pour que":"para que (+ subj.)",
   "avant qu'":"antes de que (+ subj.)",
   "pourvu qu'":"con tal de que (+ subj.)",
+  "personnellement":"personalmente",
+  "concernant":"respecto a / en lo que respecta a",
+  "d'abord":"primero / en primer lugar",
+  "ensuite":"luego / a continuación",
+  "en effet":"en efecto / efectivamente",
+  "non plus":"tampoco",
+  "du mieux que je peux":"lo mejor que puedo / como mejor pueda",
+  "quoi que":"haga lo que haga / sea lo que sea (+ subj.)",
+  "à ta place":"en tu lugar / yo que tú",
+  "il ne faut pas":"no hay que / no es necesario",
+  "ainsi":"así / de este modo",
+  "quand même":"de todas formas / aun así",
+  "comme toi":"como tú",
+  "avant de":"antes de (+ inf.)",
+  "rien":"nada (parte de 'ne… rien' = no… nada)",
 
   // --- PASADOS ---
   "m'y suis installé":"me instalé (allí) [passé composé]",
@@ -886,6 +1265,23 @@ const TR = {
   "on a vécu":"vivimos [passé composé]",
   "on a pris goût":"le hemos cogido el gusto [passé composé]",
   "m'a énormément apporté":"me ha aportado enormemente [passé composé]",
+  "m'a beaucoup fait réfléchir":"me ha hecho reflexionar mucho [passé composé]",
+  "j'étais":"estaba / yo era [imparfait]",
+  "j'ai vécu":"viví / he vivido [passé composé]",
+  "on m'avait proposé":"me habían propuesto [plus-que-parfait]",
+  "je n'étais pas sûr(e)":"no estaba seguro/a [imparfait]",
+  "a changé":"cambió / ha cambiado [passé composé]",
+  "j'ai été":"fui / he sido [passé composé de 'être']",
+  "trouviez":"encontrarais [imparfait en si-clause = hipótesis tipo 2]",
+  "aimait":"gustaba / amaba [imparfait]",
+  "j'ai déménagé":"me mudé [passé composé]",
+  "j'allais manquer":"iba a echar de menos [imparfait + inf. = futuro en el pasado]",
+  "je n'avais jamais imaginé":"nunca había imaginado [plus-que-parfait]",
+  "a vraiment changé":"realmente cambió / ha cambiado [passé composé]",
+  "ne voulait pas":"no quería [imparfait de 'vouloir']",
+  "ils ont opté":"optaron por [passé composé]",
+  "a trouvé":"encontró / ha encontrado [passé composé]",
+  "vous avez finalement décidé":"habéis decidido finalmente [passé composé]",
 
   // --- FUTUROS ---
   "restera":"quedará / permanecerá [futur simple]",
@@ -894,12 +1290,28 @@ const TR = {
   "on vivra":"viviremos [futur simple]",
   "grandira":"crecerá [futur simple]",
   "aura":"tendrá [futur simple]",
+  "je vais essayer":"voy a intentar [futur proche]",
+  "tu t'en sortiras":"saldrás adelante / te las arreglarás [futur simple]",
+  "tu sauras t'adapter":"sabrás adaptarte [futur simple de 'savoir']",
+  "tu verras":"ya verás [futur simple de 'voir']",
+  "je serai là":"estaré ahí (para ti) [futur simple de 'être']",
+  "tu feras le bon choix":"tomarás la decisión correcta [futur simple de 'faire']",
+  "vous arriverez":"lograréis / conseguiréis [futur simple]",
+  "ça va évoluer":"va a evolucionar [futur proche]",
 
   // --- CONDICIONALES ---
   "l'aurais imaginé":"lo habría imaginado [conditionnel passé]",
   "je dirais":"yo diría [conditionnel présent]",
   "je le referais":"lo volvería a hacer [conditionnel présent]",
   "conviendrait":"convendría / nos vendría bien [conditionnel présent]",
+  "tu devrais":"deberías [conditionnel présent de 'devoir']",
+  "ce serait dommage":"sería una pena / sería una lástima [conditionnel présent]",
+  "j'hésiterais":"yo dudaría / titubearía [conditionnel présent]",
+  "je tenterais":"intentaría / probaría [conditionnel présent]",
+  "tu pourrais":"podrías [conditionnel présent de 'pouvoir']",
+  "profiterait":"disfrutaría / aprovecharía [conditionnel présent]",
+  "vous pourriez":"podríais [conditionnel présent de 'pouvoir']",
+  "je pourrais":"podría [conditionnel présent de 'pouvoir']",
 
   // --- SUBJUNTIVOS ---
   "quoi qu'on en dise":"digan lo que digan [subj. présent]",
@@ -924,7 +1336,17 @@ const TR = {
   "qu'il grandisse":"que crezca [subj. présent de 'grandir']",
   "veuille":"quiera [subj. présent de 'vouloir']",
   "accepte":"acepte [subj. présent de 'accepter']",
-  "persévère":"persevere [subj. présent de 'persévérer']"
+  "persévère":"persevere [subj. présent de 'persévérer']",
+  "que tu m'aies demandé":"que me hayas pedido [subj. passé de 'demander']",
+  "tu décides":"(que) decidas [subj. présent de 'décider' tras 'quoi que']",
+  "sache":"sepas / ten en cuenta [subj./impératif de 'savoir']",
+  "qui convienne":"que convenga / que vaya bien [subj. présent de 'convenir']",
+
+  // --- PRONOMBRES ---
+  "moi":"yo / a mí (pronom disjoint = pronombre tónico)",
+  "y":"ahí / a ello (pronom adverbial; reemplaza à + lugar/cosa)",
+  "t'y":"te + y (réfléchi 'te' + pron. adverbial 'y' = ahí)",
+  "m'y":"me + y (réfléchi 'me' + pron. adverbial 'y' = ahí/a ello)"
 };
 
 const CAT_LABELS = {
@@ -932,7 +1354,8 @@ const CAT_LABELS = {
   'c-sub':'Subjuntivo',
   'c-past':'Pasado',
   'c-fut':'Futuro',
-  'c-cond':'Condicional'
+  'c-cond':'Condicional',
+  'c-pron':'Pronombre'
 };
 
 const trPopup = document.createElement('div');
@@ -949,7 +1372,7 @@ function normKey(s){
   return s.trim().replace(/\s+/g,' ').replace(/[.,;:!?]+$/,'').toLowerCase();
 }
 function getCat(el){
-  for(const cls of ['c-conn','c-sub','c-past','c-fut','c-cond']){
+  for(const cls of ['c-conn','c-sub','c-past','c-fut','c-cond','c-pron']){
     if(el.classList.contains(cls)) return cls;
   }
   return null;
@@ -994,7 +1417,9 @@ function hideTr(){
 document.addEventListener('click', (e) => {
   if(trPopup.contains(e.target)) return;
   if(document.body.classList.contains('no-highlights')){ hideTr(); return; }
-  const span = e.target.closest('.c-conn, .c-sub, .c-past, .c-fut, .c-cond');
+  const span = e.target.closest('.c-conn, .c-sub, .c-past, .c-fut, .c-cond, .c-pron');
+  // Respect local "no-marks" on the example block
+  if(span && span.closest('.example-letter.no-marks')){ hideTr(); return; }
   if(span){
     showTr(span);
     e.stopPropagation();
@@ -1002,6 +1427,19 @@ document.addEventListener('click', (e) => {
     hideTr();
   }
 });
+
+// ===== LOCAL EXAMPLE MARKS TOGGLE =====
+(function(){
+  const btn = document.getElementById('ex-marks-btn');
+  const letter = document.getElementById('example-letter');
+  if(!btn || !letter) return;
+  btn.addEventListener('click', () => {
+    const isOn = btn.classList.toggle('on');
+    btn.setAttribute('aria-pressed', String(isOn));
+    letter.classList.toggle('no-marks', !isOn);
+    if(!isOn) hideTr();
+  });
+})();
 document.addEventListener('keydown', (e) => {
   if(e.key === 'Escape') hideTr();
 });
