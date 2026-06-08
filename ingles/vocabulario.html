@@ -409,8 +409,10 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .srs-tema-item .srs-tema-name{flex:1}
 .srs-tema-item .srs-tema-count{font-size:12px;color:var(--text3);font-weight:600}
 .srs-tema-quick{display:flex;gap:8px;margin-top:8px}
-.btn-srs-quick{border:1px solid var(--border2);border-radius:var(--radius-pill);padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;background:var(--bg2);color:var(--text2)}
+.btn-srs-quick{border:1px solid var(--border2);border-radius:var(--radius-pill);padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;background:var(--bg2);color:var(--text2);transition:all .15s}
 .btn-srs-quick:hover{background:var(--border)}
+.btn-srs-quick.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.btn-srs-quick.active:hover{filter:brightness(1.08)}
 
 .srs-modal-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:4px}
 .btn-srs-primary{background:linear-gradient(135deg,var(--primary),var(--primary-mid));color:#fff;border:none;border-radius:12px;padding:10px 22px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-primary);transition:all .15s;min-height:44px}
@@ -786,6 +788,14 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
       <div class="srs-tema-quick">
         <button class="btn-srs-quick" id="btnSrsTemaAll" type="button">Todas</button>
         <button class="btn-srs-quick" id="btnSrsTemaNone" type="button">Ninguna</button>
+      </div>
+    </div>
+
+    <div class="srs-modal-section" id="srsStartOrderSection">
+      <h3>Orden</h3>
+      <div class="srs-tema-quick">
+        <button class="btn-srs-quick active" id="btnSrsOrderDefault" type="button">&#128197; Est&aacute;ndar</button>
+        <button class="btn-srs-quick" id="btnSrsOrderRandom" type="button">&#127922; Aleatorio</button>
       </div>
     </div>
 
@@ -2340,7 +2350,16 @@ buildCatBtns();render();gUpdateCt();
 
 var srsGlobal = { sessions:0, cardsStudied:0, lastSessionDate:null, sessionDates:[] };
 var srsUnsavedProgress = false;
-var srsSession = { queue:[], idx:0, revealed:false, results:[], selectedCats:null, advancing:false };
+var srsSession = { queue:[], idx:0, revealed:false, results:[], selectedCats:null, advancing:false, shuffle:false };
+
+function srsShuffleQueue(arr){
+  arr = arr.slice();
+  for(var i = arr.length - 1; i > 0; i--){
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+  }
+  return arr;
+}
 
 var CAT_LABELS = { expr:'Expressions', gi:'Gerunds & Infinitives', pv:'Phrasal Verbs', vp:'Verbs + Prep.', wf:'Word Formation', top:'TOP B2', rd:'Reading', prep:'Preposiciones' };
 var CAT_ORDER  = ['expr','gi','pv','vp','wf','top','rd','prep'];
@@ -2492,8 +2511,10 @@ function srsOpenStartModal(){
   var cancelBtn      = document.getElementById('btnSrsStartCancel');
   var subEl          = document.getElementById('srsStartSub');
 
+  var orderSection = document.getElementById('srsStartOrderSection');
   if(totalPend === 0){
     summarySection.style.display = 'none'; temasSection.style.display = 'none';
+    if(orderSection) orderSection.style.display = 'none';
     emptyState.style.display = 'block'; startBtn.style.display = 'none';
     cancelBtn.textContent = 'Cerrar';
     subEl.textContent = 'Estás al día con tus repasos.';
@@ -2507,6 +2528,7 @@ function srsOpenStartModal(){
   }
 
   summarySection.style.display = ''; temasSection.style.display = '';
+  if(orderSection) orderSection.style.display = '';
   emptyState.style.display = 'none'; startBtn.style.display = '';
   cancelBtn.textContent = 'Cancelar';
   subEl.textContent = 'Elige las categorías que quieres repasar hoy.';
@@ -2557,6 +2579,7 @@ function srsUpdateStartSummary(){
 function srsStartSession(){
   var selected = srsGetSelectedCats(); if(selected.length === 0) return;
   var queue = getSRSQueue(selected); if(queue.length === 0) return;
+  if(srsSession.shuffle) queue = srsShuffleQueue(queue);
   srsSession.queue = queue; srsSession.idx = 0; srsSession.revealed = false;
   srsSession.results = []; srsSession.selectedCats = selected.slice(); srsSession.advancing = false;
   srsCloseStartModal();
@@ -2905,6 +2928,16 @@ function initSRSAddon(){
     for(var i = 0; i < checks.length; i++) checks[i].checked = false;
     srsUpdateStartSummary();
   });
+  var btnOrderDef = document.getElementById('btnSrsOrderDefault');
+  var btnOrderRnd = document.getElementById('btnSrsOrderRandom');
+  function srsApplyOrderUI(){
+    if(!btnOrderDef || !btnOrderRnd) return;
+    btnOrderDef.classList.toggle('active', !srsSession.shuffle);
+    btnOrderRnd.classList.toggle('active',  srsSession.shuffle);
+  }
+  if(btnOrderDef) btnOrderDef.addEventListener('click', function(){ srsSession.shuffle = false; srsApplyOrderUI(); });
+  if(btnOrderRnd) btnOrderRnd.addEventListener('click', function(){ srsSession.shuffle = true;  srsApplyOrderUI(); });
+  srsApplyOrderUI();
   document.getElementById('srsStartModal').addEventListener('click', function(e){ if(e.target === this) srsCloseStartModal(); });
 
   document.getElementById('btnSrsExit').addEventListener('click', srsExitSession);
