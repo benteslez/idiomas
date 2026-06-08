@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Gap-Fill · Linguaskill Reading Toolkit · B2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Page identity: Open Gap-Fill → indigo/blue (reading/exam) */
+  --primary:#1d4ed8; --primary-soft:#eff6ff; --primary-mid:#3b82f6; --primary-strong:#1e3a8a;
+  --primary-glow:rgba(29,78,216,.14);
+  /* Per-tab identity colors (one per CSV column) */
+  --tab-verb:#c2410c;        --tab-verb-soft:#fff7ed;        --tab-verb-mid:#ea580c;
+  --tab-rel:#be185d;         --tab-rel-soft:#fdf2f8;         --tab-rel-mid:#ec4899;
+  --tab-pron:#7c3aed;        --tab-pron-soft:#f5f3ff;        --tab-pron-mid:#8b5cf6;
+  --tab-det:#1d4ed8;         --tab-det-soft:#eff6ff;         --tab-det-mid:#3b82f6;
+  --tab-link:#15803d;        --tab-link-soft:#ecfdf5;        --tab-link-mid:#22c55e;
+  --tab-prep:#b45309;        --tab-prep-soft:#fffbeb;        --tab-prep-mid:#f59e0b;
+  --tab-conj:#0e7490;        --tab-conj-soft:#ecfeff;        --tab-conj-mid:#06b6d4;
+  --tab-adv:#a16207;         --tab-adv-soft:#fefce8;         --tab-adv-mid:#ca8a04;
+  /* Neutrals */
+  --bg:#f7f7f5; --bg-elevated:#fbfbfa; --card:#ffffff;
+  --border:#ececec; --border-strong:#dfdfdf;
+  --text:#18181b; --text2:#52525b; --text3:#71717a;
+  /* Shadows */
+  --shadow-xs:0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:0 2px 8px rgba(15,23,42,.04),0 1px 2px rgba(15,23,42,.03);
+  --shadow:0 4px 16px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+  --shadow-primary:0 6px 20px var(--primary-glow);
+  /* Geometry */
+  --radius:18px; --radius-md:14px; --radius-sm:10px; --radius-xs:6px; --radius-pill:999px;
+  /* Motion */
+  --ease:cubic-bezier(0.4,0,0.2,1); --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --t-fast:120ms; --t-base:200ms;
+}
+[data-theme="dark"]{
+  --primary:#93c5fd; --primary-soft:rgba(147,197,253,.10); --primary-mid:#60a5fa; --primary-strong:#bfdbfe;
+  --primary-glow:rgba(147,197,253,.18);
+  --tab-verb:#fb923c;        --tab-verb-soft:rgba(251,146,60,.12);
+  --tab-rel:#f472b6;         --tab-rel-soft:rgba(244,114,182,.12);
+  --tab-pron:#a78bfa;        --tab-pron-soft:rgba(167,139,250,.12);
+  --tab-det:#60a5fa;         --tab-det-soft:rgba(96,165,250,.12);
+  --tab-link:#4ade80;        --tab-link-soft:rgba(74,222,128,.12);
+  --tab-prep:#fbbf24;        --tab-prep-soft:rgba(251,191,36,.12);
+  --tab-conj:#22d3ee;        --tab-conj-soft:rgba(34,211,238,.12);
+  --tab-adv:#facc15;         --tab-adv-soft:rgba(250,204,21,.12);
+  --bg:#0a0a0b; --bg-elevated:#131316; --card:#18181b;
+  --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.2);
+  --shadow:0 4px 16px rgba(0,0,0,.30),0 1px 3px rgba(0,0,0,.20);
+  --shadow-primary:0 6px 24px var(--primary-glow);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+*:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-xs);}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
+
+/* HEADER */
+.site-header{background:linear-gradient(180deg,var(--bg-elevated),var(--bg));padding:32px 20px 22px;position:relative;}
+.site-header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--border-strong) 20%,var(--border-strong) 80%,transparent);}
+.header-inner{max-width:1000px;margin:0 auto;}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.site-header h1{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:600;letter-spacing:-0.02em;color:var(--text);line-height:1.1;}
+.header-tag{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);background:var(--primary-soft);border-radius:var(--radius-pill);padding:4px 11px;}
+.header-sub{font-size:.88rem;color:var(--text3);font-weight:400;margin-top:4px;line-height:1.55;}
+.header-sub strong{color:var(--primary);font-weight:600;}
+
+/* HEADER ACTIONS */
+.header-actions{max-width:1000px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:8px 14px 8px 11px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--text2);text-decoration:none;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.back-btn:hover{border-color:var(--primary-mid);color:var(--primary);transform:translateX(-2px);box-shadow:var(--shadow);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;box-shadow:var(--shadow-sm);transition:all var(--t-base) var(--ease);}
+.theme-toggle:hover{color:var(--primary);border-color:var(--primary-mid);transform:translateY(-1px);box-shadow:var(--shadow);}
+.theme-toggle .icon-sun{display:none;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+
+/* TABS */
+.tabs-wrap{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-elevated) 85%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--border);padding:14px 20px;}
+.tabs{max-width:1000px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;}
+.tab{border:1px solid color-mix(in srgb,var(--tab-c,var(--border)) 22%,transparent);border-radius:var(--radius-pill);padding:9px 16px;font-family:inherit;font-size:.82rem;font-weight:600;cursor:pointer;background:var(--tab-c-soft,var(--card));color:var(--tab-c,var(--text2));transition:all var(--t-base) var(--ease);display:inline-flex;align-items:center;gap:7px;}
+.tab:hover{transform:translateY(-1px);box-shadow:var(--shadow-xs);border-color:color-mix(in srgb,var(--tab-c,var(--primary-mid)) 45%,transparent);}
+.tab.active{background:var(--tab-c,var(--primary));color:#fff;border-color:var(--tab-c,var(--primary));font-weight:700;box-shadow:0 6px 20px color-mix(in srgb,var(--tab-c,var(--primary)) 25%,transparent);}
+[data-theme="dark"] .tab.active{color:#0a0a0b;}
+.tab[data-tab="verb"]{--tab-c:var(--tab-verb);--tab-c-soft:var(--tab-verb-soft);}
+.tab[data-tab="rel"]{--tab-c:var(--tab-rel);--tab-c-soft:var(--tab-rel-soft);}
+.tab[data-tab="pron"]{--tab-c:var(--tab-pron);--tab-c-soft:var(--tab-pron-soft);}
+.tab[data-tab="det"]{--tab-c:var(--tab-det);--tab-c-soft:var(--tab-det-soft);}
+.tab[data-tab="link"]{--tab-c:var(--tab-link);--tab-c-soft:var(--tab-link-soft);}
+.tab[data-tab="prep"]{--tab-c:var(--tab-prep);--tab-c-soft:var(--tab-prep-soft);}
+.tab[data-tab="conj"]{--tab-c:var(--tab-conj);--tab-c-soft:var(--tab-conj-soft);}
+.tab[data-tab="adv"]{--tab-c:var(--tab-adv);--tab-c-soft:var(--tab-adv-soft);}
+.tab .count{font-size:.7rem;font-weight:500;opacity:.7;font-variant-numeric:tabular-nums;}
+.tab.active .count{opacity:.85;}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:32px 20px 64px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeSlideIn 360ms var(--ease-out);}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+.tab-panel[data-tab="verb"]{--tab-c:var(--tab-verb);--tab-c-soft:var(--tab-verb-soft);}
+.tab-panel[data-tab="rel"]{--tab-c:var(--tab-rel);--tab-c-soft:var(--tab-rel-soft);}
+.tab-panel[data-tab="pron"]{--tab-c:var(--tab-pron);--tab-c-soft:var(--tab-pron-soft);}
+.tab-panel[data-tab="det"]{--tab-c:var(--tab-det);--tab-c-soft:var(--tab-det-soft);}
+.tab-panel[data-tab="link"]{--tab-c:var(--tab-link);--tab-c-soft:var(--tab-link-soft);}
+.tab-panel[data-tab="prep"]{--tab-c:var(--tab-prep);--tab-c-soft:var(--tab-prep-soft);}
+.tab-panel[data-tab="conj"]{--tab-c:var(--tab-conj);--tab-c-soft:var(--tab-conj-soft);}
+.tab-panel[data-tab="adv"]{--tab-c:var(--tab-adv);--tab-c-soft:var(--tab-adv-soft);}
+
+/* INTRO */
+.intro{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 22px;margin-bottom:22px;box-shadow:var(--shadow-xs);}
+.intro h3{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.01em;color:var(--tab-c,var(--primary));margin-bottom:8px;}
+.intro p{font-size:.92rem;color:var(--text2);line-height:1.65;}
+.intro p strong{color:var(--tab-c,var(--primary));font-weight:600;}
+
+/* CALLOUT */
+.callout{background:var(--tab-c-soft,var(--primary-soft));border-radius:var(--radius-md);padding:14px 16px;margin:0 0 24px;font-size:.88rem;color:var(--text2);line-height:1.6;border-left:3px solid var(--tab-c,var(--primary));}
+.callout strong{color:var(--tab-c,var(--primary));font-weight:600;}
+.callout .ico{font-size:1rem;margin-right:5px;}
+
+/* TOOLBAR */
+.toolbar{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.fs-control{display:inline-flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:6px 14px;}
+.fs-label{font-family:inherit;font-weight:600;color:var(--text3);line-height:1;user-select:none;}
+.fs-label.small{font-size:.78rem;}
+.fs-label.large{font-size:1.1rem;}
+.fs-slider{-webkit-appearance:none;appearance:none;width:90px;height:4px;background:var(--border-strong);border-radius:2px;outline:none;cursor:pointer;accent-color:var(--primary);}
+.fs-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;border:2px solid var(--card);box-shadow:var(--shadow-xs);transition:transform var(--t-fast) var(--ease);}
+.fs-slider::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.fs-value{font-size:.72rem;font-weight:600;color:var(--text3);min-width:32px;text-align:right;}
+
+/* GRID + ENTRY CARD */
+.entry-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+.entry{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px 13px;box-shadow:var(--shadow-xs);transition:transform var(--t-base) var(--ease),box-shadow var(--t-base) var(--ease),border-color var(--t-base) var(--ease);}
+.entry:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--tab-c,var(--primary-mid));}
+.entry-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+.entry-term{display:inline-block;font-family:'Manrope','Inter',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:-0.005em;color:#fff;background:var(--tab-c,var(--primary));padding:5px 13px;border-radius:var(--radius-pill);line-height:1.3;}
+[data-theme="dark"] .entry-term{color:#0a0a0b;}
+.entry-tag{font-family:'Manrope',sans-serif;font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);}
+.entry-note{font-size:.78rem;color:var(--text3);font-style:italic;margin-bottom:8px;line-height:1.5;}
+.entry-examples{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;}
+.entry-examples li{font-size:.88rem;color:var(--text2);line-height:1.5;padding:5px 0 5px 12px;border-left:2px solid color-mix(in srgb,var(--tab-c,var(--primary)) 35%,transparent);}
+.entry-examples li b{color:var(--text);font-weight:700;background:var(--tab-c-soft,var(--primary-soft));padding:0 4px;border-radius:3px;}
+.entry-examples li .es{display:block;font-style:italic;color:var(--text3);font-size:.78rem;margin-top:2px;}
+
+@media (max-width:600px){
+  .entry-grid{grid-template-columns:1fr;}
+  .tabs{gap:6px;}
+  .tab{padding:7px 12px;font-size:.76rem;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-actions">
+    <a class="back-btn" href="index_grammar.html" title="Volver al índice de gramática">
+      <span class="arrow">←</span><span>Índice gramática</span>
+    </a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>📝 Open Gap-Fill · Reading Toolkit</h1>
+      <span class="header-tag">Linguaskill · B2</span>
+    </div>
+    <p class="header-sub">
+      Las palabras y expresiones <strong>más frecuentes</strong> en los huecos abiertos del Reading Linguaskill, agrupadas por categoría gramatical. Cada entrada incluye una <strong>frase de ejemplo</strong> con el hueco resuelto.
+    </p>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" data-tab="verb" onclick="showTab('verb', this)"><span>Verb</span><span class="count">15</span></button>
+    <button class="tab" data-tab="rel" onclick="showTab('rel', this)"><span>Relative pronoun</span><span class="count">6</span></button>
+    <button class="tab" data-tab="pron" onclick="showTab('pron', this)"><span>Pronoun</span><span class="count">8</span></button>
+    <button class="tab" data-tab="det" onclick="showTab('det', this)"><span>Determiners</span><span class="count">7</span></button>
+    <button class="tab" data-tab="link" onclick="showTab('link', this)"><span>Linking expression</span><span class="count">26</span></button>
+    <button class="tab" data-tab="prep" onclick="showTab('prep', this)"><span>Preposition</span><span class="count">13</span></button>
+    <button class="tab" data-tab="conj" onclick="showTab('conj', this)"><span>Conjunction</span><span class="count">12</span></button>
+    <button class="tab" data-tab="adv" onclick="showTab('adv', this)"><span>Adverb</span><span class="count">13</span></button>
+  </div>
+</div>
+
+<main class="main">
+
+<div class="toolbar">
+  <div class="fs-control" title="Tamaño del texto">
+    <span class="fs-label small">A</span>
+    <input type="range" class="fs-slider" id="fs-slider" min="85" max="140" step="5" value="100" oninput="updateFontSize(this.value)">
+    <span class="fs-label large">A</span>
+    <span class="fs-value" id="fs-value">100%</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ============== TAB 1 · VERB =============================== -->
+<!-- ============================================================ -->
+<section class="tab-panel active" id="verb" data-tab="verb">
+
+  <div class="intro">
+    <h3>Verbo · Auxiliares, modales y formas verbales</h3>
+    <p>Huecos donde falta un <strong>auxiliar</strong> (have, be, do), un <strong>modal</strong> (can, will, would, might, may), una forma <strong>perfecta/pasiva</strong> (have been, being + -ed) o un <strong>conector causal preposicional</strong> (due to, owing to). Pista clave: mira el verbo que sigue (-ing, -ed, infinitivo) y los marcadores temporales.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Frecuencia Linguaskill:</strong> los auxiliares <em>have been</em> y <em>had</em> aparecen casi en cada Open Gap-Fill. Aprende a reconocer el patrón <em>since/for + present perfect</em> y <em>by the time + past perfect</em>.
+  </div>
+
+  <div class="entry-grid">
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">have been</span><span class="entry-tag">aux · perfect</span></div>
+      <div class="entry-note">Present perfect (continuous/passive). Con <em>since / for / over the last…</em></div>
+      <ul class="entry-examples">
+        <li>Scientists <b>have been</b> studying climate change for decades.<span class="es">Los científicos llevan décadas estudiando el cambio climático.</span></li>
+        <li>The results <b>have been</b> published online.<span class="es">Los resultados han sido publicados en internet.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">have / has</span><span class="entry-tag">aux · perfect</span></div>
+      <div class="entry-note">Forma el present perfect: <em>have/has + past participle</em>.</div>
+      <ul class="entry-examples">
+        <li>The company <b>has</b> opened three new offices this year.<span class="es">La empresa ha abierto tres oficinas este año.</span></li>
+        <li>Researchers <b>have</b> identified a new species.<span class="es">Los investigadores han identificado una especie nueva.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">take</span><span class="entry-tag">verb · collocation</span></div>
+      <div class="entry-note">Collocations: <em>take place, take time, take advantage of, take into account</em>.</div>
+      <ul class="entry-examples">
+        <li>The meeting will <b>take</b> place on Monday.<span class="es">La reunión tendrá lugar el lunes.</span></li>
+        <li>We must <b>take</b> the environment into account.<span class="es">Debemos tener en cuenta el medio ambiente.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">be</span><span class="entry-tag">aux · passive</span></div>
+      <div class="entry-note">Auxiliar de la pasiva y del continuo: <em>be + past participle / -ing</em>.</div>
+      <ul class="entry-examples">
+        <li>The report must <b>be</b> finished by Friday.<span class="es">El informe debe estar terminado el viernes.</span></li>
+        <li>The product is known to <b>be</b> safe for children.<span class="es">Se sabe que el producto es seguro para niños.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">make</span><span class="entry-tag">verb · collocation</span></div>
+      <div class="entry-note">Collocations: <em>make history, make a decision, make sense, make progress</em>.</div>
+      <ul class="entry-examples">
+        <li>Her invention <b>made</b> history in the field of medicine.<span class="es">Su invento hizo historia en la medicina.</span></li>
+        <li>The new policy doesn't <b>make</b> much sense.<span class="es">La nueva política no tiene mucho sentido.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">can</span><span class="entry-tag">modal · ability</span></div>
+      <div class="entry-note">Habilidad, posibilidad general, permiso.</div>
+      <ul class="entry-examples">
+        <li>Users <b>can</b> access their accounts from any device.<span class="es">Los usuarios pueden acceder a sus cuentas desde cualquier dispositivo.</span></li>
+        <li>Stress <b>can</b> lead to serious health problems.<span class="es">El estrés puede provocar problemas graves de salud.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">do / does</span><span class="entry-tag">aux · emphatic</span></div>
+      <div class="entry-note">Auxiliar de preguntas/negativas y verbo principal (perform). Énfasis afirmativo.</div>
+      <ul class="entry-examples">
+        <li>She <b>does</b> her best to support her team.<span class="es">Hace todo lo posible para apoyar a su equipo.</span></li>
+        <li>Most people <b>do</b> not realise how serious the issue is.<span class="es">La mayoría no se da cuenta de lo grave del asunto.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">will</span><span class="entry-tag">modal · future</span></div>
+      <div class="entry-note">Predicción, futuro, promesas. Frecuente en textos prospectivos.</div>
+      <ul class="entry-examples">
+        <li>Global temperatures <b>will</b> continue to rise.<span class="es">Las temperaturas globales seguirán subiendo.</span></li>
+        <li>This trend <b>will</b> shape the next generation.<span class="es">Esta tendencia moldeará la próxima generación.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">due to</span><span class="entry-tag">phrase · cause</span></div>
+      <div class="entry-note">= <em>because of</em>. Va siempre con <strong>sustantivo</strong> o <em>-ing</em>, NO con cláusula.</div>
+      <ul class="entry-examples">
+        <li>The flight was cancelled <b>due to</b> bad weather.<span class="es">El vuelo se canceló debido al mal tiempo.</span></li>
+        <li>Sales fell <b>due to</b> the economic crisis.<span class="es">Las ventas cayeron por la crisis económica.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">owing to</span><span class="entry-tag">phrase · cause</span></div>
+      <div class="entry-note">Sinónimo formal de <em>due to / because of</em>. + sustantivo / -ing.</div>
+      <ul class="entry-examples">
+        <li><b>Owing to</b> the strike, several schools closed.<span class="es">Debido a la huelga, varias escuelas cerraron.</span></li>
+        <li>The project was delayed <b>owing to</b> a lack of funding.<span class="es">El proyecto se retrasó por falta de financiación.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">being + -ed</span><span class="entry-tag">passive · -ing</span></div>
+      <div class="entry-note">Pasiva en gerundio: <em>being + past participle</em>. Típico tras preposición.</div>
+      <ul class="entry-examples">
+        <li>He hates <b>being</b> told what to do.<span class="es">Odia que le digan lo que tiene que hacer.</span></li>
+        <li>The product is currently <b>being</b> tested.<span class="es">El producto se está probando actualmente.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">would</span><span class="entry-tag">modal · conditional</span></div>
+      <div class="entry-note">Hábito pasado, condicional, futuro reportado.</div>
+      <ul class="entry-examples">
+        <li>As a child, she <b>would</b> read for hours every evening.<span class="es">De niña, solía leer durante horas cada tarde.</span></li>
+        <li>If we had more time, we <b>would</b> finish the project.<span class="es">Si tuviéramos más tiempo, terminaríamos el proyecto.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">might</span><span class="entry-tag">modal · possibility</span></div>
+      <div class="entry-note">Posibilidad débil (presente o futuro). Más tentativo que <em>may</em>.</div>
+      <ul class="entry-examples">
+        <li>This decision <b>might</b> affect future generations.<span class="es">Esta decisión podría afectar a generaciones futuras.</span></li>
+        <li>Travelling abroad <b>might</b> be difficult next year.<span class="es">Viajar al extranjero podría ser difícil el próximo año.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">had</span><span class="entry-tag">aux · past perfect</span></div>
+      <div class="entry-note">Past perfect: <em>had + past participle</em>. Anterioridad en el pasado / cond. tipo 3.</div>
+      <ul class="entry-examples">
+        <li>By the time we arrived, the show <b>had</b> already started.<span class="es">Cuando llegamos, el espectáculo ya había empezado.</span></li>
+        <li>If she <b>had</b> known earlier, she would have called you.<span class="es">Si lo hubiera sabido antes, te habría llamado.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">may</span><span class="entry-tag">modal · possibility</span></div>
+      <div class="entry-note">Posibilidad formal, permiso formal. Frecuente en textos académicos.</div>
+      <ul class="entry-examples">
+        <li>Side effects <b>may</b> include headaches and nausea.<span class="es">Los efectos secundarios pueden incluir dolores de cabeza y náuseas.</span></li>
+        <li>You <b>may</b> leave once you have finished the test.<span class="es">Puede salir cuando haya terminado el examen.</span></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ============== TAB 2 · RELATIVE PRONOUN ==================== -->
+<!-- ============================================================ -->
+<section class="tab-panel" id="rel" data-tab="rel">
+
+  <div class="intro">
+    <h3>Pronombre relativo · Relative pronouns</h3>
+    <p>Conectan una oración subordinada con un sustantivo. Elige según el <strong>antecedente</strong>: persona (<em>who/whose</em>), cosa (<em>which</em>), lugar (<em>where</em>), razón (<em>why</em>), o cláusula libre (<em>what</em>).</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🔑</span><strong>Truco:</strong> si después del hueco hay un <strong>verbo</strong>, busca un sujeto relativo (<em>who/which/that</em>). Si hay un <strong>sustantivo + verbo</strong>, casi siempre es <em>whose</em>.
+  </div>
+
+  <div class="entry-grid">
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">who</span><span class="entry-tag">person · subject</span></div>
+      <div class="entry-note">Para personas, como sujeto u objeto de la subordinada.</div>
+      <ul class="entry-examples">
+        <li>The author <b>who</b> wrote this book lives in Madrid.<span class="es">El autor que escribió este libro vive en Madrid.</span></li>
+        <li>Employees <b>who</b> work overtime should be paid extra.<span class="es">Los empleados que trabajan horas extras deberían cobrar más.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">whose</span><span class="entry-tag">possession</span></div>
+      <div class="entry-note">Posesivo relativo (de quien/cuyo). Va seguido de sustantivo.</div>
+      <ul class="entry-examples">
+        <li>That's the scientist <b>whose</b> research changed medicine.<span class="es">Ése es el científico cuya investigación cambió la medicina.</span></li>
+        <li>She helps children <b>whose</b> parents cannot afford schooling.<span class="es">Ayuda a niños cuyos padres no pueden pagar la escuela.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">which</span><span class="entry-tag">thing · clause</span></div>
+      <div class="entry-note">Para cosas. En non-defining (con comas) reemplaza a la cláusula completa.</div>
+      <ul class="entry-examples">
+        <li>The film, <b>which</b> was released last month, broke records.<span class="es">La película, que se estrenó el mes pasado, batió récords.</span></li>
+        <li>He failed the exam, <b>which</b> surprised everyone.<span class="es">Suspendió el examen, lo cual sorprendió a todo el mundo.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">where</span><span class="entry-tag">place</span></div>
+      <div class="entry-note">Antecedente de lugar. Equivale a <em>in/at which</em>.</div>
+      <ul class="entry-examples">
+        <li>This is the village <b>where</b> my grandparents grew up.<span class="es">Éste es el pueblo donde crecieron mis abuelos.</span></li>
+        <li>The hotel <b>where</b> we stayed was excellent.<span class="es">El hotel donde nos alojamos era excelente.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">why</span><span class="entry-tag">reason</span></div>
+      <div class="entry-note">Antecedente <em>reason</em>. A menudo intercambiable con <em>that</em> u omitido.</div>
+      <ul class="entry-examples">
+        <li>That's the reason <b>why</b> she decided to resign.<span class="es">Ésa es la razón por la que decidió dimitir.</span></li>
+        <li>Nobody understood <b>why</b> the project failed.<span class="es">Nadie entendía por qué falló el proyecto.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">what</span><span class="entry-tag">free relative</span></div>
+      <div class="entry-note">= <em>the thing(s) that</em>. NO se usa después de un antecedente claro.</div>
+      <ul class="entry-examples">
+        <li><b>What</b> matters most is your health.<span class="es">Lo que más importa es tu salud.</span></li>
+        <li>I don't know <b>what</b> they expect from us.<span class="es">No sé qué esperan de nosotros.</span></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ============== TAB 3 · PRONOUN ============================= -->
+<!-- ============================================================ -->
+<section class="tab-panel" id="pron" data-tab="pron">
+
+  <div class="intro">
+    <h3>Pronombre · Pronouns</h3>
+    <p>Sustituyen a un nombre. Aquí entran <strong>it</strong> dummy (<em>It is essential…</em>), pronombres indefinidos (<em>something, nothing</em>), pronombres contrastivos (<em>another, others, the latter</em>) y <em>own</em> para énfasis posesivo.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Atención:</strong> <em>it</em> sin antecedente real (sujeto formal de <em>It is + adjetivo + that/to-V</em>) es uno de los huecos más típicos del Linguaskill.
+  </div>
+
+  <div class="entry-grid">
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">it</span><span class="entry-tag">dummy / 3rd p.</span></div>
+      <div class="entry-note">Sujeto formal (<em>it is + adj + that…</em>) o pronombre de objeto/cosa.</div>
+      <ul class="entry-examples">
+        <li><b>It</b> is important to listen to different opinions.<span class="es">Es importante escuchar opiniones distintas.</span></li>
+        <li><b>It</b> takes patience to learn a language.<span class="es">Hace falta paciencia para aprender un idioma.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">another</span><span class="entry-tag">one more</span></div>
+      <div class="entry-note">= uno más / otro distinto. Va con sustantivo singular contable.</div>
+      <ul class="entry-examples">
+        <li>Would you like <b>another</b> cup of coffee?<span class="es">¿Quieres otra taza de café?</span></li>
+        <li>This is <b>another</b> example of poor planning.<span class="es">Éste es otro ejemplo de mala planificación.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">her</span><span class="entry-tag">3rd p. sg fem.</span></div>
+      <div class="entry-note">Posesivo (her car) o pronombre de objeto (I saw her).</div>
+      <ul class="entry-examples">
+        <li>She forgot <b>her</b> keys at the office.<span class="es">Se olvidó las llaves en la oficina.</span></li>
+        <li>We met <b>her</b> at the conference last year.<span class="es">La conocimos en el congreso el año pasado.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">others</span><span class="entry-tag">contrast</span></div>
+      <div class="entry-note">Plural; contrasta con <em>some</em>. <em>The others</em> = el resto.</div>
+      <ul class="entry-examples">
+        <li>Some people enjoy reading; <b>others</b> prefer films.<span class="es">A unos les gusta leer; otros prefieren las películas.</span></li>
+        <li>Help <b>others</b> and they will help you back.<span class="es">Ayuda a los demás y te ayudarán a ti.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">they</span><span class="entry-tag">3rd p. plural / gen.</span></div>
+      <div class="entry-note">Plural o singular genérico (cuando no se especifica género).</div>
+      <ul class="entry-examples">
+        <li>People say <b>they</b> are happier in summer.<span class="es">La gente dice que son más felices en verano.</span></li>
+        <li>If anyone calls, tell <b>they</b>'ll have to wait.<span class="es">Si llama alguien, dile que tendrá que esperar.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">something</span><span class="entry-tag">indefinite</span></div>
+      <div class="entry-note">Cosa no identificada. En frases afirmativas y peticiones/ofertas.</div>
+      <ul class="entry-examples">
+        <li>There is <b>something</b> strange about his story.<span class="es">Hay algo extraño en su historia.</span></li>
+        <li>Would you like <b>something</b> to drink?<span class="es">¿Quieres algo de beber?</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">nothing</span><span class="entry-tag">negative</span></div>
+      <div class="entry-note">Negación absoluta. El verbo va en afirmativa.</div>
+      <ul class="entry-examples">
+        <li><b>Nothing</b> is more important than family.<span class="es">Nada es más importante que la familia.</span></li>
+        <li>There is <b>nothing</b> we can do about it now.<span class="es">No hay nada que podamos hacer ahora.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">own</span><span class="entry-tag">emphatic poss.</span></div>
+      <div class="entry-note">Va detrás de un posesivo (<em>my/her/their own</em>) para enfatizar posesión exclusiva.</div>
+      <ul class="entry-examples">
+        <li>She built her <b>own</b> business from scratch.<span class="es">Ella montó su propio negocio desde cero.</span></li>
+        <li>Children should learn to make their <b>own</b> decisions.<span class="es">Los niños deberían aprender a tomar sus propias decisiones.</span></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ============== TAB 4 · DETERMINERS ========================= -->
+<!-- ============================================================ -->
+<section class="tab-panel" id="det" data-tab="det">
+
+  <div class="intro">
+    <h3>Determinantes · Determiners</h3>
+    <p>Acompañan al sustantivo para identificarlo (posesivos, demostrativos, cuantificadores). Frecuente: <strong>their</strong>, <strong>this/those</strong>, <strong>some</strong>, <strong>few</strong>, y los referenciales <strong>the latter / the same</strong> que enlazan con algo mencionado antes.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🔍</span><strong>Pista:</strong> si el hueco precede a un sustantivo y el contexto se refiere a algo ya mencionado, prueba con <em>this / those / the latter / the same</em>.
+  </div>
+
+  <div class="entry-grid">
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">their</span><span class="entry-tag">possessive · pl.</span></div>
+      <div class="entry-note">Posesivo plural. También uso singular neutro (anyone…their).</div>
+      <ul class="entry-examples">
+        <li>Workers raised <b>their</b> concerns about safety.<span class="es">Los trabajadores expresaron sus preocupaciones por la seguridad.</span></li>
+        <li>Everyone should bring <b>their</b> own laptop.<span class="es">Todos deberían traer su propio portátil.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">some</span><span class="entry-tag">indefinite</span></div>
+      <div class="entry-note">Cantidad indefinida en afirmativas, peticiones, ofertas.</div>
+      <ul class="entry-examples">
+        <li>I have <b>some</b> good news to share with you.<span class="es">Tengo buenas noticias que compartir contigo.</span></li>
+        <li><b>Some</b> experts disagree with this approach.<span class="es">Algunos expertos no están de acuerdo con este enfoque.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">this</span><span class="entry-tag">demonstrative · sg</span></div>
+      <div class="entry-note">Cercanía o referencia inmediata. Frecuente como anáfora textual.</div>
+      <ul class="entry-examples">
+        <li><b>This</b> report contains valuable information.<span class="es">Este informe contiene información valiosa.</span></li>
+        <li><b>This</b> is exactly what we needed to hear.<span class="es">Esto es exactamente lo que necesitábamos oír.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">those</span><span class="entry-tag">demonstrative · pl.</span></div>
+      <div class="entry-note">Plural lejano o referencial. <em>Those who…</em> = los que…</div>
+      <ul class="entry-examples">
+        <li><b>Those</b> issues remain unresolved.<span class="es">Esos asuntos siguen sin resolverse.</span></li>
+        <li><b>Those</b> who arrive early will get the best seats.<span class="es">Los que lleguen pronto tendrán los mejores sitios.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">the latter</span><span class="entry-tag">referential</span></div>
+      <div class="entry-note">El segundo de dos elementos mencionados. Opuesto: <em>the former</em>.</div>
+      <ul class="entry-examples">
+        <li>Between cycling and driving, <b>the latter</b> is faster.<span class="es">Entre ir en bici y conducir, lo último es más rápido.</span></li>
+        <li>We can hire externally or train internally; <b>the latter</b> is cheaper.<span class="es">Podemos contratar fuera o formar internamente; lo segundo es más barato.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">the same</span><span class="entry-tag">identity</span></div>
+      <div class="entry-note">Identidad. Va con <em>as</em> al comparar (<em>the same as</em>).</div>
+      <ul class="entry-examples">
+        <li>They reached <b>the same</b> conclusion independently.<span class="es">Llegaron a la misma conclusión de forma independiente.</span></li>
+        <li>My answer is <b>the same</b> as yours.<span class="es">Mi respuesta es la misma que la tuya.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">few</span><span class="entry-tag">small qty (neg.)</span></div>
+      <div class="entry-note">Sin <em>a</em> = casi ninguno (negativo). Con <em>a few</em> = algunos.</div>
+      <ul class="entry-examples">
+        <li><b>Few</b> people understand how complex it really is.<span class="es">Poca gente entiende lo complejo que es realmente.</span></li>
+        <li>There are <b>few</b> reasons to be optimistic.<span class="es">Hay pocas razones para ser optimistas.</span></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ============== TAB 5 · LINKING EXPRESSION ================== -->
+<!-- ============================================================ -->
+<section class="tab-panel" id="link" data-tab="link">
+
+  <div class="intro">
+    <h3>Expresiones conectoras · Linking expressions</h3>
+    <p>Conectores multi-palabra que articulan el discurso: <strong>propósito</strong>, <strong>tiempo</strong>, <strong>causa-resultado</strong>, <strong>ejemplificación</strong>, <strong>contraste</strong>, <strong>secuencia</strong>, <strong>énfasis</strong>. Aprende su <strong>complemento</strong> típico (¿+ cláusula, + sustantivo, + infinitivo?).</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">📌</span><strong>Linguaskill loves:</strong> <em>as a result of</em>, <em>in order to</em>, <em>such as</em>, <em>in spite of</em>, <em>instead of</em>, <em>rather than</em>. Aparecen casi en cada examen.
+  </div>
+
+  <div class="entry-grid">
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">in case</span><span class="entry-tag">precaution</span></div>
+      <div class="entry-note">Por si acaso. + cláusula (presente, no futuro).</div>
+      <ul class="entry-examples">
+        <li>Take an umbrella <b>in case</b> it rains later.<span class="es">Coge un paraguas por si llueve más tarde.</span></li>
+        <li>Save your work <b>in case</b> the computer crashes.<span class="es">Guarda el trabajo por si se cuelga el ordenador.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">in order to</span><span class="entry-tag">purpose</span></div>
+      <div class="entry-note">Para (propósito). + infinitivo. Más formal que <em>to</em>.</div>
+      <ul class="entry-examples">
+        <li>She left early <b>in order to</b> catch the train.<span class="es">Salió pronto para coger el tren.</span></li>
+        <li>We use cookies <b>in order to</b> improve your experience.<span class="es">Usamos cookies para mejorar tu experiencia.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">as soon as</span><span class="entry-tag">time</span></div>
+      <div class="entry-note">En cuanto. + presente (con valor de futuro).</div>
+      <ul class="entry-examples">
+        <li>Call me <b>as soon as</b> you arrive home.<span class="es">Llámame en cuanto llegues a casa.</span></li>
+        <li><b>As soon as</b> the rain stopped, we went out.<span class="es">En cuanto paró la lluvia, salimos.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">as long as</span><span class="entry-tag">condition</span></div>
+      <div class="entry-note">Siempre que / mientras (condicional). = <em>provided that</em>.</div>
+      <ul class="entry-examples">
+        <li>You can borrow it <b>as long as</b> you return it tomorrow.<span class="es">Puedes tomarlo prestado siempre que lo devuelvas mañana.</span></li>
+        <li>I'm happy <b>as long as</b> my family is healthy.<span class="es">Soy feliz mientras mi familia esté sana.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">as a result of</span><span class="entry-tag">cause</span></div>
+      <div class="entry-note">Como resultado de. + sustantivo / -ing.</div>
+      <ul class="entry-examples">
+        <li>Sales fell sharply <b>as a result of</b> the recession.<span class="es">Las ventas cayeron en picado como resultado de la recesión.</span></li>
+        <li>Many species are threatened <b>as a result of</b> deforestation.<span class="es">Muchas especies están amenazadas a causa de la deforestación.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">in doing so</span><span class="entry-tag">manner · result</span></div>
+      <div class="entry-note">Al hacerlo. Refuerza la consecuencia de la acción anterior.</div>
+      <ul class="entry-examples">
+        <li>She rewrote the policy and <b>in doing so</b> reduced complaints.<span class="es">Reescribió la política y, al hacerlo, redujo las quejas.</span></li>
+        <li>The company cut costs; <b>in doing so</b>, it saved jobs.<span class="es">La empresa redujo costes; al hacerlo, salvó puestos de trabajo.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">in this way</span><span class="entry-tag">manner</span></div>
+      <div class="entry-note">De esta manera. Refiere al método mencionado antes.</div>
+      <ul class="entry-examples">
+        <li>We saved time; <b>in this way</b>, costs dropped significantly.<span class="es">Ahorramos tiempo; de este modo, los costes bajaron mucho.</span></li>
+        <li><b>In this way</b>, students learn through practice.<span class="es">De esta manera, los alumnos aprenden con la práctica.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">as such</span><span class="entry-tag">reference</span></div>
+      <div class="entry-note">Como tal / por esa razón. Se refiere a algo previamente caracterizado.</div>
+      <ul class="entry-examples">
+        <li>He is a beginner and <b>as such</b> needs guidance.<span class="es">Es un principiante y como tal necesita orientación.</span></li>
+        <li>The data is incomplete; <b>as such</b>, conclusions are limited.<span class="es">Los datos están incompletos; por eso, las conclusiones son limitadas.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">above all</span><span class="entry-tag">emphasis</span></div>
+      <div class="entry-note">Sobre todo. Introduce el punto más importante.</div>
+      <ul class="entry-examples">
+        <li>We need patience, focus, and <b>above all</b>, courage.<span class="es">Necesitamos paciencia, concentración y, sobre todo, valor.</span></li>
+        <li><b>Above all</b>, remember to enjoy the journey.<span class="es">Sobre todo, recuerda disfrutar del camino.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">as well</span><span class="entry-tag">addition</span></div>
+      <div class="entry-note">= también. Va al final de la frase.</div>
+      <ul class="entry-examples">
+        <li>She speaks French and Italian <b>as well</b>.<span class="es">Habla francés e italiano también.</span></li>
+        <li>The hotel offers a pool, a gym and a spa <b>as well</b>.<span class="es">El hotel ofrece piscina, gimnasio y también un spa.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">for example</span><span class="entry-tag">exemplification</span></div>
+      <div class="entry-note">Por ejemplo. Suele ir entre comas.</div>
+      <ul class="entry-examples">
+        <li>Many fruits, <b>for example</b> apples, contain vitamins.<span class="es">Muchas frutas, por ejemplo las manzanas, contienen vitaminas.</span></li>
+        <li><b>For example</b>, solar panels reduce electricity bills.<span class="es">Por ejemplo, los paneles solares reducen la factura de la luz.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">for instance</span><span class="entry-tag">exemplification</span></div>
+      <div class="entry-note">Sinónimo formal de <em>for example</em>. Intercambiable.</div>
+      <ul class="entry-examples">
+        <li>Some animals, <b>for instance</b> bears, hibernate in winter.<span class="es">Algunos animales, por ejemplo los osos, hibernan en invierno.</span></li>
+        <li><b>For instance</b>, recent studies show a clear trend.<span class="es">Por ejemplo, estudios recientes muestran una tendencia clara.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">in addition</span><span class="entry-tag">addition</span></div>
+      <div class="entry-note">Además. Conector formal de adición, al inicio de frase.</div>
+      <ul class="entry-examples">
+        <li>He plays piano; <b>in addition</b>, he composes his own music.<span class="es">Toca el piano; además, compone su propia música.</span></li>
+        <li><b>In addition</b>, the report highlights several risks.<span class="es">Además, el informe destaca varios riesgos.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">such as</span><span class="entry-tag">exemplification</span></div>
+      <div class="entry-note">Como (ejemplos integrados en la frase). NO entre comas.</div>
+      <ul class="entry-examples">
+        <li>Vegetables <b>such as</b> spinach are rich in iron.<span class="es">Verduras como las espinacas son ricas en hierro.</span></li>
+        <li>Cities <b>such as</b> Madrid attract millions of tourists.<span class="es">Ciudades como Madrid atraen a millones de turistas.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">to start with</span><span class="entry-tag">sequence</span></div>
+      <div class="entry-note">Para empezar. Introduce el primer punto en una enumeración.</div>
+      <ul class="entry-examples">
+        <li><b>To start with</b>, let's review the main findings.<span class="es">Para empezar, repasemos los resultados principales.</span></li>
+        <li><b>To start with</b>, the plan is far too expensive.<span class="es">Para empezar, el plan es demasiado caro.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">in fact</span><span class="entry-tag">emphasis · clarification</span></div>
+      <div class="entry-note">De hecho. Refuerza o contradice lo anterior.</div>
+      <ul class="entry-examples">
+        <li>It seemed simple at first; <b>in fact</b>, it was extremely complex.<span class="es">Parecía sencillo al principio; de hecho, era enormemente complejo.</span></li>
+        <li>She isn't just talented; <b>in fact</b>, she is a genius.<span class="es">No es solo talentosa; de hecho, es un genio.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">in the same way</span><span class="entry-tag">comparison</span></div>
+      <div class="entry-note">Del mismo modo. Establece paralelismos.</div>
+      <ul class="entry-examples">
+        <li>The brain stores memories; <b>in the same way</b>, computers store data.<span class="es">El cerebro almacena recuerdos; del mismo modo, los ordenadores almacenan datos.</span></li>
+        <li><b>In the same way</b>, plants need light to grow.<span class="es">Del mismo modo, las plantas necesitan luz para crecer.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">far more ___ than</span><span class="entry-tag">comparison · emphasis</span></div>
+      <div class="entry-note">Mucho más ___ que. <em>Far</em> intensifica el comparativo.</div>
+      <ul class="entry-examples">
+        <li>This option is <b>far more</b> efficient <b>than</b> the previous one.<span class="es">Esta opción es mucho más eficiente que la anterior.</span></li>
+        <li>The book is <b>far more</b> interesting <b>than</b> the film.<span class="es">El libro es mucho más interesante que la película.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">rather than</span><span class="entry-tag">preference / contrast</span></div>
+      <div class="entry-note">En lugar de. + sustantivo, -ing o infinitivo sin <em>to</em>.</div>
+      <ul class="entry-examples">
+        <li>She walked to work <b>rather than</b> taking the bus.<span class="es">Fue a trabajar andando en lugar de coger el autobús.</span></li>
+        <li>We need solutions <b>rather than</b> complaints.<span class="es">Necesitamos soluciones, no quejas.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">so much</span><span class="entry-tag">quantity · emphasis</span></div>
+      <div class="entry-note">Tanto (con incontables). <em>So much that…</em> = tanto que…</div>
+      <ul class="entry-examples">
+        <li>There is <b>so much</b> to learn from history.<span class="es">Hay tanto que aprender de la historia.</span></li>
+        <li>She had <b>so much</b> work that she couldn't sleep.<span class="es">Tenía tanto trabajo que no podía dormir.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">as a whole</span><span class="entry-tag">overall</span></div>
+      <div class="entry-note">En general / en su conjunto.</div>
+      <ul class="entry-examples">
+        <li>The team, <b>as a whole</b>, performed well this season.<span class="es">El equipo, en su conjunto, ha rendido bien esta temporada.</span></li>
+        <li>Society <b>as a whole</b> benefits from education.<span class="es">La sociedad en su conjunto se beneficia de la educación.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">at first</span><span class="entry-tag">time · sequence</span></div>
+      <div class="entry-note">Al principio. Suele oponerse a <em>but later / now</em>.</div>
+      <ul class="entry-examples">
+        <li><b>At first</b>, the problem seemed minor, but it grew quickly.<span class="es">Al principio el problema parecía menor, pero creció rápidamente.</span></li>
+        <li><b>At first</b>, I didn't like the city; now I love it.<span class="es">Al principio no me gustaba la ciudad; ahora la adoro.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">instead of</span><span class="entry-tag">replacement</span></div>
+      <div class="entry-note">En lugar de. + sustantivo / -ing.</div>
+      <ul class="entry-examples">
+        <li>Send an email <b>instead of</b> calling.<span class="es">Manda un correo en lugar de llamar.</span></li>
+        <li>She chose tea <b>instead of</b> coffee.<span class="es">Eligió té en lugar de café.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">in spite of</span><span class="entry-tag">concession</span></div>
+      <div class="entry-note">A pesar de. + sustantivo / -ing. Sinónimo de <em>despite</em>.</div>
+      <ul class="entry-examples">
+        <li>She succeeded <b>in spite of</b> many obstacles.<span class="es">Tuvo éxito a pesar de muchos obstáculos.</span></li>
+        <li><b>In spite of</b> the rain, the festival went ahead.<span class="es">A pesar de la lluvia, el festival siguió adelante.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">from then on</span><span class="entry-tag">time marker</span></div>
+      <div class="entry-note">Desde entonces. Marca el inicio de una nueva fase.</div>
+      <ul class="entry-examples">
+        <li>He quit smoking; <b>from then on</b>, his health improved.<span class="es">Dejó de fumar; desde entonces, su salud mejoró.</span></li>
+        <li>She moved abroad in 2010; <b>from then on</b>, she rarely visited home.<span class="es">Se mudó al extranjero en 2010; desde entonces, rara vez visitó su tierra.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">at all</span><span class="entry-tag">emphasis · neg.</span></div>
+      <div class="entry-note">Para nada / en absoluto. Refuerza negativas y preguntas.</div>
+      <ul class="entry-examples">
+        <li>I don't mind <b>at all</b> if you stay longer.<span class="es">No me importa para nada si te quedas más tiempo.</span></li>
+        <li>Did you sleep <b>at all</b> last night?<span class="es">¿Dormiste algo anoche?</span></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ============== TAB 6 · PREPOSITION ========================= -->
+<!-- ============================================================ -->
+<section class="tab-panel" id="prep" data-tab="prep">
+
+  <div class="intro">
+    <h3>Preposiciones · Prepositions</h3>
+    <p>Una palabra y cinco usos. Aprende las colocaciones típicas (<em>insights into</em>, <em>by the time</em>, <em>for two reasons</em>) y los significados de <em>of, with, without, about</em> en contextos abstractos.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🎯</span><strong>Pista:</strong> en huecos antes de <em>-ing</em>, la respuesta suele ser una preposición (<em>without doing, by completing, instead of</em>). Antes de sustantivo abstracto, prueba <em>of, with, in, about</em>.
+  </div>
+
+  <div class="entry-grid">
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">until</span><span class="entry-tag">time · limit</span></div>
+      <div class="entry-note">Hasta (un momento). + sustantivo de tiempo o cláusula.</div>
+      <ul class="entry-examples">
+        <li>Wait <b>until</b> the meeting ends before leaving.<span class="es">Espera hasta que termine la reunión antes de irte.</span></li>
+        <li>The shop stays open <b>until</b> midnight.<span class="es">La tienda permanece abierta hasta medianoche.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">by (the time)</span><span class="entry-tag">deadline</span></div>
+      <div class="entry-note">Para (no más tarde de). <em>By the time</em> + cláusula = cuando.</div>
+      <ul class="entry-examples">
+        <li><b>By the time</b> we arrived, the show had already started.<span class="es">Cuando llegamos, el espectáculo ya había empezado.</span></li>
+        <li>Finish the report <b>by</b> Friday at the latest.<span class="es">Termina el informe el viernes como muy tarde.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">of</span><span class="entry-tag">relation / possession</span></div>
+      <div class="entry-note">Composición, posesión, relación. La preposición más usada en inglés.</div>
+      <ul class="entry-examples">
+        <li>The roof <b>of</b> the building needs repair.<span class="es">El tejado del edificio necesita reparación.</span></li>
+        <li>She is afraid <b>of</b> heights.<span class="es">Le dan miedo las alturas.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">in (+ abstract noun)</span><span class="entry-tag">manner · motive</span></div>
+      <div class="entry-note">Movido por (cualidad). <em>In + his/her + abstract noun</em> = por su…</div>
+      <ul class="entry-examples">
+        <li><b>In</b> his generosity, he donated his entire salary.<span class="es">En un gesto de generosidad, donó todo su salario.</span></li>
+        <li><b>In</b> her enthusiasm, she forgot the time.<span class="es">Por su entusiasmo, se olvidó de la hora.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">between</span><span class="entry-tag">two parties</span></div>
+      <div class="entry-note">Entre (dos elementos o grupo cerrado). Con <em>and</em> para rango.</div>
+      <ul class="entry-examples">
+        <li>The deal <b>between</b> the two firms collapsed.<span class="es">El acuerdo entre las dos empresas se vino abajo.</span></li>
+        <li>Choose <b>between</b> coffee and tea.<span class="es">Elige entre café y té.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">from… to…</span><span class="entry-tag">range</span></div>
+      <div class="entry-note">Rango de tiempo, lugar o variedad.</div>
+      <ul class="entry-examples">
+        <li>The shop is open <b>from</b> 9 <b>to</b> 5.<span class="es">La tienda abre de 9 a 5.</span></li>
+        <li>Prices range <b>from</b> €20 <b>to</b> €200.<span class="es">Los precios van de 20 a 200 euros.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">(go) on</span><span class="entry-tag">continue · topic</span></div>
+      <div class="entry-note">Phrasal: continuar. También: <em>on holiday, on the phone, on Monday</em>.</div>
+      <ul class="entry-examples">
+        <li>We must <b>go on</b> despite the setbacks.<span class="es">Debemos seguir adelante a pesar de los contratiempos.</span></li>
+        <li>The book focuses <b>on</b> climate change.<span class="es">El libro se centra en el cambio climático.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">(insights) into</span><span class="entry-tag">collocation</span></div>
+      <div class="entry-note">Collocations: <em>insight into, research into, inquiry into, investigation into</em>.</div>
+      <ul class="entry-examples">
+        <li>The report offers valuable insights <b>into</b> consumer behaviour.<span class="es">El informe aporta ideas valiosas sobre el comportamiento del consumidor.</span></li>
+        <li>They launched an inquiry <b>into</b> the accident.<span class="es">Iniciaron una investigación sobre el accidente.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">about</span><span class="entry-tag">topic</span></div>
+      <div class="entry-note">Sobre, acerca de. También: <em>be about to</em> = estar a punto de.</div>
+      <ul class="entry-examples">
+        <li>We talked <b>about</b> the new project for hours.<span class="es">Hablamos sobre el nuevo proyecto durante horas.</span></li>
+        <li>The film is <b>about</b> friendship and loss.<span class="es">La película trata de la amistad y la pérdida.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">at</span><span class="entry-tag">point / skill</span></div>
+      <div class="entry-note">Punto exacto (lugar/tiempo) y habilidad: <em>good at, bad at</em>.</div>
+      <ul class="entry-examples">
+        <li>She is excellent <b>at</b> solving complex problems.<span class="es">Es excelente resolviendo problemas complejos.</span></li>
+        <li>We met <b>at</b> the station <b>at</b> noon.<span class="es">Nos encontramos en la estación a mediodía.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">without</span><span class="entry-tag">absence</span></div>
+      <div class="entry-note">Sin. + sustantivo / -ing.</div>
+      <ul class="entry-examples">
+        <li>He left the room <b>without</b> saying a word.<span class="es">Salió de la sala sin decir una palabra.</span></li>
+        <li>We can't function <b>without</b> coffee in the morning.<span class="es">No funcionamos sin café por la mañana.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">for (+ number) reasons</span><span class="entry-tag">cause</span></div>
+      <div class="entry-note">Por (motivos). <em>For two reasons</em> = por dos razones.</div>
+      <ul class="entry-examples">
+        <li>I disagree <b>for two reasons</b>: cost and timing.<span class="es">Estoy en desacuerdo por dos razones: el coste y el tiempo.</span></li>
+        <li>The plan was rejected <b>for several reasons</b>.<span class="es">El plan se rechazó por varias razones.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">with</span><span class="entry-tag">means / company</span></div>
+      <div class="entry-note">Con (compañía, instrumento, característica).</div>
+      <ul class="entry-examples">
+        <li>She paid <b>with</b> her credit card.<span class="es">Pagó con su tarjeta de crédito.</span></li>
+        <li>A man <b>with</b> red hair was waiting outside.<span class="es">Un hombre pelirrojo estaba esperando fuera.</span></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ============== TAB 7 · CONJUNCTION ========================= -->
+<!-- ============================================================ -->
+<section class="tab-panel" id="conj" data-tab="conj">
+
+  <div class="intro">
+    <h3>Conjunciones · Conjunctions</h3>
+    <p>Unen cláusulas. Coordinantes (<em>so, but, and</em>), subordinantes (<em>although, while, because</em>) y adverbios conjuntivos (<em>however, therefore, moreover, nevertheless</em>) que se usan tras punto/punto y coma.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">⚠️</span><strong>Cuidado:</strong> <em>because</em> + cláusula, <em>because of</em> + sustantivo. <em>Although</em> + cláusula, <em>despite/in spite of</em> + sustantivo. <em>However, moreover, therefore</em> normalmente entre comas o tras <em>;</em>.
+  </div>
+
+  <div class="entry-grid">
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">so</span><span class="entry-tag">result</span></div>
+      <div class="entry-note">Coordinante de resultado: por eso, así que.</div>
+      <ul class="entry-examples">
+        <li>It was raining heavily, <b>so</b> we stayed in.<span class="es">Llovía mucho, así que nos quedamos dentro.</span></li>
+        <li>The road was blocked, <b>so</b> we had to take a detour.<span class="es">La carretera estaba cortada, así que tuvimos que dar un rodeo.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">while</span><span class="entry-tag">time / contrast</span></div>
+      <div class="entry-note">Mientras (tiempo) o mientras que (contraste).</div>
+      <ul class="entry-examples">
+        <li><b>While</b> I cooked dinner, he set the table.<span class="es">Mientras yo cocinaba la cena, él ponía la mesa.</span></li>
+        <li>Some prefer cities, <b>while</b> others love the countryside.<span class="es">Unos prefieren las ciudades, mientras que otros aman el campo.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">though</span><span class="entry-tag">concession</span></div>
+      <div class="entry-note">Aunque. Más informal que <em>although</em>. Puede ir al final como "sin embargo".</div>
+      <ul class="entry-examples">
+        <li>I went out <b>though</b> I was tired.<span class="es">Salí aunque estaba cansado.</span></li>
+        <li>It's expensive. It's worth it, <b>though</b>.<span class="es">Es caro. Vale la pena, sin embargo.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">although</span><span class="entry-tag">concession</span></div>
+      <div class="entry-note">Aunque. Formal. + cláusula completa.</div>
+      <ul class="entry-examples">
+        <li><b>Although</b> it rained all morning, we still went hiking.<span class="es">Aunque llovió toda la mañana, fuimos de senderismo igualmente.</span></li>
+        <li>She accepted the job <b>although</b> the salary was low.<span class="es">Aceptó el trabajo aunque el salario era bajo.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">to</span><span class="entry-tag">purpose</span></div>
+      <div class="entry-note">Para (propósito). + infinitivo.</div>
+      <ul class="entry-examples">
+        <li>He stopped <b>to</b> rest for a few minutes.<span class="es">Paró para descansar unos minutos.</span></li>
+        <li>We're calling <b>to</b> confirm your appointment.<span class="es">Llamamos para confirmar su cita.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">however</span><span class="entry-tag">contrast</span></div>
+      <div class="entry-note">Sin embargo. Adverbio conjuntivo, entre comas.</div>
+      <ul class="entry-examples">
+        <li>It's expensive; <b>however</b>, it works perfectly.<span class="es">Es caro; sin embargo, funciona perfectamente.</span></li>
+        <li>The plan was risky. <b>However</b>, the team approved it.<span class="es">El plan era arriesgado. Sin embargo, el equipo lo aprobó.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">moreover</span><span class="entry-tag">addition</span></div>
+      <div class="entry-note">Además. Formal, refuerza un argumento.</div>
+      <ul class="entry-examples">
+        <li>The plan is risky; <b>moreover</b>, it is very costly.<span class="es">El plan es arriesgado; además, es muy costoso.</span></li>
+        <li>She is highly qualified; <b>moreover</b>, she speaks four languages.<span class="es">Está muy cualificada; además, habla cuatro idiomas.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">therefore</span><span class="entry-tag">result · formal</span></div>
+      <div class="entry-note">Por (lo) tanto. Formal, propio de textos argumentativos.</div>
+      <ul class="entry-examples">
+        <li>Demand fell sharply; <b>therefore</b>, we had to cut prices.<span class="es">La demanda cayó en picado; por tanto, tuvimos que bajar los precios.</span></li>
+        <li>He missed the deadline; <b>therefore</b>, his application was rejected.<span class="es">No cumplió el plazo; por tanto, su solicitud fue rechazada.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">whereas</span><span class="entry-tag">direct contrast</span></div>
+      <div class="entry-note">Mientras que. Contraste directo entre dos sujetos/situaciones.</div>
+      <ul class="entry-examples">
+        <li>Some students study at night, <b>whereas</b> others prefer early mornings.<span class="es">Unos estudian de noche, mientras que otros prefieren la mañana.</span></li>
+        <li>The first option is cheap, <b>whereas</b> the second is much faster.<span class="es">La primera opción es barata, mientras que la segunda es mucho más rápida.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">nevertheless</span><span class="entry-tag">concession</span></div>
+      <div class="entry-note">No obstante, aun así. = <em>however</em> pero más enfático.</div>
+      <ul class="entry-examples">
+        <li>The plan failed; <b>nevertheless</b>, we learned a great deal.<span class="es">El plan fracasó; no obstante, aprendimos mucho.</span></li>
+        <li>It was a hard year. <b>Nevertheless</b>, the team grew stronger.<span class="es">Fue un año duro. Aun así, el equipo se hizo más fuerte.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">because</span><span class="entry-tag">cause</span></div>
+      <div class="entry-note">Porque. + cláusula completa (sujeto + verbo).</div>
+      <ul class="entry-examples">
+        <li>I left early <b>because</b> I was feeling unwell.<span class="es">Me marché pronto porque me encontraba mal.</span></li>
+        <li>She accepted the job <b>because</b> it offered flexibility.<span class="es">Aceptó el trabajo porque ofrecía flexibilidad.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">because of</span><span class="entry-tag">cause + noun</span></div>
+      <div class="entry-note">A causa de. + sustantivo / -ing (NUNCA + cláusula).</div>
+      <ul class="entry-examples">
+        <li>Flights are delayed <b>because of</b> heavy fog.<span class="es">Los vuelos se retrasan por la densa niebla.</span></li>
+        <li>The match was postponed <b>because of</b> the rain.<span class="es">El partido se aplazó por la lluvia.</span></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ============== TAB 8 · ADVERB ============================== -->
+<!-- ============================================================ -->
+<section class="tab-panel" id="adv" data-tab="adv">
+
+  <div class="intro">
+    <h3>Adverbios · Adverbs</h3>
+    <p>Modifican verbos, adjetivos u oraciones. Aquí caben los <strong>sequencers</strong> (<em>firstly, secondly, later</em>), los <strong>conectivos</strong> (<em>consequently, furthermore, besides</em>), los <strong>intensifiers</strong> (<em>much, more, too</em>) y los <strong>temporales</strong> (<em>when, while, as, after, later</em>).</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">🔧</span><strong>Pista:</strong> en huecos al principio de frase seguidos de coma, suele ser un <strong>conector adverbial</strong> (<em>Firstly, … Consequently, … Furthermore, …</em>).
+  </div>
+
+  <div class="entry-grid">
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">besides</span><span class="entry-tag">addition</span></div>
+      <div class="entry-note">Además. Como adverbio (= moreover) o preposición (= apart from).</div>
+      <ul class="entry-examples">
+        <li>I don't want to go; <b>besides</b>, it's already too late.<span class="es">No quiero ir; además, ya es demasiado tarde.</span></li>
+        <li><b>Besides</b> being talented, she is also very humble.<span class="es">Además de tener talento, también es muy humilde.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">after</span><span class="entry-tag">time</span></div>
+      <div class="entry-note">Después. Preposición (+ noun), conjunción (+ clause) o adverbio.</div>
+      <ul class="entry-examples">
+        <li>We had dinner and went home soon <b>after</b>.<span class="es">Cenamos y poco después nos fuimos a casa.</span></li>
+        <li><b>After</b> the meeting, we'll discuss the next steps.<span class="es">Después de la reunión, hablaremos de los próximos pasos.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">consequently</span><span class="entry-tag">result · formal</span></div>
+      <div class="entry-note">En consecuencia. Formal; al inicio de frase.</div>
+      <ul class="entry-examples">
+        <li>Sales dropped; <b>consequently</b>, the company restructured.<span class="es">Las ventas bajaron; en consecuencia, la empresa se reestructuró.</span></li>
+        <li>He missed three meetings; <b>consequently</b>, he was dismissed.<span class="es">Faltó a tres reuniones; en consecuencia, fue despedido.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">firstly</span><span class="entry-tag">sequence · 1st</span></div>
+      <div class="entry-note">En primer lugar. Inicia una lista de argumentos.</div>
+      <ul class="entry-examples">
+        <li><b>Firstly</b>, let's outline the main goals of the project.<span class="es">En primer lugar, esbocemos los objetivos principales del proyecto.</span></li>
+        <li><b>Firstly</b>, the plan is too expensive.<span class="es">En primer lugar, el plan es demasiado caro.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">secondly</span><span class="entry-tag">sequence · 2nd</span></div>
+      <div class="entry-note">En segundo lugar. Continúa la enumeración.</div>
+      <ul class="entry-examples">
+        <li><b>Secondly</b>, we must consider the environmental impact.<span class="es">En segundo lugar, debemos considerar el impacto medioambiental.</span></li>
+        <li><b>Secondly</b>, the timeline is unrealistic.<span class="es">En segundo lugar, el calendario no es realista.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">furthermore</span><span class="entry-tag">addition · formal</span></div>
+      <div class="entry-note">Además. Formal, refuerza el argumento previo.</div>
+      <ul class="entry-examples">
+        <li>The data is old; <b>furthermore</b>, it is incomplete.<span class="es">Los datos son antiguos; además, están incompletos.</span></li>
+        <li><b>Furthermore</b>, the report fails to mention key risks.<span class="es">Es más, el informe no menciona riesgos clave.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">too (much)</span><span class="entry-tag">excess</span></div>
+      <div class="entry-note">Demasiado. <em>Too + adj</em> / <em>too much + uncountable</em> / <em>too many + plural</em>.</div>
+      <ul class="entry-examples">
+        <li>There is <b>too much</b> noise to concentrate.<span class="es">Hay demasiado ruido para concentrarse.</span></li>
+        <li>The exam was <b>too</b> difficult for most students.<span class="es">El examen era demasiado difícil para la mayoría.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">more</span><span class="entry-tag">comparative</span></div>
+      <div class="entry-note">Más. Comparativo cuantificador o intensificador.</div>
+      <ul class="entry-examples">
+        <li>We need <b>more</b> time to finish the project properly.<span class="es">Necesitamos más tiempo para terminar bien el proyecto.</span></li>
+        <li>The new model is <b>more</b> efficient than the old one.<span class="es">El nuevo modelo es más eficiente que el anterior.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">when</span><span class="entry-tag">time</span></div>
+      <div class="entry-note">Cuando. Conjunción temporal o adverbio interrogativo.</div>
+      <ul class="entry-examples">
+        <li>I was reading <b>when</b> the phone rang.<span class="es">Estaba leyendo cuando sonó el teléfono.</span></li>
+        <li>Let me know <b>when</b> you arrive home safely.<span class="es">Avísame cuando llegues bien a casa.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">while</span><span class="entry-tag">simultaneity</span></div>
+      <div class="entry-note">Mientras (acción simultánea). También contraste (= whereas).</div>
+      <ul class="entry-examples">
+        <li>She studied <b>while</b> the children were sleeping.<span class="es">Estudió mientras los niños dormían.</span></li>
+        <li><b>While</b> some agree, others strongly disagree.<span class="es">Mientras unos están de acuerdo, otros disienten claramente.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">as</span><span class="entry-tag">multi-use</span></div>
+      <div class="entry-note">Tiempo (mientras), causa (porque), manera (como), comparación (tan… como).</div>
+      <ul class="entry-examples">
+        <li><b>As</b> he was speaking, the lights suddenly went out.<span class="es">Mientras hablaba, las luces se apagaron de repente.</span></li>
+        <li><b>As</b> it was raining, we cancelled the picnic.<span class="es">Como llovía, cancelamos el picnic.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">later</span><span class="entry-tag">time</span></div>
+      <div class="entry-note">Más tarde, después. Comparativo de <em>late</em>.</div>
+      <ul class="entry-examples">
+        <li>We can decide <b>later</b> when we have more information.<span class="es">Podemos decidir más tarde, cuando tengamos más información.</span></li>
+        <li>Two years <b>later</b>, the company tripled its profits.<span class="es">Dos años después, la empresa triplicó sus beneficios.</span></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-term">much</span><span class="entry-tag">intensifier</span></div>
+      <div class="entry-note">Mucho. Intensifica comparativos: <em>much better, much more</em>.</div>
+      <ul class="entry-examples">
+        <li>She's <b>much</b> better today than yesterday.<span class="es">Está mucho mejor hoy que ayer.</span></li>
+        <li>This solution is <b>much</b> more practical.<span class="es">Esta solución es mucho más práctica.</span></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<script>
+/* THEME */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("theme",t);}catch(e){}}
+function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme")||"light";applyTheme(cur==="dark"?"light":"dark");}
+(function initTheme(){let saved=null;try{saved=localStorage.getItem("theme");}catch(e){}if(saved==="dark"||saved==="light"){applyTheme(saved);return;}const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;applyTheme(prefersDark?"dark":"light");})();
+
+/* TABS */
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* FONT SIZE SLIDER */
+const FS_KEY = 'idiomas_font_size';
+function updateFontSize(pct){
+  const scale = pct / 100;
+  document.documentElement.style.fontSize = (16 * scale) + 'px';
+  document.getElementById('fs-value').textContent = pct + '%';
+  try{localStorage.setItem(FS_KEY, pct);}catch(e){}
+}
+(function initFontSize(){
+  let saved=null;try{saved=localStorage.getItem(FS_KEY);}catch(e){}
+  if(saved){
+    document.getElementById('fs-slider').value = saved;
+    updateFontSize(saved);
+  }
+})();
+</script>
+
+</body>
+</html>

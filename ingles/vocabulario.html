@@ -527,7 +527,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
   </div>
   <div class="hdr-lbl">English B2 &middot; Study Tool</div>
   <h1>Flashcards &amp; Game Mode</h1>
-  <div class="hdr-sub">Expressions &middot; G&amp;I &middot; Phrasal Verbs &middot; Verbs+Prep &middot; Word Formation</div>
+  <div class="hdr-sub">Expressions &middot; G&amp;I &middot; Phrasal Verbs &middot; Verbs+Prep &middot; Word Formation &middot; TOP B2 &middot; Reading &middot; Preposiciones</div>
   <div class="hdr-pills">
     <div class="pill">Total <strong id="hdrTotal">0</strong></div>
     <div class="pill">Dominadas <strong id="hdrMastered">0</strong></div>
@@ -546,7 +546,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 <div class="ctrl">
   <div class="srow">
     <span style="color:var(--text3)">&#128269;</span>
-    <input type="text" id="searchBox" placeholder="Buscar tarjeta&hellip;" autocomplete="off">
+    <input type="search" id="searchBox" name="vocab-filter" placeholder="Buscar tarjeta&hellip;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-1p-ignore="true" data-form-type="other">
     <button class="clr-btn" id="clrBtn">&#10005;</button>
     <button class="add-btn" id="btnAddCard" title="A&ntilde;adir">&#65291;</button>
   </div>
@@ -598,6 +598,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
         <option value="pv">Phrasal Verbs</option>
         <option value="vp">Verbs + Preposition</option>
         <option value="wf">Word Formation</option>
+        <option value="top">TOP B2</option>
+        <option value="rd">Reading</option>
       </select>
     </div>
     <div id="apSimple">
@@ -650,6 +652,9 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
           <button class="gf-btn" data-gcat="pv">Phrasal Verbs</button>
           <button class="gf-btn" data-gcat="vp">Verbs+Prep</button>
           <button class="gf-btn" data-gcat="wf">Word Form.</button>
+          <button class="gf-btn" data-gcat="top">TOP B2</button>
+          <button class="gf-btn" data-gcat="rd">Reading</button>
+          <button class="gf-btn" data-gcat="prep">Preposiciones</button>
         </div>
       </div>
       <div class="gf-section">
@@ -932,7 +937,10 @@ var CAT={
   gi:  {label:'G & I',      color:'#3d2a72'},
   pv:  {label:'Phrasal Verbs',color:'#6b3a1a'},
   vp:  {label:'Verbs+Prep', color:'#1a4a7a'},
-  wf:  {label:'Word Form.', color:'#7a1a3a'}
+  wf:  {label:'Word Form.', color:'#7a1a3a'},
+  top: {label:'TOP B2',     color:'#0a5560'},
+  rd:  {label:'Reading',    color:'#3a5a2a'},
+  prep:{label:'Preposiciones',color:'#5a4a8a'}
 };
 var WFT={'N':'noun','adj':'adj.','-adj':'neg.adj.','-N':'neg.N','-V':'neg.V','-adv':'neg.adv.','adv':'adv.','V':'verb'};
 var CARDS=[];
@@ -1542,6 +1550,359 @@ var CARDS=[];
 {id:'wf275',base:'hope',       wftype:'-adj', derived:'hopeless',        example:'After three failed attempts, the situation looked hopeless.'}
 ].forEach(function(c){c.cat='wf';CARDS.push(c);});
 
+/* ── BLOCK 6: TOP B2 (vocabulario de clase) ── */
+[
+{id:'tb1',  front:'Cook',                       back:'Cocinero',                     example:'My uncle works as a cook at a small Italian bistro.'},
+{id:'tb2',  front:'To unwind',                  back:'Relajarse',                    example:'After a long day, I unwind by reading a book.'},
+{id:'tb3',  front:'Home chores',                back:'Tareas de casa',               example:'We split the home chores between us every weekend.'},
+{id:'tb4',  front:'Your guts',                  back:'Tu instinto',                  example:"Trust your guts on this one — they're usually right."},
+{id:'tb5',  front:'Blessed',                    back:'Bendecido',                    example:'I feel blessed to have such supportive friends.'},
+{id:'tb6',  front:'About',                      back:'A punto de',                   example:"I'm about to leave for the airport."},
+{id:'tb7',  front:'Mindset',                    back:'Mentalidad',                   example:'A growth mindset helps you learn from mistakes.'},
+{id:'tb8',  front:'Currency',                   back:'Divisa',                       example:'The euro is the official currency of Spain.'},
+{id:'tb9',  front:'Manners',                    back:'Modos',                        example:'His parents taught him good manners from an early age.'},
+{id:'tb10', front:'Turning point',              back:'Punto de inflexión',      example:'Moving abroad was a turning point in her life.'},
+{id:'tb11', front:'To party',                   back:'Ir de fiesta',                 example:'They love to party every Saturday night.'},
+{id:'tb12', front:'To vibe high',               back:'Vibrar alto',                  example:'Yoga and meditation help me vibe high.'},
+{id:'tb13', front:'I can tell',                 back:'Se nota',                      example:"I can tell you've been working out — you look great."},
+{id:'tb14', front:'My bad',                     back:'Mi error',                     example:'I sent the wrong file — my bad!'},
+{id:'tb15', front:'To leave behind',            back:'Dejar atrás',             example:'She decided to leave her past behind and start fresh.'},
+{id:'tb16', front:'To drop hints',              back:'Dar pistas',                   example:'He kept dropping hints about wanting a new bike.'},
+{id:'tb17', front:'Overloaded',                 back:'Estar sobrecargado',           example:"I'm feeling totally overloaded with work this week."},
+{id:'tb18', front:'Border',                     back:'Frontera',                     example:'They crossed the border into France at dawn.'},
+{id:'tb19', front:'Prosecuted',                 back:'Perseguidos (judicialmente)',  example:'Anyone caught cheating will be prosecuted.'},
+{id:'tb20', front:'To chase your dreams',       back:'Perseguir tus sueños',    example:"It's never too late to chase your dreams."},
+{id:'tb21', front:'To carry out',               back:'Llevar a cabo',                example:'The team carried out the experiment successfully.'},
+{id:'tb22', front:'To undergo',                 back:'Sufrir / pasar por',           example:'She had to undergo surgery last winter.'},
+{id:'tb23', front:'To hand over',               back:'Entregar',                     example:'Please hand over your report by Friday.'},
+{id:'tb24', front:'Political party',            back:'Partido político',        example:"He's the leader of the new political party."},
+{id:'tb25', front:'To acknowledge',             back:'Aceptar / reconocer',          example:'She acknowledged her mistake and apologised.'},
+{id:'tb26', front:'To come to an agreement',    back:'Llegar a un acuerdo',          example:'After hours of talks, they came to an agreement.'},
+{id:'tb27', front:'Smooth',                     back:'Natural, nítido',         example:'The transition between scenes was very smooth.'},
+{id:'tb28', front:'Weak',                       back:'Débil',                   example:'The coffee was too weak for my taste.'},
+{id:'tb29', front:'To empathize',               back:'Empatizar',                    example:"It's important to empathize with your colleagues."},
+{id:'tb30', front:'To touch a nerve',           back:'Tocar una parte sensible',     example:'My comment about her job clearly touched a nerve.'},
+{id:'tb31', front:'Painful',                    back:'Doloroso',                     example:'The injection was less painful than I expected.'},
+{id:'tb32', front:'Thread',                     back:'Hilo',                         example:'I lost the thread of the conversation.'},
+{id:'tb33', front:'Tough',                      back:'Difícil',                 example:'It was a tough decision, but the right one.'},
+{id:'tb34', front:'Rough',                      back:'Bruto, rudo',                  example:"His manners are a bit rough, but he's kind-hearted."},
+{id:'tb35', front:'Assignment',                 back:'Tarea',                        example:'The assignment is due next Monday.'},
+{id:'tb36', front:'Assessment',                 back:'Evaluación',              example:'The teacher gave us a written assessment.'},
+{id:'tb37', front:'To hook up',                 back:'Acoplar / conectar',           example:'We hooked up the printer to the new laptop.'},
+{id:'tb38', front:'About to',                   back:'A punto de',                   example:'I was about to call you when you walked in.'},
+{id:'tb39', front:'Beforehand',                 back:'De antemano',                  example:"Let me know beforehand if you can't make it."},
+{id:'tb40', front:'Commitment',                 back:'Compromiso',                   example:'Marriage is a serious commitment.'},
+{id:'tb41', front:'Grandson',                   back:'Nieto',                        example:'Her grandson just started primary school.'},
+{id:'tb42', front:'By his side',                back:'A su lado',                    example:'She stayed by his side through the whole illness.'},
+{id:'tb43', front:'Smart cookie',               back:'Persona inteligente',          example:"Don't underestimate her — she's a smart cookie."},
+{id:'tb44', front:'Mutual',                     back:'Recíproco',               example:'The respect between them is completely mutual.'},
+{id:'tb45', front:'To harm',                    back:'Herir / dañar',           example:'The chemicals can harm aquatic life.'},
+{id:'tb46', front:'Harmless',                   back:'Inofensivo',                   example:"The spider looks scary but it's harmless."},
+{id:'tb47', front:'Harmful',                    back:'Dañino / que hiere',      example:'Smoking is harmful to your lungs.'},
+{id:'tb48', front:'Patch',                      back:'Pedazo / parche',              example:'She sewed a patch onto her jeans.'},
+{id:'tb49', front:'Vessel',                     back:'Embarcación / crucero',   example:'The vessel docked at the port early in the morning.'},
+{id:'tb50', front:'To take advantage',          back:'Sacar provecho',               example:'Take advantage of the offer before it ends.'},
+{id:'tb51', front:'To lead to',                 back:'Llevar a (resultado)',         example:'A good diet can lead to a longer life.'},
+{id:'tb52', front:'Landlord',                   back:'Arrendador',                   example:'The landlord raised the rent by 5%.'},
+{id:'tb53', front:'Tenant',                     back:'Arrendatario',                 example:'The new tenant moves in next week.'},
+{id:'tb54', front:'To release',                 back:'Lanzar (álbum)',          example:'The band will release their new album in May.'},
+{id:'tb55', front:'To fund',                    back:'Financiar / invertir en',      example:'The government plans to fund several green projects.'},
+{id:'tb56', front:'Bet',                        back:'Apostar',                      example:"I bet she'll win the race."},
+{id:'tb57', front:'Servants',                   back:'Camareros / sirvientes',       example:'The mansion was once full of servants.'},
+{id:'tb58', front:'Parade',                     back:'Desfile',                      example:"There's a big parade through the city centre today."},
+{id:'tb59', front:'Costumes',                   back:'Disfraces',                    example:'The children wore amazing costumes for Halloween.'},
+{id:'tb60', front:'Undercover',                 back:'Infiltrado',                   example:'The detective worked undercover for months.'},
+{id:'tb61', front:'To brag about',              back:'Alardear',                     example:'He keeps bragging about his new car.'},
+{id:'tb62', front:'Mandatory',                  back:'Obligatorio',                  example:'Wearing a helmet is mandatory on the construction site.'},
+{id:'tb63', front:'Openings',                   back:'Huecos libres (agenda)',       example:'I have a few openings in my schedule next week.'},
+{id:'tb64', front:'Honest mistake',             back:'Error tonto / de buena fe',    example:'Forget it — it was just an honest mistake.'},
+{id:'tb65', front:'To throw sb under the bus',  back:'Dejar tirado / culpar',        example:"I can't believe he threw me under the bus in the meeting."},
+{id:'tb66', front:'To revolve around',          back:'Girar en torno a',             example:'The novel revolves around a young detective in Paris.'},
+{id:'tb67', front:'Hit me up!',                 back:'¡Escríbeme!',        example:'Hit me up when you arrive at the station.'},
+{id:'tb68', front:'To pay off',                 back:'Dar frutos',                   example:'All those hours of practice finally paid off.'},
+{id:'tb69', front:'Consumption',                back:'Consumo',                      example:'Excessive alcohol consumption is a serious risk.'},
+{id:'tb70', front:'To thrive',                  back:'Prosperar / tener éxito', example:'Plants thrive in this warm, humid climate.'},
+{id:'tb71', front:'To overthrow',               back:'Derrocar',                     example:'The rebels tried to overthrow the government.'},
+{id:'tb72', front:'To piss off / to bug',       back:'Molestar',                     example:"Stop bugging me — I'm trying to concentrate."},
+{id:'tb73', front:'My head grows heavy',        back:'Me peta la cabeza',            example:'After ten hours of meetings, my head grows heavy.'},
+{id:'tb74', front:'Dust',                       back:'Polvo',                        example:"There's a thick layer of dust on the shelves."},
+{id:'tb75', front:'The workload',               back:'Carga laboral',                example:'My workload has doubled since the new project started.'},
+{id:'tb76', front:'Fast-paced environment',     back:'Entorno laboral duro',         example:'She thrives in a fast-paced environment.'},
+{id:'tb77', front:'Backward-facing',            back:'Mirando hacia atrás',     example:'The strategy felt too backward-facing for a tech company.'},
+{id:'tb78', front:'Wind-powered',               back:'Impulsada por viento',         example:'The new ferry is entirely wind-powered.'},
+{id:'tb79', front:'Self-effacing',              back:'Modesto / discreto',           example:'Despite her success, she remains self-effacing.'},
+{id:'tb80', front:'Tightly wound',              back:'Tenso, nervioso',              example:"He's a bit tightly wound before exams."},
+{id:'tb81', front:'Politicians',                back:'Políticos',               example:'Politicians often promise more than they deliver.'},
+{id:'tb82', front:'Stubborn',                   back:'Cabezota',                     example:'He is too stubborn to admit he was wrong.'},
+{id:'tb83', front:'To plant the seed',          back:'Sembrar la duda',              example:'Her comment planted the seed of doubt in my mind.'},
+{id:'tb84', front:'To break up',                back:'Entrecortarse (señal)',   example:"Sorry, you're breaking up — I can't hear you."},
+{id:'tb85', front:'On my watch',                back:'Delante de mí / a mi cargo', example:"Not on my watch — that's never going to happen."},
+{id:'tb86', front:'Out of the blue',            back:'Inesperadamente',              example:'She called me out of the blue after ten years.'},
+{id:'tb87', front:'To yawn',                    back:'Bostezar',                     example:'He yawned loudly during the meeting.'},
+{id:'tb88', front:'Far-fetched',                back:'Inverosímil',             example:'That excuse sounds a bit far-fetched to me.'},
+{id:'tb89', front:'Light-hearted',              back:'Despreocupado',                example:'It was a light-hearted comedy, perfect for a Friday night.'},
+{id:'tb90', front:'Absent-minded',              back:'Despistado',                   example:'My grandfather is getting a bit absent-minded.'},
+{id:'tb91', front:'Half-hearted',               back:'Sin ganas',                    example:'He made a half-hearted attempt to apologise.'},
+{id:'tb92', front:'Straightforward',            back:'Sencillo',                     example:'The instructions are pretty straightforward.'},
+{id:'tb93', front:'Left and right',             back:'A diestro y siniestro',        example:"She's been getting job offers left and right."},
+{id:'tb94', front:'We are two weeks out',       back:'Quedan dos semanas',           example:"We're two weeks out from the deadline."},
+{id:'tb95', front:'Overwhelmed',                back:'Abrumado',                     example:'I feel overwhelmed by the amount of work.'},
+{id:'tb96', front:'His will',                   back:'Su voluntad',                  example:'Nothing could break his will to succeed.'},
+{id:'tb97', front:'Area of improvement',        back:'Área de mejora',          example:'Time management is my main area of improvement.'},
+{id:'tb98', front:'Aside',                      back:'A un lado',                    example:'He stepped aside to let her pass.'},
+{id:'tb99', front:'Drawer',                     back:'Cajonera / cajón',        example:'Your socks are in the top drawer.'},
+{id:'tb100',front:'Time will tell',             back:'El tiempo dirá',          example:'Only time will tell if the plan works.'},
+{id:'tb101',front:'I picture the situation',    back:'Me imagino la situación', example:'I can picture the situation perfectly.'},
+{id:'tb102',front:'The last straw',             back:'El colmo / la gota',           example:'His rude comment was the last straw.'},
+{id:'tb103',front:'Was shot',                   back:'Fue filmada',                  example:'The film was shot entirely in New Zealand.'},
+{id:'tb104',front:'Rave reviews',               back:'Críticas favorables',     example:'The new restaurant has had rave reviews.'},
+{id:'tb105',front:'Loyal',                      back:'Leal',                         example:'She has remained loyal to the brand for years.'},
+{id:'tb106',front:'Siblings',                   back:'Hermanos/as',                  example:'I have three siblings — two sisters and a brother.'},
+{id:'tb107',front:'Parents',                    back:'Padres',                       example:'My parents live in a small village in Galicia.'},
+{id:'tb108',front:'To overcome',                back:'Superar(lo)',                  example:'She overcame her fear of public speaking.'},
+{id:'tb109',front:'Net',                        back:'La red',                       example:'The fisherman pulled the net out of the water.'},
+{id:'tb110',front:'Arms wide open',             back:'Brazos abiertos',              example:'They welcomed us with arms wide open.'},
+{id:'tb111',front:'To turn into',               back:'Transformarse en',             example:'The caterpillar turned into a butterfly.'},
+{id:'tb112',front:'Parole',                     back:'Libertad condicional',         example:'He was released on parole after five years.'},
+{id:'tb113',front:'Bail',                       back:'Fianza',                       example:'The judge set the bail at $10,000.'},
+{id:'tb114',front:'Records',                    back:'Antecedentes',                 example:'A background check showed she had no criminal records.'},
+{id:'tb115',front:'Felony',                     back:'Delito grave / crimen',        example:'He was charged with a felony.'},
+{id:'tb116',front:'Shield',                     back:'Escudo',                       example:'The bodyguard used himself as a shield.'},
+{id:'tb117',front:"He's got guts",              back:'Tiene agallas',                example:"He's got guts to speak up in front of the boss."},
+{id:'tb118',front:'Over the moon',              back:'Muy feliz',                    example:'She was over the moon when she got the job.'},
+{id:'tb119',front:'To gain some pounds',        back:'Ganar peso',                   example:'I gained a few pounds over the holidays.'},
+{id:'tb120',front:'Polished',                   back:'Acicalado / pulido',           example:'His shoes were perfectly polished for the interview.'},
+{id:'tb121',front:'To cut ties',                back:'Cortar lazos',                 example:'They cut ties with the supplier after the scandal.'},
+{id:'tb122',front:'To raise',                   back:'Criar',                        example:'She was raised by her grandparents in the countryside.'},
+{id:'tb123',front:'Early',                      back:'A principio de mes',           example:'The rent is due early in the month.'},
+{id:'tb124',front:'Late',                       back:'A finales de mes',             example:'Salaries are usually paid late in the month.'},
+{id:'tb125',front:'To issue warnings',          back:'Diligenciar / emitir alertas', example:'The meteorologists issued warnings about the storm.'},
+{id:'tb126',front:'Levee',                      back:'Dique',                        example:'The levee broke during the flood.'},
+{id:'tb127',front:'Roller coaster',             back:'Montaña rusa',            example:'This year has been a real emotional roller coaster.'},
+{id:'tb128',front:'Lockdown',                   back:'Cierre del país',         example:'During lockdown, everyone worked from home.'},
+{id:'tb129',front:'To forecast',                back:'Predecir',                     example:'They forecast heavy rain for the weekend.'},
+{id:'tb130',front:'Aging up',                   back:'Hacer años',              example:"I noticed I'm aging up faster than I'd like."},
+{id:'tb131',front:'Kite',                       back:'Cometa',                       example:'The children flew a kite on the beach.'},
+{id:'tb132',front:'To demonstrate',             back:'Demostrar',                    example:'The teacher demonstrated how to solve the equation.'},
+{id:'tb133',front:'Second leg',                 back:'Segunda vuelta',               example:'The second leg of the tie will be played in Madrid.'},
+{id:'tb134',front:'Pureness',                   back:'Pureza',                       example:'Mountain water is famous for its pureness.'},
+{id:'tb135',front:'To get down',                back:'Decepcionar / desanimar',      example:"Don't let the bad news get you down."},
+{id:'tb136',front:'Round trip',                 back:'Viaje ida y vuelta',           example:'A round trip to London costs about €200.'},
+{id:'tb137',front:'Pollution',                  back:'Contaminación',           example:'Air pollution is a serious problem in big cities.'},
+{id:'tb138',front:'Environment',                back:'Medioambiente',                example:'We must protect the environment for future generations.'},
+{id:'tb139',front:'Wet',                        back:'Húmedo',                  example:'Be careful — the floor is still wet.'}
+].forEach(function(c){c.cat='top';CARDS.push(c);});
+
+/* ── BLOCK 7: READING (Linguaskill) ── */
+[
+{id:'rd1',  front:'Advise',                       back:'Aconsejar',                                example:'The doctor advised her to rest for a week.'},
+{id:'rd2',  front:'Apologise',                    back:'Disculparse / pedir perdón',          example:'I must apologise for the delay in my reply.'},
+{id:'rd3',  front:'Encourage',                    back:'Animar, motivar',                          example:'Her teacher always encourages students to ask questions.'},
+{id:'rd4',  front:'Invite',                       back:'Invitar',                                  example:'We were invited to the wedding next month.'},
+{id:'rd5',  front:'Recommend',                    back:'Recomendar',                               example:'I highly recommend this restaurant.'},
+{id:'rd6',  front:'Remind',                       back:'Recordar (a alguien algo)',                example:'Could you remind me to call the dentist?'},
+{id:'rd7',  front:'Suggest',                      back:'Sugerir',                                  example:'She suggested taking a break.'},
+{id:'rd8',  front:'Warn',                         back:'Advertir',                                 example:'The forecast warned of heavy snow this weekend.'},
+{id:'rd9',  front:'Take a risk',                  back:'Correr un riesgo',                         example:'She was willing to take a risk and start her own business.'},
+{id:'rd10', front:'Make use of',                  back:'Hacer uso de, aprovechar',                 example:'You should make use of the free trial while it lasts.'},
+{id:'rd11', front:'Put an end to',                back:'Poner fin a',                              example:'The new law aims to put an end to plastic bags.'},
+{id:'rd12', front:'Make my way',                  back:'Abrirse camino, dirigirse hacia',          example:"I'll make my way to the station after lunch."},
+{id:'rd13', front:'Put pressure on',              back:'Ejercer presión sobre',               example:'The deadline is putting pressure on the whole team.'},
+{id:'rd14', front:'Take seriously',               back:'Tomarse en serio',                         example:'Nobody takes his complaints seriously anymore.'},
+{id:'rd15', front:'Prospect',                     back:'Posibilidad futura, expectativa',          example:'The prospect of a long holiday cheered her up.'},
+{id:'rd16', front:'Converted',                    back:'Convertido',                               example:'The old church has been converted into a library.'},
+{id:'rd17', front:'Demand',                       back:'Demanda',                                  example:"There's a growing demand for electric cars."},
+{id:'rd18', front:'Tackle',                       back:'Abordar, enfrentarse a',                   example:'We need to tackle this problem head-on.'},
+{id:'rd19', front:'Cope with',                    back:'Lidiar con, hacer frente a',               example:'She copes with stress by going for a run.'},
+{id:'rd20', front:'Must',                         back:'Deber (obligación fuerte)',           example:'You must wear a seatbelt at all times.'},
+{id:'rd21', front:"Mustn't",                      back:'Está prohibido',                      example:"You mustn't use your phone during the exam."},
+{id:'rd22', front:'Need to',                      back:'Necesidad u obligación',              example:'I need to finish this before Friday.'},
+{id:'rd23', front:"Don't need to",                back:'No es necesario',                          example:"You don't need to bring anything — we've got everything."},
+{id:'rd24', front:'Have to',                      back:'Tener que (obligación externa)',      example:'I have to be at work by nine.'},
+{id:'rd25', front:"Don't have to",                back:'No es necesario, pero puedes hacerlo',     example:"You don't have to come if you're tired."},
+{id:'rd26', front:'Can',                          back:'Poder (capacidad o permiso)',              example:'I can speak three languages.'},
+{id:'rd27', front:"Can't",                        back:'No poder (incapacidad o prohibición)',     example:"I can't reach the top shelf."},
+{id:'rd28', front:'Should',                       back:'Deberías (consejo)',                  example:'You should drink more water.'},
+{id:'rd29', front:"Shouldn't",                    back:'No deberías (consejo negativo)',      example:"You shouldn't eat so much sugar."},
+{id:'rd30', front:'Ought to',                     back:'Deberías (más formal que should)',    example:'We ought to leave soon if we want to catch the train.'},
+{id:'rd31', front:'Ought not to',                 back:'No deberías (negativo de ought to)',  example:'You ought not to speak to your parents like that.'},
+{id:'rd32', front:'Gear',                         back:'Engranaje / marcha',                       example:'The bike has 21 gears.'},
+{id:'rd33', front:'To chase',                     back:'Perseguir',                                example:'The dog likes to chase squirrels in the park.'},
+{id:'rd34', front:'Flooding',                     back:'Inundación',                          example:'Heavy rain caused flooding in the south of the country.'},
+{id:'rd35', front:'Only',                         back:'Solo (cantidad)',                          example:'Only two tickets are left for the concert.'},
+{id:'rd36', front:'Unique',                       back:'Irrepetible (cualidad)',                   example:'Every fingerprint is unique.'},
+{id:'rd37', front:'Public',                       back:'Público en general, la gente',        example:'The new park is open to the public.'},
+{id:'rd38', front:'Audience',                     back:'Audiencia (que escucha o ve)',             example:'The audience applauded loudly at the end of the play.'},
+{id:'rd39', front:'Eligible',                     back:'Que reúne requisitos / con derecho', example:'Only students under 25 are eligible for the discount.'},
+{id:'rd40', front:'Alike',                        back:'Parecido, similar',                        example:'The twins look exactly alike.'},
+{id:'rd41', front:'Nothing to do',                back:'Nada que hacer / sin relación con',        example:'The weather had nothing to do with our decision.'},
+{id:'rd42', front:'One way or another',           back:'De una forma u otra',                      example:"One way or another, we'll finish the project on time."},
+{id:'rd43', front:'No sign of it',                back:'Ni rastro de ello',                        example:"She left this morning and there's been no sign of her since."},
+{id:'rd44', front:'Lose track of time',           back:'Perder la noción del tiempo',         example:'I lost track of time and missed the meeting.'},
+{id:'rd45', front:'Turn out',                     back:'Resultar, acabar siendo',                  example:'The party turned out better than we expected.'},
+{id:'rd46', front:'Keep an eye',                  back:'Vigilar, echar un ojo a',                  example:'Could you keep an eye on my bag for a minute?'},
+{id:'rd47', front:'Bulging',                      back:'Abultado, hinchado',                       example:'His pockets were bulging with coins.'},
+{id:'rd48', front:'Chunky',                       back:'Grueso, robusto, voluminoso',              example:'She wore a chunky knit sweater on the hike.'},
+{id:'rd49', front:'To launch',                    back:'Lanzar, poner en marcha',                  example:'The company will launch a new app next week.'},
+{id:'rd50', front:'Staff turnover',               back:'Rotación de personal',                     example:"High staff turnover is hurting the company's culture."},
+{id:'rd51', front:'To enlist',                    back:'Reclutar, alistar',                        example:'We enlisted volunteers to help with the event.'},
+{id:'rd52', front:'Enterprising',                 back:'Emprendedor, con iniciativa',              example:"She's an enterprising young woman with several side projects."},
+{id:'rd53', front:'Acquaintance',                 back:'Conocido (no íntimo)',                example:"He's just an acquaintance, not a close friend."},
+{id:'rd54', front:'Accomplishment',               back:'Logro',                                    example:'Climbing that mountain was a real accomplishment.'},
+{id:'rd55', front:'Endeavour',                    back:'Empeño',                              example:'I wish you success in your new endeavour.'},
+{id:'rd56', front:'Be regarded as',               back:'Ser considerado como',                     example:'He is regarded as one of the best chefs in the country.'},
+{id:'rd57', front:'Diseases',                     back:'Enfermedades',                             example:'Vaccines protect children from many diseases.'},
+{id:'rd58', front:'Crop',                         back:'Cultivo',                                  example:'The drought destroyed most of the wheat crop.'},
+{id:'rd59', front:'Starvation',                   back:'Hambre (extrema)',                         example:'Millions of people still die of starvation every year.'},
+{id:'rd60', front:'Lush',                         back:'Exuberante',                          example:'The garden was lush after weeks of rain.'},
+{id:'rd61', front:'Harsh conditions',             back:'Condiciones duras',                        example:'Penguins survive in extremely harsh conditions.'},
+{id:'rd62', front:'Far more / better / easier / worse than', back:'Mucho más / mejor / fácil / peor que', example:'This route is far easier than the other one.'},
+{id:'rd63', front:'Extremely unusual',            back:'Extremadamente inusual',                   example:'It is extremely unusual to see snow here in May.'},
+{id:'rd64', front:'Keep (sb) busy',               back:'Mantener (a alguien) ocupado',             example:'The new project will keep us busy for months.'},
+{id:'rd65', front:'A wide range of',              back:'Una gran variedad de',                     example:'The shop offers a wide range of organic products.'},
+{id:'rd66', front:'Left + "-ing"',                back:'Que queda / permanece (p. ej. left running)', example:'She left the engine running while she popped into the shop.'},
+{id:'rd67', front:'Have a go (at sth)',           back:'Intentarlo, probar suerte',                example:"Have a go at the puzzle — it's easier than it looks."},
+{id:'rd68', front:'Herded',                       back:'Pastoreado',                               example:'The shepherd herded the sheep into the pen.'},
+{id:'rd69', front:'Herd',                         back:'Rebaño',                              example:'A herd of cattle blocked the road.'},
+{id:'rd70', front:'Suffer a decline',             back:'Sufrir un declive',                        example:'The industry has suffered a sharp decline this year.'},
+{id:'rd71', front:'Pose threats',                 back:'Plantear amenazas',                        example:'Climate change poses serious threats to coastal cities.'},
+{id:'rd72', front:'Overheard',                    back:'Oír por casualidad',                       example:"I overheard them talking about the surprise party."},
+{id:'rd73', front:'To upset',                     back:'Molestar, alterar, entristecer',           example:"Don't upset your grandmother with that news."},
+{id:'rd74', front:'Tightly',                      back:'Firmemente, fuertemente',                  example:'Hold the rope tightly with both hands.'},
+{id:'rd75', front:'The length of',                back:'La longitud de',                      example:'We measured the length of the room before buying the carpet.'},
+{id:'rd76', front:'Haggle',                       back:'Regatear',                                 example:'Tourists like to haggle at the local market.'},
+{id:'rd77', front:'Unlike',                       back:'A diferencia de',                          example:'Unlike his brother, he prefers quiet evenings at home.'},
+{id:'rd78', front:'Realise',                      back:'Darse cuenta',                             example:"I didn't realise how late it was."},
+{id:'rd79', front:'Experience',                   back:'Experimentar (cambios, clima)',       example:'The region is experiencing record temperatures.'},
+{id:'rd80', front:'Widen',                        back:'Ensancharse',                              example:'The river widens as it approaches the sea.'},
+{id:'rd81', front:'Swell',                        back:'Hincharse',                                example:'My ankle started to swell after the fall.'},
+{id:'rd82', front:'Hurtful',                      back:'Hiriente',                            example:'Her comments were thoughtless and hurtful.'},
+{id:'rd83', front:'Surrounding',                  back:'Circundante',                              example:'The surrounding villages were evacuated.'},
+{id:'rd84', front:'Thoroughness',                 back:'Minuciosidad',                             example:'I admire her thoroughness when checking reports.'},
+{id:'rd85', front:'Amount',                       back:'Cantidad total',                           example:'We donated a small amount to the charity.'},
+{id:'rd86', front:'Rate',                         back:'Tasa, ritmo, porcentaje',                  example:'The unemployment rate has fallen this year.'},
+{id:'rd87', front:'Draw attention to',            back:'Llamar la atención sobre, destacar',  example:'The article draws attention to the lack of funding.'},
+{id:'rd88', front:'Supply',                       back:'Suministrar, proporcionar',                example:'The lake supplies water to the entire village.'}
+].forEach(function(c){c.cat='rd';CARDS.push(c);});
+
+/* ── BLOCK 8: PREPOSICIONES (Linguaskill) ── */
+[
+{id:'prep1',  phrase:'the trouble ____ (sth)',           meaning:'problemas con',                                  prep:'with',     example:'She had no trouble with the new software.'},
+{id:'prep2',  phrase:'____ granted',                     meaning:'dar por sentado',                                prep:'for',      example:"Don't take their support for granted."},
+{id:'prep3',  phrase:'make the most ____ the sunshine',  meaning:'aprovechar al máximo algo',                 prep:'of',       example:"Let's make the most of the sunshine."},
+{id:'prep4',  phrase:'be ____ far',                      meaning:'de lejos',                                       prep:'by',       example:'She is by far the best student in the class.'},
+{id:'prep5',  phrase:'____ the meantime',                meaning:'mientras tanto',                                 prep:'in',       example:'Dinner is almost ready; in the meantime, set the table.'},
+{id:'prep6',  phrase:"It's ____ time!",                  meaning:'¡Ya era hora!',                             prep:'about',    example:"It's about time you arrived!"},
+{id:'prep7',  phrase:'be ____ way',                      meaning:'estar en marcha',                                prep:'under',    example:'Renovations are under way at the museum.'},
+{id:'prep8',  phrase:'all ____ a sudden',                meaning:'de repente',                                     prep:'of',       example:'All of a sudden, the lights went out.'},
+{id:'prep9',  phrase:'bring ____',                       meaning:'provocar, causar',                               prep:'on',       example:'The bad weather brought on his headache.'},
+{id:'prep10', phrase:'do ____',                          meaning:'arreglárselas sin',                         prep:'without',  example:"We had to do without coffee for a week."},
+{id:'prep11', phrase:'narrow ____',                      meaning:'reducir',                                        prep:'down',     example:"We've narrowed down the list to three candidates."},
+{id:'prep12', phrase:'put ____',                         meaning:'proponer',                                       prep:'forward',  example:'She put forward an interesting proposal.'},
+{id:'prep13', phrase:'back ____',                        meaning:'echarse atrás',                             prep:'out',      example:'He backed out at the last minute.'},
+{id:'prep14', phrase:'feel ____ to',                     meaning:'sentirse con la capacidad',                      prep:'up',       example:"I don't feel up to going out tonight."},
+{id:'prep15', phrase:'as a matter ____ fact',            meaning:'como una cuestión de hecho',                example:'As a matter of fact, I do know him.',                                  prep:'of'},
+{id:'prep16', phrase:'bounce ____',                      meaning:'recuperarse, volver a la normalidad',            prep:'back',     example:'She bounced back quickly after the illness.'},
+{id:'prep17', phrase:'reduction ____ generosity',        meaning:'reducción de la generosidad',               prep:'in',       example:'There has been a reduction in generosity lately.'},
+{id:'prep18', phrase:'apply ____',                       meaning:'solicitar (un trabajo)',                         prep:'for',      example:"I'm going to apply for that job tomorrow."},
+{id:'prep19', phrase:'account ____',                     meaning:'explicar, justificar o representar',             prep:'for',      example:'His silence accounts for the tension in the room.'},
+{id:'prep20', phrase:'arrange ____',                     meaning:'organizar, hacer los preparativos',              prep:'for',      example:"I'll arrange for a taxi to pick you up."},
+{id:'prep21', phrase:'blame ____',                       meaning:'culpar por',                                     prep:'for',      example:"Don't blame her for the mistake."},
+{id:'prep22', phrase:'succeed ____',                     meaning:'tener éxito',                               prep:'in',       example:'She succeeded in finishing the marathon.'},
+{id:'prep23', phrase:'confide ____',                     meaning:'confiar en (contar secretos)',                   prep:'in',       example:'She often confides in her best friend.'},
+{id:'prep24', phrase:'result ____',                      meaning:'dar lugar a, provocar',                          prep:'in',       example:'Bad weather resulted in flight cancellations.'},
+{id:'prep25', phrase:'specialise ____',                  meaning:'especializarse en',                              prep:'in',       example:'He specialises in family law.'},
+{id:'prep26', phrase:'accuse ____',                      meaning:'acusar de',                                      prep:'of',       example:'They accused him of lying.'},
+{id:'prep27', phrase:'approve ____',                     meaning:'aprobar (dar visto bueno)',                      prep:'of',       example:"Her parents don't approve of her new boyfriend."},
+{id:'prep28', phrase:'remind ____',                      meaning:'recordar (a algo / alguien)',                    prep:'of',       example:'This song reminds me of my childhood.'},
+{id:'prep29', phrase:'warn ____',                        meaning:'advertir de',                                    prep:'of',       example:'They warned us of the danger ahead.'},
+{id:'prep30', phrase:'rely ____',                        meaning:'confiar en (contar con)',                        prep:'on',       example:'You can always rely on him in a crisis.'},
+{id:'prep31', phrase:'insist ____',                      meaning:'insistir en',                                    prep:'on',       example:'He insisted on paying for dinner.'},
+{id:'prep32', phrase:'concentrate ____',                 meaning:'concentrarse en',                                prep:'on',       example:'Please concentrate on your homework.'},
+{id:'prep33', phrase:'depend ____',                      meaning:'depender de',                                    prep:'on',       example:'It depends on the weather.'},
+{id:'prep34', phrase:'refer ____',                       meaning:'referirse a',                                    prep:'to',       example:'She referred to the article in her speech.'},
+{id:'prep35', phrase:'appeal ____',                      meaning:'apetecer / atraer a',                            prep:'to',       example:"The idea doesn't appeal to me at all."},
+{id:'prep36', phrase:'admit ____',                       meaning:'admitir',                                        prep:'to',       example:'He admitted to taking the money.'},
+{id:'prep37', phrase:'introduce ____',                   meaning:'introducir / presentar a',                       prep:'to',       example:'Let me introduce you to my colleague.'},
+{id:'prep38', phrase:'deal ____',                        meaning:'tratar con',                                     prep:'with',     example:'She knows how to deal with difficult customers.'},
+{id:'prep39', phrase:'comply ____',                      meaning:'cumplir con',                                    prep:'with',     example:'All passengers must comply with safety rules.'},
+{id:'prep40', phrase:'confuse ____',                     meaning:'confundir con',                                  prep:'with',     example:'People often confuse me with my twin brother.'},
+{id:'prep41', phrase:'discuss ____',                     meaning:'discutir / tratar con',                          prep:'with',     example:'I need to discuss the plan with my boss.'},
+{id:'prep42', phrase:'do (sth) ____ purpose',            meaning:'hacer algo a propósito',                         prep:'on',       example:'She broke the vase on purpose.'},
+{id:'prep43', phrase:'do (sth) ____ condition that',     meaning:'hacer algo con la condición de que',             prep:'on',       example:"He'll come on condition that you come too."},
+{id:'prep44', phrase:'____ all likelihood',              meaning:'con toda probabilidad',                          prep:'in',       example:'In all likelihood, the meeting will be cancelled.'},
+{id:'prep45', phrase:'do (sth) ____ mistake',            meaning:'hacer algo por error',                           prep:'by',       example:'I sent the email by mistake.'},
+{id:'prep46', phrase:'do (sth) ____ a regular basis',    meaning:'hacer algo de forma regular',                    prep:'on',       example:'He visits his parents on a regular basis.'},
+{id:'prep47', phrase:'____ all due respect',             meaning:'con todos mis respetos',                         prep:'with',     example:'With all due respect, I disagree.'},
+{id:'prep48', phrase:'do (sth) ____ due course',         meaning:'a su debido tiempo',                             prep:'in',       example:'We will reply in due course.'},
+{id:'prep49', phrase:'be ____ suspicion',                meaning:'estar bajo sospecha',                            prep:'under',    example:'He is currently under suspicion.'},
+{id:'prep50', phrase:'do (sth) ____ behalf of someone',  meaning:'hacer algo en nombre de alguien',                prep:'on',       example:"I'm signing this on behalf of the team."},
+{id:'prep51', phrase:'do (sth) ____ pressure',           meaning:'bajo presión',                                   prep:'under',    example:'She works well under pressure.'},
+{id:'prep52', phrase:'do (sth) ____ coincidence',        meaning:'por casualidad',                                 prep:'by',       example:'I met her by coincidence at the airport.'},
+{id:'prep53', phrase:'be ____ demand',                   meaning:'tener mucha demanda',                            prep:'in',       example:'Skilled engineers are in high demand.'},
+{id:'prep54', phrase:'____ exception of',                meaning:'con la excepción de',                       prep:'with',     example:'Everyone passed, with the exception of John.'},
+{id:'prep55', phrase:'be ____ favour of (sth)',          meaning:'estar a favor de',                               prep:'in',       example:'Most people are in favour of the new law.'},
+{id:'prep56', phrase:'be ____ the impression that',      meaning:'tener la impresión de que',                 prep:'under',    example:'I was under the impression that you knew.'},
+{id:'prep57', phrase:'the extent ____',                  meaning:'el alcance de',                                  prep:'to',       example:'The extent to which he helped surprised us all.'},
+{id:'prep58', phrase:"it's only ____ be expected",       meaning:'es de esperarse',                                prep:'to',       example:"It's only to be expected after such a long journey."},
+{id:'prep59', phrase:'identical ____',                   meaning:'idéntico a',                                prep:'to',       example:'This bag is identical to mine.'},
+{id:'prep60', phrase:'afraid ____ + N',                  meaning:'tener miedo de (sustantivo)',                    prep:'of',       example:'She is afraid of spiders.'},
+{id:'prep61', phrase:'afraid ____ + V',                  meaning:'tener miedo de hacer algo',                      prep:'to',       example:'He was afraid to ask for help.'},
+{id:'prep62', phrase:'distressed ____',                  meaning:'angustiado, afectado',                           prep:'by / about',example:'She was distressed by the news.'},
+{id:'prep63', phrase:'bring ____',                       meaning:'introducir, hacer entrar en un estado',          prep:'into',     example:'His ideas brought new energy into the company.'},
+{id:'prep64', phrase:'bring ____',                       meaning:'reunir, juntar',                                 prep:'together', example:'Music brings people together.'},
+{id:'prep65', phrase:'appreciative ____',                meaning:'agradecido, que aprecia algo',                   prep:'of',       example:'She was very appreciative of his help.'},
+{id:'prep66', phrase:'bothered ____',                    meaning:'molesto, preocupado',                            prep:'about / by',example:"He's not bothered about what others think."},
+{id:'prep67', phrase:'concerned ____',                   meaning:'preocupado por',                                 prep:'about',    example:'Parents are concerned about screen time.'},
+{id:'prep68', phrase:'eager ____',                       meaning:'deseoso, entusiasmado por',                      prep:'to / for', example:'The kids are eager to start the trip.'},
+{id:'prep69', phrase:'sceptical ____',                   meaning:'escéptico respecto a',                      prep:'about / of',example:"I'm sceptical about his promises."},
+{id:'prep70', phrase:'sympathetic ____',                 meaning:'comprensivo, compasivo, favorable a',            prep:'to',       example:"She was sympathetic to the refugees' plight."},
+{id:'prep71', phrase:'confident ____',                   meaning:'seguro, confiado',                               prep:'of / about',example:'He is confident of winning the match.'},
+{id:'prep72', phrase:'cynical ____',                     meaning:'cínico, desconfiado',                       prep:'about',    example:"He's become cynical about politics."},
+{id:'prep73', phrase:'enthusiastic ____',                meaning:'entusiasmado',                                   prep:'about',    example:'She is enthusiastic about her new job.'},
+{id:'prep74', phrase:'impatient ____',                   meaning:'impaciente',                                     prep:'with / for',example:"Don't be impatient with the children."},
+{id:'prep75', phrase:'irritated ____',                   meaning:'irritado, molesto',                              prep:'by / with',example:'I get irritated by loud noises.'},
+{id:'prep76', phrase:'optimistic ____',                  meaning:'optimista',                                      prep:'about',    example:"We're optimistic about the future."},
+{id:'prep77', phrase:'wear (sb) ____',                   meaning:'desgastar, agotar',                              prep:'out',      example:'The long meeting wore me out.'},
+{id:'prep78', phrase:'wear ____',                        meaning:'desaparecer gradualmente (efecto)',              prep:'off',      example:'The painkiller will wear off soon.'},
+{id:'prep79', phrase:'turn ____',                        meaning:'resultar, acabar siendo',                        prep:'out',      example:'It turned out to be a great evening.'},
+{id:'prep80', phrase:'turn ____',                        meaning:'aparecer / subir el volumen',                    prep:'up',       example:'Could you turn up the volume?'},
+{id:'prep81', phrase:'turn ____',                        meaning:'rechazar / bajar el volumen',                    prep:'down',     example:'He turned down the job offer.'},
+{id:'prep82', phrase:'turn ____',                        meaning:'convertirse en',                                 prep:'into',     example:'The frog turned into a prince.'},
+{id:'prep83', phrase:'knock ____',                       meaning:'derribar, demoler',                              prep:'down',     example:'They knocked down the old wall.'},
+{id:'prep84', phrase:'knock ____',                       meaning:'eliminar de una competición / dejar inconsciente', prep:'out',     example:'He was knocked out in the first round.'},
+{id:'prep85', phrase:'knock ____',                       meaning:'tirar algo accidentalmente',                     prep:'over',     example:'The cat knocked over the glass.'},
+{id:'prep86', phrase:'knock ____',                       meaning:'rechazar',                                       prep:'back',     example:'She knocked back his offer of a drink.'},
+{id:'prep87', phrase:'call ____ question',               meaning:'poner en duda, cuestionar',                      prep:'into',     example:'Her motives were called into question.'},
+{id:'prep88', phrase:'call ____',                        meaning:'requerir, exigir',                               prep:'for',      example:'This situation calls for a calm head.'},
+{id:'prep89', phrase:'call ____',                        meaning:'pedir a alguien que haga algo / visitar',        prep:'on',       example:"I'll call on you next time I'm in town."},
+{id:'prep90', phrase:'call ____',                        meaning:'llamar a alguien para que ayude',                prep:'in',       example:'We had to call in a specialist.'},
+{id:'prep91', phrase:'call ____',                        meaning:'llamar por teléfono / traer a la memoria',  prep:'up',       example:'That photo calls up old memories.'},
+{id:'prep92', phrase:'call ____',                        meaning:'gritar / convocar a alguien',                    prep:'out',      example:'He called out my name from across the street.'},
+{id:'prep93', phrase:'call ____',                        meaning:'solicitar formalmente',                          prep:'upon',     example:'I now call upon the minister to speak.'},
+{id:'prep94', phrase:'gather ____',                      meaning:'reunirse en, congregarse en',                    prep:'at',       example:'Crowds gathered at the entrance.'},
+{id:'prep95', phrase:'associated ____',                  meaning:'asociado con, relacionado con',                  prep:'with',     example:'Stress is associated with poor sleep.'},
+{id:'prep96', phrase:'relating ____',                    meaning:'relativo a, relacionado con',                    prep:'to',       example:'Please send any documents relating to the case.'},
+{id:'prep97', phrase:'connecting ____',                  meaning:'conectado con, vinculado a',                     prep:'to',       example:'The cable connecting to the router is loose.'},
+{id:'prep98', phrase:'attached ____',                    meaning:'unido a / encariñado con',                       prep:'to',       example:"He's very attached to his old guitar."},
+{id:'prep99', phrase:'fond ____',                        meaning:'aficionado a, que le gusta mucho',               prep:'of',       example:"She's very fond of chocolate."},
+{id:'prep100',phrase:'keen ____',                        meaning:'entusiasmado por, aficionado a',                 prep:'on',       example:"He's keen on classical music."},
+{id:'prep101',phrase:'pleased ____',                     meaning:'satisfecho con, contento con',                   prep:'with',     example:"I'm very pleased with the results."},
+{id:'prep102',phrase:'agree ____',                       meaning:'ponerse de acuerdo sobre algo',                  prep:'on',       example:'We agreed on a price.'},
+{id:'prep103',phrase:'agree ____',                       meaning:'estar de acuerdo con alguien u opinión',         prep:'with',     example:'I agree with you completely.'},
+{id:'prep104',phrase:'fascinated ____',                  meaning:'fascinado por',                                  prep:'by',       example:'She was fascinated by the documentary.'},
+{id:'prep105',phrase:'be aimed ____',                    meaning:'estar dirigido a, destinado a',                  prep:'at',       example:'The campaign is aimed at young drivers.'},
+{id:'prep106',phrase:'aim ____',                         meaning:'aspirar a, apuntar a',                           prep:'at',       example:'We aim at improving customer service.'},
+{id:'prep107',phrase:'aim ____',                         meaning:'proponerse, tener la intención de',              prep:'to',       example:'We aim to finish by Friday.'},
+{id:'prep108',phrase:'point ____',                       meaning:'señalar con el dedo',                       prep:'at',       example:"Don't point at people — it's rude."},
+{id:'prep109',phrase:'point ____',                       meaning:'indicar, apuntar a una conclusión',              prep:'to',       example:'All the evidence points to a single culprit.'},
+{id:'prep110',phrase:'point ____',                       meaning:'señalar, hacer notar, destacar',            prep:'out',      example:'She pointed out several mistakes in the report.'},
+{id:'prep111',phrase:'make ____',                        meaning:'formar, componer',                               prep:'up',       example:'These three islands make up the archipelago.'},
+{id:'prep112',phrase:'make ____ for',                    meaning:'compensar',                                      prep:'up',       example:"He's trying to make up for his earlier mistake."},
+{id:'prep113',phrase:'____ display',                     meaning:'en exhibición',                             prep:'on',       example:'Several rare paintings are on display.'},
+{id:'prep114',phrase:'to work ____',                     meaning:'trabajar en',                                    prep:'on',       example:"She's working on a new novel."}
+].forEach(function(c){c.cat='prep';CARDS.push(c);});
+
 /* ══ STATE ══ */
 var CKEY='eng_b2_custom', MKEY='eng_b2_mastered';
 var custom=[], mastered=new Set(), flipped={}, showEspGrid=true;
@@ -1565,12 +1926,14 @@ function frontContent(c){
   if(c.cat==='wf')  return pill+cust+'<div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Forma derivada</div><div class="cf-main">'+esc(c.derived)+'</div>'+ex+'<div class="cf-hint">↻ pulsa para volver</div>';
   if(c.cat==='gi'){var fl=c.form==='gerund'?'Gerund (-ing)':'Infinitive (to+…)';return pill+cust+'<div class="cf-form-gi" style="font-size:calc(13px*var(--fs));font-weight:700;color:var(--accent);background:var(--accent-bg);padding:3px 12px;border-radius:100px;display:inline-block;border:1px solid var(--accent-b);margin-bottom:8px">'+fl+'</div><div class="cf-main">'+esc(c.example)+'</div><div class="cf-hint">↻ pulsa para volver</div>';}
   if(c.cat==='vp')  return pill+cust+'<div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">Preposición</div><div class="cf-main">'+esc(c.back)+'</div>'+ex+'<div class="cf-hint">↻ pulsa para volver</div>';
+  if(c.cat==='prep')return pill+cust+'<div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">Preposición</div><div class="cf-main">'+esc(c.prep)+'</div>'+ex+'<div class="cf-hint">↻ pulsa para volver</div>';
   return pill+cust+'<div class="cf-main">'+esc(c.front)+'</div>'+ex+'<div class="cf-hint">↻ pulsa para volver</div>';
 }
 function backContent(c){
   if(c.cat==='wf')  return '<span class="cb-badge-wf" style="display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.35);margin-bottom:10px">'+esc(c.wftype)+' — '+(WFT[c.wftype]||c.wftype)+'</span><div class="cb-main">'+esc(c.base)+'</div><div class="cb-hint">↻ pulsa para ver la forma</div>';
   if(c.cat==='gi')  return '<div class="cb-main">'+esc(c.verb)+'</div><div class="cb-sub">¿Gerund o Infinitive?</div><div class="cb-hint">↻ pulsa para ver la respuesta</div>';
   if(c.cat==='vp')  return '<div class="cb-main">'+esc(c.front)+'</div><div class="cb-sub">¿Qué preposición?</div><div class="cb-hint">↻ pulsa para ver</div>';
+  if(c.cat==='prep')return '<div class="cb-main">'+esc(c.phrase)+'</div><div class="cb-sub">'+esc(c.meaning)+'</div><div class="cb-hint">↻ pulsa para ver la preposición</div>';
   return '<div class="cb-label">Traducción</div><div class="cb-main">'+esc(c.back)+'</div><div class="cb-hint">↻ pulsa para volver</div>';
 }
 
@@ -1632,7 +1995,7 @@ function filterCards(){
     if(state.know==='known'&&!mastered.has(c.id))return false;
     if(state.know==='unknown'&&mastered.has(c.id))return false;
     if(!q)return true;
-    return((c.front||c.verb||c.base||'')+(c.back||c.example||c.derived||'')).toLowerCase().includes(q);
+    return((c.front||c.verb||c.base||c.phrase||'')+' '+(c.back||c.example||c.derived||c.meaning||'')+' '+(c.prep||'')).toLowerCase().includes(q);
   });
 }
 
@@ -1678,9 +2041,9 @@ function render(){
 
 /* ══ CAT BUTTONS ══ */
 function buildCatBtns(){
-  var cats=['','expr','gi','pv','vp','wf'];
-  var labels={'':'Todas',expr:'Expressions',gi:'G & I',pv:'Phrasal Verbs',vp:'Verbs+Prep',wf:'Word Form.'};
-  var colors={expr:'#1a6b4a',gi:'#3d2a72',pv:'#6b3a1a',vp:'#1a4a7a',wf:'#7a1a3a'};
+  var cats=['','expr','gi','pv','vp','wf','top','rd','prep'];
+  var labels={'':'Todas',expr:'Expressions',gi:'G & I',pv:'Phrasal Verbs',vp:'Verbs+Prep',wf:'Word Form.',top:'TOP B2',rd:'Reading',prep:'Preposiciones'};
+  var colors={expr:'#1a6b4a',gi:'#3d2a72',pv:'#6b3a1a',vp:'#1a4a7a',wf:'#7a1a3a',top:'#0a5560',rd:'#3a5a2a',prep:'#5a4a8a'};
   document.getElementById('catBtns').innerHTML=cats.map(function(cat){
     var n=cat?CARDS.filter(function(c){return c.cat===cat;}).length:CARDS.length;
     var act=state.cat===cat;
@@ -1830,6 +2193,7 @@ function gFront(c){
   if(c.cat==='wf')  return pill+'<div class="gb-label" style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Forma derivada</div><div class="gf-main">'+esc(c.derived)+'</div><div class="gf-hint">↻ toca para volver</div>';
   if(c.cat==='gi'){var fl=c.form==='gerund'?'Gerund (-ing)':'Infinitive (to+…)';return pill+'<div class="gb-form">'+fl+'</div><div class="gf-main" style="font-size:clamp(15px,4vw,20px)">'+esc(c.example)+'</div><div class="gf-hint">↻ toca para volver</div>';}
   if(c.cat==='vp')  return pill+'<div class="gb-label" style="color:var(--text3);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px">Preposición</div><div class="gf-main">'+esc(c.back)+'</div><div class="gf-hint">↻ toca para volver</div>';
+  if(c.cat==='prep'){var pex=c.example?'<div class="gf-sub" style="margin-top:8px">'+esc(c.example)+'</div>':'';return pill+'<div class="gb-label" style="color:var(--text3);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px">Preposición</div><div class="gf-main">'+esc(c.prep)+'</div>'+pex+'<div class="gf-hint">↻ toca para volver</div>';}
   return pill+'<div class="gf-main">'+esc(c.front)+'</div><div class="gf-hint">↻ toca para ver</div>';
 }
 function gBack(c){
@@ -1837,6 +2201,7 @@ function gBack(c){
   if(c.cat==='wf')  return '<span class="gb-form" style="font-size:12px;font-weight:700;color:rgba(255,255,255,.9);background:rgba(255,255,255,.18);padding:3px 11px;border-radius:100px;display:inline-block;margin-bottom:8px">'+esc(c.wftype)+' — '+(WFT[c.wftype]||c.wftype)+'</span><div class="gb-main">'+esc(c.base)+'</div><div class="gb-hint">↻ toca para ver la forma</div>';
   if(c.cat==='gi')  return '<div class="gb-main">'+esc(c.verb)+'</div><div class="gb-sub">¿Gerund o Infinitive?</div><div class="gb-hint">↻ toca para ver la respuesta</div>';
   if(c.cat==='vp')  return '<div class="gb-main">'+esc(c.front)+'</div><div class="gb-sub">¿Qué preposición?</div><div class="gb-hint">↻ toca para ver</div>';
+  if(c.cat==='prep')return '<div class="gb-main">'+esc(c.phrase)+'</div><div class="gb-sub">'+esc(c.meaning)+'</div><div class="gb-hint">↻ toca para ver la preposición</div>';
   return '<div class="gb-label">Traducción</div><div class="gb-main">'+esc(c.back)+'</div><div class="gb-hint">↻ toca para volver</div>';
 }
 function gBuildCard(c,isTop,peek){
@@ -1966,6 +2331,7 @@ document.addEventListener('keydown',function(e){
   if(e.key===' '){e.preventDefault();gFlip();}
 });
 
+(function(){var sb=document.getElementById('searchBox');if(sb){sb.value='';state.q='';document.getElementById('clrBtn').classList.remove('vis');}})();
 buildCatBtns();render();gUpdateCt();
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1976,8 +2342,8 @@ var srsGlobal = { sessions:0, cardsStudied:0, lastSessionDate:null, sessionDates
 var srsUnsavedProgress = false;
 var srsSession = { queue:[], idx:0, revealed:false, results:[], selectedCats:null, advancing:false };
 
-var CAT_LABELS = { expr:'Expressions', gi:'Gerunds & Infinitives', pv:'Phrasal Verbs', vp:'Verbs + Prep.', wf:'Word Formation' };
-var CAT_ORDER  = ['expr','gi','pv','vp','wf'];
+var CAT_LABELS = { expr:'Expressions', gi:'Gerunds & Infinitives', pv:'Phrasal Verbs', vp:'Verbs + Prep.', wf:'Word Formation', top:'TOP B2', rd:'Reading', prep:'Preposiciones' };
+var CAT_ORDER  = ['expr','gi','pv','vp','wf','top','rd','prep'];
 
 function srsTodayISO(){ return new Date().toISOString().split('T')[0]; }
 
@@ -1985,17 +2351,24 @@ function initSRS(card){
   card.srs = { interval:1, repetitions:0, easeFactor:2.5, nextReview:srsTodayISO(), lastReview:null, history:[] };
 }
 
+/* SM-2 modificado: diferencia "Difícil" (q=3) y "Fácil" (q=5) desde el 1er pase.
+   - Fallo (q<3): intervalo = 1 día, repeticiones a 0.
+   - Difícil:     crecimiento lento — 2d / 4d / interval×1.2
+   - Fácil:       bonus inmediato — 4d / 7d / interval×easeFactor                  */
 function sm2(card, quality){
   if(!card.srs) initSRS(card);
   var srs = card.srs;
-  if(quality >= 3){
-    if(srs.repetitions === 0) srs.interval = 1;
-    else if(srs.repetitions === 1) srs.interval = 6;
-    else srs.interval = Math.round(srs.interval * srs.easeFactor);
-    srs.repetitions += 1;
-  } else {
+  if(quality < 3){
     srs.repetitions = 0;
     srs.interval = 1;
+  } else {
+    if(srs.repetitions === 0)      srs.interval = (quality >= 5) ? 4 : 2;
+    else if(srs.repetitions === 1) srs.interval = (quality >= 5) ? 7 : 4;
+    else {
+      var mult = (quality >= 5) ? srs.easeFactor : 1.2;
+      srs.interval = Math.max(srs.interval + 1, Math.round(srs.interval * mult));
+    }
+    srs.repetitions += 1;
   }
   srs.easeFactor = Math.max(1.3, srs.easeFactor + 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
   var today = new Date();
@@ -2011,12 +2384,11 @@ function previewInterval(card, quality){
   var reps = srs ? srs.repetitions : 0;
   var interval = srs ? srs.interval : 1;
   var ease = srs ? srs.easeFactor : 2.5;
-  if(quality >= 3){
-    if(reps === 0) interval = 1;
-    else if(reps === 1) interval = 6;
-    else interval = Math.round(interval * ease);
-  } else interval = 1;
-  return interval;
+  if(quality < 3) return 1;
+  if(reps === 0) return (quality >= 5) ? 4 : 2;
+  if(reps === 1) return (quality >= 5) ? 7 : 4;
+  var mult = (quality >= 5) ? ease : 1.2;
+  return Math.max(interval + 1, Math.round(interval * mult));
 }
 
 function formatInterval(days){
@@ -2031,18 +2403,21 @@ function srsPrompt(c){
   if(c.cat==='gi') return c.verb;
   if(c.cat==='vp') return c.front;
   if(c.cat==='wf') return c.base;
+  if(c.cat==='prep') return c.phrase;
   return c.back; // expr, pv → mostrar español
 }
 function srsPromptSub(c){
   if(c.cat==='gi') return '¿Gerund o Infinitive?';
   if(c.cat==='vp') return '¿Qué preposición?';
   if(c.cat==='wf') return (WFT[c.wftype]||c.wftype);
+  if(c.cat==='prep') return c.meaning;
   return '';
 }
 function srsAnswerMain(c){
   if(c.cat==='gi') return c.verb;
   if(c.cat==='vp') return c.back;
   if(c.cat==='wf') return c.derived;
+  if(c.cat==='prep') return c.prep;
   return c.front;
 }
 function srsAnswerForm(c){
