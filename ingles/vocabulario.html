@@ -373,6 +373,17 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .srs-form-pill{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--primary);padding:3px 12px;border-radius:var(--radius-pill);margin:0 auto 10px}
 .srs-ex{font-style:italic;color:var(--text2);font-size:14px;text-align:center;margin-top:6px;line-height:1.45}
 
+/* PV PARTÍCULA — pista (front) y respuesta (back) */
+.srs-pv-hint{display:inline-flex;align-items:center;gap:6px;font-family:'Manrope','Inter',sans-serif;font-size:clamp(15px,4.4vw,21px);font-weight:700;letter-spacing:-0.01em;color:#fff;background:#6b3a1a;padding:7px 18px;border-radius:var(--radius-pill);margin:14px auto 0}
+[data-theme="dark"] .srs-pv-hint{background:#9a6a44}
+.srs-translation .pvp,.gf-pvfull .pvp{display:inline-block;color:#fff;background:#6b3a1a;border-radius:8px;padding:1px 10px;margin:0 2px}
+[data-theme="dark"] .srs-translation .pvp,[data-theme="dark"] .gf-pvfull .pvp{background:#9a6a44}
+/* PV PARTÍCULA — modo juego */
+.gf-pvlabel{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--text3);margin-bottom:10px}
+.gb-pvlabel{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:10px}
+.gf-pvhint{display:inline-flex;align-items:center;font-family:'Manrope','Inter',sans-serif;font-size:clamp(15px,4.6vw,22px);font-weight:700;letter-spacing:-0.01em;color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);padding:8px 20px;border-radius:100px;margin-top:14px}
+.gf-pvfull{font-family:'Manrope','Inter',sans-serif;font-size:clamp(18px,5vw,26px);font-weight:700;letter-spacing:-0.005em;color:var(--text);line-height:1.35;margin-bottom:7px}
+
 /* Botones de calificación */
 .srs-rating-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:min(540px,96vw);margin:0 auto;overflow:hidden;max-height:0;opacity:0;transform:translateY(-8px);transition:max-height .38s cubic-bezier(.2,.7,.2,1) .05s,opacity .28s ease .12s,transform .28s ease .12s}
 .srs-rating-row.show{max-height:200px;opacity:1;transform:translateY(0)}
@@ -667,6 +678,13 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
         </div>
       </div>
       <div class="gf-section">
+        <div class="gf-label">Modo especial</div>
+        <div class="gf-row">
+          <button class="gf-btn" id="gOptPvPart">&#129513; PV Part&iacute;cula</button>
+        </div>
+        <div class="gf-sub" id="gPvPartHint" style="display:none;font-size:11px;color:var(--text3);margin-top:6px;font-style:normal">Adivina la part&iacute;cula que falta en cada phrasal verb.</div>
+      </div>
+      <div class="gf-section">
         <div class="gf-label">Cara inicial</div>
         <div class="gf-row">
           <button class="gf-btn" id="gOptFaceEng">&#127468;&#127463; Ingl&eacute;s</button>
@@ -741,6 +759,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
       <div class="srs-card-chips" id="srsCardChips"></div>
       <div class="srs-word" id="srsWord">&mdash;</div>
       <div class="srs-word-sub" id="srsWordSub" style="display:none"></div>
+      <div class="srs-pv-hint" id="srsPvHint" style="display:none"></div>
       <div class="srs-reveal-wrap">
         <button class="srs-reveal-btn" id="btnSrsReveal" type="button" title="Atajo: Espacio / Enter">Revelar</button>
       </div>
@@ -776,6 +795,14 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
     <h2>Sesión de repaso</h2>
     <p class="srs-modal-sub" id="srsStartSub">Elige las categorías que quieres repasar hoy.</p>
     <p class="srs-modal-sub" style="font-size:11px;opacity:.85">&#128161; Tu progreso se guarda en la nube por perfil. También puedes <strong>exportar el HTML</strong> como copia local.</p>
+
+    <div class="srs-modal-section" id="srsModeSection" style="border-top:none;padding-top:0">
+      <h3>Modo</h3>
+      <div class="srs-tema-quick">
+        <button class="btn-srs-quick active" id="btnSrsModeNormal" type="button">&#128218; Repaso normal</button>
+        <button class="btn-srs-quick" id="btnSrsModePv" type="button">&#129513; PV Part&iacute;cula</button>
+      </div>
+    </div>
 
     <div class="srs-modal-section" id="srsStartSummarySection">
       <h3>Resumen</h3>
@@ -2164,11 +2191,12 @@ function doExport(){
     var payload={
       srsGlobal: (typeof srsGlobal!=='undefined') ? srsGlobal : {sessions:0,cardsStudied:0,lastSessionDate:null,sessionDates:[]},
       srsCards: {},
+      srsPVCards: {},
       mastered: (typeof mastered!=='undefined') ? Array.from(mastered) : [],
       custom: (typeof custom!=='undefined') ? custom : []
     };
     if(typeof CARDS!=='undefined' && CARDS && CARDS.length){
-      for(var i=0;i<CARDS.length;i++){var c=CARDS[i];if(c && c.srs)payload.srsCards[c.id]=c.srs;}
+      for(var i=0;i<CARDS.length;i++){var c=CARDS[i];if(c && c.srs)payload.srsCards[c.id]=c.srs;if(c && c.srsPV)payload.srsPVCards[c.id]=c.srsPV;}
     }
     var el=document.getElementById('srsState');
     if(el)el.textContent=JSON.stringify(payload).replace(/</g,'\\u003c');
@@ -2184,11 +2212,20 @@ function doExport(){
 document.getElementById('btnExport').addEventListener('click',doExport);
 
 /* ══ GAME ENGINE ══ */
-var G={cat:'',nodom:false,shuffle:true,showEsp:true,deck:[],cur:0,yes:0,no:0,noList:[],run:false,flip:false};
+/* PV Partícula: separa un phrasal verb en su raíz visible y la partícula oculta (última palabra).
+   Quita paréntesis aclaratorios y signos finales. Ej.: "to come down to (topic)" → stem "to come down", particle "to". */
+function pvSplit(c){
+  var raw=(c.front||'').replace(/\([^)]*\)/g,' ').replace(/[!?.]+$/,'').replace(/\s+/g,' ').trim();
+  var words=raw.split(' ');
+  if(words.length<2) return {clean:raw,stem:'',particle:raw};
+  return {clean:raw,stem:words.slice(0,-1).join(' '),particle:words[words.length-1]};
+}
+var G={cat:'',nodom:false,shuffle:true,showEsp:true,pvPart:false,deck:[],cur:0,yes:0,no:0,noList:[],run:false,flip:false};
 var GD={w:null,pd:null,pm:null,pu:null};
 function gShuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function gDeck(useNo){
   var d=CARDS.filter(function(c){
+    if(G.pvPart)return c.cat==='pv';
     if(G.cat&&c.cat!==G.cat)return false;
     if(G.nodom&&mastered.has(c.id))return false;
     return true;
@@ -2199,6 +2236,12 @@ function gDeck(useNo){
 function gUpdateCt(){document.getElementById('gDeckCt').textContent=gDeck(false).length+' tarjetas';}
 function gFront(c){
   var cm=CAT[c.cat];
+  if(G.pvPart&&c.cat==='pv'){
+    var sp=pvSplit(c);
+    var full=esc(sp.stem)+' <span class="pvp">'+esc(sp.particle)+'</span>';
+    var ex=c.example?'<div class="gf-sub" style="margin-top:10px">'+esc(c.example)+'</div>':'';
+    return '<div class="gf-pvlabel">Partícula</div><div class="gf-pvfull">'+full+'</div>'+ex+'<div class="gf-hint">↻ toca para volver</div>';
+  }
   var pill='<span class="gf-pill">'+esc(cm.label)+'</span>';
   if(c.cat==='wf')  return pill+'<div class="gb-label" style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Forma derivada</div><div class="gf-main">'+esc(c.derived)+'</div><div class="gf-hint">↻ toca para volver</div>';
   if(c.cat==='gi'){var fl=c.form==='gerund'?'Gerund (-ing)':'Infinitive (to+…)';return pill+'<div class="gb-form">'+fl+'</div><div class="gf-main" style="font-size:clamp(15px,4vw,20px)">'+esc(c.example)+'</div><div class="gf-hint">↻ toca para volver</div>';}
@@ -2208,6 +2251,12 @@ function gFront(c){
 }
 function gBack(c){
   var cm=CAT[c.cat];
+  if(G.pvPart&&c.cat==='pv'){
+    var sp=pvSplit(c);
+    return '<div class="gb-pvlabel">¿Qué partícula falta?</div><div class="gb-main">'+esc(c.back)+'</div>'
+      +'<div class="gf-pvhint">'+esc(sp.stem)+' …</div>'
+      +'<div class="gb-hint">↻ toca para ver la partícula</div>';
+  }
   if(c.cat==='wf')  return '<span class="gb-form" style="font-size:12px;font-weight:700;color:rgba(255,255,255,.9);background:rgba(255,255,255,.18);padding:3px 11px;border-radius:100px;display:inline-block;margin-bottom:8px">'+esc(c.wftype)+' — '+(WFT[c.wftype]||c.wftype)+'</span><div class="gb-main">'+esc(c.base)+'</div><div class="gb-hint">↻ toca para ver la forma</div>';
   if(c.cat==='gi')  return '<div class="gb-main">'+esc(c.verb)+'</div><div class="gb-sub">¿Gerund o Infinitive?</div><div class="gb-hint">↻ toca para ver la respuesta</div>';
   if(c.cat==='vp')  return '<div class="gb-main">'+esc(c.front)+'</div><div class="gb-sub">¿Qué preposición?</div><div class="gb-hint">↻ toca para ver</div>';
@@ -2317,6 +2366,14 @@ document.querySelectorAll('[data-gcat]').forEach(function(b){
 });
 document.getElementById('gOptNodom').addEventListener('click',function(){G.nodom=!G.nodom;this.classList.toggle('active',G.nodom);gUpdateCt();});
 document.getElementById('gOptShuffle').addEventListener('click',function(){G.shuffle=!G.shuffle;this.classList.toggle('active',G.shuffle);});
+document.getElementById('gOptPvPart').addEventListener('click',function(){
+  G.pvPart=!G.pvPart;
+  this.classList.toggle('active',G.pvPart);
+  document.getElementById('gPvPartHint').style.display=G.pvPart?'block':'none';
+  /* En modo partícula siempre se muestra primero la cara en español con la pista */
+  if(G.pvPart){G.showEsp=true;document.getElementById('gOptFaceEs').classList.add('active');document.getElementById('gOptFaceEng').classList.remove('active');}
+  gUpdateCt();
+});
 document.getElementById('gOptFaceEng').addEventListener('click',function(){
   G.showEsp=false;
   this.classList.add('active');
@@ -2350,7 +2407,26 @@ buildCatBtns();render();gUpdateCt();
 
 var srsGlobal = { sessions:0, cardsStudied:0, lastSessionDate:null, sessionDates:[] };
 var srsUnsavedProgress = false;
-var srsSession = { queue:[], idx:0, revealed:false, results:[], selectedCats:null, advancing:false, shuffle:false };
+var srsSession = { queue:[], idx:0, revealed:false, results:[], selectedCats:null, advancing:false, shuffle:false, pvPart:false };
+var srsPvPartMode = false; /* modo elegido en el modal de inicio: false = repaso normal, true = PV Partícula */
+function srsKey(){ return srsSession.pvPart ? 'srsPV' : 'srs'; }
+/* Cola de PV Partícula: phrasal verbs nuevos o vencidos según su propio calendario (card.srsPV) */
+function getPVQueue(){
+  var today = srsTodayISO();
+  var due = CARDS.filter(function(c){
+    if(c.cat !== 'pv') return false;
+    if(!c.srsPV) return true;
+    return c.srsPV.nextReview <= today;
+  });
+  due.sort(function(a, b){
+    var aNew = !a.srsPV, bNew = !b.srsPV;
+    if(aNew && !bNew) return 1;
+    if(!aNew && bNew) return -1;
+    if(aNew && bNew) return 0;
+    return a.srsPV.nextReview.localeCompare(b.srsPV.nextReview);
+  });
+  return due;
+}
 
 function srsShuffleQueue(arr){
   arr = arr.slice();
@@ -2366,17 +2442,19 @@ var CAT_ORDER  = ['expr','gi','pv','vp','wf','top','rd','prep'];
 
 function srsTodayISO(){ return new Date().toISOString().split('T')[0]; }
 
-function initSRS(card){
-  card.srs = { interval:1, repetitions:0, easeFactor:2.5, nextReview:srsTodayISO(), lastReview:null, history:[] };
+function initSRS(card, key){
+  key = key || 'srs';
+  card[key] = { interval:1, repetitions:0, easeFactor:2.5, nextReview:srsTodayISO(), lastReview:null, history:[] };
 }
 
 /* SM-2 modificado: diferencia "Difícil" (q=3) y "Fácil" (q=5) desde el 1er pase.
    - Fallo (q<3): intervalo = 1 día, repeticiones a 0.
    - Difícil:     crecimiento lento — 2d / 4d / interval×1.2
    - Fácil:       bonus inmediato — 4d / 7d / interval×easeFactor                  */
-function sm2(card, quality){
-  if(!card.srs) initSRS(card);
-  var srs = card.srs;
+function sm2(card, quality, key){
+  key = key || 'srs';
+  if(!card[key]) initSRS(card, key);
+  var srs = card[key];
   if(quality < 3){
     srs.repetitions = 0;
     srs.interval = 1;
@@ -2398,8 +2476,8 @@ function sm2(card, quality){
   return srs;
 }
 
-function previewInterval(card, quality){
-  var srs = card.srs;
+function previewInterval(card, quality, key){
+  var srs = card[key || 'srs'];
   var reps = srs ? srs.repetitions : 0;
   var interval = srs ? srs.interval : 1;
   var ease = srs ? srs.easeFactor : 2.5;
@@ -2499,8 +2577,48 @@ function updateSrsBadge(){
 }
 
 /* Modal inicio de sesión */
+function srsRenderPvStart(modal){
+  var today = srsTodayISO(), pend = 0, nuevas = 0, repaso = 0;
+  CARDS.forEach(function(c){
+    if(c.cat !== 'pv') return;
+    if(!c.srsPV){ nuevas++; pend++; }
+    else if(c.srsPV.nextReview <= today){ repaso++; pend++; }
+  });
+  var summarySection = document.getElementById('srsStartSummarySection');
+  var temasSection   = document.getElementById('srsStartTemasSection');
+  var orderSection   = document.getElementById('srsStartOrderSection');
+  var emptyState     = document.getElementById('srsStartEmpty');
+  var startBtn       = document.getElementById('btnSrsStartGo');
+  var cancelBtn      = document.getElementById('btnSrsStartCancel');
+  document.getElementById('srsStartSub').textContent = 'Recuerda la partícula que falta en cada phrasal verb.';
+  temasSection.style.display = 'none';
+  if(pend === 0){
+    summarySection.style.display = 'none';
+    if(orderSection) orderSection.style.display = 'none';
+    emptyState.style.display = 'block'; startBtn.style.display = 'none';
+    cancelBtn.textContent = 'Cerrar';
+    document.getElementById('srsStartEmptySub').textContent = 'Has repasado todas las partículas por hoy.';
+    modal.classList.add('active'); return;
+  }
+  summarySection.style.display = '';
+  if(orderSection) orderSection.style.display = '';
+  emptyState.style.display = 'none'; startBtn.style.display = '';
+  cancelBtn.textContent = 'Cancelar';
+  document.getElementById('srsStartSummary').innerHTML =
+    '<div class="srs-summary-pill big">Total: <strong>' + pend + '</strong></div>'
+    + '<div class="srs-summary-pill">🆕 Nuevas: <strong>' + nuevas + '</strong></div>'
+    + '<div class="srs-summary-pill">🔄 A repasar: <strong>' + repaso + '</strong></div>'
+    + '<div class="srs-summary-pill">⏱ ~' + srsEstimatedMinutes(pend) + ' min</div>';
+  startBtn.disabled = false; startBtn.textContent = 'Empezar sesión';
+  modal.classList.add('active');
+}
+
 function srsOpenStartModal(){
   var modal = document.getElementById('srsStartModal'); if(!modal) return;
+  var mNorm = document.getElementById('btnSrsModeNormal'), mPv = document.getElementById('btnSrsModePv');
+  if(mNorm) mNorm.classList.toggle('active', !srsPvPartMode);
+  if(mPv) mPv.classList.toggle('active', srsPvPartMode);
+  if(srsPvPartMode){ srsRenderPvStart(modal); return; }
   var pendByCat = getPendientesPorCat();
   var totalPend = Object.keys(pendByCat).reduce(function(s, k){ return s + pendByCat[k]; }, 0);
 
@@ -2577,9 +2695,17 @@ function srsUpdateStartSummary(){
 
 /* Sesión */
 function srsStartSession(){
-  var selected = srsGetSelectedCats(); if(selected.length === 0) return;
-  var queue = getSRSQueue(selected); if(queue.length === 0) return;
-  if(srsSession.shuffle) queue = srsShuffleQueue(queue);
+  var queue, selected;
+  if(srsPvPartMode){
+    queue = getPVQueue(); if(queue.length === 0) return;
+    if(srsSession.shuffle) queue = srsShuffleQueue(queue);
+    selected = ['pv']; srsSession.pvPart = true;
+  } else {
+    selected = srsGetSelectedCats(); if(selected.length === 0) return;
+    queue = getSRSQueue(selected); if(queue.length === 0) return;
+    if(srsSession.shuffle) queue = srsShuffleQueue(queue);
+    srsSession.pvPart = false;
+  }
   srsSession.queue = queue; srsSession.idx = 0; srsSession.revealed = false;
   srsSession.results = []; srsSession.selectedCats = selected.slice(); srsSession.advancing = false;
   srsCloseStartModal();
@@ -2596,8 +2722,9 @@ function srsUpdateUndoBtn(){
 function srsUndo(){
   if(srsSession.results.length === 0 || srsSession.advancing) return;
   var last = srsSession.results.pop();
-  if(last.prevSrs == null) delete last.card.srs;
-  else last.card.srs = last.prevSrs;
+  var lk = last.key || 'srs';
+  if(last.prevSrs == null) delete last.card[lk];
+  else last.card[lk] = last.prevSrs;
   srsSession.idx = Math.max(0, srsSession.idx - 1);
   srsRenderCurrentCard(); srsReveal(); srsUpdateUndoBtn();
 }
@@ -2623,21 +2750,32 @@ function srsRenderCurrentCard(){
   if(i >= total){ srsFinishSession(); return; }
 
   var card = srsSession.queue[i];
-  document.getElementById('srsWord').textContent = srsPrompt(card) || '—';
-  var sub = srsPromptSub(card);
   var subEl = document.getElementById('srsWordSub');
-  if(sub){ subEl.textContent = sub; subEl.style.display = ''; }
-  else subEl.style.display = 'none';
-  document.getElementById('srsTemaChip').textContent = CAT_LABELS[card.cat] || '—';
+  var pvHintEl = document.getElementById('srsPvHint');
+  if(srsSession.pvPart){
+    var sp = pvSplit(card);
+    document.getElementById('srsWord').textContent = card.back || '—';
+    subEl.style.display = 'none';
+    pvHintEl.textContent = (sp.stem ? sp.stem + ' …' : '…');
+    pvHintEl.style.display = '';
+  } else {
+    document.getElementById('srsWord').textContent = srsPrompt(card) || '—';
+    var sub = srsPromptSub(card);
+    if(sub){ subEl.textContent = sub; subEl.style.display = ''; }
+    else subEl.style.display = 'none';
+    pvHintEl.style.display = 'none';
+  }
+  document.getElementById('srsTemaChip').textContent = (srsSession.pvPart ? '🧩 PV Partícula' : (CAT_LABELS[card.cat] || '—'));
 
+  var sk = srsKey(), srsData = card[sk];
   var chipsEl = document.getElementById('srsCardChips'); chipsEl.innerHTML = '';
-  var c1 = document.createElement('span'); c1.className = 'srs-chip'; c1.textContent = CAT_LABELS[card.cat] || ''; chipsEl.appendChild(c1);
-  if(!card.srs){
+  var c1 = document.createElement('span'); c1.className = 'srs-chip'; c1.textContent = (srsSession.pvPart ? '🧩 PV Partícula' : (CAT_LABELS[card.cat] || '')); chipsEl.appendChild(c1);
+  if(!srsData){
     var c3 = document.createElement('span'); c3.className = 'srs-chip srs-chip-new'; c3.textContent = '🆕 Nueva'; chipsEl.appendChild(c3);
   } else {
     var today = srsTodayISO();
-    if(card.srs.nextReview < today){
-      var diffDays = Math.floor((Date.parse(today) - Date.parse(card.srs.nextReview)) / 86400000);
+    if(srsData.nextReview < today){
+      var diffDays = Math.floor((Date.parse(today) - Date.parse(srsData.nextReview)) / 86400000);
       if(diffDays >= 2){
         var c4 = document.createElement('span'); c4.className = 'srs-chip srs-chip-due'; c4.textContent = '⏰ Vencida ' + diffDays + 'd'; chipsEl.appendChild(c4);
       }
@@ -2654,16 +2792,23 @@ function srsRenderCurrentCard(){
 
 function srsReveal(){
   var i = srsSession.idx, card = srsSession.queue[i]; if(!card) return;
-  document.getElementById('srsTranslation').textContent = srsAnswerMain(card) || '';
-  var form = srsAnswerForm(card);
   var fp = document.getElementById('srsFormPill');
-  if(form){ fp.textContent = form; fp.style.display = ''; } else fp.style.display = 'none';
   var ex = document.getElementById('srsEx');
+  if(srsSession.pvPart){
+    var sp = pvSplit(card);
+    document.getElementById('srsTranslation').innerHTML = esc(sp.stem) + ' <span class="pvp">' + esc(sp.particle) + '</span>';
+    fp.innerHTML = 'Partícula: <strong>' + esc(sp.particle) + '</strong>'; fp.style.display = '';
+  } else {
+    document.getElementById('srsTranslation').textContent = srsAnswerMain(card) || '';
+    var form = srsAnswerForm(card);
+    if(form){ fp.textContent = form; fp.style.display = ''; } else fp.style.display = 'none';
+  }
   if(card.example){ ex.textContent = card.example; ex.style.display = ''; } else ex.style.display = 'none';
 
-  document.getElementById('srsIntNo').textContent  = formatInterval(previewInterval(card, 0));
-  document.getElementById('srsIntMid').textContent = formatInterval(previewInterval(card, 3));
-  document.getElementById('srsIntYes').textContent = formatInterval(previewInterval(card, 5));
+  var sk = srsKey();
+  document.getElementById('srsIntNo').textContent  = formatInterval(previewInterval(card, 0, sk));
+  document.getElementById('srsIntMid').textContent = formatInterval(previewInterval(card, 3, sk));
+  document.getElementById('srsIntYes').textContent = formatInterval(previewInterval(card, 5, sk));
 
   document.getElementById('srsCard').classList.add('revealed');
   document.getElementById('btnSrsReveal').style.display = 'none';
@@ -2674,9 +2819,10 @@ function srsReveal(){
 function srsRate(quality){
   if(!srsSession.revealed || srsSession.advancing) return;
   var i = srsSession.idx, card = srsSession.queue[i]; if(!card) return;
-  var prevSrs = card.srs ? JSON.parse(JSON.stringify(card.srs)) : null;
-  sm2(card, quality);
-  srsSession.results.push({ card:card, quality:quality, prevSrs:prevSrs });
+  var sk = srsKey();
+  var prevSrs = card[sk] ? JSON.parse(JSON.stringify(card[sk])) : null;
+  sm2(card, quality, sk);
+  srsSession.results.push({ card:card, quality:quality, prevSrs:prevSrs, key:sk });
   markUnsaved();
   var cls = quality === 5 ? 'flash-yes' : (quality === 3 ? 'flash-mid' : 'flash-no');
   var cardEl = document.getElementById('srsCard');
@@ -2891,6 +3037,9 @@ function loadSRSState(){
     if(s.srsCards && typeof s.srsCards === 'object'){
       for(var i = 0; i < CARDS.length; i++){ var c = CARDS[i]; if(s.srsCards[c.id]) c.srs = s.srsCards[c.id]; }
     }
+    if(s.srsPVCards && typeof s.srsPVCards === 'object'){
+      for(var ip = 0; ip < CARDS.length; ip++){ var cp = CARDS[ip]; if(s.srsPVCards[cp.id]) cp.srsPV = s.srsPVCards[cp.id]; }
+    }
     if(Array.isArray(s.mastered)){
       s.mastered.forEach(function(id){ mastered.add(id); });
       try{ localStorage.setItem(MKEY, JSON.stringify(Array.from(mastered))); }catch(e){}
@@ -2918,6 +3067,8 @@ function initSRSAddon(){
 
   document.getElementById('btnSrsStartCancel').addEventListener('click', srsCloseStartModal);
   document.getElementById('btnSrsStartGo').addEventListener('click', srsStartSession);
+  document.getElementById('btnSrsModeNormal').addEventListener('click', function(){ srsPvPartMode = false; srsOpenStartModal(); });
+  document.getElementById('btnSrsModePv').addEventListener('click', function(){ srsPvPartMode = true; srsOpenStartModal(); });
   document.getElementById('btnSrsTemaAll').addEventListener('click', function(){
     var checks = document.querySelectorAll('#srsStartTemaList input[type=checkbox]:not(:disabled)');
     for(var i = 0; i < checks.length; i++) checks[i].checked = true;
@@ -3045,11 +3196,12 @@ initSRSAddon();
     var payload = {
       srsGlobal: (typeof srsGlobal !== 'undefined') ? srsGlobal : {},
       srsCards:  {},
+      srsPVCards: {},
       mastered:  (typeof mastered !== 'undefined') ? Array.from(mastered) : [],
       custom:    (typeof custom !== 'undefined') ? custom : []
     };
     if(typeof CARDS !== 'undefined' && CARDS && CARDS.length){
-      for(var i = 0; i < CARDS.length; i++){ var c = CARDS[i]; if(c && c.srs) payload.srsCards[c.id] = c.srs; }
+      for(var i = 0; i < CARDS.length; i++){ var c = CARDS[i]; if(c && c.srs) payload.srsCards[c.id] = c.srs; if(c && c.srsPV) payload.srsPVCards[c.id] = c.srsPV; }
     }
     return payload;
   }
@@ -3057,7 +3209,7 @@ initSRSAddon();
   function richness(p){
     if(!p || typeof p !== 'object') return 0;
     var m = Array.isArray(p.mastered) ? p.mastered.length : 0;
-    var c = p.srsCards ? Object.keys(p.srsCards).length : 0;
+    var c = (p.srsCards ? Object.keys(p.srsCards).length : 0) + (p.srsPVCards ? Object.keys(p.srsPVCards).length : 0);
     var cu = Array.isArray(p.custom) ? p.custom.length : 0;
     var s = (p.srsGlobal && p.srsGlobal.sessions) ? p.srsGlobal.sessions : 0;
     var d = (p.srsGlobal && p.srsGlobal.cardsStudied) ? p.srsGlobal.cardsStudied : 0;
@@ -3093,10 +3245,13 @@ initSRSAddon();
     /* SRS por tarjeta */
     if(typeof CARDS !== 'undefined' && CARDS && CARDS.length){
       var srsMap = (data.srsCards && typeof data.srsCards === 'object') ? data.srsCards : {};
+      var srsPVMap = (data.srsPVCards && typeof data.srsPVCards === 'object') ? data.srsPVCards : {};
       for(var j = 0; j < CARDS.length; j++){
         var cc = CARDS[j]; if(!cc) continue;
         if(srsMap[cc.id]) cc.srs = srsMap[cc.id];
         else if(cc.srs) delete cc.srs;
+        if(srsPVMap[cc.id]) cc.srsPV = srsPVMap[cc.id];
+        else if(cc.srsPV) delete cc.srsPV;
       }
     }
   }

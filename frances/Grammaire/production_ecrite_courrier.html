@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Production Écrite · Courrier des lecteurs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design.css">
+<style>
+/* Production Écrite · Courrier des lecteurs → Producción · dk-purple */
+:root {
+  --primary: #3f2456;
+  --primary-soft: #efe9f4;
+  --primary-mid: #7a609a;
+  --primary-strong: #2a1340;
+  --primary-glow: rgba(63, 36, 86, 0.14);
+}
+[data-theme="dark"] {
+  --primary: #b89adb;
+  --primary-soft: #20162e;
+  --primary-mid: #8a6cba;
+  --primary-strong: #dcc6ec;
+  --primary-glow: rgba(184, 154, 219, 0.18);
+}
+/* Topic-color aliases — émotion (rojo) / position (azul) / nuance (verde) */
+:root {
+  --emo-color: var(--red);   --emo-bg: var(--red-bg);   --emo-border: var(--red-border);
+  --pos-color: var(--blue);   --pos-bg: var(--blue-bg);   --pos-border: var(--blue-border);
+  --nua-color: var(--green);  --nua-bg: var(--green-bg);  --nua-border: var(--green-border);
+}
+
+.example-block.emo  { background: var(--red-bg);  border-color: var(--red-border); }
+.example-block.pos  { background: var(--blue-bg);  border-color: var(--blue-border); }
+.example-block.nua  { background: var(--green-bg); border-color: var(--green-border); }
+
+.eemo,  .hl-emo  { color: var(--red);  font-weight: 700; }
+.epos,  .hl-pos  { color: var(--blue);  font-weight: 700; }
+.enua,  .hl-nua  { color: var(--green); font-weight: 700; }
+
+.chip.emo.active { background: var(--red);  border-color: var(--red); }
+.chip.pos.active { background: var(--blue);  border-color: var(--blue); }
+.chip.nua.active { background: var(--green); border-color: var(--green); }
+
+/* formula-box + legend-pill (mismos tokens que el resto del módulo) */
+.formula-box {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin: 10px 0;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.95em;
+  line-height: 1.7;
+  color: var(--text);
+}
+.f-dim  { color: var(--text3); font-style: italic; }
+.f-emo  { color: var(--red);  font-weight: 600; }
+.f-pos  { color: var(--blue);  font-weight: 600; }
+.f-nua  { color: var(--green); font-weight: 600; }
+.f-opt  { color: var(--text2); font-style: italic; }
+
+.legend-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; align-items: center; }
+.legend-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  border-radius: var(--radius-pill); padding: 4px 12px;
+  font-size: 0.78em; font-weight: 600; border: 1px solid;
+}
+.legend-pill.emo { background: var(--red-bg);  border-color: var(--red-border);  color: var(--red); }
+.legend-pill.pos { background: var(--blue-bg);  border-color: var(--blue-border);  color: var(--blue); }
+.legend-pill.nua { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index_grammaire.html" class="back-btn" aria-label="Volver al índice" title="Volver al índice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <h1>Production Écrite · Courrier des lecteurs</h1>
+    <span class="header-tag">Production Écrite</span>
+  </div>
+  <div class="subtitle">Réaction émotionnelle + Opinion argumentée · B2–C1 · DELF/DALF</div>
+  <div class="stats-row">
+    <div class="fs-wrap">
+      <span class="fs-sz" style="font-size:0.75rem">A</span>
+      <input class="fs-slider" type="range" min="13" max="20" value="15" oninput="setFontSize(this.value)">
+      <span class="fs-sz" style="font-size:1.05rem">A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro" title="Tema claro/oscuro">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="section-nav" id="section-nav">
+  <div class="section-nav-inner">
+    <button class="snav-btn active" onclick="showSection('sec-1', this)">1 · Visión general</button>
+    <button class="snav-btn" onclick="showSection('sec-2', this)">2 · Structure du genre</button>
+    <button class="snav-btn" onclick="showSection('sec-3', this)">3 · Plantilla complète</button>
+    <button class="snav-btn" onclick="showSection('sec-4', this)">4 · Banque de phrases</button>
+    <button class="snav-btn" onclick="showSection('sec-5', this)">5 · Cas pratique (coqs)</button>
+    <button class="snav-btn" onclick="showSection('sec-6', this)">6 · Trampas</button>
+  </div>
+  <div class="scroll-progress"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
+</nav>
+
+<main class="main-layout">
+
+<!-- ====== SECTION 1 ====== -->
+<section id="sec-1" class="sec-block active">
+  <h2>1 · Visión general</h2>
+
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <div class="def-box">
+        El <strong>courrier des lecteurs</strong> (carta al director / reacción a un testimonio publicado) es un género híbrido de la production écrite B2–C1. Reacciona a un testimonio o artículo publicado combinando <strong>tres componentes</strong> que deben aparecer de forma equilibrada: una <strong>reacción emocional</strong>, una <strong>toma de posición clara</strong> y una <strong>argumentación matizada</strong>. Lo que distingue a este texto del essai puro es la dimensión afectiva: hay que <em>sentir</em> antes de razonar.
+      </div>
+
+      <div class="legend-row">
+        <span class="legend-pill emo">Réaction émotionnelle — cómo te afectó el testimonio</span>
+        <span class="legend-pill pos">Prise de position — tu opinión clara sobre la situación</span>
+        <span class="legend-pill nua">Argumentation + nuance — argumentos, ejemplos, matices</span>
+      </div>
+
+      <div class="sec-label">Los 3 componentes del género</div>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead>
+            <tr><th>Componente</th><th>Función</th><th>Pregunta clave que responde</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="hl-emo"><strong>Réaction émotionnelle</strong></td><td>Mostrar cómo te afectó el testimonio</td><td>¿Qué sentiste al leerlo?</td></tr>
+            <tr><td class="hl-pos"><strong>Prise de position</strong></td><td>Expresar una opinión clara sobre la situación</td><td>¿De qué lado estás y por qué?</td></tr>
+            <tr><td class="hl-nua"><strong>Argumentation + nuance</strong></td><td>Justificar con argumentos, ejemplos y matices</td><td>¿Cómo lo razonas sin caricaturizar?</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warn-box">
+        <div class="warn-text">El error capital de este género es <strong>saltar directamente a la opinión</strong> sin pasar por la reacción emocional, o al revés, <strong>quedarse en la emoción superficial</strong> (<em>«ça me choque beaucoup»</em>) sin desarrollar ningún argumento. El examinador busca las <strong>tres dimensiones articuladas</strong>: emoción → posición → argumentación matizada.</div>
+      </div>
+
+      <div class="sec-label">Marco del examen</div>
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead>
+            <tr><th>Dato</th><th>Referencia</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Nivel</strong></td><td>DELF B2 / DALF C1</td></tr>
+            <tr><td><strong>Extensión</strong></td><td>250–350 palabras (B2) · 300–400 (C1)</td></tr>
+            <tr><td><strong>Registro</strong></td><td>Formal cortés (carta a una redacción)</td></tr>
+            <tr><td><strong>Apertura típica</strong></td><td><em>Madame, Monsieur,</em></td></tr>
+            <tr><td><strong>Cierre típico</strong></td><td><em>…je vous adresse mes cordiales salutations.</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note-box">
+        A pesar de su carga emocional, sigue siendo una <strong>carta formal a una redacción</strong>: nunca tutees, nunca empieces con <em>Je</em>, mantén el registro <em>soutenu</em> de principio a fin. La emoción se expresa con vocabulario preciso (<em>indignation, stupéfaction, inquiétude</em>), no con exclamaciones coloquiales.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 2 ====== -->
+<section id="sec-2" class="sec-block">
+  <h2>2 · Structure du genre textuel</h2>
+
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <div class="def-box">
+        El courrier des lecteurs se organiza en <strong>una apertura + 5 párrafos + un cierre</strong>. Cada párrafo cumple una función discursiva precisa que progresa de lo afectivo a lo propositivo. Respetar esta progresión es lo que se evalúa en el criterio de <em>cohérence et cohésion</em>.
+      </div>
+
+      <div class="formula-box">
+        <span class="f-opt">[En-tête]</span> <span class="f-dim">→</span> <span class="f-emo">[Réaction émotionnelle]</span> <span class="f-dim">→</span> <span class="f-emo">[Empathie 2 parties]</span> <span class="f-dim">→</span> <span class="f-pos">[Prise de position]</span> <span class="f-dim">→</span> <span class="f-nua">[Exemple personnel]</span> <span class="f-dim">→</span> <span class="f-nua">[Nuance + proposition]</span> <span class="f-dim">→</span> <span class="f-opt">[Clôture]</span>
+      </div>
+
+      <div class="table-wrap">
+        <table class="gram-table">
+          <thead>
+            <tr><th>Bloque</th><th>Función discursiva</th><th>Componente</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>En-tête</strong></td><td>Identificarse + anunciar la reacción al testimonio</td><td class="hl-emo">émotion</td></tr>
+            <tr><td><strong>Párrafo 2</strong></td><td>Reacción emocional + empatía con ambas partes</td><td class="hl-emo">émotion</td></tr>
+            <tr><td><strong>Párrafo 3</strong></td><td>Toma de posición clara + argumento principal</td><td class="hl-pos">position</td></tr>
+            <tr><td><strong>Párrafo 4</strong></td><td>Ejemplo, experiencia propia o referencia concreta</td><td class="hl-nua">argumentation</td></tr>
+            <tr><td><strong>Párrafo 5</strong></td><td>Matización + propuesta o llamada a la acción</td><td class="hl-nua">nuance</td></tr>
+            <tr><td><strong>Clôture</strong></td><td>Idea general + fórmula de cierre cortés + firma</td><td class="hl-pos">synthèse</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sec-label">La lógica afectiva-argumentativa</div>
+      <div class="note-box">
+        La fuerza del género está en el <strong>orden</strong>: primero la emoción legitima tu derecho a opinar (<em>«me afectó, por eso escribo»</em>), después la empatía con ambas partes te da credibilidad (<em>«entiendo a los dos lados»</em>), y solo entonces tu toma de posición resulta <strong>creíble y matizada</strong> en lugar de visceral. La nuance final evita el maniqueísmo y abre a una solución.
+      </div>
+
+      <div class="warn-box">
+        <div class="warn-text">No conviertas el courrier en un <strong>essai impersonal</strong> (sin emoción) ni en un <strong>desahogo</strong> (solo emoción). El equilibrio entre las dos voces —la del corazón y la de la razón— es exactamente lo que el género exige y lo que lo diferencia del texto argumentativo neutro.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 3 ====== -->
+<section id="sec-3" class="sec-block">
+  <h2>3 · Plantilla complète commentée</h2>
+
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <div class="def-box">
+        Plantilla modelo bloque por bloque. Las palabras entre <strong>[corchetes]</strong> son opciones que debes adaptar al tema concreto. Los elementos resaltados marcan los conectores y las estructuras de alto valor (subjonctif, mise en relief, concesión) que elevan el nivel del texto.
+      </div>
+
+      <!-- En-tête -->
+      <div class="example-block emo">
+        <div class="ex-note">En-tête — identificación + anuncio de la reacción</div>
+        <div class="ex-fr"><em>Madame, Monsieur,<br><br>C'est avec une grande <span class="eemo">[émotion / indignation / surprise / inquiétude]</span> que j'ai lu le témoignage publié dans votre journal au sujet de [reformular brevemente el tema]. En tant que [lecteur·rice / citoyen·ne / habitant·e de…], je me sens concerné(e) par cette situation et je souhaitais vous faire part de ma réaction.</em></div>
+        <div class="ex-es">Nunca empieces con <em>Je</em>: arranca con <em>C'est avec…</em> o <em>En tant que…</em>. El en-tête legitima por qué escribes (te sientes <em>concerné</em>) y anuncia el tema sin copiar el enunciado.</div>
+      </div>
+
+      <!-- Párrafo 2 -->
+      <div class="example-block emo">
+        <div class="ex-note">Párrafo 2 — reacción emocional + empatía con ambas partes</div>
+        <div class="ex-fr"><em>Je dois admettre que ce témoignage m'a <span class="eemo">[touché(e) / choqué(e) / profondément interpellé(e)]</span>. <span class="eemo">D'un côté</span>, je comprends tout à fait que [parte A] se sente [frustré(e) / lésé(e) / dépassé(e)]&nbsp;: [razón empática para A]. <span class="eemo">De l'autre</span>, il est difficile de nier que [parte B] a également [ses droits / ses contraintes / ses raisons], et qu'il ne s'agit pas d'une situation simple à trancher.</em></div>
+        <div class="ex-es">La estructura <em>D'un côté… De l'autre…</em> muestra que entiendes a las dos partes antes de posicionarte. Esto te da credibilidad y evita parecer parcial.</div>
+      </div>
+
+      <!-- Párrafo 3 -->
+      <div class="example-block pos">
+        <div class="ex-note">Párrafo 3 — prise de position clara</div>
+        <div class="ex-fr"><em>Cela dit, à mon sens, <span class="epos">[il est difficile d'accepter que… / il me semble injuste que… / force est de constater que…]</span>. En effet, [argumento principal]. On ne peut pas, selon moi, [tolérer / ignorer / laisser sans réponse] le fait que [desarrollo del argumento].</em></div>
+        <div class="ex-es">El giro <em>Cela dit, à mon sens…</em> marca el paso de la empatía a la posición. Tras <em>il est injuste que</em> → <strong>subjonctif</strong> obligatorio. Conectores: <em>En effet / Car / C'est pourquoi / Force est de constater que / Je suis convaincu(e) que</em>.</div>
+      </div>
+
+      <!-- Párrafo 4 -->
+      <div class="example-block nua">
+        <div class="ex-note">Párrafo 4 — ejemplo, experiencia propia o referencia concreta</div>
+        <div class="ex-fr"><em>À titre personnel, j'ai déjà été <span class="enua">confronté(e)</span> à [situación paralela vagamente descrita], et je peux témoigner que [lo que aprendiste / cómo te afectó]. Cette expérience m'a appris que [reflexión personal]. Je sais donc par expérience qu'il est parfois difficile de [infinitivo], mais que cela reste nécessaire.</em></div>
+        <div class="ex-es">El ejemplo personal ancla el argumento en lo concreto y refuerza la dimensión testimonial del género. <em>À titre personnel</em> introduce la experiencia sin caer en lo anecdótico.</div>
+      </div>
+
+      <!-- Párrafo 5 -->
+      <div class="example-block nua">
+        <div class="ex-note">Párrafo 5 — nuance + propuesta o llamada a la acción</div>
+        <div class="ex-fr"><em><span class="enua">Pour autant</span>, je ne pense pas qu'il <span class="enua">faille</span> [radicaliser les positions / opposer les uns aux autres / ignorer les difficultés]. Il me semble qu'une solution équilibrée passerait par [propuesta concreta]. Peut-être serait-il utile que [les autorités compétentes <span class="enua">interviennent</span> / un dialogue <span class="enua">soit instauré</span> / des règles claires <span class="enua">soient établies</span>], afin que [resultado deseable].</em></div>
+        <div class="ex-es"><em>Pour autant</em> introduce la matización; <em>je ne pense pas qu'il faille</em> y <em>il serait utile que… interviennent</em> → <strong>subjonctif</strong>. Conectores: <em>Néanmoins / Cela étant dit / Il n'en reste pas moins que / Sans aller jusqu'à… / Il conviendrait de…</em>.</div>
+      </div>
+
+      <!-- Clôture -->
+      <div class="example-block pos">
+        <div class="ex-note">Clôture — idea general + fórmula de cierre + firma</div>
+        <div class="ex-fr"><em>En conclusion, cette situation illustre bien <span class="epos">[la complexité du vivre-ensemble / les tensions entre droits individuels et collectifs / la nécessité d'un cadre légal clair]</span>. J'espère que votre journal continuera à donner la parole à ces témoignages qui nous invitent à réfléchir ensemble.<br><br>Dans l'attente d'une suite à cette affaire, je vous adresse mes cordiales salutations.<br><br>[Prénom / Initiales]</em></div>
+        <div class="ex-es">La conclusión eleva el caso particular a una idea general (<em>ouverture</em>) y agradece a la redacción. El cierre <em>cordiales salutations</em> mantiene el registro formal de la carta.</div>
+      </div>
+
+      <div class="note-box">
+        <strong>Estructuras de alto valor a colocar sí o sí:</strong> al menos <strong>2 subjonctifs</strong> tras expresiones de opinión negada o de necesidad (<em>je ne pense pas que… faille</em>, <em>il serait utile que… soit</em>), una <strong>concesión</strong> binaria (<em>D'un côté… De l'autre…</em>), una <strong>mise en relief</strong> (<em>Ce qui me choque, c'est…</em>) y una <strong>ouverture</strong> final. Son los marcadores que separan un B2 sólido de un C1.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 4 ====== -->
+<section id="sec-4" class="sec-block">
+  <h2>4 · Banque de phrases par fonction</h2>
+
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <div class="def-box">
+        Repertorio de fórmulas fijas clasificadas por función discursiva. Memorizar 2 o 3 de cada categoría permite construir el courrier con fluidez idiomática y registro coherente, dos criterios evaluados directamente en el DELF/DALF.
+      </div>
+
+      <div class="chip-bar" id="chips-sec4">
+        <button class="chip emo active" onclick="selectChip('sec4', 0)">Réaction émotionnelle</button>
+        <button class="chip pos" onclick="selectChip('sec4', 1)">Toma de posición</button>
+        <button class="chip nua" onclick="selectChip('sec4', 2)">Argumentación</button>
+        <button class="chip nua" onclick="selectChip('sec4', 3)">Propuesta / acción</button>
+      </div>
+
+      <!-- Chip 0 — Réaction émotionnelle -->
+      <div class="chip-panel active" data-group="sec4" data-idx="0">
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Función</th><th>Fórmula</th></tr></thead>
+            <tbody>
+              <tr><td class="dim">Indignación</td><td class="hl-emo"><em>J'ai lu cet article avec une profonde indignation…</em></td></tr>
+              <tr><td class="dim">Sorpresa</td><td class="hl-emo"><em>Je n'aurais jamais imaginé qu'une telle situation puisse exister…</em></td></tr>
+              <tr><td class="dim">Empatía</td><td class="hl-emo"><em>Je me suis immédiatement mis(e) à la place de…</em></td></tr>
+              <tr><td class="dim">Preocupación</td><td class="hl-emo"><em>Ce témoignage m'a véritablement préoccupé(e), car…</em></td></tr>
+              <tr><td class="dim">Estupefacción</td><td class="hl-emo"><em>C'est avec une certaine stupéfaction que j'ai découvert…</em></td></tr>
+              <tr><td class="dim">Conmoción</td><td class="hl-emo"><em>Ce récit m'a profondément interpellé(e) / bouleversé(e)…</em></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note-box">
+          Tras <em>Je n'aurais jamais imaginé qu'une telle situation <strong>puisse</strong> exister</em> → <strong>subjonctif</strong>. La emoción se nombra con un sustantivo preciso (<em>indignation, stupéfaction, inquiétude</em>), nunca con <em>«ça me choque beaucoup»</em>.
+        </div>
+      </div>
+
+      <!-- Chip 1 — Toma de posición -->
+      <div class="chip-panel" data-group="sec4" data-idx="1">
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Función</th><th>Fórmula</th></tr></thead>
+            <tbody>
+              <tr><td class="dim">Opinión firme</td><td class="hl-pos"><em>Il me semble évident que… / À mon sens… / Je suis convaincu(e) que…</em></td></tr>
+              <tr><td class="dim">Denuncia</td><td class="hl-pos"><em>Il est inacceptable que</em> + subjonctif</td></tr>
+              <tr><td class="dim">Matiz</td><td class="hl-pos"><em>Sans vouloir généraliser… / Tout en comprenant que…</em></td></tr>
+              <tr><td class="dim">Concesión</td><td class="hl-pos"><em>Certes, … mais… / Il est vrai que… cependant…</em></td></tr>
+              <tr><td class="dim">Constatación</td><td class="hl-pos"><em>Force est de constater que… / On ne peut que déplorer que</em> + subj.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="warn-box">
+          <div class="warn-text">Tras <em>Il est inacceptable que</em> y <em>On ne peut que déplorer que</em> → <strong>subjonctif obligatorio</strong>: <em>Il est inacceptable que l'on <strong>puisse</strong> ignorer…</em>. Es uno de los puntos donde el corrector busca el modo correcto.</div>
+        </div>
+      </div>
+
+      <!-- Chip 2 — Argumentación -->
+      <div class="chip-panel" data-group="sec4" data-idx="2">
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Función</th><th>Conectores</th></tr></thead>
+            <tbody>
+              <tr><td class="dim">Causa</td><td class="hl-nua"><em>En effet / Car / Puisque / Étant donné que</em></td></tr>
+              <tr><td class="dim">Consecuencia</td><td class="hl-nua"><em>C'est pourquoi / Ainsi / De ce fait / Par conséquent</em></td></tr>
+              <tr><td class="dim">Ejemplo</td><td class="hl-nua"><em>Par exemple / À titre d'exemple / C'est le cas de…</em></td></tr>
+              <tr><td class="dim">Adición</td><td class="hl-nua"><em>De plus / En outre / Par ailleurs / Qui plus est</em></td></tr>
+              <tr><td class="dim">Oposición</td><td class="hl-nua"><em>Or / Pourtant / Néanmoins / Il n'en reste pas moins que</em></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note-box">
+          <em>En effet</em> introduce una <strong>justificación</strong> de lo anterior, no una confirmación de acuerdo. <em>Or</em> no es «o» (esa es <em>ou</em>): es un contraste argumentativo («ahora bien»). Alterna los conectores de oposición para no repetir <em>mais</em>.
+        </div>
+      </div>
+
+      <!-- Chip 3 — Propuesta / acción -->
+      <div class="chip-panel" data-group="sec4" data-idx="3">
+        <div class="table-wrap">
+          <table class="gram-table">
+            <thead><tr><th>Función</th><th>Fórmula</th></tr></thead>
+            <tbody>
+              <tr><td class="dim">Propuesta suave</td><td class="hl-nua"><em>Il me semblerait utile de… / Il conviendrait de…</em></td></tr>
+              <tr><td class="dim">Propuesta + subjonctif</td><td class="hl-nua"><em>J'aimerais que les autorités… / Il serait souhaitable que</em> + subj.</td></tr>
+              <tr><td class="dim">Urgencia</td><td class="hl-nua"><em>Il est grand temps que</em> + subjonctif</td></tr>
+              <tr><td class="dim">Esperanza</td><td class="hl-nua"><em>J'espère sincèrement que… / Je reste optimiste quant à…</em></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="warn-box">
+          <div class="warn-text">Tras <em>Il serait souhaitable que</em>, <em>J'aimerais que</em> e <em>Il est grand temps que</em> → <strong>subjonctif</strong>: <em>Il est grand temps que les autorités <strong>prennent</strong> leurs responsabilités</em>. La propuesta final es el lugar natural para colocar uno o dos subjuntivos de alto valor.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 5 ====== -->
+<section id="sec-5" class="sec-block">
+  <h2>5 · Cas pratique — le chant des coqs</h2>
+
+  <div class="gram-card">
+    <div class="gram-card-body">
+      <div class="def-box">
+        Aplicación concreta de la plantilla a un caso real: el conflicto de vecindad en torno al canto de los gallos (testimonio publicado → reacción del lector). Permite ver cómo cada función se rellena con contenido específico sin perder el equilibrio emoción / posición / nuance.
+      </div>
+
+      <div class="example-block emo">
+        <div class="ex-note">Réaction émotionnelle</div>
+        <div class="ex-fr"><em>C'est avec une certaine stupéfaction que j'ai lu cet article concernant les conflits de voisinage autour du chant des coqs.</em></div>
+        <div class="ex-es">La emoción nombrada (<em>stupéfaction</em>) abre la carta y anuncia el tema sin copiar el enunciado.</div>
+      </div>
+
+      <div class="example-block pos">
+        <div class="ex-note">Prise de position</div>
+        <div class="ex-fr"><em>À mon sens, il est difficile de condamner des pratiques agricoles ancestrales au nom d'un confort urbain récent.</em></div>
+        <div class="ex-es">Posición clara introducida con <em>À mon sens</em>, formulada como contraste de valores (tradición rural vs. confort urbano).</div>
+      </div>
+
+      <div class="example-block nua">
+        <div class="ex-note">Nuance</div>
+        <div class="ex-fr"><em>Certes, la liberté de chacun s'arrête là où commence celle de l'autre — mais encore faut-il définir ce qu'est une nuisance raisonnable.</em></div>
+        <div class="ex-es">Concesión <em>Certes… mais…</em> + la estructura elevada <em>encore faut-il</em> (inversión) que matiza sin negar la posición.</div>
+      </div>
+
+      <div class="example-block nua">
+        <div class="ex-note">Proposition</div>
+        <div class="ex-fr"><em>Il conviendrait peut-être que les communes concernées <span class="enua">établissent</span> un dialogue entre résidents et exploitants, plutôt que de laisser la justice trancher systématiquement.</em></div>
+        <div class="ex-es"><em>Il conviendrait que… <strong>établissent</strong></em> → subjonctif. Propuesta concreta (diálogo municipal) frente a la alternativa que se rechaza (judicializar).</div>
+      </div>
+
+      <div class="note-box">
+        Observa cómo el caso recorre las cuatro voces del género en cuatro frases: <span class="hl-emo">emoción</span> → <span class="hl-pos">posición</span> → <span class="hl-nua">matiz</span> → <span class="hl-nua">propuesta</span>. En el texto completo, cada una de estas frases se desarrollaría en un párrafo con su argumento y, en el caso de la propuesta, su subjonctif.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 6 ====== -->
+<section id="sec-6" class="sec-block">
+  <h2>6 · Trampas frecuentes</h2>
+
+  <div class="def-box">
+    Errores de alta frecuencia entre hispanohablantes en el courrier des lecteurs. Cada trampa contiene una versión incorrecta (✗) y su corrección (✓), seguidas de una explicación del mecanismo del error.
+  </div>
+
+  <div id="traps-container"></div>
+</section>
+
+<footer class="page-end">
+  <button class="page-end-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    Volver arriba
+  </button>
+</footer>
+</main>
+
+<script src="design.js"></script>
+<script>
+function selectChip(group, idx) {
+  const chipBar = document.getElementById('chips-' + group);
+  if (chipBar) {
+    chipBar.querySelectorAll('.chip').forEach((c, i) => {
+      c.classList.toggle('active', i === idx);
+    });
+  }
+  document.querySelectorAll('.chip-panel[data-group="' + group + '"]').forEach(p => {
+    p.classList.toggle('active', parseInt(p.dataset.idx) === idx);
+  });
+}
+
+const TRAPS = [
+  {
+    name: "Je suis d'accord avec cette situation",
+    wrong: "Je suis tout à fait d'accord avec cette situation difficile.",
+    right: "Je comprends parfaitement cette situation. / Je partage le point de vue exprimé dans ce témoignage.",
+    explanation: "Una <em>situation</em> no se «aprueba» (être d'accord) — se comprende, se analiza o se deplora. <em>Être d'accord avec</em> se aplica a una opinión o propuesta, no a un estado de cosas. Es un calco directo del español «estar de acuerdo con esta situación»."
+  },
+  {
+    name: "Selon moi, je pense que… — redundancia",
+    wrong: "Selon moi, je pense que cette décision est injuste.",
+    right: "Selon moi, cette décision est injuste. / Je pense que cette décision est injuste.",
+    explanation: "<em>Selon moi</em> y <em>je pense que</em> expresan ambos la subjetividad del que habla: usar los dos juntos es pleonástico. Hay que elegir uno solo. El mismo error ocurre con <em>À mon avis, je crois que…</em>."
+  },
+  {
+    name: "Il faut que les gens savent — indicativo tras il faut que",
+    wrong: "Il faut que les gens savent la vérité sur cette affaire.",
+    right: "Il faut que les gens sachent la vérité sur cette affaire.",
+    explanation: "Tras <em>il faut que</em> el verbo va siempre en <strong>subjonctif</strong>: <em>sachent</em>, no <em>savent</em>. Lo mismo con <em>il est important que, il est nécessaire que, il serait souhaitable que</em>. Es el error de subjuntivo más sistemático en este género, donde abundan las construcciones de necesidad."
+  },
+  {
+    name: "Quedarse en la emoción superficial",
+    wrong: "C'est une situation qui me choque beaucoup. C'est vraiment horrible et triste.",
+    right: "Ce témoignage m'a profondément interpellé(e). En effet, il met en lumière une tension réelle entre des droits légitimes mais inconciliables, ce qui soulève une question de fond : jusqu'où la collectivité doit-elle arbitrer ?",
+    explanation: "<em>Ça me choque beaucoup</em> es un buen punto de partida emocional, pero no puede ser la totalidad de la reacción. La emoción debe abrir paso a un <strong>desarrollo argumentativo</strong>. Un courrier que se queda en lo afectivo sin razonar se evalúa como B1, no como B2."
+  },
+  {
+    name: "Empezar la carta con Je",
+    wrong: "Je suis très choqué(e) par ce témoignage que j'ai lu dans votre journal.",
+    right: "C'est avec une grande émotion que j'ai lu ce témoignage. / En tant que lecteur fidèle de votre journal, j'ai été profondément interpellé(e)…",
+    explanation: "En el courrier formel se evita abrir con <em>Je</em>: resulta abrupto y de registro bajo. Se prefiere <em>C'est avec… que…</em> (mise en relief) o <em>En tant que…</em>. Reservar el <em>je</em> para el interior de la carta, una vez establecido el marco."
+  },
+  {
+    name: "Tutear o caer en registro informal",
+    wrong: "Franchement, votre article est carrément génial, ça m'a trop touché !",
+    right: "Je tiens à saluer la qualité de votre article, qui m'a véritablement touché(e).",
+    explanation: "El courrier des lecteurs es una carta formal a una redacción. Adverbios familiares (<em>franchement, carrément, trop</em>) y exclamaciones coloquiales rompen el registro <em>soutenu</em> exigido y penalizan el criterio léxico. La emoción se expresa con vocabulario preciso, no con marcadores orales."
+  }
+];
+
+function renderTraps() {
+  const container = document.getElementById('traps-container');
+  if (!container) return;
+  container.innerHTML = TRAPS.map(t => `
+    <div class="trap-card">
+      <div class="trap-card-header">
+        <div class="trap-name">${t.name}</div>
+      </div>
+      <div class="trap-vs">
+        <div class="trap-wrong">${t.wrong}</div>
+        <div class="trap-right">${t.right}</div>
+      </div>
+      <div class="trap-expl">${t.explanation}</div>
+    </div>
+  `).join('');
+}
+
+renderTraps();
+</script>
+
+</body>
+</html>
