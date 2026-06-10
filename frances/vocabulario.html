@@ -1986,6 +1986,20 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 .btn-srs-stats { /* heredamos del estilo neutro de .hdr-srs-row */ }
 
 /* Banner de progreso sin guardar */
+.tts-toast {
+  position: fixed; left: 50%; bottom: 24px;
+  transform: translate(-50%, 16px); z-index: 900;
+  max-width: min(440px, calc(100vw - 32px));
+  background: linear-gradient(135deg, #fdf6e3, #fbe9a8);
+  border: 1px solid #c9a64d; border-radius: 12px;
+  color: #6b4a00; padding: 11px 16px;
+  font-size: 0.82rem; font-weight: 600; line-height: 1.4;
+  text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.tts-toast.visible { opacity: 1; transform: translate(-50%, 0); }
+.tts-toast-sub { display: block; margin-top: 3px; font-weight: 500; opacity: 0.85; }
 .srs-unsaved-banner {
   display: none;
   position: sticky; top: 0; z-index: 400;
@@ -42865,12 +42879,51 @@ function argPills(escapedStr) {
 }
 // ── TTS (Web Speech API): pronuncia la palabra en francés ──
 var TTS_OK = (typeof window !== "undefined") && ("speechSynthesis" in window);
+// Selecciona una voz francesa real: fijar solo u.lang no basta (Safari/Chrome
+// usan la voz por defecto del sistema, que aquí es española, y leerían el
+// francés con acento español).
+var TTS_VOICE = null;
+function ttsPickVoice() {
+  if (!TTS_OK) return null;
+  var voices = window.speechSynthesis.getVoices() || [];
+  if (!voices.length) return null;
+  var fr = voices.filter(function(v) { return /^fr[-_]?FR/i.test(v.lang); });
+  if (!fr.length) fr = voices.filter(function(v) { return /^fr([-_]|$)/i.test(v.lang); });
+  if (!fr.length) return null;
+  var local = fr.filter(function(v) { return v.localService; });
+  return local[0] || fr[0];
+}
+if (TTS_OK) {
+  TTS_VOICE = ttsPickVoice();
+  window.speechSynthesis.addEventListener("voiceschanged", function() {
+    TTS_VOICE = ttsPickVoice() || TTS_VOICE;
+  });
+}
+var ttsWarnShown = false;
+function ttsWarnNoVoice() {
+  if (ttsWarnShown) return;
+  ttsWarnShown = true;
+  var t = document.createElement("div");
+  t.className = "tts-toast";
+  t.innerHTML = "&#9888;&#65039; No hay voz francesa instalada: se leerá con otro acento.<br>" +
+    "<span class=\"tts-toast-sub\">Instálala en Ajustes &rsaquo; Accesibilidad &rsaquo; Contenido hablado &rsaquo; Voces &rsaquo; Francés.</span>";
+  document.body.appendChild(t);
+  requestAnimationFrame(function() { t.classList.add("visible"); });
+  setTimeout(function() {
+    t.classList.remove("visible");
+    setTimeout(function() { if (t.parentNode) t.parentNode.removeChild(t); }, 400);
+  }, 6000);
+}
 function ttsSpeak(text, btn) {
   if (!TTS_OK || !text) return;
   try {
     window.speechSynthesis.cancel();
     var u = new SpeechSynthesisUtterance(text);
     u.lang = "fr-FR"; u.rate = 0.92; u.pitch = 1;
+    if (!TTS_VOICE) TTS_VOICE = ttsPickVoice();
+    if (TTS_VOICE) u.voice = TTS_VOICE;
+    // Si las voces ya cargaron pero ninguna es francesa, avisa al usuario.
+    else if ((window.speechSynthesis.getVoices() || []).length) ttsWarnNoVoice();
     if (btn) {
       btn.classList.add("speaking");
       u.onend = u.onerror = function() { btn.classList.remove("speaking"); };
