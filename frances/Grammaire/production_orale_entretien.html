@@ -24,6 +24,8 @@
   --shadow-primary:0 6px 20px var(--primary-glow);
   /* Geometry */
   --radius:18px; --radius-md:14px; --radius-sm:10px; --radius-xs:6px; --radius-pill:999px;
+  /* Reading text scale (controlled by the size slider) */
+  --reading-scale:1;
   /* Motion */
   --ease:cubic-bezier(0.4,0,0.2,1); --ease-out:cubic-bezier(0.16,1,0.3,1);
   --t-fast:120ms; --t-base:200ms;
@@ -287,6 +289,46 @@ body{
 }
 .toggle-switch.on .toggle-thumb{transform:translateX(21px);}
 
+/* ===== TEXT-SIZE SLIDER ===== */
+.size-wrap{
+  display:flex;align-items:center;gap:9px;
+  flex-shrink:0;
+  padding-left:14px;
+  border-left:1px solid var(--border-strong);
+}
+.size-label{
+  color:var(--text3);font-weight:700;
+  line-height:1;user-select:none;
+  transition:color var(--t-base) var(--ease);
+}
+.size-label.sm{font-size:.78rem;}
+.size-label.lg{font-size:1.18rem;}
+.size-slider{
+  -webkit-appearance:none;appearance:none;
+  width:104px;height:4px;
+  border-radius:var(--radius-pill);
+  background:var(--border-strong);
+  cursor:pointer;
+  transition:background var(--t-base) var(--ease);
+}
+.size-slider:hover{background:var(--primary-mid);}
+.size-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--primary);
+  box-shadow:var(--shadow-sm);
+  cursor:pointer;
+  transition:transform var(--t-fast) var(--ease);
+}
+.size-slider::-webkit-slider-thumb:hover{transform:scale(1.18);}
+.size-slider::-moz-range-thumb{
+  width:16px;height:16px;border:0;border-radius:50%;
+  background:var(--primary);
+  box-shadow:var(--shadow-sm);
+  cursor:pointer;
+}
+.size-slider:focus-visible{outline:2px solid var(--primary);outline-offset:4px;}
+
 /* ===== TABS ===== */
 .tabs-wrap{
   position:sticky;top:0;z-index:50;
@@ -335,6 +377,33 @@ body{
 .panel.active{display:block;animation:fadeSlideIn 360ms var(--ease-out);}
 @keyframes fadeSlideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 
+/* ===== LEVEL SWITCH (B2 / B1 within a panel) ===== */
+.level-tabs{
+  display:inline-flex;gap:4px;
+  padding:4px;margin-bottom:26px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  border-radius:var(--radius-pill);
+  box-shadow:var(--shadow-xs);
+}
+.level-tab{
+  border:0;background:transparent;
+  border-radius:var(--radius-pill);
+  padding:8px 20px;
+  font-family:inherit;
+  font-size:.82rem;font-weight:600;
+  letter-spacing:.01em;
+  color:var(--text3);cursor:pointer;
+  transition:all var(--t-base) var(--ease);
+}
+.level-tab:hover{color:var(--primary);}
+.level-tab.active{
+  background:var(--primary);color:#fff;
+  box-shadow:var(--shadow-primary);
+}
+.level-panel{display:none;}
+.level-panel.active{display:block;animation:fadeSlideIn 300ms var(--ease-out);}
+
 .panel-header{
   margin-bottom:28px;
   padding-bottom:18px;
@@ -359,7 +428,7 @@ body{
 
 .ex{
   font-family:inherit;
-  font-size:.95rem;
+  font-size:calc(.95rem * var(--reading-scale));
   color:var(--text2);
   font-style:italic;
   padding:14px 18px;
@@ -400,7 +469,7 @@ body{
 .rep:hover{box-shadow:var(--shadow);}
 .rep:hover::before{opacity:1;}
 .rep > p{
-  font-size:1rem;
+  font-size:calc(1rem * var(--reading-scale));
   line-height:1.85;
   margin-bottom:14px;
   color:var(--text);
@@ -626,7 +695,7 @@ body.no-highlights .c-pron{
   padding:24px 26px;
 }
 .example-letter > p{
-  font-size:1rem;line-height:1.85;
+  font-size:calc(1rem * var(--reading-scale));line-height:1.85;
   margin-bottom:14px;color:var(--text);
 }
 .example-letter > p:last-child{margin-bottom:0;}
@@ -651,12 +720,14 @@ body.no-highlights .c-pron{
   .toggle-wrap{margin-left:0;width:100%;justify-content:flex-end;}
   .toggle-text{font-size:.72rem;}
   .toggle-state{font-size:.6rem;}
+  .size-wrap{width:100%;padding-left:0;border-left:0;justify-content:flex-end;}
+  .size-slider{width:140px;}
   .tabs-wrap{padding:10px 14px;}
   .tab{font-size:.78rem;padding:7px 13px;}
   .main{padding:24px 14px 56px;}
   .rep{padding:18px 18px 20px;}
-  .rep > p{font-size:.96rem;line-height:1.75;}
-  .ex{padding:12px 14px;font-size:.9rem;}
+  .rep > p{font-size:calc(.96rem * var(--reading-scale));line-height:1.75;}
+  .ex{padding:12px 14px;font-size:calc(.9rem * var(--reading-scale));}
 }
 </style>
 </head>
@@ -718,6 +789,11 @@ body.no-highlights .c-pron{
       </button>
       <span class="toggle-state on" id="hl-state">ON</span>
     </div>
+    <div class="size-wrap">
+      <span class="size-label sm" aria-hidden="true">A</span>
+      <input type="range" id="size-slider" class="size-slider" min="0.85" max="1.6" step="0.05" value="1" aria-label="Tamaño del texto">
+      <span class="size-label lg" aria-hidden="true">A</span>
+    </div>
   </div>
 </div>
 
@@ -746,13 +822,13 @@ body.no-highlights .c-pron{
     <div class="ex"><strong>Examinateur :</strong> Bonjour ! Pouvez-vous vous présenter, me parler de vous, de votre famille ?</div>
     <div class="rep">
       <span class="name">Rubén</span>
-      <p>Bonjour ! Bien sûr, avec plaisir. Je m'appelle Rubén, j'ai trente-sept ans et je suis espagnol, de Madrid. <span class="c-conn">En ce moment</span>, je vis à Bogotá, en Colombie, <span class="c-conn">depuis trois ans</span> — ou plutôt, <span class="c-conn">ça fait trois ans que</span> je <span class="c-past">m'y suis installé</span>. Je <span class="c-past">suis venu</span> ici <span class="c-conn">à cause du</span> travail de mon mari : il est professeur dans une école internationale espagnole.</p>
+      <p>Bonjour ! Bien sûr, avec plaisir. Je m'appelle Rubén, j'ai trente-sept ans et je suis espagnol, de Madrid. <span class="c-conn">En ce moment</span>, je vis à Bogotá, en Colombie — <span class="c-conn">ça fait trois ans que</span> je <span class="c-past">m'y suis installé</span>. Je <span class="c-past">suis venu</span> ici <span class="c-conn">à cause du</span> travail de mon mari : il est professeur dans une école internationale espagnole.</p>
 
-      <p><span class="c-conn">Au début</span>, je dois avouer que <span class="c-past">j'avais</span> un peu peur. En Europe, on a souvent une image très négative de la Colombie : on <span class="c-conn">ne</span> pense <span class="c-conn">qu'</span>à l'insécurité, à la violence, aux problèmes du passé. <span class="c-conn">Donc</span>, quand mon mari <span class="c-past">m'a annoncé</span> qu'on <span class="c-past">allait s'installer</span> ici, <span class="c-past">je n'étais</span> pas vraiment rassuré. <span class="c-conn">Cependant</span>, la réalité <span class="c-past">était</span> complètement différente de ce que <span class="c-past">j'imaginais</span>. <span class="c-conn">Finalement</span>, <span class="c-past">je me suis très bien adapté</span> et je me sens vraiment chez moi ici — <span class="c-sub">quoi qu'on en dise</span> à l'étranger. <span class="c-conn">Bien que</span> ce <span class="c-sub">ne soit</span> pas toujours facile à expliquer à mes proches en Espagne, c'est aujourd'hui une des meilleures expériences de ma vie.</p>
+      <p><span class="c-conn">Au début</span>, <span class="c-past">j'avais</span> un peu peur, je dois l'avouer. En Europe, on a souvent une image très négative de la Colombie : on pense surtout à l'insécurité et aux problèmes du passé. <span class="c-conn">Donc</span>, <span class="c-conn">quand</span> mon mari <span class="c-past">m'a annoncé</span> qu'on <span class="c-past">allait s'installer</span> ici, <span class="c-past">je n'étais</span> pas très rassuré. <span class="c-conn">Mais</span> la réalité <span class="c-past">était</span> complètement différente de ce que <span class="c-past">j'imaginais</span>. <span class="c-conn">Finalement</span>, <span class="c-past">je me suis très bien adapté</span> et je me sens vraiment chez moi ici. C'est difficile à expliquer à mes proches en Espagne, <span class="c-conn">mais</span> c'est aujourd'hui une des meilleures expériences de ma vie.</p>
 
-      <p><span class="c-conn">En ce qui concerne</span> ma famille... eh bien, <span class="c-conn">on vient de vivre</span> un grand moment : notre fils <span class="c-past">est né</span> <span class="c-conn">il y a trois mois</span> ! <span class="c-conn">Donc</span> on est maintenant quatre à la maison, <span class="c-conn">si</span> on compte notre chienne [sourire]. C'est une période intense, un peu épuisante, <span class="c-conn">mais</span> vraiment belle.</p>
+      <p>Et pour ma famille... eh bien, <span class="c-conn">on vient de vivre</span> un grand moment : notre fils <span class="c-past">est né</span> <span class="c-conn">il y a trois mois</span> ! On est maintenant quatre à la maison, <span class="c-conn">si</span> on compte notre chienne [sourire]. C'est une période un peu épuisante, <span class="c-conn">mais</span> vraiment belle.</p>
 
-      <p>Ma famille en Espagne me manque beaucoup, <span class="c-conn">bien sûr</span>. Mes parents vivent à Madrid, <span class="c-conn">ainsi que</span> mon petit frère, qui a vingt-huit ans. Il est marié et a un fils de deux ans — mon neveu, <span class="c-conn">dont</span> je suis le parrain. C'est quelque chose qui compte beaucoup pour moi. Être loin d'eux est parfois difficile, <span class="c-conn">surtout maintenant que</span> je suis père moi-même <span class="c-conn">et que</span> je comprends mieux ce que représente la famille. J'aimerais vraiment <span class="c-sub">qu'ils puissent</span> voir grandir leur petit-fils au quotidien, mais on s'arrange <span class="c-conn">pour qu'</span>on se <span class="c-sub">voie</span> aussi souvent que possible.</p>
+      <p>Ma famille en Espagne me manque beaucoup, <span class="c-conn">bien sûr</span>. Mes parents vivent à Madrid, <span class="c-conn">ainsi que</span> mon petit frère, qui a vingt-huit ans. Il est marié et a un fils de deux ans — mon neveu, <span class="c-conn">dont</span> je suis le parrain. C'est quelque chose qui compte beaucoup pour moi. Être loin d'eux est parfois difficile, <span class="c-conn">surtout maintenant que</span> je suis père moi-même. J'aimerais vraiment <span class="c-sub">qu'ils puissent</span> voir grandir leur petit-fils, mais on s'arrange pour se voir aussi souvent que possible.</p>
     </div>
   </div>
 
@@ -760,7 +836,7 @@ body.no-highlights .c-pron{
     <div class="ex"><span class="relance-label">Relance</span><br><strong>Examinateur :</strong> Et vous vous sentez bien à Bogotá, malgré l'éloignement ?</div>
     <div class="rep">
       <span class="name">Rubén</span>
-      <p>Oui, vraiment bien — <span class="c-conn">bien mieux que</span> je <span class="c-conn">ne</span> <span class="c-cond">l'aurais imaginé</span> au départ ! Bogotá est une ville très vivante, avec beaucoup de culture, de musique, de gastronomie... Et les Colombiens sont extraordinairement chaleureux. <span class="c-conn">Bien sûr</span>, certaines choses me manquent — la famille, les amis, et soyons honnêtes, le jambon ibérique [sourire]. <span class="c-conn">Mais dans l'ensemble</span>, je suis sincèrement content <span class="c-past">d'avoir vécu</span> cette expérience.</p>
+      <p>Oui, vraiment bien — <span class="c-conn">bien mieux que</span> je <span class="c-conn">ne</span> <span class="c-cond">l'aurais imaginé</span> ! Bogotá est une ville très vivante, avec beaucoup de culture, de musique, de gastronomie... Et les Colombiens sont extraordinairement chaleureux. <span class="c-conn">Bien sûr</span>, certaines choses me manquent — la famille, les amis, et soyons honnêtes, le jambon ibérique [sourire]. <span class="c-conn">Mais dans l'ensemble</span>, je suis vraiment content <span class="c-past">d'avoir vécu</span> cette expérience.</p>
     </div>
   </div>
 </section>
@@ -776,15 +852,15 @@ body.no-highlights .c-pron{
     <div class="ex"><strong>Examinateur :</strong> Parlez-moi de votre parcours — vos études, votre profession.</div>
     <div class="rep">
       <span class="name">Rubén</span>
-      <p><span class="c-conn">Alors</span>, mon parcours est un peu atypique, je dois l'admettre ! <span class="c-past">J'ai fait</span> des études de droit et de journalisme à Madrid — deux domaines très différents, déjà. <span class="c-conn">Mais</span> aujourd'hui, je <span class="c-conn">ne</span> suis <span class="c-conn">ni</span> avocat <span class="c-conn">ni</span> journaliste. Je suis photographe, spécialisé dans les événements culturels : les concerts, les festivals, les expositions d'art...</p>
+      <p><span class="c-conn">Alors</span>, mon parcours est un peu atypique ! <span class="c-past">J'ai fait</span> des études de droit et de journalisme à Madrid — deux domaines très différents, déjà. <span class="c-conn">Mais</span> aujourd'hui, je <span class="c-conn">ne</span> suis <span class="c-conn">ni</span> avocat <span class="c-conn">ni</span> journaliste. Je suis photographe, spécialisé dans les événements culturels : les concerts, les festivals, les expositions d'art...</p>
 
-      <p><span class="c-conn">En fait</span>, la photographie <span class="c-past">est arrivée</span> dans ma vie de façon assez naturelle. <span class="c-conn">Pendant</span> mes études, <span class="c-past">j'ai commencé</span> à photographier des événements culturels, et <span class="c-conn">petit à petit</span> <span class="c-past">c'est devenu</span> mon activité principale. C'est un métier que j'aime beaucoup <span class="c-conn">parce qu'</span>il est très créatif <span class="c-conn">et qu'</span>il me connecte à la culture, à la musique, aux artistes. Chaque événement est différent, et ça, c'est quelque chose que j'apprécie vraiment.</p>
+      <p><span class="c-conn">En fait</span>, la photographie <span class="c-past">est arrivée</span> dans ma vie de façon assez naturelle. <span class="c-conn">Pendant</span> mes études, <span class="c-past">j'ai commencé</span> à photographier des événements culturels, et <span class="c-conn">petit à petit</span> <span class="c-past">c'est devenu</span> mon activité principale. C'est un métier que j'aime beaucoup <span class="c-conn">parce qu'</span>il est très créatif <span class="c-conn">et qu'</span>il me connecte à la culture et aux artistes. Chaque événement est différent, et ça, c'est quelque chose que j'apprécie vraiment.</p>
 
-      <p><span class="c-conn">Cependant</span>, je dois être honnête : c'est <span class="c-conn">aussi</span> un secteur assez instable. Les contrats sont irréguliers, les revenus varient beaucoup d'un mois à l'autre... <span class="c-conn">Avec le temps</span>, cette incertitude <span class="c-past">m'a pesé</span> <span class="c-conn">de plus en plus</span>, <span class="c-conn">surtout depuis que</span> nous avons un enfant <span class="c-conn">et que</span> la stabilité devient plus importante.</p>
+      <p><span class="c-conn">Mais</span> je dois être honnête : c'est <span class="c-conn">aussi</span> un secteur assez instable. Les contrats sont irréguliers, les revenus varient beaucoup d'un mois à l'autre. <span class="c-conn">Avec le temps</span>, cette incertitude <span class="c-past">m'a pesé</span> <span class="c-conn">de plus en plus</span>, <span class="c-conn">surtout depuis qu'</span>on a un enfant <span class="c-conn">et que</span> la stabilité <span class="c-past">est devenue</span> plus importante.</p>
 
-      <p><span class="c-conn">C'est précisément pour ça que</span> <span class="c-past">j'ai décidé</span> de me tourner vers la carrière diplomatique. C'est un domaine qui me passionne <span class="c-conn">depuis longtemps</span> — les relations internationales, les échanges entre cultures, la politique étrangère... <span class="c-conn">Et en fait</span>, vivre à Bogotá ces trois dernières années <span class="c-past">m'a beaucoup aidé</span> à confirmer cette décision. <span class="c-conn">Quand</span> on vit à l'étranger, on comprend autrement les enjeux du monde, les différences culturelles, l'importance du dialogue entre les pays. Ça <span class="c-past">m'a vraiment convaincu</span> que c'est la direction que je veux prendre.</p>
+      <p><span class="c-conn">C'est pour ça que</span> <span class="c-past">j'ai décidé</span> de me tourner vers la carrière diplomatique. C'est un domaine qui me passionne <span class="c-conn">depuis longtemps</span> — les relations internationales, les échanges entre cultures, la politique étrangère. Et vivre à Bogotá ces trois dernières années <span class="c-past">m'a vraiment aidé</span> à confirmer cette décision. <span class="c-conn">Quand</span> on vit à l'étranger, on comprend mieux les différences culturelles et l'importance du dialogue entre les pays. Ça <span class="c-past">m'a vraiment convaincu</span> que c'est la direction que je veux prendre.</p>
 
-      <p>Je prépare <span class="c-conn">donc</span> les concours <span class="c-conn">en ce moment</span>, <span class="c-conn">en parallèle de</span> mon travail de photographe. C'est intense, <span class="c-conn">mais</span> je suis très motivé. <span class="c-conn">Il faut que</span> je <span class="c-sub">réussisse</span> ces concours et <span class="c-conn">que</span> <span class="c-sub">j'aie</span> le courage d'aller jusqu'au bout — c'est devenu vital pour moi.</p>
+      <p>Je prépare <span class="c-conn">donc</span> les concours <span class="c-conn">en ce moment</span>, <span class="c-conn">en parallèle de</span> mon travail de photographe. C'est intense, <span class="c-conn">mais</span> je suis très motivé.</p>
     </div>
   </div>
 
@@ -792,9 +868,9 @@ body.no-highlights .c-pron{
     <div class="ex"><span class="relance-label">Relance</span><br><strong>Examinateur :</strong> C'est un grand changement — vous n'avez pas peur de tout recommencer ?</div>
     <div class="rep">
       <span class="name">Rubén</span>
-      <p>Honnêtement, un peu, oui ! [sourire] <span class="c-conn">Mais</span> je pense que ce n'est pas vraiment repartir de zéro. Le droit que <span class="c-past">j'ai étudié</span> est très utile pour comprendre le droit international. Le journalisme <span class="c-past">m'a appris</span> à analyser l'information et à communiquer clairement. Et la photographie <span class="c-past">m'a appris</span> à observer, à comprendre les gens et les situations rapidement. <span class="c-conn">En fin de compte</span>, je pense que tout ce parcours <span class="c-past">m'a préparé</span> pour ça, <span class="c-conn">même si</span> <span class="c-past">je ne le savais pas</span> à l'époque.</p>
+      <p>Honnêtement, un peu, oui ! [sourire] <span class="c-conn">Mais</span> je ne pense pas que <span class="c-sub">ce soit</span> vraiment repartir de zéro. Le droit que <span class="c-past">j'ai étudié</span> est très utile pour comprendre le droit international. Le journalisme <span class="c-past">m'a appris</span> à analyser l'information et à communiquer clairement. Et la photographie <span class="c-past">m'a appris</span> à observer et à comprendre les gens rapidement. Je pense que tout ce parcours <span class="c-past">m'a préparé</span> pour ça, <span class="c-conn">même si</span> <span class="c-past">je ne le savais pas</span> à l'époque.</p>
 
-      <p><span class="c-conn">Et puis</span>, à trente-sept ans, ce n'est pas si tard pour changer de chemin. Je crois <span class="c-conn">qu'il vaut mieux</span> faire quelque chose <span class="c-sub">qui ait</span> du sens pour soi que de rester dans une situation confortable mais sans avenir. <span class="c-conn">Bien que</span> cela <span class="c-sub">demande</span> beaucoup de patience et que la route <span class="c-sub">soit</span> encore longue, je suis convaincu que ça en vaut la peine.</p>
+      <p><span class="c-conn">Et puis</span>, à trente-sept ans, ce n'est pas si tard pour changer de chemin. Je crois <span class="c-conn">qu'il vaut mieux</span> faire quelque chose <span class="c-sub">qui ait</span> du sens pour soi que de rester dans une situation sans avenir. La route est encore longue, <span class="c-conn">mais</span> je suis convaincu que ça en vaut la peine.</p>
     </div>
   </div>
 
@@ -802,7 +878,7 @@ body.no-highlights .c-pron{
     <div class="ex"><span class="relance-label">Relance</span><br><strong>Examinateur :</strong> Et votre mari, il soutient ce projet ?</div>
     <div class="rep">
       <span class="name">Rubén</span>
-      <p>Oui, complètement — et c'est très important pour moi. Ce n'est pas facile pour une famille, <span class="c-conn">parce que</span> la carrière diplomatique implique de vivre souvent à l'étranger, de changer de pays régulièrement... <span class="c-conn">Mais d'un autre côté</span>, c'est une vie que nous connaissons déjà un peu, <span class="c-conn">puisque</span> nous vivons à Bogotá <span class="c-conn">depuis trois ans</span>. <span class="c-conn">Donc</span> ce mode de vie ne nous fait pas peur. <span class="c-conn">Au contraire</span>, <span class="c-cond">je dirais</span> même que nous l'apprécions.</p>
+      <p>Oui, complètement — et c'est très important pour moi. Ce n'est pas facile pour une famille, <span class="c-conn">parce que</span> la carrière diplomatique implique de vivre souvent à l'étranger, de changer de pays régulièrement. <span class="c-conn">Mais d'un autre côté</span>, c'est une vie qu'on connaît déjà un peu, <span class="c-conn">puisqu'</span>on vit à Bogotá <span class="c-conn">depuis trois ans</span>. <span class="c-conn">Donc</span> ce mode de vie ne nous fait pas peur. <span class="c-conn">Au contraire</span>, <span class="c-cond">je dirais</span> même qu'on l'apprécie.</p>
     </div>
   </div>
 </section>
@@ -818,15 +894,15 @@ body.no-highlights .c-pron{
     <div class="ex"><strong>Examinateur :</strong> Parlez-moi de vos passe-temps préférés.</div>
     <div class="rep">
       <span class="name">Rubén</span>
-      <p>Mes deux grandes passions, c'est la cuisine et les voyages — et heureusement, les deux vont très bien ensemble !</p>
+      <p>Mes grandes passions ? La cuisine et les voyages — et les deux vont très bien ensemble, heureusement !</p>
 
-      <p><span class="c-conn">En ce qui concerne</span> la cuisine, ce n'est pas juste cuisiner pour manger — c'est vraiment une passion. J'adore préparer des plats du monde entier, <span class="c-sub">qu'il s'agisse</span> de cuisine européenne, asiatique ou latino-américaine. La cuisine géorgienne, <span class="c-conn">par exemple</span>, me fascine : les khinkali — ce sont des sortes de raviolis géorgiens —, les pains fourrés au fromage, les sauces aux noix... c'est complètement différent de ce qu'on mange en Europe et c'est délicieux. J'aime beaucoup <span class="c-conn">aussi</span> la cuisine arabe — les mélanges d'épices, le sucré-salé, les herbes aromatiques... <span class="c-conn">Bien que</span> la cuisine française <span class="c-sub">me plaise</span> énormément, j'avoue que les saveurs moins connues m'attirent davantage.</p>
+      <p>La cuisine, ce n'est pas juste cuisiner pour manger — c'est vraiment une passion. J'adore préparer des plats du monde entier, <span class="c-sub">que ce soit</span> de la cuisine européenne, asiatique ou latino-américaine. La cuisine géorgienne, <span class="c-conn">par exemple</span>, me fascine : les khinkali — ce sont des sortes de raviolis —, les pains fourrés au fromage, les sauces aux noix... c'est complètement différent de ce qu'on mange en Europe et c'est délicieux. J'aime beaucoup <span class="c-conn">aussi</span> la cuisine arabe — les mélanges d'épices, le sucré-salé, les herbes aromatiques. La cuisine française me plaît beaucoup aussi, <span class="c-conn">mais</span> j'avoue que les saveurs moins connues m'attirent davantage.</p>
 
-      <p><span class="c-conn">Pour moi</span>, cuisiner des plats du monde, c'est une façon de voyager sans sortir de chez soi. <span class="c-conn">Quand</span> je prépare un repas géorgien ou libanais, je me documente sur la culture, sur les traditions culinaires, sur l'histoire du pays. C'est beaucoup plus qu'une recette.</p>
+      <p><span class="c-conn">Pour moi</span>, c'est une façon de voyager sans sortir de chez soi. <span class="c-conn">Quand</span> je prépare un repas géorgien, <span class="c-conn">par exemple</span>, je me documente un peu sur la culture du pays. C'est beaucoup plus qu'une simple recette.</p>
 
-      <p><span class="c-conn">Quant aux</span> voyages, c'est une passion absolue — et pas seulement le voyage en lui-même. <span class="c-conn">Ce que j'aime vraiment, c'est</span> toute la préparation : <span class="c-conn">avant qu'</span>on <span class="c-sub">parte</span> quelque part, je passe des heures à chercher des destinations peu connues, à trouver des restaurants locaux que les guides touristiques ne mentionnent pas, à découvrir des petits villages, des marchés... Je m'arrange toujours <span class="c-conn">pour qu'</span>on <span class="c-sub">puisse</span> vivre une expérience vraiment authentique, loin des circuits touristiques classiques. Les grandes foules et le tourisme de masse, ce n'est vraiment pas mon truc. Je préfère une expérience authentique et un peu imprévue à une attraction très connue <span class="c-conn">mais</span> bondée de touristes.</p>
+      <p>Et les voyages, c'est une passion absolue. <span class="c-conn">Ce que j'aime vraiment, c'est</span> toute la préparation : <span class="c-conn">avant de</span> partir quelque part, je passe des heures à chercher des destinations peu connues, des restaurants locaux que les guides ne mentionnent pas, des petits villages, des marchés... Je préfère une expérience authentique à une attraction très connue <span class="c-conn">mais</span> bondée de touristes. Les grandes foules et le tourisme de masse, ce n'est vraiment pas mon truc.</p>
 
-      <p><span class="c-conn">Par ailleurs</span>, <span class="c-past">je faisais</span> de la natation régulièrement. <span class="c-conn">Mais depuis</span> la naissance de mon fils <span class="c-conn">il y a trois mois</span>, <span class="c-past">c'est devenu</span>... disons, très théorique ! [sourire] Un bébé prend toute l'énergie disponible, et <span class="c-conn">entre</span> le manque de sommeil <span class="c-conn">et</span> les nuits courtes, le sport <span class="c-past">est passé</span> en dernier. <span class="c-conn">Cela dit</span>, c'est un sacrifice que j'accepte très volontiers — pour l'instant, je nage surtout dans le bonheur d'être père [sourire].</p>
+      <p>Ah, et le sport <span class="c-conn">aussi</span> — <span class="c-past">je faisais</span> de la natation régulièrement. <span class="c-conn">Mais depuis</span> la naissance de mon fils, <span class="c-past">c'est devenu</span>... disons, très théorique ! [sourire] Un bébé prend toute l'énergie disponible, et <span class="c-conn">entre</span> le manque de sommeil <span class="c-conn">et</span> les nuits courtes, le sport <span class="c-past">est passé</span> en dernier. <span class="c-conn">Mais</span> c'est un sacrifice que j'accepte très volontiers.</p>
     </div>
   </div>
 
@@ -834,7 +910,7 @@ body.no-highlights .c-pron{
     <div class="ex"><span class="relance-label">Relance</span><br><strong>Examinateur :</strong> Et la photographie, c'est aussi un loisir pour vous, ou seulement un travail ?</div>
     <div class="rep">
       <span class="name">Rubén</span>
-      <p>C'est une très bonne question ! Je pense que <span class="c-conn">quand</span> on fait de la photographie son métier, la frontière entre travail et passion devient un peu floue. <span class="c-conn">D'un côté</span>, ma photographie professionnelle est très spécifique — les événements, les concerts, souvent la nuit, sous pression. <span class="c-conn">De l'autre</span>, <span class="c-conn">quand</span> je voyage, j'emporte toujours mon appareil et je photographie de façon très différente — plus lente, plus personnelle. <span class="c-conn">Donc</span> oui, dans un sens, la photographie reste aussi un loisir, <span class="c-conn">mais</span> d'une façon différente.</p>
+      <p>C'est une bonne question ! Je pense que <span class="c-conn">quand</span> on fait de la photographie son métier, la frontière entre travail et passion devient un peu floue. <span class="c-conn">D'un côté</span>, ma photographie professionnelle est très spécifique — les événements, les concerts, souvent la nuit, sous pression. <span class="c-conn">De l'autre</span>, <span class="c-conn">quand</span> je voyage, j'emporte toujours mon appareil et je photographie de façon très différente — plus lente, plus personnelle. <span class="c-conn">Donc</span> oui, la photographie reste <span class="c-conn">aussi</span> un loisir, <span class="c-conn">mais</span> d'une façon différente.</p>
     </div>
   </div>
 </section>
@@ -845,6 +921,14 @@ body.no-highlights .c-pron{
     <h2>Thème 4 · Dernières vacances</h2>
     <p class="subtitle">Voyage au Pérou avant la naissance</p>
   </div>
+
+  <div class="level-tabs" role="tablist" aria-label="Nivel de la respuesta">
+    <button class="level-tab active" data-level="b2" type="button">Nivel B2</button>
+    <button class="level-tab" data-level="b1" type="button">Nivel B1</button>
+  </div>
+
+  <!-- ---- NIVEL B2 ---- -->
+  <div class="level-panel active" data-level-panel="b2">
 
   <div class="qa">
     <div class="ex"><strong>Examinateur :</strong> Où avez-vous passé vos dernières vacances ?</div>
@@ -871,6 +955,32 @@ body.no-highlights .c-pron{
       <p>Absolument pas ! Maintenant c'est une anecdote qu'on raconte à tout le monde [rires]. <span class="c-conn">En fait</span>, je pense que les imprévus font partie du voyage — ce sont souvent <span class="c-conn">eux dont on se souvient le mieux</span>. <span class="c-conn">La prochaine fois</span>, <span class="c-fut">je m'acclimaterai</span> mieux à l'altitude <span class="c-conn">avant de</span> monter si haut. <span class="c-conn">Mais à part ça</span>, <span class="c-cond">je le referais</span> sans hésiter.</p>
     </div>
   </div>
+
+  </div><!-- /level-panel b2 -->
+
+  <!-- ---- NIVEL B1 ---- -->
+  <div class="level-panel" data-level-panel="b1">
+
+  <div class="qa">
+    <div class="ex"><strong>Examinateur :</strong> Où avez-vous passé vos dernières vacances ?</div>
+    <div class="rep">
+      <span class="name">Rubén</span>
+      <p><span class="c-conn">Alors</span>, <span class="c-conn">l'année dernière</span>, <span class="c-past">on a fait</span> un grand voyage au Pérou avec mon mari. Et <span class="c-past">c'était</span> spécial, <span class="c-conn">parce que</span> <span class="c-past">c'était</span> notre dernier grand voyage <span class="c-conn">avant d'</span>avoir notre bébé. <span class="c-conn">Du coup</span>, <span class="c-past">on voulait</span> vraiment <span class="c-sub">que ce soit</span> mémorable. <span class="c-past">On a tout préparé</span> dans les détails.</p>
+
+      <p><span class="c-past">On a fait</span> <span class="c-conn">pas mal de</span> villes : Lima, Paracas, Arequipa, Cusco… et <span class="c-conn">bien sûr</span> le Machu Picchu. Et <span class="c-conn">franchement</span>, voir le Machu Picchu en vrai, <span class="c-conn">après</span> <span class="c-past">l'avoir vu</span> cent fois en photo… c'est une émotion difficile à expliquer. <span class="c-conn">En fait</span>, tu réalises que tu es enfin là, devant quelque chose <span class="c-conn">dont</span> tu <span class="c-past">rêvais</span> <span class="c-conn">depuis longtemps</span>.</p>
+
+      <p><span class="c-past">On a aussi loué</span> une voiture <span class="c-conn">pour</span> visiter la Vallée Sacrée. Les petits villages, les sites archéologiques, les marchés… C'est <span class="c-conn">peut-être</span> la partie que <span class="c-past">j'ai préférée</span>, <span class="c-conn">justement parce qu'</span><span class="c-past">il y avait</span> moins de touristes. On <span class="c-past">pouvait</span> aller à notre rythme, <span class="c-conn">voilà</span>.</p>
+
+      <p><span class="c-conn">Et puis</span>, la nourriture ! <span class="c-conn">Pour moi</span>, la cuisine péruvienne, c'est la meilleure d'Amérique latine. Le lomo saltado, le ceviche, le cuy… <span class="c-past">c'était</span> <span class="c-conn">trop</span> bon. Et <span class="c-conn">comme</span> j'adore manger, <span class="c-conn">ben</span>… <span class="c-past">j'étais</span> super content.</p>
+
+      <p><span class="c-conn">Bon</span>, <span class="c-conn">après</span>, tout <span class="c-past">n'a pas été</span> parfait ! [sourire] <span class="c-past">On a monté</span> la montagne aux sept couleurs, le Vinicunca. Et <span class="c-conn">là</span>, <span class="c-past">j'ai eu</span> le mal d'altitude. <span class="c-past">C'était</span> horrible : mal de tête, nausées, <span class="c-past">j'ai même vomi</span>… <span class="c-past">On m'a donné</span> de l'oxygène, <span class="c-conn">mais bon</span>, ça <span class="c-past">ne m'a pas trop aidé</span>. <span class="c-conn">À un moment</span>, <span class="c-past">je pouvais</span> <span class="c-conn">presque plus</span> marcher. <span class="c-conn">Mais</span> <span class="c-conn">quand même</span>, <span class="c-past">j'ai réussi</span> à rejoindre le bus, tout doucement, pas à pas. Et <span class="c-conn">honnêtement</span>, j'en suis assez fier — c'est <span class="c-conn">sûrement</span> mon plus grand exploit sportif ! [sourire] <span class="c-conn">Après</span> une bonne nuit à Cusco, ça <span class="c-past">allait</span> beaucoup mieux.</p>
+
+      <p><span class="c-conn">Bref</span>, c'est un voyage <span class="c-conn">qu'</span>on <span class="c-fut">n'oubliera jamais</span>. Les bons moments, les moments difficiles… tout ça fait partie du souvenir. Et <span class="c-conn">c'est ça qui</span> le rend précieux, <span class="c-conn">je trouve</span>.</p>
+    </div>
+  </div>
+
+  </div><!-- /level-panel b1 -->
+
 </section>
 
 <!-- ============ THÈME 5 ============ -->
@@ -1071,6 +1181,21 @@ document.querySelectorAll('.tab').forEach(btn => {
   });
 });
 
+// ===== LEVEL SWITCH (B2 / B1 inside a panel) =====
+document.querySelectorAll('.level-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const lvl = btn.dataset.level;
+    const wrap = btn.closest('.panel');
+    if(!wrap) return;
+    wrap.querySelectorAll('.level-tab').forEach(t => t.classList.remove('active'));
+    wrap.querySelectorAll('.level-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    const target = wrap.querySelector('[data-level-panel="'+lvl+'"]');
+    if(target) target.classList.add('active');
+    hideTr();
+  });
+});
+
 // ===== TOGGLE HIGHLIGHTS =====
 const hlToggle = document.getElementById('hl-toggle');
 const hlState  = document.getElementById('hl-state');
@@ -1082,6 +1207,24 @@ hlToggle.addEventListener('click', () => {
   hlState.classList.toggle('on', isOn);
   if(!isOn) hideTr();
 });
+
+// ===== TEXT-SIZE SLIDER =====
+(function(){
+  const slider = document.getElementById('size-slider');
+  if(!slider) return;
+  let stored = null;
+  try { stored = localStorage.getItem('entretien-text-scale'); } catch(e){}
+  if(stored){
+    document.documentElement.style.setProperty('--reading-scale', stored);
+    slider.value = stored;
+  }
+  slider.addEventListener('input', () => {
+    const v = slider.value;
+    document.documentElement.style.setProperty('--reading-scale', v);
+    try { localStorage.setItem('entretien-text-scale', v); } catch(e){}
+    hideTr();
+  });
+})();
 
 // ===== TRANSLATION POPUP =====
 const TR = {
@@ -1210,6 +1353,31 @@ const TR = {
   "comme toi":"como tú",
   "avant de":"antes de (+ inf.)",
   "rien":"nada (parte de 'ne… rien' = no… nada)",
+  // --- B1 · conectores y muletillas ---
+  "l'année dernière":"el año pasado",
+  "avant d'":"antes de (+ inf.)",
+  "du coup":"así que / por eso (registro familiar)",
+  "pas mal de":"bastantes / unos cuantos (registro familiar)",
+  "franchement":"francamente / la verdad",
+  "voilà":"ya está / eso es (muletilla)",
+  "trop":"demasiado / muy (registro familiar)",
+  "ben":"pues… / bueno… (muletilla familiar)",
+  "bon":"bueno… (muletilla)",
+  "là":"ahí / entonces",
+  "mais bon":"pero bueno / en fin",
+  "presque plus":"casi ya no",
+  "sûrement":"seguramente / sin duda",
+  "bref":"en fin / en resumen / en una palabra",
+  "je trouve":"me parece / diría yo (muletilla)",
+  // --- añadidos (textos actualizados) ---
+  "et qu'":"y que (retoma una conjunción)",
+  "aussi":"también",
+  "surtout depuis qu'":"sobre todo desde que",
+  "c'est pour ça que":"es por eso por lo que… (puesta en relieve)",
+  "puisqu'":"ya que / puesto que",
+  "est devenue":"se ha vuelto / se volvió [passé composé]",
+  "m'a vraiment aidé":"me ha ayudado de verdad [passé composé]",
+  "ce soit":"sea [subj. présent de 'être']",
 
   // --- PASADOS ---
   "m'y suis installé":"me instalé (allí) [passé composé]",
@@ -1282,6 +1450,14 @@ const TR = {
   "ils ont opté":"optaron por [passé composé]",
   "a trouvé":"encontró / ha encontrado [passé composé]",
   "vous avez finalement décidé":"habéis decidido finalmente [passé composé]",
+  // --- B1 · pasados ---
+  "on a tout préparé":"lo preparamos todo [passé composé]",
+  "tu rêvais":"soñabas [imparfait]",
+  "j'ai préférée":"la que preferí / mi preferida [passé composé · acuerdo del p.p.]",
+  "on a monté":"subimos / escalamos [passé composé]",
+  "j'ai même vomi":"incluso vomité [passé composé]",
+  "ne m'a pas trop aidé":"no me ayudó mucho [passé composé]",
+  "je pouvais":"podía [imparfait]",
 
   // --- FUTUROS ---
   "restera":"quedará / permanecerá [futur simple]",
@@ -1298,6 +1474,7 @@ const TR = {
   "tu feras le bon choix":"tomarás la decisión correcta [futur simple de 'faire']",
   "vous arriverez":"lograréis / conseguiréis [futur simple]",
   "ça va évoluer":"va a evolucionar [futur proche]",
+  "n'oubliera jamais":"no olvidaremos nunca [futur simple]",
 
   // --- CONDICIONALES ---
   "l'aurais imaginé":"lo habría imaginado [conditionnel passé]",
