@@ -340,6 +340,30 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .anec-popup .ap-close{position:absolute;top:8px;right:8px;width:26px;height:26px;border:0;background:transparent;color:var(--text3);cursor:pointer;font-size:.95rem;line-height:1;border-radius:var(--radius-pill);transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);display:flex;align-items:center;justify-content:center;}
 .anec-popup .ap-close:hover{background:var(--bg-elevated);color:var(--text);}
 
+/* ===== PLANTILLA FINAL — selector de anécdotas temáticas ===== */
+.anec-picker{margin-top:18px;}
+.anec-picker-intro{font-size:.86rem;color:var(--text2);line-height:1.55;margin-bottom:12px;}
+.ap-legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.ap-leg{font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:var(--radius-pill);border:1px solid;}
+.ap-leg.t-pc {background:var(--a-fut-bg); color:var(--a-fut); border-color:var(--a-fut-bd);}
+.ap-leg.t-imp{background:var(--a-conn-bg);color:var(--a-conn);border-color:var(--a-conn-bd);}
+.anec-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+.anec-tab{border:1px solid var(--border);border-radius:var(--radius-pill);padding:6px 13px;font-family:inherit;font-size:.78rem;font-weight:500;cursor:pointer;background:var(--card);color:var(--text2);transition:all var(--t-base) var(--ease);}
+.anec-tab:hover{border-color:var(--tab-c,var(--primary-mid));color:var(--tab-c,var(--primary));transform:translateY(-1px);box-shadow:var(--shadow-xs);}
+.anec-tab.active{background:var(--tab-c,var(--primary));color:#fff;border-color:var(--tab-c,var(--primary));font-weight:600;box-shadow:var(--shadow-xs);}
+[data-theme="dark"] .anec-tab.active{color:#0a0a0b;}
+.anec-theme{display:none;background:var(--paper);border:1px solid var(--paper-border);border-radius:var(--radius-md);padding:18px 20px;}
+.anec-theme.active{display:block;animation:fadeSlideIn 320ms var(--ease-out);}
+.ta-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.ta-num{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-family:'Manrope','Inter',sans-serif;font-weight:700;font-size:.9rem;flex-shrink:0;border:2px solid var(--tab-c,var(--primary));color:var(--tab-c,var(--primary));}
+.ta-title{font-family:'Manrope','Inter',sans-serif;font-weight:700;font-size:1rem;color:var(--text);line-height:1.25;}
+.ta-meta{font-size:.72rem;color:var(--text3);font-weight:600;margin-top:1px;}
+.ta-text{font-size:.96rem;line-height:1.9;color:var(--text);margin-bottom:12px;}
+.ta-use{font-size:.82rem;color:var(--text2);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;line-height:1.5;}
+.ta-use strong{color:var(--tab-c,var(--primary));font-weight:600;}
+.t-pc {background:var(--a-fut-bg); color:var(--a-fut); border-bottom:2px solid var(--a-fut-bd); padding:1px 5px;border-radius:var(--radius-xs);font-weight:600;}
+.t-imp{background:var(--a-conn-bg);color:var(--a-conn);border-bottom:2px solid var(--a-conn-bd);padding:1px 5px;border-radius:var(--radius-xs);font-weight:600;}
+
 @media (max-width: 600px){
   .paper{padding:20px 18px;}
   .paper-body{font-size:.88rem;}
@@ -1180,7 +1204,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
       </div>
     </div>
     <div class="papers">
-      <article class="paper">
+      <article class="paper paper-open">
         <h4 class="paper-title">Plantilla final · Conseiller un ami</h4>
         <div class="paper-meta">Estructura completa con huecos [ ] para adaptar a cualquier tema · ~160 mots</div>
         <div class="paper-body">
@@ -1193,6 +1217,62 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
           <p><span class="k-close">À très vite !</span><br>[Prénom]</p>
         </div>
       </article>
+    </div>
+
+    <div class="anec-picker">
+      <p class="anec-picker-intro">Elige una anécdota según el tema del ejercicio y encájala en el bloque <strong>[anécdota personal]</strong> de la plantilla. <strong>Adapta el tema, no la estructura</strong>: la gramática se mantiene siempre igual.</p>
+      <div class="ap-legend">
+        <span class="ap-leg t-pc">Passé composé · acción puntual completada</span>
+        <span class="ap-leg t-imp">Imparfait · estado o descripción</span>
+      </div>
+      <div class="anec-tabs">
+        <button class="anec-tab active" onclick="selectThemeAnec(1, this)">1 · Travail / ville</button>
+        <button class="anec-tab" onclick="selectThemeAnec(2, this)">2 · Études</button>
+        <button class="anec-tab" onclick="selectThemeAnec(3, this)">3 · Voyage</button>
+        <button class="anec-tab" onclick="selectThemeAnec(4, this)">4 · Logement</button>
+        <button class="anec-tab" onclick="selectThemeAnec(5, this)">5 · Écologie</button>
+        <button class="anec-tab" onclick="selectThemeAnec(6, this)">6 · Technologie</button>
+      </div>
+
+      <div class="anec-theme active" data-theme-anec="1">
+        <div class="ta-head"><span class="ta-num">1</span><div><div class="ta-title">Changement de travail / ville</div><div class="ta-meta">~38 mots</div></div></div>
+        <p class="ta-text">Il y a deux ans, <span class="t-pc">j'ai quitté</span> mon travail pour m'installer dans une autre ville. <span class="t-imp">J'avais</span> peur de ne pas m'adapter à ce nouvel environnement, mais <span class="t-pc">j'ai trouvé</span> un emploi en moins d'un mois et <span class="t-pc">je me suis fait</span> de nouveaux amis très rapidement.</p>
+        <div class="ta-use"><strong>Útil para:</strong> cambio de trabajo, mudanza, nueva ciudad, expatriación</div>
+      </div>
+
+      <div class="anec-theme" data-theme-anec="2">
+        <div class="ta-head"><span class="ta-num">2</span><div><div class="ta-title">Études / formation</div><div class="ta-meta">~36 mots</div></div></div>
+        <p class="ta-text">Quand <span class="t-pc">j'ai décidé</span> de reprendre mes études à 30 ans, tout le monde <span class="t-imp">pensait</span> que <span class="t-imp">c'était</span> une mauvaise idée. Pourtant, non seulement <span class="t-pc">j'ai réussi</span> mes examens, mais <span class="t-pc">j'ai aussi découvert</span> une vraie passion pour le droit.</p>
+        <div class="ta-use"><strong>Útil para:</strong> retomar estudios, cambio de carrera, formación adulta</div>
+      </div>
+
+      <div class="anec-theme" data-theme-anec="3">
+        <div class="ta-head"><span class="ta-num">3</span><div><div class="ta-title">Voyage / expatriation</div><div class="ta-meta">~37 mots</div></div></div>
+        <p class="ta-text"><span class="t-pc">J'ai vécu</span> à l'étranger pendant deux ans et, au début, <span class="t-imp">je ne parlais</span> pas bien la langue locale. Mais grâce à cette expérience, <span class="t-pc">j'ai appris</span> à m'adapter rapidement et <span class="t-pc">j'ai gagné</span> une vraie confiance en moi.</p>
+        <div class="ta-use"><strong>Útil para:</strong> vivir en el extranjero, aprender idiomas, adaptación cultural</div>
+      </div>
+
+      <div class="anec-theme" data-theme-anec="4">
+        <div class="ta-head"><span class="ta-num">4</span><div><div class="ta-title">Logement / colocation</div><div class="ta-meta">~35 mots</div></div></div>
+        <p class="ta-text">Quand <span class="t-pc">j'ai cherché</span> un appartement dans une grande ville pour la première fois, <span class="t-imp">c'était</span> vraiment stressant. Même si le processus <span class="t-imp">était</span> long, <span class="t-pc">j'ai finalement trouvé</span> une colocation parfaite qui <span class="t-pc">m'a permis</span> de faire des économies.</p>
+        <div class="ta-use"><strong>Útil para:</strong> búsqueda de piso, compartir piso, independencia económica</div>
+      </div>
+
+      <div class="anec-theme" data-theme-anec="5">
+        <div class="ta-head"><span class="ta-num">5</span><div><div class="ta-title">Écologie / mode de vie</div><div class="ta-meta">~36 mots</div></div></div>
+        <p class="ta-text">Il y a quelques années, <span class="t-pc">j'ai décidé</span> de changer mes habitudes de consommation. Au début, <span class="t-imp">je trouvais</span> ça difficile, mais peu à peu <span class="t-pc">j'ai réalisé</span> que ces petits changements <span class="t-pc">ont eu</span> un vrai impact sur ma façon de vivre.</p>
+        <div class="ta-use"><strong>Útil para:</strong> ecología, consumo responsable, cambio de hábitos</div>
+      </div>
+
+      <div class="anec-theme" data-theme-anec="6">
+        <div class="ta-head"><span class="ta-num">6</span><div><div class="ta-title">Technologie / réseaux sociaux</div><div class="ta-meta">~34 mots</div></div></div>
+        <p class="ta-text"><span class="t-pc">J'ai décidé</span> un jour d'arrêter d'utiliser les réseaux sociaux pendant un mois. <span class="t-imp">Je pensais</span> que ce serait impossible, mais <span class="t-pc">j'ai découvert</span> que <span class="t-imp">j'avais</span> beaucoup plus de temps libre et <span class="t-pc">je me suis senti</span> beaucoup mieux.</p>
+        <div class="ta-use"><strong>Útil para:</strong> redes sociales, tecnología, bienestar digital</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="ico">💡</span><strong>Cómo usarlas:</strong> cada anécdota está calibrada para encajar sin costuras en la plantilla y cubre los temas más frecuentes del DELF B1. <strong>1)</strong> Adapta el tema, no la estructura — la gramática se mantiene. <strong>2)</strong> La anécdota 2 es la más potente gramaticalmente (incluye <em>non seulement… mais aussi</em>, que ya aparece en la plantilla fija): si la usas, quita una de las dos instancias para no repetir. <strong>3)</strong> El contraste <em>passé composé</em> (verde, acción puntual) vs <em>imparfait</em> (naranja, estado/descripción) es uno de los criterios de corrección del B1.
     </div>
   </div>
 
@@ -1943,7 +2023,7 @@ document.querySelectorAll('.paper').forEach(paper => {
   header.appendChild(toggle);
   header.addEventListener('click', () => paper.classList.toggle('collapsed'));
   paper.insertBefore(header, paper.firstChild);
-  paper.classList.add('collapsed');
+  if(!paper.classList.contains('paper-open')) paper.classList.add('collapsed');
 });
 
 /* Set section colors + item counts */
@@ -1982,6 +2062,17 @@ function updateFontSize(pct){
     updateFontSize(saved);
   }
 })();
+
+/* PLANTILLA FINAL — selector de anécdotas temáticas */
+function selectThemeAnec(idx, btn){
+  const picker = btn.closest('.anec-picker');
+  if(!picker) return;
+  picker.querySelectorAll('.anec-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  picker.querySelectorAll('.anec-theme').forEach(p => {
+    p.classList.toggle('active', p.dataset.themeAnec === String(idx));
+  });
+}
 
 /* ANECDOTES — highlight toggle + translation popup */
 (function(){
