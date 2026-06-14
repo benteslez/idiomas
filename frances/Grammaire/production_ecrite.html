@@ -16,6 +16,16 @@
   --tab-formal:#1d4ed8;     --tab-formal-soft:#eff6ff;     --tab-formal-mid:#3b82f6;
   --tab-informal:#15803d;   --tab-informal-soft:#ecfdf5;   --tab-informal-mid:#22c55e;
   --tab-essay:#b45309;      --tab-essay-soft:#fffbeb;      --tab-essay-mid:#f59e0b;
+  --tab-courrier:#7c3aed;   --tab-courrier-soft:#f5f3ff;   --tab-courrier-mid:#a78bfa;
+  --tab-anec:#be123c;       --tab-anec-soft:#fff1f2;       --tab-anec-mid:#fb7185;
+  /* Anecdotes — tense/structure highlight palette */
+  --a-conn:#b45309; --a-conn-bg:#fffbeb; --a-conn-bd:#fde68a;
+  --a-imp:#1d4ed8;  --a-imp-bg:#eff6ff;  --a-imp-bd:#bfdbfe;
+  --a-pc:#be185d;   --a-pc-bg:#fdf2f8;   --a-pc-bd:#fbcfe8;
+  --a-pqp:#0e7490;  --a-pqp-bg:#ecfeff;  --a-pqp-bd:#a5f3fc;
+  --a-subj:#7c3aed; --a-subj-bg:#f5f3ff; --a-subj-bd:#ddd6fe;
+  --a-fut:#15803d;  --a-fut-bg:#ecfdf5;  --a-fut-bd:#bbf7d0;
+  --a-cond:#b91c1c; --a-cond-bg:#fef2f2; --a-cond-bd:#fecaca;
   /* Legacy aliases */
   --accent:var(--primary); --accent-light:var(--primary-soft); --accent-mid:var(--primary-mid);
   /* Neutrals */
@@ -54,6 +64,15 @@
   --tab-formal:#60a5fa;     --tab-formal-soft:rgba(96,165,250,.12);   --tab-formal-mid:#3b82f6;
   --tab-informal:#4ade80;   --tab-informal-soft:rgba(74,222,128,.12); --tab-informal-mid:#22c55e;
   --tab-essay:#fbbf24;      --tab-essay-soft:rgba(251,191,36,.12);    --tab-essay-mid:#f59e0b;
+  --tab-courrier:#c4b5fd;   --tab-courrier-soft:rgba(167,139,250,.14); --tab-courrier-mid:#a78bfa;
+  --tab-anec:#fb7185;       --tab-anec-soft:rgba(251,113,133,.14);     --tab-anec-mid:#f43f5e;
+  --a-conn:#fbbf24; --a-conn-bg:rgba(251,191,36,.10); --a-conn-bd:rgba(251,191,36,.30);
+  --a-imp:#60a5fa;  --a-imp-bg:rgba(96,165,250,.10);  --a-imp-bd:rgba(96,165,250,.30);
+  --a-pc:#f472b6;   --a-pc-bg:rgba(244,114,182,.10);  --a-pc-bd:rgba(244,114,182,.30);
+  --a-pqp:#22d3ee;  --a-pqp-bg:rgba(34,211,238,.10);  --a-pqp-bd:rgba(34,211,238,.30);
+  --a-subj:#a78bfa; --a-subj-bg:rgba(167,139,250,.10);--a-subj-bd:rgba(167,139,250,.30);
+  --a-fut:#4ade80;  --a-fut-bg:rgba(74,222,128,.10);  --a-fut-bd:rgba(74,222,128,.30);
+  --a-cond:#f87171; --a-cond-bg:rgba(248,113,113,.10);--a-cond-bd:rgba(248,113,113,.30);
   --bg:#0a0a0b; --bg-elevated:#131316; --card:#18181b;
   --border:#27272a; --border-strong:#3f3f46;
   --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
@@ -113,6 +132,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .tab[data-tab="formal"]{--tab-c:var(--tab-formal);}
 .tab[data-tab="informal"]{--tab-c:var(--tab-informal);}
 .tab[data-tab="essay"]{--tab-c:var(--tab-essay);}
+.tab[data-tab="courrier"]{--tab-c:var(--tab-courrier);}
+.tab[data-tab="anecdotes"]{--tab-c:var(--tab-anec);}
 .tab .ico{font-size:1rem;line-height:1;}
 
 /* MAIN */
@@ -255,6 +276,69 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .tab-panel[data-tab="formal"]{--tab-c:var(--tab-formal);--tab-c-soft:var(--tab-formal-soft);}
 .tab-panel[data-tab="informal"]{--tab-c:var(--tab-informal);--tab-c-soft:var(--tab-informal-soft);}
 .tab-panel[data-tab="essay"]{--tab-c:var(--tab-essay);--tab-c-soft:var(--tab-essay-soft);}
+.tab-panel[data-tab="courrier"]{--tab-c:var(--tab-courrier);--tab-c-soft:var(--tab-courrier-soft);}
+.tab-panel[data-tab="anecdotes"]{--tab-c:var(--tab-anec);--tab-c-soft:var(--tab-anec-soft);}
+
+/* ===== ANECDOTES — highlight + reader ===== */
+.anec-controls{display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:space-between;margin-bottom:22px;padding:13px 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-xs);}
+.anec-legend{display:flex;flex-wrap:wrap;gap:7px;}
+.anec-leg{font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:var(--radius-pill);border:1px solid;}
+.anec-leg.a-conn{background:var(--a-conn-bg);color:var(--a-conn);border-color:var(--a-conn-bd);}
+.anec-leg.a-imp {background:var(--a-imp-bg); color:var(--a-imp); border-color:var(--a-imp-bd);}
+.anec-leg.a-pc  {background:var(--a-pc-bg);  color:var(--a-pc);  border-color:var(--a-pc-bd);}
+.anec-leg.a-pqp {background:var(--a-pqp-bg); color:var(--a-pqp); border-color:var(--a-pqp-bd);}
+.anec-leg.a-subj{background:var(--a-subj-bg);color:var(--a-subj);border-color:var(--a-subj-bd);}
+.anec-leg.a-fut {background:var(--a-fut-bg); color:var(--a-fut); border-color:var(--a-fut-bd);}
+.anec-leg.a-cond{background:var(--a-cond-bg);color:var(--a-cond);border-color:var(--a-cond-bd);}
+
+.anec-toggle-wrap{display:flex;align-items:center;gap:9px;flex-shrink:0;}
+.toggle-text{font-size:.76rem;font-weight:600;color:var(--text2);user-select:none;}
+.toggle-state{font-size:.62rem;font-weight:700;letter-spacing:.14em;color:var(--text3);text-transform:uppercase;min-width:22px;user-select:none;transition:color var(--t-base) var(--ease);}
+.toggle-state.on{color:var(--tab-c,var(--primary));}
+.toggle-switch{position:relative;width:46px;height:25px;background:var(--border-strong);border:0;border-radius:var(--radius-pill);cursor:pointer;transition:background var(--t-base) var(--ease);padding:0;flex-shrink:0;}
+.toggle-switch.on{background:var(--tab-c,var(--primary));}
+.toggle-thumb{position:absolute;top:2px;left:2px;width:21px;height:21px;background:#fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.28);transition:transform var(--t-base) var(--ease-out);}
+.toggle-switch.on .toggle-thumb{transform:translateX(21px);}
+
+.anec-card{background:var(--paper);border:1px solid var(--paper-border);border-radius:var(--radius-md);padding:24px 26px;margin-bottom:16px;box-shadow:var(--shadow-sm);position:relative;}
+.anec-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--tab-c,var(--primary)),transparent);border-radius:var(--radius-md) var(--radius-md) 0 0;}
+.anec-title{font-family:'Fraunces',Georgia,serif;font-size:1.15rem;font-weight:600;color:var(--tab-c,var(--primary));margin-bottom:6px;letter-spacing:-.01em;}
+.anec-meta{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:18px;}
+.anec-body{font-size:1rem;line-height:1.95;color:var(--text);}
+.anec-body p{margin-bottom:14px;}
+.anec-body p:last-child{margin-bottom:0;}
+
+.anec-body .a-conn,.anec-body .a-imp,.anec-body .a-pc,.anec-body .a-pqp,.anec-body .a-subj,.anec-body .a-fut,.anec-body .a-cond{
+  padding:1px 5px;border-radius:var(--radius-xs);border-bottom:2px solid;cursor:pointer;
+  transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease),border-color var(--t-base) var(--ease),transform var(--t-fast) var(--ease);
+}
+.anec-body .a-conn:hover,.anec-body .a-imp:hover,.anec-body .a-pc:hover,.anec-body .a-pqp:hover,.anec-body .a-subj:hover,.anec-body .a-fut:hover,.anec-body .a-cond:hover{transform:translateY(-1px);}
+.anec-body .a-conn{background:var(--a-conn-bg);color:var(--a-conn);border-bottom-color:var(--a-conn-bd);}
+.anec-body .a-imp {background:var(--a-imp-bg); color:var(--a-imp); border-bottom-color:var(--a-imp-bd);}
+.anec-body .a-pc  {background:var(--a-pc-bg);  color:var(--a-pc);  border-bottom-color:var(--a-pc-bd);font-weight:600;}
+.anec-body .a-pqp {background:var(--a-pqp-bg); color:var(--a-pqp); border-bottom-color:var(--a-pqp-bd);font-weight:600;}
+.anec-body .a-subj{background:var(--a-subj-bg);color:var(--a-subj);border-bottom-color:var(--a-subj-bd);font-weight:600;}
+.anec-body .a-fut {background:var(--a-fut-bg); color:var(--a-fut); border-bottom-color:var(--a-fut-bd);font-weight:600;}
+.anec-body .a-cond{background:var(--a-cond-bg);color:var(--a-cond);border-bottom-color:var(--a-cond-bd);font-weight:600;}
+
+#anecdotes.no-marks .anec-body .a-conn,#anecdotes.no-marks .anec-body .a-imp,#anecdotes.no-marks .anec-body .a-pc,#anecdotes.no-marks .anec-body .a-pqp,#anecdotes.no-marks .anec-body .a-subj,#anecdotes.no-marks .anec-body .a-fut,#anecdotes.no-marks .anec-body .a-cond{
+  background:transparent;color:inherit;border-bottom:0;font-weight:inherit;padding:0;cursor:text;transform:none;
+}
+
+.anec-popup{position:absolute;z-index:200;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow);padding:15px 36px 16px 18px;max-width:340px;min-width:240px;font-family:inherit;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity var(--t-base) var(--ease),transform var(--t-base) var(--ease);}
+.anec-popup.show{opacity:1;transform:translateY(0);pointer-events:auto;}
+.anec-popup .ap-cat{display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;padding:3px 10px;border-radius:var(--radius-pill);border:1px solid;}
+.anec-popup .ap-cat.cat-conn{background:var(--a-conn-bg);color:var(--a-conn);border-color:var(--a-conn-bd);}
+.anec-popup .ap-cat.cat-imp {background:var(--a-imp-bg); color:var(--a-imp); border-color:var(--a-imp-bd);}
+.anec-popup .ap-cat.cat-pc  {background:var(--a-pc-bg);  color:var(--a-pc);  border-color:var(--a-pc-bd);}
+.anec-popup .ap-cat.cat-pqp {background:var(--a-pqp-bg); color:var(--a-pqp); border-color:var(--a-pqp-bd);}
+.anec-popup .ap-cat.cat-subj{background:var(--a-subj-bg);color:var(--a-subj);border-color:var(--a-subj-bd);}
+.anec-popup .ap-cat.cat-fut {background:var(--a-fut-bg); color:var(--a-fut); border-color:var(--a-fut-bd);}
+.anec-popup .ap-cat.cat-cond{background:var(--a-cond-bg);color:var(--a-cond);border-color:var(--a-cond-bd);}
+.anec-popup .ap-fr{font-family:'Fraunces',Georgia,serif;font-size:.95rem;color:var(--text2);font-style:italic;margin-bottom:6px;line-height:1.4;}
+.anec-popup .ap-es{font-size:1rem;color:var(--text);font-weight:500;line-height:1.5;}
+.anec-popup .ap-close{position:absolute;top:8px;right:8px;width:26px;height:26px;border:0;background:transparent;color:var(--text3);cursor:pointer;font-size:.95rem;line-height:1;border-radius:var(--radius-pill);transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);display:flex;align-items:center;justify-content:center;}
+.anec-popup .ap-close:hover{background:var(--bg-elevated);color:var(--text);}
 
 @media (max-width: 600px){
   .paper{padding:20px 18px;}
@@ -281,7 +365,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
       <span class="header-tag">DELF B1–B2</span>
     </div>
     <p class="header-sub">
-      Toolkit completo para la <strong>producción escrita</strong> · <strong>Lettre formelle</strong> · <strong>Message informel</strong> · <strong>Essai argumentatif</strong>
+      Toolkit completo para la <strong>producción escrita</strong> · <strong>Lettre formelle</strong> · <strong>Message informel</strong> · <strong>Essai argumentatif</strong> · <strong>Courrier des lecteurs</strong> · <strong>Anecdotes du passé</strong>
     </p>
   </div>
 </header>
@@ -296,6 +380,12 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
     </button>
     <button class="tab" data-tab="essay" onclick="showTab('essay', this)">
       <span class="ico">📝</span><span>Essai</span>
+    </button>
+    <button class="tab" data-tab="courrier" onclick="showTab('courrier', this)">
+      <span class="ico">📰</span><span>Courrier des lecteurs</span>
+    </button>
+    <button class="tab" data-tab="anecdotes" onclick="showTab('anecdotes', this)">
+      <span class="ico">🕰️</span><span>Anecdotes du passé</span>
     </button>
   </div>
 </div>
@@ -1080,6 +1170,32 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
     </div>
   </div>
 
+  <!-- H. PLANTILLA FINAL -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">📋</div>
+      <div>
+        <div class="section-title">H. Plantilla final · Modèle à compléter</div>
+        <div class="section-desc">Esqueleto listo para rellenar — responder a un amigo que pide consejo</div>
+      </div>
+    </div>
+    <div class="papers">
+      <article class="paper">
+        <h4 class="paper-title">Plantilla final · Conseiller un ami</h4>
+        <div class="paper-meta">Estructura completa con huecos [ ] para adaptar a cualquier tema · ~160 mots</div>
+        <div class="paper-body">
+          <p><span class="k-open">Salut XXX !</span></p>
+          <p><span class="label">Ouverture</span>Je suis vraiment content <span class="k-key">que tu m'aies demandé</span> mon avis — <span class="k-open">ça me fait plaisir que tu penses à moi</span> ! Ta situation m'a beaucoup fait réfléchir et je vais essayer de t'aider du mieux que je peux.</p>
+          <p><span class="label">Conseil</span><span class="k-time">À mon avis,</span> tu devrais vraiment saisir cette chance — <span class="k-key">ce serait dommage de la laisser passer.</span> Je comprends bien tes inquiétudes concernant [problème 1], <span class="k-contrast">mais</span> je suis sûr que tu t'en sortiras sans problème.</p>
+          <p><span class="label">Arguments</span><span class="k-seq">D'abord,</span> … <span class="k-seq">Ensuite,</span> … <span class="k-add">Par ailleurs,</span> …</p>
+          <p><span class="label">Anecdote</span>Moi aussi, j'ai vécu une situation similaire : [anécdota personal — 1 o 2 frases]. <span class="k-time">Au début</span> j'étais un peu inquiet, <span class="k-contrast">mais</span> cette expérience m'a <span class="k-add">non seulement</span> aidé à voir les choses différemment, <span class="k-add">mais aussi</span> appris beaucoup sur moi-même. Et je ne regrette rien !</p>
+          <p><span class="label">Clôture</span><span class="k-concess">Quoi que tu décides,</span> sache que je serai là pour toi. <span class="k-key">Je suis sûr que tu feras le bon choix !</span></p>
+          <p><span class="k-close">À très vite !</span><br>[Prénom]</p>
+        </div>
+      </article>
+    </div>
+  </div>
+
 </section>
 
 <!-- ==================================================================== -->
@@ -1454,6 +1570,326 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 
 </section>
 
+<!-- ==================================================================== -->
+<!-- ==================== TAB 4: COURRIER DES LECTEURS ================ -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="courrier" data-tab="courrier">
+
+  <div class="intro">
+    <h3>Courrier des lecteurs · Carta a la redacción</h3>
+    <p>El <strong>courrier des lecteurs</strong> (carta al director / reacción a un testimonio publicado) es un género híbrido de la <strong>production écrite B2–C1</strong>. Reacciona a un testimonio o artículo combinando tres voces equilibradas: una <strong>réaction émotionnelle</strong>, una <strong>prise de position claire</strong> y una <strong>argumentation nuancée</strong>. A diferencia del essai puro, hay que <em>sentir</em> antes de razonar — pero sigue siendo una carta formal a una redacción: <em>vouvoiement</em>, registro <em>soutenu</em>, nunca empezar con <em>Je</em>.</p>
+  </div>
+
+  <div class="callout">
+    <span class="ico">⚠️</span><strong>El error capital:</strong> saltar directamente a la opinión sin pasar por la emoción, o quedarse en la emoción superficial (<em>«ça me choque beaucoup»</em>) sin argumentar. El examinador busca las <strong>tres dimensiones articuladas</strong>: émotion → position → argumentation nuancée. Extensión: <strong>250–350 palabras</strong> (B2) · 300–400 (C1).
+  </div>
+
+  <!-- A. STRUCTURE BLUEPRINT -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-struct)">📐</div>
+      <div>
+        <div class="section-title">A. Structure du genre · Estructura ideal</div>
+        <div class="section-desc">En-tête + 5 párrafos + clôture, de lo afectivo a lo propositivo</div>
+      </div>
+    </div>
+    <div class="blueprint">
+      <div class="step">
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <h5>En-tête · Identificación + anuncio</h5>
+          <p>Identifícate y anuncia tu reacción al testimonio. Nunca empieces con <em>Je</em>: arranca con <em>C'est avec… que…</em> o <em>En tant que…</em>.</p>
+          <div class="step-phrases">
+            <span>Madame, Monsieur,</span>
+            <span>C'est avec une grande émotion que j'ai lu…</span>
+            <span>En tant que lecteur·rice…</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <h5>Réaction émotionnelle + empathie</h5>
+          <p>Di cómo te afectó y muestra que entiendes a ambas partes antes de posicionarte. Esto te da credibilidad.</p>
+          <div class="step-phrases">
+            <span>Ce témoignage m'a profondément interpellé(e)…</span>
+            <span>D'un côté… De l'autre…</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <h5>Prise de position claire + argument principal</h5>
+          <p>El giro <em>Cela dit, à mon sens…</em> marca el paso de la empatía a la posición. Tras <em>il est injuste que</em> → subjonctif.</p>
+          <div class="step-phrases">
+            <span>Cela dit, à mon sens…</span>
+            <span>Force est de constater que…</span>
+            <span>Il est difficile d'accepter que… + subj.</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">4</span>
+        <div class="step-body">
+          <h5>Exemple ou expérience personnelle</h5>
+          <p>Ancla el argumento en lo concreto. <em>À titre personnel</em> introduce la experiencia sin caer en lo anecdótico.</p>
+          <div class="step-phrases">
+            <span>À titre personnel, j'ai déjà été confronté(e) à…</span>
+            <span>Je peux témoigner que…</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">5</span>
+        <div class="step-body">
+          <h5>Nuance + proposition</h5>
+          <p><em>Pour autant</em> introduce la matización; <em>je ne pense pas qu'il faille</em> e <em>il serait utile que…</em> → subjonctif. Evita el maniqueísmo y abre a una solución.</p>
+          <div class="step-phrases">
+            <span>Pour autant, je ne pense pas qu'il faille…</span>
+            <span>Il conviendrait de…</span>
+            <span>Il serait souhaitable que… + subj.</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">6</span>
+        <div class="step-body">
+          <h5>Clôture · Ouverture + fórmula cortés</h5>
+          <p>Eleva el caso particular a una idea general (<em>ouverture</em>) y cierra con una fórmula formal.</p>
+          <div class="step-phrases">
+            <span>En conclusion, cette situation illustre…</span>
+            <span>Je vous adresse mes cordiales salutations.</span>
+          </div>
+        </div>
+      </div>
+      <div class="blueprint-footer">
+        <span class="footer-ico">📏</span>
+        <span><strong>Total:</strong> en-tête + 5 párrafos + clôture · 250–350 palabras (B2) · registro formal soutenu, vouvoiement · al menos <strong>2 subjonctifs</strong>, una concesión <em>D'un côté… De l'autre…</em> y una <em>ouverture</em> final</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- B. BANQUE DE PHRASES PAR FONCTION -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-key)">⭐</div>
+      <div>
+        <div class="section-title">B. Banque de phrases par fonction</div>
+        <div class="section-desc">Fórmulas clasificadas por las tres voces del género</div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="item" style="--section-c:var(--c-emph)">
+        <div class="item-head"><span class="item-term">Réaction émotionnelle</span><span class="item-trans">emoción</span></div>
+        <ul class="item-list">
+          <li>J'ai lu cet article avec une profonde <strong>indignation</strong>…</li>
+          <li>Je n'aurais jamais imaginé qu'une telle situation <strong>puisse</strong> exister… <em>(+ subj.)</em></li>
+          <li>Ce témoignage m'a véritablement <strong>préoccupé(e)</strong>, car…</li>
+          <li>C'est avec une certaine <strong>stupéfaction</strong> que j'ai découvert…</li>
+          <li>Ce récit m'a profondément <strong>interpellé(e) / bouleversé(e)</strong>…</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-key)">
+        <div class="item-head"><span class="item-term">Prise de position</span><span class="item-trans">posición</span></div>
+        <ul class="item-list">
+          <li>Il me semble évident que… / À mon sens…</li>
+          <li>Je suis convaincu(e) que…</li>
+          <li>Il est <strong>inacceptable que</strong> + subj.</li>
+          <li>Sans vouloir généraliser… / Tout en comprenant que…</li>
+          <li>Force est de constater que… / On ne peut que déplorer que + subj.</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-cause)">
+        <div class="item-head"><span class="item-term">Argumentation</span><span class="item-trans">conectores</span></div>
+        <ul class="item-list">
+          <li><strong>Cause:</strong> En effet / Car / Puisque / Étant donné que</li>
+          <li><strong>Conséquence:</strong> C'est pourquoi / Par conséquent / De ce fait</li>
+          <li><strong>Concession:</strong> Certes,… mais… / Il est vrai que… cependant…</li>
+          <li><strong>Opposition:</strong> Or / Pourtant / Néanmoins / Il n'en reste pas moins que</li>
+        </ul>
+      </div>
+      <div class="item" style="--section-c:var(--c-purpose)">
+        <div class="item-head"><span class="item-term">Proposition / action</span><span class="item-trans">propuesta</span></div>
+        <ul class="item-list">
+          <li>Il me semblerait utile de… / Il conviendrait de…</li>
+          <li>Il serait souhaitable que… + subj.</li>
+          <li>Il est grand temps que… + subj.</li>
+          <li>J'espère sincèrement que… / Je reste optimiste quant à…</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- C. MODÈLES COMMENTÉS -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-model)">📄</div>
+      <div>
+        <div class="section-title">C. Modèle commenté + cas pratique</div>
+        <div class="section-desc">Plantilla bloque por bloque y un caso real · frases clave coloreadas</div>
+      </div>
+    </div>
+    <div class="papers">
+
+      <!-- MODEL 1: Plantilla commentée -->
+      <article class="paper">
+        <h4 class="paper-title">Modèle 1 · Plantilla complète commentée</h4>
+        <div class="paper-meta">Las palabras entre [corchetes] se adaptan al tema concreto</div>
+        <div class="paper-body">
+          <p>Madame, Monsieur,</p>
+          <p><span class="label">En-tête</span>C'est avec une grande <span class="k-emph">[émotion / indignation / inquiétude]</span> que j'ai lu le témoignage publié dans votre journal au sujet de [tema]. <span class="k-emph">En tant que [lecteur·rice / citoyen·ne]</span>, je me sens concerné(e) par cette situation et je souhaitais vous faire part de ma réaction.</p>
+          <p><span class="label">Réaction + empathie</span>Je dois admettre que ce témoignage m'a <span class="k-emph">touché(e)</span>. <span class="k-emph">D'un côté,</span> je comprends tout à fait que [partie A] se sente [frustré(e) / lésé(e)] : [razón]. <span class="k-emph">De l'autre,</span> il est difficile de nier que [partie B] a également ses raisons, et qu'il ne s'agit pas d'une situation simple à trancher.</p>
+          <p><span class="label">Prise de position</span><span class="k-key">Cela dit, à mon sens,</span> [il me semble injuste que… / force est de constater que…]. En effet, [argumento principal]. On ne peut pas, selon moi, [tolérer / ignorer] le fait que [desarrollo].</p>
+          <p><span class="label">Exemple personnel</span>À titre personnel, j'ai déjà été <span class="k-cause">confronté(e)</span> à [situación paralela], et je peux témoigner que [lo que aprendiste]. Cette expérience m'a appris qu'il est parfois difficile de [inf.], mais que cela reste nécessaire.</p>
+          <p><span class="label">Nuance + proposition</span><span class="k-cause">Pour autant,</span> je ne pense pas qu'il <span class="k-cause">faille</span> [radicaliser les positions]. Il me semble qu'une solution équilibrée passerait par [propuesta]. Peut-être serait-il utile qu'un dialogue <span class="k-cause">soit instauré</span>, afin que [resultado deseable].</p>
+          <p><span class="label">Clôture</span>En conclusion, cette situation illustre bien <span class="k-key">[la complexité du vivre-ensemble / la nécessité d'un cadre légal clair]</span>. J'espère que votre journal continuera à donner la parole à ces témoignages qui nous invitent à réfléchir ensemble.</p>
+          <p><span class="k-close">Dans l'attente d'une suite à cette affaire, je vous adresse mes cordiales salutations.</span><br>[Prénom / Initiales]</p>
+        </div>
+      </article>
+
+      <!-- MODEL 2: Cas pratique -->
+      <article class="paper">
+        <h4 class="paper-title">Modèle 2 · Cas pratique — le chant des coqs</h4>
+        <div class="paper-meta">Conflicto de vecindad: tradición rural vs. confort urbano · ~190 mots</div>
+        <div class="paper-body">
+          <p>Madame, Monsieur,</p>
+          <p><span class="label">En-tête + émotion</span>C'est avec une certaine <span class="k-emph">stupéfaction</span> que j'ai lu cet article concernant les conflits de voisinage autour du chant des coqs. <span class="k-emph">En tant que</span> lecteur attaché à la vie rurale, je me sens directement concerné par ce débat.</p>
+          <p><span class="label">Empathie</span><span class="k-emph">D'un côté,</span> je comprends qu'un nouvel habitant venu de la ville soit gêné par un bruit auquel il n'est pas habitué. <span class="k-emph">De l'autre,</span> il est difficile de nier que ces animaux faisaient partie du paysage bien avant son arrivée.</p>
+          <p><span class="label">Prise de position</span><span class="k-key">À mon sens,</span> il est difficile de condamner des pratiques agricoles ancestrales au nom d'un confort urbain récent. En effet, la campagne a ses sons, ses odeurs et ses rythmes, et c'est précisément ce qui en fait la valeur.</p>
+          <p><span class="label">Nuance</span>Certes, la liberté de chacun s'arrête là où commence celle de l'autre — mais encore faut-il définir ce qu'est une nuisance raisonnable. <span class="k-cause">Pour autant,</span> je ne crois pas qu'il <span class="k-cause">faille</span> opposer systématiquement les uns aux autres.</p>
+          <p><span class="label">Proposition + clôture</span>Il <span class="k-cause">conviendrait</span> peut-être que les communes concernées <span class="k-cause">établissent</span> un dialogue entre résidents et exploitants, plutôt que de laisser la justice trancher. Cette affaire illustre bien la difficile coexistence entre ville et campagne.</p>
+          <p><span class="k-close">Je vous adresse mes cordiales salutations.</span><br>R. M.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- D. CONSEILS & PIÈGES -->
+  <div class="section collapsed">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon" style="background:var(--c-tip)">💡</div>
+      <div>
+        <div class="section-title">D. Conseils &amp; pièges fréquents</div>
+        <div class="section-desc">Trampas de alta frecuencia entre hispanohablantes</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>«Je suis d'accord avec cette situation»</h5>
+          <p>Una <em>situation</em> no se «aprueba». ✗ <em>Je suis d'accord avec cette situation</em> → ✓ <em>Je comprends cette situation / Je partage le point de vue exprimé.</em> <em>Être d'accord avec</em> se aplica a una opinión, no a un estado de cosas. Calco del español.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>«Selon moi, je pense que…» — redundancia</h5>
+          <p>✗ <em>Selon moi, je pense que…</em> → ✓ <em>Selon moi, …</em> o <em>Je pense que…</em>. Ambos expresan subjetividad: usar los dos juntos es pleonástico. Mismo error con <em>À mon avis, je crois que…</em></p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Indicativo tras «il faut que»</h5>
+          <p>✗ <em>Il faut que les gens savent…</em> → ✓ <em>Il faut que les gens <strong>sachent</strong>…</em>. Subjonctif obligatorio tras <em>il faut que, il est important que, il serait souhaitable que</em>. El error de subjuntivo más sistemático del género.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Quedarse en la emoción superficial</h5>
+          <p>✗ <em>Ça me choque beaucoup, c'est horrible et triste.</em> → ✓ <em>Ce témoignage m'a profondément interpellé(e). En effet, il met en lumière une tension réelle…</em> La emoción debe abrir paso a un <strong>desarrollo argumentativo</strong>, no quedarse sola (eso es B1).</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Empezar la carta con «Je»</h5>
+          <p>✗ <em>Je suis très choqué(e) par ce témoignage…</em> → ✓ <em>C'est avec une grande émotion que j'ai lu…</em> o <em>En tant que lecteur fidèle…</em> Reserva el <em>je</em> para el interior de la carta.</p>
+        </div>
+      </div>
+      <div class="tip warn">
+        <div class="tip-icon">!</div>
+        <div class="tip-body">
+          <h5>Tutear o caer en registro informal</h5>
+          <p>✗ <em>Franchement, votre article est carrément génial !</em> → ✓ <em>Je tiens à saluer la qualité de votre article.</em> Adverbios familiares (<em>franchement, carrément, trop</em>) y exclamaciones rompen el registro <em>soutenu</em>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==================== TAB 5: ANECDOTES DU PASSÉ ================== -->
+<!-- ==================================================================== -->
+<section class="tab-panel" id="anecdotes" data-tab="anecdotes">
+
+  <div class="intro">
+    <h3>Anecdotes du passé · Anécdotas del pasado</h3>
+    <p>Dos relatos modelo en pasado para estudiar el juego de tiempos del francés: el <strong>imparfait</strong> (descripción, hábito, situación en curso), el <strong>passé composé</strong> (acción puntual acabada), el <strong>plus-que-parfait</strong> (anterioridad), más subjonctif, futur y conditionnel. <strong>Toca cualquier resaltado</strong> para ver el tiempo verbal y su traducción, o desactiva los resaltados para leer el texto limpio.</p>
+  </div>
+
+  <div class="anec-controls">
+    <div class="anec-legend">
+      <span class="anec-leg a-conn">Connecteurs</span>
+      <span class="anec-leg a-imp">Imparfait</span>
+      <span class="anec-leg a-pc">Passé composé</span>
+      <span class="anec-leg a-pqp">Plus-que-parfait</span>
+      <span class="anec-leg a-subj">Subjonctif</span>
+      <span class="anec-leg a-fut">Futur</span>
+      <span class="anec-leg a-cond">Conditionnel</span>
+    </div>
+    <div class="anec-toggle-wrap">
+      <span class="toggle-text">Resaltados</span>
+      <button id="anec-hl-toggle" class="toggle-switch on" role="switch" aria-checked="true" aria-label="Activar o desactivar resaltados">
+        <span class="toggle-thumb"></span>
+      </button>
+      <span class="toggle-state on" id="anec-hl-state">ON</span>
+    </div>
+  </div>
+
+  <!-- ANECDOTE 1 -->
+  <article class="anec-card">
+    <h4 class="anec-title">Le robinet de mon grand-père</h4>
+    <div class="anec-meta">DELF B1 · Récit au passé · imparfait · plus-que-parfait · passé composé</div>
+    <div class="anec-body">
+      <p><span class="a-conn" data-tip="cuando — introduce el marco temporal del recuerdo">Quand</span> <span class="a-imp" data-tip="j'étais — imparfait de 'être': descripción en el pasado (yo era)">j'étais</span> petit, <span class="a-imp" data-tip="je passais — imparfait: hábito repetido en el pasado (pasaba)">je passais</span> tous les étés à la campagne chez mes grands-parents. <span class="a-conn" data-tip="cada día — marcador de hábito (refuerza el imparfait)">Chaque jour</span>, <span class="a-imp" data-tip="j'aidais — imparfait: acción habitual (ayudaba)">j'aidais</span> mon grand-père dans les champs et <span class="a-imp" data-tip="je me sentais — imparfait de un verbo pronominal (me sentía)">je me sentais</span> très utile. <span class="a-imp" data-tip="il me disait — imparfait: acción repetida (me decía siempre)">Il me disait</span> toujours de ne pas gaspiller l'eau, <span class="a-conn" data-tip="porque — conector de causa">parce que</span> les vaches en <span class="a-imp" data-tip="avaient — imparfait de 'avoir' (tenían)">avaient</span> plus besoin que nous : sans eau, l'herbe ne <span class="a-imp" data-tip="poussait — imparfait (crecía)">poussait</span> pas et elles ne <span class="a-imp" data-tip="pouvaient — imparfait de 'pouvoir' (podían)">pouvaient</span> pas manger.</p>
+
+      <p><span class="a-conn" data-tip="mientras — simultaneidad de dos acciones en el pasado">Pendant que</span> <span class="a-imp" data-tip="je jouais — imparfait: acción en desarrollo (jugaba)">je jouais</span>, <span class="a-imp" data-tip="j'observais — imparfait (observaba)">j'observais</span> comment il <span class="a-imp" data-tip="respectait — imparfait (respetaba)">respectait</span> la nature avec beaucoup de soin. <span class="a-pqp" data-tip="il avait appris — plus-que-parfait: acción anterior a otra acción pasada (había aprendido)">Il avait appris</span> de son père à ne pas utiliser plus que nécessaire, et <span class="a-imp" data-tip="il essayait — imparfait (intentaba)">il essayait</span> de transmettre ces valeurs. <span class="a-conn" data-tip="sin embargo — conector de oposición">Pourtant</span>, <span class="a-imp" data-tip="il ne se considérait pas — imparfait en negativo (no se consideraba)">il ne se considérait</span> pas du tout comme un écologiste.</p>
+
+      <p><span class="a-conn" data-tip="hoy (en día) — marca el presente que contrasta con el pasado del relato">Aujourd'hui</span>, je comprends à quel point ce qu'il <span class="a-imp" data-tip="disait — imparfait (decía)">disait</span> <span class="a-imp" data-tip="était — imparfait de 'être' (era)">était</span> important. Ce souvenir m'accompagne encore : parfois, j'ai peur d'ouvrir le robinet, <span class="a-conn" data-tip="porque — conector de causa">parce que</span> je pense aux vaches de mon grand-père et à tout ce qu'il <span class="a-pc" data-tip="m'a appris — passé composé: acción puntual acabada (me enseñó)">m'a appris</span>.</p>
+
+      <p><span class="a-conn" data-tip="aunque — concesión (+ indicativo)">Même si</span> beaucoup de temps <span class="a-pc" data-tip="a passé — passé composé (ha pasado / pasó)">a passé</span>, son exemple ne m'<span class="a-pc" data-tip="a jamais quitté — passé composé en negativo (nunca me ha abandonado)">a jamais quitté</span>. Je suis sûr que, un jour, <span class="a-fut" data-tip="j'expliquerai — futur simple (explicaré)">j'expliquerai</span> tout ça à mes enfants, <span class="a-conn" data-tip="para que — expresa finalidad (+ subjuntivo)">pour qu'</span><span class="a-subj" data-tip="ils comprennent — subjonctif obligatorio tras 'pour que' (comprendan)">ils comprennent</span> que chaque génération a la responsabilité de prendre soin de la planète.</p>
+    </div>
+  </article>
+
+  <!-- ANECDOTE 2 -->
+  <article class="anec-card">
+    <h4 class="anec-title">Un dîner presque français</h4>
+    <div class="anec-meta">DELF B1 · Production écrite / lecture · passé composé · imparfait · subjonctif</div>
+    <div class="anec-body">
+      <p><span class="a-conn" data-tip="hace unas semanas — marcador temporal de un hecho acabado">Il y a quelques semaines</span>, <span class="a-pc" data-tip="j'ai décidé — passé composé: decisión puntual (decidí)">j'ai décidé</span> de préparer un repas français pour un groupe d'amis français. <span class="a-imp" data-tip="je voulais — imparfait: estado/deseo en el pasado (quería)">Je voulais</span> vraiment les impressionner et leur montrer qu'un Espagnol comme moi peut tout à fait s'en sortir en cuisine.</p>
+
+      <p><span class="a-conn" data-tip="después de haber pasado — infinitif passé: anterioridad respecto a la acción principal (tras pasar)">Après avoir passé</span> des heures à chercher des recettes, <span class="a-pc" data-tip="j'ai choisi — passé composé (elegí)">j'ai choisi</span> un menu simple : des crêpes maison et une quiche lorraine. <span class="a-imp" data-tip="je ne pensais pas — imparfait (no pensaba / no creía)">Je ne pensais pas</span> que <span class="a-subj" data-tip="ce soit — subjonctif tras 'ne pas penser que' (que fuera / fuese)">ce soit</span> si difficile à réaliser.</p>
+
+      <p><span class="a-imp" data-tip="tout semblait — imparfait: situación en curso (todo parecía)">Tout semblait</span> bien se passer <span class="a-conn" data-tip="hasta el momento en que — conector temporal que introduce la ruptura">jusqu'au moment où</span> <span class="a-pc" data-tip="j'ai confondu — passé composé: acción puntual (confundí)">j'ai confondu</span> le sucre et le sel. <span class="a-imp" data-tip="c'était — imparfait de 'être' (era / fue)">C'était</span> une petite erreur, certes, <span class="a-conn" data-tip="pero — conector de oposición">mais</span> du genre à vous faire regretter d'avoir allumé le four.</p>
+
+      <p><span class="a-conn" data-tip="cuando — conector temporal">Quand</span> mes amis <span class="a-pc" data-tip="ont goûté — passé composé (probaron)">ont goûté</span> la quiche, un silence gêné <span class="a-pc" data-tip="s'est installé — passé composé de un verbo pronominal (se instaló)">s'est installé</span>. <span class="a-cond" data-tip="j'aurais voulu — conditionnel passé (habría querido)">J'aurais voulu</span> disparaître. Je l'<span class="a-pc" data-tip="ai goûtée — passé composé con acuerdo del participio (la probé)">ai goûtée</span> à mon tour et <span class="a-pc" data-tip="j'ai tout de suite compris — passé composé (comprendí enseguida)">j'ai tout de suite compris</span> le désastre.</p>
+
+      <p><span class="a-imp" data-tip="il était important — imparfait que introduce el subjuntivo (era importante)">Il était important</span> que quelqu'un <span class="a-subj" data-tip="réagisse — subjonctif tras 'il était important que' (reaccionara / reaccionase)">réagisse</span> rapidement. <span class="a-conn" data-tip="fue entonces cuando — puesta en relieve / conector temporal">C'est alors que</span> l'un de mes amis <span class="a-pc" data-tip="s'est levé — passé composé pronominal (se levantó)">s'est levé</span> et <span class="a-pc" data-tip="a jeté — passé composé (echó / tiró)">a jeté</span> un paquet de pâtes dans l'eau bouillante <span class="a-conn" data-tip="antes incluso de que — conector temporal (+ subjuntivo)">avant même que</span> je ne <span class="a-subj" data-tip="comprenne — subjonctif tras 'avant que' (comprendiera / entendiera)">comprenne</span> ce qui <span class="a-imp" data-tip="se passait — imparfait (estaba pasando / pasaba)">se passait</span>. <span class="a-conn" data-tip="en resumen — conector de conclusión">Bref</span>, c'est le vrai Français qui <span class="a-pc" data-tip="a sauvé — passé composé (salvó)">a sauvé</span> le dîner.</p>
+    </div>
+  </article>
+
+  <div class="callout">
+    <span class="ico">💡</span><strong>Clave del relato en pasado:</strong> el <strong>imparfait</strong> pinta el decorado (cómo eran las cosas, qué se hacía habitualmente, qué estaba pasando); el <strong>passé composé</strong> hace avanzar la acción con hechos puntuales y acabados; el <strong>plus-que-parfait</strong> retrocede a algo anterior. Dominar este contraste es lo que distingue una buena anécdota en el DELF.
+  </div>
+
+</section>
+
 </main>
 
 <script>
@@ -1545,6 +1981,74 @@ function updateFontSize(pct){
     document.getElementById('fs-slider').value = saved;
     updateFontSize(saved);
   }
+})();
+
+/* ANECDOTES — highlight toggle + translation popup */
+(function(){
+  const panel = document.getElementById('anecdotes');
+  if(!panel) return;
+  const toggle = document.getElementById('anec-hl-toggle');
+  const state  = document.getElementById('anec-hl-state');
+
+  toggle.addEventListener('click', () => {
+    const isOn = toggle.classList.toggle('on');
+    toggle.setAttribute('aria-checked', String(isOn));
+    panel.classList.toggle('no-marks', !isOn);
+    state.textContent = isOn ? 'ON' : 'OFF';
+    state.classList.toggle('on', isOn);
+    if(!isOn) hide();
+  });
+
+  const CAT = {'a-conn':'Connecteur','a-imp':'Imparfait','a-pc':'Passé composé','a-pqp':'Plus-que-parfait','a-subj':'Subjonctif','a-fut':'Futur','a-cond':'Conditionnel'};
+  const SEL = '.a-conn,.a-imp,.a-pc,.a-pqp,.a-subj,.a-fut,.a-cond';
+
+  const popup = document.createElement('div');
+  popup.className = 'anec-popup';
+  popup.innerHTML = '<button class="ap-close" aria-label="Cerrar">✕</button><div class="ap-cat"></div><div class="ap-fr"></div><div class="ap-es"></div>';
+  document.body.appendChild(popup);
+  const catEl = popup.querySelector('.ap-cat');
+  const frEl  = popup.querySelector('.ap-fr');
+  const esEl  = popup.querySelector('.ap-es');
+  popup.querySelector('.ap-close').addEventListener('click', hide);
+
+  function getCat(el){ for(const c in CAT){ if(el.classList.contains(c)) return c; } return null; }
+  function hide(){ popup.classList.remove('show'); }
+  function show(span){
+    const cat = getCat(span);
+    if(!cat) return;
+    catEl.textContent = CAT[cat];
+    catEl.className = 'ap-cat ' + cat.replace('a-','cat-');
+    frEl.textContent = span.textContent.trim();
+    esEl.textContent = span.dataset.tip || '— traducción no disponible —';
+    popup.classList.add('show');
+    position(span);
+  }
+  function position(span){
+    const r = span.getBoundingClientRect();
+    const m = 10;
+    popup.style.left = '-9999px';
+    popup.style.top  = '0px';
+    const pw = popup.offsetWidth, ph = popup.offsetHeight;
+    let x = r.left;
+    if(x + pw > window.innerWidth - m) x = window.innerWidth - pw - m;
+    if(x < m) x = m;
+    let y = r.bottom + m;
+    if(y + ph > window.innerHeight - m) y = r.top - ph - m;
+    if(y < m) y = m;
+    popup.style.left = (x + window.scrollX) + 'px';
+    popup.style.top  = (y + window.scrollY) + 'px';
+  }
+
+  document.addEventListener('click', (e) => {
+    if(popup.contains(e.target)) return;
+    if(!panel.classList.contains('active') || panel.classList.contains('no-marks')){ hide(); return; }
+    const span = e.target.closest(SEL);
+    if(span && panel.contains(span)){ show(span); e.stopPropagation(); }
+    else hide();
+  });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') hide(); });
+  window.addEventListener('scroll', hide, {passive:true, capture:true});
+  window.addEventListener('resize', hide);
 })();
 </script>
 
