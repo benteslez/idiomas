@@ -17,6 +17,19 @@ despliega en GitHub Pages sin paso de build.
 | **Sinónimo en contexto** | una frase con la palabra resaltada | su sinónimo |
 | **Traducción** (EN↔ES) | una palabra o su significado | la equivalencia |
 | **Falso amigo** | una palabra "trampa" para hispanohablantes | su significado real |
+| **Phrasal verb** | una frase con hueco, o el phrasal verb | el phrasal verb / su significado |
+
+### Selector de tema
+
+Antes de empezar (práctica o examen) eliges el **tema**, que filtra los tipos:
+**Mezclado** (todos), **Vocabulario** (traducción), **Frases** (hueco + sinónimo),
+**Phrasal verbs** y **Falsos amigos**. La preferencia se guarda.
+
+### Control de exposición
+
+El motor recuerda las últimas ~700 palabras vistas (`lexis.seen`) y evita
+repetirlas entre sesiones, así cada examen trae vocabulario fresco (antes
+tendía a repetir las mismas palabras y a inflar el nivel por memorización).
 
 La selección rota los tipos (sin repetir el mismo más de 2 veces seguidas) y,
 dentro de cada tipo, elige el ítem de **máxima información de Fisher** en el θ
@@ -24,7 +37,11 @@ actual (es decir, `|b − θ̂|` mínimo).
 
 ## Motor IRT
 
-- **Modelo de Rasch (1PL)**: `P(θ,b) = 1 / (1 + e^(−(θ − b)))`.
+- **Modelo 3PL con adivinación**: `P(θ,b) = c + (1−c)/(1 + e^(−(θ − b)))`, con
+  `c = 0.25` (≈ 1/opciones). El suelo de adivinación evita que los aciertos por
+  azar/eliminación en ítems difíciles inflen θ (causa de los resultados
+  "siempre C2"). Verificado por simulación con un modelo de respuesta que sí
+  adivina: un B2 ahora se reporta como B2, no como C2.
 - **Estimación EAP** (Expected A Posteriori) sobre una rejilla θ ∈ [−4, 4] paso
   0.1, con prior normal `N(priorMean, 1.5)`. Se usa EAP en lugar de máxima
   verosimilitud porque **es finito y estable** incluso con patrones
@@ -77,6 +94,20 @@ dificultad psicométrica "real" se afinaría con datos de respuesta (ver Supabas
 
 Teclado: `1`–`4` para responder, `Enter`/`Espacio` para continuar.
 
+## Historial y repaso (SRS)
+
+Cada respuesta (en práctica y examen) se guarda en `lexis.vocab` con su fecha:
+nº de aciertos/fallos, fecha de aprendizaje y estado de repetición espaciada.
+Los exámenes completos se registran en `lexis.sessions`.
+
+- **Historial** (botón en la home): pestañas **Aprendidas** (palabras acertadas,
+  con es/en/nivel y fecha), **Falladas**, **Por días** (agrupa los exámenes del
+  día con su nivel medio; clic para desplegar cada partida) y **Timeline**.
+- **Flashcards** (SRS estilo SM-2): tras cada examen las palabras entran en el
+  mazo — los **aciertos** como "bien" y los **fallos** como "otra vez" (repaso
+  inmediato). En el repaso, cada tarjeta se califica *Otra vez / Difícil / Bien
+  / Fácil* y se reprograma. La home muestra cuántas tarjetas tocan hoy.
+
 ## Estructura
 
 ```
@@ -84,8 +115,10 @@ ingles/
 ├─ examen.html            # app completa (motor IRT + UI)
 ├─ examen-data.js         # banco de traducción (4.349 términos) — generado
 ├─ examen-extra.js        # gap-fill + sinónimos + falsos amigos (904) — generado
+├─ examen-phrasal.js      # tema phrasal verbs (222 A2–C2) — generado
 ├─ gen-examen-data.mjs    # pipeline del banco de traducción
 ├─ gen-examen-extra.mjs   # pipeline de los ejercicios con frase
+├─ gen-examen-phrasal.mjs # pipeline del tema phrasal verbs
 ├─ data/                  # lotes fuente verificados (JSON) de los pipelines
 ├─ supabase-sync.js       # sincronización opcional (no-op sin config)
 ├─ config.example.js      # plantilla de credenciales → copiar a config.js
