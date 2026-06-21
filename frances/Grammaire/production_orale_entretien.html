@@ -710,6 +710,76 @@ body.no-highlights .c-pron{
   padding:0;cursor:text;transform:none;
 }
 
+/* ===== SPEAK BUTTON (lectura en voz francesa) ===== */
+.speak-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  vertical-align:middle;
+  margin-left:10px;
+  padding:5px 13px 5px 11px;
+  border-radius:var(--radius-pill);
+  background:var(--primary-soft);
+  border:1px solid var(--primary-mid);
+  color:var(--primary);
+  font-family:inherit;font-size:.7rem;font-weight:600;
+  letter-spacing:.04em;text-transform:uppercase;
+  cursor:pointer;
+  box-shadow:var(--shadow-xs);
+  transition:all var(--t-base) var(--ease);
+}
+.speak-btn:hover{
+  background:var(--primary);color:#fff;
+  border-color:var(--primary);
+  transform:translateY(-1px);box-shadow:var(--shadow-primary);
+}
+.speak-btn:active{transform:translateY(0);}
+.speak-btn.speaking{
+  background:var(--primary);color:#fff;
+  border-color:var(--primary);
+  box-shadow:var(--shadow-primary);
+}
+.speak-btn .ico{flex-shrink:0;}
+.speak-btn .ico-stop{display:none;}
+.speak-btn.speaking .ico-play{display:none;}
+.speak-btn.speaking .ico-stop{display:inline-flex;}
+/* Pulso suave mientras lee */
+.speak-btn.speaking .ico-stop{animation:speakPulse 1.1s var(--ease) infinite;}
+@keyframes speakPulse{0%,100%{opacity:1;}50%{opacity:.45;}}
+/* Variante dentro de la barra de controles del ejemplo */
+.example-controls .speak-btn{margin-left:0;}
+
+/* ===== SPEED CONTROL (velocidad de lectura) ===== */
+.speed-wrap{
+  display:flex;align-items:center;gap:9px;
+  flex-shrink:0;
+  padding-left:14px;
+  border-left:1px solid var(--border-strong);
+}
+.speed-label-txt{
+  font-size:.76rem;font-weight:600;
+  color:var(--text2);user-select:none;
+}
+.speed-seg{
+  display:inline-flex;gap:3px;
+  padding:3px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-pill);
+  box-shadow:var(--shadow-xs);
+}
+.speed-opt{
+  border:0;background:transparent;
+  border-radius:var(--radius-pill);
+  padding:5px 12px;
+  font-family:inherit;font-size:.72rem;font-weight:600;
+  color:var(--text3);cursor:pointer;
+  transition:all var(--t-base) var(--ease);
+}
+.speed-opt:hover{color:var(--primary);}
+.speed-opt.active{
+  background:var(--primary);color:#fff;
+  box-shadow:var(--shadow-primary);
+}
+
 @media (max-width:600px){
   .header-actions{margin-bottom:12px;}
   .site-header{padding:20px 16px 18px;}
@@ -722,6 +792,7 @@ body.no-highlights .c-pron{
   .toggle-state{font-size:.6rem;}
   .size-wrap{width:100%;padding-left:0;border-left:0;justify-content:flex-end;}
   .size-slider{width:140px;}
+  .speed-wrap{width:100%;padding-left:0;border-left:0;justify-content:flex-end;}
   .tabs-wrap{padding:10px 14px;}
   .tab{font-size:.78rem;padding:7px 13px;}
   .main{padding:24px 14px 56px;}
@@ -1529,6 +1600,175 @@ document.addEventListener('keydown', (e) => {
 });
 window.addEventListener('scroll', hideTr, {passive:true, capture:true});
 window.addEventListener('resize', hideTr);
+
+// ===== TEXT-TO-SPEECH (lectura en voz francesa) =====
+(function(){
+  if(!('speechSynthesis' in window)) return;
+  const synth = window.speechSynthesis;
+
+  let frVoice = null;
+  function pickVoice(){
+    const voices = synth.getVoices();
+    if(!voices || !voices.length) return;
+    frVoice = voices.find(v => /^fr[-_]?fr/i.test(v.lang))
+           || voices.find(v => /^fr([-_]|$)/i.test(v.lang))
+           || voices.find(v => /fran/i.test(v.name))
+           || null;
+  }
+  pickVoice();
+  if('onvoiceschanged' in synth) synth.addEventListener('voiceschanged', pickVoice);
+
+  // Extrae solo el texto francés de los párrafos, sin acotaciones tipo [sourire]
+  function cleanText(container){
+    const parts = [];
+    container.querySelectorAll('p').forEach(p => parts.push(p.textContent));
+    return parts.join('. ')
+      .replace(/\[[^\]]*\]/g, ' ')   // [sourire], [rires]…
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  let currentBtn = null;
+  let currentContainer = null;
+
+  // Velocidad de lectura (persistente)
+  let rate = 0.95;
+  try {
+    const stored = parseFloat(localStorage.getItem('entretien-speak-rate'));
+    if(stored && stored > 0) rate = stored;
+  } catch(e){}
+
+  function stopAll(){
+    synth.cancel();
+    document.querySelectorAll('.speak-btn.speaking').forEach(b => {
+      b.classList.remove('speaking');
+      const lbl = b.querySelector('.speak-label');
+      if(lbl) lbl.textContent = b.dataset.label || 'Escuchar';
+    });
+    currentBtn = null;
+    currentContainer = null;
+  }
+
+  // Inicia la lectura (sin alternar) — usado también para reiniciar al cambiar velocidad
+  function startSpeak(btn, container){
+    const txt = cleanText(container);
+    if(!txt) return;
+
+    const u = new SpeechSynthesisUtterance(txt);
+    u.lang = 'fr-FR';
+    if(frVoice) u.voice = frVoice;
+    u.rate = rate;
+    u.pitch = 1;
+    const lbl = btn.querySelector('.speak-label');
+    const reset = () => {
+      btn.classList.remove('speaking');
+      if(lbl) lbl.textContent = btn.dataset.label || 'Escuchar';
+      if(currentBtn === btn){ currentBtn = null; currentContainer = null; }
+    };
+    u.onend = reset;
+    u.onerror = reset;
+
+    btn.classList.add('speaking');
+    if(lbl) lbl.textContent = 'Detener';
+    currentBtn = btn;
+    currentContainer = container;
+    synth.speak(u);
+  }
+
+  function speak(btn, container){
+    const wasSpeaking = btn.classList.contains('speaking');
+    stopAll();
+    if(wasSpeaking) return; // segundo clic = parar
+    startSpeak(btn, container);
+  }
+
+  const ICONS =
+    '<svg class="ico ico-play" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>' +
+    '<svg class="ico ico-stop" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>';
+
+  function makeBtn(){
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'speak-btn';
+    b.dataset.label = 'Escuchar';
+    b.setAttribute('aria-label', 'Leer el texto en voz alta en francés');
+    b.title = 'Escuchar en francés';
+    b.innerHTML = ICONS + '<span class="speak-label">Escuchar</span>';
+    return b;
+  }
+
+  // Un botón por respuesta (.rep), junto al nombre
+  document.querySelectorAll('.rep').forEach(rep => {
+    const btn = makeBtn();
+    const name = rep.querySelector('.name');
+    if(name) name.insertAdjacentElement('afterend', btn);
+    else rep.insertBefore(btn, rep.firstChild);
+    btn.addEventListener('click', e => { e.stopPropagation(); speak(btn, rep); });
+  });
+
+  // Ejemplo aplicado (carta completa) → botón en su barra de controles
+  const exLetter = document.getElementById('example-letter');
+  const exControls = document.querySelector('.example-controls');
+  if(exLetter && exControls){
+    const btn = makeBtn();
+    exControls.appendChild(btn);
+    btn.addEventListener('click', e => { e.stopPropagation(); speak(btn, exLetter); });
+  }
+
+  // Control de velocidad en la barra de controles
+  const SPEEDS = [
+    { rate: 0.7,  label: 'Lento'  },
+    { rate: 0.95, label: 'Normal' },
+    { rate: 1.2,  label: 'Rápido' }
+  ];
+  const controlsInner = document.querySelector('.controls-inner');
+  if(controlsInner){
+    const wrap = document.createElement('div');
+    wrap.className = 'speed-wrap';
+    const seg = document.createElement('div');
+    seg.className = 'speed-seg';
+    seg.setAttribute('role','group');
+    seg.setAttribute('aria-label','Velocidad de lectura');
+    SPEEDS.forEach(s => {
+      const o = document.createElement('button');
+      o.type = 'button';
+      o.className = 'speed-opt';
+      o.dataset.rate = String(s.rate);
+      o.textContent = s.label;
+      if(Math.abs(s.rate - rate) < 0.001) o.classList.add('active');
+      o.addEventListener('click', () => {
+        rate = s.rate;
+        try { localStorage.setItem('entretien-speak-rate', String(rate)); } catch(e){}
+        seg.querySelectorAll('.speed-opt').forEach(b => b.classList.remove('active'));
+        o.classList.add('active');
+        // si se está leyendo, reiniciar con la nueva velocidad
+        if(currentBtn && currentContainer){
+          const b = currentBtn, c = currentContainer;
+          synth.cancel();
+          startSpeak(b, c);
+        }
+      });
+      seg.appendChild(o);
+    });
+    // si la velocidad guardada no coincide con ninguna, marcar la más cercana
+    if(!seg.querySelector('.speed-opt.active')){
+      let best = seg.firstChild, bestDiff = Infinity;
+      seg.querySelectorAll('.speed-opt').forEach(b => {
+        const d = Math.abs(parseFloat(b.dataset.rate) - rate);
+        if(d < bestDiff){ bestDiff = d; best = b; }
+      });
+      best.classList.add('active');
+    }
+    wrap.innerHTML = '<span class="speed-label-txt">Velocidad</span>';
+    wrap.appendChild(seg);
+    controlsInner.appendChild(wrap);
+  }
+
+  // Parar la lectura al cambiar de pestaña o de tema
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', stopAll));
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') stopAll(); });
+  window.addEventListener('beforeunload', () => synth.cancel());
+})();
 </script>
 </body>
 </html>
