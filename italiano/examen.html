@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lexis IT · Examen adaptativo de vocabulario italiano (A1–C2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f1ec; --card:#fbfaf6; --border:#e2ddd0;
+  --text:#1a1814; --text2:#44413a; --text3:#706c64;
+  --accent:#1f6e44; --accent-light:#d8eee0; --accent-mid:#4a9e6e;
+  --shadow:0 2px 14px rgba(0,0,0,.10),0 1px 4px rgba(0,0,0,.06);
+  --shadow-sm:0 1px 6px rgba(0,0,0,.07);
+  --radius:20px; --radius-sm:12px;
+  --green:#1a6028; --green-bg:#e4f2e8;
+  --wine:#8b1a4a; --wine-bg:#f8e6ee;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --display:'Manrope',sans-serif;
+  /* bandas CEFR */
+  --a2:#0e6060; --b1:#2a7a5a; --b2:#4a6ba8; --c1:#6a3a9a; --c2:#8b1a4a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-text-size-adjust:100%;}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;position:relative;line-height:1.5;}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .035 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+.wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:24px 18px 80px;}
+
+/* HEADER */
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:22px;flex-wrap:wrap;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:6px 13px 6px 10px;font-family:var(--sans);font-size:.78rem;font-weight:600;color:var(--text2);text-decoration:none;transition:all .15s;box-shadow:var(--shadow-sm);}
+.back-btn:hover{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent);transform:translateX(-2px);}
+.brand{display:flex;align-items:baseline;gap:9px;}
+.brand h1{font-family:var(--display);font-weight:800;font-size:1.35rem;letter-spacing:-.02em;}
+.brand .tag{font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border-radius:20px;padding:3px 9px;}
+
+/* CARD */
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 24px;}
+.hidden{display:none!important;}
+
+/* HOME */
+.lead{font-family:var(--serif);font-size:1.45rem;line-height:1.3;font-weight:600;margin-bottom:8px;letter-spacing:-.01em;}
+.lead em{font-style:italic;color:var(--accent);}
+.sub{color:var(--text3);font-size:.92rem;margin-bottom:20px;}
+.stat-prev{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 15px;margin-bottom:22px;font-size:.85rem;}
+.stat-prev .lv{font-family:var(--mono);font-weight:700;font-size:1.05rem;color:var(--accent);}
+.modes{display:grid;gap:13px;grid-template-columns:1fr 1fr;}
+@media(max-width:520px){.modes{grid-template-columns:1fr;}}
+.mode{appearance:none;text-align:left;cursor:pointer;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:18px 18px;transition:all .18s;font-family:inherit;color:inherit;}
+.mode:hover{border-color:var(--accent-mid);transform:translateY(-2px);box-shadow:var(--shadow);}
+.mode:focus-visible{outline:3px solid var(--accent-mid);outline-offset:2px;}
+.mode .ic{font-size:1.5rem;}
+.mode h3{font-family:var(--display);font-weight:700;font-size:1.05rem;margin:8px 0 4px;}
+.mode p{font-size:.8rem;color:var(--text3);line-height:1.5;}
+.note{margin-top:18px;font-size:.74rem;color:var(--text3);line-height:1.6;border-top:1px solid var(--border);padding-top:14px;}
+.note b{color:var(--text2);}
+
+/* EXAM LENGTH SELECTOR */
+#exam-setup{animation:fade .3s ease;}
+@media(prefers-reduced-motion:reduce){#exam-setup{animation:none;}}
+.setup-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.back-mini{appearance:none;cursor:pointer;background:var(--bg);border:1px solid var(--border);border-radius:18px;padding:5px 12px;font-family:var(--sans);font-size:.76rem;font-weight:600;color:var(--text2);transition:all .15s;}
+.back-mini:hover{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent);}
+.setup-title{font-family:var(--display);font-weight:700;font-size:1.05rem;}
+.len-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+@media(max-width:520px){.len-grid{grid-template-columns:repeat(2,1fr);}}
+.lenbtn{appearance:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:18px 10px;font-family:inherit;color:inherit;transition:all .16s;}
+.lenbtn:hover{border-color:var(--accent-mid);transform:translateY(-2px);box-shadow:var(--shadow);background:#fff;}
+.lenbtn:focus-visible{outline:3px solid var(--accent-mid);outline-offset:2px;}
+.lenbtn b{font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--accent);letter-spacing:-.02em;}
+.lenbtn span{font-size:.72rem;color:var(--text3);}
+.setup-hint{margin-top:14px;font-size:.74rem;color:var(--text3);line-height:1.6;}
+.setup-hint b{color:var(--text2);}
+
+/* GAUGE */
+.gauge-wrap{margin-bottom:20px;}
+.gauge-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:7px;}
+.gauge-cefr{font-family:var(--display);font-weight:800;font-size:1.2rem;letter-spacing:-.01em;}
+.gauge-metrics{font-family:var(--mono);font-size:.7rem;color:var(--text3);text-align:right;line-height:1.5;}
+.gauge-metrics b{color:var(--text2);font-weight:700;}
+.gauge{position:relative;height:34px;border-radius:9px;overflow:hidden;border:1px solid var(--border);background:linear-gradient(90deg,var(--a2) 0%,var(--a2) 18%,var(--b1) 18%,var(--b1) 36%,var(--b2) 36%,var(--b2) 64%,var(--c1) 64%,var(--c1) 82%,var(--c2) 82%,var(--c2) 100%);}
+.gauge .band{position:absolute;top:0;bottom:0;background:rgba(255,255,255,.32);border-left:1px solid rgba(255,255,255,.55);border-right:1px solid rgba(255,255,255,.55);transition:left .5s cubic-bezier(.22,1,.36,1),width .5s cubic-bezier(.22,1,.36,1);}
+.gauge .marker{position:absolute;top:-3px;bottom:-3px;width:3px;background:#fff;box-shadow:0 0 0 1.5px var(--text),0 0 8px rgba(0,0,0,.5);transition:left .5s cubic-bezier(.22,1,.36,1);}
+.gauge-labels{display:flex;justify-content:space-between;margin-top:5px;font-family:var(--mono);font-size:.62rem;color:var(--text3);font-weight:500;}
+@media(prefers-reduced-motion:reduce){.gauge .band,.gauge .marker{transition:none;}}
+
+/* PROGRESS BAR (top of question) */
+.qbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;font-family:var(--mono);font-size:.72rem;color:var(--text3);}
+.qbar .ix{font-weight:700;color:var(--text2);}
+.toggle-bar{appearance:none;background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:4px 11px;font-family:var(--mono);font-size:.66rem;font-weight:500;color:var(--text3);cursor:pointer;}
+.toggle-bar:hover{border-color:var(--accent-mid);color:var(--accent);}
+
+/* QUESTION */
+.qkind{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px;}
+.prompt{font-family:var(--serif);font-size:1.7rem;line-height:1.25;font-weight:600;margin-bottom:6px;letter-spacing:-.01em;}
+.prompt .hw{color:var(--accent);font-style:italic;}
+.prompt-sub{color:var(--text3);font-size:.85rem;margin-bottom:20px;}
+.options{display:grid;gap:10px;}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 15px;font-family:inherit;font-size:1rem;color:var(--text);transition:all .14s;}
+.opt:hover:not(:disabled){border-color:var(--accent-mid);background:#fff;}
+.opt:focus-visible{outline:3px solid var(--accent-mid);outline-offset:2px;}
+.opt:disabled{cursor:default;}
+.opt .num{flex:none;width:24px;height:24px;border-radius:7px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.78rem;font-weight:700;color:var(--text3);}
+.opt.correct{border-color:var(--green);background:var(--green-bg);}
+.opt.correct .num{background:var(--green);color:#fff;border-color:var(--green);}
+.opt.wrong{border-color:var(--wine);background:var(--wine-bg);}
+.opt.wrong .num{background:var(--wine);color:#fff;border-color:var(--wine);}
+
+/* DICTIONARY FEEDBACK */
+.dict{margin-top:18px;border-top:2px solid var(--accent);padding-top:16px;animation:fade .35s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+@media(prefers-reduced-motion:reduce){.dict{animation:none;}}
+.dict-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px;}
+.dict-word{font-family:var(--serif);font-size:1.5rem;font-weight:700;}
+.dict-cefr{font-family:var(--mono);font-size:.64rem;font-weight:700;color:#fff;border-radius:6px;padding:2px 7px;}
+.dict-b{font-family:var(--mono);font-size:.66rem;color:var(--text3);}
+.dict-tr{font-size:1.02rem;color:var(--text2);margin-bottom:6px;}
+.dict-extra{font-size:.86rem;color:var(--text3);margin-bottom:5px;font-style:italic;}
+.dict-extra b{color:var(--text2);font-style:normal;}
+.dict-trap{font-size:.84rem;color:var(--wine);background:var(--wine-bg);border:1px solid #eccdd9;border-radius:10px;padding:8px 11px;margin:8px 0 4px;line-height:1.5;}
+.gap-slot{display:inline-flex;align-items:center;justify-content:center;min-width:48px;height:1.45em;vertical-align:-.3em;margin:0 3px;border-bottom:2.5px solid var(--accent-mid);background:var(--accent-light);border-radius:5px 5px 0 0;color:var(--accent);font-family:var(--mono);font-weight:700;}
+.dict-verdict{font-family:var(--display);font-weight:700;font-size:.82rem;margin-bottom:10px;}
+.dict-verdict.ok{color:var(--green);}
+.dict-verdict.no{color:var(--wine);}
+.cont-btn,.primary{appearance:none;cursor:pointer;font-family:var(--display);font-weight:700;font-size:.92rem;border:none;border-radius:14px;padding:13px 22px;background:var(--accent);color:#fff;transition:all .15s;box-shadow:var(--shadow-sm);}
+.cont-btn:hover,.primary:hover{background:#0a2247;transform:translateY(-1px);}
+.cont-btn:focus-visible,.primary:focus-visible{outline:3px solid var(--accent-mid);outline-offset:2px;}
+.cont-btn{margin-top:16px;width:100%;}
+.kbd-hint{font-family:var(--mono);font-size:.64rem;color:var(--text3);text-align:center;margin-top:10px;}
+kbd{font-family:var(--mono);font-size:.62rem;background:var(--bg);border:1px solid var(--border);border-bottom-width:2px;border-radius:5px;padding:1px 5px;color:var(--text2);}
+
+/* EXAM minimal feedback */
+.exam-flash{font-family:var(--display);font-weight:700;font-size:.9rem;margin-top:16px;text-align:center;}
+
+/* RESULTS */
+.result-cefr{font-family:var(--display);font-weight:800;font-size:3.2rem;letter-spacing:-.02em;line-height:1;text-align:center;color:var(--accent);}
+.result-label{text-align:center;color:var(--text3);font-size:.9rem;margin:6px 0 22px;}
+.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px;}
+.metric{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:13px 10px;text-align:center;}
+.metric .v{font-family:var(--mono);font-weight:700;font-size:1.3rem;color:var(--text);}
+.metric .k{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-top:3px;}
+.review h4{font-family:var(--display);font-weight:700;font-size:.95rem;margin:8px 0 10px;}
+.review-list{display:grid;gap:7px;max-height:280px;overflow:auto;}
+.rev{display:flex;align-items:baseline;gap:10px;font-size:.88rem;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 12px;}
+.rev .rw{font-weight:600;font-family:var(--serif);font-size:1rem;}
+.rev .rt{color:var(--text3);flex:1;}
+.rev .rc{font-family:var(--mono);font-size:.6rem;font-weight:700;color:#fff;border-radius:5px;padding:1px 6px;}
+.result-actions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;}
+.result-actions button{flex:1;min-width:140px;}
+.ghost{background:var(--card);color:var(--accent);border:1px solid var(--border);}
+.ghost:hover{background:var(--accent-light);}
+.disclaimer{font-size:.7rem;color:var(--text3);text-align:center;margin-top:16px;line-height:1.6;}
+/* THEME SELECTOR */
+.theme-pick{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.theme-label{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-weight:700;}
+.theme-chips{display:flex;gap:7px;flex-wrap:wrap;}
+.chip{appearance:none;cursor:pointer;background:var(--bg);border:1px solid var(--border);border-radius:18px;padding:6px 13px;font-family:var(--sans);font-size:.8rem;font-weight:600;color:var(--text2);transition:all .14s;}
+.chip:hover{border-color:var(--accent-mid);color:var(--accent);}
+.chip.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.chip:focus-visible{outline:3px solid var(--accent-mid);outline-offset:2px;}
+
+/* HOME NAV */
+.home-nav{display:flex;gap:10px;margin-top:18px;}
+.navbtn{flex:1;appearance:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;font-family:var(--display);font-weight:700;font-size:.9rem;color:var(--text2);transition:all .15s;}
+.navbtn:hover{border-color:var(--accent-mid);color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);}
+.navbtn:focus-visible{outline:3px solid var(--accent-mid);outline-offset:2px;}
+.due-badge{font-family:var(--mono);font-size:.66rem;font-weight:700;background:var(--wine);color:#fff;border-radius:20px;padding:1px 7px;}
+
+/* EXAM FEEDBACK (revela la respuesta correcta unos segundos) */
+.exam-fb{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:16px;border-top:2px solid var(--border);padding-top:14px;animation:fade .25s ease;}
+.exam-fb.ok{border-color:var(--green);} .exam-fb.no{border-color:var(--wine);}
+.exam-fb-verdict{font-family:var(--display);font-weight:700;font-size:.95rem;}
+.exam-fb.ok .exam-fb-verdict{color:var(--green);} .exam-fb.no .exam-fb-verdict{color:var(--wine);}
+.exam-fb-ans{font-size:.95rem;color:var(--text2);} .exam-fb-ans b{color:var(--text);}
+
+/* HISTORY / FLASHCARDS shared */
+.hist-top{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
+.hist-title{font-family:var(--display);font-weight:800;font-size:1.3rem;letter-spacing:-.01em;}
+.cards-progress{margin-left:auto;font-family:var(--mono);font-size:.74rem;color:var(--text3);}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.tab{appearance:none;cursor:pointer;background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:6px 13px;font-family:var(--sans);font-size:.8rem;font-weight:600;color:var(--text2);transition:all .14s;}
+.tab:hover{border-color:var(--accent-mid);}
+.tab.active{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent);}
+.wordlist{display:grid;gap:7px;max-height:60vh;overflow:auto;}
+.wrow{display:flex;align-items:baseline;gap:10px;font-size:.9rem;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 12px;}
+.wrow .rw{font-family:var(--serif);font-weight:700;font-size:1rem;}
+.wrow .rt{color:var(--text3);flex:1;min-width:80px;}
+.wrow .rdate{font-family:var(--mono);font-size:.64rem;color:var(--text3);}
+.wrow .rc{font-family:var(--mono);font-size:.6rem;font-weight:700;color:#fff;border-radius:5px;padding:1px 6px;}
+.empty{color:var(--text3);font-size:.9rem;text-align:center;padding:30px 10px;}
+.daygroup{margin-bottom:14px;}
+.dayhead{display:flex;align-items:baseline;justify-content:space-between;cursor:pointer;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:11px 13px;}
+.dayhead:hover{border-color:var(--accent-mid);}
+.dayhead .dd{font-weight:700;font-family:var(--display);}
+.dayhead .davg{font-family:var(--mono);font-size:.78rem;}
+.daydetail{padding:8px 4px 2px;display:grid;gap:6px;}
+.gameline{display:flex;align-items:baseline;gap:10px;font-size:.82rem;color:var(--text2);font-family:var(--mono);}
+.gameline .glc{font-weight:700;color:#fff;border-radius:5px;padding:1px 6px;font-size:.6rem;}
+
+/* FLASHCARD */
+.fcard{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:38px 22px;text-align:center;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;cursor:pointer;}
+.fc-front{font-family:var(--serif);font-size:2rem;font-weight:700;color:var(--text);}
+.fc-hint{font-family:var(--mono);font-size:.68rem;color:var(--text3);}
+.fc-back{font-size:1.15rem;color:var(--accent);}
+.fc-cefr{font-family:var(--mono);font-size:.62rem;font-weight:700;color:#fff;border-radius:5px;padding:2px 7px;}
+.fc-grades{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px;}
+.gradebtn{appearance:none;cursor:pointer;border:none;border-radius:12px;padding:12px 6px;font-family:var(--display);font-weight:700;font-size:.82rem;color:#fff;transition:transform .12s;}
+.gradebtn:hover{transform:translateY(-2px);}
+.gradebtn small{display:block;font-family:var(--mono);font-weight:400;font-size:.58rem;opacity:.85;margin-top:2px;}
+.g-again{background:#8b1a4a;} .g-hard{background:#8b4a0a;} .g-good{background:#1a6028;} .g-easy{background:#0e6060;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="back-btn" href="index.html"><span aria-hidden="true">‹</span> Italiano · Riferimento</a>
+    <div class="brand"><h1>Lexis</h1><span class="tag">CAT · IRT</span></div>
+  </div>
+
+  <!-- ============ HOME ============ -->
+  <section id="home" class="panel">
+    <p class="lead">Examen <em>adaptativo</em> de vocabulario italiano</p>
+    <p class="sub">Más de <b id="bank-size">…</b> términos italianos A1–C2 y <b id="exercise-count">…</b> ejercicios con frase. El motor estima tu nivel en tiempo real con Teoría de Respuesta al Ítem (modelo de Rasch + estimación EAP) y elige cada pregunta para medirte con la máxima precisión.</p>
+    <p class="sub" style="margin-top:-8px">Alterna cuatro tipos al estilo <b>PLIDA / CILS</b>: <b>rellenar el hueco</b> en una frase, <b>sinónimo en contexto</b>, <b>traducción</b> IT↔ES y <b>falsi amici</b> (falsos amigos) para hispanohablantes, más un tema de <b>expresiones idiomáticas</b>.</p>
+
+    <div id="prev-stat" class="stat-prev hidden">
+      <span>Tu último nivel estimado:</span>
+      <span class="lv" id="prev-cefr">—</span>
+      <span style="font-family:var(--mono);font-size:.72rem;color:var(--text3)" id="prev-theta"></span>
+    </div>
+
+    <div class="theme-pick">
+      <span class="theme-label">Tema</span>
+      <div class="theme-chips" id="theme-chips">
+        <button class="chip" data-theme="mix">Mezclado</button>
+        <button class="chip" data-theme="vocab">Vocabulario</button>
+        <button class="chip" data-theme="phrases">Frases</button>
+        <button class="chip" data-theme="pv">Espressioni</button>
+        <button class="chip" data-theme="traps">Falsi amici</button>
+      </div>
+    </div>
+
+    <div class="modes" id="modes">
+      <button class="mode" id="btn-practice">
+        <div class="ic">📖</div>
+        <h3>Práctica</h3>
+        <p>Sin fin. Medidor de nivel en directo y entrada de diccionario tras cada respuesta. Prioriza tus palabras falladas.</p>
+      </button>
+      <button class="mode" id="btn-exam">
+        <div class="ic">📐</div>
+        <h3>Examen</h3>
+        <p>Como un examen real: sin ver tu nivel ni correcciones hasta el final. Tú eliges cuántas preguntas.</p>
+      </button>
+    </div>
+
+    <!-- Selector de longitud del examen -->
+    <div id="exam-setup" class="hidden">
+      <div class="setup-head">
+        <button class="back-mini" id="exam-back"><span aria-hidden="true">‹</span> Volver</button>
+        <span class="setup-title">¿Cuántas preguntas?</span>
+      </div>
+      <div class="len-grid">
+        <button class="lenbtn" data-len="10"><b>10</b><span>Rápido</span></button>
+        <button class="lenbtn" data-len="20"><b>20</b><span>Estándar</span></button>
+        <button class="lenbtn" data-len="40"><b>40</b><span>Completo</span></button>
+        <button class="lenbtn" data-len="adaptive"><b>Auto</b><span>Adaptativo · 12–25</span></button>
+      </div>
+      <p class="setup-hint">El modo <b>Adaptativo</b> termina solo cuando la medición es bastante precisa (SE ≤ 0,45). Los exámenes de longitud fija se detienen al llegar al número elegido.</p>
+    </div>
+
+    <div class="home-nav">
+      <button class="navbtn" id="nav-history"><span>📊</span> Historial</button>
+      <button class="navbtn" id="nav-cards"><span>🃏</span> Flashcards <span class="due-badge hidden" id="due-badge">0</span></button>
+    </div>
+
+    <p class="note"><b>Nota.</b> El nivel CEFR de cada palabra es una <i>semilla</i> orientativa derivada de listas por nivel; la dificultad psicométrica real se afinaría con datos de respuesta. La escala tipo CILS es <b>orientativa, no oficial</b>. Tu progreso se guarda solo en este navegador.</p>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="quiz" class="panel hidden">
+    <div class="qbar">
+      <span class="ix" id="q-counter">1</span>
+      <button class="toggle-bar" id="toggle-bar" hidden>Ocultar barra</button>
+    </div>
+
+    <div class="gauge-wrap" id="gauge-wrap">
+      <div class="gauge-head">
+        <span class="gauge-cefr" id="g-cefr">B2</span>
+        <span class="gauge-metrics">θ <b id="g-theta">0.00</b> · SE <b id="g-se">—</b><br>CILS <b id="g-cam">—</b> <span style="opacity:.6">(orient.)</span></span>
+      </div>
+      <div class="gauge" id="gauge">
+        <div class="band" id="g-band"></div>
+        <div class="marker" id="g-marker"></div>
+      </div>
+      <div class="gauge-labels"><span>A2</span><span>B1</span><span>B2</span><span>C1</span><span>C2</span></div>
+    </div>
+
+    <div class="qkind" id="q-kind">Sinónimo</div>
+    <h2 class="prompt" id="q-prompt"></h2>
+    <p class="prompt-sub" id="q-sub"></p>
+    <div class="options" id="q-options"></div>
+
+    <div id="feedback"></div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section id="results" class="panel hidden">
+    <div class="result-cefr" id="r-cefr">B2</div>
+    <p class="result-label" id="r-label">Nivel estimado</p>
+    <div class="metrics-grid">
+      <div class="metric"><div class="v" id="r-theta">0.0</div><div class="k">θ habilidad</div></div>
+      <div class="metric"><div class="v" id="r-se">0.0</div><div class="k">SE error</div></div>
+      <div class="metric"><div class="v" id="r-score">0/0</div><div class="k">aciertos</div></div>
+    </div>
+    <div class="metrics-grid" style="grid-template-columns:1fr 1fr;">
+      <div class="metric"><div class="v" id="r-cam">—</div><div class="k">CILS (orient.)</div></div>
+      <div class="metric"><div class="v" id="r-items">0</div><div class="k">ítems usados</div></div>
+    </div>
+    <div class="review" id="r-review">
+      <h4>Vocabulario para repasar</h4>
+      <div class="review-list" id="r-review-list"></div>
+    </div>
+    <div class="result-actions">
+      <button class="primary" id="r-cards">🃏 Repasar (flashcards)</button>
+      <button class="primary ghost" id="r-again">Repetir examen</button>
+      <button class="primary ghost" id="r-practice">Pasar a práctica</button>
+    </div>
+    <p class="disclaimer">Resultado orientativo basado en un banco de ítems con niveles semilla. No equivale a una certificación oficial.</p>
+  </section>
+
+  <!-- ============ HISTORIAL ============ -->
+  <section id="history" class="panel hidden">
+    <div class="hist-top">
+      <button class="back-mini" id="hist-back"><span aria-hidden="true">‹</span> Volver</button>
+      <h2 class="hist-title">Historial</h2>
+    </div>
+    <div class="tabs" id="hist-tabs">
+      <button class="tab active" data-tab="learned">Aprendidas</button>
+      <button class="tab" data-tab="failed">Falladas</button>
+      <button class="tab" data-tab="days">Por días</button>
+      <button class="tab" data-tab="timeline">Timeline</button>
+    </div>
+    <div id="hist-body"></div>
+  </section>
+
+  <!-- ============ FLASHCARDS (SRS) ============ -->
+  <section id="flashcards" class="panel hidden">
+    <div class="hist-top">
+      <button class="back-mini" id="cards-back"><span aria-hidden="true">‹</span> Volver</button>
+      <h2 class="hist-title">Flashcards</h2>
+      <span class="cards-progress" id="cards-progress"></span>
+    </div>
+    <div id="cards-body"></div>
+  </section>
+</div>
+
+<script src="examen-data.js"></script>
+<script src="examen-extra.js"></script>
+<script src="examen-phrasal.js"></script>
+<script>
+"use strict";
+/* ============================================================================
+   LEXIS — Motor IRT (Rasch / 1PL) con estimación EAP, selección por información
+   de Fisher y regla de parada. Implementado según la especificación del proyecto.
+   ============================================================================ */
+
+/* ---- 3.1 Probabilidad de acierto — modelo 3PL con adivinación ----
+   Con 4 opciones, una respuesta correcta puede deberse al azar/eliminación.
+   El "suelo de adivinación" c evita que aciertos en ítems difíciles inflen θ
+   (causa de resultados siempre-C2). P nunca baja de c. */
+const GUESS = 0.25;                       // ≈ 1/opciones
+const P = (theta, b, a = 1) => GUESS + (1 - GUESS) / (1 + Math.exp(-a * (theta - b)));
+
+/* ---- Rejilla θ de −4 a 4 en pasos de 0.1 ---- */
+const GRID = [];
+for (let t = -4; t <= 4.0001; t += 0.1) GRID.push(Math.round(t * 100) / 100);
+
+/* ---- 3.2 Estimación EAP (Expected A Posteriori). Estable en patrones extremos ---- */
+function estimateEAP(history, priorMean, priorSd) {
+  const prior = GRID.map(t => Math.exp(-0.5 * Math.pow((t - priorMean) / priorSd, 2)));
+  let sum = 0;
+  const post = GRID.map((t, i) => {
+    let L = prior[i];
+    for (const h of history) { const p = P(t, h.b, h.a ?? 1); L *= h.correct ? p : (1 - p); }
+    sum += L; return L;
+  });
+  let m = 0; for (let i = 0; i < GRID.length; i++) m += GRID[i] * post[i] / sum;
+  let v = 0; for (let i = 0; i < GRID.length; i++) v += Math.pow(GRID[i] - m, 2) * post[i] / sum;
+  return { theta: m, se: Math.sqrt(v) };
+}
+
+/* ---- 3.5 Mapeo θ → CEFR (anclaje transparente) ---- */
+function thetaToCefr(t) {
+  if (t < -1.3) return { short: "A2", label: "A2 · Básico" };
+  if (t < -0.3) return { short: "B1", label: "B1 · Intermedio" };
+  if (t < 0.9)  return { short: "B2", label: "B2 bajo · Intermedio-alto" };
+  if (t < 1.6)  return { short: "B2", label: "B2 · Intermedio-alto" };
+  if (t < 2.3)  return { short: "C1", label: "C1 · Avanzado" };
+  return { short: "C2", label: "C2 · Dominio" };
+}
+// Índice CILS orientativo 0–100 (no oficial): θ=0 ≈ 50, C2 ≈ 99, A1 ≈ 10.
+const cambridge = (t) => Math.round(Math.max(0, Math.min(100, 50 + 18 * t)));
+const CEFR_COLOR = { A2: "var(--a2)", B1: "var(--b1)", B2: "var(--b2)", C1: "var(--c1)", C2: "var(--c2)" };
+
+/* ---- Regla de parada (solo examen): SE ≤ 0.45, min 12, max 25 (§3.4) ---- */
+const EXAM = { seTarget: 0.45, min: 12, max: 25 };
+
+/* ============================================================================
+   Banco de ítems y generación de preguntas
+   ============================================================================ */
+const RAW = (window.LEXIS_ITEMS || []).map(([w, es, cefr, b]) => ({ w, es, cefr, b }));
+const BY_LEVEL = { A2: [], B1: [], B2: [], C1: [], C2: [] };
+for (const it of RAW) (BY_LEVEL[it.cefr] || (BY_LEVEL[it.cefr] = [])).push(it);
+
+// Ejercicios enriquecidos (rellenar hueco, sinónimo en contexto, falsos amigos)
+const RICH = window.LEXIS_RICH || { gap: [], syn: [], traps: [] };
+const TRAP_BY_WORD = new Map(RICH.traps.map(t => [t.w, t]));   // para enriquecer el diccionario
+
+const PHRASAL = window.LEXIS_PHRASAL || [];
+
+// Pool unificado por TIPO de ejercicio. Cada entrada: {id, w, cefr, b, kind, data}
+const POOL = {
+  trans: RAW.map((it, i) => ({ id: "t" + i, w: it.w, cefr: it.cefr, b: it.b, kind: "trans", data: it })),
+  gap:   RICH.gap.map((it, i) => ({ id: "g" + i, w: it.w, cefr: it.cefr, b: it.b, kind: "gap", data: it })),
+  syn:   RICH.syn.map((it, i) => ({ id: "s" + i, w: it.w, cefr: it.cefr, b: it.b, kind: "syn", data: it })),
+  trap:  RICH.traps.map((it, i) => ({ id: "f" + i, w: it.w, cefr: it.cefr, b: it.b, kind: "trap", data: it })),
+  pv:    PHRASAL.map((it, i) => ({ id: "p" + i, w: it.pv, cefr: it.cefr, b: it.b, kind: "pv", data: it })),
+};
+const ALL_POOL = [].concat(POOL.trans, POOL.gap, POOL.syn, POOL.trap, POOL.pv);
+
+// Temas: qué tipos de ejercicio entran en cada uno
+const THEMES = {
+  mix:     { label: "Mezclado",      kinds: ["gap", "syn", "trans", "trap", "pv"] },
+  vocab:   { label: "Vocabulario",   kinds: ["trans"] },
+  phrases: { label: "Frases",        kinds: ["gap", "syn"] },
+  traps:   { label: "Falsi amici", kinds: ["trap"] },
+  pv:      { label: "Espressioni", kinds: ["pv"] },
+};
+
+const totalTerms = RAW.length;
+document.getElementById("bank-size").textContent = totalTerms.toLocaleString("es-ES");
+const elEx = document.getElementById("exercise-count");
+if (elEx) elEx.textContent = (POOL.gap.length + POOL.syn.length + POOL.trap.length + POOL.pv.length).toLocaleString("es-ES");
+
+const tokens = (s) => s.toLowerCase().replace(/\([^)]*\)/g, " ").split(/[^a-záéíóúüñ]+/i).filter(x => x.length > 2);
+function shareSense(a, b) {           // ¿comparten algún término? -> distractor inválido
+  const A = new Set(tokens(a)); return tokens(b).some(t => A.has(t));
+}
+const rnd = (n) => Math.floor(Math.random() * n);
+function sample(arr, n, exclude) {
+  const out = [], used = new Set();
+  let guard = 0;
+  while (out.length < n && guard++ < 400) {
+    const c = arr[rnd(arr.length)];
+    if (!c || used.has(c.w)) continue;
+    if (exclude(c)) continue;
+    used.add(c.w); out.push(c);
+  }
+  return out;
+}
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function boldWord(sentence, w){                 // resalta la palabra objetivo dentro de la frase
+  const i = sentence.toLowerCase().indexOf(w.toLowerCase());
+  if (i < 0) return esc(sentence);
+  return esc(sentence.slice(0,i)) + '<b class="hw">' + esc(sentence.slice(i,i+w.length)) + '</b>' + esc(sentence.slice(i+w.length));
+}
+function fromStrings(correct, distractors){      // -> {options:[str], answer:int}
+  const opts = shuffle([{ t: correct, ok: true }, ...distractors.map(d => ({ t: d, ok: false }))]);
+  return { options: opts.map(o => o.t), answer: opts.findIndex(o => o.ok) };
+}
+
+/* Construye una pregunta según el TIPO de ejercicio del ítem del pool.
+   kinds: trans (traducción IT↔ES) · gap (rellenar hueco) · syn (sinónimo) · trap (falso amigo) */
+function buildQuestion(p) {
+  const d = p.data;
+  const baseDict = { w: p.w, cefr: p.cefr, b: p.b };
+  const trapNote = TRAP_BY_WORD.get(p.w);        // aviso de falso amigo si aplica
+
+  if (p.kind === "trans") {
+    const pool = (BY_LEVEL[p.cefr] && BY_LEVEL[p.cefr].length >= 8) ? BY_LEVEL[p.cefr] : RAW;
+    const dir = (p.dir === "es2en") ? "es2en" : "en2es";
+    if (dir === "en2es") {
+      const distract = sample(pool, 3, c => c.w === d.w || c.es === d.es || shareSense(c.es, d.es)).map(x => x.es);
+      const { options, answer } = fromStrings(d.es, distract);
+      return { ...base("Traducción · IT→ES", `<span class="hw">${esc(d.w)}</span>`, "Elige la traducción correcta al español.", options, answer, p),
+        dict: { ...baseDict, es: d.es, note: trapNote?.note } };
+    }
+    const distract = sample(pool, 3, c => c.w === d.w || c.es === d.es || shareSense(c.es, d.es)).map(x => x.w);
+    const { options, answer } = fromStrings(d.w, distract);
+    return { ...base("Traducción · ES→IT", esc(d.es), "¿Qué palabra italiana significa esto?", options, answer, p),
+      dict: { ...baseDict, es: d.es, note: trapNote?.note } };
+  }
+
+  if (p.kind === "gap") {
+    const { options, answer } = fromStrings(d.w, d.ds);
+    const prompt = esc(d.blank).replace("___", '<span class="gap-slot">?</span>');
+    return { ...base("Rellena el hueco", prompt, "Elige la palabra que completa la frase.", options, answer, p),
+      dict: { ...baseDict, es: d.es, def: d.def, note: trapNote?.note } };
+  }
+
+  if (p.kind === "syn") {
+    const { options, answer } = fromStrings(d.syn, d.ds);
+    return { ...base("Sinónimo en contexto", boldWord(d.sent, d.w), "Elige el sinónimo de la palabra en negrita.", options, answer, p),
+      dict: { ...baseDict, es: d.es, def: d.def, syn: d.syn, note: trapNote?.note } };
+  }
+
+  if (p.kind === "pv") {
+    const dict = { ...baseDict, es: d.es, def: d.def };
+    if (Math.random() < 0.5 && d.sent.toLowerCase().includes(d.pv.toLowerCase())) {
+      // subtipo rellena-hueco: la frase con el phrasal verb en blanco
+      const { options, answer } = fromStrings(d.pv, d.ds);
+      return { ...base("Expresión · hueco", blankPhrase(d.sent, d.pv), "Elige la expresión que completa la frase.", options, answer, p), dict };
+    }
+    // subtipo significado: el phrasal verb → su significado
+    const distract = samplePvMeanings(d).map(x => x.es);
+    const { options, answer } = fromStrings(d.es, distract);
+    return { ...base("Expresión · significado", `<span class="hw">${esc(d.pv)}</span>`, "¿Qué significa esta expresión?", options, answer, p), dict };
+  }
+
+  // trap (falso amigo)
+  const { options, answer } = fromStrings(d.real, [d.trap, d.d1, d.d2]);
+  return { ...base("⚠ Falso amigo", `<span class="hw">${esc(d.w)}</span>`, "¿Qué significa en realidad? (¡cuidado con el falso amigo!)", options, answer, p),
+    dict: { ...baseDict, es: d.real, note: d.note, trap: d.trap } };
+}
+function blankPhrase(sent, pv) {
+  const i = sent.toLowerCase().indexOf(pv.toLowerCase());
+  if (i < 0) return esc(sent);
+  return esc(sent.slice(0, i)) + '<span class="gap-slot">?</span>' + esc(sent.slice(i + pv.length));
+}
+function samplePvMeanings(d) {              // 3 significados distractores de otros phrasal verbs
+  const out = [], used = new Set([lcx(d.es)]); let g = 0;
+  while (out.length < 3 && g++ < 400) {
+    const c = PHRASAL[rnd(PHRASAL.length)];
+    if (!c || used.has(lcx(c.es)) || shareSense(c.es, d.es)) continue;
+    used.add(lcx(c.es)); out.push(c);
+  }
+  return out;
+}
+const lcx = (s) => String(s).trim().toLowerCase();
+function base(typeLabel, prompt, sub, options, answer, p){
+  return { typeLabel, prompt, sub, options, answer, poolId: p.id, kind: p.kind, w: p.w, cefr: p.cefr, b: p.b };
+}
+
+/* ============================================================================
+   Estado de sesión
+   ============================================================================ */
+const LS = {
+  get theta(){ const v = parseFloat(localStorage.getItem("lexisit.theta")); return isNaN(v) ? null : v; },
+  set theta(v){ localStorage.setItem("lexisit.theta", v); },
+  get se(){ const v = parseFloat(localStorage.getItem("lexisit.se")); return isNaN(v) ? null : v; },
+  set se(v){ localStorage.setItem("lexisit.se", v); },
+  get cefr(){ return localStorage.getItem("lexisit.cefr"); },
+  set cefr(v){ localStorage.setItem("lexisit.cefr", v); },
+  get weak(){ try { return JSON.parse(localStorage.getItem("lexisit.weak")||"[]"); } catch { return []; } },
+  set weak(v){ localStorage.setItem("lexisit.weak", JSON.stringify(v.slice(-120))); },
+  get barHidden(){ return localStorage.getItem("lexisit.barHidden") === "1"; },
+  set barHidden(v){ localStorage.setItem("lexisit.barHidden", v ? "1" : "0"); },
+  get themePref(){ return localStorage.getItem("lexisit.themePref") || "mix"; },
+  set themePref(v){ localStorage.setItem("lexisit.themePref", v); },
+  get seen(){ try { return JSON.parse(localStorage.getItem("lexisit.seen")||"[]"); } catch { return []; } },
+  set seen(v){ localStorage.setItem("lexisit.seen", JSON.stringify(v.slice(-700))); },
+  get vocab(){ try { return JSON.parse(localStorage.getItem("lexisit.vocab")||"{}"); } catch { return {}; } },
+  set vocab(v){ localStorage.setItem("lexisit.vocab", JSON.stringify(v)); },
+  get sessions(){ try { return JSON.parse(localStorage.getItem("lexisit.sessions")||"[]"); } catch { return []; } },
+  set sessions(v){ localStorage.setItem("lexisit.sessions", JSON.stringify(v.slice(-400))); },
+};
+
+/* ============================================================================
+   Historial de vocabulario + repetición espaciada (SRS, estilo SM-2 ligero)
+   ============================================================================ */
+const DAY = 86400000;
+const todayStr = () => new Date().toISOString().slice(0, 10);
+const vkey = (w) => w.trim().toLowerCase();
+
+// Registra el resultado de una palabra: actualiza contadores, fecha de aprendizaje y SRS.
+function commitWordResult(q, correct) {
+  const v = LS.vocab;
+  const k = vkey(q.w);
+  const nowISO = new Date().toISOString();
+  let e = v[k] || { w: q.w, es: q.dict.es, cefr: q.cefr, kind: q.kind,
+    firstSeen: nowISO, firstCorrect: null, nCorrect: 0, nWrong: 0,
+    srs: { ease: 2.5, reps: 0, interval: 0, due: todayStr(), lapses: 0 } };
+  e.es = q.dict.es; e.cefr = q.cefr; e.kind = q.kind; e.lastSeen = nowISO;
+  if (correct) { e.nCorrect++; if (!e.firstCorrect) e.firstCorrect = nowISO; }
+  else e.nWrong++;
+  e.lastCorrect = correct;
+  srsGrade(e, correct ? "good" : "again");   // examen/práctica: acierto→bien, fallo→otra vez
+  v[k] = e; LS.vocab = v;
+}
+
+// Programa la próxima revisión según la calificación.
+function srsGrade(e, g) {
+  const s = e.srs || (e.srs = { ease: 2.5, reps: 0, interval: 0, due: todayStr(), lapses: 0 });
+  if (g === "again") { s.reps = 0; s.interval = 0; s.ease = Math.max(1.3, s.ease - 0.2); s.lapses = (s.lapses || 0) + 1; }
+  else if (g === "hard") { s.reps++; s.interval = Math.max(1, Math.round((s.interval || 1) * 1.2)); s.ease = Math.max(1.3, s.ease - 0.15); }
+  else if (g === "good") { s.reps++; s.interval = s.reps <= 1 ? 1 : s.reps === 2 ? 3 : Math.round(s.interval * s.ease); }
+  else if (g === "easy") { s.reps++; s.interval = s.reps <= 1 ? 3 : Math.round((s.interval || 2) * s.ease * 1.3); s.ease += 0.15; }
+  const days = g === "again" ? 0 : s.interval;
+  s.due = new Date(Date.now() + days * DAY).toISOString().slice(0, 10);
+}
+const dueCards = () => Object.values(LS.vocab).filter(e => (e.srs?.due || "9999") <= todayStr());
+
+let S = null;
+let lastExamLen = "adaptive";              // recordar la última elección para "Repetir examen"
+function newSession(mode, examLen, theme) {
+  // Prior: el EXAMEN parte de cero (neutro) para ser una medición fresca e
+  // independiente — así una sesión buena no "arrastra" el nivel hacia arriba en
+  // la siguiente. La PRÁCTICA sí mantiene continuidad con tu último θ.
+  const priorMean = (mode === "exam") ? 0.0 : (LS.theta ?? 0.5);
+  S = {
+    mode, examLen: examLen ?? "adaptive", theme: theme || "mix", priorMean,
+    history: [], used: new Set(), recentSeen: new Set(LS.seen), lastKinds: [], lastTransDirs: [],
+    theta: priorMean, se: null, count: 0, correct: 0,
+    weak: [], answeredItems: [], current: null, answered: false, timer: null,
+  };
+}
+function markSeen(id) {                 // control de exposición entre sesiones (evita repetir palabras)
+  S.recentSeen.add(id);
+  const arr = LS.seen; arr.push(id); LS.seen = arr;
+}
+
+/* ---- Rotación de TIPOS de ejercicio (variedad estilo Linguaskill, según el tema) ---- */
+const KIND_WEIGHTS = { gap: 0.30, syn: 0.24, trans: 0.24, trap: 0.10, pv: 0.20 };
+const availableKinds = () => (THEMES[S.theme]?.kinds || THEMES.mix.kinds).filter(k => POOL[k] && POOL[k].length);
+function chooseKind() {
+  let kinds = availableKinds();
+  const L = S.lastKinds;                                   // no repetir el mismo tipo >2 veces seguidas
+  if (kinds.length > 1 && L.length >= 2 && L[L.length-1] === L[L.length-2]) {
+    const f = kinds.filter(k => k !== L[L.length-1]); if (f.length) kinds = f;
+  }
+  const ws = kinds.map(k => KIND_WEIGHTS[k] ?? 0.1);
+  let r = Math.random() * ws.reduce((a, b) => a + b, 0);
+  for (let i = 0; i < kinds.length; i++) { r -= ws[i]; if (r <= 0) return kinds[i]; }
+  return kinds[kinds.length-1];
+}
+function nextTransDir() {
+  const L = S.lastTransDirs;
+  let dir = Math.random() < 0.5 ? "en2es" : "es2en";
+  if (L.length >= 2 && L[L.length-1] === L[L.length-2]) dir = L[L.length-1] === "en2es" ? "es2en" : "en2es";
+  L.push(dir); return dir;
+}
+
+/* ---- 3.3 Selección del ítem: máxima info de Fisher (|b−θ| mínimo) dentro del tipo ---- */
+function nearestUnused(arr) {
+  // 1) ni usados en esta sesión ni vistos recientemente (control de exposición)
+  let cands = arr.filter(p => !S.used.has(p.id) && !S.recentSeen.has(p.id));
+  if (cands.length < 8) cands = arr.filter(p => !S.used.has(p.id));   // si casi todo está visto, reabrir
+  if (!cands.length) return null;
+  cands.sort((a, b) => Math.abs(a.b - S.theta) - Math.abs(b.b - S.theta));
+  // ventana amplia alrededor de θ (variedad) en vez de los 6 más cercanos siempre
+  const near = cands.filter(p => Math.abs(p.b - S.theta) <= 0.9);
+  const pool = near.length >= 8 ? near : cands.slice(0, Math.min(16, cands.length));
+  return pool[rnd(pool.length)];
+}
+const themePool = () => [].concat(...availableKinds().map(k => POOL[k]));
+function pickPoolItem() {
+  const tp = themePool();
+  // Práctica: prioriza palabras falladas (dentro del tema seleccionado)
+  if (S.mode === "practice" && S.pendingWeak && S.pendingWeak.length && Math.random() < 0.3) {
+    let g = 0;
+    while (S.pendingWeak.length && g++ < 60) {
+      const w = S.pendingWeak.shift();
+      const cand = tp.filter(p => p.w === w && !S.used.has(p.id));
+      if (cand.length) return cand[rnd(cand.length)];
+    }
+  }
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const it = nearestUnused(POOL[chooseKind()]);
+    if (it) return it;
+  }
+  let any = nearestUnused(tp);
+  if (any) return any;
+  S.used.clear();                                          // práctica: reciclar al agotarse
+  return nearestUnused(tp);
+}
+
+function renderNext() {
+  const p = pickPoolItem();
+  S.used.add(p.id);
+  markSeen(p.id);
+  const pc = p.kind === "trans" ? { ...p, dir: nextTransDir() } : p;
+  S.lastKinds.push(p.kind);
+  S.current = buildQuestion(pc);
+  S.answered = false;
+  drawQuestion();
+}
+
+/* ============================================================================
+   UI
+   ============================================================================ */
+const $ = (id) => document.getElementById(id);
+const screens = { home: $("home"), quiz: $("quiz"), results: $("results"), history: $("history"), flashcards: $("flashcards") };
+function show(name){ for (const k in screens) screens[k].classList.toggle("hidden", k !== name); window.scrollTo(0,0); }
+
+function updateGauge() {
+  const c = thetaToCefr(S.theta);
+  $("g-cefr").textContent = c.short;
+  $("g-cefr").style.color = CEFR_COLOR[c.short];
+  $("g-theta").textContent = S.theta.toFixed(2);
+  $("g-se").textContent = S.se == null ? "—" : S.se.toFixed(2);
+  $("g-cam").textContent = S.se == null ? "—" : cambridge(S.theta);
+  // mapa θ∈[-2.5,3.0] -> 0..100%
+  const pos = (t) => Math.max(0, Math.min(100, ((t + 2.5) / 5.5) * 100));
+  $("g-marker").style.left = pos(S.theta) + "%";
+  if (S.se != null) {
+    const lo = pos(S.theta - S.se), hi = pos(S.theta + S.se);
+    $("g-band").style.left = lo + "%";
+    $("g-band").style.width = Math.max(1.5, hi - lo) + "%";
+  } else { $("g-band").style.width = "0%"; }
+}
+
+function drawQuestion() {
+  const q = S.current;
+  const total = (S.mode === "exam") ? (typeof S.examLen === "number" ? S.examLen : `máx. ${EXAM.max}`) : null;
+  $("q-counter").textContent = S.mode === "exam" ? `Ítem ${S.count + 1} / ${total}` : `Pregunta ${S.count + 1}`;
+  $("q-kind").textContent = q.typeLabel;
+  $("q-prompt").innerHTML = q.prompt;
+  $("q-sub").textContent = q.sub;
+  const box = $("q-options"); box.innerHTML = "";
+  q.options.forEach((t, i) => {
+    const btn = document.createElement("button");
+    btn.className = "opt"; btn.dataset.i = i;
+    btn.innerHTML = `<span class="num">${i + 1}</span><span>${esc(t)}</span>`;
+    btn.addEventListener("click", () => answer(i));
+    box.appendChild(btn);
+  });
+  $("feedback").innerHTML = "";
+  if (S.mode === "practice") updateGauge();
+}
+
+function answer(choice) {
+  if (S.answered) return;
+  S.answered = true;
+  const q = S.current;
+  const correct = choice === q.answer;
+  S.count++; if (correct) S.correct++;
+  S.history.push({ b: q.b, a: 1, correct });
+
+  // re-estimar θ con EAP (priorMean = θ previo guardado o 0.5; priorSd = 1.5)
+  const est = estimateEAP(S.history, S.priorMean, 1.8);   // prior algo más débil: menos "tirón" hacia el centro en exámenes cortos
+  S.theta = est.theta; S.se = est.se;
+
+  // marcar palabras débiles
+  if (!correct && !S.weak.find(x => x.w === q.w)) S.weak.push({ w: q.w, es: q.dict.es, cefr: q.cefr });
+
+  // historial de vocabulario + SRS (acierto→bien, fallo→otra vez)
+  commitWordResult(q, correct);
+  S.answeredItems.push({ w: q.w, es: q.dict.es, cefr: q.cefr, kind: q.kind, correct });
+
+  // registrar respuesta en la nube (opcional; se encola y sincroniza)
+  if (window.LexisSync && window.LexisSync.enabled) {
+    window.LexisSync.recordResponse({
+      session_id: S.sessionId || null, item_id: q.poolId, kind: q.kind, word: q.w,
+      cefr: q.cefr, b: q.b, correct, theta_at_time: S.theta, chosen_index: choice,
+    });
+  }
+
+  // pintar opciones
+  const btns = [...$("q-options").children];
+  btns.forEach((b, i) => {
+    b.disabled = true;
+    if (i === q.answer) b.classList.add("correct");
+    else if (i === choice) b.classList.add("wrong");
+  });
+
+  if (S.mode === "practice") { updateGauge(); showDictionary(q, correct); }
+  else examFeedback();
+}
+
+function showDictionary(q, correct) {
+  const dd = q.dict, c = q.cefr;
+  let extra = "";
+  if (dd.syn) extra += `<div class="dict-extra">≈ sinónimo: <b>${esc(dd.syn)}</b></div>`;
+  if (dd.def) extra += `<div class="dict-extra">${esc(dd.def)}</div>`;
+  if (dd.note) extra += `<div class="dict-trap">⚠ ${esc(dd.note)}</div>`;
+  $("feedback").innerHTML = `
+    <div class="dict">
+      <div class="dict-verdict ${correct ? "ok" : "no"}">${correct ? "✓ Correcto" : "✗ Incorrecto"}</div>
+      <div class="dict-head">
+        <span class="dict-word">${esc(dd.w)}</span>
+        <span class="dict-cefr" style="background:${CEFR_COLOR[c]}">${c}</span>
+        <span class="dict-b">b = ${q.b.toFixed(2)}</span>
+      </div>
+      <div class="dict-tr">${esc(dd.es)}</div>
+      ${extra}
+      <button class="cont-btn" id="cont">Siguiente →</button>
+      <p class="kbd-hint">Pulsa <kbd>Enter</kbd> o <kbd>Espacio</kbd> para continuar · <kbd>1</kbd>–<kbd>4</kbd> para responder</p>
+    </div>`;
+  $("cont").addEventListener("click", proceed);
+  $("cont").focus();
+}
+
+function examFeedback() {
+  const q = S.current;
+  const correct = q.options[q.answer];
+  const ok = S.answeredItems[S.answeredItems.length - 1]?.correct;
+  $("feedback").innerHTML = `
+    <div class="exam-fb ${ok ? "ok" : "no"}">
+      <span class="exam-fb-verdict">${ok ? "✓ Correcto" : "✗ Incorrecto"}</span>
+      <span class="exam-fb-ans">Respuesta: <b>${esc(correct)}</b></span>
+    </div>
+    <p class="kbd-hint">Siguiente en un momento · pulsa <kbd>Enter</kbd> para continuar ya</p>`;
+  S.timer = setTimeout(proceed, 2200);   // tiempo suficiente para ver la correcta; se puede saltar
+}
+
+function proceed() {
+  if (S.timer) { clearTimeout(S.timer); S.timer = null; }
+  if (S.mode === "exam" && shouldStop()) return finish();
+  renderNext();
+}
+
+function shouldStop() {
+  if (S.examLen !== "adaptive" && typeof S.examLen === "number") return S.count >= S.examLen;  // longitud fija
+  // adaptativo: para cuando la medición es precisa (con mínimo y máximo)
+  if (S.count >= EXAM.max) return true;
+  if (S.count >= EXAM.min && S.se != null && S.se <= EXAM.seTarget) return true;
+  return false;
+}
+
+function finish() {
+  // persistir progreso
+  LS.theta = Math.round(S.theta * 1000) / 1000;
+  LS.se = Math.round(S.se * 1000) / 1000;
+  // Nivel = estimador puntual θ̂ (insesgado: ni permisivo ni penalizador).
+  // Se muestra además el MARGEN de confianza θ̂ ± SE para ser transparentes.
+  const c = thetaToCefr(S.theta); LS.cefr = c.short;
+  const lo = thetaToCefr(S.theta - S.se).short, hi = thetaToCefr(S.theta + S.se).short;
+  const merged = [...LS.weak, ...S.weak.map(x => x.w)];
+  LS.weak = [...new Set(merged)];
+
+  // registrar la sesión en el historial (timeline / días)
+  const sess = LS.sessions;
+  sess.push({ ts: new Date().toISOString(), date: todayStr(), mode: S.mode, theme: S.theme,
+    cefr: c.short, theta: LS.theta, se: LS.se, correct: S.correct, total: S.count });
+  LS.sessions = sess;
+
+  // sincronizar sesión y progreso (opcional)
+  if (window.LexisSync && window.LexisSync.enabled) {
+    window.LexisSync.endSession(S.sessionId, { items_count: S.count, final_theta: LS.theta, final_se: S.se, final_cefr: c.short });
+    window.LexisSync.saveProgress({ theta: LS.theta, cefr: c.short, weak: LS.weak });
+  }
+
+  $("r-cefr").textContent = c.short; $("r-cefr").style.color = CEFR_COLOR[c.short];
+  $("r-label").textContent = (lo === hi) ? `${c.label} (medición precisa)` : `${c.label} · margen ${lo}–${hi}`;
+  $("r-theta").textContent = S.theta.toFixed(2);
+  $("r-se").textContent = S.se.toFixed(2);
+  $("r-score").textContent = `${S.correct}/${S.count}`;
+  $("r-cam").textContent = cambridge(S.theta);
+  $("r-items").textContent = S.count;
+
+  const list = $("r-review-list");
+  if (S.weak.length) {
+    list.innerHTML = S.weak.map(it =>
+      `<div class="rev"><span class="rw">${esc(it.w)}</span><span class="rt">${esc(it.es)}</span><span class="rc" style="background:${CEFR_COLOR[it.cefr]}">${it.cefr}</span></div>`
+    ).join("");
+    $("r-review").classList.remove("hidden");
+  } else {
+    list.innerHTML = `<div class="rev"><span class="rt">¡Sin fallos! Nada que repasar.</span></div>`;
+  }
+  show("results");
+}
+
+/* ---- arranque de modos ---- */
+function startQuiz(mode, examLen) {
+  if (mode === "exam") lastExamLen = examLen ?? lastExamLen;
+  newSession(mode, mode === "exam" ? (examLen ?? lastExamLen) : undefined, LS.themePref);
+  // dejar la home limpia para futuras visitas
+  $("modes").classList.remove("hidden");
+  $("exam-setup").classList.add("hidden");
+  if (mode === "practice") {
+    S.pendingWeak = shuffle([...new Set(LS.weak)]);   // cola de palabras falladas (por palabra)
+  }
+  // sesión remota opcional (Supabase)
+  S.sessionId = null;
+  if (window.LexisSync && window.LexisSync.enabled) {
+    Promise.resolve(window.LexisSync.startSession(mode)).then(id => { if (S) S.sessionId = id; });
+  }
+  // visibilidad de la barra: práctica sí (salvo preferencia), examen no
+  const showBar = mode === "practice" && !LS.barHidden;
+  $("gauge-wrap").classList.toggle("hidden", !showBar);
+  const tg = $("toggle-bar"); tg.hidden = (mode !== "practice");
+  tg.textContent = LS.barHidden ? "Mostrar barra" : "Ocultar barra";
+  show("quiz");
+  renderNext();
+}
+
+/* ============================================================================
+   Eventos
+   ============================================================================ */
+$("btn-practice").addEventListener("click", () => startQuiz("practice"));
+$("btn-exam").addEventListener("click", () => {           // mostrar selector de longitud
+  $("modes").classList.add("hidden");
+  $("exam-setup").classList.remove("hidden");
+});
+$("exam-back").addEventListener("click", () => {
+  $("exam-setup").classList.add("hidden");
+  $("modes").classList.remove("hidden");
+});
+document.querySelectorAll(".lenbtn").forEach(btn => btn.addEventListener("click", () => {
+  const v = btn.dataset.len;
+  startQuiz("exam", v === "adaptive" ? "adaptive" : parseInt(v, 10));
+}));
+$("r-again").addEventListener("click", () => startQuiz("exam", lastExamLen));
+$("r-practice").addEventListener("click", () => startQuiz("practice"));
+$("r-cards").addEventListener("click", startFlashcards);
+
+/* ============================================================================
+   Tema · Historial · Flashcards (SRS)
+   ============================================================================ */
+function initThemeChips() {
+  const cur = LS.themePref;
+  document.querySelectorAll("#theme-chips .chip").forEach(c => {
+    c.classList.toggle("active", c.dataset.theme === cur);
+    c.addEventListener("click", () => {
+      LS.themePref = c.dataset.theme;
+      document.querySelectorAll("#theme-chips .chip").forEach(x => x.classList.toggle("active", x === c));
+    });
+  });
+}
+function refreshDueBadge() {
+  const n = dueCards().length, b = $("due-badge");
+  b.textContent = n; b.classList.toggle("hidden", n === 0);
+}
+
+$("nav-history").addEventListener("click", () => { renderHistory("learned"); show("history"); });
+$("nav-cards").addEventListener("click", startFlashcards);
+$("hist-back").addEventListener("click", () => show("home"));
+$("cards-back").addEventListener("click", () => { show("home"); refreshDueBadge(); });
+document.querySelectorAll("#hist-tabs .tab").forEach(t => t.addEventListener("click", () => renderHistory(t.dataset.tab)));
+
+/* ---- Historial ---- */
+const dStr = (iso) => (iso || "").slice(0, 10);
+const empty = (m) => `<div class="empty">${esc(m)}</div>`;
+function wrow(e, dateISO) {
+  return `<div class="wrow"><span class="rw">${esc(e.w)}</span><span class="rt">${esc(e.es || "")}</span>` +
+    `<span class="rdate">${esc(dStr(dateISO))}</span><span class="rc" style="background:${CEFR_COLOR[e.cefr] || "#888"}">${esc(e.cefr || "")}</span></div>`;
+}
+function renderHistory(tab) {
+  document.querySelectorAll("#hist-tabs .tab").forEach(t => t.classList.toggle("active", t.dataset.tab === tab));
+  const body = $("hist-body"), vocab = Object.values(LS.vocab);
+  if (tab === "learned") {
+    const list = vocab.filter(e => e.firstCorrect).sort((a, b) => (b.firstCorrect || "").localeCompare(a.firstCorrect || ""));
+    body.innerHTML = list.length ? `<div class="wordlist">${list.map(e => wrow(e, e.firstCorrect)).join("")}</div>` : empty("Aún no has acertado ninguna palabra.");
+  } else if (tab === "failed") {
+    const list = vocab.filter(e => e.lastCorrect === false).sort((a, b) => (b.lastSeen || "").localeCompare(a.lastSeen || ""));
+    body.innerHTML = list.length ? `<div class="wordlist">${list.map(e => wrow(e, e.lastSeen)).join("")}</div>` : empty("No tienes palabras falladas pendientes. ¡Bien!");
+  } else if (tab === "days") {
+    renderDays(body);
+  } else {
+    renderTimeline(body);
+  }
+}
+function renderDays(body) {
+  const sessions = LS.sessions;
+  if (!sessions.length) { body.innerHTML = empty("Aún no has completado ningún examen."); return; }
+  const byDay = {};
+  for (const s of sessions) (byDay[s.date] || (byDay[s.date] = [])).push(s);
+  body.innerHTML = Object.keys(byDay).sort().reverse().map(date => {
+    const games = byDay[date];
+    const avg = thetaToCefr(games.reduce((a, b) => a + (b.theta || 0), 0) / games.length).short;
+    const detail = games.map(g => `<div class="gameline"><span class="glc" style="background:${CEFR_COLOR[g.cefr] || "#888"}">${g.cefr}</span> ${g.correct}/${g.total} · ${THEMES[g.theme]?.label || g.theme} · ${g.ts.slice(11, 16)}</div>`).join("");
+    return `<div class="daygroup"><div class="dayhead" data-day="${date}"><span class="dd">${date}</span>` +
+      `<span class="davg">${games.length} ${games.length > 1 ? "exámenes" : "examen"} · media <b style="color:${CEFR_COLOR[avg]}">${avg}</b></span></div>` +
+      `<div class="daydetail hidden" data-detail="${date}">${detail}</div></div>`;
+  }).join("");
+  body.querySelectorAll(".dayhead").forEach(h => h.addEventListener("click", () =>
+    body.querySelector(`[data-detail="${h.dataset.day}"]`).classList.toggle("hidden")));
+}
+function renderTimeline(body) {
+  const sessions = LS.sessions.slice().reverse();
+  if (!sessions.length) { body.innerHTML = empty("Aún no hay partidas registradas."); return; }
+  body.innerHTML = `<div class="wordlist">${sessions.map(s =>
+    `<div class="wrow"><span class="rdate">${s.date} ${s.ts.slice(11, 16)}</span>` +
+    `<span class="rt">${esc(THEMES[s.theme]?.label || s.theme)} · ${s.correct}/${s.total}</span>` +
+    `<span class="rc" style="background:${CEFR_COLOR[s.cefr] || "#888"}">${s.cefr}</span></div>`).join("")}</div>`;
+}
+
+/* ---- Flashcards (SRS) ---- */
+let FC = null;
+function startFlashcards() {
+  FC = { queue: shuffle(dueCards()), idx: 0, revealed: false };
+  FC.total = FC.queue.length;
+  show("flashcards"); drawCard();
+}
+function drawCard() {
+  const body = $("cards-body"), prog = $("cards-progress");
+  if (!FC.total) { body.innerHTML = empty("No hay tarjetas pendientes para hoy. Haz un examen o vuelve mañana 🙂"); prog.textContent = ""; return; }
+  if (FC.idx >= FC.queue.length) { body.innerHTML = `<div class="empty">✓ Repaso terminado — ${FC.total} tarjeta(s).</div>`; prog.textContent = ""; return; }
+  const e = FC.queue[FC.idx];
+  prog.textContent = `${FC.idx + 1} / ${FC.queue.length}`;
+  FC.revealed = false;
+  body.innerHTML = `<div class="fcard" id="fcard"><div class="fc-front">${esc(e.w)}</div><div class="fc-hint">Toca o pulsa Espacio para ver el significado</div></div>`;
+  $("fcard").addEventListener("click", revealCard);
+}
+function revealCard() {
+  if (!FC || FC.revealed || FC.idx >= FC.queue.length) return;
+  FC.revealed = true;
+  const e = FC.queue[FC.idx];
+  $("cards-body").innerHTML = `
+    <div class="fcard"><div class="fc-front">${esc(e.w)}</div>
+      <div class="fc-back">${esc(e.es || "")}</div>
+      <span class="fc-cefr" style="background:${CEFR_COLOR[e.cefr] || "#888"}">${esc(e.cefr || "")}</span></div>
+    <div class="fc-grades">
+      <button class="gradebtn g-again" data-g="again">Otra vez<small>hoy</small></button>
+      <button class="gradebtn g-hard" data-g="hard">Difícil<small>1–2</small></button>
+      <button class="gradebtn g-good" data-g="good">Bien<small>+</small></button>
+      <button class="gradebtn g-easy" data-g="easy">Fácil<small>++</small></button>
+    </div>`;
+  document.querySelectorAll(".gradebtn").forEach(b => b.addEventListener("click", () => gradeCard(b.dataset.g)));
+}
+function gradeCard(g) {
+  const e = FC.queue[FC.idx], v = LS.vocab, k = vkey(e.w);
+  if (v[k]) { srsGrade(v[k], g); LS.vocab = v; }
+  FC.idx++; drawCard();
+}
+
+$("toggle-bar").addEventListener("click", () => {
+  LS.barHidden = !LS.barHidden;
+  const hide = LS.barHidden;
+  $("gauge-wrap").classList.toggle("hidden", hide);
+  $("toggle-bar").textContent = hide ? "Mostrar barra" : "Ocultar barra";
+});
+
+document.addEventListener("keydown", (e) => {
+  // Flashcards: Espacio/Enter revela; 1–4 califica
+  if (!screens.flashcards.classList.contains("hidden") && FC) {
+    if (!FC.revealed && (e.key === " " || e.key === "Enter")) { e.preventDefault(); revealCard(); }
+    else if (FC.revealed && /^[1-4]$/.test(e.key)) { e.preventDefault(); gradeCard(["again", "hard", "good", "easy"][+e.key - 1]); }
+    return;
+  }
+  if (screens.quiz.classList.contains("hidden")) return;
+  if (!S) return;
+  if (!S.answered && /^[1-4]$/.test(e.key)) {
+    const btn = $("q-options").children[+e.key - 1];
+    if (btn) { e.preventDefault(); answer(+e.key - 1); }
+  } else if (S.answered && (e.key === "Enter" || e.key === " ")) {
+    e.preventDefault(); proceed();
+  }
+});
+
+/* ---- estado previo en la home (se refresca si Supabase restaura progreso) ---- */
+function refreshHomeStat() {
+  if (LS.theta != null) {
+    const c = thetaToCefr(LS.theta);   // estimador puntual, coherente con el resultado
+    $("prev-stat").classList.remove("hidden");
+    $("prev-cefr").textContent = c.short;
+    $("prev-cefr").style.color = CEFR_COLOR[c.short];
+    $("prev-theta").textContent = `θ ${LS.theta.toFixed(2)}`;
+  }
+}
+refreshHomeStat();
+initThemeChips();
+refreshDueBadge();
+window.addEventListener("lexisit:progress", refreshHomeStat);
+</script>
+</body>
+</html>
