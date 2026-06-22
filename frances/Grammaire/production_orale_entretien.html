@@ -799,7 +799,126 @@ body.no-highlights .c-pron{
   .rep{padding:18px 18px 20px;}
   .rep > p{font-size:calc(.96rem * var(--reading-scale));line-height:1.75;}
   .ex{padding:12px 14px;font-size:calc(.9rem * var(--reading-scale));}
+  .jr-table{font-size:.86rem;}
+  .jr-table th,.jr-table td{padding:8px 10px;}
+  .jr-section{padding:18px 18px 20px;}
 }
+
+/* ===== JEU DE RÔLE (fiche-réf) ===== */
+.jr-intro{
+  background:var(--primary-soft);
+  border:1px solid var(--primary-mid);
+  border-radius:var(--radius-md);
+  padding:18px 22px;
+  margin-bottom:28px;
+  line-height:1.65;
+}
+.jr-intro p{margin-bottom:8px;color:var(--text2);font-size:calc(.94rem * var(--reading-scale));}
+.jr-intro p:last-child{margin-bottom:0;}
+.jr-intro strong{color:var(--primary);}
+.jr-flow{
+  display:inline-block;margin-top:4px;font-weight:600;color:var(--text);
+}
+
+.jr-section{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px 26px 24px;
+  box-shadow:var(--shadow-sm);
+  margin-bottom:20px;
+}
+.jr-section > h3{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:1.18rem;font-weight:600;letter-spacing:-.01em;
+  color:var(--text);
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:16px;
+}
+.jr-num{
+  flex:none;
+  display:inline-grid;place-items:center;
+  width:30px;height:30px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.82rem;font-weight:700;
+  color:var(--primary);
+  background:var(--primary-soft);
+  border-radius:var(--radius-pill);
+}
+
+/* listas de frases */
+.jr-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.jr-list li{
+  position:relative;
+  padding:11px 14px 11px 30px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  line-height:1.6;
+  font-size:calc(.96rem * var(--reading-scale));
+  color:var(--text);
+}
+.jr-list li::before{
+  content:"»";
+  position:absolute;left:12px;top:11px;
+  color:var(--primary-mid);font-weight:700;
+}
+
+/* tablas */
+.jr-table{
+  width:100%;border-collapse:collapse;
+  font-size:calc(.9rem * var(--reading-scale));
+  border-radius:var(--radius-sm);overflow:hidden;
+  border:1px solid var(--border);
+}
+.jr-table th{
+  text-align:left;font-weight:600;
+  color:var(--primary);
+  background:var(--primary-soft);
+  padding:10px 14px;
+  font-size:.82rem;letter-spacing:.02em;
+}
+.jr-table td{
+  padding:10px 14px;
+  border-top:1px solid var(--border);
+  color:var(--text);vertical-align:top;line-height:1.55;
+}
+.jr-table tr:nth-child(even) td,.jr-table tbody tr:nth-child(even) td{background:var(--bg-elevated);}
+.jr-table td em{color:var(--text3);font-style:italic;}
+.jr-table strong{color:var(--text);}
+
+/* cajas de aviso */
+.jr-note{
+  display:flex;gap:11px;
+  padding:13px 16px;
+  border-radius:var(--radius-sm);
+  margin-top:16px;
+  line-height:1.6;
+  font-size:calc(.9rem * var(--reading-scale));
+}
+.jr-note .ic{flex:none;font-size:1.05rem;line-height:1.5;}
+.jr-note.warn{background:var(--conn-bg);border:1px solid var(--conn-border);color:var(--text);}
+.jr-note.warn strong{color:var(--conn);}
+.jr-note.tip{background:var(--past-bg);border:1px solid var(--past-border);color:var(--text);}
+.jr-note.tip strong{color:var(--past);}
+.jr-note.goal{background:var(--sub-bg);border:1px solid var(--sub-border);color:var(--text);}
+.jr-note.goal strong{color:var(--sub);}
+
+/* tabla evitar / preferir */
+.jr-table .x{color:var(--cond);font-weight:600;}
+.jr-table .v{color:var(--fut);font-weight:600;}
+
+/* lista de criterios */
+.jr-check{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.jr-check li{
+  padding-left:28px;position:relative;line-height:1.55;
+  font-size:calc(.94rem * var(--reading-scale));color:var(--text);
+}
+.jr-check li::before{
+  content:"✓";position:absolute;left:6px;top:0;
+  color:var(--fut);font-weight:700;
+}
+.jr-check li strong{color:var(--text);}
 </style>
 </head>
 <body>
@@ -876,6 +995,8 @@ body.no-highlights .c-pron{
     <button class="tab" data-tab="4"><span class="tab-num">04</span> Projets</button>
     <button class="tab" data-tab="5"><span class="tab-num">05</span> Français</button>
     <button class="tab" data-tab="6"><span class="tab-num">06</span> Plantilla PE</button>
+    <button class="tab" data-tab="7"><span class="tab-num">07</span> Monologues</button>
+    <button class="tab" data-tab="8"><span class="tab-num">08</span> Jeu de rôle</button>
   </div>
 </div>
 
@@ -898,9 +1019,13 @@ body.no-highlights .c-pron{
 
       <p>À la maison, on est quatre — mon mari, notre fils Pablo, qui a trois mois, notre chienne Lima, et moi ! [sourire] Ma famille en Espagne me manque beaucoup, <span class="c-conn">bien sûr</span> — mes parents, mon petit frère et mon neveu de deux ans, <span class="c-conn">dont</span> je suis le parrain. Et <span class="c-conn">justement</span>, vendredi on part en Espagne <span class="c-conn">pour</span> tout l'été : juillet et août à Madrid, <span class="c-conn">en profitant des</span> vacances scolaires de mon mari. On a vraiment hâte — j'aimerais vraiment <span class="c-sub">qu'ils puissent</span> voir grandir Pablo de près.</p>
 
-      <p>Du côté professionnel, mon parcours est un peu atypique. <span class="c-past">J'ai fait</span> des études de droit et de journalisme à Madrid, <span class="c-conn">mais</span> aujourd'hui je travaille comme photographe, spécialisé dans les événements culturels : concerts, festivals, expositions d'art... C'est un métier créatif que j'aime beaucoup, <span class="c-conn">mais</span> assez instable.</p>
+      <p>Du côté professionnel, mon parcours est un peu atypique. <span class="c-past">J'ai fait</span> des études de droit et de journalisme à Madrid, <span class="c-conn">mais</span> aujourd'hui je travaille comme photographe, spécialisé dans les événements culturels : concerts, festivals, expositions d'art... C'est un métier créatif que j'aime beaucoup, <span class="c-conn">mais</span> assez instable. <span class="c-conn">C'est pour ça que j'ai décidé</span> de <span class="c-past">préparer</span> les concours <span class="c-conn">pour</span> la carrière diplomatique — et <span class="c-conn">c'est précisément pour ça que je suis ici à Bogotá</span>, <span class="c-conn">parce que</span> j'<span class="c-past">ai besoin</span> de parler le français à un très bon niveau.</p>
 
-      <p><span class="c-conn">Avec</span> l'arrivée de Pablo, on a besoin de plus de stabilité, et <span class="c-past">j'ai décidé</span> de préparer les concours <span class="c-conn">pour</span> la carrière diplomatique, <span class="c-conn">en parallèle de</span> mon travail de photographe. C'est un domaine qui me passionne <span class="c-conn">depuis longtemps</span> — et vivre à l'étranger <span class="c-past">m'a convaincu</span> que c'est vraiment ce que je veux faire.</p>
+      <p><span class="c-conn">Mais</span> ce n'est pas seulement <span class="c-conn">pour ça</span> <span class="c-conn">que</span> j'étudie le français. J'aime vraiment apprendre les langues — <span class="c-conn">c'est</span> une vraie passion pour moi. <span class="c-conn">En ce moment</span>, <span class="c-past">je suis en train d'</span>étudier le français et le portugais <span class="c-conn">en même temps</span>, et je dois avouer <span class="c-conn">que</span> parfois je les <span class="c-past">mélange</span> ! [sourire]</p>
+
+      <p><span class="c-conn">En fait</span>, les langues, les voyages et la cuisine sont mes trois grandes passions — elles sont toutes liées. <span class="c-conn">En ce qui concerne</span> la cuisine, j'adore cuisiner, <span class="c-conn">surtout</span> des plats du monde entier : géorgien, arabe, latino-américain... Bogotá est une ville très ouverte sur le monde, et <span class="c-conn">ça</span> <span class="c-past">m'a vraiment donné</span> envie d'explorer de nouvelles cuisines.</p>
+
+      <p><span class="c-conn">Mais</span> pour être honnête, mon projet principal <span class="c-conn">en ce moment</span>, <span class="c-conn">c'est</span> de me préparer pour la carrière diplomatique, et ça me <span class="c-past">demande</span> beaucoup de temps et de concentration.</p>
     </div>
   </div>
 </section>
@@ -916,11 +1041,11 @@ body.no-highlights .c-pron{
     <div class="ex"><strong>Examinateur :</strong> Parlez-moi de vos passe-temps préférés.</div>
     <div class="rep">
       <span class="name">Rubén</span>
-      <p>J'ai plusieurs passions. La cuisine <span class="c-conn">d'abord</span> — j'adore cuisiner, <span class="c-conn">surtout</span> des plats du monde entier : géorgien, arabe, latino-américain... Bogotá est une ville très ouverte sur le monde, et ça <span class="c-past">m'a vraiment donné</span> envie d'explorer de nouvelles cuisines.</p>
+      <p>J'adore apprendre de nouvelles langues : c'est une véritable passion. <span class="c-conn">En ce moment</span>, j'étudie <span class="c-conn">aussi</span> l'italien et le portugais <span class="c-conn">en même temps</span>. <span class="c-conn">D'ailleurs</span>, il m'arrive parfois de les mélanger ! [rire] <span class="c-conn">Mais</span> ça ne me dérange pas : pour moi, chaque langue est une porte vers une autre culture.</p>
 
-      <p>J'aime <span class="c-conn">aussi</span> beaucoup voyager — <span class="c-conn">de préférence</span> des destinations un peu hors des sentiers battus. <span class="c-conn">Et puis</span> il y a les langues : <span class="c-conn">en ce moment</span> j'étudie le français, l'italien et le portugais <span class="c-conn">en même temps</span>. C'est un défi ! <span class="c-conn">Donc</span> <span class="c-conn">si</span> je fais des erreurs ou si je mélange parfois, je m'en excuse d'avance. [sourire]</p>
+      <p><span class="c-conn">En fait</span>, les langues, les voyages et la cuisine sont probablement mes trois plus grandes passions — et pour moi, elles sont très liées. J'adore voyager et découvrir de nouvelles cultures, <span class="c-conn">surtout</span> loin des circuits touristiques. <span class="c-conn">Ce que</span> j'aime, c'est rencontrer les gens, comprendre leur façon de vivre… et goûter leur cuisine !</p>
 
-      <p>Et <span class="c-conn">bien sûr</span>, la photographie — <span class="c-conn">même si</span> c'est <span class="c-conn">aussi</span> mon métier, c'est avant tout une passion. C'est <span class="c-conn">d'ailleurs</span> comme ça que tout <span class="c-past">a commencé</span>.</p>
+      <p><span class="c-conn">Justement</span>, j'aime beaucoup cuisiner, <span class="c-conn">surtout</span> des plats du monde entier : géorgiens, arabes, latino-américains… Pour moi, cuisiner un plat d'un autre pays, c'est un peu comme voyager sans quitter la maison. Et vivre à Bogotá m'aide beaucoup : c'est une ville très ouverte, <span class="c-conn">où</span> on trouve des produits et des saveurs de partout.</p>
     </div>
   </div>
 </section>
@@ -1090,6 +1215,239 @@ body.no-highlights .c-pron{
       </div>
     </div>
   </details>
+</section>
+
+<!-- ============ THÈME 7 — MONOLOGUES ============ -->
+<section class="panel" data-panel="7">
+  <div class="panel-header">
+    <h2>Thème 7 · Monologues</h2>
+    <p class="subtitle">Logement, centres d'intérêt et habitudes alimentaires</p>
+  </div>
+
+  <div class="qa">
+    <div class="ex"><strong>Sujet :</strong> Mon logement</div>
+    <div class="rep">
+      <span class="name">Rubén</span>
+      <p><span class="c-conn">En ce moment</span>, j'habite à Bogotá, en Colombie, <span class="c-conn">depuis</span> plusieurs années. Je vis dans un appartement situé dans un quartier résidentiel de la ville. C'est un logement assez spacieux — il y a trois chambres, un salon, une cuisine ouverte et un petit balcon <span class="c-conn">depuis lequel</span> on peut voir une partie de la ville. Je partage cet appartement avec mon mari et notre fils Pablo, qui est encore tout petit.</p>
+
+      <p><span class="c-conn">Ce que</span> j'apprécie vraiment, <span class="c-conn">c'est que</span> l'appartement est bien situé : les transports en commun sont accessibles, et il y a des commerces pas très loin. <span class="c-conn">En revanche</span>, il y a quelques inconvénients. <span class="c-conn">Par exemple</span>, on <span class="c-past">a eu</span> des problèmes avec la cheminée d'un voisin qui produit de la fumée — c'est quelque chose qui <span class="c-past">m'a vraiment dérangé</span>, et <span class="c-past">j'ai même dû</span> envoyer une réclamation officielle à l'administration de l'immeuble. Ce n'est pas la situation idéale <span class="c-conn">quand</span> on a un bébé à la maison.</p>
+
+      <p><span class="c-conn">Avant de</span> vivre à Bogotá, <span class="c-past">j'habitais</span> à Madrid, la ville <span class="c-conn">où</span> <span class="c-past">je suis né</span>. Là-bas, mon logement <span class="c-past">était</span> plus petit, <span class="c-conn">mais</span> <span class="c-past">j'appréciais</span> beaucoup l'ambiance du quartier. Ici, en Colombie, le style de vie est différent, et l'appartement lui-même est adapté à un climat plutôt frais, <span class="c-conn">ce qui</span> est surprenant pour un pays tropical.</p>
+
+      <p><span class="c-conn">Dans l'ensemble</span>, je suis assez satisfait de mon logement actuel, <span class="c-conn">même s'</span>il faudrait <span class="c-sub">que</span> certains problèmes <span class="c-sub">soient réglés</span>. <span class="c-conn">Ce qui</span> compte le plus pour moi, <span class="c-conn">c'est que</span> mon fils <span class="c-sub">grandisse</span> dans un environnement confortable et tranquille. Et franchement, pour le moment, c'est le cas.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="ex"><strong>Sujet :</strong> Mes centres d'intérêt</div>
+    <div class="rep">
+      <span class="name">Rubén</span>
+      <p><span class="c-conn">Si</span> je <span class="c-past">devais</span> résumer mes passions en trois mots, je <span class="c-cond">dirais</span> : les voyages, la cuisine et les langues. <span class="c-conn">Ce qui</span> me fascine, <span class="c-conn">c'est que</span> ces trois domaines sont profondément liés — ils forment <span class="c-conn">en quelque sorte</span> un seul et même projet de vie.</p>
+
+      <p>Commençons par les voyages. J'adore voyager, <span class="c-conn">bien sûr</span> — découvrir des endroits nouveaux, rencontrer des gens, m'imprégner de cultures différentes. <span class="c-conn">Mais</span> <span class="c-conn">ce qui</span> me plaît autant que le voyage lui-même, <span class="c-conn">c'est</span> toute la phase de préparation. <span class="c-conn">Avant de</span> partir, je passe beaucoup de temps à rechercher des itinéraires, à lire sur l'histoire et la géographie du pays, à identifier des endroits peu fréquentés, loin des circuits touristiques habituels. Pour moi, préparer un voyage, c'est déjà commencer à voyager. <span class="c-past">J'ai eu</span> la chance de visiter plusieurs pays grâce à ma vie en Colombie, et <span class="c-conn">je prévois d'</span>aller au Canada avec ma famille l'année prochaine — un voyage que je prépare <span class="c-conn">depuis</span> déjà plusieurs mois avec beaucoup d'enthousiasme.</p>
+
+      <p>Et c'est là <span class="c-conn">qu'</span>intervient ma deuxième passion : la cuisine. <span class="c-conn">Parce que</span> <span class="c-conn">quand</span> je voyage — ou même <span class="c-conn">quand</span> je me prépare à voyager — la gastronomie est toujours au cœur de mon expérience. J'aime cuisiner, et pas seulement des plats espagnols. Je cherche à explorer des cuisines du monde entier : <span class="c-conn">en ce moment</span>, je m'intéresse beaucoup à la cuisine géorgienne et à la cuisine arabe, qui utilisent des épices et des techniques que <span class="c-past">je ne connaissais pas</span> avant. J'aime aller chercher des ingrédients un peu inhabituels, comprendre la logique derrière une recette, expérimenter. Pour moi, préparer un plat d'un pays que <span class="c-past">je n'ai pas encore visité</span>, c'est une façon de voyager sans bouger de chez soi.</p>
+
+      <p>Et c'est exactement là que les langues entrent en jeu. <span class="c-conn">Parce qu'</span>apprendre une langue, c'est aussi apprendre à voir le monde d'une autre façon — à comprendre comment les gens pensent, ce qu'ils mangent, comment ils vivent. <span class="c-conn">En ce moment</span>, j'étudie plusieurs langues en parallèle : le français de manière intensive, <span class="c-conn">puisque</span> je me prépare à un examen officiel, <span class="c-conn">mais aussi</span> l'italien, le portugais, et j'entretiens mon anglais et mon russe. C'est un équilibre qui demande de l'organisation, <span class="c-conn">mais</span> chaque langue m'ouvre une nouvelle porte — vers une culture, vers une cuisine, vers une destination.</p>
+
+      <p><span class="c-conn">En résumé</span>, pour moi, voyager, cuisiner et apprendre les langues ne sont pas trois activités séparées. Ce sont trois façons différentes de faire la même chose : s'ouvrir au monde et comprendre ce qui nous unit <span class="c-conn">malgré</span> nos différences.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="ex"><strong>Sujet :</strong> Mes habitudes alimentaires</div>
+    <div class="rep">
+      <span class="name">Rubén</span>
+      <p><span class="c-conn">En matière d'</span>alimentation, je pense que je suis quelqu'un d'assez curieux et ouvert. Je ne suis pas du genre à manger toujours les mêmes choses — j'aime expérimenter des saveurs nouvelles, des ingrédients que <span class="c-past">je ne connaissais pas</span>. C'est <span class="c-conn">d'ailleurs</span> en lien direct avec ma passion pour la cuisine internationale.</p>
+
+      <p><span class="c-conn">Au quotidien</span>, je mange assez équilibré : des légumes, des céréales, des protéines variées. <span class="c-conn">Depuis que</span> j'habite en Colombie, <span class="c-past">j'ai adopté</span> certaines habitudes locales — <span class="c-conn">par exemple</span>, je mange souvent du riz et des haricots le midi, <span class="c-conn">ce qui</span> <span class="c-past">était</span> très différent de ce que <span class="c-past">je faisais</span> en Espagne. Là-bas, <span class="c-past">je déjeunais</span> plus légèrement et <span class="c-past">je dînais</span> plus tard le soir.</p>
+
+      <p><span class="c-conn">En ce qui concerne</span> la cuisine française, je dois admettre que je ne la connais pas encore très bien dans les faits, <span class="c-conn">même si</span> j'étudie la langue. <span class="c-conn">Mais</span> parmi les plats que <span class="c-past">j'ai pu</span> goûter ou préparer, je <span class="c-cond">dirais</span> que mon préféré est probablement la ratatouille — j'aime beaucoup les plats mijotés <span class="c-conn">où</span> les légumes ont le temps de développer leurs arômes. C'est un plat qui demande de la patience, et je trouve ça valorisant. <span class="c-conn">Cela dit</span>, la soupe à l'oignon m'intrigue aussi, <span class="c-conn">ainsi que</span> le gratin dauphinois que <span class="c-past">j'ai eu</span> l'occasion de préparer une fois chez moi.</p>
+
+      <p><span class="c-conn">En résumé</span>, mes habitudes alimentaires sont le reflet de ma curiosité pour d'autres cultures. Je crois <span class="c-conn">qu'</span>on apprend beaucoup sur un peuple à travers sa façon de manger. La cuisine française, avec son attention aux produits et aux techniques, est quelque chose que <span class="c-conn">j'espère</span> explorer davantage à l'avenir — peut-être directement en France, <span class="c-conn">d'ailleurs</span>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THÈME 8 — JEU DE RÔLE ============ -->
+<section class="panel" data-panel="8">
+  <div class="panel-header">
+    <h2>Jeu de rôle · Conflits commerciaux</h2>
+    <p class="subtitle">DELF B1 · Banque de phrases mémorisables et transférables (achat / réclamation / litige)</p>
+  </div>
+
+  <div class="jr-intro">
+    <p><strong>Objectif :</strong> disposer de phrases-types réutilisables pour tout jeu de rôle de type « achat / réclamation / litige avec un vendeur ou un prestataire ».</p>
+    <p>Structure récurrente de l'examen :</p>
+    <p class="jr-flow">présenter le problème → le vendeur refuse → insister avec des arguments → négocier une issue.</p>
+  </div>
+
+  <div class="jr-section">
+    <h3><span class="jr-num">0</span> Vocabulaire-clé indispensable</h3>
+    <table class="jr-table">
+      <thead><tr><th>Français</th><th>Español</th><th>Note d'usage</th></tr></thead>
+      <tbody>
+        <tr><td>un remboursement</td><td>un reembolso</td><td><em>se faire rembourser</em> = que te devuelvan el dinero</td></tr>
+        <tr><td>un avoir</td><td>un vale / crédito de tienda</td><td>lo que el vendedor ofrecerá de verdad</td></tr>
+        <tr><td>un échange / un remplacement</td><td>un cambio / sustitución</td><td></td></tr>
+        <tr><td>le ticket de caisse / la facture</td><td>el recibo / la factura</td><td>prueba de compra</td></tr>
+        <tr><td>être sous garantie</td><td>estar en garantía</td><td><em>la garantie couvre…</em></td></tr>
+        <tr><td>un produit défectueux</td><td>un producto defectuoso</td><td></td></tr>
+        <tr><td>le service après-vente (le SAV)</td><td>servicio posventa</td><td></td></tr>
+        <tr><td>le délai de rétractation</td><td>plazo de desistimiento</td><td>14 días (compra a distancia)</td></tr>
+        <tr><td>faire un geste commercial</td><td>hacer un gesto comercial</td><td>a pedir para desbloquear</td></tr>
+        <tr><td>une association de consommateurs</td><td>asociación de consumidores</td><td>vía de escalada realista</td></tr>
+      </tbody>
+    </table>
+    <div class="jr-note tip"><span class="ic">💡</span><div><strong>Phrase or</strong> (intègre 3 termes-clés) : <em>J'ai gardé le ticket de caisse, et l'appareil est toujours sous garantie. Je suis donc en droit d'exiger un remboursement.</em></div></div>
+  </div>
+
+  <div class="jr-section">
+    <h3><span class="jr-num">1</span> Ouverture — présenter le problème</h3>
+    <ul class="jr-list">
+      <li>Je suis venu vous voir parce que je suis mécontent de mon achat, et j'aimerais que vous m'expliquiez ce qui s'est passé.</li>
+      <li>J'ai un problème avec l'article que j'ai acheté il y a [X jours], et j'aimerais qu'on trouve une solution ensemble.</li>
+      <li>Malheureusement, le produit ne correspond pas à ce qui était indiqué, et je souhaite trouver une solution avec vous.</li>
+    </ul>
+    <div class="jr-note warn"><span class="ic">⚠️</span><div>Piège hispanophone : c'est <strong>j'aimerAIS</strong> (conditionnel, politesse), jamais <em>j'aimerai</em> (futur).</div></div>
+  </div>
+
+  <div class="jr-section">
+    <h3><span class="jr-num">2</span> Exposer les faits / justifier son droit</h3>
+    <ul class="jr-list">
+      <li>Selon votre publicité, vous proposez « satisfaction garantie ou remboursée ». Je me base là-dessus.</li>
+      <li>Vu que le produit est couvert par la garantie, il devrait être remboursé, et non simplement réparé.</li>
+      <li>C'est écrit noir sur blanc dans vos conditions : remboursement total en cas de non-satisfaction.</li>
+      <li>Vous m'aviez promis un remboursement intégral si je n'étais pas satisfait. C'est exactement ma situation.</li>
+      <li>Étant donné que l'appareil ne fonctionne pas, je ne vois pas pourquoi j'accepterais un échange.</li>
+    </ul>
+  </div>
+
+  <div class="jr-section">
+    <h3><span class="jr-num">3</span> Exprimer son désaccord — insister poliment</h3>
+    <ul class="jr-list">
+      <li>Je comprends votre proposition, mais ce n'est vraiment pas ce que je recherche : je voudrais un remboursement.</li>
+      <li>Je respecte votre offre, seulement ce n'est pas ce que j'attendais. Je préfère être remboursé.</li>
+      <li>Avec tout le respect que j'ai pour votre établissement, je ne peux pas accepter un avoir. J'insiste pour un remboursement.</li>
+      <li>C'est gentil de me proposer cela, mais j'aimerais vraiment un remboursement, pas un remplacement.</li>
+      <li>Je ne veux ni avoir ni échange : je veux un remboursement sur ma carte.</li>
+    </ul>
+    <div class="jr-note warn"><span class="ic">⚠️</span><div>Évite <em>Je veux</em> sec → préfère <strong>Je souhaite / Je voudrais / J'insiste pour</strong>.</div></div>
+  </div>
+
+  <div class="jr-section">
+    <h3><span class="jr-num">4</span> Subjonctif — montrer le niveau grammatical</h3>
+    <table class="jr-table">
+      <thead><tr><th>Déclencheur</th><th>Phrase modèle</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Je suis déçu/mécontent que</strong> + subj.</td><td>Je suis déçu <span class="c-sub">que vous refusiez</span> mon remboursement, surtout qu'il y a une garantie.</td></tr>
+        <tr><td><strong>Il est normal/logique que</strong> + subj.</td><td>Il est logique <span class="c-sub">que vous me remboursiez</span>, puisque le produit ne fonctionne pas.</td></tr>
+        <tr><td><strong>Il faut que</strong> + subj.</td><td>Il faut <span class="c-sub">que vous compreniez</span> que votre publicité promettait une satisfaction garantie.</td></tr>
+        <tr><td><strong>Je ne pense pas que</strong> + subj.</td><td>Je ne pense pas <span class="c-sub">que votre solution soit</span> acceptable.</td></tr>
+        <tr><td><strong>Bien que</strong> + subj.</td><td><span class="c-sub">Bien que vous me proposiez</span> un échange, je préfère un remboursement.</td></tr>
+        <tr><td><strong>C'est dommage que</strong> + subj.</td><td>C'est dommage <span class="c-sub">que vous insistiez</span> sur l'échange alors que j'ai droit au remboursement.</td></tr>
+      </tbody>
+    </table>
+    <div class="jr-note warn"><span class="ic">⚠️</span><div>Piège : <em>Je suis déçu <strong>que</strong> vous refusiez</em> (✅), jamais <em>de ce que vous refusiez</em> (❌).</div></div>
+  </div>
+
+  <div class="jr-section">
+    <h3><span class="jr-num">5</span> Garder son calme sous pression — concession</h3>
+    <ul class="jr-list">
+      <li>Je comprends parfaitement votre position, cependant je dois maintenir ma demande de remboursement.</li>
+      <li>Je vous écoute, mais je suis obligé d'insister : c'est une question de principe.</li>
+      <li>Vous avez raison sur ce point, néanmoins cela ne change rien à mon droit au remboursement.</li>
+      <li>Je suis raisonnable, mais vous comprendrez que je ne peux pas laisser passer cela.</li>
+      <li>Si je comprends votre situation, cela n'excuse pas le fait que je doive être remboursé.</li>
+    </ul>
+  </div>
+
+  <div class="jr-section">
+    <h3><span class="jr-num">6</span> Gambits oraux — gestion du dialogue</h3>
+    <table class="jr-table">
+      <thead><tr><th>Fonction</th><th>Expression</th></tr></thead>
+      <tbody>
+        <tr><td>Gagner du temps / démarrer</td><td><em>Écoutez… / Bon, alors… / En fait,…</em></td></tr>
+        <tr><td>Reformuler</td><td><em>C'est-à-dire que… / Ce que je veux dire, c'est que…</em></td></tr>
+        <tr><td>Montrer qu'on écoute</td><td><em>Oui, je vois ce que vous voulez dire, mais…</em></td></tr>
+        <tr><td>Relancer son argument</td><td><em>Justement, c'est là le problème.</em></td></tr>
+        <tr><td>Demander de répéter</td><td><em>Pardon, pouvez-vous répéter ? Je n'ai pas bien compris.</em></td></tr>
+      </tbody>
+    </table>
+    <div class="jr-note tip"><span class="ic">💡</span><div>Demander une clarification <strong>fait gagner des points</strong> (gestion de la communication), ça n'en fait pas perdre.</div></div>
+  </div>
+
+  <div class="jr-section">
+    <h3><span class="jr-num">7</span> Escalade — si le vendeur persiste</h3>
+    <ul class="jr-list">
+      <li>Si vous continuez à refuser, je serai obligé de contacter une association de consommateurs.</li>
+      <li>Je regretterai vraiment de devoir signaler cette pratique.</li>
+      <li>Si vous ne me remboursez pas, il faudra que j'envisage d'autres recours.</li>
+      <li>Vous me forcez à aller plus loin, ce qui est franchement dommage.</li>
+    </ul>
+  </div>
+
+  <div class="jr-section">
+    <h3><span class="jr-num">8</span> Négocier une issue — profil de note haute</h3>
+    <div class="jr-note goal"><span class="ic">🎯</span><div>L'examinateur attend que tu <strong>négocies</strong>, pas que tu « gagnes ». Après 2-3 refus, propose TOI une sortie.</div></div>
+    <ul class="jr-list">
+      <li>Bon, écoutez : si le remboursement immédiat est impossible, est-ce qu'on pourrait au moins convenir d'un remboursement sous quinze jours ? Ça me semblerait raisonnable.</li>
+      <li>Je suis prêt à faire un effort : un remboursement partiel maintenant et le reste plus tard, est-ce envisageable ?</li>
+      <li>Pourriez-vous au moins me faire un geste commercial pour compenser ?</li>
+    </ul>
+  </div>
+
+  <div class="jr-section">
+    <h3><span class="jr-num">9</span> Clôture</h3>
+    <ul class="jr-list">
+      <li>Bien, si vous maintenez cette position, je vais devoir explorer d'autres options.</li>
+      <li>Je regrette vraiment que nous ne puissions pas nous mettre d'accord, mais je dois défendre mes droits.</li>
+      <li>En résumé : j'étais un client satisfait jusqu'à ce problème, et je demande simplement un remboursement, conformément à vos propres conditions.</li>
+      <li>Voilà. J'espère que vous reconsidérerez. Sinon, je n'aurai pas d'autre choix.</li>
+    </ul>
+  </div>
+
+  <div class="jr-section">
+    <h3><span class="jr-num">10</span> Trame universelle (mémoriser l'ordre)</h3>
+    <table class="jr-table">
+      <thead><tr><th>Phase</th><th>Exemple court</th><th>Fonction</th></tr></thead>
+      <tbody>
+        <tr><td>1. Ouverture</td><td><em>Je suis venu parce que j'ai un problème avec…</em></td><td>poser le problème</td></tr>
+        <tr><td>2. Faits</td><td><em>Selon votre publicité / La garantie couvre…</em></td><td>justifier</td></tr>
+        <tr><td>3. Désaccord</td><td><em>Je comprends, mais je dois insister…</em></td><td>refuser poliment</td></tr>
+        <tr><td>4. Subjonctif</td><td><em>Il est normal que… / C'est dommage que…</em></td><td>niveau grammatical</td></tr>
+        <tr><td>5. Argument fort</td><td><em>C'est écrit noir sur blanc…</em></td><td>verrouiller</td></tr>
+        <tr><td>6. Escalade</td><td><em>Si vous refusez, je devrai…</em></td><td>montrer le sérieux</td></tr>
+        <tr><td>7. Négociation</td><td><em>On pourrait convenir de…</em></td><td>maturité communicative</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="jr-section">
+    <h3><span class="jr-num">11</span> À éviter (baisse la note)</h3>
+    <table class="jr-table">
+      <thead><tr><th>❌ Éviter</th><th>✅ Préférer</th></tr></thead>
+      <tbody>
+        <tr><td class="x">C'est pas possible / c'est pas juste</td><td class="v">C'est inacceptable / Ce n'est pas juste</td></tr>
+        <tr><td class="x">Je veux absolument</td><td class="v">Je souhaite / J'insiste pour</td></tr>
+        <tr><td class="x">OK, d'accord (trop soumis en négo)</td><td class="v">Je comprends, néanmoins…</td></tr>
+        <tr><td class="x">J'en sais rien</td><td class="v">Je ne suis pas responsable de cela, mais…</td></tr>
+        <tr><td class="x">Répéter 3× la même phrase</td><td class="v">Varier : subjonctif → argument → négociation</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="jr-section">
+    <h3><span class="jr-num">12</span> Critères d'évaluation visés</h3>
+    <ul class="jr-check">
+      <li><strong>Comprendre la situation</strong> (compréhension)</li>
+      <li><strong>Parler sans longues pauses</strong> (fluidité) → gambits du §6</li>
+      <li><strong>Lexique varié et précis</strong> → vocabulaire du §0</li>
+      <li><strong>Phrases complexes</strong> → 1-2 subjonctifs naturels (§4)</li>
+      <li><strong>Argumenter de façon cohérente</strong> (interaction)</li>
+      <li><strong>Négocier une issue</strong> (§8) plutôt que de bloquer</li>
+    </ul>
+  </div>
 </section>
 
 </main>
