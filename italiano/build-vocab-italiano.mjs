@@ -104,6 +104,20 @@ const oldPre = `[{"w":"Il convient de rappeler que…","t":"Conviene recordar qu
 const newPre = `[{"w":"affrontare","t":"afrontar","tema":"General","cat":"Verbo","nivel":"B2","ex_fr":"Non è facile affrontare una situazione così difficile.","ex_es":"No es fácil afrontar una situación tan difícil.","warn":null,"syn":"fronteggiare","flags":{"top":false,"oral":false}}]`;
 rep(oldPre, newPre, 1);
 
+// PWA offline: manifest + metas apple + registro del service worker
+rep('<meta name="viewport" content="width=device-width, initial-scale=1.0">',
+  '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n'
+  + '<link rel="manifest" href="../manifest.webmanifest">\n'
+  + '<link rel="apple-touch-icon" href="../apple-touch-icon.png">\n'
+  + '<meta name="apple-mobile-web-app-capable" content="yes">\n'
+  + '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\n'
+  + '<meta name="apple-mobile-web-app-title" content="Vocabolario">\n'
+  + '<meta name="mobile-web-app-capable" content="yes">\n'
+  + '<meta name="theme-color" content="#7a1a2d">', 1);
+rep('</body></html>',
+  '<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){'
+  + 'navigator.serviceWorker.register("../sw.js",{scope:"../"}).catch(function(){});});}</script>\n</body></html>', 1);
+
 // ---- aplicar con verificación ----
 for (const [find, replace, n] of reps) {
   const count = out.split(find).length - 1;
