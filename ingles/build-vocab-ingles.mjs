@@ -113,6 +113,9 @@ rep('</body></html>',
   '<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){'
   + 'navigator.serviceWorker.register("../sw.js",{scope:"../"}).catch(function(){});});}</script>\n</body></html>', 1);
 
+// 12) "Top B1" -> "Top" (niveles A2–C2: "Top B1" no aplica al inglés)
+rep('Top B1', 'Top', 12);
+
 // aplicar con verificación
 for (const [f, r, n] of reps) {
   const count = out.split(f).length - 1;
