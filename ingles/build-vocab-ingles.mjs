@@ -42,6 +42,10 @@ rep('"srs_hard_mode"', '"ingl_srs_hard_mode"', 2);
 rep('"srsFullscreen"', '"ingl_srsFullscreen"', 2);
 rep('"mgmt_unlocked"', '"ingl_mgmt_unlocked"', 2);
 rep("var APP_ID        = 'frances';", "var APP_ID        = 'ingles';", 1);
+// Claves de PERFIL globales: compartidas con index.html (que las fija), para no
+// entrar en bucle de selección de perfil. El progreso sí va por idioma (ingl_).
+rep('ingl_active_profile', 'delf_active_profile', 1);
+rep('ingl_profile_unlocked', 'delf_profile_unlocked', 1);
 
 // 5) etiquetas UI
 rep('>▶ Francés<', '>▶ Inglés<', 1);

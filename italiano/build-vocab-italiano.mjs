@@ -51,6 +51,11 @@ rep('"srsFullscreen"', '"ital_srsFullscreen"', 2);
 rep('"mgmt_unlocked"', '"ital_mgmt_unlocked"', 2);
 // APP_ID (namespacing nube)
 rep("var APP_ID        = 'frances';", "var APP_ID        = 'italiano';", 1);
+// Claves de PERFIL globales: compartidas con index.html (que las fija). El progreso
+// sí va por idioma; pero el perfil activo/desbloqueo es el mismo en todo el sitio,
+// si no, el índice fija delf_active_profile y la página lee otra clave -> bucle.
+rep('ital_active_profile', 'delf_active_profile', 1);
+rep('ital_profile_unlocked', 'delf_profile_unlocked', 1);
 
 // etiquetas de UI fr -> it
 rep('>▶ Francés<', '>▶ Italiano<', 1);
