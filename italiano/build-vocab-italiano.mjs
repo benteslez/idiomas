@@ -8,7 +8,9 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const FR = '/Users/Ruben/Documents/GitHub/idiomas/frances/vocabulario.html';
+// Ruta al template (vocabulario francés) relativa al repo para que el script
+// funcione en cualquier checkout — antes apuntaba a /Users/Ruben/… absoluto.
+const FR = join(__dirname, '../frances/vocabulario.html');
 const src = readFileSync(FR, 'utf8');
 const data = JSON.parse(readFileSync(join(__dirname, 'vocab-italiano.json'), 'utf8'));
 
