@@ -33,7 +33,16 @@ rep('<h1>Vocabulaire</h1>', '<h1>Vocabulário</h1>', 1);
 
 // ordenación + TTS
 rep('"fr")', '"pt")', 3);
+// TTS: además de u.lang, hay que reemplazar el selector de voz (ttsPickVoice)
+// y el texto del aviso. Si no, aunque u.lang sea pt-BR, u.voice = TTS_VOICE
+// fuerza una voz francesa filtrada por regex y todo se lee en francés.
 rep('u.lang = "fr-FR"', 'u.lang = "pt-BR"', 1);
+rep('var fr = voices.filter(function(v) { return /^fr[-_]?FR/i.test(v.lang); });',
+    'var fr = voices.filter(function(v) { return /^pt[-_]?BR/i.test(v.lang); });', 1);
+rep('if (!fr.length) fr = voices.filter(function(v) { return /^fr([-_]|$)/i.test(v.lang); });',
+    'if (!fr.length) fr = voices.filter(function(v) { return /^pt([-_]|$)/i.test(v.lang); });', 1);
+rep('No hay voz francesa instalada', 'No hay voz portuguesa instalada', 1);
+rep('Voces &rsaquo; Francés', 'Voces &rsaquo; Portugués', 1);
 
 // almacenamiento independiente
 rep('delf_', 'port_', 28);

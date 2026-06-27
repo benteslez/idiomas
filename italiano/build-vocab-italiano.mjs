@@ -40,8 +40,16 @@ rep('<h1>Vocabulaire</h1>', '<h1>Vocabolario</h1>', 1);
 
 // ordenación local-aware (3 localeCompare)
 rep('"fr")', '"it")', 3);
-// TTS
+// TTS: además de u.lang, hay que reemplazar el selector de voz (ttsPickVoice)
+// y el texto del aviso. Si no, aunque u.lang sea it-IT, u.voice = TTS_VOICE
+// fuerza una voz francesa filtrada por regex y todo se lee en francés.
 rep('u.lang = "fr-FR"', 'u.lang = "it-IT"', 1);
+rep('var fr = voices.filter(function(v) { return /^fr[-_]?FR/i.test(v.lang); });',
+    'var fr = voices.filter(function(v) { return /^it[-_]?IT/i.test(v.lang); });', 1);
+rep('if (!fr.length) fr = voices.filter(function(v) { return /^fr([-_]|$)/i.test(v.lang); });',
+    'if (!fr.length) fr = voices.filter(function(v) { return /^it([-_]|$)/i.test(v.lang); });', 1);
+rep('No hay voz francesa instalada', 'No hay voz italiana instalada', 1);
+rep('Voces &rsaquo; Francés', 'Voces &rsaquo; Italiano', 1);
 
 // claves localStorage independientes del francés
 rep('delf_', 'ital_', 28);
