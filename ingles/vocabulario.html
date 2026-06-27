@@ -1,7 +1,6 @@
 <html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style id="ios-zoom-fix">html{touch-action:manipulation}html,body{overscroll-behavior:none;-webkit-overflow-scrolling:touch}@media (max-width:768px){input:not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select{font-size:16px!important}}</style>
 <link rel="manifest" href="../manifest.webmanifest">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -9,6 +8,7 @@
 <meta name="apple-mobile-web-app-title" content="Vocabulary">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#163494">
+<style id="ios-zoom-fix">html{touch-action:manipulation}html,body{overscroll-behavior:none;-webkit-overflow-scrolling:touch}@media (max-width:768px){input:not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select{font-size:16px!important}}</style>
 <title>Vocabulary · Inglés A2–C2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -2142,7 +2142,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   justify-content: center;
 }
 #srsOverlay.fullscreen .srs-card {
-  width: min(720px, 94vw);
+  max-width: 720px;
   padding: 32px 36px 28px;
   margin-bottom: 22px;
 }
@@ -2155,7 +2155,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 }
 #srsOverlay.fullscreen .srs-ex-fr { font-size: 1rem; }
 #srsOverlay.fullscreen .srs-ex-es { font-size: 0.92rem; }
-#srsOverlay.fullscreen .srs-rating-row { width: min(720px, 94vw); gap: 12px; }
+#srsOverlay.fullscreen .srs-rating-row { max-width: 720px; gap: 12px; }
 #srsOverlay.fullscreen .btn-srs-rate { min-height: 70px; }
 #srsOverlay.fullscreen .btn-srs-rate .srs-rate-icon { font-size: 1.25rem; }
 #srsOverlay.fullscreen .btn-srs-rate .srs-rate-label { font-size: 0.94rem; }
@@ -2191,7 +2191,10 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  width: min(540px, 96vw);
+  /* width 100% para respetar el padding lateral del .srs-stage (antes 96vw
+     hacía overflow lateral en pantallas estrechas — iPhone). */
+  width: 100%; max-width: 540px;
+  box-sizing: border-box;
   padding: 28px 26px 24px;
   position: relative;
   margin-bottom: 20px;
@@ -2393,8 +2396,12 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 .srs-rating-row {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  width: min(540px, 96vw);
+  /* width 100% (respeta el padding lateral 20px del .srs-stage)
+     + max-width 540px en pantallas grandes. Antes 96vw + padding del stage
+     hacía overflow → el botón Fácil quedaba clipeado por la derecha. */
+  width: 100%; max-width: 540px;
   margin: 0 auto;
+  box-sizing: border-box;
   overflow: hidden;
   max-height: 0;
   opacity: 0;
@@ -2432,7 +2439,7 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 /* Modo difícil: input obligatorio cuando se pulsa "No lo sé" */
 .srs-hard-input-row {
   display: none; flex-direction: column; align-items: stretch; gap: 10px;
-  width: min(540px, 96vw); margin: 0 auto;
+  width: 100%; max-width: 540px; margin: 0 auto; box-sizing: border-box;
 }
 .srs-hard-input-row.show { display: flex; }
 .srs-hard-prompt {
