@@ -1225,6 +1225,11 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 .card-reg-Neutro  { color: #2d6b2d; border-color: #2d6b2d; background: #f0faf0; }
 .card-reg-Formal  { color: #1a3a8b; border-color: #1a3a8b; background: #eaf0ff; }
 .card-reg-Familiar { color: #8b3a1a; border-color: #8b3a1a; background: #fff0ea; }
+.card-reg-Literario { color: #5b218b; border-color: #5b218b; background: #f5edff; }
+.card-reg-Coloquial { color: #8b5a1a; border-color: #8b5a1a; background: #fff5e6; }
+.card-reg-Jurídico { color: #1a4a5e; border-color: #1a4a5e; background: #e6f0f5; }
+.card-reg-Técnico { color: #44475a; border-color: #44475a; background: #eef0f4; }
+.card-reg-Vulgar { color: #8b1a3a; border-color: #8b1a3a; background: #ffeaf0; }
 .fn-meta-row {
   display: flex; flex-wrap: wrap; gap: 5px; align-items: center;
   padding: 0 0 4px 0;
@@ -2073,6 +2078,20 @@ mark.hl { background: #fff176; border-radius: 2px; padding: 0 1px; }
 }
 .btn-srs-close:hover, .btn-srs-undo:hover:not(:disabled) { background: var(--bg); }
 .btn-srs-undo:disabled { opacity: 0.35; cursor: not-allowed; }
+/* Botón de "Volver a la anterior" debajo de la tarjeta — más accesible al
+   pulgar en móvil que el que vive en la topbar (que sigue ahí como atajo
+   secundario). Mismo handler srsUndo(), mismo estado disabled. */
+.srs-undo-below-row { display: flex; justify-content: center; margin-top: 10px; }
+.btn-srs-undo-below {
+  appearance: none; cursor: pointer;
+  background: transparent; border: 1px solid var(--border);
+  border-radius: 20px; padding: 9px 22px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.86rem; font-weight: 600;
+  color: var(--text2); transition: all 0.15s; white-space: nowrap;
+  min-width: 180px;
+}
+.btn-srs-undo-below:hover:not(:disabled) { background: var(--bg); border-color: var(--accent-mid); color: var(--accent); }
+.btn-srs-undo-below:disabled { opacity: 0.35; cursor: not-allowed; }
 .btn-srs-save-exit {
   border-color: #2d7a3a; color: #1a5a22; font-weight: 600;
   background: #eaffea;
@@ -3301,6 +3320,9 @@ body.profile-guest #btnSrsResExport {
         <span class="srs-rate-label">Fácil</span>
         <span class="srs-rate-interval" id="srsIntYes">mañana</span>
       </button>
+    </div>
+    <div class="srs-undo-below-row">
+      <button class="btn-srs-undo-below" id="btnSrsUndoBelow" type="button" title="Volver a la tarjeta anterior (Z o -)" disabled="">↶ Volver a la anterior</button>
     </div>
     <div class="srs-hard-input-row" id="srsHardInputRow">
       <div class="srs-hard-prompt">✍️ Escribe la palabra en portugués para continuar (con acentos)</div>
@@ -38276,6 +38298,8 @@ function srsUpdateUndoBtn() {
   if (btn) btn.disabled = disabled;
   var btnFs = document.getElementById("btnSrsUndoFs");
   if (btnFs) btnFs.disabled = disabled;
+  var btnBelow = document.getElementById("btnSrsUndoBelow");
+  if (btnBelow) btnBelow.disabled = disabled;
 }
 
 function srsUndo() {
@@ -38922,6 +38946,8 @@ function initSRSAddon() {
   document.getElementById("btnSrsExit").addEventListener("click", srsExitSession);
   document.getElementById("btnSrsSaveExit").addEventListener("click", srsExitAndSave);
   document.getElementById("btnSrsUndo").addEventListener("click", srsUndo);
+  var btnUndoBelow = document.getElementById("btnSrsUndoBelow");
+  if (btnUndoBelow) btnUndoBelow.addEventListener("click", srsUndo);
   document.getElementById("btnSrsReveal").addEventListener("click", srsReveal);
   var btnUndoFs = document.getElementById("btnSrsUndoFs");
   if (btnUndoFs) btnUndoFs.addEventListener("click", srsUndo);
