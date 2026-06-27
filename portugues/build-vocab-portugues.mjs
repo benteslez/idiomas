@@ -8,7 +8,9 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const FR = '/Users/Ruben/Documents/GitHub/idiomas/frances/vocabulario.html';
+// Ruta al template (vocabulario francés) relativa al repo — antes apuntaba a
+// /Users/Ruben/… absoluto, que rompe cualquier rebuild fuera de esa máquina.
+const FR = join(__dirname, '../frances/vocabulario.html');
 const src = readFileSync(FR, 'utf8');
 const data = JSON.parse(readFileSync(join(__dirname, 'vocab-portugues.json'), 'utf8'));
 
@@ -112,9 +114,9 @@ rep('<meta name="viewport" content="width=device-width, initial-scale=1.0">',
   + '<meta name="apple-mobile-web-app-title" content="Vocabulário">\n'
   + '<meta name="mobile-web-app-capable" content="yes">\n'
   + '<meta name="theme-color" content="#8b4a0a">', 1);
-rep('</body></html>',
-  '<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){'
-  + 'navigator.serviceWorker.register("../sw.js",{scope:"../"}).catch(function(){});});}</script>\n</body></html>', 1);
+// (El snippet de registro del SW ya viene heredado del template francés con la
+// misma ruta relativa '../sw.js' y el mismo scope, así que no hace falta
+// re-añadirlo aquí — re-añadirlo dejaba el snippet DUPLICADO al final del body.)
 
 for (const [f, r, n] of reps) {
   const count = out.split(f).length - 1;
