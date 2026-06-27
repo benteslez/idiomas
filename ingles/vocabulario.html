@@ -3260,7 +3260,6 @@ body.profile-guest #btnSrsResExport {
 <!-- ═══ OVERLAY SESIÓN SRS ═══ -->
 <div id="srsOverlay" class="">
   <div class="srs-topbar">
-    <button class="btn-srs-undo" id="btnSrsUndo" type="button" title="Volver a la tarjeta anterior (Z o -)" disabled="">↶ Volver</button>
     <div class="srs-title">🧠 Repaso SRS</div>
     <div class="srs-counter">Tarjeta <strong id="srsCounterCur">1</strong> de <strong id="srsCounterTot">43</strong></div>
     <div class="srs-tema-chip" id="srsTemaChip">Falsos amigos</div>
@@ -3271,7 +3270,6 @@ body.profile-guest #btnSrsResExport {
   </div>
   <div class="srs-fs-bar">
     <span class="srs-fs-counter" id="srsCounterFs"><strong>1</strong>/<strong>43</strong></span>
-    <button class="btn-srs-fs" id="btnSrsUndoFs" type="button" title="Volver a la tarjeta anterior (Z o -)" disabled="" style="background:var(--card);border-color:var(--border);">↶ Volver</button>
     <button class="btn-srs-fs" id="btnSrsExitFullscreen" type="button" title="Mostrar menú" style="background:var(--card);border-color:var(--border);">⇗ Mostrar menú</button>
   </div>
   <div class="srs-progress-bar"><div class="srs-progress-fill" id="srsProgressFill" style="width: 0%;"></div></div>
@@ -92631,10 +92629,6 @@ function srsStartSession() {
 
 function srsUpdateUndoBtn() {
   var disabled = srsSession.results.length === 0 || srsSession.advancing;
-  var btn = document.getElementById("btnSrsUndo");
-  if (btn) btn.disabled = disabled;
-  var btnFs = document.getElementById("btnSrsUndoFs");
-  if (btnFs) btnFs.disabled = disabled;
   var btnBelow = document.getElementById("btnSrsUndoBelow");
   if (btnBelow) btnBelow.disabled = disabled;
 }
@@ -92721,6 +92715,15 @@ function srsRenderCurrentCard() {
     c2.className = "srs-chip";
     c2.textContent = card.nivel;
     chipsEl.appendChild(c2);
+  }
+  // Chip de registro (Formal, Literario, Coloquial, Jurídico, Técnico, Vulgar…)
+  // reusa las clases .card-reg-* ya definidas para la rejilla principal,
+  // así el color del chip coincide con el del registro.
+  if (card.reg) {
+    var cReg = document.createElement("span");
+    cReg.className = "srs-chip card-reg card-reg-" + card.reg;
+    cReg.textContent = card.reg;
+    chipsEl.appendChild(cReg);
   }
   if (!card.srs) {
     var c3 = document.createElement("span");
@@ -93282,12 +93285,9 @@ function initSRSAddon() {
   // Overlay sesión
   document.getElementById("btnSrsExit").addEventListener("click", srsExitSession);
   document.getElementById("btnSrsSaveExit").addEventListener("click", srsExitAndSave);
-  document.getElementById("btnSrsUndo").addEventListener("click", srsUndo);
   var btnUndoBelow = document.getElementById("btnSrsUndoBelow");
   if (btnUndoBelow) btnUndoBelow.addEventListener("click", srsUndo);
   document.getElementById("btnSrsReveal").addEventListener("click", srsReveal);
-  var btnUndoFs = document.getElementById("btnSrsUndoFs");
-  if (btnUndoFs) btnUndoFs.addEventListener("click", srsUndo);
   var srsTtsBtnInit = document.getElementById("srsTtsBtn");
   if (srsTtsBtnInit) {
     srsTtsBtnInit.addEventListener("click", function(e) {
