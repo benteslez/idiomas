@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style id="ios-zoom-fix">html{touch-action:manipulation}html,body{overscroll-behavior:none;-webkit-overflow-scrolling:touch}@media (max-width:768px){input:not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select{font-size:16px!important}}</style>
+<title>Parcours · Choisis ton niveau</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafafa; --surface:#ffffff; --border:#e5e5e5; --border-strong:#d4d4d4;
+  --text:#0a0a0a; --text2:#525252; --text3:#737373;
+  --accent:#2563eb; --accent-soft:#dbeafe;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.04);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.05),0 1px 2px rgba(0,0,0,.04);
+  --shadow:0 4px 16px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+}
+[data-theme="dark"]{
+  --bg:#0a0a0b; --surface:#18181b; --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --accent:#60a5fa; --accent-soft:rgba(96,165,250,.15);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
+.site-header{background:var(--surface);border-bottom:1px solid var(--border);padding:24px 20px 22px;position:relative;}
+.header-inner{max-width:900px;margin:0 auto;position:relative;}
+.hdr-tools{position:absolute;top:0;right:0;display:flex;gap:6px;}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--bg);border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .15s;font-size:.95rem;}
+.theme-toggle:hover{border-color:var(--border-strong);color:var(--text);}
+.theme-toggle::before{content:"◐";line-height:1;}
+[data-theme="dark"] .theme-toggle::before{content:"☼";}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px 5px 9px;font-size:.78rem;font-weight:600;color:var(--text2);text-decoration:none;transition:all .15s;box-shadow:var(--shadow-xs);margin-bottom:12px;}
+.back-btn:hover{border-color:var(--border-strong);color:var(--text);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+.header-top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
+h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
+.header-tag{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:100px;padding:3px 10px;}
+.header-sub{font-size:.84rem;color:var(--text3);font-weight:500;margin-top:6px;max-width:640px;line-height:1.5;}
+.main{max-width:900px;margin:0 auto;padding:34px 20px 80px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+.book{position:relative;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:18px;padding:22px 22px 20px;background:var(--surface);text-decoration:none;color:inherit;box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s,border-color .2s;overflow:hidden;}
+.book::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--bk,var(--accent));}
+.book.live:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--bk);}
+.book.soon{opacity:.6;cursor:not-allowed;}
+.book-top{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.book-badge{font-size:1.1rem;font-weight:800;letter-spacing:-.02em;color:#fff;background:var(--bk);border-radius:10px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;}
+.book-cefr{font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--bk);background:color-mix(in srgb,var(--bk) 14%,transparent);border-radius:100px;padding:3px 10px;}
+.book-state{margin-left:auto;font-size:.64rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:100px;}
+.book-state.on{color:#15803d;background:rgba(21,128,61,.12);}
+.book-state.new{color:#fff;background:var(--bk);}
+.book-state.wait{color:var(--text3);background:var(--bg);border:1px solid var(--border);}
+.book h2{font-size:1.12rem;font-weight:800;letter-spacing:-.015em;margin-bottom:5px;}
+.book p{font-size:.82rem;color:var(--text2);line-height:1.5;margin-bottom:14px;}
+.book-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;}
+.book-tag{font-size:.68rem;font-weight:600;color:var(--text2);background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:2px 9px;}
+.book-cta{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:.8rem;font-weight:700;color:var(--bk);}
+.book-prog{margin-top:12px;}
+.book-prog .pbar{height:5px;background:var(--border);border-radius:100px;overflow:hidden;}
+.book-prog .pfill{height:100%;background:var(--bk);border-radius:100px;transition:width .4s;}
+.book-prog .ptxt{font-size:.7rem;color:var(--text3);font-weight:600;margin-top:5px;font-variant-numeric:tabular-nums;}
+.note{margin-top:30px;font-size:.78rem;color:var(--text3);line-height:1.6;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.note strong{color:var(--text2);}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="hdr-tools">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Cambiar tema" aria-label="Cambiar tema"></button>
+    </div>
+    <a class="back-btn" href="../index.html"><span class="arrow">‹</span><span>Français</span></a>
+    <div class="header-top">
+      <h1>Parcours</h1>
+      <span class="header-tag">Choisis ton niveau</span>
+    </div>
+    <p class="header-sub">Cuatro libros de estudio autónomos, del B1 al C2. Cada nivel es un camino completo con léxico, gramática, expresiones y ejercicios autocorregibles que funcionan <strong>sin conexión y sin IA</strong>. Tu progreso se guarda por perfil, separado en cada libro.</p>
+  </div>
+</header>
+
+<main class="main">
+  <div class="grid">
+
+    <!-- B1 -->
+    <a class="book live" href="index.html" style="--bk:#0d9488;">
+      <div class="book-top">
+        <span class="book-badge">B1</span>
+        <span class="book-cefr">Seuil</span>
+        <span class="book-state on">Disponible</span>
+      </div>
+      <h2>DELF B1 · sobrevivir y narrar</h2>
+      <p>17 leçons en 6 dossiers: contar, pedir, gestionar imprevistos. Léxico cotidiano, subjonctif básico, hypothèse, passé composé/imparfait y examen blanco.</p>
+      <div class="book-tags">
+        <span class="book-tag">17 leçons</span>
+        <span class="book-tag">flashcards</span>
+        <span class="book-tag">examen blanc</span>
+        <span class="book-tag">carnet d'erreurs</span>
+      </div>
+      <div class="book-prog" data-prog="parcours_b1_state" data-total="17">
+        <div class="pbar"><div class="pfill" style="width:0%"></div></div>
+        <div class="ptxt">0 / 17 leçons</div>
+      </div>
+      <span class="book-cta">Ouvrir le livre B1 →</span>
+    </a>
+
+    <!-- B2 -->
+    <a class="book live" href="index_b2.html" style="--bk:#2563eb;">
+      <div class="book-top">
+        <span class="book-badge">B2</span>
+        <span class="book-cefr">Avancé</span>
+        <span class="book-state new">Nouveau</span>
+      </div>
+      <h2>DELF B2 · argumentar y matizar</h2>
+      <p>El salto a la abstracción: defender una tesis, matizar la certeza, conceder y refutar. Subjonctif pleno, hypothèse, discours indirect, modalisation, connecteurs cultes y las 4 épreuves 2026.</p>
+      <div class="book-tags">
+        <span class="book-tag">8 unités</span>
+        <span class="book-tag">argumentation</span>
+        <span class="book-tag">modalisation</span>
+        <span class="book-tag">phonétique</span>
+      </div>
+      <div class="book-prog" data-prog="parcours_b2_state" data-total="8">
+        <div class="pbar"><div class="pfill" style="width:0%"></div></div>
+        <div class="ptxt">0 / 8 unités</div>
+      </div>
+      <span class="book-cta">Ouvrir le livre B2 →</span>
+    </a>
+
+    <!-- C1 -->
+    <div class="book soon" style="--bk:#7c3aed;" aria-disabled="true">
+      <div class="book-top">
+        <span class="book-badge">C1</span>
+        <span class="book-cefr">Autonome</span>
+        <span class="book-state wait">Bientôt</span>
+      </div>
+      <h2>DALF C1 · convaincre avec aisance</h2>
+      <p>Discurso fluido y espontáneo sobre temas complejos, síntesis de documentos, registro flexible e ironía. En preparación.</p>
+      <div class="book-tags">
+        <span class="book-tag">synthèse</span>
+        <span class="book-tag">exposé</span>
+        <span class="book-tag">nuances</span>
+      </div>
+      <span class="book-cta" style="opacity:.7;">En préparation</span>
+    </div>
+
+    <!-- C2 -->
+    <div class="book soon" style="--bk:#e11d48;" aria-disabled="true">
+      <div class="book-top">
+        <span class="book-badge">C2</span>
+        <span class="book-cefr">Maîtrise</span>
+        <span class="book-state wait">Bientôt</span>
+      </div>
+      <h2>DALF C2 · précision native</h2>
+      <p>Dominio casi nativo: matiz sutil, estilística, reformulación experta y argumentación de alto nivel. En preparación.</p>
+      <div class="book-tags">
+        <span class="book-tag">stylistique</span>
+        <span class="book-tag">idiomes</span>
+        <span class="book-tag">registres</span>
+      </div>
+      <span class="book-cta" style="opacity:.7;">En préparation</span>
+    </div>
+
+  </div>
+
+  <div class="note">
+    <strong>¿Por dónde empezar?</strong> Si apruebas con soltura el examen blanco del B1, pasa al B2. El libro B2 asume la base del B1 consolidada y no la repite: se centra en <strong>densidad argumentativa, precisión, registro y fluidez</strong> — el verdadero salto del DELF B2.
+  </div>
+</main>
+
+<script>
+// Theme toggle (compartido con el resto del Parcours)
+const LS_THEME='parcours_theme';
+function applyTheme(t){document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'');}
+let saved='light';try{saved=localStorage.getItem(LS_THEME)||'light';}catch(e){}
+applyTheme(saved);
+document.getElementById('themeToggle').addEventListener('click',()=>{
+  const cur=document.documentElement.getAttribute('data-theme')==='dark'?'dark':'light';
+  const next=cur==='dark'?'light':'dark';applyTheme(next);
+  try{localStorage.setItem(LS_THEME,next);}catch(e){}
+});
+// Progreso local de cada libro (lee el estado guardado por perfil)
+document.querySelectorAll('.book-prog').forEach(box=>{
+  try{
+    const st=JSON.parse(localStorage.getItem(box.dataset.prog)||'{}');
+    const done=(st.done||[]).length;
+    const total=+box.dataset.total;
+    const pct=total?Math.round(done/total*100):0;
+    box.querySelector('.pfill').style.width=pct+'%';
+    const unit=total===17?'leçons':'unités';
+    box.querySelector('.ptxt').textContent=done+' / '+total+' '+unit;
+  }catch(e){}
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style id="ios-zoom-fix">html{touch-action:manipulation}html,body{overscroll-behavior:none;-webkit-overflow-scrolling:touch}@media (max-width:768px){input:not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select{font-size:16px!important}}</style>
+<title>Parcours B2 · Camino de estudio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+.hdr-profile-row{position:absolute;top:0;right:0;display:flex;align-items:center;}
+.hdr-profile-pill{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:4px 11px 4px 4px;font-family:inherit;font-size:.75rem;font-weight:600;color:var(--text2);box-shadow:var(--shadow-xs);cursor:pointer;transition:all .15s;}
+.hdr-profile-pill:hover{background:var(--bg);border-color:var(--border-strong);color:var(--text);}
+.hdr-profile-pill .pp-avatar{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem;}
+.hdr-profile-pill[data-profile="ruben"] .pp-avatar{background:var(--accent);}
+.hdr-profile-pill[data-profile="sergio"] .pp-avatar{background:#7c3aed;}
+.hdr-profile-pill[data-profile="invitado"] .pp-avatar{background:var(--text3);}
+.hdr-profile-pill .pp-switch{font-size:.6rem;color:var(--text3);margin-left:2px;}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .15s;margin-right:6px;font-size:.95rem;}
+.theme-toggle:hover{background:var(--bg);border-color:var(--border-strong);color:var(--text);}
+.theme-toggle::before{content:"◐";line-height:1;}
+[data-theme="dark"] .theme-toggle::before{content:"☼";}
+.cloud-status{position:fixed;bottom:14px;right:14px;display:inline-flex;align-items:center;gap:7px;padding:7px 13px;background:var(--surface);border:1px solid var(--border);border-radius:100px;font-family:inherit;font-size:.74rem;font-weight:600;color:var(--text2);box-shadow:var(--shadow);opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .25s ease, transform .25s ease;z-index:8000;}
+.cloud-status.visible{opacity:1;transform:translateY(0);}
+.cloud-status .cs-dot{width:8px;height:8px;border-radius:50%;background:var(--text3);flex-shrink:0;}
+.cloud-status.saving  .cs-dot{background:#d97706;animation:cs-pulse 1s ease-in-out infinite;}
+.cloud-status.saved   .cs-dot{background:#15803d;}
+.cloud-status.offline .cs-dot{background:#b91c1c;}
+.cloud-status.error   .cs-dot{background:#b91c1c;}
+@keyframes cs-pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.header-inner{position:relative;}
+</style>
+<style>
+:root{
+  --bg:#fafafa; --surface:#ffffff; --border:#e5e5e5; --border-strong:#d4d4d4;
+  --text:#0a0a0a; --text2:#525252; --text3:#737373;
+  --accent:#2563eb; --accent-soft:#dbeafe; --accent-deep:#1d4ed8;
+  --done:#10b981; --done-bg:#d1fae5;
+  --locked:#a3a3a3; --locked-bg:#f5f5f5;
+  --header-bg-rgb:255,255,255;
+  --d1:#2563eb; --d1-bg:#dbeafe; --d1-soft:#eff6ff;
+  --d2:#7c3aed; --d2-bg:#ede9fe; --d2-soft:#faf5ff;
+  --d3:#d97706; --d3-bg:#fef3c7; --d3-soft:#fffbeb;
+  --d4:#0d9488; --d4-bg:#ccfbf1; --d4-soft:#f0fdfa;
+  --d5:#16a34a; --d5-bg:#dcfce7; --d5-soft:#f0fdf4;
+  --d6:#e11d48; --d6-bg:#ffe4e6; --d6-soft:#fff1f2;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.04);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.05),0 1px 2px rgba(0,0,0,.04);
+  --shadow:0 4px 16px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+}
+[data-theme="dark"]{
+  --bg:#0a0a0b; --surface:#18181b; --border:#27272a; --border-strong:#3f3f46;
+  --text:#fafafa; --text2:#d4d4d8; --text3:#8e8e96;
+  --accent:#60a5fa; --accent-soft:rgba(96,165,250,.15); --accent-deep:#3b82f6;
+  --done:#4ade80; --done-bg:rgba(74,222,128,.15);
+  --locked:#52525b; --locked-bg:rgba(82,82,91,.20);
+  --header-bg-rgb:18,18,27;
+  --d1:#60a5fa; --d1-bg:rgba(96,165,250,.20); --d1-soft:rgba(96,165,250,.08);
+  --d2:#a78bfa; --d2-bg:rgba(167,139,250,.20); --d2-soft:rgba(167,139,250,.08);
+  --d3:#fbbf24; --d3-bg:rgba(251,191,36,.20); --d3-soft:rgba(251,191,36,.08);
+  --d4:#2dd4bf; --d4-bg:rgba(45,212,191,.20); --d4-soft:rgba(45,212,191,.08);
+  --d5:#4ade80; --d5-bg:rgba(74,222,128,.20); --d5-soft:rgba(74,222,128,.08);
+  --d6:#fb7185; --d6-bg:rgba(251,113,133,.20); --d6-soft:rgba(251,113,133,.08);
+}
+[data-theme="dark"] .node-card{color:var(--text);background:var(--surface);}
+[data-theme="dark"] .meta-tag{background:var(--surface);color:var(--text2);}
+[data-theme="dark"] .progress-bar{background:var(--border);}
+[data-theme="dark"] .confirm-box{background:var(--surface);}
+[data-theme="dark"] .dossier{background:var(--surface);}
+[data-theme="dark"] .site-header{background:rgba(18,18,27,.88);}
+[data-theme="dark"] .cloud-status{background:var(--surface);color:var(--text2);}
+[data-theme="dark"] .hdr-profile-pill{background:var(--surface);color:var(--text2);}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;font-feature-settings:"cv02","cv03","cv04","cv11";}
+.site-header{background:rgba(var(--header-bg-rgb),.85);border-bottom:1px solid var(--border);padding:24px 20px 22px;position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(10px);}
+.header-inner{max-width:880px;margin:0 auto;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:5px 12px 5px 9px;font-size:.78rem;font-weight:600;color:var(--text2);text-decoration:none;transition:all .15s;box-shadow:var(--shadow-xs);margin-bottom:12px;}
+.back-btn:hover{background:var(--bg);border-color:var(--border-strong);color:var(--text);}
+.back-btn .arrow{font-size:1rem;line-height:1;}
+.header-top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
+h1{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800;letter-spacing:-.025em;}
+.header-tag{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:100px;padding:3px 10px;}
+.header-sub{font-size:.82rem;color:var(--text3);font-weight:500;margin-top:4px;}
+.header-sub strong{color:var(--text);font-weight:700;}
+.progress-wrap{margin-top:14px;}
+.progress-bar{height:6px;background:var(--border);border-radius:100px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--accent);border-radius:100px;transition:width .4s cubic-bezier(.22,1,.36,1);}
+.progress-meta{display:flex;justify-content:space-between;font-size:.72rem;color:var(--text3);margin-top:6px;font-variant-numeric:tabular-nums;flex-wrap:wrap;gap:6px;}
+.progress-meta button{background:none;border:none;color:var(--accent);font-family:inherit;font-size:.72rem;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;padding:0;}
+.progress-meta button:hover{color:var(--accent-deep);}
+.progress-meta .quick-link{color:var(--accent);text-decoration:none;font-weight:600;}
+.progress-meta .quick-link:hover{text-decoration:underline;text-underline-offset:2px;color:var(--accent-deep);}
+.progress-meta .dot-sep{color:var(--text3);margin:0 6px;}
+.main{max-width:880px;margin:0 auto;padding:36px 20px 80px;}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.74rem;color:var(--text3);margin-bottom:32px;}
+.legend-item{display:inline-flex;align-items:center;gap:6px;}
+.legend-dot{width:10px;height:10px;border-radius:50%;}
+.legend-dot.done{background:var(--done);}
+.legend-dot.current{background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.legend-dot.locked{background:var(--locked);}
+.intro-b2{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:26px;box-shadow:var(--shadow-xs);}
+.intro-b2 h2{font-size:.95rem;font-weight:800;letter-spacing:-.01em;margin-bottom:6px;}
+.intro-b2 p{font-size:.82rem;color:var(--text2);line-height:1.6;}
+.intro-b2 .obj{display:inline-block;margin-top:8px;font-size:.72rem;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:100px;padding:3px 11px;}
+.dossier{margin-bottom:26px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 18px 14px;box-shadow:var(--shadow-xs);position:relative;overflow:hidden;}
+.dossier::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--d-color,var(--accent));}
+.dossier[data-d="1"]{--d-color:var(--d1);--d-bg:var(--d1-bg);--d-soft:var(--d1-soft);}
+.dossier[data-d="2"]{--d-color:var(--d2);--d-bg:var(--d2-bg);--d-soft:var(--d2-soft);}
+.dossier[data-d="3"]{--d-color:var(--d3);--d-bg:var(--d3-bg);--d-soft:var(--d3-soft);}
+.dossier[data-d="4"]{--d-color:var(--d4);--d-bg:var(--d4-bg);--d-soft:var(--d4-soft);}
+.dossier[data-d="X"]{--d-color:#9333ea;--d-bg:rgba(147,51,234,.18);--d-soft:rgba(147,51,234,.06);}
+.dossier-head{display:flex;align-items:center;gap:10px;padding:0 0 14px 4px;flex-wrap:wrap;}
+.dossier-num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;background:var(--d-color);color:#fff;font-size:.74rem;font-weight:700;font-variant-numeric:tabular-nums;}
+.dossier-title{font-size:.95rem;font-weight:700;letter-spacing:-.012em;color:var(--d-color);}
+.dossier-desc{font-size:.78rem;color:var(--text3);font-weight:500;}
+.camino{position:relative;padding-left:34px;}
+.camino::before{content:"";position:absolute;left:13px;top:8px;bottom:8px;width:2px;background:repeating-linear-gradient(to bottom, var(--d-bg) 0, var(--d-bg) 4px, transparent 4px, transparent 8px);}
+.node{position:relative;margin-bottom:12px;display:block;text-decoration:none;color:inherit;}
+.node:last-child{margin-bottom:4px;}
+.node-dot{position:absolute;left:-34px;top:18px;width:28px;height:28px;border-radius:50%;background:var(--surface);border:2px solid var(--d-bg);display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:700;color:var(--d-color);z-index:2;transition:all .2s;font-variant-numeric:tabular-nums;}
+.node[data-state="done"] .node-dot{background:var(--done);border-color:var(--done);color:#fff;}
+.node[data-state="current"] .node-dot{background:var(--d-color);border-color:var(--d-color);color:#fff;box-shadow:0 0 0 5px var(--d-bg);}
+.node[data-state="locked"] .node-dot{background:var(--locked-bg);border-color:var(--border);color:var(--locked);}
+.node-card{background:var(--d-soft);border:1px solid var(--d-bg);border-radius:12px;padding:14px 16px;transition:all .2s;}
+.node:hover .node-card{border-color:var(--d-color);transform:translateY(-1px);box-shadow:var(--shadow-sm);}
+.node[data-state="locked"]{pointer-events:none;}
+.node[data-state="locked"] .node-card{opacity:.5;background:var(--locked-bg);border-color:var(--border);}
+.node[data-state="current"] .node-card{border-color:var(--d-color);box-shadow:0 0 0 3px var(--d-bg),var(--shadow-sm);background:var(--surface);}
+.node[data-state="done"] .node-card{background:var(--done-bg);border-color:var(--done);}
+.node-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.node-label{font-size:.66rem;font-weight:700;color:var(--d-color);letter-spacing:.08em;text-transform:uppercase;opacity:.85;}
+.node-badge{font-size:.64rem;font-weight:700;color:#fff;background:var(--d-color);border-radius:100px;padding:2px 9px;letter-spacing:.04em;}
+.node-badge.done-badge{color:#fff;background:var(--done);}
+.node-title{font-size:1rem;font-weight:700;letter-spacing:-.012em;color:var(--text);margin-bottom:8px;line-height:1.35;}
+.node-meta{display:flex;flex-wrap:wrap;gap:6px;}
+.meta-tag{font-size:.7rem;font-weight:500;color:var(--text2);background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:2px 9px;}
+.meta-tag.gram{color:var(--d-color);background:var(--d-bg);border-color:transparent;font-weight:600;}
+.node-prog{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:600;color:var(--text2);background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:2px 9px 2px 4px;margin-top:8px;}
+.node-prog .prog-dot{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--d-bg);color:var(--d-color);font-size:.62rem;font-weight:700;}
+.node-prog.full{color:var(--done);background:var(--done-bg);border-color:var(--done);}
+.node-prog.full .prog-dot{background:var(--done);color:#fff;}
+.confirm{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;padding:20px;z-index:100;}
+.confirm.show{display:flex;}
+.confirm-box{background:var(--surface);border-radius:14px;padding:22px 22px 18px;max-width:340px;width:100%;box-shadow:var(--shadow);}
+.confirm-box p{font-size:.88rem;color:var(--text);margin-bottom:14px;line-height:1.5;}
+.confirm-actions{display:flex;gap:8px;justify-content:flex-end;}
+.btn{font-family:inherit;font-size:.8rem;font-weight:600;border-radius:8px;padding:7px 14px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;transition:all .15s;}
+.btn:hover{background:var(--bg);}
+.btn-danger{background:var(--text);color:var(--surface);border-color:var(--text);}
+@media (max-width:520px){
+  .main{padding:24px 16px 60px;}
+  .camino{padding-left:30px;}
+  .node-dot{left:-30px;width:24px;height:24px;font-size:.68rem;}
+  .camino::before{left:11px;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="hdr-profile-row">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Cambiar tema (claro/oscuro)" aria-label="Cambiar tema"></button>
+      <button type="button" class="hdr-profile-pill" id="hdrProfilePill" data-profile="invitado" title="Cambiar de perfil">
+        <span class="pp-avatar" id="hdrProfileAvatar">I</span>
+        <span class="pp-name" id="hdrProfileName">Invitado</span>
+        <span class="pp-switch">▼</span>
+      </button>
+    </div>
+    <a class="back-btn" href="niveaux.html"><span class="arrow">‹</span><span>Niveaux</span></a>
+    <div class="header-top">
+      <h1>Parcours B2</h1>
+      <span class="header-tag">DELF B2 · viser 70+/100</span>
+    </div>
+    <p class="header-sub"><strong id="done-count">0</strong> / 8 unités · <span id="dossier-meta">Dossier 1 en curso</span></p>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <div class="progress-meta">
+        <span id="progress-pct">0% completado</span>
+        <span>
+          <a href="methodologie_b2.html" class="quick-link">🎯 Méthodologie</a>
+          <span class="dot-sep">·</span>
+          <a href="connecteurs_b2.html" class="quick-link">🔗 Connecteurs</a>
+          <span class="dot-sep">·</span>
+          <a href="examen_blanc_b2.html" class="quick-link">🏁 Examen blanc</a>
+          <span class="dot-sep">·</span>
+          <button id="manage-btn">✏️ Gestionar</button>
+          <span class="dot-sep">·</span>
+          <button id="reset-btn">Reiniciar progreso</button>
+        </span>
+      </div>
+    </div>
+
+    <details id="manage-panel" style="margin-top:12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:0 14px;">
+      <summary style="cursor:pointer;font-size:.78rem;font-weight:600;color:var(--accent);padding:10px 0;">✏️ Marcar / desmarcar unités individualmente</summary>
+      <div id="manage-list" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;padding:8px 0 14px 0;"></div>
+    </details>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="legend">
+    <span class="legend-item"><span class="legend-dot done"></span>Completado</span>
+    <span class="legend-item"><span class="legend-dot current"></span>Actual</span>
+    <span class="legend-item"><span class="legend-dot locked"></span>Bloqueado</span>
+  </div>
+
+  <div class="intro-b2">
+    <h2>Del B1 al B2+ : el verdadero salto</h2>
+    <p>El B1 <em>sobrevive</em> (narrar, pedir, gestionar). El B2 <strong>argumenta</strong> sobre temas abstractos, <strong>matiza</strong> la certeza y <strong>defiende</strong> una opinión con soltura. No es «más palabras»: es densidad argumentativa, precisión, registro y fluidez. Cada unité une un <strong>dominio temático</strong> del DELF con una <strong>estructura gramatical</strong> decisiva y ejercicios autocorregibles.</p>
+    <span class="obj">Objetivo: aprobar holgadamente, ninguna prueba por debajo de 12/25</span>
+  </div>
+
+  <!-- ===== DOSSIER 1 ===== -->
+  <section class="dossier" data-d="1">
+    <div class="dossier-head">
+      <span class="dossier-num">1</span>
+      <span class="dossier-title">Convictions &amp; engagement</span>
+      <span class="dossier-desc">· medio ambiente, sociedad, matizar y conceder</span>
+    </div>
+    <div class="camino">
+      <a class="node" data-id="1" href="b2_lecon_01.html">
+        <span class="node-dot">1</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Unité 1</span></div>
+          <div class="node-title">Environnement &amp; transition écologique</div>
+          <div class="node-meta">
+            <span class="meta-tag">Léxico · écologie, climat</span>
+            <span class="meta-tag gram">Subjonctif (volonté · émotion · doute) + quand l'éviter</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" data-id="2" href="b2_lecon_02.html">
+        <span class="node-dot">2</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Unité 2</span></div>
+          <div class="node-title">Société, solidarité &amp; vivre-ensemble</div>
+          <div class="node-meta">
+            <span class="meta-tag">Léxico · égalité, discriminations</span>
+            <span class="meta-tag gram">Concession &amp; opposition (bien que · avoir beau · quand bien même)</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== DOSSIER 2 ===== -->
+  <section class="dossier" data-d="2">
+    <div class="dossier-head">
+      <span class="dossier-num">2</span>
+      <span class="dossier-title">Travail &amp; parcours de vie</span>
+      <span class="dossier-desc">· empleo, formación, hipótesis y relato</span>
+    </div>
+    <div class="camino">
+      <a class="node" data-id="3" href="b2_lecon_03.html">
+        <span class="node-dot">3</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Unité 3</span></div>
+          <div class="node-title">Travail, emploi &amp; reconversion</div>
+          <div class="node-meta">
+            <span class="meta-tag">Léxico · emploi, télétravail</span>
+            <span class="meta-tag gram">Hypothèse (4 systèmes) + valeurs du conditionnel</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" data-id="4" href="b2_lecon_04.html">
+        <span class="node-dot">4</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Unité 4</span></div>
+          <div class="node-title">Éducation, formation &amp; jeunesse</div>
+          <div class="node-meta">
+            <span class="meta-tag">Léxico · système éducatif</span>
+            <span class="meta-tag gram">Discours indirect au passé + concordance des temps</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== DOSSIER 3 ===== -->
+  <section class="dossier" data-d="3">
+    <div class="dossier-head">
+      <span class="dossier-num">3</span>
+      <span class="dossier-title">Information &amp; esprit critique</span>
+      <span class="dossier-desc">· medios, IA, ciencia, salud, ética</span>
+    </div>
+    <div class="camino">
+      <a class="node" data-id="5" href="b2_lecon_05.html">
+        <span class="node-dot">5</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Unité 5</span></div>
+          <div class="node-title">Médias, numérique &amp; intelligence artificielle</div>
+          <div class="node-meta">
+            <span class="meta-tag">Léxico · infox, données, IA</span>
+            <span class="meta-tag gram">Modalisation / nuance + conditionnel non confirmé</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" data-id="6" href="b2_lecon_06.html">
+        <span class="node-dot">6</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Unité 6</span></div>
+          <div class="node-title">Sciences, santé &amp; éthique</div>
+          <div class="node-meta">
+            <span class="meta-tag">Léxico · recherche, bioéthique</span>
+            <span class="meta-tag gram">Voix passive &amp; se faire/se voir + nominalisation</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== DOSSIER 4 ===== -->
+  <section class="dossier" data-d="4">
+    <div class="dossier-head">
+      <span class="dossier-num">4</span>
+      <span class="dossier-title">Culture &amp; cité</span>
+      <span class="dossier-desc">· cultura, economía, ciudad, ciudadanía</span>
+    </div>
+    <div class="camino">
+      <a class="node" data-id="7" href="b2_lecon_07.html">
+        <span class="node-dot">7</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Unité 7</span></div>
+          <div class="node-title">Culture, arts &amp; patrimoine</div>
+          <div class="node-meta">
+            <span class="meta-tag">Léxico · patrimoine, mécénat</span>
+            <span class="meta-tag gram">Relatifs composés + mise en relief + pronoms (y/en, doubles)</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" data-id="8" href="b2_lecon_08.html">
+        <span class="node-dot">8</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Unité 8</span></div>
+          <div class="node-title">Économie, ville &amp; citoyenneté</div>
+          <div class="node-meta">
+            <span class="meta-tag">Léxico · pouvoir d'achat, mobilité</span>
+            <span class="meta-tag gram">Gérondif/participe + argumentation (A-E-E · plan PE/PO)</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== PRÉPARATION FINALE ===== -->
+  <section class="dossier" data-d="X" id="final">
+    <div class="dossier-head">
+      <span class="dossier-num">★</span>
+      <span class="dossier-title">Préparation finale DELF B2</span>
+      <span class="dossier-desc">· métodología, síntesis y examen blanco</span>
+    </div>
+    <div class="camino">
+      <a class="node" href="methodologie_b2.html">
+        <span class="node-dot">★</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Méthodologie</span></div>
+          <div class="node-title">Las 4 épreuves · grilles 2026</div>
+          <div class="node-meta">
+            <span class="meta-tag">CO · CE · PE (250 mots) · PO (monologue + débat)</span>
+            <span class="meta-tag gram">QCM · plan PE 5 pasos · producir «para la rejilla»</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" href="connecteurs_b2.html">
+        <span class="node-dot">🔗</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Connecteurs</span></div>
+          <div class="node-title">Banco de conectores B2 (soutenu)</div>
+          <div class="node-meta">
+            <span class="meta-tag">Por función · cause, concession, nuance…</span>
+            <span class="meta-tag gram">Esqueleto argumentativo A-E-E</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" href="modalisation_b2.html">
+        <span class="node-dot">🪄</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Phrases magiques</span></div>
+          <div class="node-title">Modalisation &amp; matiz B2+</div>
+          <div class="node-meta">
+            <span class="meta-tag">Graduar la certeza · il semblerait que…</span>
+            <span class="meta-tag gram">Estructuras que suben la nota</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" href="conjugaison_b2.html">
+        <span class="node-dot">🔤</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Conjugaison</span></div>
+          <div class="node-title">Sistema verbal B2</div>
+          <div class="node-meta">
+            <span class="meta-tag">Subjonctif · temps composés · concordance</span>
+            <span class="meta-tag gram">Irregulares clave + accord du participe</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" href="erreurs_b2.html">
+        <span class="node-dot">⚠</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Pièges</span></div>
+          <div class="node-title">Trampas hispanohablantes B2</div>
+          <div class="node-meta">
+            <span class="meta-tag">Faux amis · género · prépositions · pour/par</span>
+            <span class="meta-tag gram">Drills autocorregibles</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" href="phonetique_b2.html">
+        <span class="node-dot">🔊</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Phonétique</span></div>
+          <div class="node-title">Pronunciación · 3 pts directos en PO</div>
+          <div class="node-meta">
+            <span class="meta-tag">/y/–/u/ · nasales · liaison · rythme</span>
+            <span class="meta-tag gram">Pares mínimos + drills offline</span>
+          </div>
+        </div>
+      </a>
+      <a class="node" href="examen_blanc_b2.html">
+        <span class="node-dot">🏁</span>
+        <div class="node-card">
+          <div class="node-top"><span class="node-label">Examen blanc</span></div>
+          <div class="node-title">DELF B2 · simulación cronometrada</div>
+          <div class="node-meta">
+            <span class="meta-tag">CO + CE (QCM) + PE 250 mots</span>
+            <span class="meta-tag gram">Auto-correction · / 100 pts</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<div class="confirm" id="confirm">
+  <div class="confirm-box">
+    <p>¿Reiniciar todo el progreso del Parcours B2? Esto borrará el estado de las unités completadas.</p>
+    <div class="confirm-actions">
+      <button class="btn" id="cancel-reset">Cancelar</button>
+      <button class="btn btn-danger" id="confirm-reset">Reiniciar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY   = 'parcours_b2_state';
+const SCORES_KEY    = 'parcours_b2_scores';
+const DRAFTS_KEY    = 'parcours_b2_drafts';
+const PE_KEY        = 'parcours_b2_pe_done';
+const CHECKLIST_KEY = 'parcours_b2_checklist';
+const TOTAL = 8;
+const ITEMS_PER_LECON = {
+  1:{exos:8,pe:4,check:8}, 2:{exos:8,pe:4,check:8}, 3:{exos:8,pe:4,check:8}, 4:{exos:8,pe:4,check:8},
+  5:{exos:8,pe:4,check:8}, 6:{exos:8,pe:4,check:8}, 7:{exos:8,pe:4,check:8}, 8:{exos:8,pe:4,check:8}
+};
+const AVAILABLE = [1,2,3,4,5,6,7,8];
+
+function loadJSON(key){ try{ return JSON.parse(localStorage.getItem(key)||'{}'); }catch(e){ return {}; } }
+function loadState(){ return loadJSON(STORAGE_KEY); }
+function saveState(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+function loadScores(){ return loadJSON(SCORES_KEY); }
+function loadDrafts(){ return loadJSON(DRAFTS_KEY); }
+function loadPEDone(){ return loadJSON(PE_KEY); }
+function loadChecklist(){ return loadJSON(CHECKLIST_KEY); }
+
+function paintProgressTag(node, leconId){
+  const def = ITEMS_PER_LECON[leconId];
+  if(!def) return;
+  const scores = loadScores(), drafts = loadDrafts(), peDone = loadPEDone(), check = loadChecklist();
+  const sCount  = scores[leconId] ? Object.keys(scores[leconId]).length : 0;
+  const dCount  = drafts[leconId] ? Object.values(drafts[leconId]).filter(v => v && v.trim().length>0).length : 0;
+  const peCount = (peDone[leconId] || []).length;
+  const ckCount = (check[leconId]  || []).length;
+  const exoTot = def.exos + def.pe + def.check;
+  const completed = sCount + dCount + peCount + ckCount;
+  if(completed === 0){ const ex = node.querySelector('.node-prog'); if(ex) ex.remove(); return; }
+  let tag = node.querySelector('.node-prog');
+  if(!tag){
+    tag = document.createElement('span'); tag.className = 'node-prog';
+    const meta = node.querySelector('.node-meta');
+    if(meta) meta.parentNode.insertBefore(tag, meta.nextSibling);
+  }
+  tag.innerHTML = '<span class="prog-dot">'+completed+'</span> '+completed+' / '+exoTot+' avances';
+  tag.classList.toggle('full', completed === exoTot);
+}
+
+function render(){
+  const state = loadState();
+  const done = state.done || [];
+  const nodes = document.querySelectorAll('.node');
+  let current = null;
+  nodes.forEach(n=>{ const b = n.querySelector('.node-badge'); if(b) b.remove(); });
+  nodes.forEach(n=>{
+    const id = +n.dataset.id;
+    if(!n.dataset.id) return;
+    const isAvailable = AVAILABLE.includes(id);
+    const top = n.querySelector('.node-top');
+    if(done.includes(id)){
+      n.dataset.state='done';
+      const span=document.createElement('span'); span.className='node-badge done-badge'; span.textContent='Completada'; top.appendChild(span);
+    } else if(isAvailable && !current){
+      n.dataset.state='current'; current=id;
+      const span=document.createElement('span'); span.className='node-badge'; span.textContent = id===1?'Empieza aquí':'Sigue aquí'; top.appendChild(span);
+    } else if(!isAvailable){
+      n.dataset.state='locked'; n.setAttribute('aria-disabled','true');
+    } else { n.dataset.state=''; }
+    if(isAvailable) paintProgressTag(n, id);
+  });
+  const pct = Math.round(done.length/TOTAL*100);
+  document.getElementById('done-count').textContent = done.length;
+  document.getElementById('progress-fill').style.width = pct+'%';
+  document.getElementById('progress-pct').textContent = pct+'% completado';
+  const dossierMap = {1:1,2:1, 3:2,4:2, 5:3,6:3, 7:4,8:4};
+  const focus = current || (done.length ? done[done.length-1] : 1);
+  document.getElementById('dossier-meta').textContent = 'Dossier '+dossierMap[focus]+(current?' en curso':' completado');
+}
+
+const confirmEl = document.getElementById('confirm');
+document.getElementById('reset-btn').addEventListener('click', ()=>confirmEl.classList.add('show'));
+document.getElementById('cancel-reset').addEventListener('click', ()=>confirmEl.classList.remove('show'));
+document.getElementById('confirm-reset').addEventListener('click', ()=>{
+  localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(SCORES_KEY); localStorage.removeItem(DRAFTS_KEY);
+  localStorage.removeItem(PE_KEY); localStorage.removeItem(CHECKLIST_KEY);
+  confirmEl.classList.remove('show');
+  document.querySelectorAll('.node-prog').forEach(t=>t.remove());
+  render();
+  if(window.parcoursCloud) window.parcoursCloud.notify();
+});
+confirmEl.addEventListener('click', e=>{ if(e.target===confirmEl) confirmEl.classList.remove('show'); });
+
+const LECON_TITLES_INDEX = {
+  1:"U1 · Environnement", 2:"U2 · Société", 3:"U3 · Travail", 4:"U4 · Éducation",
+  5:"U5 · Médias & IA", 6:"U6 · Sciences & santé", 7:"U7 · Culture", 8:"U8 · Économie & cité"
+};
+function renderManagePanel(){
+  const list = document.getElementById('manage-list');
+  if(!list) return;
+  const state = loadState(); const done = state.done || [];
+  list.innerHTML = '';
+  for(let i=1;i<=TOTAL;i++){
+    const isDone = done.includes(i);
+    const label = document.createElement('label');
+    label.style.cssText = 'display:flex;align-items:center;gap:8px;padding:8px 12px;background:'+(isDone?'rgba(16,185,129,.12)':'var(--bg)')+';border:1px solid '+(isDone?'#10b981':'var(--border)')+';border-radius:8px;cursor:pointer;font-size:.82rem;font-weight:500;transition:all .15s;user-select:none;';
+    const cb = document.createElement('input');
+    cb.type='checkbox'; cb.checked=isDone; cb.dataset.lecon=i;
+    cb.style.cssText='width:16px;height:16px;accent-color:#10b981;cursor:pointer;';
+    cb.addEventListener('change', ()=>{
+      const s=loadState(); s.done=s.done||[];
+      const idx=s.done.indexOf(i);
+      if(cb.checked && idx===-1) s.done.push(i);
+      else if(!cb.checked && idx!==-1) s.done.splice(idx,1);
+      saveState(s);
+      if(window.parcoursCloud) window.parcoursCloud.notify();
+      document.querySelectorAll('.node-prog').forEach(t=>t.remove());
+      document.querySelectorAll('.node').forEach(n=>{ n.dataset.state=''; n.removeAttribute('aria-disabled'); });
+      render(); renderManagePanel();
+    });
+    label.appendChild(cb);
+    const span=document.createElement('span');
+    span.textContent = LECON_TITLES_INDEX[i] || ('Unité '+i);
+    if(isDone) span.innerHTML = '✓ ' + span.textContent;
+    label.appendChild(span); list.appendChild(label);
+  }
+}
+document.getElementById('manage-btn').addEventListener('click', ()=>{
+  const panel=document.getElementById('manage-panel');
+  panel.open=!panel.open; renderManagePanel();
+  if(panel.open) setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+});
+renderManagePanel();
+
+window.addEventListener('parcours:cloud-loaded', ()=>{
+  document.querySelectorAll('.node-prog').forEach(t=>t.remove());
+  document.querySelectorAll('.node').forEach(n=>{ n.dataset.state=''; n.removeAttribute('aria-disabled'); });
+  render(); renderManagePanel();
+});
+
+render();
+</script>
+
+<div class="cloud-status" id="cloudStatus" role="status" aria-live="polite">
+  <span class="cs-dot"></span>
+  <span class="cs-text">Listo</span>
+</div>
+<script src="parcours-b2.js"></script>
+<div id="offlineReadyBadge" hidden style="text-align:center;padding:18px 16px 26px;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:11px;color:#71717a;opacity:.78;letter-spacing:.02em;line-height:1.4"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10b981;margin-right:7px;vertical-align:middle;box-shadow:0 0 0 3px rgba(16,185,129,.16)"></span>Disponible sin conexión</div>
+<script>(function(){if(!('serviceWorker' in navigator)||!('caches' in window))return;var el;function show(){if(!el)el=document.getElementById('offlineReadyBadge');if(el)el.hidden=false;}function check(){if(!navigator.serviceWorker.controller)return;caches.match(location.href,{ignoreSearch:true}).then(function(hit){if(hit)show();}).catch(function(){});}if(document.readyState==='complete')check();else window.addEventListener('load',check);setTimeout(check,1500);})();</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("../../sw.js",{scope:"../../"}).catch(function(){});});}</script>
+</body>
+</html>
