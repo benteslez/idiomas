@@ -704,6 +704,32 @@ body.study-mode.reverse-mode .card:not(.cv-revealed) .np-s{
   color:transparent;border-radius:3px;cursor:pointer;user-select:none;
 }
 body.study-mode.reverse-mode .card.cv-revealed .np-s{background:transparent;color:var(--text)}
+
+/* ───────── FASE 3: hoja inferior (bottom sheet) de ejemplos por tiempo ───────── */
+.ex-sheet{position:fixed;inset:0;z-index:10000;display:flex;align-items:flex-end;justify-content:center}
+.ex-sheet[hidden]{display:none!important}
+.ex-sheet-backdrop{position:absolute;inset:0;background:rgba(10,8,5,.5);animation:exFadeIn .18s ease-out}
+.ex-sheet-inner{position:relative;width:100%;max-width:560px;background:var(--surface);border-top:1px solid var(--border);border-radius:16px 16px 0 0;padding:10px 20px 32px;max-height:85vh;overflow-y:auto;animation:exSlideUp .25s cubic-bezier(.2,.7,.2,1);outline:none;-webkit-overflow-scrolling:touch}
+.ex-sheet-handle{width:40px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 10px}
+.ex-sheet-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
+.ex-sheet-title{font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--accent);line-height:1.3;flex:1}
+.ex-sheet-close{all:unset;cursor:pointer;font-size:18px;color:var(--text3);padding:2px 8px;border-radius:6px;line-height:1;flex-shrink:0}
+.ex-sheet-close:hover,.ex-sheet-close:focus-visible{background:var(--bg2);color:var(--text);outline:none}
+.ex-sheet-use{font-size:13px;color:var(--text2);line-height:1.5;padding:9px 13px;background:var(--accent-bg);border-left:3px solid var(--accent);border-radius:0 var(--rsm) var(--rsm) 0;margin-bottom:16px}
+.ex-sheet-ex-list{display:flex;flex-direction:column;gap:14px}
+.ex-sheet-ex-it{font-size:15px;color:var(--text);line-height:1.45}
+.ex-sheet-ex-it b{color:var(--accent);font-weight:700}
+.ex-sheet-ex-es{font-size:13px;color:var(--text2);font-style:italic;margin-top:3px;line-height:1.4}
+.ex-sheet-generic-note{font-size:11px;color:var(--text3);font-style:italic;margin-top:18px;padding-top:12px;border-top:1px dashed var(--border);line-height:1.5}
+.ex-sheet-empty{font-size:14px;color:var(--text3);text-align:center;padding:20px}
+
+@media (min-width:768px){
+  .ex-sheet{align-items:center;padding:20px}
+  .ex-sheet-inner{border-radius:16px;max-height:75vh;border:1px solid var(--border);border-top:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.25)}
+  .ex-sheet-handle{display:none}
+}
+@keyframes exSlideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes exFadeIn{from{opacity:0}to{opacity:1}}
 </style>
 </head>
 <body>
@@ -5342,6 +5368,136 @@ updateSrsBadge();
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else setTimeout(boot, 0);
+})();
+</script>
+
+<!-- ═══ FASE 3: BOTTOM SHEET DE EJEMPLOS POR TIEMPO ═══ -->
+<div id="exSheet" class="ex-sheet" hidden role="dialog" aria-modal="true" aria-labelledby="exSheetTitle">
+  <div class="ex-sheet-backdrop" data-ex-dismiss="1"></div>
+  <div class="ex-sheet-inner" tabindex="-1">
+    <div class="ex-sheet-handle"></div>
+    <div class="ex-sheet-header">
+      <h3 id="exSheetTitle" class="ex-sheet-title">—</h3>
+      <button type="button" id="exSheetClose" class="ex-sheet-close" aria-label="Cerrar hoja de ejemplos" data-ex-dismiss="1">✕</button>
+    </div>
+    <div id="exSheetBody" class="ex-sheet-body"></div>
+  </div>
+</div>
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// FASE 3: carga lazy del JSON de ejemplos + lógica de la hoja inferior/modal.
+//   - Al tocar un .tp-label (pastilla de tiempo) se abre con 3 frases del verbo
+//     visible + línea de uso del tiempo. Fallback a ejemplos genéricos si el
+//     verbo aún no está enriquecido.
+//   - Focus trap simple, cierre con X / backdrop / Escape.
+//   - Lazy fetch del JSON una sola vez, cacheado en memoria.
+// ─────────────────────────────────────────────────────────────────────────────
+(function(){
+  var cache = null, loading = null, lastFocus = null;
+
+  var TENSE_LABELS = {
+    pr:'Presente', im:'Imperfetto', pr2:'Passato remoto', fs:'Futuro semplice',
+    pc:'Passato prossimo', tp:'Trapassato prossimo', tr:'Trapassato remoto', fa:'Futuro anteriore',
+    sb:'Congiuntivo presente', sbi:'Congiuntivo imperfetto', sbp:'Congiuntivo passato', sbt:'Congiuntivo trapassato',
+    co:'Condizionale presente', cop:'Condizionale passato',
+    ipa:'Imperativo affermativo', ipn:'Imperativo negativo'
+  };
+
+  function loadExamples(){
+    if (cache) return Promise.resolve(cache);
+    if (loading) return loading;
+    loading = fetch('data/verbs-examples-it.json', { cache: 'force-cache' })
+      .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function(data){ cache = data; return data; })
+      .catch(function(err){ console.warn('[ejemplos] fallback vacío:', err.message); cache = {}; return cache; });
+    return loading;
+  }
+
+  function sanitizeMarkdownBold(it){
+    // Convierte **texto** en <b>texto</b> escapando el resto.
+    var escaped = esc(it);
+    return escaped.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+  }
+
+  function openSheet(verb, tenseKey){
+    loadExamples().then(function(data){
+      var entry = data[verb.n] && data[verb.n][tenseKey];
+      var generic = (data._generic && data._generic[tenseKey]) || [];
+      var use = (data._tenses && data._tenses[tenseKey] && data._tenses[tenseKey].use) || '';
+      var examples = entry || generic;
+      var isGeneric = !entry && generic.length > 0;
+
+      var title = verb.v.toUpperCase() + ' · ' + (TENSE_LABELS[tenseKey] || tenseKey);
+      document.getElementById('exSheetTitle').textContent = title;
+
+      var html = '';
+      if (use) html += '<div class="ex-sheet-use">' + esc(use) + '</div>';
+      if (examples.length > 0){
+        html += '<div class="ex-sheet-ex-list">';
+        for (var i = 0; i < examples.length; i++){
+          var ex = examples[i];
+          html += '<div class="ex-sheet-ex">'
+            +   '<div class="ex-sheet-ex-it">' + sanitizeMarkdownBold(ex.it) + '</div>'
+            +   '<div class="ex-sheet-ex-es">' + esc(ex.es) + '</div>'
+            + '</div>';
+        }
+        html += '</div>';
+        if (isGeneric) html += '<div class="ex-sheet-generic-note">ejemplo genérico — este verbo todavía no tiene ejemplos propios para este tiempo</div>';
+      } else {
+        html += '<div class="ex-sheet-empty">Aún no hay ejemplos para este tiempo.</div>';
+      }
+
+      document.getElementById('exSheetBody').innerHTML = html;
+      var sheet = document.getElementById('exSheet');
+      sheet.hidden = false;
+      lastFocus = document.activeElement;
+      // Focus al inner para que Escape/Tab actúen dentro de él
+      document.querySelector('#exSheet .ex-sheet-inner').focus();
+      document.body.style.overflow = 'hidden';
+    });
+  }
+
+  function closeSheet(){
+    var sheet = document.getElementById('exSheet');
+    if (sheet.hidden) return;
+    sheet.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    lastFocus = null;
+  }
+
+  // Clic global para abrir el sheet (delegado en #grid) y para cerrarlo (data-ex-dismiss)
+  document.addEventListener('click', function(e){
+    // Cerrar (X o backdrop)
+    if (e.target.closest('[data-ex-dismiss]')){
+      closeSheet();
+      return;
+    }
+    // Abrir desde una pastilla de tiempo. Ignorar si el clic fue sobre el TTS interno.
+    if (e.target.closest('.tp-tts')) return;
+    var label = e.target.closest('.tp-label');
+    if (!label) return;
+    var n = parseInt(label.getAttribute('data-verb-n'), 10);
+    var tenseKey = label.getAttribute('data-tense');
+    if (!n || !tenseKey) return;
+    var verb = V.find(function(x){ return x.n === n; });
+    if (verb) openSheet(verb, tenseKey);
+  });
+
+  // Escape para cerrar; focus trap simple (Tab ciclando dentro del sheet)
+  document.addEventListener('keydown', function(e){
+    var sheet = document.getElementById('exSheet');
+    if (!sheet || sheet.hidden) return;
+    if (e.key === 'Escape'){ e.preventDefault(); closeSheet(); return; }
+    if (e.key === 'Tab'){
+      var focusables = sheet.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])');
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last  = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  });
 })();
 </script>
 

@@ -8,7 +8,7 @@
 // (el navegador rechaza una Response con .redirected=true al servirla para
 // un request en modo navigate, dejando la pestaña en blanco y atascando el
 // botón "volver"). Bumpear la versión purga la caché antigua corrupta.
-const VERSION = 'v2';
+const VERSION = 'v3';
 const CACHE = 'idiomas-' + VERSION;
 const NAV_TIMEOUT_MS = 6000;
 
