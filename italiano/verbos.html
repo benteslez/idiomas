@@ -718,6 +718,12 @@ body.study-mode.reverse-mode .card.cv-revealed .np-s{background:transparent;colo
 @keyframes markFade{from{background:color-mix(in srgb,#10b981 20%,transparent)}to{background:transparent}}
 /* Toggle "Ocultar lo que ya sé" → atenúa las filas marcadas pero las deja visibles. */
 body.hide-mastered-forms .tp-forms .row.marked{opacity:.3}
+
+/* Fase 5: en el SRS reveal, las formas ya marcadas en la rejilla principal se
+   atenúan automáticamente con tachado verde para enfocarse en las pendientes.
+   Siempre visible, no requiere toggle. */
+.srs-rev-row-pron.marked,
+.srs-rev-row-form.marked{opacity:.4;text-decoration:line-through;text-decoration-color:rgba(16,185,129,.6);text-decoration-thickness:2px}
 /* Contador por tiempo y por verbo */
 .tp-count[data-count-for]{display:inline-block;margin-left:auto;font-size:9px;font-weight:700;color:var(--text3);background:var(--bg2);border-radius:100px;padding:1px 6px;font-variant-numeric:tabular-nums;opacity:.75}
 .tp-count[data-count-for].has-marked{color:#0a7a52;background:rgba(16,185,129,.12);opacity:1}
@@ -4526,6 +4532,47 @@ function isDueOrNewCard(c, today){
   if(isNewCard(c)) return true;
   return c.verb.srs[c.tenseKey].nextReview <= today;
 }
+// ─── Fase 5: integración con pulsación larga de Fase 4 ───
+// Mapa SRS_TENSES key → nueva taxonomía (mood + tenseKey) para consultar
+// masteredForms. El viejo "ip" tenía 4 personas (sin Loro); el nuevo "ipa"
+// tiene 5. Al comprobar, iteramos solo sobre las personas presentes en la
+// tabla original del verbo — así respetamos el renderizado real del SRS.
+var SRS_TO_FORM = {
+  pr: { mood:'ind', tense:'pr'  },
+  im: { mood:'ind', tense:'im'  },
+  pc: { mood:'ind', tense:'pc'  },
+  fs: { mood:'ind', tense:'fs'  },
+  co: { mood:'co',  tense:'co'  },
+  sb: { mood:'sb',  tense:'sb'  },
+  ip: { mood:'imp', tense:'ipa' }
+};
+function srsPidFor(verbN, srsTenseKey, personIdx){
+  var m = SRS_TO_FORM[srsTenseKey];
+  if(!m) return null;
+  return verbN + '|' + m.mood + '|' + m.tense + '|' + personIdx;
+}
+function isSrsTenseFullyMarked(verb, srsTenseKey){
+  if(typeof masteredForms === 'undefined' || !masteredForms || !masteredForms.size) return false;
+  var raw = verb[srsTenseKey];
+  if(!Array.isArray(raw) || raw.length === 0) return false;
+  for(var i=0;i<raw.length;i++){
+    var f = Array.isArray(raw[i]) ? raw[i][1] : raw[i];
+    // Formas dash (—) no cuentan — el verbo no tiene esa persona.
+    if(!f || f === '—' || f === '-') continue;
+    var pid = srsPidFor(verb.n, srsTenseKey, i);
+    if(!pid || !masteredForms.has(pid)) return false;
+  }
+  return true;
+}
+// Combina due/new con filtro de formas marcadas: una tarjeta no cuenta
+// como activa si todas sus formas están marcadas en masteredForms.
+function isSrsCardActive(verb, tenseKey, today){
+  var card = {verb:verb, tenseKey:tenseKey};
+  if(!isDueOrNewCard(card, today)) return false;
+  if(isSrsTenseFullyMarked(verb, tenseKey)) return false;
+  return true;
+}
+
 function getSRSQueue(blocsSet, tensesSet){
   var today = srsToday();
   var queue = [];
@@ -4535,8 +4582,8 @@ function getSRSQueue(blocsSet, tensesSet){
     for(var t=0;t<SRS_TENSES.length;t++){
       var k = SRS_TENSES[t].key;
       if(tensesSet && !tensesSet.has(k)) continue;
-      var card = {verb:v, tenseKey:k};
-      if(isDueOrNewCard(card, today)) queue.push(card);
+      if(!isSrsCardActive(v, k, today)) continue;
+      queue.push({verb:v, tenseKey:k});
     }
   }
   // Separar vencidas vs nuevas, barajar cada grupo, concatenar (vencidas primero).
@@ -4576,6 +4623,8 @@ function getPendientesPorBloque(){
     if(out[v.b] === undefined) out[v.b] = 0;
     for(var t=0;t<SRS_TENSES.length;t++){
       var k = SRS_TENSES[t].key;
+      // Fase 5: no cuenta si todas las formas están marcadas
+      if(isSrsTenseFullyMarked(v, k)) continue;
       if(!v.srs || !v.srs[k] || v.srs[k].nextReview <= today) out[v.b]++;
     }
   }
@@ -4590,6 +4639,8 @@ function countNewVsReview(blocsSet, tensesSet){
     for(var t=0;t<SRS_TENSES.length;t++){
       var k = SRS_TENSES[t].key;
       if(tensesSet && !tensesSet.has(k)) continue;
+      // Fase 5: no cuenta si todas las formas están marcadas
+      if(isSrsTenseFullyMarked(v, k)) continue;
       if(!v.srs || !v.srs[k]) n++;
       else if(v.srs[k].nextReview <= today) r++;
     }
@@ -4657,11 +4708,18 @@ function srsRenderCard(){
   } else {
     var forms = v[tKey] || [];
     var rows = '';
+    // Fase 5: pinta cada par (pron, forma) con data-pid + clase .marked si la
+    // forma ya fue marcada con pulsación larga en la rejilla principal. Así se
+    // atenúan visualmente dentro del SRS reveal y el usuario enfoca las no
+    // marcadas.
     for(var i=0;i<forms.length;i++){
       var pron = forms[i][0], form = forms[i][1];
       var dash = (!form || form === '—' || form === '-');
-      rows += '<div class="srs-rev-row-pron">' + esc(pron) + '</div>'
-            + '<div class="srs-rev-row-form' + (dash?' dash':'') + '">' + esc(form || '—') + '</div>';
+      var revPid = srsPidFor(v.n, tKey, i);
+      var markedCls = (revPid && typeof masteredForms !== 'undefined' && masteredForms.has(revPid)) ? ' marked' : '';
+      var pidAttr  = revPid ? ' data-pid="' + revPid + '"' : '';
+      rows += '<div class="srs-rev-row-pron' + markedCls + '"' + pidAttr + '>' + esc(pron) + '</div>'
+            + '<div class="srs-rev-row-form' + (dash?' dash':'') + markedCls + '"' + pidAttr + '>' + esc(form || '—') + '</div>';
     }
     var warnBox = v.warn ? '<div class="srs-rev-warn">' + esc(v.warn) + '</div>' : '';
     var iv0 = previewInterval(v, tKey, 0), iv3 = previewInterval(v, tKey, 3), iv5 = previewInterval(v, tKey, 5);
