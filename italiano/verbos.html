@@ -705,6 +705,27 @@ body.study-mode.reverse-mode .card:not(.cv-revealed) .np-s{
 }
 body.study-mode.reverse-mode .card.cv-revealed .np-s{background:transparent;color:var(--text)}
 
+/* ───────── FASE 4: marcar formas con pulsación larga (500ms) ───────── */
+/* Evita menú contextual + selección de texto en iOS en TODAS las filas de
+   conjugación. Añadir también text-size-adjust para que iOS no reajuste. */
+.tp-forms .row{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.tp-forms .row.marked{background:color-mix(in srgb,#10b981 14%,transparent);border-radius:4px;transition:background .2s,opacity .2s}
+.tp-forms .row.marked .form{color:#0a7a52;font-weight:500}
+.tp-forms .row.pressing{background:color-mix(in srgb,#10b981 7%,transparent);border-radius:4px}
+.tp-forms .row.just-marked{animation:markPulse .35s ease-out}
+.tp-forms .row.just-unmarked{animation:markFade .25s ease-out}
+@keyframes markPulse{0%{transform:scale(1)}40%{transform:scale(1.02);background:color-mix(in srgb,#10b981 30%,transparent)}100%{transform:scale(1)}}
+@keyframes markFade{from{background:color-mix(in srgb,#10b981 20%,transparent)}to{background:transparent}}
+/* Toggle "Ocultar lo que ya sé" → atenúa las filas marcadas pero las deja visibles. */
+body.hide-mastered-forms .tp-forms .row.marked{opacity:.3}
+/* Contador por tiempo y por verbo */
+.tp-count[data-count-for]{display:inline-block;margin-left:auto;font-size:9px;font-weight:700;color:var(--text3);background:var(--bg2);border-radius:100px;padding:1px 6px;font-variant-numeric:tabular-nums;opacity:.75}
+.tp-count[data-count-for].has-marked{color:#0a7a52;background:rgba(16,185,129,.12);opacity:1}
+.cf-progress{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:var(--text3);background:var(--bg2);border-radius:100px;padding:2px 8px;margin-top:4px;font-variant-numeric:tabular-nums}
+.cf-progress strong{color:#0a7a52}
+.cf-progress-bar{display:inline-block;width:40px;height:3px;background:var(--border2);border-radius:2px;overflow:hidden;margin-left:2px}
+.cf-progress-bar-fill{height:100%;background:#10b981;transition:width .3s}
+
 /* ───────── FASE 3: hoja inferior (bottom sheet) de ejemplos por tiempo ───────── */
 .ex-sheet{position:fixed;inset:0;z-index:10000;display:flex;align-items:flex-end;justify-content:center}
 .ex-sheet[hidden]{display:none!important}
@@ -818,6 +839,7 @@ body.study-mode.reverse-mode .card.cv-revealed .np-s{background:transparent;colo
       <button class="btn" id="btn-open-game">Juego</button>
       <button class="btn" id="btn-srs-start" title="Repaso espaciado (SM-2)">🧠 Repaso <span class="srs-badge" id="srs-badge">0</span></button>
       <button class="btn" id="btn-srs-stats" title="Estadísticas">📊 Stats</button>
+      <button class="btn" id="sb-hide-marked" title="Atenuar formas que ya has marcado con pulsación larga" onclick="toggleHideMastered()"><span id="sb-hide-marked-txt">🙈 Ocultar las marcadas</span></button>
 
       <!-- Hidden legacy buttons (kept for backwards compatibility with handlers) -->
       <button class="btn" id="btn-rel" style="display:none"></button>
@@ -3013,6 +3035,21 @@ let knowFilter  = (_savedUI.knowFilter === 'know' || _savedUI.knowFilter === 'no
 let studyMode   = !!_savedUI.studyMode;
 let mastered    = new Set([]);
 
+// FASE 4: marcar formas con pulsación larga. masteredForms coexiste con
+// mastered (verbo entero) — NO sustituye. Clave: "verbN|mood|tense|personIdx".
+// Persiste en localStorage y se sincroniza via cloudSyncModule (añadido abajo).
+var MASTERED_FORMS_KEY = 'plida_it_mastered_forms';
+let masteredForms = (function(){
+  try { var raw = localStorage.getItem(MASTERED_FORMS_KEY); return new Set(raw ? JSON.parse(raw) : []); }
+  catch(e){ return new Set(); }
+})();
+function saveMasteredForms(){
+  try { localStorage.setItem(MASTERED_FORMS_KEY, JSON.stringify(Array.from(masteredForms))); } catch(e){}
+}
+let hideMastered = (function(){
+  try { return localStorage.getItem('plida_it_hide_mastered_forms') === '1'; } catch(e){ return false; }
+})();
+
 // ── Nuevos modos de estudio (persistencia independiente; no se exportan en _savedUI) ──
 let studyVariant = (function(){
   try { var s = localStorage.getItem('plida_it_study_variant'); return (s === 'type') ? 'type' : 'reveal'; }
@@ -3163,15 +3200,34 @@ function imperativoNegativo(v){
 }
 
 // Pintor de 6 filas de un tiempo (reutiliza highlight con el término buscado).
-function renderTensePairForms(normRows, q){
+// Fase 4: añade data-pid "verbN|mood|tense|personIdx" + clase .marked si está en
+// masteredForms, y pastilla "formal" en la posición 4 (Loro) del imperativo.
+function renderTensePairForms(v, moodKey, tenseKey, normRows, q, opts){
+  opts = opts || {};
   return normRows.map(function(row, i){
     var p = row[0], f = row[1];
     var dash = (!f || f === '—');
     var fHtml = (q && !dash) ? highlight(f, q) : esc(f || '—');
     var cls = 'form' + (dash ? ' dash' : '');
-    return '<div class="row"><span class="pron">' + esc(p) + '</span>'
-         + '<span class="' + cls + '">' + fHtml + '</span></div>';
+    var pid = v.n + '|' + moodKey + '|' + tenseKey + '|' + i;
+    var rowCls = 'row' + (masteredForms.has(pid) ? ' marked' : '');
+    var loroP = (opts.markLoro && i === 4) ? '<span class="loro-pill" title="Forma formal/literaria, poco usada en italiano hablado">formal</span>' : '';
+    return '<div class="' + rowCls + '" data-pid="' + pid + '"><span class="pron">' + esc(p) + '</span>'
+         + '<span class="' + cls + '">' + fHtml + '</span>' + loroP + '</div>';
   }).join('');
+}
+
+// Cuenta formas marcadas (no-dash) en un tiempo específico para un verbo.
+function countMarkedInTense(verbN, moodKey, tenseKey, normRows){
+  var marked = 0, total = 0;
+  for (var i = 0; i < normRows.length; i++){
+    var f = normRows[i][1];
+    if (!f || f === '—') continue;
+    total++;
+    var pid = verbN + '|' + moodKey + '|' + tenseKey + '|' + i;
+    if (masteredForms.has(pid)) marked++;
+  }
+  return { marked: marked, total: total };
 }
 
 // Ensambla UNA celda (pastilla) con su botón-label + 6 filas.
@@ -3181,23 +3237,13 @@ function renderTenseCell(v, label, moodKey, tenseKey, normRows, q, opts){
   var ttsBtn = TTS_OK ? '<button type="button" class="tp-tts" data-tts="' + esc(ttsText) + '" title="Escuchar">🔊</button>' : '';
   var verifyChip = (v.verify && v.verify.indexOf(tenseKey) !== -1)
     ? '<span class="verify-chip" title="Forma por verificar">⚠ verificar</span>' : '';
-  var forms = renderTensePairForms(normRows, q);
-  // Caso especial imperativo: marcar la 5ª fila (Loro) con pastilla "formal".
-  if(opts.markLoro){
-    forms = normRows.map(function(row, i){
-      var p = row[0], f = row[1];
-      var dash = (!f || f === '—');
-      var fHtml = (q && !dash) ? highlight(f, q) : esc(f || '—');
-      var cls = 'form' + (dash ? ' dash' : '');
-      var loroP = (i === 4) ? '<span class="loro-pill" title="Forma formal/literaria, poco usada en italiano hablado">formal</span>' : '';
-      return '<div class="row"><span class="pron">' + esc(p) + '</span>'
-           + '<span class="' + cls + '">' + fHtml + '</span>' + loroP + '</div>';
-    }).join('');
-  }
+  var forms = renderTensePairForms(v, moodKey, tenseKey, normRows, q, opts);
+  var cnt = countMarkedInTense(v.n, moodKey, tenseKey, normRows);
+  var counter = '<span class="tp-count" data-count-for="' + moodKey + '|' + tenseKey + '">' + cnt.marked + '/' + cnt.total + '</span>';
   return ''
     + '<div class="tp" data-mood="' + moodKey + '" data-tense="' + tenseKey + '">'
     + '  <button type="button" class="tp-label" data-verb-n="' + v.n + '" data-mood="' + moodKey + '" data-tense="' + tenseKey + '">'
-    +      esc(label) + ttsBtn + verifyChip
+    +      esc(label) + ttsBtn + verifyChip + counter
     + '  </button>'
     + '  <div class="tp-forms">' + forms + '</div>'
     + '</div>';
@@ -5085,6 +5131,188 @@ updateSrsBadge();
   <span class="cs-text">Listo</span>
 </div>
 
+<!-- ═══ FASE 4: pulsación larga para marcar formas + toggle "Ocultar lo que ya sé" ═══ -->
+<script>
+(function(){
+  var PRESS_MS = 500;        // ms para disparar long-press
+  var CANCEL_PX = 10;        // px de tolerancia antes de cancelar por scroll
+  var pressTimer = null;
+  var pressStart = null;
+  var pressRow   = null;
+
+  // Toggle: "Ocultar lo que ya sé". Añade .hide-mastered-forms al body.
+  function applyHideMastered(){
+    document.body.classList.toggle('hide-mastered-forms', hideMastered);
+    var btn = document.getElementById('sb-hide-marked');
+    if (btn) btn.classList.toggle('active', hideMastered);
+    var txt = document.getElementById('sb-hide-marked-txt');
+    if (txt) txt.textContent = hideMastered ? '👁 Mostrar todas' : '🙈 Ocultar las marcadas';
+  }
+  function toggleHideMastered(){
+    hideMastered = !hideMastered;
+    try { localStorage.setItem('plida_it_hide_mastered_forms', hideMastered ? '1' : '0'); } catch(e){}
+    applyHideMastered();
+  }
+  // Exportar al global para wirearlo desde el botón
+  window.toggleHideMastered = toggleHideMastered;
+  applyHideMastered();
+
+  function startPress(ev, row){
+    pressRow = row;
+    pressStart = [ev.clientX, ev.clientY];
+    row.classList.add('pressing');
+    pressTimer = setTimeout(function(){
+      pressTimer = null;
+      row.classList.remove('pressing');
+      togglePid(row.dataset.pid, row);
+    }, PRESS_MS);
+  }
+  function cancelPress(){
+    if (pressTimer){ clearTimeout(pressTimer); pressTimer = null; }
+    if (pressRow) pressRow.classList.remove('pressing');
+    pressStart = null; pressRow = null;
+  }
+
+  function togglePid(pid, row){
+    if (!pid) return;
+    var wasMarked = masteredForms.has(pid);
+    if (wasMarked){
+      masteredForms.delete(pid);
+      row.classList.remove('marked');
+      row.classList.add('just-unmarked');
+      setTimeout(function(){ row.classList.remove('just-unmarked'); }, 260);
+    } else {
+      masteredForms.add(pid);
+      row.classList.add('marked');
+      row.classList.add('just-marked');
+      setTimeout(function(){ row.classList.remove('just-marked'); }, 360);
+      if (navigator.vibrate){ try { navigator.vibrate(10); } catch(e){} }
+    }
+    saveMasteredForms();
+    // Notifica al cloudSyncModule (si existe) que algo cambió — comparte el
+    // mismo scheduler de guardado.
+    if (typeof window.scheduleCloudSave === 'function') window.scheduleCloudSave();
+    // Actualiza contadores en vivo (del tiempo tocado + total del verbo)
+    var parts = pid.split('|');
+    updateTenseCounter(row, parts[0], parts[1], parts[2]);
+    updateVerbTotal(parts[0]);
+  }
+
+  function updateTenseCounter(row, verbN, moodKey, tenseKey){
+    var tp = row.closest('.tp');
+    if (!tp) return;
+    var cEl = tp.querySelector('.tp-count[data-count-for]');
+    if (!cEl) return;
+    var rows = tp.querySelectorAll('.tp-forms .row');
+    var marked = 0, total = 0;
+    for (var i = 0; i < rows.length; i++){
+      var f = rows[i].querySelector('.form');
+      if (!f || f.classList.contains('dash')) continue;
+      total++;
+      if (rows[i].classList.contains('marked')) marked++;
+    }
+    cEl.textContent = marked + '/' + total;
+    cEl.classList.toggle('has-marked', marked > 0);
+  }
+
+  function updateVerbTotal(verbN){
+    var card = document.querySelector('.card[data-n="' + verbN + '"]');
+    if (!card) return;
+    var rows = card.querySelectorAll('.tp-forms .row');
+    var marked = 0, total = 0;
+    for (var i = 0; i < rows.length; i++){
+      var f = rows[i].querySelector('.form');
+      if (!f || f.classList.contains('dash')) continue;
+      total++;
+      if (rows[i].classList.contains('marked')) marked++;
+    }
+    var prog = card.querySelector('.cf-progress');
+    if (prog){
+      prog.querySelector('.cf-progress-txt').innerHTML = '<strong>' + marked + '</strong>/' + total;
+      var pct = total ? Math.round(100 * marked / total) : 0;
+      prog.querySelector('.cf-progress-bar-fill').style.width = pct + '%';
+    }
+  }
+
+  // Marca los contadores de todo un card recién renderizado y añade el chip
+  // de progreso en la cabecera. Se dispara después de cada render().
+  window.applyFormCountersToCards = function(){
+    var cards = document.querySelectorAll('.card');
+    for (var i = 0; i < cards.length; i++){
+      var card = cards[i];
+      var rows = card.querySelectorAll('.tp-forms .row');
+      var marked = 0, total = 0;
+      for (var j = 0; j < rows.length; j++){
+        var f = rows[j].querySelector('.form');
+        if (!f || f.classList.contains('dash')) continue;
+        total++;
+        if (rows[j].classList.contains('marked')) marked++;
+      }
+      // Inject progress chip en la cabecera si no existe aún
+      var chLeft = card.querySelector('.ch-left');
+      if (chLeft && !chLeft.querySelector('.cf-progress')){
+        var pct = total ? Math.round(100 * marked / total) : 0;
+        var html = '<div class="cf-progress" title="Formas marcadas de este verbo">'
+          + '<span class="cf-progress-txt"><strong>' + marked + '</strong>/' + total + '</span>'
+          + '<span class="cf-progress-bar"><span class="cf-progress-bar-fill" style="width:' + pct + '%"></span></span>'
+          + '</div>';
+        chLeft.insertAdjacentHTML('beforeend', html);
+      }
+      // Marcar contadores por tiempo con has-marked si corresponde
+      var tenseCs = card.querySelectorAll('.tp-count[data-count-for]');
+      for (var k = 0; k < tenseCs.length; k++){
+        var text = tenseCs[k].textContent;
+        var m = text.match(/^(\d+)\//);
+        if (m && parseInt(m[1], 10) > 0) tenseCs[k].classList.add('has-marked');
+      }
+    }
+  };
+
+  // Hook: cada render() original repinta #grid. Observamos cambios en #grid
+  // para re-aplicar contadores/chip.
+  var mo = new MutationObserver(function(){
+    window.applyFormCountersToCards();
+  });
+  var gridEl = document.getElementById('grid');
+  if (gridEl) mo.observe(gridEl, { childList: true });
+  // También primera pasada
+  window.applyFormCountersToCards();
+
+  // ─── Pointer handlers (delegados en #grid, táctil + ratón unificados) ───
+  function onPointerDown(ev){
+    var row = ev.target.closest('.tp-forms .row[data-pid]');
+    if (!row) return;
+    // Solo botón izquierdo del ratón (o toque)
+    if (ev.pointerType === 'mouse' && ev.button !== 0) return;
+    // Evita abrir la bottom-sheet por tocar dentro de la fila si confluye
+    // (el sheet se abre solo en .tp-label, aquí no hay conflicto).
+    startPress(ev, row);
+  }
+  function onPointerMove(ev){
+    if (!pressStart) return;
+    var dx = Math.abs(ev.clientX - pressStart[0]);
+    var dy = Math.abs(ev.clientY - pressStart[1]);
+    if (dx > CANCEL_PX || dy > CANCEL_PX) cancelPress();
+  }
+  function onPointerUpOrCancel(){ cancelPress(); }
+
+  // Delegamos en #grid para que funcione aunque el DOM se re-renderice.
+  var grid = document.getElementById('grid');
+  if (grid){
+    grid.addEventListener('pointerdown', onPointerDown, { passive: true });
+    grid.addEventListener('pointermove', onPointerMove, { passive: true });
+    grid.addEventListener('pointerup', onPointerUpOrCancel, { passive: true });
+    grid.addEventListener('pointercancel', onPointerUpOrCancel, { passive: true });
+    grid.addEventListener('pointerleave', onPointerUpOrCancel, { passive: true });
+  }
+
+  // Evita que el menú contextual nativo salte al mantener presionado en móvil.
+  document.addEventListener('contextmenu', function(ev){
+    if (ev.target.closest('.tp-forms .row[data-pid]')) ev.preventDefault();
+  });
+})();
+</script>
+
 <!-- ═══ MÓDULO DE SINCRONIZACIÓN EN LA NUBE (Supabase) ═══ -->
 <script id="cloudSyncModule">
 (function(){
@@ -5110,6 +5338,9 @@ updateSrsBadge();
   function readGlobals(){
     var payload = {
       mastered:    (typeof mastered    !== 'undefined' && mastered) ? Array.from(mastered) : [],
+      // Fase 4: nuevo campo. Clave compuesta "verbN|mood|tense|personIdx".
+      // No rompe con esquema anterior — campo opcional en applyPayload.
+      masteredForms: (typeof masteredForms !== 'undefined' && masteredForms) ? Array.from(masteredForms) : [],
       customVerbs: (typeof customVerbs !== 'undefined' && Array.isArray(customVerbs)) ? customVerbs.slice() : [],
       srsGlobal:   (typeof srsGlobal   !== 'undefined') ? {
         sessions:        srsGlobal.sessions || 0,
@@ -5138,6 +5369,18 @@ updateSrsBadge();
       var m = Array.isArray(data.mastered) ? data.mastered : [];
       for (var i = 0; i < m.length; i++) mastered.add(m[i]);
       try { localStorage.setItem('plida_it_mastered', JSON.stringify(Array.from(mastered))); } catch(e){}
+    }
+
+    // Fase 4: masteredForms (Set de strings "verbN|mood|tense|personIdx")
+    if (typeof masteredForms !== 'undefined' && masteredForms && typeof masteredForms.clear === 'function') {
+      masteredForms.clear();
+      var mf = Array.isArray(data.masteredForms) ? data.masteredForms : [];
+      for (var i = 0; i < mf.length; i++) masteredForms.add(mf[i]);
+      try { localStorage.setItem('plida_it_mastered_forms', JSON.stringify(Array.from(masteredForms))); } catch(e){}
+      // Si la rejilla ya está pintada, repinta para reflejar nuevas marcas
+      if (typeof render === 'function') {
+        try { render(); } catch(e){}
+      }
     }
 
     // customVerbs (array): reemplazar y re-mergear en V (deduplicando por v.v)
@@ -5275,6 +5518,9 @@ updateSrsBadge();
     if (saveTimer) clearTimeout(saveTimer);
     saveTimer = setTimeout(function(){ saveTimer = null; doSaveNow(); }, SAVE_DEBOUNCE);
   }
+  // Exportamos scheduleSave como window.scheduleCloudSave para que el handler
+  // de long-press (Fase 4) pueda disparar el guardado en la nube debounced.
+  window.scheduleCloudSave = scheduleSave;
 
   // ───────────────── HOOKS ─────────────────
   function installHooks(){
