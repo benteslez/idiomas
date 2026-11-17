@@ -638,6 +638,72 @@ mark{background:rgba(255,200,0,.4);color:inherit;border-radius:2px;padding:0 1px
 .cloud-status.error   .cs-dot{background:#dc2626;}
 @keyframes cs-pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
 @media (max-width:560px){.hdr-profile-row{top:10px;right:10px;}.hdr-profile-pill{font-size:11px;padding:4px 10px 4px 4px;}.cloud-status{bottom:8px;right:8px;font-size:11px;padding:6px 10px;}}
+
+/* ───────── FASE 2: rejilla 2 columnas (simple | compuesto) por tiempo ───────── */
+/* Formas no personales (bloque pequeño al inicio de cada tarjeta). */
+.np-block{display:flex;flex-direction:column;gap:3px;padding:8px 14px 12px;border-bottom:1px solid var(--border)}
+.np-row{display:grid;grid-template-columns:72px 1fr 1fr;gap:6px;align-items:baseline;font-size:calc(11.5px * var(--fs))}
+.np-l{font-size:calc(9px * var(--fs));font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text3)}
+.np-s,.np-c{color:var(--text);word-break:break-word}
+.np-c{color:var(--text2);font-style:italic}
+
+/* Cabecera de modo (INDICATIVO, CONGIUNTIVO…) */
+.mood-h{display:flex;align-items:center;gap:8px;padding:12px 14px 4px;font-size:calc(9.5px * var(--fs));font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent)}
+.mood-h::after{content:"";flex:1;height:1px;background:var(--border)}
+
+/* Filas pares de tiempo (simple | compuesto). 2 columnas en pantallas estándar
+   y en móvil; en pantallas muy estrechas se reduce padding/fuente. */
+.tp-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 10px 10px;align-items:stretch}
+.tp{display:flex;flex-direction:column;gap:5px;min-width:0;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rsm);padding:7px 9px}
+.tp-label{all:unset;display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:calc(9px * var(--fs));font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text);border-radius:4px;padding:1px 4px}
+.tp-label:hover,.tp-label:focus-visible{background:var(--accent-bg);outline:none}
+.tp-count{margin-left:auto;font-size:9px;color:var(--text3);font-weight:600;font-variant-numeric:tabular-nums;opacity:.65}
+.tp-forms{display:flex;flex-direction:column;gap:2px;font-size:calc(11.5px * var(--fs));line-height:1.3}
+.tp-forms .row{display:flex;align-items:baseline;gap:5px}
+.tp-forms .pron{color:var(--text3);font-size:calc(9.5px * var(--fs));min-width:calc(56px * var(--fs));opacity:.75;flex-shrink:0}
+.tp-forms .form{color:var(--text);word-break:break-word;flex:1;min-width:0}
+.tp-forms .form.dash{color:var(--text3)}
+
+/* Pastilla "formal" pegada a la forma Loro del imperativo (requisito #6). */
+.loro-pill{display:inline-block;margin-left:5px;font-size:8px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#5c3bb5;background:rgba(92,59,181,.12);border:1px solid rgba(92,59,181,.3);border-radius:3px;padding:1px 4px;vertical-align:middle;line-height:1.3}
+
+/* Indicador "verificar" cuando un tiempo está marcado verify en el verbo. */
+.verify-chip{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:600;color:#a06500;background:rgba(255,180,0,.14);border:1px solid rgba(255,180,0,.35);border-radius:3px;padding:0 4px;margin-left:5px}
+
+/* TTS discreto por tiempo (reemplaza al .tts-btn actual en el nuevo layout). */
+.tp-tts{background:none;border:none;cursor:pointer;color:var(--text3);font-size:11px;padding:0 2px;border-radius:4px;opacity:.55;transition:opacity .15s,color .15s}
+.tp-tts:hover{opacity:1;color:var(--accent)}
+.tp-tts.speaking{opacity:1;color:var(--accent);animation:tts-pulse 1s ease-in-out infinite}
+
+/* Grietas estrechas en móvil: reduce padding/fuente sin romper las 2 columnas. */
+@media (max-width:480px){
+  .tp{padding:6px 7px}
+  .tp-forms .pron{min-width:calc(48px * var(--fs))}
+  .np-row{grid-template-columns:62px 1fr 1fr}
+}
+
+/* Contenedor principal del nuevo render (sustituye al .tw antiguo). Es un
+   contenedor vertical; cada hijo (.np-block, .mood-h, .tp-row) ya aporta su
+   propia maquetación interna. */
+.tw2{display:flex;flex-direction:column;padding:2px 0 10px}
+
+/* Soporte del Modo Estudio en el nuevo layout (misma lógica que el antiguo
+   .tb .form: máscara al mismo color, se revela al tocar). */
+body.study-mode .tp-forms .form:not(.dash){
+  background:color-mix(in srgb, var(--text) 24%, #ffffff);
+  color:color-mix(in srgb, var(--text) 24%, #ffffff);
+  border-radius:3px;cursor:pointer;
+  transition:background .15s,color .15s;user-select:none
+}
+body.study-mode .tp-forms .form:not(.dash).revealed{background:transparent;color:inherit}
+
+/* En modo "reverse" también ocultar el infinitivo del np-block (coherencia
+   con cómo se oculta en el .cv). */
+body.study-mode.reverse-mode .card:not(.cv-revealed) .np-s{
+  background:color-mix(in srgb,var(--text) 18%,#fff);
+  color:transparent;border-radius:3px;cursor:pointer;user-select:none;
+}
+body.study-mode.reverse-mode .card.cv-revealed .np-s{background:transparent;color:var(--text)}
 </style>
 </head>
 <body>
@@ -2956,6 +3022,220 @@ function ttsTenseText(rows){
              .join(', ');
 }
 
+// ────────────────────────────────────────────────────────────────────────────
+// FASE 2: motor de compuestos + renderCardTenses() con grid 2 col emparejados.
+//   - Reutiliza essere y avere del propio V[] como auxiliares (ya enriquecidos
+//     con pr2/sbi/ipN tras la Fase 1).
+//   - Deriva al render los 7 compuestos (pc, tp, tr, fa, sbp, sbt, cop) desde
+//     aux + pp. Para aux=essere la concordancia es sg "pp/a", pl "pp(sin -o)+i/e".
+//   - Reflexivos: antepone clítico (mi/ti/si/ci/vi/si) al aux conjugado.
+//   - No toca las tablas existentes pr/im/pc/fs/co/sb/ip → SRS y Juego siguen
+//     usando TENSES tal cual y funcionando igual que antes.
+// ────────────────────────────────────────────────────────────────────────────
+var _auxEssereCache = null, _auxAvereCache = null;
+function auxEssere(){
+  if(!_auxEssereCache) _auxEssereCache = V.find(function(v){ return v.v === 'essere'; });
+  return _auxEssereCache;
+}
+function auxAvere(){
+  if(!_auxAvereCache) _auxAvereCache = V.find(function(v){ return v.v === 'avere'; });
+  return _auxAvereCache;
+}
+// Personas por tipo de modo. Las tablas antiguas (pr/im/...) ya llevan [person,form]
+// pero las nuevas (pr2/sbi) son arrays de strings — las normalizo al leer.
+var PERSONS_IND = ['io','tu','lui/lei','noi','voi','loro'];
+var PERSONS_SB  = ['che io','che tu','che lui/lei','che noi','che voi','che loro'];
+var PERSONS_IMP = ['tu','Lei','noi','voi','Loro'];
+var REFL_CLITICS = ['mi','ti','si','ci','vi','si'];
+
+// Normaliza cualquier formato de tiempo (tuplas antiguas o strings nuevos)
+// a una lista de [person, form].
+function normTense(raw, persons){
+  if(!Array.isArray(raw)) return [];
+  if(raw.length && Array.isArray(raw[0])) return raw;  // ya es [person,form]
+  return raw.map(function(f, i){ return [persons[i] || '', f]; });
+}
+
+// Concordancia del pp con essere. Sg → "pp/a", Pl → "pp(sin vocal final)+i/e".
+// Funciona también con pp irregulares (fatto/a, detto/a, stato/a, …).
+function ppConcord(pp, i){
+  if(!pp) return '';
+  var base = pp.slice(0, -1);
+  return i < 3 ? pp + '/a' : base + 'i/e';
+}
+
+// Construye un tiempo compuesto para el verbo v a partir del aux en ese tiempo.
+// auxTenseKey: 'pr' → passato prossimo, 'im' → trapassato prossimo, etc.
+// personType: 'ind' | 'sb' | 'co' (determina los pronombres).
+function buildCompound(v, auxTenseKey, personType){
+  var ax = v.aux === 'essere' ? auxEssere() : auxAvere();
+  if(!ax || !v.pp) return null;
+  var raw = ax[auxTenseKey];
+  if(!raw) return null;
+  var persons = personType === 'sb' ? PERSONS_SB : PERSONS_IND;
+  var axNorm = normTense(raw, persons);
+  var isRefl = !!v.reflexive;
+  return axNorm.map(function(tup, i){
+    var auxForm = tup[1];
+    var prefix = isRefl ? REFL_CLITICS[i] + ' ' : '';
+    var ppx    = v.aux === 'essere' ? ppConcord(v.pp, i) : v.pp;
+    return [persons[i], prefix + auxForm + ' ' + ppx];
+  });
+}
+
+// Formas no personales compuestas.
+function infinitoCompuesto(v){
+  if(!v.pp) return '';
+  if(v.reflexive) return 'essersi ' + v.pp + '/a/i/e';
+  return v.aux === 'essere' ? 'essere ' + v.pp + '/a/i/e' : 'aver ' + v.pp;
+}
+function gerundioCompuesto(v){
+  if(!v.pp) return '';
+  if(v.reflexive) return 'essendosi ' + v.pp + '/a/i/e';
+  return v.aux === 'essere' ? 'essendo ' + v.pp + '/a/i/e' : 'avendo ' + v.pp;
+}
+
+// Imperativo con 5 personas: si tenemos ipN (nuevo), lo usamos; si no,
+// derivamos un placeholder del ip antiguo (4 personas → 5 con Loro = sb[5]).
+function imperativoAfirmativo(v){
+  if(v.ipN && Array.isArray(v.ipN.aff)){
+    // ipN.aff es [[forma, (alt opcional)], …] por persona (5 persons).
+    return v.ipN.aff.map(function(alts, i){
+      return [PERSONS_IMP[i], (alts || []).join(' / ') || '—'];
+    });
+  }
+  // Fallback: tomamos el ip antiguo (4) + Loro = sb[5]
+  var out = [];
+  if(Array.isArray(v.ip)){
+    for(var i=0;i<4;i++){
+      var r = v.ip[i];
+      out.push([PERSONS_IMP[i], r && r[1] ? r[1] : '—']);
+    }
+  } else {
+    for(var i=0;i<4;i++) out.push([PERSONS_IMP[i], '—']);
+  }
+  // Loro: 6ª persona del congiuntivo presente
+  var loroForm = '—';
+  if(Array.isArray(v.sb) && v.sb[5]){
+    loroForm = Array.isArray(v.sb[5]) ? v.sb[5][1] : v.sb[5];
+  }
+  out.push([PERSONS_IMP[4], loroForm]);
+  return out;
+}
+function imperativoNegativo(v){
+  if(v.ipN && Array.isArray(v.ipN.neg)){
+    return v.ipN.neg.map(function(alts, i){
+      return [PERSONS_IMP[i], (alts || []).join(' / ') || '—'];
+    });
+  }
+  // Fallback derivado: tu = non + infinito; resto = non + afirmativo
+  var aff = imperativoAfirmativo(v);
+  return aff.map(function(tup, i){
+    if(i === 0) return [tup[0], 'non ' + v.v];
+    return [tup[0], tup[1] === '—' ? '—' : 'non ' + tup[1]];
+  });
+}
+
+// Pintor de 6 filas de un tiempo (reutiliza highlight con el término buscado).
+function renderTensePairForms(normRows, q){
+  return normRows.map(function(row, i){
+    var p = row[0], f = row[1];
+    var dash = (!f || f === '—');
+    var fHtml = (q && !dash) ? highlight(f, q) : esc(f || '—');
+    var cls = 'form' + (dash ? ' dash' : '');
+    return '<div class="row"><span class="pron">' + esc(p) + '</span>'
+         + '<span class="' + cls + '">' + fHtml + '</span></div>';
+  }).join('');
+}
+
+// Ensambla UNA celda (pastilla) con su botón-label + 6 filas.
+function renderTenseCell(v, label, moodKey, tenseKey, normRows, q, opts){
+  opts = opts || {};
+  var ttsText = ttsTenseText(normRows);
+  var ttsBtn = TTS_OK ? '<button type="button" class="tp-tts" data-tts="' + esc(ttsText) + '" title="Escuchar">🔊</button>' : '';
+  var verifyChip = (v.verify && v.verify.indexOf(tenseKey) !== -1)
+    ? '<span class="verify-chip" title="Forma por verificar">⚠ verificar</span>' : '';
+  var forms = renderTensePairForms(normRows, q);
+  // Caso especial imperativo: marcar la 5ª fila (Loro) con pastilla "formal".
+  if(opts.markLoro){
+    forms = normRows.map(function(row, i){
+      var p = row[0], f = row[1];
+      var dash = (!f || f === '—');
+      var fHtml = (q && !dash) ? highlight(f, q) : esc(f || '—');
+      var cls = 'form' + (dash ? ' dash' : '');
+      var loroP = (i === 4) ? '<span class="loro-pill" title="Forma formal/literaria, poco usada en italiano hablado">formal</span>' : '';
+      return '<div class="row"><span class="pron">' + esc(p) + '</span>'
+           + '<span class="' + cls + '">' + fHtml + '</span>' + loroP + '</div>';
+    }).join('');
+  }
+  return ''
+    + '<div class="tp" data-mood="' + moodKey + '" data-tense="' + tenseKey + '">'
+    + '  <button type="button" class="tp-label" data-verb-n="' + v.n + '" data-mood="' + moodKey + '" data-tense="' + tenseKey + '">'
+    +      esc(label) + ttsBtn + verifyChip
+    + '  </button>'
+    + '  <div class="tp-forms">' + forms + '</div>'
+    + '</div>';
+}
+
+// Produce el bloque de formas no personales + los 8 pares de tiempos emparejados.
+function renderCardTenses(v, q){
+  var html = '';
+  // Bloque NO-PERSONAL
+  var ger    = v.ger || '';
+  var ppr    = v.ppr || '—';
+  var pp     = v.pp  || '—';
+  html += '<div class="np-block">'
+    +   '<div class="np-row"><span class="np-l">Infinito</span>'
+    +      '<span class="np-s">' + esc(v.v) + '</span>'
+    +      '<span class="np-c">' + esc(infinitoCompuesto(v) || '—') + '</span></div>'
+    +   '<div class="np-row"><span class="np-l">Gerundio</span>'
+    +      '<span class="np-s">' + esc(ger) + '</span>'
+    +      '<span class="np-c">' + esc(gerundioCompuesto(v) || '—') + '</span></div>'
+    +   '<div class="np-row"><span class="np-l">Participio</span>'
+    +      '<span class="np-s">' + esc(ppr) + '</span>'
+    +      '<span class="np-c">' + esc(pp) + '</span></div>'
+    + '</div>';
+
+  // Helper para una fila de 2 columnas
+  function pair(moodH, sLabel, sKey, sRowsRaw, sMood, cLabel, cKey, cAuxKey, cMoodType, opts){
+    var sNorm = normTense(sRowsRaw, sMood === 'sb' ? PERSONS_SB : (sMood === 'imp' ? PERSONS_IMP : PERSONS_IND));
+    var cRows = cAuxKey ? buildCompound(v, cAuxKey, cMoodType || 'ind') : null;
+    opts = opts || {};
+    var left  = renderTenseCell(v, sLabel, moodH, sKey, sNorm, q, opts.left || {});
+    var right = cRows
+      ? renderTenseCell(v, cLabel, moodH, cKey, cRows, q, opts.right || {})
+      : '<div class="tp"><button type="button" class="tp-label">' + esc(cLabel) + '</button><div class="tp-forms"><div class="row"><span class="form dash">—</span></div></div></div>';
+    return '<div class="tp-row">' + left + right + '</div>';
+  }
+
+  // INDICATIVO
+  html += '<div class="mood-h">Indicativo</div>';
+  html += pair('ind', 'Presente',       'pr',  v.pr,  'ind', 'Passato prossimo',  'pc', 'pr',  'ind');
+  html += pair('ind', 'Imperfetto',     'im',  v.im,  'ind', 'Trapassato prossimo','tp','im',  'ind');
+  html += pair('ind', 'Passato remoto', 'pr2', v.pr2, 'ind', 'Trapassato remoto', 'tr', 'pr2', 'ind');
+  html += pair('ind', 'Futuro semplice','fs',  v.fs,  'ind', 'Futuro anteriore',  'fa', 'fs',  'ind');
+
+  // CONGIUNTIVO
+  html += '<div class="mood-h">Congiuntivo</div>';
+  html += pair('sb', 'Presente',   'sb',  v.sb,  'sb',  'Passato',    'sbp', 'sb',  'sb');
+  html += pair('sb', 'Imperfetto', 'sbi', v.sbi, 'sb',  'Trapassato', 'sbt', 'sbi', 'sb');
+
+  // CONDIZIONALE
+  html += '<div class="mood-h">Condizionale</div>';
+  html += pair('co', 'Presente', 'co', v.co, 'ind', 'Passato', 'cop', 'co', 'ind');
+
+  // IMPERATIVO (5 personas; Loro con pastilla formal)
+  html += '<div class="mood-h">Imperativo</div>';
+  var affRows = imperativoAfirmativo(v);
+  var negRows = imperativoNegativo(v);
+  html += '<div class="tp-row">'
+    +   renderTenseCell(v, 'Affermativo', 'imp', 'ipa', affRows, q, { markLoro: true })
+    +   renderTenseCell(v, 'Negativo',    'imp', 'ipn', negRows, q, { markLoro: true })
+    + '</div>';
+
+  return html;
+}
+
 function saveUIState(){
   try {
     localStorage.setItem(UI_STATE_KEY, JSON.stringify({
@@ -3300,12 +3580,7 @@ function render(){
           + '<button class="know-btn" onclick="event.stopPropagation();deleteCustomVerb(' + v.n + ')" style="font-size:13px;border-color:rgba(181,58,58,.3);color:#b53a3a" title="Eliminar">🗑</button>'
           + knowBtn + '</div>'
         : knowBtn;
-      var tensesHtml = TENSES.map(function(t){
-        var cls = 'tb tb-' + t.key + (t.hl ? ' hl' : '') + (t.imp ? ' imp' : '');
-        var ttsAll = TTS_OK ? '<button type="button" class="tts-btn" data-tts="' + esc(ttsTenseText(v[t.key])) + '" title="Escuchar todo el tiempo">🔊</button>' : '';
-        return '<div class="' + cls + '"><div class="tl">' + t.label + ttsAll + '</div>'
-             + '<div class="tf">' + renderForms(v[t.key], q) + '</div></div>';
-      }).join('');
+      var tensesHtml = renderCardTenses(v, q);
       var warnHtml = v.warn ? '<div class="cw">' + esc(v.warn) + '</div>' : '';
       return '<div class="card' + (isMast ? ' mastered' : '') + (v.custom ? ' custom-verb' : '') + '" data-n="' + v.n + '" style="animation-delay:' + Math.min(i*20,220) + 'ms">'
         + '<div class="ch"><div class="ch-left">'
@@ -3316,7 +3591,7 @@ function render(){
           + '<span class="cbadge" style="' + bs + '">' + esc(v.b) + '</span>'
           + btnsRow
         + '</div></div>'
-        + '<div class="tw">' + tensesHtml + '</div>'
+        + '<div class="tw2">' + tensesHtml + '</div>'
         + warnHtml + '</div>';
     }).join('');
     if(studyMode) updateProgress();
@@ -3374,11 +3649,7 @@ function render(){
         + '</div>'
       : knowBtn;
 
-    var tensesHtml = TENSES.map(function(t){
-      var cls = 'tb tb-' + t.key + (t.hl ? ' hl' : '') + (t.imp ? ' imp' : '');
-      return '<div class="' + cls + '"><div class="tl">' + t.label + '</div>'
-           + '<div class="tf">' + renderForms(v[t.key], q) + '</div></div>';
-    }).join('');
+    var tensesHtml = renderCardTenses(v, q);
 
     var warnHtml = v.warn
       ? '<div class="cw">' + esc(v.warn) + '</div>'
@@ -3396,7 +3667,7 @@ function render(){
           + btnsRow
         + '</div>'
       + '</div>'
-      + '<div class="tw">' + tensesHtml + '</div>'
+      + '<div class="tw2">' + tensesHtml + '</div>'
       + warnHtml
       + '</div>';
   }).join('');
